@@ -38,7 +38,12 @@ export function Navbar() {
       <nav className="mx-auto max-w-7xl px-5 md:px-10 flex items-center justify-between">
         {/* logo */}
         <Link href="/" className="flex items-center gap-2">
-          <span className="font-display text-xl font-bold text-primary">
+          <span
+            className={cn(
+              "font-display text-xl font-bold transition-colors duration-300",
+              isScrolled ? "text-primary" : "text-white",
+            )}
+          >
             Vizit Africa
           </span>
         </Link>
@@ -49,7 +54,12 @@ export function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              className={cn(
+                "text-sm font-medium transition-colors duration-300",
+                isScrolled
+                  ? "text-muted-foreground hover:text-foreground"
+                  : "text-white/80 hover:text-white",
+              )}
             >
               {link.label}
             </Link>
@@ -59,19 +69,31 @@ export function Navbar() {
         {/* cta button */}
         <div className="hidden md:block">
           <Link href="/plan-trip">
-            <Button size="sm">Get Started</Button>
+            <Button
+              size="sm"
+              variant={isScrolled ? "default" : "secondary"}
+              className={cn(
+                "rounded-full transition-all duration-300",
+                !isScrolled && "bg-white text-primary hover:bg-white/90",
+              )}
+            >
+              Get Started
+            </Button>
           </Link>
         </div>
 
         {/* mobile menu button */}
         <button
           type="button"
-          className="md:hidden p-2 text-foreground"
+          className={cn(
+            "md:hidden p-2 transition-colors duration-300",
+            isScrolled ? "text-foreground" : "text-white",
+          )}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
         >
           {isMobileMenuOpen ? (
-            <RiCloseLine className="size-6" />
+            <RiCloseLine className="size-6 text-foreground" />
           ) : (
             <RiMenuLine className="size-6" />
           )}

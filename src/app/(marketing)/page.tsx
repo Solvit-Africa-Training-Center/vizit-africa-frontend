@@ -3,6 +3,7 @@ import {
   FAQ,
   Footer,
   Hero,
+  Destinations,
   Services,
   SocialProof,
   ExperienceShowcase,
@@ -17,9 +18,12 @@ export default function Home() {
   return (
     <>
       <Navbar />
+      <Navbar />
       <Hero />
       <SocialProof />
+
       <Services />
+      <Destinations />
       <ExperienceShowcase />
       <HowItWorks />
       <Gallery />

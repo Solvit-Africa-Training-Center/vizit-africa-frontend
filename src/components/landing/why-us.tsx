@@ -1,30 +1,32 @@
 import { stats, benefits } from "@/lib/dummy-data";
-import { RiCheckLine } from "@remixicon/react";
 
 export function WhyUs() {
   return (
-    <section id="why-us" className="py-20 md:py-24 bg-background">
+    <section
+      id="why-us"
+      className="py-24 bg-background border-t border-border/40"
+    >
       <div className="mx-auto max-w-7xl px-5 md:px-10">
-        <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
-          {/* left - stats */}
-          <div className="space-y-8">
-            <div>
-              <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
-                Why Choose Us
+        <div className="grid md:grid-cols-2 gap-16 items-start">
+          {/* left - Header & Stats */}
+          <div>
+            <div className="mb-12">
+              <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
+                Why Choose Vizit Africa
               </h2>
-              <p className="text-muted-foreground text-lg">
-                Numbers that reflect our commitment to exceptional travel
-                experiences.
+              <p className="max-w-md text-lg text-muted-foreground font-light leading-relaxed">
+                We believe in travel that transforms. Numbers that reflect our
+                commitment to exceptional experiences.
               </p>
             </div>
 
-            <div className="grid grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 gap-y-10 gap-x-8">
               {stats.map((stat) => (
-                <div key={stat.label} className="text-center md:text-left">
-                  <div className="font-display text-3xl md:text-4xl font-bold text-primary mb-1">
+                <div key={stat.label}>
+                  <div className="font-display text-5xl md:text-6xl font-black text-primary mb-2 tracking-tighter">
                     {stat.value}
                   </div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-sm uppercase tracking-widest text-muted-foreground font-medium">
                     {stat.label}
                   </div>
                 </div>
@@ -32,19 +34,23 @@ export function WhyUs() {
             </div>
           </div>
 
-          {/* right - benefits */}
-          <div className="bg-card border border-border rounded-xl p-6 md:p-8">
-            <h3 className="font-display text-lg font-semibold text-foreground mb-6">
-              What Sets Us Apart
+          {/* right - benefits list (Clean Editorial) */}
+          <div className="pt-8 md:pt-20">
+            <h3 className="font-display text-xl font-bold uppercase tracking-widest text-foreground mb-8 border-b border-border pb-4">
+              The Standard
             </h3>
 
-            <ul className="space-y-4">
-              {benefits.map((benefit) => (
-                <li key={benefit} className="flex items-start gap-3">
-                  <div className="size-6 rounded-full bg-accent-success/20 flex items-center justify-center shrink-0 mt-0.5">
-                    <RiCheckLine className="size-4 text-accent-success" />
+            <ul className="space-y-8">
+              {benefits.map((benefit, i) => (
+                <li key={i} className="group">
+                  <div className="flex items-baseline gap-6">
+                    <span className="font-mono text-primary/40 text-sm">
+                      {(i + 1).toString().padStart(2, "0")}
+                    </span>
+                    <span className="text-xl md:text-2xl font-light text-foreground group-hover:text-primary transition-colors duration-300">
+                      {benefit}
+                    </span>
                   </div>
-                  <span className="text-foreground">{benefit}</span>
                 </li>
               ))}
             </ul>
@@ -54,3 +60,4 @@ export function WhyUs() {
     </section>
   );
 }
+

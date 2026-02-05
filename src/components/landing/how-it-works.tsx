@@ -2,49 +2,36 @@ import { processSteps } from "@/lib/dummy-data";
 
 export function HowItWorks() {
   return (
-    <section id="how-it-works" className="py-20 md:py-24 bg-muted/50">
+    <section id="how-it-works" className="py-24 bg-background">
       <div className="mx-auto max-w-7xl px-5 md:px-10">
-        {/* header */}
-        <div className="text-center max-w-2xl mx-auto mb-12 md:mb-16">
-          <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
+        <div className="mb-20 max-w-2xl">
+          <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
             Simple Process
           </h2>
-          <p className="text-muted-foreground text-lg">
-            From your first inquiry to landing in Kigali — we make it seamless.
+          <p className="text-muted-foreground text-lg font-light">
+            From your first inquiry to landing in Kigali — we orchestrate every
+            detail.
           </p>
         </div>
 
-        {/* steps */}
-        <div className="relative">
-          {/* desktop only */}
-          <div className="hidden lg:block absolute top-7 left-[calc(12.5%+24px)] right-[calc(12.5%+24px)] h-0.5 bg-border" />
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
-            {processSteps.map((step, index) => (
-              <div key={step.step} className="relative text-center">
-                <div className="relative z-10 mx-auto size-14 rounded-full bg-muted/50 flex items-center justify-center font-display font-bold mb-4">
-                  <div className="bg-primary size-12 text-primary-foreground flex items-center justify-center font-display text-lg font-bold rounded-full">
-                    {step.step}
-                  </div>
+        <div className="grid md:grid-cols-4 gap-8">
+          {processSteps.map((step, index) => (
+            <div key={step.step} className="group relative">
+              <div className="pt-8 border-t border-border/40 group-hover:border-primary transition-colors duration-500">
+                <div className="font-mono text-sm text-primary/50 mb-4 group-hover:text-primary transition-colors">
+                  STEP {step.step}
                 </div>
 
-                {/* arrow connector - mobile/tablet */}
-                {index < processSteps.length - 1 && (
-                  <div className="lg:hidden absolute left-1/2 -translate-x-1/2 top-14 text-border text-2xl">
-                    ↓
-                  </div>
-                )}
-
-                <h3 className="font-display text-lg font-semibold text-foreground mb-2">
+                <h3 className="text-2xl font-bold font-display text-foreground mb-3">
                   {step.title}
                 </h3>
 
-                <p className="text-sm text-muted-foreground leading-relaxed max-w-[200px] mx-auto">
+                <p className="text-muted-foreground font-light leading-relaxed">
                   {step.description}
                 </p>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

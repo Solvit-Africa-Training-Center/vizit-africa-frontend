@@ -35,29 +35,27 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="bg-[oklch(20%_0_0)] text-white">
-      <div className="mx-auto max-w-7xl px-5 md:px-10 py-12 md:py-16">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
-          {/* brand */}
-          <div>
+    <footer className="bg-zinc-900 text-white">
+      <div className="mx-auto max-w-7xl px-5 md:px-10 py-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-12">
+          {/* Brand */}
+          <div className="lg:col-span-2">
             <Link href="/" className="inline-block mb-4">
-              <span className="font-display text-xl font-bold text-white">
+              <span className="font-display text-2xl font-bold text-white">
                 Vizit Africa
               </span>
             </Link>
-            <p className="text-sm text-gray-400 leading-relaxed mb-6">
+            <p className="text-sm text-gray-400 leading-relaxed mb-6 max-w-sm">
               Your trusted Rwanda travel partner. Professional planning for
               unforgettable African experiences.
             </p>
-
-            {/* social icons */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
                   aria-label={social.label}
-                  className="size-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
+                  className="size-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition-colors duration-300"
                 >
                   <social.icon className="size-4" />
                 </a>
@@ -65,17 +63,17 @@ export function Footer() {
             </div>
           </div>
 
-          {/* services */}
+          {/* Explore */}
           <div>
-            <h4 className="font-semibold text-sm uppercase tracking-wider text-gray-400 mb-4">
-              Services
+            <h4 className="font-semibold text-sm uppercase tracking-wider text-white mb-4">
+              Explore
             </h4>
             <ul className="space-y-3">
               {footerLinks.services.map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-gray-300 hover:text-white transition-colors"
+                    className="text-sm text-gray-400 hover:text-white transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -84,9 +82,9 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* company */}
+          {/* Company */}
           <div>
-            <h4 className="font-semibold text-sm uppercase tracking-wider text-gray-400 mb-4">
+            <h4 className="font-semibold text-sm uppercase tracking-wider text-white mb-4">
               Company
             </h4>
             <ul className="space-y-3">
@@ -94,7 +92,7 @@ export function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-gray-300 hover:text-white transition-colors"
+                    className="text-sm text-gray-400 hover:text-white transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -103,9 +101,9 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* contact */}
+          {/* Contact */}
           <div>
-            <h4 className="font-semibold text-sm uppercase tracking-wider text-gray-400 mb-4">
+            <h4 className="font-semibold text-sm uppercase tracking-wider text-white mb-4">
               Contact
             </h4>
             <ul className="space-y-3">
@@ -113,7 +111,7 @@ export function Footer() {
                 <li key={link.label}>
                   <a
                     href={link.href}
-                    className="text-sm text-gray-300 hover:text-white transition-colors"
+                    className="text-sm text-gray-400 hover:text-white transition-colors"
                   >
                     {link.label}
                   </a>
@@ -123,12 +121,12 @@ export function Footer() {
           </div>
         </div>
 
-        {/* bottom bar */}
+        {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-gray-400">
+          <p className="text-sm text-gray-500">
             © 2025 Vizit Africa. All rights reserved.
           </p>
-          <p className="text-sm text-gray-400">Made with ❤️ in Kigali</p>
+          <p className="text-sm text-gray-500">Made with ❤️ in Kigali</p>
         </div>
       </div>
     </footer>

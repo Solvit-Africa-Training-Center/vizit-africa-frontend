@@ -1,98 +1,131 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { RiArrowRightLine } from "@remixicon/react";
-import Image from "next/image";
-import Link from "next/link";
+import { RiArrowRightUpLine } from "@remixicon/react";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const experiences = [
   {
-    id: 1,
-    title: "Gorilla Trekking",
-    location: "Volcanoes National Park",
-    image: "/images/experiences/gorillas.jpg",
+    id: "bisate",
+    name: "Bisate Lodge",
+    location: "Volcanoes N.P.",
     description:
-      "Face-to-face encounters with endangered mountain gorillas in their natural habitat.",
-    colSpan: "md:col-span-2",
+      "Nestled in the amphitheatre of an eroded volcanic cone, Bisate offers a luxurious base for gorilla trekking with sustainable architecture.",
+    image:
+      "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2600&auto=format&fit=crop", // Luxury lodge vibe
   },
   {
-    id: 2,
-    title: "Kigali Culture",
-    location: "Kigali City",
-    image: "/images/experiences/kigali.jpg",
+    id: "magashi",
+    name: "Magashi Camp",
+    location: "Akagera N.P.",
     description:
-      "Explore the vibrant art scene, markets, and history of Africa's cleanest city.",
-    colSpan: "md:col-span-1",
+      "A classic safari camp overlooking Lake Rwanyakazinga, offering exclusive access to Rwanda's only savannah big game area.",
+    image:
+      "https://images.unsplash.com/photo-1547619292-240402b5ae5d?q=80&w=2600&auto=format&fit=crop", // Safari vibe
   },
   {
-    id: 3,
-    title: "Lake Kivu Relaxation",
-    location: "Western Province",
-    image: "/images/experiences/lake-kivu.jpg",
+    id: "nyungwe",
+    name: "Nyungwe House",
+    location: "Nyungwe Forest",
     description:
-      "Unwind on the sandy shores of Rwanda's largest lake with stunning sunsets.",
-    colSpan: "md:col-span-1",
-  },
-  {
-    id: 4,
-    title: "Safari Adventure",
-    location: "Akagera National Park",
-    image: "/images/experiences/safari.jpg",
-    description:
-      "Spot the Big Five (lions, leopards, rhinos, elephants, buffalos) on a game drive.",
-    colSpan: "md:col-span-2",
+      "Set amidst the rich tea plantations on the edge of the ancient rainforest, offering wellness and chimpanzee trekking.",
+    image:
+      "https://images.unsplash.com/photo-1445019980597-93fa8acb746c?q=80&w=2600&auto=format&fit=crop", // Forest vibe
   },
 ];
 
 export function ExperienceShowcase() {
+  const [activeId, setActiveId] = useState(experiences[0].id);
+
   return (
-    <section className="py-20 bg-neutral-50 border-t border-border">
-      <div className="mx-auto max-w-7xl px-5 md:px-10">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-          <div className="max-w-2xl">
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Unforgettable Experiences
-            </h2>
-            <p className="text-muted-foreground text-lg">
-              Rwanda offers more than just destinations; it offers moments that
-              change you. Discover the magic waiting for you.
-            </p>
+    <section className="bg-background py-24 md:py-32 relative">
+      <div className="container mx-auto px-5 md:px-10">
+        <div className="flex flex-col md:flex-row gap-12 lg:gap-24">
+          {/* Sticky Image Section */}
+          <div className="md:w-1/2 h-[50vh] md:h-[80vh] sticky top-24 overflow-hidden rounded-2xl">
+            <AnimatePresence mode="popLayout">
+              {experiences.map(
+                (exp) =>
+                  exp.id === activeId && (
+                    <motion.div
+                      key={exp.id}
+                      initial={{ opacity: 0, scale: 1.1 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.7, ease: "easeInOut" }}
+                      className="absolute inset-0 w-full h-full bg-black rounded-2xl overflow-hidden" // Added rounded-2xl
+                    >
+                      <img
+                        src={exp.image}
+                        alt={exp.name}
+                        className="w-full h-full object-cover opacity-80"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+
+                      <div className="absolute bottom-8 left-8 text-white">
+                        <p className="text-xs font-mono uppercase tracking-widest text-primary mb-2">
+                          {exp.location}
+                        </p>
+                        <h3 className="text-4xl font-black font-display uppercase tracking-tight">
+                          {exp.name}
+                        </h3>
+                      </div>
+                    </motion.div>
+                  ),
+              )}
+            </AnimatePresence>
           </div>
-          <Link href="/experiences">
-            <Button variant="outline" className="gap-2">
-              View All Experiences <RiArrowRightLine className="size-4" />
-            </Button>
-          </Link>
-        </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
-          {experiences.map((exp) => (
-            <div
-              key={exp.id}
-              className={`group relative overflow-hidden rounded-2xl h-[400px] ${exp.colSpan}`}
-            >
-              <div className="absolute inset-0 bg-neutral-800">
-                {/* Placeholder for image */}
-                <div className="w-full h-full bg-neutral-800 flex items-center justify-center text-neutral-600">
-                  Image: {exp.title}
-                </div>
-              </div>
+          {/* Scrollable Text Section */}
+          <div className="md:w-1/2 flex flex-col gap-24 py-12 md:py-24">
+            <div className="mb-12">
+              <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
+                Featured Stays
+              </h2>
+              <p className="text-muted-foreground text-lg font-light">
+                We partner with the most exclusive lodges that share our
+                commitment to conservation and luxury.
+              </p>
+            </div>
 
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent group-hover:from-black/90 transition-colors" />
-
-              <div className="absolute bottom-0 left-0 p-8 w-full transform translate-y-2 group-hover:translate-y-0 transition-transform">
-                <p className="text-accent-warm font-medium bg-accent-warm/10 text-xs px-2 py-1 rounded w-fit mb-2 backdrop-blur-sm">
-                  {exp.location}
-                </p>
-                <h3 className="font-display text-2xl font-bold text-white mb-2">
-                  {exp.title}
+            {experiences.map((exp) => (
+              <motion.div
+                key={exp.id}
+                onViewportEnter={() => setActiveId(exp.id)}
+                viewport={{ amount: 0.5, margin: "-100px" }}
+                className={cn(
+                  "group cursor-pointer border-l-2 pl-8 transition-colors duration-500 py-4",
+                  activeId === exp.id ? "border-primary" : "border-border",
+                )}
+              >
+                <h3
+                  className={cn(
+                    "text-3xl font-black uppercase mb-4 transition-colors duration-300",
+                    activeId === exp.id
+                      ? "text-foreground"
+                      : "text-muted-foreground",
+                  )}
+                >
+                  {exp.name}
                 </h3>
-                <p className="text-white/80 line-clamp-2 md:line-clamp-none opacity-0 md:opacity-100 group-hover:opacity-100 transition-opacity">
+                <p className="text-muted-foreground text-lg font-light leading-relaxed mb-6 group-hover:text-foreground transition-colors duration-300">
                   {exp.description}
                 </p>
-              </div>
-            </div>
-          ))}
+                <button
+                  type="button"
+                  className={cn(
+                    "flex items-center gap-2 text-sm font-bold uppercase tracking-widest transition-all duration-300",
+                    activeId === exp.id
+                      ? "text-primary translate-x-2"
+                      : "text-muted-foreground",
+                  )}
+                >
+                  View Lodge <RiArrowRightUpLine className="size-4" />
+                </button>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
