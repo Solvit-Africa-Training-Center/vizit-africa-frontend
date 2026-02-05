@@ -1,4 +1,16 @@
-import type { Flight, Hotel, Car, Guide, Request, Package } from "./schemas";
+import type {
+  Flight,
+  Hotel,
+  Car,
+  Guide,
+  Request,
+  Package,
+  Testimonial,
+  GalleryImage,
+  TeamMember,
+  User,
+  Booking,
+} from "./schemas";
 
 // INFO: dummy data for development - replace with actual api calls later
 
@@ -84,6 +96,7 @@ export const hotels: Hotel[] = [
     location: "KN 3 Ave, Kigali",
     area: "Kigali City Center",
     rating: 4.8,
+    stars: 5,
     reviewCount: 342,
     description:
       "Luxury hotel in the heart of Kigali with stunning city views, rooftop pool, and world-class dining.",
@@ -116,6 +129,7 @@ export const hotels: Hotel[] = [
     location: "KG 2 Roundabout, Kigali",
     area: "Kigali City Center",
     rating: 4.6,
+    stars: 5,
     reviewCount: 289,
     description:
       "Modern hotel featuring spacious rooms, multiple restaurants, and excellent conference facilities.",
@@ -144,6 +158,7 @@ export const hotels: Hotel[] = [
     location: "Musanze, Northern Province",
     area: "Musanze (Gorilla Trekking)",
     rating: 4.9,
+    stars: 4,
     reviewCount: 156,
     description:
       "Charming boutique hotel near Volcanoes National Park, perfect base for gorilla trekking adventures.",
@@ -174,6 +189,7 @@ export const hotels: Hotel[] = [
     location: "Rubavu, Western Province",
     area: "Lake Kivu",
     rating: 4.7,
+    stars: 5,
     reviewCount: 198,
     description:
       "Lakeside resort with private beach, water sports, and breathtaking views of Lake Kivu.",
@@ -299,6 +315,7 @@ export const guides: Guide[] = [
     id: "gd-1",
     name: "Jean-Pierre Uwimana",
     photo: "/images/guides/jean-pierre.jpg",
+    type: "full-day",
     languages: ["English", "French", "Kinyarwanda", "Swahili"],
     specialties: ["Gorilla Trekking", "Wildlife Safari", "Cultural Tours"],
     experience: 12,
@@ -313,6 +330,7 @@ export const guides: Guide[] = [
     id: "gd-2",
     name: "Marie-Claire Ingabire",
     photo: "/images/guides/marie-claire.jpg",
+    type: "full-day",
     languages: ["English", "French", "Kinyarwanda"],
     specialties: [
       "History Tours",
@@ -332,6 +350,7 @@ export const guides: Guide[] = [
     id: "gd-3",
     name: "Emmanuel Nshimiyimana",
     photo: "/images/guides/emmanuel.jpg",
+    type: "full-day",
     languages: ["English", "French", "Kinyarwanda", "German"],
     specialties: [
       "Bird Watching",
@@ -352,6 +371,7 @@ export const guides: Guide[] = [
 export const sampleRequests: Request[] = [
   {
     id: "req-1",
+    userId: "user-1",
     name: "Sarah Johnson",
     email: "sarah.j@example.com",
     phone: "+1-555-0123",
@@ -368,12 +388,14 @@ export const sampleRequests: Request[] = [
   },
   {
     id: "req-2",
+    userId: "user-2",
     name: "Michael Chen",
     email: "m.chen@example.com",
     phone: "+1-555-0456",
     arrivalDate: "2025-04-10",
     departureDate: "2025-04-15",
     travelers: 4,
+    purpose: "business",
     needsFlights: false,
     needsHotel: true,
     needsCar: true,
@@ -392,6 +414,7 @@ export const samplePackage: Package = {
   cars: cars.slice(0, 3),
   guides: guides.slice(0, 2),
   expiresAt: "2025-02-15T23:59:59Z",
+  status: "sent",
   createdAt: "2025-02-03T09:00:00Z",
 };
 
@@ -445,6 +468,9 @@ export const partnerLogos = [
   { name: "Kenya Airways", logo: "/images/partners/kenya-airways.svg" },
   { name: "Ethiopian Airlines", logo: "/images/partners/ethiopian.svg" },
   { name: "Qatar Airways", logo: "/images/partners/qatar.svg" },
+  { name: "Serena Hotels", logo: "/images/partners/serena.svg" },
+  { name: "Marriott", logo: "/images/partners/marriott.svg" },
+  { name: "Radisson", logo: "/images/partners/radisson.svg" },
 ];
 
 // INFO: stats for why us section
@@ -516,5 +542,151 @@ export const processSteps = [
     title: "Confirm & Go",
     description:
       "We handle all bookings and logistics. You just enjoy your journey.",
+  },
+];
+
+export const testimonials: Testimonial[] = [
+  {
+    id: "t-1",
+    name: "Sarah M.",
+    role: "Adventure Traveler",
+    country: "United Kingdom",
+    avatar: "/images/avatars/sarah.jpg",
+    content:
+      "Vizit Africa made our gorilla trekking dream come true. The logistics were flawless, and our guide Jean-Pierre was incredibly knowledgeable. Highly recommended!",
+    rating: 5,
+  },
+  {
+    id: "t-2",
+    name: "John Davis",
+    role: "Business Traveler",
+    country: "USA",
+    avatar: "/images/avatars/john.jpg",
+    content:
+      "I needed a quick car rental and hotel for a conference in Kigali. Their team arranged everything within hours. Professional, reliable, and excellent service.",
+    rating: 5,
+  },
+  {
+    id: "t-3",
+    name: "Aisha Mohammed",
+    role: "Family Vacation",
+    country: "Kenya",
+    avatar: "/images/avatars/aisha.jpg",
+    content:
+      "Traveling with kids can be stressful, but Vizit Africa handled everything. The Lake Kivu resort they suggested was perfect for our family. We'll be back!",
+    rating: 5,
+  },
+];
+
+export const galleryImages: GalleryImage[] = [
+  {
+    id: "g-1",
+    src: "/images/gallery/gorilla.jpg",
+    alt: "Mountain Gorilla",
+    category: "experiences",
+    caption: "Gorilla Trekking in Volcanoes National Park",
+  },
+  {
+    id: "g-2",
+    src: "/images/gallery/kigali-night.jpg",
+    alt: "Kigali Skyline",
+    category: "experiences",
+    caption: "Kigali City Convention Center at Night",
+  },
+  {
+    id: "g-3",
+    src: "/images/gallery/akagera-safari.jpg",
+    alt: "Safari Game Drive",
+    category: "experiences",
+    caption: "Game Drive in Akagera National Park",
+  },
+  {
+    id: "g-4",
+    src: "/images/gallery/hotel-pool.jpg",
+    alt: "Hotel Pool",
+    category: "hotels",
+    caption: "Infinity Pool at Lake Kivu",
+  },
+  {
+    id: "g-5",
+    src: "/images/gallery/land-cruiser.jpg",
+    alt: "Safari Vehicle",
+    category: "transport",
+    caption: "Our Fleet of 4x4 Safari Vehicles",
+  },
+  {
+    id: "g-6",
+    src: "/images/gallery/coffee-tour.jpg",
+    alt: "Coffee Plantation",
+    category: "experiences",
+    caption: "Rwandan Coffee Experience Tour",
+  },
+];
+
+export const teamMembers: TeamMember[] = [
+  {
+    id: "tm-1",
+    name: "Aline Uwase",
+    role: "Founder & CEO",
+    image: "/images/team/aline.jpg",
+    bio: "With 15 years in Rwandan tourism, Aline founded Vizit Africa to share the beauty of her homeland with the world.",
+  },
+  {
+    id: "tm-2",
+    name: "David Mutesa",
+    role: "Head of Operations",
+    image: "/images/team/david.jpg",
+    bio: "David ensures every trip runs smoothly, managing our network of partners and logistics with military precision.",
+  },
+  {
+    id: "tm-3",
+    name: "Grace Iribagiza",
+    role: "Customer Experience Lead",
+    image: "/images/team/grace.jpg",
+    bio: "Grace leads our support team, ensuring every traveler feels safe, welcomed, and cared for 24/7.",
+  },
+];
+
+export const users: User[] = [
+  {
+    id: "user-1",
+    email: "sarah.j@example.com",
+    name: "Sarah Johnson",
+    phone: "+1-555-0123",
+    role: "customer",
+    createdAt: "2025-01-15T10:00:00Z",
+  },
+  {
+    id: "user-2",
+    email: "m.chen@example.com",
+    name: "Michael Chen",
+    phone: "+1-555-0456",
+    role: "customer",
+    createdAt: "2025-01-20T14:30:00Z",
+  },
+  {
+    id: "admin-1",
+    email: "admin@vizitafrica.com",
+    name: "Admin User",
+    role: "admin",
+    createdAt: "2025-01-01T00:00:00Z",
+  },
+];
+
+export const sampleBookings: Booking[] = [
+  {
+    id: "bk-1",
+    packageId: "pkg-1",
+    userId: "user-1",
+    selectedFlight: flights[0],
+    selectedHotel: hotels[0],
+    selectedCar: cars[1],
+    selectedGuide: guides[0],
+    subtotal: 2400,
+    serviceFee: 120,
+    total: 2520,
+    currency: "USD",
+    status: "draft",
+    bookedAt: "2025-02-04T12:00:00Z",
   },
 ];

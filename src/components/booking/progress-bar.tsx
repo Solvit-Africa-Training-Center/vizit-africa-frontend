@@ -3,7 +3,7 @@ interface ProgressBarProps {
   totalSteps: number;
 }
 
-const steps = ["Select Options", "Review", "Payment", "Confirmation"];
+const steps = ["Flights", "Hotels", "Transport", "Guides", "Payment"];
 
 export function ProgressBar({ currentStep, totalSteps }: ProgressBarProps) {
   return (
