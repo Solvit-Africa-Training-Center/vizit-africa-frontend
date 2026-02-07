@@ -1,13 +1,12 @@
 "use client";
 
-import { Slot } from "radix-ui";
 import * as React from "react";
 import { createContext, useContext } from "react";
 
 import { cn } from "@/lib/utils";
+import { mergeProps, useRender } from "@base-ui/react";
 import { RiCheckLine, RiLoader2Line } from "@remixicon/react";
 
-// Types
 type StepperContextValue = {
   activeStep: number;
   setActiveStep: (step: number) => void;
@@ -23,7 +22,6 @@ type StepItemContextValue = {
 
 type StepState = "active" | "completed" | "inactive" | "loading";
 
-// Contexts
 const StepperContext = createContext<StepperContextValue | undefined>(
   undefined,
 );
@@ -47,8 +45,7 @@ const useStepItem = () => {
   return context;
 };
 
-// Components
-interface StepperProps extends React.HTMLAttributes<HTMLDivElement> {
+interface StepperProps extends useRender.ComponentProps<"div"> {
   defaultValue?: number;
   value?: number;
   onValueChange?: (value: number) => void;
@@ -61,6 +58,7 @@ function Stepper({
   onValueChange,
   orientation = "horizontal",
   className,
+  render,
   ...props
 }: StepperProps) {
   const [activeStep, setInternalStep] = React.useState(defaultValue);
@@ -77,6 +75,15 @@ function Stepper({
 
   const currentStep = value ?? activeStep;
 
+  const defaultProps = {
+    className: cn(
+      "group/stepper inline-flex data-[orientation=horizontal]:w-full data-[orientation=horizontal]:flex-row data-[orientation=vertical]:flex-col",
+      className,
+    ),
+    "data-orientation": orientation,
+    "data-slot": "stepper",
+  };
+
   return (
     <StepperContext.Provider
       value={{
@@ -85,21 +92,16 @@ function Stepper({
         setActiveStep,
       }}
     >
-      <div
-        className={cn(
-          "group/stepper inline-flex data-[orientation=horizontal]:w-full data-[orientation=horizontal]:flex-row data-[orientation=vertical]:flex-col",
-          className,
-        )}
-        data-orientation={orientation}
-        data-slot="stepper"
-        {...props}
-      />
+      {useRender({
+        defaultTagName: "div",
+        props: mergeProps<"div">(defaultProps, props),
+        render,
+      })}
     </StepperContext.Provider>
   );
 }
 
-// StepperItem
-interface StepperItemProps extends React.HTMLAttributes<HTMLDivElement> {
+interface StepperItemProps extends useRender.ComponentProps<"div"> {
   step: number;
   completed?: boolean;
   disabled?: boolean;
@@ -113,6 +115,7 @@ function StepperItem({
   loading = false,
   className,
   children,
+  render,
   ...props
 }: StepperItemProps) {
   const { activeStep } = useStepper();
@@ -126,159 +129,159 @@ function StepperItem({
 
   const isLoading = loading && step === activeStep;
 
+  const defaultProps = {
+    className: cn(
+      "group/step flex items-center group-data-[orientation=horizontal]/stepper:flex-row group-data-[orientation=vertical]/stepper:flex-col",
+      className,
+    ),
+    "data-slot": "stepper-item",
+    "data-state": state,
+    ...(isLoading ? { "data-loading": true } : {}),
+    children,
+  };
+
   return (
     <StepItemContext.Provider
       value={{ isDisabled: disabled, isLoading, state, step }}
     >
-      <div
-        className={cn(
-          "group/step flex items-center group-data-[orientation=horizontal]/stepper:flex-row group-data-[orientation=vertical]/stepper:flex-col",
-          className,
-        )}
-        data-slot="stepper-item"
-        data-state={state}
-        {...(isLoading ? { "data-loading": true } : {})}
-        {...props}
-      >
-        {children}
-      </div>
+      {useRender({
+        defaultTagName: "div",
+        props: mergeProps<"div">(defaultProps, props),
+        render,
+      })}
     </StepItemContext.Provider>
   );
 }
 
-// StepperTrigger
-interface StepperTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  asChild?: boolean;
-}
+interface StepperTriggerProps extends useRender.ComponentProps<"button"> {}
 
 function StepperTrigger({
-  asChild = false,
   className,
   children,
+  render,
   ...props
 }: StepperTriggerProps) {
   const { setActiveStep } = useStepper();
   const { step, isDisabled } = useStepItem();
 
-  if (asChild) {
-    const Comp = asChild ? Slot.Root : "span";
-    return (
-      <Comp className={className} data-slot="stepper-trigger">
-        {children}
-      </Comp>
-    );
-  }
+  const defaultProps = {
+    className: cn(
+      "inline-flex items-center gap-3 rounded-full outline-none focus-visible:z-10 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50",
+      className,
+    ),
+    "data-slot": "stepper-trigger",
+    disabled: isDisabled,
+    onClick: () => setActiveStep(step),
+    type: "button" as const,
+    children,
+  };
 
-  return (
-    <button
-      className={cn(
-        "inline-flex items-center gap-3 rounded-full outline-none focus-visible:z-10 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50",
-        className,
-      )}
-      data-slot="stepper-trigger"
-      disabled={isDisabled}
-      onClick={() => setActiveStep(step)}
-      type="button"
-      {...props}
-    >
-      {children}
-    </button>
-  );
+  return useRender({
+    defaultTagName: "button",
+    props: mergeProps<"button">(defaultProps, props),
+    render,
+  });
 }
 
-// StepperIndicator
-interface StepperIndicatorProps extends React.HTMLAttributes<HTMLDivElement> {
-  asChild?: boolean;
-}
+interface StepperIndicatorProps extends useRender.ComponentProps<"span"> {}
 
 function StepperIndicator({
-  asChild = false,
   className,
   children,
+  render,
   ...props
 }: StepperIndicatorProps) {
   const { state, step, isLoading } = useStepItem();
 
-  return (
-    <span
-      className={cn(
-        "relative flex size-6 shrink-0 items-center justify-center rounded-full bg-muted font-medium text-muted-foreground text-xs data-[state=active]:bg-primary data-[state=completed]:bg-primary data-[state=active]:text-primary-foreground data-[state=completed]:text-primary-foreground",
-        className,
-      )}
-      data-slot="stepper-indicator"
-      data-state={state}
-      {...props}
-    >
-      {asChild ? (
-        children
-      ) : (
-        <>
-          <span className="transition-all group-data-[state=completed]/step:scale-0 group-data-loading/step:scale-0 group-data-[state=completed]/step:opacity-0 group-data-loading/step:opacity-0 group-data-loading/step:transition-none">
-            {step}
+  const defaultProps = {
+    className: cn(
+      "relative flex size-6 shrink-0 items-center justify-center rounded-full bg-muted font-medium text-muted-foreground text-xs data-[state=active]:bg-primary data-[state=completed]:bg-primary data-[state=active]:text-primary-foreground data-[state=completed]:text-primary-foreground",
+      className,
+    ),
+    "data-slot": "stepper-indicator",
+    "data-state": state,
+    children: children ?? (
+      <>
+        <span className="transition-all group-data-[state=completed]/step:scale-0 group-data-loading/step:scale-0 group-data-[state=completed]/step:opacity-0 group-data-loading/step:opacity-0 group-data-loading/step:transition-none">
+          {step}
+        </span>
+        <RiCheckLine
+          aria-hidden="true"
+          className="absolute scale-0 opacity-0 transition-all group-data-[state=completed]/step:scale-100 group-data-[state=completed]/step:opacity-100"
+          size={16}
+        />
+        {isLoading && (
+          <span className="absolute transition-all">
+            <RiLoader2Line
+              aria-hidden="true"
+              className="animate-spin"
+              size={14}
+            />
           </span>
-          <RiCheckLine
-            aria-hidden="true"
-            className="absolute scale-0 opacity-0 transition-all group-data-[state=completed]/step:scale-100 group-data-[state=completed]/step:opacity-100"
-            size={16}
-          />
-          {isLoading && (
-            <span className="absolute transition-all">
-              <RiLoader2Line
-                aria-hidden="true"
-                className="animate-spin"
-                size={14}
-              />
-            </span>
-          )}
-        </>
-      )}
-    </span>
-  );
+        )}
+      </>
+    ),
+  };
+
+  return useRender({
+    defaultTagName: "span",
+    props: mergeProps<"span">(defaultProps, props),
+    render,
+  });
 }
 
-// StepperTitle
 function StepperTitle({
   className,
+  render,
   ...props
-}: React.HTMLAttributes<HTMLHeadingElement>) {
-  return (
-    <h3
-      className={cn("font-medium text-sm", className)}
-      data-slot="stepper-title"
-      {...props}
-    />
-  );
+}: useRender.ComponentProps<"h3">) {
+  const defaultProps = {
+    className: cn("font-medium text-sm", className),
+    "data-slot": "stepper-title",
+  };
+
+  return useRender({
+    defaultTagName: "h3",
+    props: mergeProps<"h3">(defaultProps, props),
+    render,
+  });
 }
 
-// StepperDescription
 function StepperDescription({
   className,
+  render,
   ...props
-}: React.HTMLAttributes<HTMLParagraphElement>) {
-  return (
-    <p
-      className={cn("text-muted-foreground text-sm", className)}
-      data-slot="stepper-description"
-      {...props}
-    />
-  );
+}: useRender.ComponentProps<"p">) {
+  const defaultProps = {
+    className: cn("text-muted-foreground text-sm", className),
+    "data-slot": "stepper-description",
+  };
+
+  return useRender({
+    defaultTagName: "p",
+    props: mergeProps<"p">(defaultProps, props),
+    render,
+  });
 }
 
-// StepperSeparator
 function StepperSeparator({
   className,
+  render,
   ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
-  return (
-    <div
-      className={cn(
-        "m-0.5 bg-muted group-data-[orientation=horizontal]/stepper:h-0.5 group-data-[orientation=vertical]/stepper:h-12 group-data-[orientation=horizontal]/stepper:w-full group-data-[orientation=vertical]/stepper:w-0.5 group-data-[orientation=horizontal]/stepper:flex-1 group-data-[state=completed]/step:bg-primary",
-        className,
-      )}
-      data-slot="stepper-separator"
-      {...props}
-    />
-  );
+}: useRender.ComponentProps<"div">) {
+  const defaultProps = {
+    className: cn(
+      "m-0.5 bg-muted group-data-[orientation=horizontal]/stepper:h-0.5 group-data-[orientation=vertical]/stepper:h-12 group-data-[orientation=horizontal]/stepper:w-full group-data-[orientation=vertical]/stepper:w-0.5 group-data-[orientation=horizontal]/stepper:flex-1 group-data-[state=completed]/step:bg-primary",
+      className,
+    ),
+    "data-slot": "stepper-separator",
+  };
+
+  return useRender({
+    defaultTagName: "div",
+    props: mergeProps<"div">(defaultProps, props),
+    render,
+  });
 }
 
 export {
