@@ -1,10 +1,18 @@
 import Link from "next/link";
-import { sampleRequests } from "@/lib/dummy-data";
 import { RiDashboardLine, RiFileListLine } from "@remixicon/react";
 import { DataTable } from "@/components/ui/data-table";
 import { columns } from "./columns";
+import { getRequests } from "@/lib/data-fetching";
+import type { Metadata } from "next";
 
-export default function RequestsPage() {
+export const metadata: Metadata = {
+  title: "Travel Requests | Vizit Africa Admin",
+  description: "Manage incoming travel requests and itineraries.",
+};
+
+export default async function RequestsPage() {
+  const requests = await getRequests();
+
   const filters = [
     {
       columnId: "status",
@@ -50,7 +58,7 @@ export default function RequestsPage() {
       </div>
 
       {/* Unified Data Table with filters */}
-      <DataTable columns={columns} data={sampleRequests} filters={filters} />
+      <DataTable columns={columns} data={requests} filters={filters} />
     </div>
   );
 }
