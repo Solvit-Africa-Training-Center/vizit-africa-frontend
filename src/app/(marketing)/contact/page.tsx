@@ -222,7 +222,7 @@ export default function ContactPage() {
 
                   <Button className="w-full md:w-auto h-12 px-8 text-base shadow-lg shadow-primary/20">
                     Send Message
-                    <RiArrowRightLine className="ml-2 size-5" />
+                    <RiArrowRightLine className="size-5" />
                   </Button>
                 </form>
               </div>

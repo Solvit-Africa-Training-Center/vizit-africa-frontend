@@ -43,11 +43,10 @@ export function Pagination({
       <Button
         variant="outline"
         size="icon"
-        className="size-8"
         disabled={currentPage === 1}
         onClick={() => onPageChange(currentPage - 1)}
       >
-        <RiArrowLeftSLine className="size-4" />
+        <RiArrowLeftSLine />
       </Button>
 
       {visiblePages.map((page, idx) =>
@@ -60,7 +59,6 @@ export function Pagination({
             key={page}
             variant={currentPage === page ? "default" : "outline"}
             size="icon"
-            className="size-8"
             onClick={() => onPageChange(page as number)}
           >
             {page}
@@ -71,11 +69,10 @@ export function Pagination({
       <Button
         variant="outline"
         size="icon"
-        className="size-8"
         disabled={currentPage === totalPages}
         onClick={() => onPageChange(currentPage + 1)}
       >
-        <RiArrowRightSLine className="size-4" />
+        <RiArrowRightSLine />
       </Button>
     </div>
   );

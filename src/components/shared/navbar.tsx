@@ -90,8 +90,8 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
                 size="sm"
                 variant={showSolid ? "default" : "secondary"}
                 className={cn(
-                  "rounded-full transition-all duration-300 font-medium px-6",
-                  !showSolid && "bg-white text-primary hover:bg-white/90 shadow-lg",
+                  "rounded-full transition-all duration-300 font-medium",
+                  !showSolid && "bg-white text-primary hover:bg-white/90",
                 )}
               >
                 Get Started
@@ -103,15 +103,20 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
             type="button"
             className={cn(
               "md:hidden p-2 transition-colors duration-300 rounded-md",
-              showSolid 
-                ? "text-foreground hover:bg-muted" 
+              showSolid
+                ? "text-foreground hover:bg-muted"
                 : "text-white hover:bg-white/10",
             )}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
           >
             {isMobileMenuOpen ? (
-              <RiCloseLine className={cn("size-6", showSolid ? "text-foreground" : "text-white")} />
+              <RiCloseLine
+                className={cn(
+                  "size-6",
+                  showSolid ? "text-foreground" : "text-white",
+                )}
+              />
             ) : (
               <RiMenuLine className="size-6" />
             )}
@@ -119,9 +124,9 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
         </nav>
       </header>
 
-      <NavbarMobile 
-        isOpen={isMobileMenuOpen} 
-        onClose={() => setIsMobileMenuOpen(false)} 
+      <NavbarMobile
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
       />
     </>
   );

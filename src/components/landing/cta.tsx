@@ -28,15 +28,11 @@ export function CTA() {
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
           <Link href="/plan-trip">
-            <Button
-              size="lg"
-              className="h-16 px-10 text-lg rounded-full"
-            >
+            <Button size="lg" className="h-16 px-10 text-lg rounded-full">
               Start Planning
-              <RiArrowRightLine className="ml-2 size-5" />
+              <RiArrowRightLine className="size-5" />
             </Button>
           </Link>
-
         </div>
 
         <p className="mt-12 text-white/50 text-sm tracking-widest uppercase">

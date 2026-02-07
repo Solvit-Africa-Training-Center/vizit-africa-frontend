@@ -28,9 +28,7 @@ function ConfirmationContent() {
 
       <div className="p-8 space-y-6">
         <div className="bg-muted/50 rounded-lg p-4">
-          <p className="text-sm text-muted-foreground mb-1">
-            Reference Number
-          </p>
+          <p className="text-sm text-muted-foreground mb-1">Reference Number</p>
           <p className="font-mono text-xl font-bold tracking-wider">
             {requestId}
           </p>
@@ -48,7 +46,9 @@ function ConfirmationContent() {
                   Expert Review (24hrs)
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  One of our travel specialists will review your selected flights, hotels, and services to ensure availability and logistics.
+                  One of our travel specialists will review your selected
+                  flights, hotels, and services to ensure availability and
+                  logistics.
                 </p>
               </div>
             </li>
@@ -61,7 +61,8 @@ function ConfirmationContent() {
                   Personalized Proposal
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  You'll receive a detailed itinerary with final pricing and payment options via email.
+                  You'll receive a detailed itinerary with final pricing and
+                  payment options via email.
                 </p>
               </div>
             </li>
@@ -70,8 +71,8 @@ function ConfirmationContent() {
 
         <div className="flex flex-col sm:flex-row gap-3 pt-4">
           <Link href="/dashboard" className="flex-1">
-            <Button className="w-full gap-2" size="lg">
-              Go to Dashboard <RiArrowRightLine className="size-5" />
+            <Button className="w-full" size="lg">
+              Go to Dashboard <RiArrowRightLine />
             </Button>
           </Link>
           <Link href="/" className="flex-1">

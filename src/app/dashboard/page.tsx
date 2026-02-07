@@ -36,8 +36,8 @@ export default function DashboardPage() {
               </p>
             </div>
             <Link href="/plan-trip">
-              <Button className="gap-2">
-                <RiAddLine className="size-5" />
+              <Button>
+                <RiAddLine />
                 Plan New Trip
               </Button>
             </Link>
@@ -192,7 +192,7 @@ export default function DashboardPage() {
                         <span className="text-xs font-bold uppercase tracking-wider bg-orange-100 text-orange-700 px-2 py-1 rounded">
                           {req.status}
                         </span>
-                        <Button variant="ghost" size="sm" className="h-8">
+                        <Button variant="ghost" size="sm">
                           Details
                         </Button>
                       </div>

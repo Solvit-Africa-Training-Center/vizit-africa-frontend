@@ -203,8 +203,8 @@ export default function ExperiencesPage() {
                       </span>
                     </div>
                     <Link href={`/plan-trip?experience=${exp.id}`}>
-                      <Button className="gap-2">
-                        Book Now <RiArrowRightLine className="size-4" />
+                      <Button>
+                        Book Now <RiArrowRightLine />
                       </Button>
                     </Link>
                   </div>

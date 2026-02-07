@@ -57,8 +57,8 @@ export default function InventoryPage() {
               className="pl-9 w-[250px] bg-background"
             />
           </div>
-          <Button className="gap-2">
-            <RiAddLine className="size-5" />
+          <Button>
+            <RiAddLine />
             Add New
           </Button>
         </div>

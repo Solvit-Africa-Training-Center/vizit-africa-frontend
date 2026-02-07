@@ -45,8 +45,8 @@ export default async function PackageBuilder({ params }: PackageBuilderProps) {
             Create a travel package for {request.name}
           </p>
         </div>
-        <Button className="gap-2">
-          <RiSendPlaneLine className="size-4" />
+        <Button>
+          <RiSendPlaneLine />
           Send Package
         </Button>
       </div>
@@ -127,8 +127,8 @@ export default async function PackageBuilder({ params }: PackageBuilderProps) {
                     Flight Options
                   </h3>
                 </div>
-                <Button variant="ghost" size="sm" className="gap-1">
-                  <RiAddLine className="size-4" />
+                <Button variant="ghost" size="sm">
+                  <RiAddLine />
                   Add Flight
                 </Button>
               </div>
@@ -177,8 +177,8 @@ export default async function PackageBuilder({ params }: PackageBuilderProps) {
                     Hotel Options
                   </h3>
                 </div>
-                <Button variant="ghost" size="sm" className="gap-1">
-                  <RiAddLine className="size-4" />
+                <Button variant="ghost" size="sm">
+                  <RiAddLine />
                   Add Hotel
                 </Button>
               </div>
@@ -224,8 +224,8 @@ export default async function PackageBuilder({ params }: PackageBuilderProps) {
                   </div>
                   <h3 className="font-semibold text-foreground">Car Options</h3>
                 </div>
-                <Button variant="ghost" size="sm" className="gap-1">
-                  <RiAddLine className="size-4" />
+                <Button variant="ghost" size="sm">
+                  <RiAddLine />
                   Add Car
                 </Button>
               </div>
@@ -273,8 +273,8 @@ export default async function PackageBuilder({ params }: PackageBuilderProps) {
                     Guide Options
                   </h3>
                 </div>
-                <Button variant="ghost" size="sm" className="gap-1">
-                  <RiAddLine className="size-4" />
+                <Button variant="ghost" size="sm">
+                  <RiAddLine />
                   Add Guide
                 </Button>
               </div>

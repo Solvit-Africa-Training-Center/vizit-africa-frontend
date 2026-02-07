@@ -74,7 +74,7 @@ export function ReviewStep({
 
         <div className="flex gap-3">
           <Button variant="outline" size="lg" onClick={onBack}>
-            <RiArrowLeftLine className="mr-2" /> Back
+            <RiArrowLeftLine /> Back
           </Button>
           <Button size="lg" className="flex-1" onClick={onSubmit}>
             Submit Booking Request

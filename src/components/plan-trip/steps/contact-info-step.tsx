@@ -103,7 +103,7 @@ export function ContactInfoStep({
 
         <div className="flex gap-3">
           <Button variant="outline" size="lg" onClick={onBack}>
-            <RiArrowLeftLine className="mr-2" /> Back
+            <RiArrowLeftLine /> Back
           </Button>
           <Button
             size="lg"
@@ -112,7 +112,7 @@ export function ContactInfoStep({
             onClick={onNext}
           >
             Continue to Services
-            <RiArrowRightLine className="ml-2" />
+            <RiArrowRightLine />
           </Button>
         </div>
       </div>

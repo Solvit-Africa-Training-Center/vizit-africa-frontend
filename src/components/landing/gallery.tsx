@@ -73,8 +73,8 @@ export function Gallery() {
           </p>
         </div>
         <Link href="/gallery">
-          <Button variant="outline" className="gap-2 rounded-full px-6">
-            View Full Gallery <RiArrowRightLine className="size-4" />
+          <Button variant="outline" className="rounded-full px-6">
+            View Full Gallery <RiArrowRightLine />
           </Button>
         </Link>
       </div>

@@ -107,13 +107,8 @@ export function InlineFilters({
           </Select>
 
           {hasHotelFilters && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={resetHotelFilters}
-              className="h-9 gap-1"
-            >
-              <RiFilterOffLine className="size-4" />
+            <Button variant="ghost" size="sm" onClick={resetHotelFilters}>
+              <RiFilterOffLine />
               Reset
             </Button>
           )}
@@ -158,13 +153,8 @@ export function InlineFilters({
           </Select>
 
           {hasCarFilters && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={resetCarFilters}
-              className="h-9 gap-1"
-            >
-              <RiFilterOffLine className="size-4" />
+            <Button variant="ghost" size="sm" onClick={resetCarFilters}>
+              <RiFilterOffLine />
               Reset
             </Button>
           )}

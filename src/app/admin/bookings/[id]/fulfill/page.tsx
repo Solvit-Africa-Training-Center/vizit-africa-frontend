@@ -57,8 +57,8 @@ export default function FulfillmentPage() {
             </p>
           </div>
           <div className="flex gap-2">
-            <Button variant="outline" className="gap-2">
-              <RiDownloadLine className="size-4" /> Download Invoice
+            <Button variant="outline">
+              <RiDownloadLine /> Download Invoice
             </Button>
           </div>
         </div>
@@ -180,8 +180,8 @@ export default function FulfillmentPage() {
           </div>
 
           <div className="flex justify-end">
-            <Button size="lg" disabled={progress < 100} className="gap-2">
-              <RiCheckDoubleLine className="size-5" />
+            <Button size="lg" disabled={progress < 100}>
+              <RiCheckDoubleLine />
               Mark Booking Complete
             </Button>
           </div>

@@ -13,16 +13,16 @@ const ActionsCell = () => (
     <Button
       variant="ghost"
       size="sm"
-      className="h-8 w-8 p-0 text-muted-foreground hover:text-foreground"
+      className="text-muted-foreground hover:text-foreground"
     >
-      <RiEditLine className="size-4" />
+      <RiEditLine />
     </Button>
     <Button
       variant="ghost"
       size="sm"
-      className="h-8 w-8 p-0 text-destructive hover:bg-destructive/10"
+      className="text-destructive hover:bg-destructive/10"
     >
-      <RiDeleteBinLine className="size-4" />
+      <RiDeleteBinLine />
     </Button>
   </div>
 );

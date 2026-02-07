@@ -63,12 +63,8 @@ export function AdminNavbar() {
 
         <div className="flex items-center gap-4">
           <Link href="/">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="gap-2 text-muted-foreground"
-            >
-              <RiGlobalLine className="size-4" />
+            <Button variant="ghost" size="sm" className="text-muted-foreground">
+              <RiGlobalLine />
               <span className="hidden sm:inline">Public Site</span>
             </Button>
           </Link>
@@ -77,7 +73,7 @@ export function AdminNavbar() {
             size="icon"
             className="text-muted-foreground hover:text-destructive"
           >
-            <RiLogoutBoxRLine className="size-5" />
+            <RiLogoutBoxRLine />
             <span className="sr-only">Logout</span>
           </Button>
         </div>

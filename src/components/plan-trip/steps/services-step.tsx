@@ -145,11 +145,7 @@ export function ServicesStep({
 
           <div className="lg:hidden">
             <Sheet open={showMobileSummary} onOpenChange={setShowMobileSummary}>
-              <SheetTrigger
-                render={
-                  <Button variant="outline" size="sm" className="gap-2" />
-                }
-              >
+              <SheetTrigger render={<Button variant="outline" size="sm" />}>
                 ${total.toFixed(0)}
               </SheetTrigger>
               <SheetContent side="right" className="w-[300px]">
@@ -275,11 +271,11 @@ export function ServicesStep({
 
             <div className="mt-6 flex justify-between">
               <Button variant="outline" onClick={onBack}>
-                <RiArrowLeftLine className="mr-2 size-4" /> Back
+                <RiArrowLeftLine /> Back
               </Button>
               <Button size="lg" disabled={!canProceed} onClick={onNext}>
                 Review Booking
-                <RiArrowRightLine className="ml-2 size-4" />
+                <RiArrowRightLine />
               </Button>
             </div>
           </div>
