@@ -72,8 +72,9 @@ export function Destinations() {
                 key={region.id}
                 layout
                 onClick={() => setActiveId(region.id)}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 className={cn(
-                  "relative cursor-pointer overflow-hidden rounded-3xl transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]",
+                  "relative cursor-pointer overflow-hidden rounded-3xl",
                   isActive ? "flex-[10]" : "flex-[2] hover:flex-[3]",
                 )}
               >
@@ -87,7 +88,6 @@ export function Destinations() {
                   />
                   <div
                     className={cn(
-                      "absolute inset-0 transition-colors duration-500",
                       isActive
                         ? "bg-black/20"
                         : "bg-black/50 group-hover:bg-black/30",

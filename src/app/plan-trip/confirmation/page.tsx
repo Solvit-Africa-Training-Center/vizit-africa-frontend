@@ -13,7 +13,7 @@ function ConfirmationContent() {
   const requestId = searchParams.get("id") || "REQ-UNKNOWN";
 
   return (
-    <div className="bg-white border border-border rounded-xl shadow-sm overflow-hidden text-center max-w-2xl mx-auto">
+    <div className="bg-white border border-border rounded-xl overflow-hidden text-center max-w-2xl mx-auto">
       <div className="p-8 border-b border-border bg-accent-success/5">
         <div className="mx-auto w-20 h-20 rounded-full bg-accent-success/20 flex items-center justify-center mb-6">
           <RiCheckboxCircleFill className="size-12 text-accent-success" />

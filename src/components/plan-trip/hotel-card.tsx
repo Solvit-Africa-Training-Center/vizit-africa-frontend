@@ -2,12 +2,7 @@
 
 import type { Hotel } from "../../lib/plan_trip-types";
 import { Badge } from "@/components/ui/badge";
-import {
-  RiStarFill,
-  RiMapPinLine,
-  RiCheckLine,
-  RiHotelLine,
-} from "@remixicon/react";
+import { RiMapPinLine, RiCheckLine, RiHotelLine } from "@remixicon/react";
 
 interface HotelCardProps {
   hotel: Hotel;
@@ -27,16 +22,14 @@ export function HotelCard({
       onClick={onSelect}
       className={`group relative border-2 rounded-xl overflow-hidden cursor-pointer transition-all ${
         isSelected
-          ? "border-primary bg-primary-subtle shadow-sm"
-          : "border-border bg-white hover:border-primary/50 hover:shadow-sm"
+          ? "border-primary bg-primary-subtle"
+          : "border-border bg-white hover:border-primary/50"
       }`}
     >
-
       <div className="aspect-video bg-muted relative">
         <div className="absolute inset-0 flex items-center justify-center">
           <RiHotelLine className="size-10 text-muted-foreground/50" />
         </div>
-
 
         {isSelected && (
           <div className="absolute top-2 right-2 size-6 rounded-full bg-primary text-white flex items-center justify-center">
@@ -44,7 +37,6 @@ export function HotelCard({
           </div>
         )}
       </div>
-
 
       <div className="p-4">
         <h4 className="font-semibold text-foreground mb-1 line-clamp-1">
@@ -54,7 +46,6 @@ export function HotelCard({
           <RiMapPinLine className="size-3 shrink-0" />
           <span className="line-clamp-1">{hotel.address}</span>
         </p>
-
 
         <div className="flex flex-wrap gap-1 mb-3">
           {hotel.amenities.slice(0, 3).map((a) => (
@@ -68,7 +59,6 @@ export function HotelCard({
             </Badge>
           )}
         </div>
-
 
         <div className="flex items-end justify-between pt-3 border-t border-border">
           <div>

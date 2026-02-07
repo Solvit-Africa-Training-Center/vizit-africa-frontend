@@ -47,7 +47,7 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
           showSolid
-            ? "bg-white/80 backdrop-blur-md border-b border-border/50 py-3 shadow-sm"
+            ? "bg-white/80 backdrop-blur-md border-b border-border/50 py-3"
             : "bg-transparent py-6",
         )}
       >
@@ -64,7 +64,7 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
                   "text-sm font-medium transition-colors duration-300",
                   showSolid
                     ? "text-muted-foreground hover:text-foreground"
-                    : "text-white/80 hover:text-white drop-shadow-sm",
+                    : "text-white/80 hover:text-white",
                 )}
               >
                 {link.label}
@@ -80,7 +80,7 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
                 "text-sm font-medium transition-colors duration-300",
                 showSolid
                   ? "text-muted-foreground hover:text-foreground"
-                  : "text-white/80 hover:text-white drop-shadow-sm",
+                  : "text-white/80 hover:text-white",
               )}
             >
               Login

@@ -171,7 +171,7 @@ export default function GalleryPage() {
           </div>
         </section>
 
-        <section className="py-4 border-b border-border bg-card/80 backdrop-blur-md sticky top-16 z-30 shadow-sm">
+        <section className="py-4 border-b border-border bg-card/80 backdrop-blur-md sticky top-16 z-30">
           <div className="mx-auto max-w-7xl px-5 md:px-10">
             <div className="flex flex-wrap items-center justify-center gap-2">
               <div className="flex items-center gap-2 mr-4 text-muted-foreground hidden md:flex">

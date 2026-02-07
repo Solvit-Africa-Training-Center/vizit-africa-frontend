@@ -39,8 +39,8 @@ export function CarCard({
       onClick={onSelect}
       className={`group relative border-2 rounded-xl overflow-hidden cursor-pointer transition-all ${
         isSelected
-          ? "border-primary bg-primary-subtle shadow-sm"
-          : "border-border bg-white hover:border-primary/50 hover:shadow-sm"
+          ? "border-primary bg-primary-subtle"
+          : "border-border bg-white hover:border-primary/50"
       }`}
     >
       {/* placeholder */}
