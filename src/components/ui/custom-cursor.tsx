@@ -1,98 +1,40 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useMotionValue, useSpring } from "motion/react";
-import { cn } from "@/lib/utils";
+import { motion } from "motion/react";
 
 export function CustomCursor() {
-  const [isVisible, setIsVisible] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
-
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const springConfig = { damping: 25, stiffness: 700 };
-  const cursorX = useSpring(mouseX, springConfig);
-  const cursorY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
     const moveCursor = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-      setIsVisible(true);
+      setPosition({ x: e.clientX, y: e.clientY });
     };
 
-    const handleMouseEnter = () => setIsHovering(true);
-    const handleMouseLeave = () => setIsHovering(false);
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      setIsHovering(target.closest("a, button") !== null);
+    };
 
     window.addEventListener("mousemove", moveCursor);
-
-    const hoverables = document.querySelectorAll("a, button, [role='button']");
-    hoverables.forEach((el) => {
-      el.addEventListener("mouseenter", handleMouseEnter);
-      el.addEventListener("mouseleave", handleMouseLeave);
-    });
-
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        mutation.addedNodes.forEach((node) => {
-          if (node instanceof HTMLElement) {
-            const newHoverables = node.querySelectorAll(
-              "a, button, [role='button']",
-            );
-            newHoverables.forEach((el) => {
-              el.addEventListener("mouseenter", handleMouseEnter);
-              el.addEventListener("mouseleave", handleMouseLeave);
-            });
-            if (node.matches("a, button, [role='button']")) {
-              node.addEventListener("mouseenter", handleMouseEnter);
-              node.addEventListener("mouseleave", handleMouseLeave);
-            }
-          }
-        });
-      });
-    });
-
-    observer.observe(document.body, { childList: true, subtree: true });
+    window.addEventListener("mouseover", handleMouseOver);
 
     return () => {
       window.removeEventListener("mousemove", moveCursor);
-      hoverables.forEach((el) => {
-        el.removeEventListener("mouseenter", handleMouseEnter);
-        el.removeEventListener("mouseleave", handleMouseLeave);
-      });
-      observer.disconnect();
+      window.removeEventListener("mouseover", handleMouseOver);
     };
-  }, [mouseX, mouseY]);
-
-  if (!isVisible) return null;
+  }, []);
 
   return (
-    <>
-      <motion.div
-        className="fixed top-0 left-0 w-3 h-3 bg-primary rounded-full pointer-events-none z-[9999] mix-blend-difference"
-        style={{
-          x: cursorX,
-          y: cursorY,
-          translateX: "-50%",
-          translateY: "-50%",
-        }}
-      />
-
-      <motion.div
-        className={cn(
-          "fixed top-0 left-0 w-8 h-8 border border-primary rounded-full pointer-events-none z-[9998] transition-all duration-300 ease-out mix-blend-difference",
-          isHovering
-            ? "scale-150 bg-primary/20 border-transparent"
-            : "scale-100",
-        )}
-        style={{
-          x: cursorX,
-          y: cursorY,
-          translateX: "-50%",
-          translateY: "-50%",
-        }}
-      />
-    </>
+    <motion.div
+      className="fixed top-0 left-0 w-4 h-4 bg-primary/50 rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2"
+      animate={{
+        x: position.x,
+        y: position.y,
+        scale: isHovering ? 1.5 : 1,
+      }}
+      transition={{ type: "spring", damping: 30, stiffness: 500 }}
+    />
   );
 }

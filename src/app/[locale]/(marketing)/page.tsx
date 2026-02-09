@@ -38,7 +38,7 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "TravelAgency",
   name: "Vizit Africa",
-  image: "https://vizitafrica.com/logo.png",
+  image: "https://vizit.africa/logo.png",
   description: "Professional travel planning for your Rwanda experience.",
   address: {
     "@type": "PostalAddress",
@@ -51,7 +51,7 @@ const jsonLd = {
     latitude: "-1.9441",
     longitude: "30.0619",
   },
-  url: "https://vizitafrica.com",
+  url: "https://vizit.africa",
   telephone: "+250788123456",
   priceRange: "$$$",
 };

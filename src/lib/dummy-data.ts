@@ -663,7 +663,7 @@ export const users: User[] = [
   },
   {
     id: "admin-1",
-    email: "admin@vizitafrica.com",
+    email: "admin@vizit.africa",
     name: "Admin User",
     role: "admin",
     createdAt: "2025-01-01T00:00:00Z",

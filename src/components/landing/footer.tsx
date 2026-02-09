@@ -8,6 +8,7 @@ import {
 } from "@remixicon/react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { Logo } from "../shared";
 
 const socialLinks = [
   { icon: RiTwitterXLine, href: "https://twitter.com", label: "Twitter" },
@@ -18,7 +19,6 @@ const socialLinks = [
 
 export function Footer() {
   const t = useTranslations("Footer");
-  const tCommon = useTranslations("Common");
 
   const footerLinks = {
     services: [
@@ -48,11 +48,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-5 md:px-10">
         <div className="grid md:grid-cols-12 gap-12 lg:gap-24">
           <div className="md:col-span-5 lg:col-span-4 space-y-8">
-            <Link href="/" className="inline-block">
-              <span className="font-display text-3xl font-bold uppercase tracking-tight text-white">
-                {tCommon("brandName")}
-              </span>
-            </Link>
+              <Logo variant="light" />
             <p className="text-base text-gray-400 leading-relaxed max-w-sm font-light">
               {t("tagline")}
             </p>

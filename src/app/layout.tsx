@@ -37,7 +37,7 @@ const notoSansArabic = Noto_Sans_Arabic({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://vizitafrica.com"),
+  metadataBase: new URL("https://vizit.africa"),
   title: "Vizit Africa | Your Journey to Rwanda Starts Here",
   description:
     "Professional travel planning for your Rwanda experience. Flights, hotels, car rentals, and local guides - all in one place.",
