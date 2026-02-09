@@ -327,6 +327,7 @@
       "title": "Start Your Journey",
       "subtitle": "Create an account to begin planning your legacy trip.",
       "fullName": "Full Name",
+      "phoneNumber": "Phone Number",
       "emailLabel": "Email Address",
       "passwordLabel": "Password",
       "confirmPassword": "Confirm Password",

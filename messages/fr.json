@@ -216,6 +216,7 @@
       "confirmPassword": "Confirmer le Mot de Passe",
       "emailLabel": "Adresse Email",
       "fullName": "Nom Complet",
+      "phoneNumber": "Numéro de Téléphone",
       "haveAccount": "Vous avez déjà un compte?",
       "passwordLabel": "Mot de Passe",
       "signIn": "Se connecter",
