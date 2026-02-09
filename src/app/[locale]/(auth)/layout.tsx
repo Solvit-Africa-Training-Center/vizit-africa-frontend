@@ -9,7 +9,7 @@ export default function AuthLayout({
     <div className="min-h-screen grid lg:grid-cols-2">
       <div className="hidden lg:block relative bg-black">
         <Image
-          src="https://images.unsplash.com/photo-1547471080-7528385f7017?q=90&w=2400&auto=format&fit=crop"
+          src="https://images.unsplash.com/photo-1516426122078-c23e76319801?q=90&w=2400&auto=format&fit=crop"
           alt="Vizit Africa Experience"
           fill
           className="object-cover opacity-60 mix-blend-overlay"

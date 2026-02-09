@@ -23,7 +23,7 @@ const experiences = [
     title: "Chimpanzee Trekking",
     location: "Nyungwe Forest",
     image:
-      "https://images.unsplash.com/photo-1547471080-7528385f7017?q=90&w=1600&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1516426122078-c23e76319801?q=90&w=1600&auto=format&fit=crop",
     description: "Ancient rainforests teeming with primates.",
   },
   {
@@ -31,7 +31,7 @@ const experiences = [
     title: "Game Drive Safari",
     location: "Akagera National Park",
     image:
-      "https://images.unsplash.com/photo-1517309995815-46fd4252e1f4?q=90&w=1600&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=90&w=1600&auto=format&fit=crop",
     description: "Lions, rhinos, and elephants in the savannah.",
   },
   {

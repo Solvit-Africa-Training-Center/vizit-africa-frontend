@@ -1,4 +1,4 @@
-import type * as React from "react"
+import * as React from "react"
 import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"
 
@@ -86,7 +86,7 @@ function BreadcrumbSeparator({
       {...props}
     >
       {children ?? (
-        <RiArrowRightSLine />
+        <RiArrowRightSLine className="rtl:rotate-180" />
       )}
     </li>
   )

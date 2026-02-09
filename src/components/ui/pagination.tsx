@@ -1,4 +1,4 @@
-import type * as React from "react"
+import * as React from "react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -7,6 +7,7 @@ import { RiArrowLeftSLine, RiArrowRightSLine, RiMoreLine } from "@remixicon/reac
 function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
   return (
     <nav
+      role="navigation"
       aria-label="pagination"
       data-slot="pagination"
       className={cn(
@@ -51,6 +52,7 @@ function PaginationLink({
       variant={isActive ? "outline" : "ghost"}
       size={size}
       className={cn(className)}
+      nativeButton={false}
       render={
         <a
           aria-current={isActive ? "page" : undefined}
@@ -72,10 +74,10 @@ function PaginationPrevious({
     <PaginationLink
       aria-label="Go to previous page"
       size="default"
-      className={cn("gap-1 pl-2!", className)}
+      className={cn("ps-2!", className)}
       {...props}
     >
-      <RiArrowLeftSLine data-icon="inline-start" />
+      <RiArrowLeftSLine data-icon="inline-start" className="rtl:rotate-180" />
       <span className="hidden sm:block">
         {text}
       </span>
@@ -92,11 +94,11 @@ function PaginationNext({
     <PaginationLink
       aria-label="Go to next page"
       size="default"
-      className={cn("gap-1 pr-2!", className)}
+      className={cn("pe-2!", className)}
       {...props}
     >
       <span className="hidden sm:block">{text}</span>
-      <RiArrowRightSLine data-icon="inline-end" />
+      <RiArrowRightSLine data-icon="inline-end" className="rtl:rotate-180" />
     </PaginationLink>
   )
 }

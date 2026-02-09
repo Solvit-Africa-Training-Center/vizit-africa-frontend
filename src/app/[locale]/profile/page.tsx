@@ -104,7 +104,7 @@ export default function ProfilePage({
                 <div className="grid lg:grid-cols-2 gap-12">
                   <div className="group relative aspect-[4/5] md:aspect-[16/9] lg:aspect-square overflow-hidden rounded-sm bg-muted">
                     <Image
-                      src="https://images.unsplash.com/photo-1571896349842-6e547ce2a79b?q=80&w=2600&auto=format&fit=crop"
+                      src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2600&auto=format&fit=crop"
                       alt="Next Trip"
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-105"

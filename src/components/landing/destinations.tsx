@@ -40,7 +40,7 @@ const regionData = [
     id: "kigali",
     key: "kigali",
     image:
-      "https://images.unsplash.com/photo-1555699875-577bf68b68ec?q=90&w=1600&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=90&w=1600&auto=format&fit=crop",
     className: "md:col-span-1 md:row-span-1",
   },
 ];

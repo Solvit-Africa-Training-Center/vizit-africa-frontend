@@ -12,7 +12,7 @@ export const HERO_SLIDES = [
   {
     id: 2,
     image:
-      "https://images.unsplash.com/photo-1547471080-7528385f7017?q=90&w=2400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1516426122078-c23e76319801?q=90&w=2400&auto=format&fit=crop",
     subheading: "Wildlife Sanctuary",
     heading1: "Wild",
     heading2: "Heart",
@@ -22,7 +22,7 @@ export const HERO_SLIDES = [
   {
     id: 3,
     image:
-      "https://images.unsplash.com/photo-1517309995815-46fd4252e1f4?q=90&w=2400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=90&w=2400&auto=format&fit=crop",
     subheading: "Gorilla Highlands",
     heading1: "Mist",
     heading2: "Valley",

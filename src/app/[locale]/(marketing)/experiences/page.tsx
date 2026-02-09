@@ -89,7 +89,7 @@ export default function ExperiencesPage() {
           rating: 4.8,
           reviews: 45,
           image:
-            "https://images.unsplash.com/photo-1565355866173-d5d140e69818?q=80&w=2600&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=2600&auto=format&fit=crop",
           description: t("items.lake-kivu-relax.description"),
           tags: ["Relaxation", "Water", "Leisure"],
         },

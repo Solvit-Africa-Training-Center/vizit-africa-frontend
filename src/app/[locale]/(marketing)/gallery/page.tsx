@@ -72,7 +72,7 @@ export default function GalleryPage() {
     },
     {
       id: 7,
-      src: "https://images.unsplash.com/photo-1565355866173-d5d140e69818?q=80&w=2600&auto=format&fit=crop",
+      src: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=2600&auto=format&fit=crop",
       alt: t("items.7.alt"),
       caption: t("items.7.caption"),
       category: tCategories("relax"),
@@ -90,7 +90,7 @@ export default function GalleryPage() {
     },
     {
       id: 9,
-      src: "https://images.unsplash.com/photo-1552423316-6950337c8651?q=80&w=2600&auto=format&fit=crop",
+      src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2600&auto=format&fit=crop",
       alt: t("items.9.alt"),
       caption: t("items.9.caption"),
       category: tCategories("wildlife"),
@@ -239,10 +239,10 @@ export default function GalleryPage() {
             />
           </div>
           <div className="relative z-10 max-w-4xl px-8 text-center">
-            <span className="text-white/60 font-mono text-sm uppercase tracking-widest mb-6 block">
+            <span className="text-foreground/60 font-mono text-sm uppercase tracking-widest mb-6 block">
               {t("quote.overline")}
             </span>
-            <blockquote className="font-display text-4xl md:text-6xl text-white font-bold leading-tight mb-8">
+            <blockquote className="font-display text-4xl md:text-6xl font-bold leading-tight mb-8">
               "{t("quote.text")}"
             </blockquote>
           </div>

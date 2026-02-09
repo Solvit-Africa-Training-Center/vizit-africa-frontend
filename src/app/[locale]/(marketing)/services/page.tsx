@@ -39,7 +39,7 @@ export default function ServicesPage() {
       description: t("items.the-retreat.description"),
       price: "From $450 / night",
       image:
-        "https://images.unsplash.com/photo-1571896349842-6e547ce2a79b?q=80&w=2600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2600&auto=format&fit=crop",
       details: [
         t("items.the-retreat.details.0"),
         t("items.the-retreat.details.1"),
@@ -69,7 +69,7 @@ export default function ServicesPage() {
       description: t("items.kigali-soul.description"),
       price: "From $80 / night",
       image:
-        "https://images.unsplash.com/photo-1522771753035-7a58875b2da2?q=80&w=2600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1439066615861-d1af74d74000?q=80&w=2600&auto=format&fit=crop",
       details: [
         t("items.kigali-soul.details.0"),
         t("items.kigali-soul.details.1"),
@@ -129,7 +129,7 @@ export default function ServicesPage() {
       description: t("items.guide-alex.description"),
       price: "$100 / day",
       image:
-        "https://images.unsplash.com/photo-1552423316-6950337c8651?q=80&w=2600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2600&auto=format&fit=crop",
       details: [
         t("items.guide-alex.details.0"),
         t("items.guide-alex.details.1"),

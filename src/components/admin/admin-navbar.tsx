@@ -14,6 +14,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
+import { LanguageSwitcher } from "../shared/language-switcher";
 
 export function AdminNavbar() {
   const pathname = usePathname();
@@ -68,9 +69,10 @@ export function AdminNavbar() {
         </nav>
 
         <div className="flex items-center gap-4">
+            <LanguageSwitcher variant={"default"} />
           <Link href="/">
             <Button variant="ghost" size="sm" className="text-muted-foreground">
-              <RiGlobalLine />
+         
               <span className="hidden sm:inline">{t("publicSite")}</span>
             </Button>
           </Link>

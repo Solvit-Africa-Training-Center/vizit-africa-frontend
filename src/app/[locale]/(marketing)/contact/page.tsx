@@ -41,7 +41,7 @@ export default function ContactPage() {
                 className="w-full h-full"
               >
                 <Image
-                  src="https://images.unsplash.com/photo-1596701725345-3dbd4d7a7836?q=90&w=2600&auto=format&fit=crop"
+                  src="https://images.unsplash.com/photo-1516426122078-c23e76319801?q=90&w=2600&auto=format&fit=crop"
                   alt="Contact Background"
                   fill
                   className="object-cover opacity-60"

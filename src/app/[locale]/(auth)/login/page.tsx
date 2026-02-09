@@ -112,7 +112,6 @@ export default function LoginPage() {
         onClick={handleAdminLogin}
         className="w-full h-12 rounded-sm gap-2 text-sm font-medium border-border/50 hover:bg-muted/30"
       >
-        <RiShieldUserLine className="size-4" />
         {t("adminAccess")}
       </Button>
 
