@@ -1,0 +1,16 @@
+{
+  "rest-client.environmentVariables": {
+    "$shared": {
+      "baseUrl": "https://linguistic-murial-adventist-university-of-central-afri-7975ce32.koyeb.app/api",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzcwNjQyNDcyLCJpYXQiOjE3NzA2Mzg4NzIsImp0aSI6IjM0MDY1ODYyOTc5YTQwMDQ4NDlmYzI2NDVkNGM3N2I3IiwidXNlcl9pZCI6IjVmNjc1N2I4LTJlNzktNDA3ZS1iYmUxLTIwZDQ0ZjJjYjJmYSJ9.TzBMxddRC5zh5PmrrAFAId1rU_99A_oUVT47lm9WE0I"
+    },
+    "dev": {
+      "baseUrl": "https://linguistic-murial-adventist-university-of-central-afri-7975ce32.koyeb.app/api",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzcwNjQyNDcyLCJpYXQiOjE3NzA2Mzg4NzIsImp0aSI6IjM0MDY1ODYyOTc5YTQwMDQ4NDlmYzI2NDVkNGM3N2I3IiwidXNlcl9pZCI6IjVmNjc1N2I4LTJlNzktNDA3ZS1iYmUxLTIwZDQ0ZjJjYjJmYSJ9.TzBMxddRC5zh5PmrrAFAId1rU_99A_oUVT47lm9WE0I"
+    },
+    "prod": {
+      "baseUrl": "https://api.vizit.africa/api",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzcwNjQyNDcyLCJpYXQiOjE3NzA2Mzg4NzIsImp0aSI6IjM0MDY1ODYyOTc5YTQwMDQ4NDlmYzI2NDVkNGM3N2I3IiwidXNlcl9pZCI6IjVmNjc1N2I4LTJlNzktNDA3ZS1iYmUxLTIwZDQ0ZjJjYjJmYSJ9.TzBMxddRC5zh5PmrrAFAId1rU_99A_oUVT47lm9WE0I"
+    }
+  }
+}

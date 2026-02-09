@@ -1,876 +1,1043 @@
 {
-  "Common": {
-    "brandName": "Vizit Africa",
-    "startPlanning": "Comenzar a Planificar",
-    "learnMore": "Saber Más",
-    "viewAll": "Ver Todo",
-    "bookNow": "Reservar Ahora",
-    "contactUs": "Contáctenos",
-    "getInTouch": "Ponte en Contacto",
-    "sendMessage": "Enviar Mensaje",
-    "login": "Iniciar Sesión",
-    "signup": "Registrarse",
-    "signIn": "Ingresar",
-    "createAccount": "Crear Cuenta",
-    "localTime": "Hora Local",
-    "back": "Atrás",
-    "continue": "Continuar",
-    "submit": "Enviar"
-  },
-  "Navigation": {
-    "services": "Servicios",
-    "experiences": "Experiencias",
-    "gallery": "Galería",
-    "aboutUs": "Sobre Nosotros",
-    "contact": "Contacto"
-  },
-  "Hero": {
-    "slides": {
+  "About": {
+    "established": "Establecido 2018",
+    "guidesDescription": "Locales. Narradores. Expertos. Conoce a las personas que mejor conocen Ruanda.",
+    "guidesTitle": "Los Guías",
+    "intro1": "No solo visitamos.",
+    "intro2": "Nos sumergimos. Vizit Africa nació de una creencia simple pero radical: que viajar debería ser más que hacer turismo—debería ser conmovedor.",
+    "intro3": "Quitamos las capas artificiales del turismo para revelar el corazón crudo y palpitante de Ruanda.",
+    "startJourney": "Comienza Tu Viaje",
+    "title": "La Historia de Vizit",
+    "values": {
       "1": {
-        "subheading": "Visita Ruanda 2026",
-        "heading1": "Majestuoso",
-        "heading2": "Horizonte",
-        "description": "Descubre las historias no contadas del corazón de África. Donde la niebla se encuentra con la montaña y el silencio dice mucho."
+        "description": "Honramos la tierra, la vida silvestre y las comunidades que visitamos. Cada huella que dejamos es consciente.",
+        "title": "Respeto"
       },
       "2": {
-        "subheading": "Santuario de Vida Silvestre",
-        "heading1": "Corazón",
-        "heading2": "Salvaje",
-        "description": "Experimenta el pulso de la selva y la serena belleza de nuestras tierras altas protegidas."
+        "description": "No escenificamos experiencias. Facilitamos conexiones genuinas con la gente real y la cultura de Ruanda.",
+        "title": "Autenticidad"
       },
       "3": {
-        "subheading": "Tierras Altas de Gorilas",
-        "heading1": "Valle de",
-        "heading2": "Niebla",
-        "description": "Encuentra gentiles gigantes en su hábitat natural. Una conexión profunda con los tesoros más raros de la naturaleza."
+        "description": "El turismo es una fuerza para el bien. Una porción de cada viaje va directamente al mejoramiento de la comunidad.",
+        "title": "Impacto"
       },
       "4": {
-        "subheading": "Lago Kivu",
-        "heading1": "Costas",
-        "heading2": "Serenas",
-        "description": "Relájate junto a las aguas esmeralda del lago Kivu. Un paraíso para la relajación, la aventura y la reflexión."
-      },
-      "5": {
-        "subheading": "Cultura Vibrante",
-        "heading1": "Ritmo",
-        "heading2": "Urbano",
-        "description": "Siente la energía de Kigali. Una ciudad de innovación, arte y cálida hospitalidad que surge de las colinas."
-      }
-    },
-    "location": "P.N. Volcanes",
-    "coordinates": "1°28'S, 29°32'E"
-  },
-  "SocialProof": {
-    "tagline": "Con la confianza de viajeros y socios globales"
-  },
-  "Services": {
-    "overline": "Nuestros Servicios",
-    "title": "Servicios de Clase Mundial",
-    "description": "Nos encargamos de todo desde el momento en que sales de tu puerta hasta que regresas, cambiado para siempre.",
-    "items": {
-      "flights": {
-        "title": "Vuelos de Lujo",
-        "description": "Vuelos privados y acceso a clase premium."
-      },
-      "hotels": {
-        "title": "Hoteles Curados",
-        "description": "Desde lodges boutique hasta resorts de 5 estrellas."
-      },
-      "experiences": {
-        "title": "Experiencias Exclusivas",
-        "description": "Trekking con gorilas, plantaciones de té y más."
-      },
-      "transfers": {
-        "title": "Traslados VIP",
-        "description": "Transporte terrestre sin problemas."
+        "description": "Desde el vehículo en el que viajas hasta el café que bebes, nos obsesionamos con cada detalle de tu viaje.",
+        "title": "Excelencia"
       }
     }
   },
-  "Destinations": {
-    "overline": "Descubre Ruanda",
-    "title": "Paisajes Diversos",
-    "description": "Desde montañas cubiertas de niebla hasta sabanas doradas, explora la variada belleza de la tierra de las mil colinas.",
-    "regions": {
-      "volcanoes": {
-        "name": "P.N. Volcanes",
-        "subtitle": "Trekking con Gorilas"
+  "Admin": {
+    "Languages": {
+      "ar": "العربية",
+      "de": "Deutsch",
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "he": "עברית",
+      "pt": "Português"
+    },
+    "bookings": {
+      "card": {
+        "badges": {
+          "car": "Coche",
+          "flight": "Vuelo",
+          "guide": "Guía",
+          "hotel": "Hotel"
+        },
+        "manageFulfillment": "Gestionar Cumplimiento",
+        "paid": "Pagado",
+        "travelers": "viajeros"
       },
+      "empty": {
+        "description": "Las reservas aparecerán aquí una vez que los clientes completen el pago.",
+        "title": "Aún no hay reservas confirmadas"
+      },
+      "fulfill": {
+        "actions": {
+          "complete": "Completar Reserva",
+          "confirmHotel": "Confirmar Hotel",
+          "finalizeItinerary": "Finalizar Itinerario",
+          "issueCarVoucher": "Emitir Bono Coche",
+          "sendDocuments": "Enviar Documentos",
+          "title": "Acciones Requeridas",
+          "uploadTickets": "Subir Billetes"
+        },
+        "back": "Volver a Reservas",
+        "customer": {
+          "email": "Email",
+          "name": "Nombre",
+          "phone": "Teléfono",
+          "title": "Detalles del Cliente"
+        },
+        "downloadInvoice": "Descargar Factura",
+        "paid": "Pagado",
+        "payment": {
+          "date": "Fecha",
+          "method": "Pagado vía",
+          "status": "Pagado",
+          "title": "Resumen de Pago",
+          "total": "Total"
+        },
+        "progress": {
+          "title": "Progreso"
+        },
+        "title": "Gestión de Reserva"
+      },
+      "subtitle": "Gestionar y cumplir reservas de viaje confirmadas",
+      "title": "Reservas Confirmadas"
+    },
+    "dashboard": {
+      "overview": "Visión General",
+      "recentRequests": {
+        "createPackage": "Crear Paquete",
+        "title": "Solicitudes Recientes",
+        "to": "a",
+        "travelers": "viajeros",
+        "viewPackage": "Ver Paquete"
+      },
+      "requests": "Solicitudes",
+      "stats": {
+        "confirmed": "Confirmado",
+        "pending": "Solicitudes Pendientes",
+        "quoted": "Cotizado"
+      },
+      "subtitle": "Manejar solicitudes de viaje y paquetes",
+      "title": "Panel de Admin"
+    },
+    "inventory": {
+      "addNew": "Agregar Nuevo",
+      "columns": {
+        "capacity": "Capacidad",
+        "experience": "Experiencia",
+        "flight": "Vuelo",
+        "languages": "Idiomas",
+        "location": "Ubicación",
+        "name": "Nombre",
+        "price": "Precio",
+        "pricePerDay": "Precio/Día",
+        "pricePerNight": "Precio/Noche",
+        "rating": "Calificación",
+        "route": "Ruta",
+        "seats": "Asientos",
+        "time": "Hora",
+        "type": "Tipo",
+        "vehicle": "Vehículo",
+        "years": "Años"
+      },
+      "searchPlaceholder": "Buscar inventario...",
+      "subtitle": "Gestiona tus activos de viaje y ofertas de socios.",
+      "tabs": {
+        "cars": "Coches",
+        "flights": "Vuelos",
+        "guides": "Guías",
+        "hotels": "Hoteles"
+      },
+      "title": "Gestión de Inventario"
+    },
+    "nav": {
+      "bookings": "Reservas",
+      "brand": "Admin Vizit",
+      "inventory": "Inventario",
+      "logout": "Cerrar Sesión",
+      "overview": "Visión General",
+      "publicSite": "Sitio Público",
+      "requests": "Solicitudes",
+      "settings": "Ajustes"
+    },
+    "packages": {
+      "actions": {
+        "add": "Añadir",
+        "options": "Opciones",
+        "saveDraft": "Guardar Borrador",
+        "sendQuote": "Enviar Cotización"
+      },
+      "back": "Volver a Solicitudes",
+      "createTitle": "Crear Nuevo Paquete",
+      "details": {
+        "customer": "Cliente",
+        "dates": "Fechas",
+        "notes": "Notas",
+        "services": "Servicios Solicitados",
+        "status": "Estado",
+        "title": "Detalles de Solicitud",
+        "travelers": "Viajeros"
+      },
+      "editTitle": "Editar Paquete",
+      "subtitle": "para",
+      "tabs": {
+        "documents": "Documentos",
+        "itinerary": "Itinerario",
+        "pricing": "Precios e Inclusiones"
+      },
+      "units": {
+        "passengers": "pasajeros",
+        "perDay": "/día",
+        "perNight": "/noche"
+      }
+    },
+    "requests": {
+      "overview": "Visión General",
+      "requests": "Solicitudes",
+      "subtitle": "Ver y gestionar solicitudes de viaje entrantes",
+      "table": {
+        "actions": "Acciones",
+        "badges": {
+          "car": "Coche",
+          "flights": "Vuelos",
+          "guide": "Guía",
+          "hotels": "Hoteles"
+        },
+        "createPackage": "Crear Paquete",
+        "created": "Creado",
+        "customer": "Cliente",
+        "dates": "Fechas de Viaje",
+        "services": "Servicios",
+        "status": "Estado",
+        "to": "a",
+        "view": "Ver"
+      },
+      "title": "Solicitudes de Viaje"
+    }
+  },
+  "Auth": {
+    "login": {
+      "adminAccess": "Acceso de Administrador",
+      "createAccount": "Crear una cuenta",
+      "emailLabel": "Dirección de Correo",
+      "forgot": "¿Olvidaste?",
+      "noAccount": "¿Nuevo en Vizit Africa?",
+      "orContinue": "O continuar con",
+      "passwordLabel": "Contraseña",
+      "subtitle": "Inicia sesión para acceder a tu itinerario curado.",
+      "title": "Bienvenido de Nuevo"
+    },
+    "signup": {
+      "confirmPassword": "Confirmar Contraseña",
+      "emailLabel": "Dirección de Correo",
+      "fullName": "Nombre Completo",
+      "haveAccount": "¿Ya tienes una cuenta?",
+      "passwordLabel": "Contraseña",
+      "signIn": "Iniciar sesión",
+      "subtitle": "Crea una cuenta para comenzar a planificar tu viaje legado.",
+      "title": "Comienza Tu Viaje"
+    }
+  },
+  "CTA": {
+    "concierge": "Conserje Directo",
+    "contactTeam": "Contactar Equipo",
+    "description": "Escapa de lo ordinario. Manejamos la logística, permisos y alojamientos de lujo. Tú solo preséntate y respira.",
+    "emailUs": "Envíenos un Email",
+    "overline": "El Viaje Comienza",
+    "startPlanning": "Comenzar a Planificar",
+    "title": "¿Listo para",
+    "titleHighlight": "Desaparecer?",
+    "whatsapp": "WhatsApp"
+  },
+  "Common": {
+    "back": "Atrás",
+    "bookNow": "Reservar Ahora",
+    "brandName": "Vizit Africa",
+    "contactUs": "Contáctenos",
+    "continue": "Continuar",
+    "createAccount": "Crear Cuenta",
+    "getInTouch": "Ponte en Contacto",
+    "learnMore": "Saber Más",
+    "localTime": "Hora Local",
+    "login": "Iniciar Sesión",
+    "sendMessage": "Enviar Mensaje",
+    "signIn": "Ingresar",
+    "signup": "Registrarse",
+    "startPlanning": "Comenzar a Planificar",
+    "submit": "Enviar",
+    "viewAll": "Ver Todo"
+  },
+  "Contact": {
+    "address": "Kigali Heights, 4to Piso",
+    "addressSub": "KG 7 Ave, Kigali, Ruanda",
+    "contactDetails": "Detalles de Contacto",
+    "description": "¿Tienes preguntas sobre nuestros tours o necesitas un itinerario personalizado? Estamos aquí para ayudarte a planificar la experiencia perfecta.",
+    "emailAddress": "Dirección de Correo",
+    "emailUs": "Envíenos un Email",
+    "firstName": "Nombre",
+    "formDescription": "Completa el formulario a continuación y nuestro equipo te responderá en 24 horas.",
+    "formTitle": "Envíanos un mensaje",
+    "lastName": "Apellido",
+    "message": "Mensaje",
+    "messagePlaceholder": "Cuéntanos sobre tus planes de viaje...",
+    "office": "Oficina",
+    "openStatus": "Abierto para Nuevas Aventuras",
+    "phoneNumber": "Número de Teléfono",
+    "title": "Planifiquemos tu",
+    "titleSub": "viaje legado.",
+    "visitUs": "Visítanos",
+    "whatsapp": "WhatsApp"
+  },
+  "Destinations": {
+    "description": "Desde montañas cubiertas de niebla hasta sabanas doradas, explora la variada belleza de la tierra de las mil colinas.",
+    "overline": "Descubre Ruanda",
+    "regions": {
       "akagera": {
         "name": "P.N. Akagera",
         "subtitle": "Safari de los 5 Grandes"
       },
-      "nyungwe": {
-        "name": "Bosque Nyungwe",
-        "subtitle": "Trekking de Primates"
+      "kigali": {
+        "name": "Ciudad de Kigali",
+        "subtitle": "Cultura Urbana"
       },
       "kivu": {
         "name": "Lago Kivu",
         "subtitle": "Relajación Costera"
       },
-      "kigali": {
-        "name": "Ciudad de Kigali",
-        "subtitle": "Cultura Urbana"
+      "nyungwe": {
+        "name": "Bosque Nyungwe",
+        "subtitle": "Trekking de Primates"
+      },
+      "volcanoes": {
+        "name": "P.N. Volcanes",
+        "subtitle": "Trekking con Gorilas"
       }
-    }
-  },
-  "HowItWorks": {
-    "overline": "Tu Viaje Comienza Aquí",
-    "title": "Cuatro Pasos al Paraíso",
-    "description": "Desde tu primera consulta hasta el aterrizaje en Kigali, orquestamos cada detalle para que puedas concentrarte en la aventura.",
-    "steps": {
-      "1": {
-        "title": "Comparte Tu Plan",
-        "description": "Cuéntanos tus fechas de viaje, tamaño del grupo y qué te gustaría experimentar."
-      },
-      "2": {
-        "title": "Encontramos las Mejores Opciones",
-        "description": "Nuestro equipo busca disponibilidad actual y precios de socios de confianza."
-      },
-      "3": {
-        "title": "Elige Tus Preferencias",
-        "description": "Selecciona opciones personalizadas para vuelos, estancias, transporte y guías."
-      },
-      "4": {
-        "title": "Confirma y Ve",
-        "description": "Nos encargamos de todas las reservas y logística. Tú solo disfruta tu viaje."
-      }
-    }
-  },
-  "Testimonials": {
-    "overline": "Lo Que Dicen",
-    "title": "Historias de Viajeros",
-    "description": "Historias reales de viajes reales. Mira por qué miles de aventureros elijen Vizit Africa.",
-    "items": {
-      "1": {
-        "name": "Sarah Mitchell",
-        "role": "Viajera de Aventura",
-        "country": "Reino Unido",
-        "content": "Vizit Africa hizo realidad nuestro sueño de trekking con gorilas. La logística fue impecable y nuestro guía Jean-Pierre fue increíblemente conocedor. ¡Altamente recomendado!"
-      },
-      "2": {
-        "name": "John Davis",
-        "role": "Viajero de Negocios",
-        "country": "EE. UU.",
-        "content": "Necesitaba un alquiler de coche rápido y hotel para una conferencia en Kigali. Su equipo arregló todo en horas. Profesional, confiable y excelente servicio."
-      },
-      "3": {
-        "name": "Aisha Mohammed",
-        "role": "Vacaciones Familiares",
-        "country": "Kenia",
-        "content": "Viajar con niños puede ser estresante, pero Vizit Africa se encargó de todo. El resort en el lago Kivu que sugirieron fue perfecto para nuestra familia. ¡Volveremos!"
-      },
-      "4": {
-        "name": "Marcus Chen",
-        "role": "Explorador Solitario",
-        "country": "Singapur",
-        "content": "Como viajero solitario, la seguridad era mi prioridad. Sus guías locales me hicieron sentir completamente a gusto mientras me mostraban joyas ocultas que nunca encontraría por mi cuenta."
-      },
-      "5": {
-        "name": "Emma Laurent",
-        "role": "Fotógrafa",
-        "country": "Francia",
-        "content": "La hora dorada en Akagera fue mágica. Sabían exactamente dónde posicionarnos para las mejores tomas. ¡Mi portafolio nunca se ha visto mejor!"
-      }
-    }
-  },
-  "WhyUs": {
-    "overline": "Por Qué Elegirnos",
-    "title": "La Diferencia Vizit",
-    "description": "No solo reservamos viajes; creamos legados personales. Esto es lo que distingue nuestros viajes del resto.",
-    "stats": {
-      "travelers": { "value": "200+", "label": "Viajeros Felices" },
-      "countries": { "value": "15+", "label": "Países Servidos" },
-      "rating": { "value": "4.9", "label": "Calificación Promedio" }
     },
-    "benefits": [
-      "Precios en tiempo real de socios verificados",
-      "Expertos locales con profundo conocimiento de Ruanda",
-      "Soporte 24/7 durante tu viaje",
-      "Reserva y cancelación flexibles",
-      "Costos transparentes sin tarifas ocultas"
-    ]
+    "title": "Paisajes Diversos"
+  },
+  "Experiences": {
+    "categories": {
+      "adventure": "Aventura",
+      "cultureLeisure": "Cultura y Ocio",
+      "wildlifeNature": "Vida Silvestre y Naturaleza"
+    },
+    "filters": {
+      "difficulty": "Dificultad",
+      "duration": "Duración",
+      "location": "Ubicación",
+      "priceRange": "Rango de Precios"
+    },
+    "items": {
+      "akagera-safari": {
+        "description": "Observa a los Cinco Grandes (Leones, Leopardos, Rinocerontes, Elefantes, Búfalos) en el único parque de sabana de Ruanda. Disfruta de paseos en bote por el lago Ihema.",
+        "duration": "2 Días / 1 Noche",
+        "location": "Parque Nacional Akagera",
+        "title": "Safari en Akagera"
+      },
+      "bisoke-hike": {
+        "description": "Caminata desafiante pero gratificante a la cima del Monte Bisoke, con un hermoso lago en el cráter en la cima.",
+        "duration": "1 Día",
+        "location": "Musanze",
+        "title": "Caminata Monte Bisoke"
+      },
+      "gorilla-trekking": {
+        "description": "Un encuentro único en la vida con los majestuosos gorilas de montaña en su hábitat natural. Camina a través de los bosques brumosos de los volcanes Virunga.",
+        "duration": "1 Día Paquete",
+        "location": "Parque Nacional de los Volcanes",
+        "title": "Trekking con Gorilas"
+      },
+      "kigali-city-tour": {
+        "description": "Explora el vibrante corazón de Ruanda. Visita el Memorial del Genocidio de Kigali, el Mercado Kimironko y galerías de arte para entender el pasado y presente del país.",
+        "duration": "Día Completo",
+        "location": "Ciudad de Kigali",
+        "title": "Tour Cultural de Kigali"
+      },
+      "lake-kivu-relax": {
+        "description": "Relájate en las costas arenosas del lago Kivu. Disfruta de paseos en bote, tours de café y puestas de sol impresionantes en este hermoso lago del valle del rift.",
+        "duration": "3 Días",
+        "location": "Rubavu / Karongi",
+        "title": "Retiro en Lago Kivu"
+      },
+      "nyungwe-canopy": {
+        "description": "Camina 60 metros sobre el suelo del bosque en la famosa pasarela de dosel y rastrea chimpancés en una de las selvas tropicales más antiguas de África.",
+        "duration": "2 Días",
+        "location": "Bosque Nyungwe",
+        "title": "Caminata de Dosel y Chimpancés"
+      }
+    },
+    "labels": {
+      "duration": "Duración",
+      "location": "Ubicación",
+      "requestQuote": "Solicitar Presupuesto",
+      "startingFrom": "Desde"
+    },
+    "overline": "El Catálogo",
+    "title": "Experiencias Curadas"
   },
   "FAQ": {
-    "overline": "¿Tienes Preguntas?",
-    "title": "Tenemos Respuestas",
-    "description": "Todo lo que necesitas saber para planificar tu viaje inolvidable a Ruanda.",
     "cantFindAnswer": "¿No encuentras tu respuesta?",
     "cantFindMobile": "¿No encuentras lo que buscas?",
     "contactTeam": "Contacta a nuestro equipo",
+    "description": "Todo lo que necesitas saber para planificar tu viaje inolvidable a Ruanda.",
     "items": {
       "1": {
-        "question": "¿Con cuánta antelación debo reservar?",
-        "answer": "Recomendamos reservar con al menos 3-4 semanas de antelación, especialmente si planeas permisos para gorilas que pueden agotarse meses antes. Para temporada alta (junio-septiembre, diciembre-febrero), reserva 2-3 meses antes."
+        "answer": "Recomendamos reservar con al menos 3-4 semanas de antelación, especialmente si planeas permisos para gorilas que pueden agotarse meses antes. Para temporada alta (junio-septiembre, diciembre-febrero), reserva 2-3 meses antes.",
+        "question": "¿Con cuánta antelación debo reservar?"
       },
       "2": {
-        "question": "¿Qué métodos de pago aceptan?",
-        "answer": "Aceptamos las principales tarjetas de crédito (Visa, MasterCard, American Express), transferencias bancarias y dinero móvil (MTN MoMo, Airtel Money). Planes de pago disponibles para reservas grandes."
+        "answer": "Aceptamos las principales tarjetas de crédito (Visa, MasterCard, American Express), transferencias bancarias y dinero móvil (MTN MoMo, Airtel Money). Planes de pago disponibles para reservas grandes.",
+        "question": "¿Qué métodos de pago aceptan?"
       },
       "3": {
-        "question": "¿Puedo modificar mi reserva después de la confirmación?",
-        "answer": "¡Sí! Puedes modificar la mayoría de las reservas hasta 48 horas antes de tu fecha de llegada. Los cambios en los permisos de gorilas están sujetos a disponibilidad y políticas de la Junta de Desarrollo de Ruanda."
+        "answer": "¡Sí! Puedes modificar la mayoría de las reservas hasta 48 horas antes de tu fecha de llegada. Los cambios en los permisos de gorilas están sujetos a disponibilidad y políticas de la Junta de Desarrollo de Ruanda.",
+        "question": "¿Puedo modificar mi reserva después de la confirmación?"
       },
       "4": {
-        "question": "¿Proporcionan recogida en el aeropuerto?",
-        "answer": "Absolutamente. Todos nuestros paquetes incluyen la opción de recogida en el Aeropuerto Internacional de Kigali. Nuestros conductores te recibirán en llegadas con un cartel con tu nombre."
+        "answer": "Absolutamente. Todos nuestros paquetes incluyen la opción de recogida en el Aeropuerto Internacional de Kigali. Nuestros conductores te recibirán en llegadas con un cartel con tu nombre.",
+        "question": "¿Proporcionan recogida en el aeropuerto?"
       },
       "5": {
-        "question": "¿Qué incluye el servicio de guía turístico?",
-        "answer": "Nuestros guías ofrecen servicios de día completo que incluyen transporte, entradas a atracciones, comidas y comentarios expertos. Manejan toda la logística para que puedas concentrarte en la experiencia."
+        "answer": "Nuestros guías ofrecen servicios de día completo que incluyen transporte, entradas a atracciones, comidas y comentarios expertos. Manejan toda la logística para que puedas concentrarte en la experiencia.",
+        "question": "¿Qué incluye el servicio de guía turístico?"
       },
       "6": {
-        "question": "¿Es Ruanda segura para los turistas?",
-        "answer": "Ruanda es uno de los países más seguros de África para los turistas. Kigali está clasificada constantemente como una de las capitales más limpias y seguras del continente."
+        "answer": "Ruanda es uno de los países más seguros de África para los turistas. Kigali está clasificada constantemente como una de las capitales más limpias y seguras del continente.",
+        "question": "¿Es Ruanda segura para los turistas?"
       },
       "7": {
-        "question": "¿Qué debo empacar para el trekking de gorilas?",
-        "answer": "Artículos esenciales incluyen: botas de montaña impermeables, pantalones largos, camisa de manga larga, chaqueta para la lluvia, guantes de jardinería y una mochila pequeña. Proporcionamos una lista de empaque detallada al reservar."
+        "answer": "Artículos esenciales incluyen: botas de montaña impermeables, pantalones largos, camisa de manga larga, chaqueta para la lluvia, guantes de jardinería y una mochila pequeña. Proporcionamos una lista de empaque detallada al reservar.",
+        "question": "¿Qué debo empacar para el trekking de gorilas?"
       },
       "8": {
-        "question": "¿Necesito visa para visitar Ruanda?",
-        "answer": "La mayoría de las nacionalidades pueden obtener una visa a la llegada o visa electrónica. Los titulares de pasaportes de la Unión Africana y ciudadanos de algunos países entran sin visa. Te ayudaremos a entender tus requisitos específicos."
+        "answer": "La mayoría de las nacionalidades pueden obtener una visa a la llegada o visa electrónica. Los titulares de pasaportes de la Unión Africana y ciudadanos de algunos países entran sin visa. Te ayudaremos a entender tus requisitos específicos.",
+        "question": "¿Necesito visa para visitar Ruanda?"
       }
-    }
-  },
-  "CTA": {
-    "overline": "El Viaje Comienza",
-    "title": "¿Listo para",
-    "titleHighlight": "Desaparecer?",
-    "description": "Escapa de lo ordinario. Manejamos la logística, permisos y alojamientos de lujo. Tú solo preséntate y respira.",
-    "startPlanning": "Comenzar a Planificar",
-    "contactTeam": "Contactar Equipo",
-    "concierge": "Conserje Directo",
-    "emailUs": "Envíenos un Email",
-    "whatsapp": "WhatsApp"
+    },
+    "overline": "¿Tienes Preguntas?",
+    "title": "Tenemos Respuestas"
   },
   "Footer": {
-    "tagline": "Tu socio de confianza en viajes a Ruanda. Planificación profesional para experiencias africanas inolvidables.",
-    "explore": "Explorar",
     "company": "Compañía",
     "contact": "Contacto",
+    "copyright": "© 2025 Vizit Africa. Todos los derechos reservados.",
+    "explore": "Explorar",
     "links": {
-      "tripsPackages": "Viajes y Paquetes",
-      "customItineraries": "Itinerarios Personalizados",
-      "gallery": "Galería",
-      "faq": "Preguntas Frecuentes",
       "aboutUs": "Sobre Nosotros",
       "contactUs": "Contacto",
+      "customItineraries": "Itinerarios Personalizados",
+      "faq": "Preguntas Frecuentes",
+      "gallery": "Galería",
       "privacyPolicy": "Política de Privacidad",
-      "termsOfService": "Términos de Servicio"
+      "termsOfService": "Términos de Servicio",
+      "tripsPackages": "Viajes y Paquetes"
     },
-    "copyright": "© 2025 Vizit Africa. Todos los derechos reservados.",
     "privacy": "Privacidad",
+    "tagline": "Tu socio de confianza en viajes a Ruanda. Planificación profesional para experiencias africanas inolvidables.",
     "terms": "Términos"
   },
-  "About": {
-    "established": "Establecido 2018",
-    "title": "La Historia de Vizit",
-    "intro1": "No solo visitamos.",
-    "intro2": "Nos sumergimos. Vizit Africa nació de una creencia simple pero radical: que viajar debería ser más que hacer turismo—debería ser conmovedor.",
-    "intro3": "Quitamos las capas artificiales del turismo para revelar el corazón crudo y palpitante de Ruanda.",
-    "guidesTitle": "Los Guías",
-    "guidesDescription": "Locales. Narradores. Expertos. Conoce a las personas que mejor conocen Ruanda.",
-    "startJourney": "Comienza Tu Viaje",
-    "values": {
-      "1": {
-        "title": "Respeto",
-        "description": "Honramos la tierra, la vida silvestre y las comunidades que visitamos. Cada huella que dejamos es consciente."
-      },
-      "2": {
-        "title": "Autenticidad",
-        "description": "No escenificamos experiencias. Facilitamos conexiones genuinas con la gente real y la cultura de Ruanda."
-      },
-      "3": {
-        "title": "Impacto",
-        "description": "El turismo es una fuerza para el bien. Una porción de cada viaje va directamente al mejoramiento de la comunidad."
-      },
-      "4": {
-        "title": "Excelencia",
-        "description": "Desde el vehículo en el que viajas hasta el café que bebes, nos obsesionamos con cada detalle de tu viaje."
-      }
-    }
-  },
-  "Contact": {
-    "openStatus": "Abierto para Nuevas Aventuras",
-    "title": "Planifiquemos tu",
-    "titleSub": "viaje legado.",
-    "description": "¿Tienes preguntas sobre nuestros tours o necesitas un itinerario personalizado? Estamos aquí para ayudarte a planificar la experiencia perfecta.",
-    "emailUs": "Envíenos un Email",
-    "whatsapp": "WhatsApp",
-    "visitUs": "Visítanos",
-    "address": "Kigali Heights, 4to Piso",
-    "addressSub": "KG 7 Ave, Kigali, Ruanda",
-    "formTitle": "Envíanos un mensaje",
-    "formDescription": "Completa el formulario a continuación y nuestro equipo te responderá en 24 horas.",
-    "firstName": "Nombre",
-    "lastName": "Apellido",
-    "emailAddress": "Dirección de Correo",
-    "phoneNumber": "Número de Teléfono",
-    "message": "Mensaje",
-    "messagePlaceholder": "Cuéntanos sobre tus planes de viaje...",
-    "contactDetails": "Detalles de Contacto",
-    "office": "Oficina"
-  },
-  "Auth": {
-    "login": {
-      "title": "Bienvenido de Nuevo",
-      "subtitle": "Inicia sesión para acceder a tu itinerario curado.",
-      "emailLabel": "Dirección de Correo",
-      "passwordLabel": "Contraseña",
-      "forgot": "¿Olvidaste?",
-      "orContinue": "O continuar con",
-      "adminAccess": "Acceso de Administrador",
-      "noAccount": "¿Nuevo en Vizit Africa?",
-      "createAccount": "Crear una cuenta"
-    },
-    "signup": {
-      "title": "Comienza Tu Viaje",
-      "subtitle": "Crea una cuenta para comenzar a planificar tu viaje legado.",
-      "fullName": "Nombre Completo",
-      "emailLabel": "Dirección de Correo",
-      "passwordLabel": "Contraseña",
-      "confirmPassword": "Confirmar Contraseña",
-      "haveAccount": "¿Ya tienes una cuenta?",
-      "signIn": "Iniciar sesión"
-    }
-  },
-  "ServicesPage": {
-    "overline": "El Índice",
-    "title": "Nuestros Servicios",
-    "description": "Alojamientos curados, transporte confiable y guías expertos. Todo lo que necesitas para el viaje perfecto.",
-    "searchPlaceholder": "Buscar servicios...",
-    "sort": "Ordenar:",
-    "categories": {
-      "all": "Todos",
-      "hotels": "Hoteles",
-      "bnbs": "BnBs",
-      "carRentals": "Alquiler de Coches",
-      "guides": "Guías"
-    },
-    "sortOptions": {
-      "recommended": "Recomendado",
-      "priceLowHigh": "Precio: Bajo a Alto",
-      "priceHighLow": "Precio: Alto a Bajo",
-      "az": "A-Z"
-    },
-    "noResults": "No se encontraron servicios que coincidan con tus criterios.",
-    "bookService": "Reservar Este Servicio",
-    "items": {
-      "the-retreat": {
-        "title": "The Retreat by Heaven",
-        "description": "El principal hotel boutique de lujo de Kigali con piscinas climatizadas con energía solar.",
-        "details": [
-          "11 Villas de Lujo con Piscina.",
-          "Restaurante y Bar Fusión.",
-          "Spa de Bienestar y Gimnasio.",
-          "Ubicado en el tranquilo Kiyovu."
-        ]
-      },
-      "one-and-only": {
-        "title": "One&Only Gorilla's Nest",
-        "description": "Un asiento exclusivo en primera fila para los gorilas de montaña.",
-        "details": [
-          "Acurrucado en bosque de eucaliptos.",
-          "Lodges privados con chimeneas.",
-          "Piscina infinita con vista a los volcanes.",
-          "Acceso para helipuerto."
-        ]
-      },
-      "kigali-soul": {
-        "title": "Kigali Soul Guesthouse",
-        "description": "Una estancia vibrante y artística en el corazón de Nyamirambo.",
-        "details": [
-          "Muebles hechos localmente.",
-          "Terraza en la azotea con vistas a la ciudad.",
-          "Desayuno casero incluido.",
-          "A poca distancia de bares de leche."
-        ]
-      },
-      "lavender-home": {
-        "title": "The Lavender Home",
-        "description": "Acogedor bed and breakfast familiar cerca del centro de convenciones.",
-        "details": [
-          "Entorno de jardín exuberante.",
-          "Internet de fibra de alta velocidad.",
-          "Transporte al aeropuerto disponible.",
-          "Barrio residencial tranquilo."
-        ]
-      },
-      "land-cruiser-v8": {
-        "title": "Toyota Land Cruiser V8",
-        "description": "El vehículo de safari definitivo para cualquier terreno.",
-        "details": [
-          "Techo emergente para ver juegos.",
-          "Transmisión Automática.",
-          "Incluye seguro integral.",
-          "Conductor disponible a pedido."
-        ]
-      },
-      "rav4-hire": {
-        "title": "Toyota RAV4 (Nuevo Modelo)",
-        "description": "Perfecto para conducir en la ciudad y aventuras ligeras fuera de la carretera.",
-        "details": [
-          "Eficiente en combustible.",
-          "Comodidad de SUV compacto.",
-          "Sistema de Audio Bluetooth.",
-          "Kilometraje ilimitado incluido."
-        ]
-      },
-      "guide-alex": {
-        "title": "Alex - Observador de Aves Experto",
-        "description": "Especializado en la vida aviar de Akagera y Nyungwe.",
-        "details": [
-          "Más de 10 años de experiencia de campo.",
-          "Telescopio de alta gama proporcionado.",
-          "Asistencia de fotografía.",
-          "Fluido en inglés y francés."
-        ]
-      },
-      "guide-sarah": {
-        "title": "Sarah - Historiadora Cultural",
-        "description": "Desentrañando la profunda historia y futuro de Kigali.",
-        "details": [
-          "Tours de museos curados.",
-          "Recorrido por galerías de arte.",
-          "Enfoque en historia contemporánea.",
-          "Vehículo privado incluido."
-        ]
-      }
-    }
-  },
-  "Experiences": {
-    "overline": "El Catálogo",
-    "title": "Experiencias Curadas",
-    "categories": {
-      "wildlifeNature": "Vida Silvestre y Naturaleza",
-      "cultureLeisure": "Cultura y Ocio",
-      "adventure": "Aventura"
-    },
-    "labels": {
-      "location": "Ubicación",
-      "duration": "Duración",
-      "startingFrom": "Desde",
-      "requestQuote": "Solicitar Presupuesto"
-    },
-    "filters": {
-      "location": "Ubicación",
-      "priceRange": "Rango de Precios",
-      "duration": "Duración",
-      "difficulty": "Dificultad"
-    },
-    "items": {
-      "gorilla-trekking": {
-        "title": "Trekking con Gorilas",
-        "description": "Un encuentro único en la vida con los majestuosos gorilas de montaña en su hábitat natural. Camina a través de los bosques brumosos de los volcanes Virunga.",
-        "location": "Parque Nacional de los Volcanes",
-        "duration": "1 Día Paquete"
-      },
-      "akagera-safari": {
-        "title": "Safari en Akagera",
-        "description": "Observa a los Cinco Grandes (Leones, Leopardos, Rinocerontes, Elefantes, Búfalos) en el único parque de sabana de Ruanda. Disfruta de paseos en bote por el lago Ihema.",
-        "location": "Parque Nacional Akagera",
-        "duration": "2 Días / 1 Noche"
-      },
-      "nyungwe-canopy": {
-        "title": "Caminata de Dosel y Chimpancés",
-        "description": "Camina 60 metros sobre el suelo del bosque en la famosa pasarela de dosel y rastrea chimpancés en una de las selvas tropicales más antiguas de África.",
-        "location": "Bosque Nyungwe",
-        "duration": "2 Días"
-      },
-      "kigali-city-tour": {
-        "title": "Tour Cultural de Kigali",
-        "description": "Explora el vibrante corazón de Ruanda. Visita el Memorial del Genocidio de Kigali, el Mercado Kimironko y galerías de arte para entender el pasado y presente del país.",
-        "location": "Ciudad de Kigali",
-        "duration": "Día Completo"
-      },
-      "lake-kivu-relax": {
-        "title": "Retiro en Lago Kivu",
-        "description": "Relájate en las costas arenosas del lago Kivu. Disfruta de paseos en bote, tours de café y puestas de sol impresionantes en este hermoso lago del valle del rift.",
-        "location": "Rubavu / Karongi",
-        "duration": "3 Días"
-      },
-      "bisoke-hike": {
-        "title": "Caminata Monte Bisoke",
-        "description": "Caminata desafiante pero gratificante a la cima del Monte Bisoke, con un hermoso lago en el cráter en la cima.",
-        "location": "Musanze",
-        "duration": "1 Día"
-      }
-    }
-  },
   "Gallery": {
-    "overline": "La Colección",
-    "title": "Historias Visuales",
-    "description": "Una selección curada de momentos capturados a través de la Tierra de las Mil Colinas.",
-    "filterBy": "Filtrar Por",
-    "featured": {
-      "overline": "Destacado • Vida Silvestre",
-      "title": "Llanuras Doradas de Akagera",
-      "description": "Donde la sabana se encuentra con el cielo. Sé testigo de los majestuosos Cinco Grandes en su hábitat natural."
-    },
-    "quote": {
-      "overline": "Voces de Ruanda",
-      "text": "En el corazón de África, cada paisaje cuenta una historia de resiliencia y belleza."
-    },
     "categories": {
-      "all": "todo",
-      "wildlife": "vida silvestre",
-      "nature": "naturaleza",
-      "culture": "cultura",
       "adventure": "aventura",
+      "all": "todo",
+      "culture": "cultura",
+      "nature": "naturaleza",
       "relax": "relajación",
-      "urban": "urbano"
+      "urban": "urbano",
+      "wildlife": "vida silvestre"
     },
+    "description": "Una selección curada de momentos capturados a través de la Tierra de las Mil Colinas.",
+    "featured": {
+      "description": "Donde la sabana se encuentra con el cielo. Sé testigo de los majestuosos Cinco Grandes en su hábitat natural.",
+      "overline": "Destacado • Vida Silvestre",
+      "title": "Llanuras Doradas de Akagera"
+    },
+    "filterBy": "Filtrar Por",
     "items": {
-      "1": { "alt": "Arte Imigongo", "caption": "Patrimonio Cultural" },
+      "1": {
+        "alt": "Arte Imigongo",
+        "caption": "Patrimonio Cultural"
+      },
       "2": {
         "alt": "Centro de Convenciones de Kigali",
         "caption": "Kigali Moderno"
       },
-      "3": { "alt": "Plantación de Té", "caption": "Té de Nyungwe" },
-      "4": { "alt": "Trekking con Gorilas", "caption": "Único en la Vida" },
-      "5": { "alt": "Atardecer de Safari", "caption": "Llanuras Doradas" },
-      "6": { "alt": "Caminata de Dosel", "caption": "Sobre los Árboles" },
-      "7": { "alt": "Lago Kivu", "caption": "Aguas Serenas" },
-      "8": { "alt": "Monte Bisoke", "caption": "Vistas Volcánicas" },
-      "9": { "alt": "Jirafas", "caption": "Gigantes de Akagera" },
-      "10": { "alt": "Danza Tradicional", "caption": "Bailarines Intore" },
-      "11": { "alt": "Chimpancé", "caption": "Primos Primates" },
-      "12": { "alt": "Cerezas de Café", "caption": "Oro de Ruanda" }
+      "3": {
+        "alt": "Plantación de Té",
+        "caption": "Té de Nyungwe"
+      },
+      "4": {
+        "alt": "Trekking con Gorilas",
+        "caption": "Único en la Vida"
+      },
+      "5": {
+        "alt": "Atardecer de Safari",
+        "caption": "Llanuras Doradas"
+      },
+      "6": {
+        "alt": "Caminata de Dosel",
+        "caption": "Sobre los Árboles"
+      },
+      "7": {
+        "alt": "Lago Kivu",
+        "caption": "Aguas Serenas"
+      },
+      "8": {
+        "alt": "Monte Bisoke",
+        "caption": "Vistas Volcánicas"
+      },
+      "9": {
+        "alt": "Jirafas",
+        "caption": "Gigantes de Akagera"
+      },
+      "10": {
+        "alt": "Danza Tradicional",
+        "caption": "Bailarines Intore"
+      },
+      "11": {
+        "alt": "Chimpancé",
+        "caption": "Primos Primates"
+      },
+      "12": {
+        "alt": "Cerezas de Café",
+        "caption": "Oro de Ruanda"
+      }
+    },
+    "overline": "La Colección",
+    "quote": {
+      "overline": "Voces de Ruanda",
+      "text": "En el corazón de África, cada paisaje cuenta una historia de resiliencia y belleza."
+    },
+    "title": "Historias Visuales"
+  },
+  "Hero": {
+    "coordinates": "1°28'S, 29°32'E",
+    "location": "P.N. Volcanes",
+    "slides": {
+      "1": {
+        "description": "Descubre las historias no contadas del corazón de África. Donde la niebla se encuentra con la montaña y el silencio dice mucho.",
+        "heading1": "Majestuoso",
+        "heading2": "Horizonte",
+        "subheading": "Visita Ruanda 2026"
+      },
+      "2": {
+        "description": "Experimenta el pulso de la selva y la serena belleza de nuestras tierras altas protegidas.",
+        "heading1": "Corazón",
+        "heading2": "Salvaje",
+        "subheading": "Santuario de Vida Silvestre"
+      },
+      "3": {
+        "description": "Encuentra gentiles gigantes en su hábitat natural. Una conexión profunda con los tesoros más raros de la naturaleza.",
+        "heading1": "Valle de",
+        "heading2": "Niebla",
+        "subheading": "Tierras Altas de Gorilas"
+      },
+      "4": {
+        "description": "Relájate junto a las aguas esmeralda del lago Kivu. Un paraíso para la relajación, la aventura y la reflexión.",
+        "heading1": "Costas",
+        "heading2": "Serenas",
+        "subheading": "Lago Kivu"
+      },
+      "5": {
+        "description": "Siente la energía de Kigali. Una ciudad de innovación, arte y cálida hospitalidad que surge de las colinas.",
+        "heading1": "Ritmo",
+        "heading2": "Urbano",
+        "subheading": "Cultura Vibrante"
+      }
     }
+  },
+  "HowItWorks": {
+    "description": "Desde tu primera consulta hasta el aterrizaje en Kigali, orquestamos cada detalle para que puedas concentrarte en la aventura.",
+    "overline": "Tu Viaje Comienza Aquí",
+    "steps": {
+      "1": {
+        "description": "Cuéntanos tus fechas de viaje, tamaño del grupo y qué te gustaría experimentar.",
+        "title": "Comparte Tu Plan"
+      },
+      "2": {
+        "description": "Nuestro equipo busca disponibilidad actual y precios de socios de confianza.",
+        "title": "Encontramos las Mejores Opciones"
+      },
+      "3": {
+        "description": "Selecciona opciones personalizadas para vuelos, estancias, transporte y guías.",
+        "title": "Elige Tus Preferencias"
+      },
+      "4": {
+        "description": "Nos encargamos de todas las reservas y logística. Tú solo disfruta tu viaje.",
+        "title": "Confirma y Ve"
+      }
+    },
+    "title": "Cuatro Pasos al Paraíso"
+  },
+  "LandingExperiences": {
+    "cta": "Explorar",
+    "items": {
+      "1": {
+        "description": "Encuentros cara a cara con gentiles gigantes.",
+        "location": "Parque Nacional de los Volcanes",
+        "title": "Gorilas de Montaña"
+      },
+      "2": {
+        "description": "Selvas tropicales antiguas llenas de primates.",
+        "location": "Bosque Nyungwe",
+        "title": "Trekking de Chimpancés"
+      },
+      "3": {
+        "description": "Leones, rinocerontes y elefantes en la sabana.",
+        "location": "Parque Nacional Akagera",
+        "title": "Safari"
+      },
+      "4": {
+        "description": "Relájate en las orillas del lago más grande de Ruanda.",
+        "location": "Provincia Occidental",
+        "title": "Relax en Lago Kivu"
+      },
+      "5": {
+        "description": "Mercados vibrantes, galerías de arte e historia.",
+        "location": "Ciudad de Kigali",
+        "title": "Tour Cultural de Kigali"
+      }
+    },
+    "overline": "Experiencias Únicas",
+    "title": "Viaje a Través\nDel Paisaje"
+  },
+  "LandingGallery": {
+    "description": "Ve el mundo a través de los ojos de nuestros viajeros. Desde estancias de lujo hasta aventuras salvajes.",
+    "items": {
+      "1": {
+        "alt": "Arte Imigongo",
+        "caption": "Patrimonio Cultural"
+      },
+      "2": {
+        "alt": "Centro de Convenciones de Kigali",
+        "caption": "Kigali Moderno"
+      },
+      "3": {
+        "alt": "Plantación de Té",
+        "caption": "Té de Nyungwe"
+      },
+      "4": {
+        "alt": "Trekking de Gorilas",
+        "caption": "Una Vez en la Vida"
+      },
+      "5": {
+        "alt": "Atardecer de Safari",
+        "caption": "Llanuras Doradas"
+      },
+      "6": {
+        "alt": "Caminata en Dosel",
+        "caption": "Sobre los Árboles"
+      }
+    },
+    "overline": "Historias Visuales",
+    "title": "Momentos \nCapturados",
+    "viewAll": "Ver Galería Completa"
   },
   "Meta": {
-    "home": {
-      "title": "Vizit Africa | Experiencias de Viaje Curadas en Ruanda",
-      "description": "Experimenta lo mejor de Ruanda con paquetes de viaje personalizados. Desde trekking con gorilas hasta tours por la ciudad de Kigali, nos encargamos de vuelos, hoteles y guías."
-    },
     "about": {
-      "title": "Sobre Nosotros | Vizit Africa",
-      "description": "Conoce nuestra misión de proporcionar experiencias de viaje auténticas en Ruanda."
+      "description": "Conoce nuestra misión de proporcionar experiencias de viaje auténticas en Ruanda.",
+      "title": "Sobre Nosotros | Vizit Africa"
     },
     "contact": {
-      "title": "Contáctenos | Vizit Africa",
-      "description": "Ponte en contacto con nuestros expertos en viajes para planificar tu aventura en Ruanda."
+      "description": "Ponte en contacto con nuestros expertos en viajes para planificar tu aventura en Ruanda.",
+      "title": "Contáctenos | Vizit Africa"
+    },
+    "home": {
+      "description": "Experimenta lo mejor de Ruanda con paquetes de viaje personalizados. Desde trekking con gorilas hasta tours por la ciudad de Kigali, nos encargamos de vuelos, hoteles y guías.",
+      "title": "Vizit Africa | Experiencias de Viaje Curadas en Ruanda"
     },
     "services": {
-      "title": "Nuestros Servicios | Vizit Africa",
-      "description": "Explora nuestros hoteles curados, alquiler de coches y guías locales."
+      "description": "Explora nuestros hoteles curados, alquiler de coches y guías locales.",
+      "title": "Nuestros Servicios | Vizit Africa"
     }
   },
+  "Navigation": {
+    "aboutUs": "Sobre Nosotros",
+    "contact": "Contacto",
+    "experiences": "Experiencias",
+    "gallery": "Galería",
+    "services": "Servicios"
+  },
   "PlanTrip": {
-    "header": {
-      "title": "Planifica Tu Viaje",
-      "description": "Personaliza tu aventura africana perfecta. Nos encargaremos de los detalles mientras te concentras en el viaje."
-    },
-    "steps": {
-      "tripDetails": "Detalles del Viaje",
-      "contact": "Contacto",
-      "services": "Servicios",
-      "review": "Revisar"
-    },
-    "tripDetails": {
-      "title": "Detalles del Viaje",
-      "subtitle": "Cuéntanos de dónde vienes y cuándo",
-      "departingFrom": "Saliendo Desde",
-      "departingPlaceholder": "ej. Nueva York, Londres, Dubái",
-      "arrival": "Llegada a Ruanda",
-      "departure": "Salida de Ruanda",
-      "pickDate": "Elige una fecha",
-      "adults": "Adultos",
-      "children": "Niños (0-12)",
-      "tripPurpose": "Propósito del Viaje",
-      "purposes": {
-        "leisure": "Ocio",
-        "business": "Negocios",
-        "honeymoon": "Luna de Miel",
-        "family": "Familia",
-        "adventure": "Aventura",
-        "other": "Otro"
+    "confirmation": {
+      "dashboardButton": "Ir al Panel",
+      "homeButton": "Volver a Inicio",
+      "referenceNumber": "Número de Referencia",
+      "steps": {
+        "1": {
+          "description": "Uno de nuestros especialistas en viajes revisará tus vuelos, hoteles y servicios seleccionados para asegurar disponibilidad y logística.",
+          "title": "Revisión de Expertos (24hrs)"
+        },
+        "2": {
+          "description": "Recibirás un itinerario detallado con precios finales y opciones de pago por correo electrónico.",
+          "title": "Propuesta Personalizada"
+        }
       },
-      "specialRequests": "Solicitudes Especiales (Opcional)",
-      "requestsPlaceholder": "Cualquier requisito dietético, necesidades de accesibilidad u ocasiones especiales...",
-      "continue": "Continuar a Info de Contacto"
+      "subtitle": "Hemos recibido tu plan de viaje y nuestro equipo ya lo está revisando.",
+      "title": "¡Solicitud Recibida!",
+      "whatNext": "¿Qué pasa después?"
     },
     "contactInfo": {
-      "title": "Información de Contacto",
-      "subtitle": "¿Cómo podemos contactarte sobre tu reserva?",
-      "fullName": "Nombre Completo",
-      "namePlaceholder": "Juan Pérez",
+      "continue": "Continuar a Servicios",
       "email": "Correo Electrónico",
       "emailPlaceholder": "tu@ejemplo.com",
+      "fullName": "Nombre Completo",
+      "namePlaceholder": "Juan Pérez",
       "phone": "Teléfono (Opcional)",
       "phonePlaceholder": "+1 234 567 8900",
-      "continue": "Continuar a Servicios"
-    },
-    "services": {
-      "tabs": {
-        "hotels": "Hoteles",
-        "cars": "Coches",
-        "guides": "Guías"
-      },
-      "filters": {
-        "search": "Buscar",
-        "price": "Precio",
-        "stars": "Estrellas",
-        "category": "Categoría",
-        "all": "Todos",
-        "budget": "Económico (<$150)",
-        "mid": "Medio ($150-$200)",
-        "luxury": "Lujo (>$200)",
-        "stars4plus": "4 Estrellas y Más",
-        "stars5": "5 Estrellas"
-      },
-      "guidesAlert": "¡Los guías son opcionales pero muy recomendados para los visitantes primerizos!",
-      "noHotels": "No hay hoteles que coincidan con tus filtros",
-      "noCars": "No hay vehículos que coincidan con tus filtros",
-      "reviewBooking": "Revisar Reserva"
-    },
-    "review": {
-      "title": "Revisa Tu Viaje",
-      "subtitle": "Por favor revisa tus detalles antes de confirmar",
-      "alert": "Después de enviar, revisaremos tu solicitud y te enviaremos un enlace de pago dentro de las 24 horas.",
-      "submit": "Enviar Solicitud de Reserva",
-      "success": "¡Reserva enviada! Te contactaremos dentro de las 24 horas."
-    },
-    "summary": {
-      "title": "Tu Viaje",
-      "dates": "Fechas",
-      "travelers": "Viajeros",
-      "accommodation": "Alojamiento",
-      "vehicle": "Vehículo",
-      "guide": "Guía",
-      "subtotal": "Subtotal",
-      "serviceFee": "Tarifa de Servicio (5%)",
-      "total": "Total Estimado",
-      "perNight": "/ noche",
-      "perDay": "/ día",
-      "withDriver": "con Conductor",
-      "nights": "noches",
-      "days": "días"
+      "subtitle": "¿Cómo podemos contactarte sobre tu reserva?",
+      "title": "Información de Contacto"
     },
     "data": {
       "amenities": {
-        "WiFi": "WiFi",
+        "Bar": "Bar",
+        "Business Center": "Centro de Negocios",
+        "Butler Service": "Servicio de Mayordomo",
+        "Garden": "Jardín",
+        "Gym": "Gimnasio",
+        "Parking": "Estacionamiento",
         "Pool": "Piscina",
         "Restaurant": "Restaurante",
-        "Gym": "Gimnasio",
-        "Spa": "Spa",
-        "Bar": "Bar",
-        "Parking": "Estacionamiento",
-        "Garden": "Jardín",
         "Rooftop Bar": "Bar en la Azotea",
-        "Business Center": "Centro de Negocios",
-        "Butler Service": "Servicio de Mayordomo"
-      },
-      "features": {
-        "A/C": "A/C",
-        "Bluetooth": "Bluetooth",
-        "USB": "USB",
-        "4WD": "4x4",
-        "GPS": "GPS",
-        "Premium Sound": "Sonido Premium",
-        "Large Storage": "Gran Almacenamiento",
-        "USB Charging": "Carga USB",
-        "Safety Pack": "Paquete de Seguridad",
-        "Premium Leather": "Cuero Premium",
-        "Premium Interior": "Interior Premium",
+        "Spa": "Spa",
         "WiFi": "WiFi"
+      },
+      "carAttributes": {
+        "Automatic": "Automático",
+        "Diesel": "Diésel",
+        "Hybrid": "Híbrido",
+        "Manual": "Manual",
+        "Petrol": "Gasolina"
       },
       "carTypes": {
         "sedan": "Sedán",
         "suv": "SUV",
         "van": "Furgoneta"
       },
+      "features": {
+        "4WD": "4x4",
+        "A/C": "A/C",
+        "Bluetooth": "Bluetooth",
+        "GPS": "GPS",
+        "Large Storage": "Gran Almacenamiento",
+        "Premium Interior": "Interior Premium",
+        "Premium Leather": "Cuero Premium",
+        "Premium Sound": "Sonido Premium",
+        "Safety Pack": "Paquete de Seguridad",
+        "USB": "USB",
+        "USB Charging": "Carga USB",
+        "WiFi": "WiFi"
+      },
       "guideTypes": {
         "f1": "Guía de Día Completo",
         "h1": "Guía de Medio Día",
         "s1": "Especialista en Safari"
-      },
-      "carAttributes": {
-        "Automatic": "Automático",
-        "Manual": "Manual",
-        "Petrol": "Gasolina",
-        "Diesel": "Diésel",
-        "Hybrid": "Híbrido"
       }
     },
-    "confirmation": {
-      "title": "¡Solicitud Recibida!",
-      "subtitle": "Hemos recibido tu plan de viaje y nuestro equipo ya lo está revisando.",
-      "referenceNumber": "Número de Referencia",
-      "whatNext": "¿Qué pasa después?",
-      "steps": {
-        "1": {
-          "title": "Revisión de Expertos (24hrs)",
-          "description": "Uno de nuestros especialistas en viajes revisará tus vuelos, hoteles y servicios seleccionados para asegurar disponibilidad y logística."
-        },
-        "2": {
-          "title": "Propuesta Personalizada",
-          "description": "Recibirás un itinerario detallado con precios finales y opciones de pago por correo electrónico."
-        }
+    "header": {
+      "description": "Personaliza tu aventura africana perfecta. Nos encargaremos de los detalles mientras te concentras en el viaje.",
+      "title": "Planifica Tu Viaje"
+    },
+    "review": {
+      "alert": "Después de enviar, revisaremos tu solicitud y te enviaremos un enlace de pago dentro de las 24 horas.",
+      "submit": "Enviar Solicitud de Reserva",
+      "subtitle": "Por favor revisa tus detalles antes de confirmar",
+      "success": "¡Reserva enviada! Te contactaremos dentro de las 24 horas.",
+      "title": "Revisa Tu Viaje"
+    },
+    "services": {
+      "filters": {
+        "all": "Todos",
+        "budget": "Económico (<$150)",
+        "category": "Categoría",
+        "luxury": "Lujo (>$200)",
+        "mid": "Medio ($150-$200)",
+        "price": "Precio",
+        "search": "Buscar",
+        "stars": "Estrellas",
+        "stars4plus": "4 Estrellas y Más",
+        "stars5": "5 Estrellas"
       },
-      "dashboardButton": "Ir al Panel",
-      "homeButton": "Volver a Inicio"
-    }
-  },
-  "Admin": {
-    "nav": {
-      "brand": "Admin Vizit",
-      "overview": "Visión General",
-      "requests": "Solicitudes",
-      "bookings": "Reservas",
-      "inventory": "Inventario",
-      "settings": "Ajustes",
-      "publicSite": "Sitio Público",
-      "logout": "Cerrar Sesión"
-    },
-    "dashboard": {
-      "title": "Panel de Admin",
-      "subtitle": "Manejar solicitudes de viaje y paquetes",
-      "stats": {
-        "pending": "Solicitudes Pendientes",
-        "quoted": "Cotizado",
-        "confirmed": "Confirmado"
-      },
-      "overview": "Visión General",
-      "requests": "Solicitudes",
-      "recentRequests": {
-        "title": "Solicitudes Recientes",
-        "travelers": "viajeros",
-        "to": "a",
-        "createPackage": "Crear Paquete",
-        "viewPackage": "Ver Paquete"
-      }
-    },
-    "requests": {
-      "title": "Solicitudes de Viaje",
-      "subtitle": "Ver y gestionar solicitudes de viaje entrantes",
-      "overview": "Visión General",
-      "requests": "Solicitudes",
-      "table": {
-        "customer": "Cliente",
-        "dates": "Fechas de Viaje",
-        "to": "a",
-        "services": "Servicios",
-        "status": "Estado",
-        "created": "Creado",
-        "actions": "Acciones",
-        "createPackage": "Crear Paquete",
-        "view": "Ver",
-        "badges": {
-          "flights": "Vuelos",
-          "hotels": "Hoteles",
-          "car": "Coche",
-          "guide": "Guía"
-        }
-      }
-    },
-    "bookings": {
-      "title": "Reservas Confirmadas",
-      "subtitle": "Gestionar y cumplir reservas de viaje confirmadas",
-      "card": {
-        "paid": "Pagado",
-        "travelers": "viajeros",
-        "badges": {
-          "flight": "Vuelo",
-          "hotel": "Hotel",
-          "car": "Coche",
-          "guide": "Guía"
-        },
-        "manageFulfillment": "Gestionar Cumplimiento"
-      },
-      "empty": {
-        "title": "Aún no hay reservas confirmadas",
-        "description": "Las reservas aparecerán aquí una vez que los clientes completen el pago."
-      }
-    },
-    "inventory": {
-      "title": "Gestión de Inventario",
-      "subtitle": "Gestiona tus activos de viaje y ofertas de socios.",
-      "searchPlaceholder": "Buscar inventario...",
-      "addNew": "Agregar Nuevo",
+      "guidesAlert": "¡Los guías son opcionales pero muy recomendados para los visitantes primerizos!",
+      "noCars": "No hay vehículos que coincidan con tus filtros",
+      "noHotels": "No hay hoteles que coincidan con tus filtros",
+      "reviewBooking": "Revisar Reserva",
       "tabs": {
-        "hotels": "Hoteles",
         "cars": "Coches",
         "guides": "Guías",
-        "flights": "Vuelos"
-      },
-      "columns": {
-        "name": "Nombre",
-        "location": "Ubicación",
-        "rating": "Calificación",
-        "pricePerNight": "Precio/Noche",
-        "vehicle": "Vehículo",
-        "type": "Tipo",
-        "pricePerDay": "Precio/Día",
-        "airline": "Aerolínea",
-        "flightNumber": "Vuelo #",
-        "price": "Precio",
-        "languages": "Idiomas",
-        "actions": "Acciones",
-        "edit": "Editar",
-        "delete": "Eliminar"
+        "hotels": "Hoteles"
       }
     },
-    "packages": {
-      "createTitle": "Crear Nuevo Paquete",
-      "subtitle": "para",
-      "actions": {
-        "sendQuote": "Enviar Cotización"
+    "steps": {
+      "contact": "Contacto",
+      "review": "Revisar",
+      "services": "Servicios",
+      "tripDetails": "Detalles del Viaje"
+    },
+    "summary": {
+      "accommodation": "Alojamiento",
+      "dates": "Fechas",
+      "days": "días",
+      "guide": "Guía",
+      "nights": "noches",
+      "perDay": "/ día",
+      "perNight": "/ noche",
+      "serviceFee": "Tarifa de Servicio (5%)",
+      "subtotal": "Subtotal",
+      "title": "Tu Viaje",
+      "total": "Total Estimado",
+      "travelers": "Viajeros",
+      "vehicle": "Vehículo",
+      "withDriver": "con Conductor"
+    },
+    "tripDetails": {
+      "adults": "Adultos",
+      "arrival": "Llegada a Ruanda",
+      "children": "Niños (0-12)",
+      "continue": "Continuar a Info de Contacto",
+      "departingFrom": "Saliendo Desde",
+      "departingPlaceholder": "ej. Nueva York, Londres, Dubái",
+      "departure": "Salida de Ruanda",
+      "pickDate": "Elige una fecha",
+      "purposes": {
+        "adventure": "Aventura",
+        "business": "Negocios",
+        "family": "Familia",
+        "honeymoon": "Luna de Miel",
+        "leisure": "Ocio",
+        "other": "Otro"
       },
-      "details": {
-        "dates": "Fechas",
-        "travelers": "Viajeros"
-      }
+      "requestsPlaceholder": "Cualquier requisito dietético, necesidades de accesibilidad u ocasiones especiales...",
+      "specialRequests": "Solicitudes Especiales (Opcional)",
+      "subtitle": "Cuéntanos de dónde vienes y cuándo",
+      "title": "Detalles del Viaje",
+      "tripPurpose": "Propósito del Viaje"
     }
   },
   "Profile": {
-    "nav": {
-      "overview": "Visión General",
-      "trips": "Mis Viajes",
-      "saved": "Guardado",
-      "settings": "Ajustes",
-      "logout": "Cerrar Sesión"
+    "header": {
+      "signOut": "Cerrar Sesión",
+      "subtitle": "El Viaje de Sarah",
+      "title": "Perfil del Viajero"
     },
     "overview": {
-      "welcome": "Bienvenido de nuevo,",
-      "stats": {
-        "totalTrips": "Total de Viajes",
-        "countriesVisited": "Países Visitados",
-        "memoriesCollected": "Recuerdos Recolectados"
+      "nextTrip": {
+        "adults": "Adultos",
+        "confirmed": "Confirmado",
+        "daysLeft": "Días Restantes",
+        "imageAlt": "Próximo Viaje",
+        "label": "Próximo",
+        "status": "Estado",
+        "travelers": "Viajeros"
       },
-      "upcomingTrip": "Próximo Viaje",
-      "noUpcomingTrip": "Ningún viaje próximo planeado.",
-      "pendingRequests": "Solicitudes Pendientes",
-      "viewAll": "Ver Todo"
-    },
-    "trips": {
-      "title": "Mis Viajes",
-      "emptyTitle": "Aún no hay viajes",
-      "emptyDescription": "¡Tu historial de viajes aparecerá aquí una vez que comiences tu aventura!",
-      "tabs": {
-        "upcoming": "Próximos",
-        "past": "Pasados",
-        "cancelled": "Cancelados"
+      "pendingRequests": {
+        "title": "Solicitudes Pendientes"
+      },
+      "stats": {
+        "days": "Días Viajados",
+        "reviews": "Reseñas",
+        "title": "Tus Estadísticas",
+        "trips": "Viajes Realizados"
       }
     },
     "saved": {
-      "title": "Elementos Guardados",
-      "emptyTitle": "No Hay Elementos Guardados",
-      "emptyDescription": "Los elementos que marques aparecerán aquí."
+      "emptyDescription": "Los artículos que guardes aparecerán aquí.",
+      "emptyTitle": "Sin Artículos Guardados"
     },
     "settings": {
-      "title": "Ajustes de Cuenta",
-      "fullName": "Nombre Completo",
       "email": "Dirección de Correo",
-      "save": "Guardar Cambios"
+      "fullName": "Nombre Completo",
+      "save": "Guardar Cambios",
+      "title": "Configuración de la Cuenta"
+    },
+    "tabs": {
+      "overview": "Resumen",
+      "saved": "Guardado",
+      "settings": "Configuración",
+      "trips": "Mis Viajes"
+    },
+    "trips": {
+      "planNew": "Planificar Nuevo Viaje",
+      "title": "Historial de Viajes",
+      "upcoming": "Próximos",
+      "viewDetails": "Ver Detalles"
     }
   },
-  "Languages": {
-    "en": "English",
-    "fr": "Français",
-    "es": "Español",
-    "de": "Deutsch",
-    "pt": "Português",
-    "ar": "العربية"
+  "Services": {
+    "description": "Nos encargamos de todo desde el momento en que sales de tu puerta hasta que regresas, cambiado para siempre.",
+    "items": {
+      "experiences": {
+        "description": "Trekking con gorilas, plantaciones de té y más.",
+        "title": "Experiencias Exclusivas"
+      },
+      "flights": {
+        "description": "Vuelos privados y acceso a clase premium.",
+        "title": "Vuelos de Lujo"
+      },
+      "hotels": {
+        "description": "Desde lodges boutique hasta resorts de 5 estrellas.",
+        "title": "Hoteles Curados"
+      },
+      "transfers": {
+        "description": "Transporte terrestre sin problemas.",
+        "title": "Traslados VIP"
+      }
+    },
+    "overline": "Nuestros Servicios",
+    "title": "Servicios de Clase Mundial"
+  },
+  "ServicesPage": {
+    "bookService": "Reservar Este Servicio",
+    "categories": {
+      "all": "Todos",
+      "bnbs": "BnBs",
+      "carRentals": "Alquiler de Coches",
+      "guides": "Guías",
+      "hotels": "Hoteles"
+    },
+    "description": "Alojamientos curados, transporte confiable y guías expertos. Todo lo que necesitas para el viaje perfecto.",
+    "items": {
+      "guide-alex": {
+        "description": "Especializado en la vida aviar de Akagera y Nyungwe.",
+        "details": [
+          "Más de 10 años de experiencia de campo.",
+          "Telescopio de alta gama proporcionado.",
+          "Asistencia de fotografía.",
+          "Fluido en inglés y francés."
+        ],
+        "title": "Alex - Observador de Aves Experto"
+      },
+      "guide-sarah": {
+        "description": "Desentrañando la profunda historia y futuro de Kigali.",
+        "details": [
+          "Tours de museos curados.",
+          "Recorrido por galerías de arte.",
+          "Enfoque en historia contemporánea.",
+          "Vehículo privado incluido."
+        ],
+        "title": "Sarah - Historiadora Cultural"
+      },
+      "kigali-soul": {
+        "description": "Una estancia vibrante y artística en el corazón de Nyamirambo.",
+        "details": [
+          "Muebles hechos localmente.",
+          "Terraza en la azotea con vistas a la ciudad.",
+          "Desayuno casero incluido.",
+          "A poca distancia de bares de leche."
+        ],
+        "title": "Kigali Soul Guesthouse"
+      },
+      "land-cruiser-v8": {
+        "description": "El vehículo de safari definitivo para cualquier terreno.",
+        "details": [
+          "Techo emergente para ver juegos.",
+          "Transmisión Automática.",
+          "Incluye seguro integral.",
+          "Conductor disponible a pedido."
+        ],
+        "title": "Toyota Land Cruiser V8"
+      },
+      "lavender-home": {
+        "description": "Acogedor bed and breakfast familiar cerca del centro de convenciones.",
+        "details": [
+          "Entorno de jardín exuberante.",
+          "Internet de fibra de alta velocidad.",
+          "Transporte al aeropuerto disponible.",
+          "Barrio residencial tranquilo."
+        ],
+        "title": "The Lavender Home"
+      },
+      "one-and-only": {
+        "description": "Un asiento exclusivo en primera fila para los gorilas de montaña.",
+        "details": [
+          "Acurrucado en bosque de eucaliptos.",
+          "Lodges privados con chimeneas.",
+          "Piscina infinita con vista a los volcanes.",
+          "Acceso para helipuerto."
+        ],
+        "title": "One&Only Gorilla's Nest"
+      },
+      "rav4-hire": {
+        "description": "Perfecto para conducir en la ciudad y aventuras ligeras fuera de la carretera.",
+        "details": [
+          "Eficiente en combustible.",
+          "Comodidad de SUV compacto.",
+          "Sistema de Audio Bluetooth.",
+          "Kilometraje ilimitado incluido."
+        ],
+        "title": "Toyota RAV4 (Nuevo Modelo)"
+      },
+      "the-retreat": {
+        "description": "El principal hotel boutique de lujo de Kigali con piscinas climatizadas con energía solar.",
+        "details": [
+          "11 Villas de Lujo con Piscina.",
+          "Restaurante y Bar Fusión.",
+          "Spa de Bienestar y Gimnasio.",
+          "Ubicado en el tranquilo Kiyovu."
+        ],
+        "title": "The Retreat by Heaven"
+      }
+    },
+    "noResults": "No se encontraron servicios que coincidan con tus criterios.",
+    "overline": "El Índice",
+    "searchPlaceholder": "Buscar servicios...",
+    "sort": "Ordenar:",
+    "sortOptions": {
+      "az": "A-Z",
+      "priceHighLow": "Precio: Alto a Bajo",
+      "priceLowHigh": "Precio: Bajo a Alto",
+      "recommended": "Recomendado"
+    },
+    "title": "Nuestros Servicios"
+  },
+  "SocialProof": {
+    "tagline": "Con la confianza de viajeros y socios globales"
+  },
+  "Testimonials": {
+    "description": "Historias reales de viajes reales. Mira por qué miles de aventureros elijen Vizit Africa.",
+    "items": {
+      "1": {
+        "content": "Vizit Africa hizo realidad nuestro sueño de trekking con gorilas. La logística fue impecable y nuestro guía Jean-Pierre fue increíblemente conocedor. ¡Altamente recomendado!",
+        "country": "Reino Unido",
+        "name": "Sarah Mitchell",
+        "role": "Viajera de Aventura"
+      },
+      "2": {
+        "content": "Necesitaba un alquiler de coche rápido y hotel para una conferencia en Kigali. Su equipo arregló todo en horas. Profesional, confiable y excelente servicio.",
+        "country": "EE. UU.",
+        "name": "John Davis",
+        "role": "Viajero de Negocios"
+      },
+      "3": {
+        "content": "Viajar con niños puede ser estresante, pero Vizit Africa se encargó de todo. El resort en el lago Kivu que sugirieron fue perfecto para nuestra familia. ¡Volveremos!",
+        "country": "Kenia",
+        "name": "Aisha Mohammed",
+        "role": "Vacaciones Familiares"
+      },
+      "4": {
+        "content": "Como viajero solitario, la seguridad era mi prioridad. Sus guías locales me hicieron sentir completamente a gusto mientras me mostraban joyas ocultas que nunca encontraría por mi cuenta.",
+        "country": "Singapur",
+        "name": "Marcus Chen",
+        "role": "Explorador Solitario"
+      },
+      "5": {
+        "content": "La hora dorada en Akagera fue mágica. Sabían exactamente dónde posicionarnos para las mejores tomas. ¡Mi portafolio nunca se ha visto mejor!",
+        "country": "Francia",
+        "name": "Emma Laurent",
+        "role": "Fotógrafa"
+      }
+    },
+    "overline": "Lo Que Dicen",
+    "title": "Historias de Viajeros"
+  },
+  "WhyUs": {
+    "benefits": [
+      "Precios en tiempo real de socios verificados",
+      "Expertos locales con profundo conocimiento de Ruanda",
+      "Soporte 24/7 durante tu viaje",
+      "Reserva y cancelación flexibles",
+      "Costos transparentes sin tarifas ocultas"
+    ],
+    "description": "No solo reservamos viajes; creamos legados personales. Esto es lo que distingue nuestros viajes del resto.",
+    "overline": "Por Qué Elegirnos",
+    "stats": {
+      "countries": {
+        "label": "Países Servidos",
+        "value": "15+"
+      },
+      "rating": {
+        "label": "Calificación Promedio",
+        "value": "4.9"
+      },
+      "travelers": {
+        "label": "Viajeros Felices",
+        "value": "200+"
+      }
+    },
+    "title": "La Diferencia Vizit"
   }
 }

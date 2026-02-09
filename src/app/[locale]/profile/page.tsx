@@ -18,6 +18,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
+import { Label } from "@/components/ui/label";
 
 type Tab = "overview" | "trips" | "saved" | "settings";
 
@@ -29,13 +30,7 @@ export default function ProfilePage({
   const [activeTab, setActiveTab] = useState<Tab>("overview");
   const _activeTrip = sampleBookings[0];
   const t = useTranslations("Profile");
-  const tCommon = useTranslations("Admin.requests.table.badges"); // Reuse common badges if needed, or specific ones.
-  // Actually, let's just reuse the key strings or add them to Profile.
-  // I added them to Profile? No, I reused them in Admin.
-  // The badges in pending requests are "Flights", "Hotels".
-  // Let's use hardcoded or tCommon if available.
-  // Since I didn't add badges to Profile, I will rely on existing keys or add them if needed.
-  // Wait, I used "Admin.requests.table.badges" in Admin. I can use that here too.
+  const tCommon = useTranslations("Admin.requests.table.badges");
 
   const tabs = [
     { id: "overview", label: t("tabs.overview"), icon: RiMapPinLine },
@@ -105,7 +100,7 @@ export default function ProfilePage({
                   <div className="group relative aspect-[4/5] md:aspect-[16/9] lg:aspect-square overflow-hidden rounded-sm bg-muted">
                     <Image
                       src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2600&auto=format&fit=crop"
-                      alt="Next Trip"
+                      alt={t("overview.nextTrip.imageAlt")}
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
@@ -284,9 +279,9 @@ export default function ProfilePage({
                   </h2>
                   <div className="space-y-8">
                     <div className="grid gap-4">
-                      <label className="text-sm font-bold uppercase tracking-wider text-muted-foreground">
+                      <Label className="text-sm font-bold uppercase tracking-wider text-muted-foreground">
                         {t("settings.fullName")}
-                      </label>
+                      </Label>
                       <input
                         type="text"
                         value="Sarah Jenkins"
@@ -295,9 +290,9 @@ export default function ProfilePage({
                       />
                     </div>
                     <div className="grid gap-4">
-                      <label className="text-sm font-bold uppercase tracking-wider text-muted-foreground">
+                      <Label className="text-sm font-bold uppercase tracking-wider text-muted-foreground">
                         {t("settings.email")}
-                      </label>
+                      </Label>
                       <input
                         type="email"
                         value="sarah.j@example.com"

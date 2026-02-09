@@ -1,0 +1,41 @@
+### Add Item to Cart
+POST {{baseUrl}}/bookings/items/create/
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "service": 1,
+  "start_date": "2024-07-15",
+  "end_date": "2024-07-18",
+  "quantity": 2,
+  "unit_price": 500.00
+}
+
+### Confirm Booking
+POST {{baseUrl}}/bookings/confirm/
+Authorization: Bearer {{token}}
+
+### Generate Ticket
+POST {{baseUrl}}/bookings/1/generate-ticket/
+Authorization: Bearer {{token}}
+
+### Verify Ticket
+POST {{baseUrl}}/bookings/verify-ticket/
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "qr_code_data": "VZT-1-1-user-id"
+}
+
+### Process Commission
+POST {{baseUrl}}/bookings/1/commission/
+Authorization: Bearer {{token}}
+
+### Process Payout (Vendor)
+POST {{baseUrl}}/bookings/1/payout/
+Authorization: Bearer {{token}}
+
+### Process Refund
+POST {{baseUrl}}/bookings/1/refund/
+Authorization: Bearer {{token}}

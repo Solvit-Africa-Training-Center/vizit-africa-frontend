@@ -1,895 +1,1043 @@
 {
-  "Common": {
-    "brandName": "Vizit Africa",
-    "startPlanning": "Commencer à Planifier",
-    "learnMore": "En Savoir Plus",
-    "viewAll": "Voir Tout",
-    "bookNow": "Réserver",
-    "contactUs": "Contactez-nous",
-    "getInTouch": "Nous Contacter",
-    "sendMessage": "Envoyer le Message",
-    "login": "Se Connecter",
-    "signup": "S'inscrire",
-    "signIn": "Connexion",
-    "createAccount": "Créer un Compte",
-    "localTime": "Heure Locale",
-    "back": "Retour",
-    "continue": "Continuer",
-    "submit": "Soumettre"
-  },
-  "Navigation": {
-    "services": "Services",
-    "experiences": "Expériences",
-    "gallery": "Galerie",
-    "aboutUs": "À Propos",
-    "contact": "Contact"
-  },
-  "Hero": {
-    "slides": {
+  "About": {
+    "established": "Établi en 2018",
+    "guidesDescription": "Locaux. Conteurs. Experts. Rencontrez les personnes qui connaissent le mieux le Rwanda.",
+    "guidesTitle": "Les Guides",
+    "intro1": "Nous ne visitons pas seulement.",
+    "intro2": "Nous nous immergeons. Vizit Africa est né d'une croyance simple mais radicale: que le voyage devrait être plus que du tourisme—il devrait toucher l'âme.",
+    "intro3": "Nous enlevons les couches artificielles du tourisme pour révéler le cœur battant et brut du Rwanda.",
+    "startJourney": "Commencez Votre Voyage",
+    "title": "L'Histoire de Vizit",
+    "values": {
       "1": {
-        "subheading": "Visitez le Rwanda 2026",
-        "heading1": "Horizon",
-        "heading2": "Majestueux",
-        "description": "Découvrez les histoires inédites du cœur de l'Afrique. Où la brume rencontre la montagne et le silence parle."
+        "description": "Nous honorons la terre, la faune et les communautés que nous visitons. Chaque empreinte que nous laissons est réfléchie.",
+        "title": "Respect"
       },
       "2": {
-        "subheading": "Sanctuaire de la Faune",
-        "heading1": "Cœur",
-        "heading2": "Sauvage",
-        "description": "Ressentez le pouls de la jungle et la beauté sereine de nos hauts plateaux protégés."
+        "description": "Nous ne mettons pas en scène les expériences. Nous facilitons des connexions authentiques avec les vraies personnes et la culture du Rwanda.",
+        "title": "Authenticité"
       },
       "3": {
-        "subheading": "Hauts Plateaux des Gorilles",
-        "heading1": "Vallée",
-        "heading2": "de Brume",
-        "description": "Rencontrez des géants doux dans leur habitat naturel. Une connexion profonde avec les trésors les plus rares de la nature."
+        "description": "Le tourisme est une force positive. Une partie de chaque voyage va directement à l'amélioration de la communauté.",
+        "title": "Impact"
       },
       "4": {
-        "subheading": "Lac Kivu",
-        "heading1": "Rivages",
-        "heading2": "Sereins",
-        "description": "Détendez-vous au bord des eaux émeraude du lac Kivu. Un paradis pour la détente, l'aventure et la réflexion."
-      },
-      "5": {
-        "subheading": "Culture Vibrante",
-        "heading1": "Rythme",
-        "heading2": "Urbain",
-        "description": "Ressentez l'énergie de Kigali. Une ville d'innovation, d'art et d'hospitalité chaleureuse s'élevant des collines."
-      }
-    },
-    "location": "Parc des Volcans",
-    "coordinates": "1°28'S, 29°32'E"
-  },
-  "SocialProof": {
-    "tagline": "Approuvé par des voyageurs et partenaires du monde entier"
-  },
-  "Services": {
-    "overline": "Nos Services",
-    "title": "Services de Classe Mondiale",
-    "description": "Nous gérons tout, du moment où vous quittez votre domicile jusqu'à votre retour, transformé pour toujours.",
-    "items": {
-      "flights": {
-        "title": "Vols de Luxe",
-        "description": "Vols privés et accès aux classes premium."
-      },
-      "hotels": {
-        "title": "Hôtels Sélectionnés",
-        "description": "Des lodges boutiques aux resorts 5 étoiles."
-      },
-      "experiences": {
-        "title": "Expériences Exclusives",
-        "description": "Trek des gorilles, plantations de thé, et plus."
-      },
-      "transfers": {
-        "title": "Transferts VIP",
-        "description": "Transport terrestre sans faille."
+        "description": "Du véhicule dans lequel vous voyagez au café que vous buvez, nous sommes obsédés par chaque détail de votre voyage.",
+        "title": "Excellence"
       }
     }
   },
-  "Destinations": {
-    "overline": "Découvrez le Rwanda",
-    "title": "Paysages Diversifiés",
-    "description": "Des montagnes couvertes de brume aux savanes dorées, explorez la beauté variée du pays des mille collines.",
-    "regions": {
-      "volcanoes": {
-        "name": "Parc des Volcans",
-        "subtitle": "Trek des Gorilles"
+  "Admin": {
+    "Languages": {
+      "ar": "العربية",
+      "de": "Deutsch",
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "he": "עברית",
+      "pt": "Português"
+    },
+    "bookings": {
+      "card": {
+        "badges": {
+          "car": "Voiture",
+          "flight": "Vol",
+          "guide": "Guide",
+          "hotel": "Hôtel"
+        },
+        "manageFulfillment": "Gérer le Traitement",
+        "paid": "Payé",
+        "travelers": "voyageurs"
       },
+      "empty": {
+        "description": "Les réservations apparaîtront ici une fois le paiement effectué.",
+        "title": "Pas encore de réservations confirmées"
+      },
+      "fulfill": {
+        "actions": {
+          "complete": "Terminer la Réservation",
+          "confirmHotel": "Confirmer l'Hôtel",
+          "finalizeItinerary": "Finaliser l'Itinéraire",
+          "issueCarVoucher": "Émettre Bon de Voiture",
+          "sendDocuments": "Envoyer Documents",
+          "title": "Actions Requises",
+          "uploadTickets": "Télécharger Billets"
+        },
+        "back": "Retour aux Réservations",
+        "customer": {
+          "email": "Email",
+          "name": "Nom",
+          "phone": "Téléphone",
+          "title": "Détails du Client"
+        },
+        "downloadInvoice": "Télécharger la Facture",
+        "paid": "Payé",
+        "payment": {
+          "date": "Date",
+          "method": "Moyen de Paiement",
+          "status": "Payé",
+          "title": "Résumé du Paiement",
+          "total": "Total"
+        },
+        "progress": {
+          "title": "Progression"
+        },
+        "title": "Traitement de la Réservation"
+      },
+      "subtitle": "Gérer et traiter les réservations confirmées",
+      "title": "Réservations Confirmées"
+    },
+    "dashboard": {
+      "overview": "Vue d'ensemble",
+      "recentRequests": {
+        "createPackage": "Créer un Forfait",
+        "title": "Demandes Récentes",
+        "to": "au",
+        "travelers": "voyageurs",
+        "viewPackage": "Voir le Forfait"
+      },
+      "requests": "Demandes",
+      "stats": {
+        "confirmed": "Confirmé",
+        "pending": "Demandes En Attente",
+        "quoted": "Devis Envoyé"
+      },
+      "subtitle": "Gérer les demandes de voyage et les forfaits",
+      "title": "Tableau de Bord Admin"
+    },
+    "inventory": {
+      "addNew": "Ajouter",
+      "columns": {
+        "capacity": "Capacité",
+        "experience": "Expérience",
+        "flight": "Vol",
+        "languages": "Langues",
+        "location": "Lieu",
+        "name": "Nom",
+        "price": "Prix",
+        "pricePerDay": "Prix/Jour",
+        "pricePerNight": "Prix/Nuit",
+        "rating": "Note",
+        "route": "Trajet",
+        "seats": "Sièges",
+        "time": "Heure",
+        "type": "Type",
+        "vehicle": "Véhicule",
+        "years": "Ans"
+      },
+      "searchPlaceholder": "Rechercher dans l'inventaire...",
+      "subtitle": "Gérez vos actifs de voyage et offres partenaires.",
+      "tabs": {
+        "cars": "Voitures",
+        "flights": "Vols",
+        "guides": "Guides",
+        "hotels": "Hôtels"
+      },
+      "title": "Gestion des Stocks"
+    },
+    "nav": {
+      "bookings": "Réservations",
+      "brand": "Admin Vizit",
+      "inventory": "Inventaire",
+      "logout": "Déconnexion",
+      "overview": "Vue d'ensemble",
+      "publicSite": "Site Public",
+      "requests": "Demandes",
+      "settings": "Paramètres"
+    },
+    "packages": {
+      "actions": {
+        "add": "Ajouter",
+        "options": "Options",
+        "saveDraft": "Enregistrer le Brouillon",
+        "sendQuote": "Envoyer le Devis"
+      },
+      "back": "Retour aux Demandes",
+      "createTitle": "Créer un Forfait Personnalisé",
+      "details": {
+        "customer": "Client",
+        "dates": "Dates",
+        "notes": "Notes",
+        "services": "Services Demandés",
+        "status": "Statut",
+        "title": "Détails de la Demande",
+        "travelers": "Voyageurs"
+      },
+      "editTitle": "Modifier le Forfait",
+      "subtitle": "Construire un itinéraire personnalisé pour",
+      "tabs": {
+        "documents": "Documents",
+        "itinerary": "Itinéraire",
+        "pricing": "Prix et Inclusions"
+      },
+      "units": {
+        "passengers": "passagers",
+        "perDay": "/jour",
+        "perNight": "/nuit"
+      }
+    },
+    "requests": {
+      "overview": "Vue d'ensemble",
+      "requests": "Demandes",
+      "subtitle": "Voir et gérer les demandes de voyage entrantes",
+      "table": {
+        "actions": "Actions",
+        "badges": {
+          "car": "Voiture",
+          "flights": "Vols",
+          "guide": "Guide",
+          "hotels": "Hôtels"
+        },
+        "createPackage": "Créer Forfait",
+        "created": "Créé le",
+        "customer": "Client",
+        "dates": "Dates de Voyage",
+        "services": "Services",
+        "status": "Statut",
+        "to": "au",
+        "view": "Voir"
+      },
+      "title": "Demandes de Voyage"
+    }
+  },
+  "Auth": {
+    "login": {
+      "adminAccess": "Accès Admin",
+      "createAccount": "Créer un compte",
+      "emailLabel": "Adresse Email",
+      "forgot": "Oublié?",
+      "noAccount": "Nouveau sur Vizit Africa?",
+      "orContinue": "Ou continuer avec",
+      "passwordLabel": "Mot de Passe",
+      "subtitle": "Connectez-vous pour accéder à votre itinéraire personnalisé.",
+      "title": "Bon Retour"
+    },
+    "signup": {
+      "confirmPassword": "Confirmer le Mot de Passe",
+      "emailLabel": "Adresse Email",
+      "fullName": "Nom Complet",
+      "haveAccount": "Vous avez déjà un compte?",
+      "passwordLabel": "Mot de Passe",
+      "signIn": "Se connecter",
+      "subtitle": "Créez un compte pour commencer à planifier votre voyage héritage.",
+      "title": "Commencez Votre Voyage"
+    }
+  },
+  "CTA": {
+    "concierge": "Conciergerie Directe",
+    "contactTeam": "Contacter l'Équipe",
+    "description": "Échappez à l'ordinaire. Nous gérons la logistique, les permis et les hébergements de luxe. Vous n'avez qu'à vous présenter et respirer.",
+    "emailUs": "Envoyez-nous un Email",
+    "overline": "Le Voyage Commence",
+    "startPlanning": "Commencer à Planifier",
+    "title": "Prêt à",
+    "titleHighlight": "Disparaître?",
+    "whatsapp": "WhatsApp"
+  },
+  "Common": {
+    "back": "Retour",
+    "bookNow": "Réserver",
+    "brandName": "Vizit Africa",
+    "contactUs": "Contactez-nous",
+    "continue": "Continuer",
+    "createAccount": "Créer un Compte",
+    "getInTouch": "Nous Contacter",
+    "learnMore": "En Savoir Plus",
+    "localTime": "Heure Locale",
+    "login": "Se Connecter",
+    "sendMessage": "Envoyer le Message",
+    "signIn": "Connexion",
+    "signup": "S'inscrire",
+    "startPlanning": "Commencer à Planifier",
+    "submit": "Soumettre",
+    "viewAll": "Voir Tout"
+  },
+  "Contact": {
+    "address": "Kigali Heights, 4ème Étage",
+    "addressSub": "KG 7 Ave, Kigali, Rwanda",
+    "contactDetails": "Coordonnées",
+    "description": "Vous avez des questions sur nos circuits ou besoin d'un itinéraire personnalisé? Nous sommes là pour vous aider à planifier l'expérience parfaite.",
+    "emailAddress": "Adresse Email",
+    "emailUs": "Envoyez-nous un Email",
+    "firstName": "Prénom",
+    "formDescription": "Remplissez le formulaire ci-dessous et notre équipe vous répondra dans les 24 heures.",
+    "formTitle": "Envoyez-nous un message",
+    "lastName": "Nom",
+    "message": "Message",
+    "messagePlaceholder": "Parlez-nous de vos projets de voyage...",
+    "office": "Bureau",
+    "openStatus": "Ouvert pour de Nouvelles Aventures",
+    "phoneNumber": "Numéro de Téléphone",
+    "title": "Planifions votre",
+    "titleSub": "voyage héritage.",
+    "visitUs": "Visitez-nous",
+    "whatsapp": "WhatsApp"
+  },
+  "Destinations": {
+    "description": "Des montagnes couvertes de brume aux savanes dorées, explorez la beauté variée du pays des mille collines.",
+    "overline": "Découvrez le Rwanda",
+    "regions": {
       "akagera": {
         "name": "Parc Akagera",
         "subtitle": "Safari Big 5"
       },
-      "nyungwe": {
-        "name": "Forêt de Nyungwe",
-        "subtitle": "Trek des Primates"
+      "kigali": {
+        "name": "Ville de Kigali",
+        "subtitle": "Culture Urbaine"
       },
       "kivu": {
         "name": "Lac Kivu",
         "subtitle": "Détente Côtière"
       },
-      "kigali": {
-        "name": "Ville de Kigali",
-        "subtitle": "Culture Urbaine"
+      "nyungwe": {
+        "name": "Forêt de Nyungwe",
+        "subtitle": "Trek des Primates"
+      },
+      "volcanoes": {
+        "name": "Parc des Volcans",
+        "subtitle": "Trek des Gorilles"
       }
-    }
-  },
-  "HowItWorks": {
-    "overline": "Votre Voyage Commence Ici",
-    "title": "Quatre Étapes vers le Paradis",
-    "description": "De votre première demande à votre atterrissage à Kigali — nous orchestrons chaque détail pour que vous puissiez vous concentrer sur l'aventure.",
-    "steps": {
-      "1": {
-        "title": "Partagez Votre Plan",
-        "description": "Dites-nous vos dates de voyage, la taille de votre groupe et ce que vous aimeriez vivre."
-      },
-      "2": {
-        "title": "Nous Trouvons les Meilleures Options",
-        "description": "Notre équipe recherche les disponibilités et les prix actuels auprès de partenaires de confiance."
-      },
-      "3": {
-        "title": "Choisissez Vos Préférences",
-        "description": "Sélectionnez parmi des options personnalisées pour les vols, l'hébergement, le transport et les guides."
-      },
-      "4": {
-        "title": "Confirmez et Partez",
-        "description": "Nous gérons toutes les réservations et la logistique. Profitez simplement de votre voyage."
-      }
-    }
-  },
-  "Testimonials": {
-    "overline": "Ce Qu'ils Disent",
-    "title": "Histoires de Voyageurs",
-    "description": "Des histoires vraies de vrais voyages. Découvrez pourquoi des milliers d'aventuriers choisissent Vizit Africa.",
-    "items": {
-      "1": {
-        "name": "Sarah Mitchell",
-        "role": "Voyageuse d'Aventure",
-        "country": "Royaume-Uni",
-        "content": "Vizit Africa a réalisé notre rêve de trek des gorilles. La logistique était impeccable et notre guide Jean-Pierre était incroyablement compétent. Hautement recommandé!"
-      },
-      "2": {
-        "name": "John Davis",
-        "role": "Voyageur d'Affaires",
-        "country": "États-Unis",
-        "content": "J'avais besoin d'une location de voiture et d'un hôtel rapidement pour une conférence à Kigali. Leur équipe a tout organisé en quelques heures. Service professionnel, fiable et excellent."
-      },
-      "3": {
-        "name": "Aisha Mohammed",
-        "role": "Vacances en Famille",
-        "country": "Kenya",
-        "content": "Voyager avec des enfants peut être stressant, mais Vizit Africa a tout géré. Le resort du lac Kivu qu'ils ont suggéré était parfait pour notre famille. Nous reviendrons!"
-      },
-      "4": {
-        "name": "Marcus Chen",
-        "role": "Explorateur Solo",
-        "country": "Singapour",
-        "content": "En tant que voyageur solo, la sécurité était ma priorité. Leurs guides locaux m'ont mis complètement à l'aise tout en me montrant des joyaux cachés que je n'aurais jamais trouvés seul."
-      },
-      "5": {
-        "name": "Emma Laurent",
-        "role": "Photographe",
-        "country": "France",
-        "content": "L'heure dorée à Akagera était magique. Ils savaient exactement où nous positionner pour les meilleures photos. Mon portfolio n'a jamais été aussi beau!"
-      }
-    }
-  },
-  "WhyUs": {
-    "overline": "Pourquoi Nous Choisir",
-    "title": "La Différence Vizit",
-    "description": "Nous ne réservons pas seulement des voyages; nous créons des héritages personnels. Voici ce qui distingue nos voyages.",
-    "stats": {
-      "travelers": { "value": "200+", "label": "Voyageurs Heureux" },
-      "countries": { "value": "15+", "label": "Pays Servis" },
-      "rating": { "value": "4.9", "label": "Note Moyenne" }
     },
-    "benefits": [
-      "Prix en temps réel de partenaires vérifiés",
-      "Experts locaux avec une connaissance approfondie du Rwanda",
-      "Support 24h/24 et 7j/7 pendant votre voyage",
-      "Réservation et annulation flexibles",
-      "Coûts transparents sans frais cachés"
-    ]
+    "title": "Paysages Diversifiés"
+  },
+  "Experiences": {
+    "categories": {
+      "adventure": "Aventure",
+      "cultureLeisure": "Culture & Loisirs",
+      "wildlifeNature": "Faune & Nature"
+    },
+    "filters": {
+      "difficulty": "Difficulté",
+      "duration": "Durée",
+      "location": "Lieu",
+      "priceRange": "Fourchette de Prix"
+    },
+    "items": {
+      "akagera-safari": {
+        "description": "Repérez les Big Five (Lions, Léopards, Rhinos, Éléphants, Buffles) dans le seul parc de savane du Rwanda. Profitez de promenades en bateau sur le lac Ihema.",
+        "duration": "2 Jours / 1 Nuit",
+        "location": "Parc National de l'Akagera",
+        "title": "Safari Akagera"
+      },
+      "bisoke-hike": {
+        "description": "Randonnée difficile mais gratifiante jusqu'au sommet du mont Bisoke, avec un magnifique lac de cratère au sommet.",
+        "duration": "1 Jour",
+        "location": "Musanze",
+        "title": "Randonnée Mont Bisoke"
+      },
+      "gorilla-trekking": {
+        "description": "Une rencontre unique avec les majestueux gorilles de montagne dans leur habitat naturel. Randonnée à travers les forêts brumeuses des volcans des Virunga.",
+        "duration": "1 Journée Forfait",
+        "location": "Parc National des Volcans",
+        "title": "Trek des Gorilles"
+      },
+      "kigali-city-tour": {
+        "description": "Explorez le cœur vibrant du Rwanda. Visitez le mémorial du génocide de Kigali, le marché de Kimironko et les galeries d'art pour comprendre le passé et le présent du pays.",
+        "duration": "Journée Complète",
+        "location": "Ville de Kigali",
+        "title": "Visite Culturelle de Kigali"
+      },
+      "lake-kivu-relax": {
+        "description": "Détendez-vous sur les rives sablonneuses du lac Kivu. Profitez de promenades en bateau, de visites de café et de couchers de soleil époustouflants sur ce magnifique lac de la vallée du rift.",
+        "duration": "3 Jours",
+        "location": "Rubavu / Karongi",
+        "title": "Retraite au Lac Kivu"
+      },
+      "nyungwe-canopy": {
+        "description": "Marchez à 60 mètres au-dessus du sol forestier sur la célèbre passerelle de la canopée et suivez les chimpanzés dans l'une des plus anciennes forêts tropicales d'Afrique.",
+        "duration": "2 Jours",
+        "location": "Forêt de Nyungwe",
+        "title": "Canopy Walk & Chimps"
+      }
+    },
+    "labels": {
+      "duration": "Durée",
+      "location": "Lieu",
+      "requestQuote": "Demander un Devis",
+      "startingFrom": "À partir de"
+    },
+    "overline": "Le Catalogue",
+    "title": "Expériences Uniques"
   },
   "FAQ": {
-    "overline": "Des Questions?",
-    "title": "Nous Avons les Réponses",
-    "description": "Tout ce que vous devez savoir pour planifier votre voyage inoubliable au Rwanda.",
     "cantFindAnswer": "Vous ne trouvez pas votre réponse?",
     "cantFindMobile": "Vous ne trouvez pas ce que vous cherchez?",
     "contactTeam": "Contactez notre équipe",
+    "description": "Tout ce que vous devez savoir pour planifier votre voyage inoubliable au Rwanda.",
     "items": {
       "1": {
-        "question": "Combien de temps à l'avance dois-je réserver?",
-        "answer": "Nous recommandons de réserver au moins 3-4 semaines à l'avance, surtout si vous prévoyez des permis de trek des gorilles qui peuvent se vendre des mois à l'avance. Pour la haute saison (juin-septembre, décembre-février), réservez 2-3 mois à l'avance."
+        "answer": "Nous recommandons de réserver au moins 3-4 semaines à l'avance, surtout si vous prévoyez des permis de trek des gorilles qui peuvent se vendre des mois à l'avance. Pour la haute saison (juin-septembre, décembre-février), réservez 2-3 mois à l'avance.",
+        "question": "Combien de temps à l'avance dois-je réserver?"
       },
       "2": {
-        "question": "Quels modes de paiement acceptez-vous?",
-        "answer": "Nous acceptons toutes les principales cartes de crédit (Visa, MasterCard, American Express), les virements bancaires et le mobile money (MTN MoMo, Airtel Money). Des plans de paiement sont disponibles pour les réservations importantes."
+        "answer": "Nous acceptons toutes les principales cartes de crédit (Visa, MasterCard, American Express), les virements bancaires et le mobile money (MTN MoMo, Airtel Money). Des plans de paiement sont disponibles pour les réservations importantes.",
+        "question": "Quels modes de paiement acceptez-vous?"
       },
       "3": {
-        "question": "Puis-je modifier ma réservation après confirmation?",
-        "answer": "Oui! Vous pouvez modifier la plupart des réservations jusqu'à 48 heures avant votre date d'arrivée. Les modifications des permis de gorilles sont soumises à disponibilité et aux politiques du Rwanda Development Board."
+        "answer": "Oui! Vous pouvez modifier la plupart des réservations jusqu'à 48 heures avant votre date d'arrivée. Les modifications des permis de gorilles sont soumises à disponibilité et aux politiques du Rwanda Development Board.",
+        "question": "Puis-je modifier ma réservation après confirmation?"
       },
       "4": {
-        "question": "Proposez-vous un service de navette aéroport?",
-        "answer": "Absolument. Tous nos forfaits incluent l'option de transfert aéroport à l'aéroport international de Kigali. Nos chauffeurs vous accueilleront aux arrivées avec une pancarte à votre nom."
+        "answer": "Absolument. Tous nos forfaits incluent l'option de transfert aéroport à l'aéroport international de Kigali. Nos chauffeurs vous accueilleront aux arrivées avec une pancarte à votre nom.",
+        "question": "Proposez-vous un service de navette aéroport?"
       },
       "5": {
-        "question": "Qu'est-ce qui est inclus dans le service de guide?",
-        "answer": "Nos guides fournissent des services de journée complète incluant le transport, les frais d'entrée aux attractions, les repas et des commentaires experts. Ils gèrent toute la logistique pour que vous puissiez vous concentrer sur l'expérience."
+        "answer": "Nos guides fournissent des services de journée complète incluant le transport, les frais d'entrée aux attractions, les repas et des commentaires experts. Ils gèrent toute la logistique pour que vous puissiez vous concentrer sur l'expérience.",
+        "question": "Qu'est-ce qui est inclus dans le service de guide?"
       },
       "6": {
-        "question": "Le Rwanda est-il sûr pour les touristes?",
-        "answer": "Le Rwanda est l'un des pays les plus sûrs d'Afrique pour les touristes. Kigali est régulièrement classée comme l'une des capitales les plus propres et les plus sûres du continent."
+        "answer": "Le Rwanda est l'un des pays les plus sûrs d'Afrique pour les touristes. Kigali est régulièrement classée comme l'une des capitales les plus propres et les plus sûres du continent.",
+        "question": "Le Rwanda est-il sûr pour les touristes?"
       },
       "7": {
-        "question": "Que dois-je emporter pour le trek des gorilles?",
-        "answer": "Les articles essentiels incluent: des chaussures de randonnée imperméables, un pantalon long, une chemise à manches longues, une veste de pluie, des gants de jardinage et un sac à dos. Nous fournissons une liste de bagages détaillée lors de la réservation."
+        "answer": "Les articles essentiels incluent: des chaussures de randonnée imperméables, un pantalon long, une chemise à manches longues, une veste de pluie, des gants de jardinage et un sac à dos. Nous fournissons une liste de bagages détaillée lors de la réservation.",
+        "question": "Que dois-je emporter pour le trek des gorilles?"
       },
       "8": {
-        "question": "Ai-je besoin d'un visa pour visiter le Rwanda?",
-        "answer": "La plupart des nationalités peuvent obtenir un visa à l'arrivée ou un e-visa. Les détenteurs de passeports de l'Union africaine et les citoyens de certains pays entrent sans visa. Nous vous aiderons à comprendre vos exigences spécifiques."
+        "answer": "La plupart des nationalités peuvent obtenir un visa à l'arrivée ou un e-visa. Les détenteurs de passeports de l'Union africaine et les citoyens de certains pays entrent sans visa. Nous vous aiderons à comprendre vos exigences spécifiques.",
+        "question": "Ai-je besoin d'un visa pour visiter le Rwanda?"
       }
-    }
-  },
-  "CTA": {
-    "overline": "Le Voyage Commence",
-    "title": "Prêt à",
-    "titleHighlight": "Disparaître?",
-    "description": "Échappez à l'ordinaire. Nous gérons la logistique, les permis et les hébergements de luxe. Vous n'avez qu'à vous présenter et respirer.",
-    "startPlanning": "Commencer à Planifier",
-    "contactTeam": "Contacter l'Équipe",
-    "concierge": "Conciergerie Directe",
-    "emailUs": "Envoyez-nous un Email",
-    "whatsapp": "WhatsApp"
+    },
+    "overline": "Des Questions?",
+    "title": "Nous Avons les Réponses"
   },
   "Footer": {
-    "tagline": "Votre partenaire de confiance pour voyager au Rwanda. Une planification professionnelle pour des expériences africaines inoubliables.",
-    "explore": "Explorer",
     "company": "Entreprise",
     "contact": "Contact",
+    "copyright": "© 2025 Vizit Africa. Tous droits réservés.",
+    "explore": "Explorer",
     "links": {
-      "tripsPackages": "Voyages & Forfaits",
-      "customItineraries": "Itinéraires Personnalisés",
-      "gallery": "Galerie",
-      "faq": "FAQ",
       "aboutUs": "À Propos",
       "contactUs": "Contact",
+      "customItineraries": "Itinéraires Personnalisés",
+      "faq": "FAQ",
+      "gallery": "Galerie",
       "privacyPolicy": "Politique de Confidentialité",
-      "termsOfService": "Conditions d'Utilisation"
+      "termsOfService": "Conditions d'Utilisation",
+      "tripsPackages": "Voyages & Forfaits"
     },
-    "copyright": "© 2025 Vizit Africa. Tous droits réservés.",
     "privacy": "Confidentialité",
+    "tagline": "Votre partenaire de confiance pour voyager au Rwanda. Une planification professionnelle pour des expériences africaines inoubliables.",
     "terms": "Conditions"
   },
-  "About": {
-    "established": "Établi en 2018",
-    "title": "L'Histoire de Vizit",
-    "intro1": "Nous ne visitons pas seulement.",
-    "intro2": "Nous nous immergeons. Vizit Africa est né d'une croyance simple mais radicale: que le voyage devrait être plus que du tourisme—il devrait toucher l'âme.",
-    "intro3": "Nous enlevons les couches artificielles du tourisme pour révéler le cœur battant et brut du Rwanda.",
-    "guidesTitle": "Les Guides",
-    "guidesDescription": "Locaux. Conteurs. Experts. Rencontrez les personnes qui connaissent le mieux le Rwanda.",
-    "startJourney": "Commencez Votre Voyage",
-    "values": {
-      "1": {
-        "title": "Respect",
-        "description": "Nous honorons la terre, la faune et les communautés que nous visitons. Chaque empreinte que nous laissons est réfléchie."
-      },
-      "2": {
-        "title": "Authenticité",
-        "description": "Nous ne mettons pas en scène les expériences. Nous facilitons des connexions authentiques avec les vraies personnes et la culture du Rwanda."
-      },
-      "3": {
-        "title": "Impact",
-        "description": "Le tourisme est une force positive. Une partie de chaque voyage va directement à l'amélioration de la communauté."
-      },
-      "4": {
-        "title": "Excellence",
-        "description": "Du véhicule dans lequel vous voyagez au café que vous buvez, nous sommes obsédés par chaque détail de votre voyage."
-      }
-    }
-  },
-  "Contact": {
-    "openStatus": "Ouvert pour de Nouvelles Aventures",
-    "title": "Planifions votre",
-    "titleSub": "voyage héritage.",
-    "description": "Vous avez des questions sur nos circuits ou besoin d'un itinéraire personnalisé? Nous sommes là pour vous aider à planifier l'expérience parfaite.",
-    "emailUs": "Envoyez-nous un Email",
-    "whatsapp": "WhatsApp",
-    "visitUs": "Visitez-nous",
-    "address": "Kigali Heights, 4ème Étage",
-    "addressSub": "KG 7 Ave, Kigali, Rwanda",
-    "formTitle": "Envoyez-nous un message",
-    "formDescription": "Remplissez le formulaire ci-dessous et notre équipe vous répondra dans les 24 heures.",
-    "firstName": "Prénom",
-    "lastName": "Nom",
-    "emailAddress": "Adresse Email",
-    "phoneNumber": "Numéro de Téléphone",
-    "message": "Message",
-    "messagePlaceholder": "Parlez-nous de vos projets de voyage...",
-    "contactDetails": "Coordonnées",
-    "office": "Bureau"
-  },
-  "Auth": {
-    "login": {
-      "title": "Bon Retour",
-      "subtitle": "Connectez-vous pour accéder à votre itinéraire personnalisé.",
-      "emailLabel": "Adresse Email",
-      "passwordLabel": "Mot de Passe",
-      "forgot": "Oublié?",
-      "orContinue": "Ou continuer avec",
-      "adminAccess": "Accès Admin",
-      "noAccount": "Nouveau sur Vizit Africa?",
-      "createAccount": "Créer un compte"
-    },
-    "signup": {
-      "title": "Commencez Votre Voyage",
-      "subtitle": "Créez un compte pour commencer à planifier votre voyage héritage.",
-      "fullName": "Nom Complet",
-      "emailLabel": "Adresse Email",
-      "passwordLabel": "Mot de Passe",
-      "confirmPassword": "Confirmer le Mot de Passe",
-      "haveAccount": "Vous avez déjà un compte?",
-      "signIn": "Se connecter"
-    }
-  },
-  "ServicesPage": {
-    "overline": "L'Index",
-    "title": "Nos Services",
-    "description": "Hébergements sélectionnés, transport fiable et guides experts. Tout ce dont vous avez besoin pour le voyage parfait.",
-    "searchPlaceholder": "Rechercher des services...",
-    "sort": "Trier:",
-    "categories": {
-      "all": "Tous",
-      "hotels": "Hôtels",
-      "bnbs": "B&B",
-      "carRentals": "Location de Voitures",
-      "guides": "Guides"
-    },
-    "sortOptions": {
-      "recommended": "Recommandé",
-      "priceLowHigh": "Prix: Croissant",
-      "priceHighLow": "Prix: Décroissant",
-      "az": "A-Z"
-    },
-    "noResults": "Aucun service trouvé correspondant à vos critères.",
-    "bookService": "Réserver ce Service",
-    "items": {
-      "the-retreat": {
-        "title": "The Retreat by Heaven",
-        "description": "Le premier hôtel boutique de luxe de Kigali avec piscines chauffées à l'énergie solaire.",
-        "details": [
-          "11 Villas avec Piscine de Luxe.",
-          "Restaurant & Bar Fusion.",
-          "Spa Bien-être & Gym.",
-          "Situé dans le paisible Kiyovu."
-        ]
-      },
-      "one-and-only": {
-        "title": "One&Only Gorilla's Nest",
-        "description": "Un siège exclusif au premier rang pour voir les gorilles de montagne.",
-        "details": [
-          "Niché dans une forêt d'eucalyptus.",
-          "Lodges privés avec cheminées.",
-          "Piscine à débordement avec vue sur les volcans.",
-          "Accès héliport."
-        ]
-      },
-      "kigali-soul": {
-        "title": "Kigali Soul Guesthouse",
-        "description": "Un séjour vibrant et artistique au cœur de Nyamirambo.",
-        "details": [
-          "Meubles fabriqués localement.",
-          "Terrasse sur le toit avec vue sur la ville.",
-          "Petit-déjeuner maison inclus.",
-          "À distance de marche des bars à lait."
-        ]
-      },
-      "lavender-home": {
-        "title": "The Lavender Home",
-        "description": "Chambre d'hôtes confortable et familiale près du centre de congrès.",
-        "details": [
-          "Cadre de jardin luxuriant.",
-          "Internet fibre haut débit.",
-          "Navette aéroport disponible.",
-          "Quartier résidentiel calme."
-        ]
-      },
-      "land-cruiser-v8": {
-        "title": "Toyota Land Cruiser V8",
-        "description": "Le véhicule de safari ultime pour tout terrain.",
-        "details": [
-          "Toit ouvrant pour l'observation du gibier.",
-          "Transmission automatique.",
-          "Assurance complète incluse.",
-          "Chauffeur disponible sur demande."
-        ]
-      },
-      "rav4-hire": {
-        "title": "Toyota RAV4 (Nouveau Modèle)",
-        "description": "Parfait pour la conduite en ville et les aventures légères hors route.",
-        "details": [
-          "Économe en carburant.",
-          "Confort SUV compact.",
-          "Système audio Bluetooth.",
-          "Kilométrage illimité inclus."
-        ]
-      },
-      "guide-alex": {
-        "title": "Alex - Expert Ornithologue",
-        "description": "Spécialisé dans la vie aviaire de l'Akagera et de Nyungwe.",
-        "details": [
-          "10+ années d'expérience sur le terrain.",
-          "Longue-vue haut de gamme fournie.",
-          "Assistance photo.",
-          "Parle couramment anglais et français."
-        ]
-      },
-      "guide-sarah": {
-        "title": "Sarah - Historienne Culturelle",
-        "description": "Dévoile l'histoire profonde et l'avenir de Kigali.",
-        "details": [
-          "Visites de musées organisées.",
-          "Tournée des galeries d'art.",
-          "Focus sur l'histoire contemporaine.",
-          "Véhicule privé inclus."
-        ]
-      }
-    }
-  },
-  "Experiences": {
-    "overline": "Le Catalogue",
-    "title": "Expériences Uniques",
-    "categories": {
-      "wildlifeNature": "Faune & Nature",
-      "cultureLeisure": "Culture & Loisirs",
-      "adventure": "Aventure"
-    },
-    "labels": {
-      "location": "Lieu",
-      "duration": "Durée",
-      "startingFrom": "À partir de",
-      "requestQuote": "Demander un Devis"
-    },
-    "filters": {
-      "location": "Lieu",
-      "priceRange": "Fourchette de Prix",
-      "duration": "Durée",
-      "difficulty": "Difficulté"
-    },
-    "items": {
-      "gorilla-trekking": {
-        "title": "Trek des Gorilles",
-        "description": "Une rencontre unique avec les majestueux gorilles de montagne dans leur habitat naturel. Randonnée à travers les forêts brumeuses des volcans des Virunga.",
-        "location": "Parc National des Volcans",
-        "duration": "1 Journée Forfait"
-      },
-      "akagera-safari": {
-        "title": "Safari Akagera",
-        "description": "Repérez les Big Five (Lions, Léopards, Rhinos, Éléphants, Buffles) dans le seul parc de savane du Rwanda. Profitez de promenades en bateau sur le lac Ihema.",
-        "location": "Parc National de l'Akagera",
-        "duration": "2 Jours / 1 Nuit"
-      },
-      "nyungwe-canopy": {
-        "title": "Canopy Walk & Chimps",
-        "description": "Marchez à 60 mètres au-dessus du sol forestier sur la célèbre passerelle de la canopée et suivez les chimpanzés dans l'une des plus anciennes forêts tropicales d'Afrique.",
-        "location": "Forêt de Nyungwe",
-        "duration": "2 Jours"
-      },
-      "kigali-city-tour": {
-        "title": "Visite Culturelle de Kigali",
-        "description": "Explorez le cœur vibrant du Rwanda. Visitez le mémorial du génocide de Kigali, le marché de Kimironko et les galeries d'art pour comprendre le passé et le présent du pays.",
-        "location": "Ville de Kigali",
-        "duration": "Journée Complète"
-      },
-      "lake-kivu-relax": {
-        "title": "Retraite au Lac Kivu",
-        "description": "Détendez-vous sur les rives sablonneuses du lac Kivu. Profitez de promenades en bateau, de visites de café et de couchers de soleil époustouflants sur ce magnifique lac de la vallée du rift.",
-        "location": "Rubavu / Karongi",
-        "duration": "3 Jours"
-      },
-      "bisoke-hike": {
-        "title": "Randonnée Mont Bisoke",
-        "description": "Randonnée difficile mais gratifiante jusqu'au sommet du mont Bisoke, avec un magnifique lac de cratère au sommet.",
-        "location": "Musanze",
-        "duration": "1 Jour"
-      }
-    }
-  },
   "Gallery": {
-    "overline": "La Collection",
-    "title": "Histoires Visuelles",
-    "description": "Une sélection de moments capturés à travers le pays des mille collines.",
-    "filterBy": "Filtrer Par",
-    "featured": {
-      "overline": "En Vedette • Faune",
-      "title": "Plaines Dorées de l'Akagera",
-      "description": "Où la savane rencontre le ciel. Soyez témoin des majestueux Big Five dans leur habitat naturel."
-    },
-    "quote": {
-      "overline": "Voix du Rwanda",
-      "text": "Au cœur de l'Afrique, chaque paysage raconte une histoire de résilience et de beauté."
-    },
     "categories": {
-      "all": "tout",
-      "wildlife": "faune",
-      "nature": "nature",
-      "culture": "culture",
       "adventure": "aventure",
+      "all": "tout",
+      "culture": "culture",
+      "nature": "nature",
       "relax": "détente",
-      "urban": "urbain"
+      "urban": "urbain",
+      "wildlife": "faune"
     },
+    "description": "Une sélection de moments capturés à travers le pays des mille collines.",
+    "featured": {
+      "description": "Où la savane rencontre le ciel. Soyez témoin des majestueux Big Five dans leur habitat naturel.",
+      "overline": "En Vedette • Faune",
+      "title": "Plaines Dorées de l'Akagera"
+    },
+    "filterBy": "Filtrer Par",
     "items": {
-      "1": { "alt": "Art Imigongo", "caption": "Héritage Culturel" },
+      "1": {
+        "alt": "Art Imigongo",
+        "caption": "Héritage Culturel"
+      },
       "2": {
         "alt": "Centre de Convention de Kigali",
         "caption": "Kigali Moderne"
       },
-      "3": { "alt": "Plantation de Thé", "caption": "Thé de Nyungwe" },
-      "4": { "alt": "Trek des Gorilles", "caption": "Une Fois dans une Vie" },
-      "5": { "alt": "Coucher de Soleil Safari", "caption": "Plaines Dorées" },
+      "3": {
+        "alt": "Plantation de Thé",
+        "caption": "Thé de Nyungwe"
+      },
+      "4": {
+        "alt": "Trek des Gorilles",
+        "caption": "Une Fois dans une Vie"
+      },
+      "5": {
+        "alt": "Coucher de Soleil Safari",
+        "caption": "Plaines Dorées"
+      },
       "6": {
         "alt": "Marche dans la Canopée",
         "caption": "Au-dessus des Arbres"
       },
-      "7": { "alt": "Lac Kivu", "caption": "Eaux Sereines" },
-      "8": { "alt": "Mont Bisoke", "caption": "Vues Volcaniques" },
-      "9": { "alt": "Girafes", "caption": "Géants de l'Akagera" },
-      "10": { "alt": "Danse Traditionnelle", "caption": "Danseurs Intore" },
-      "11": { "alt": "Chimpanzé", "caption": "Cousins Primates" },
-      "12": { "alt": "Cerises de Café", "caption": "L'Or du Rwanda" }
+      "7": {
+        "alt": "Lac Kivu",
+        "caption": "Eaux Sereines"
+      },
+      "8": {
+        "alt": "Mont Bisoke",
+        "caption": "Vues Volcaniques"
+      },
+      "9": {
+        "alt": "Girafes",
+        "caption": "Géants de l'Akagera"
+      },
+      "10": {
+        "alt": "Danse Traditionnelle",
+        "caption": "Danseurs Intore"
+      },
+      "11": {
+        "alt": "Chimpanzé",
+        "caption": "Cousins Primates"
+      },
+      "12": {
+        "alt": "Cerises de Café",
+        "caption": "L'Or du Rwanda"
+      }
+    },
+    "overline": "La Collection",
+    "quote": {
+      "overline": "Voix du Rwanda",
+      "text": "Au cœur de l'Afrique, chaque paysage raconte une histoire de résilience et de beauté."
+    },
+    "title": "Histoires Visuelles"
+  },
+  "Hero": {
+    "coordinates": "1°28'S, 29°32'E",
+    "location": "Parc des Volcans",
+    "slides": {
+      "1": {
+        "description": "Découvrez les histoires inédites du cœur de l'Afrique. Où la brume rencontre la montagne et le silence parle.",
+        "heading1": "Horizon",
+        "heading2": "Majestueux",
+        "subheading": "Visitez le Rwanda 2026"
+      },
+      "2": {
+        "description": "Ressentez le pouls de la jungle et la beauté sereine de nos hauts plateaux protégés.",
+        "heading1": "Cœur",
+        "heading2": "Sauvage",
+        "subheading": "Sanctuaire de la Faune"
+      },
+      "3": {
+        "description": "Rencontrez des géants doux dans leur habitat naturel. Une connexion profonde avec les trésors les plus rares de la nature.",
+        "heading1": "Vallée",
+        "heading2": "de Brume",
+        "subheading": "Hauts Plateaux des Gorilles"
+      },
+      "4": {
+        "description": "Détendez-vous au bord des eaux émeraude du lac Kivu. Un paradis pour la détente, l'aventure et la réflexion.",
+        "heading1": "Rivages",
+        "heading2": "Sereins",
+        "subheading": "Lac Kivu"
+      },
+      "5": {
+        "description": "Ressentez l'énergie de Kigali. Une ville d'innovation, d'art et d'hospitalité chaleureuse s'élevant des collines.",
+        "heading1": "Rythme",
+        "heading2": "Urbain",
+        "subheading": "Culture Vibrante"
+      }
     }
+  },
+  "HowItWorks": {
+    "description": "De votre première demande à votre atterrissage à Kigali — nous orchestrons chaque détail pour que vous puissiez vous concentrer sur l'aventure.",
+    "overline": "Votre Voyage Commence Ici",
+    "steps": {
+      "1": {
+        "description": "Dites-nous vos dates de voyage, la taille de votre groupe et ce que vous aimeriez vivre.",
+        "title": "Partagez Votre Plan"
+      },
+      "2": {
+        "description": "Notre équipe recherche les disponibilités et les prix actuels auprès de partenaires de confiance.",
+        "title": "Nous Trouvons les Meilleures Options"
+      },
+      "3": {
+        "description": "Sélectionnez parmi des options personnalisées pour les vols, l'hébergement, le transport et les guides.",
+        "title": "Choisissez Vos Préférences"
+      },
+      "4": {
+        "description": "Nous gérons toutes les réservations et la logistique. Profitez simplement de votre voyage.",
+        "title": "Confirmez et Partez"
+      }
+    },
+    "title": "Quatre Étapes vers le Paradis"
+  },
+  "LandingExperiences": {
+    "cta": "Explorer",
+    "items": {
+      "1": {
+        "description": "Rencontres face à face avec des géants doux.",
+        "location": "Parc National des Volcans",
+        "title": "Gorilles de Montagne"
+      },
+      "2": {
+        "description": "Forêts tropicales anciennes grouillant de primates.",
+        "location": "Forêt de Nyungwe",
+        "title": "Trek des Chimpanzés"
+      },
+      "3": {
+        "description": "Lions, rhinos et éléphants dans la savane.",
+        "location": "Parc National de l'Akagera",
+        "title": "Safari"
+      },
+      "4": {
+        "description": "Détendez-vous sur les rives du plus grand lac du Rwanda.",
+        "location": "Province de l'Ouest",
+        "title": "Détente au Lac Kivu"
+      },
+      "5": {
+        "description": "Marchés vibrants, galeries d'art et histoire.",
+        "location": "Ville de Kigali",
+        "title": "Visite Culturelle de Kigali"
+      }
+    },
+    "overline": "Expériences Uniques",
+    "title": "Voyage à Travers\nLe Paysage"
+  },
+  "LandingGallery": {
+    "description": "Voyez le monde à travers les yeux de nos voyageurs. Des séjours de luxe aux aventures sauvages.",
+    "items": {
+      "1": {
+        "alt": "Art Imigongo",
+        "caption": "Héritage Culturel"
+      },
+      "2": {
+        "alt": "Centre de Convention de Kigali",
+        "caption": "Kigali Moderne"
+      },
+      "3": {
+        "alt": "Plantation de Thé",
+        "caption": "Thé de Nyungwe"
+      },
+      "4": {
+        "alt": "Trek des Gorilles",
+        "caption": "Une Fois dans une Vie"
+      },
+      "5": {
+        "alt": "Coucher de Soleil Safari",
+        "caption": "Plaines Dorées"
+      },
+      "6": {
+        "alt": "Marche dans la Canopée",
+        "caption": "Au-dessus des Arbres"
+      }
+    },
+    "overline": "Histoires Visuelles",
+    "title": "Moments \nCapturés",
+    "viewAll": "Voir la Galerie Complète"
   },
   "Meta": {
-    "home": {
-      "title": "Vizit Africa | Expériences de Voyage sur Mesure au Rwanda",
-      "description": "Vivez le meilleur du Rwanda avec des forfaits de voyage personnalisés. Du trek des gorilles aux visites de Kigali, nous gérons vols, hôtels et guides."
-    },
     "about": {
-      "title": "À Propos | Vizit Africa",
-      "description": "Découvrez notre mission de fournir des expériences de voyage authentiques au Rwanda."
+      "description": "Découvrez notre mission de fournir des expériences de voyage authentiques au Rwanda.",
+      "title": "À Propos | Vizit Africa"
     },
     "contact": {
-      "title": "Contactez-nous | Vizit Africa",
-      "description": "Contactez nos experts en voyage pour planifier votre aventure au Rwanda."
+      "description": "Contactez nos experts en voyage pour planifier votre aventure au Rwanda.",
+      "title": "Contactez-nous | Vizit Africa"
+    },
+    "home": {
+      "description": "Vivez le meilleur du Rwanda avec des forfaits de voyage personnalisés. Du trek des gorilles aux visites de Kigali, nous gérons vols, hôtels et guides.",
+      "title": "Vizit Africa | Expériences de Voyage sur Mesure au Rwanda"
     },
     "services": {
-      "title": "Nos Services | Vizit Africa",
-      "description": "Explorez nos hôtels sélectionnés, locations de voitures et guides locaux."
+      "description": "Explorez nos hôtels sélectionnés, locations de voitures et guides locaux.",
+      "title": "Nos Services | Vizit Africa"
     }
   },
+  "Navigation": {
+    "aboutUs": "À Propos",
+    "contact": "Contact",
+    "experiences": "Expériences",
+    "gallery": "Galerie",
+    "services": "Services"
+  },
   "PlanTrip": {
-    "header": {
-      "title": "Planifiez Votre Voyage",
-      "description": "Personnalisez votre aventure africaine parfaite. Nous gérons les détails pendant que vous vous concentrez sur le voyage."
-    },
-    "steps": {
-      "tripDetails": "Détails du Voyage",
-      "contact": "Contact",
-      "services": "Services",
-      "review": "Révision"
-    },
-    "tripDetails": {
-      "title": "Détails du Voyage",
-      "subtitle": "Dites-nous d'où vous venez et quand",
-      "departingFrom": "Départ De",
-      "departingPlaceholder": "ex. Paris, Bruxelles, Montréal",
-      "arrival": "Arrivée au Rwanda",
-      "departure": "Départ du Rwanda",
-      "pickDate": "Choisir une date",
-      "adults": "Adultes",
-      "children": "Enfants (0-12)",
-      "tripPurpose": "But du Voyage",
-      "purposes": {
-        "leisure": "Loisirs",
-        "business": "Affaires",
-        "honeymoon": "Lune de Miel",
-        "family": "Famille",
-        "adventure": "Aventure",
-        "other": "Autre"
+    "confirmation": {
+      "dashboardButton": "Aller au Tableau de Bord",
+      "homeButton": "Retour à l'Accueil",
+      "referenceNumber": "Numéro de Référence",
+      "steps": {
+        "1": {
+          "description": "Un de nos spécialistes examina vos vols, hôtels et services sélectionnés pour garantir la disponibilité et la logistique.",
+          "title": "Examen d'Expert (24h)"
+        },
+        "2": {
+          "description": "Vous recevrez un itinéraire détaillé avec le prix final et les options de paiement par email.",
+          "title": "Proposition Personnalisée"
+        }
       },
-      "specialRequests": "Demandes Spéciales (Optionnel)",
-      "requestsPlaceholder": "Exigences diététiques, besoins d'accessibilité ou occasions spéciales...",
-      "continue": "Continuer vers Contact"
+      "subtitle": "Nous avons reçu votre plan de voyage et notre équipe l'examine déjà.",
+      "title": "Demande Reçue !",
+      "whatNext": "Que se passe-t-il ensuite ?"
     },
     "contactInfo": {
-      "title": "Informations de Contact",
-      "subtitle": "Comment pouvons-nous vous joindre concernant votre réservation ?",
-      "fullName": "Nom Complet",
-      "namePlaceholder": "Jean Dupont",
+      "continue": "Continuer vers Services",
       "email": "Email",
       "emailPlaceholder": "vous@exemple.com",
+      "fullName": "Nom Complet",
+      "namePlaceholder": "Jean Dupont",
       "phone": "Téléphone (Optionnel)",
       "phonePlaceholder": "+33 6 12 34 56 78",
-      "continue": "Continuer vers Services"
-    },
-    "services": {
-      "tabs": {
-        "hotels": "Hôtels",
-        "cars": "Voitures",
-        "guides": "Guides"
-      },
-      "filters": {
-        "search": "Rechercher",
-        "price": "Prix",
-        "stars": "Étoiles",
-        "category": "Catégorie",
-        "all": "Tout",
-        "budget": "Budget (<$150)",
-        "mid": "Moyen ($150-$200)",
-        "luxury": "Luxe (>$200)",
-        "stars4plus": "4 Étoiles & Plus",
-        "stars5": "5 Étoiles"
-      },
-      "guidesAlert": "Les guides sont optionnels mais fortement recommandés pour les premières visites !",
-      "noHotels": "Aucun hôtel ne correspond à vos filtres",
-      "noCars": "Aucun véhicule ne correspond à vos filtres",
-      "reviewBooking": "Revoir la Réservation"
-    },
-    "review": {
-      "title": "Revoir Votre Voyage",
-      "subtitle": "Veuillez vérifier vos détails avant de confirmer",
-      "alert": "Après soumission, nous examinerons votre demande et vous enverrons un lien de paiement dans les 24 heures.",
-      "submit": "Soumettre la Demande",
-      "success": "Réservation soumise ! Nous vous contacterons dans les 24 heures."
-    },
-    "summary": {
-      "title": "Votre Voyage",
-      "dates": "Dates",
-      "travelers": "Voyageurs",
-      "accommodation": "Hébergement",
-      "vehicle": "Véhicule",
-      "guide": "Guide",
-      "subtotal": "Sous-total",
-      "serviceFee": "Frais de Service (5%)",
-      "total": "Total Estimé",
-      "perNight": "/ nuit",
-      "perDay": "/ jour",
-      "withDriver": "avec Chauffeur",
-      "nights": "nuits",
-      "days": "jours"
+      "subtitle": "Comment pouvons-nous vous joindre concernant votre réservation ?",
+      "title": "Informations de Contact"
     },
     "data": {
       "amenities": {
-        "WiFi": "WiFi",
+        "Bar": "Bar",
+        "Business Center": "Centre d'Affaires",
+        "Butler Service": "Service de Majordome",
+        "Garden": "Jardin",
+        "Gym": "Gym",
+        "Parking": "Parking",
         "Pool": "Piscine",
         "Restaurant": "Restaurant",
-        "Gym": "Gym",
-        "Spa": "Spa",
-        "Bar": "Bar",
-        "Parking": "Parking",
-        "Garden": "Jardin",
         "Rooftop Bar": "Bar sur le Toit",
-        "Business Center": "Centre d'Affaires",
-        "Butler Service": "Service de Majordome"
-      },
-      "features": {
-        "A/C": "Climatisation",
-        "Bluetooth": "Bluetooth",
-        "USB": "USB",
-        "4WD": "4x4",
-        "GPS": "GPS",
-        "Premium Sound": "Son Premium",
-        "Large Storage": "Grand Coffre",
-        "USB Charging": "Recharge USB",
-        "Safety Pack": "Pack Sécurité",
-        "Premium Leather": "Cuir Premium",
-        "Premium Interior": "Intérieur Premium",
+        "Spa": "Spa",
         "WiFi": "WiFi"
+      },
+      "carAttributes": {
+        "Automatic": "Automatique",
+        "Diesel": "Diesel",
+        "Hybrid": "Hybride",
+        "Manual": "Manuelle",
+        "Petrol": "Essence"
       },
       "carTypes": {
         "sedan": "Berline",
         "suv": "SUV",
         "van": "Van"
       },
+      "features": {
+        "4WD": "4x4",
+        "A/C": "Climatisation",
+        "Bluetooth": "Bluetooth",
+        "GPS": "GPS",
+        "Large Storage": "Grand Coffre",
+        "Premium Interior": "Intérieur Premium",
+        "Premium Leather": "Cuir Premium",
+        "Premium Sound": "Son Premium",
+        "Safety Pack": "Pack Sécurité",
+        "USB": "USB",
+        "USB Charging": "Recharge USB",
+        "WiFi": "WiFi"
+      },
       "guideTypes": {
         "f1": "Guide Journée Complète",
         "h1": "Guide Demi-Journée",
         "s1": "Spécialiste Safari"
-      },
-      "carAttributes": {
-        "Automatic": "Automatique",
-        "Manual": "Manuelle",
-        "Petrol": "Essence",
-        "Diesel": "Diesel",
-        "Hybrid": "Hybride"
       }
     },
-    "confirmation": {
-      "title": "Demande Reçue !",
-      "subtitle": "Nous avons reçu votre plan de voyage et notre équipe l'examine déjà.",
-      "referenceNumber": "Numéro de Référence",
-      "whatNext": "Que se passe-t-il ensuite ?",
-      "steps": {
-        "1": {
-          "title": "Examen d'Expert (24h)",
-          "description": "Un de nos spécialistes examina vos vols, hôtels et services sélectionnés pour garantir la disponibilité et la logistique."
-        },
-        "2": {
-          "title": "Proposition Personnalisée",
-          "description": "Vous recevrez un itinéraire détaillé avec le prix final et les options de paiement par email."
-        }
+    "header": {
+      "description": "Personnalisez votre aventure africaine parfaite. Nous gérons les détails pendant que vous vous concentrez sur le voyage.",
+      "title": "Planifiez Votre Voyage"
+    },
+    "review": {
+      "alert": "Après soumission, nous examinerons votre demande et vous enverrons un lien de paiement dans les 24 heures.",
+      "submit": "Soumettre la Demande",
+      "subtitle": "Veuillez vérifier vos détails avant de confirmer",
+      "success": "Réservation soumise ! Nous vous contacterons dans les 24 heures.",
+      "title": "Revoir Votre Voyage"
+    },
+    "services": {
+      "filters": {
+        "all": "Tout",
+        "budget": "Budget (<$150)",
+        "category": "Catégorie",
+        "luxury": "Luxe (>$200)",
+        "mid": "Moyen ($150-$200)",
+        "price": "Prix",
+        "search": "Rechercher",
+        "stars": "Étoiles",
+        "stars4plus": "4 Étoiles & Plus",
+        "stars5": "5 Étoiles"
       },
-      "dashboardButton": "Aller au Tableau de Bord",
-      "homeButton": "Retour à l'Accueil"
-    }
-  },
-  "Admin": {
-    "nav": {
-      "brand": "Admin Vizit",
-      "overview": "Vue d'ensemble",
-      "requests": "Demandes",
-      "bookings": "Réservations",
-      "inventory": "Inventaire",
-      "settings": "Paramètres",
-      "publicSite": "Site Public",
-      "logout": "Déconnexion"
-    },
-    "dashboard": {
-      "title": "Tableau de Bord Admin",
-      "subtitle": "Gérer les demandes de voyage et les forfaits",
-      "stats": {
-        "pending": "Demandes En Attente",
-        "quoted": "Devis Envoyé",
-        "confirmed": "Confirmé"
-      },
-      "overview": "Vue d'ensemble",
-      "requests": "Demandes",
-      "recentRequests": {
-        "title": "Demandes Récentes",
-        "travelers": "voyageurs",
-        "to": "au",
-        "createPackage": "Créer un Forfait",
-        "viewPackage": "Voir le Forfait"
-      }
-    },
-    "requests": {
-      "title": "Demandes de Voyage",
-      "subtitle": "Voir et gérer les demandes de voyage entrantes",
-      "overview": "Vue d'ensemble",
-      "requests": "Demandes",
-      "table": {
-        "customer": "Client",
-        "dates": "Dates de Voyage",
-        "to": "au",
-        "services": "Services",
-        "status": "Statut",
-        "created": "Créé le",
-        "actions": "Actions",
-        "createPackage": "Créer Forfait",
-        "view": "Voir",
-        "badges": {
-          "flights": "Vols",
-          "hotels": "Hôtels",
-          "car": "Voiture",
-          "guide": "Guide"
-        }
-      }
-    },
-    "bookings": {
-      "title": "Réservations Confirmées",
-      "subtitle": "Gérer et traiter les réservations confirmées",
-      "card": {
-        "paid": "Payé",
-        "travelers": "voyageurs",
-        "badges": {
-          "flight": "Vol",
-          "hotel": "Hôtel",
-          "car": "Voiture",
-          "guide": "Guide"
-        },
-        "manageFulfillment": "Gérer le Traitement"
-      },
-      "empty": {
-        "title": "Pas encore de réservations confirmées",
-        "description": "Les réservations apparaîtront ici une fois le paiement effectué."
-      }
-    },
-    "inventory": {
-      "title": "Gestion des Stocks",
-      "subtitle": "Gérez vos actifs de voyage et offres partenaires.",
-      "searchPlaceholder": "Rechercher dans l'inventaire...",
-      "addNew": "Ajouter",
+      "guidesAlert": "Les guides sont optionnels mais fortement recommandés pour les premières visites !",
+      "noCars": "Aucun véhicule ne correspond à vos filtres",
+      "noHotels": "Aucun hôtel ne correspond à vos filtres",
+      "reviewBooking": "Revoir la Réservation",
       "tabs": {
-        "hotels": "Hôtels",
         "cars": "Voitures",
         "guides": "Guides",
-        "flights": "Vols"
-      },
-      "columns": {
-        "name": "Nom",
-        "location": "Lieu",
-        "rating": "Note",
-        "pricePerNight": "Prix/Nuit",
-        "vehicle": "Véhicule",
-        "type": "Type",
-        "capacity": "Capacité",
-        "pricePerDay": "Prix/Jour",
-        "languages": "Langues",
-        "experience": "Expérience",
-        "years": "Ans",
-        "flight": "Vol",
-        "route": "Trajet",
-        "time": "Heure",
-        "price": "Prix",
-        "seats": "Sièges"
+        "hotels": "Hôtels"
       }
     },
-    "packages": {
-      "createTitle": "Créer un Forfait Personnalisé",
-      "editTitle": "Modifier le Forfait",
-      "subtitle": "Construire un itinéraire personnalisé pour",
-      "tabs": {
-        "itinerary": "Itinéraire",
-        "pricing": "Prix et Inclusions",
-        "documents": "Documents"
-      },
-      "details": {
-        "status": "Statut",
-        "travelers": "Voyageurs",
-        "dates": "Dates"
-      },
-      "actions": {
-        "saveDraft": "Enregistrer le Brouillon",
-        "sendQuote": "Envoyer le Devis"
-      }
+    "steps": {
+      "contact": "Contact",
+      "review": "Révision",
+      "services": "Services",
+      "tripDetails": "Détails du Voyage"
     },
-    "Profile": {
-      "header": {
-        "title": "Profil Voyageur",
-        "subtitle": "Le Voyage de Sarah",
-        "signOut": "Déconnexion"
-      },
-      "tabs": {
-        "overview": "Vue d'ensemble",
-        "trips": "Mes Voyages",
-        "saved": "Enregistré",
-        "settings": "Paramètres"
-      },
-      "overview": {
-        "nextTrip": {
-          "label": "À Suivre",
-          "daysLeft": "Jours Restants",
-          "status": "Statut",
-          "confirmed": "Confirmé",
-          "travelers": "Voyageurs",
-          "adults": "Adultes"
-        },
-        "pendingRequests": {
-          "title": "Demandes En Attente"
-        },
-        "stats": {
-          "title": "Vos Statistiques",
-          "trips": "Voyages Effectués",
-          "days": "Jours de Voyage",
-          "reviews": "Avis"
-        }
-      },
-      "trips": {
-        "title": "Historique des Voyages",
-        "planNew": "Planifier un Voyage",
-        "upcoming": "À Venir",
-        "viewDetails": "Voir Détails"
-      },
-      "saved": {
-        "emptyTitle": "Aucun élément enregistré",
-        "emptyDescription": "Les éléments que vous marquez apparaîtront ici."
-      },
-      "settings": {
-        "title": "Paramètres du Compte",
-        "fullName": "Nom Complet",
-        "email": "Adresse Email",
-        "save": "Enregistrer"
-      }
+    "summary": {
+      "accommodation": "Hébergement",
+      "dates": "Dates",
+      "days": "jours",
+      "guide": "Guide",
+      "nights": "nuits",
+      "perDay": "/ jour",
+      "perNight": "/ nuit",
+      "serviceFee": "Frais de Service (5%)",
+      "subtotal": "Sous-total",
+      "title": "Votre Voyage",
+      "total": "Total Estimé",
+      "travelers": "Voyageurs",
+      "vehicle": "Véhicule",
+      "withDriver": "avec Chauffeur"
     },
-    "Languages": {
-      "en": "English",
-      "fr": "Français",
-      "es": "Español",
-      "de": "Deutsch",
-      "pt": "Português",
-      "ar": "العربية"
+    "tripDetails": {
+      "adults": "Adultes",
+      "arrival": "Arrivée au Rwanda",
+      "children": "Enfants (0-12)",
+      "continue": "Continuer vers Contact",
+      "departingFrom": "Départ De",
+      "departingPlaceholder": "ex. Paris, Bruxelles, Montréal",
+      "departure": "Départ du Rwanda",
+      "pickDate": "Choisir une date",
+      "purposes": {
+        "adventure": "Aventure",
+        "business": "Affaires",
+        "family": "Famille",
+        "honeymoon": "Lune de Miel",
+        "leisure": "Loisirs",
+        "other": "Autre"
+      },
+      "requestsPlaceholder": "Exigences diététiques, besoins d'accessibilité ou occasions spéciales...",
+      "specialRequests": "Demandes Spéciales (Optionnel)",
+      "subtitle": "Dites-nous d'où vous venez et quand",
+      "title": "Détails du Voyage",
+      "tripPurpose": "But du Voyage"
     }
+  },
+  "Profile": {
+    "header": {
+      "signOut": "Déconnexion",
+      "subtitle": "Le Voyage de Sarah",
+      "title": "Profil Voyageur"
+    },
+    "overview": {
+      "nextTrip": {
+        "adults": "Adultes",
+        "confirmed": "Confirmé",
+        "daysLeft": "Jours Restants",
+        "imageAlt": "Prochain Voyage",
+        "label": "À Venir",
+        "status": "Statut",
+        "travelers": "Voyageurs"
+      },
+      "pendingRequests": {
+        "title": "Demandes En Attente"
+      },
+      "stats": {
+        "days": "Jours Voyagés",
+        "reviews": "Avis",
+        "title": "Vos Statistiques",
+        "trips": "Voyages Effectués"
+      }
+    },
+    "saved": {
+      "emptyDescription": "Les éléments que vous sauvegardez apparaîtront ici.",
+      "emptyTitle": "Aucun Élément Sauvegardé"
+    },
+    "settings": {
+      "email": "Adresse Email",
+      "fullName": "Nom Complet",
+      "save": "Enregistrer les Modifications",
+      "title": "Paramètres du Compte"
+    },
+    "tabs": {
+      "overview": "Vue d'ensemble",
+      "saved": "Enregistré",
+      "settings": "Paramètres",
+      "trips": "Mes Voyages"
+    },
+    "trips": {
+      "planNew": "Planifier un Nouveau Voyage",
+      "title": "Historique des Voyages",
+      "upcoming": "À Venir",
+      "viewDetails": "Voir Détails"
+    }
+  },
+  "Services": {
+    "description": "Nous gérons tout, du moment où vous quittez votre domicile jusqu'à votre retour, transformé pour toujours.",
+    "items": {
+      "experiences": {
+        "description": "Trek des gorilles, plantations de thé, et plus.",
+        "title": "Expériences Exclusives"
+      },
+      "flights": {
+        "description": "Vols privés et accès aux classes premium.",
+        "title": "Vols de Luxe"
+      },
+      "hotels": {
+        "description": "Des lodges boutiques aux resorts 5 étoiles.",
+        "title": "Hôtels Sélectionnés"
+      },
+      "transfers": {
+        "description": "Transport terrestre sans faille.",
+        "title": "Transferts VIP"
+      }
+    },
+    "overline": "Nos Services",
+    "title": "Services de Classe Mondiale"
+  },
+  "ServicesPage": {
+    "bookService": "Réserver ce Service",
+    "categories": {
+      "all": "Tous",
+      "bnbs": "B&B",
+      "carRentals": "Location de Voitures",
+      "guides": "Guides",
+      "hotels": "Hôtels"
+    },
+    "description": "Hébergements sélectionnés, transport fiable et guides experts. Tout ce dont vous avez besoin pour le voyage parfait.",
+    "items": {
+      "guide-alex": {
+        "description": "Spécialisé dans la vie aviaire de l'Akagera et de Nyungwe.",
+        "details": [
+          "10+ années d'expérience sur le terrain.",
+          "Longue-vue haut de gamme fournie.",
+          "Assistance photo.",
+          "Parle couramment anglais et français."
+        ],
+        "title": "Alex - Expert Ornithologue"
+      },
+      "guide-sarah": {
+        "description": "Dévoile l'histoire profonde et l'avenir de Kigali.",
+        "details": [
+          "Visites de musées organisées.",
+          "Tournée des galeries d'art.",
+          "Focus sur l'histoire contemporaine.",
+          "Véhicule privé inclus."
+        ],
+        "title": "Sarah - Historienne Culturelle"
+      },
+      "kigali-soul": {
+        "description": "Un séjour vibrant et artistique au cœur de Nyamirambo.",
+        "details": [
+          "Meubles fabriqués localement.",
+          "Terrasse sur le toit avec vue sur la ville.",
+          "Petit-déjeuner maison inclus.",
+          "À distance de marche des bars à lait."
+        ],
+        "title": "Kigali Soul Guesthouse"
+      },
+      "land-cruiser-v8": {
+        "description": "Le véhicule de safari ultime pour tout terrain.",
+        "details": [
+          "Toit ouvrant pour l'observation du gibier.",
+          "Transmission automatique.",
+          "Assurance complète incluse.",
+          "Chauffeur disponible sur demande."
+        ],
+        "title": "Toyota Land Cruiser V8"
+      },
+      "lavender-home": {
+        "description": "Chambre d'hôtes confortable et familiale près du centre de congrès.",
+        "details": [
+          "Cadre de jardin luxuriant.",
+          "Internet fibre haut débit.",
+          "Navette aéroport disponible.",
+          "Quartier résidentiel calme."
+        ],
+        "title": "The Lavender Home"
+      },
+      "one-and-only": {
+        "description": "Un siège exclusif au premier rang pour voir les gorilles de montagne.",
+        "details": [
+          "Niché dans une forêt d'eucalyptus.",
+          "Lodges privés avec cheminées.",
+          "Piscine à débordement avec vue sur les volcans.",
+          "Accès héliport."
+        ],
+        "title": "One&Only Gorilla's Nest"
+      },
+      "rav4-hire": {
+        "description": "Parfait pour la conduite en ville et les aventures légères hors route.",
+        "details": [
+          "Économe en carburant.",
+          "Confort SUV compact.",
+          "Système audio Bluetooth.",
+          "Kilométrage illimité inclus."
+        ],
+        "title": "Toyota RAV4 (Nouveau Modèle)"
+      },
+      "the-retreat": {
+        "description": "Le premier hôtel boutique de luxe de Kigali avec piscines chauffées à l'énergie solaire.",
+        "details": [
+          "11 Villas avec Piscine de Luxe.",
+          "Restaurant & Bar Fusion.",
+          "Spa Bien-être & Gym.",
+          "Situé dans le paisible Kiyovu."
+        ],
+        "title": "The Retreat by Heaven"
+      }
+    },
+    "noResults": "Aucun service trouvé correspondant à vos critères.",
+    "overline": "L'Index",
+    "searchPlaceholder": "Rechercher des services...",
+    "sort": "Trier:",
+    "sortOptions": {
+      "az": "A-Z",
+      "priceHighLow": "Prix: Décroissant",
+      "priceLowHigh": "Prix: Croissant",
+      "recommended": "Recommandé"
+    },
+    "title": "Nos Services"
+  },
+  "SocialProof": {
+    "tagline": "Approuvé par des voyageurs et partenaires du monde entier"
+  },
+  "Testimonials": {
+    "description": "Des histoires vraies de vrais voyages. Découvrez pourquoi des milliers d'aventuriers choisissent Vizit Africa.",
+    "items": {
+      "1": {
+        "content": "Vizit Africa a réalisé notre rêve de trek des gorilles. La logistique était impeccable et notre guide Jean-Pierre était incroyablement compétent. Hautement recommandé!",
+        "country": "Royaume-Uni",
+        "name": "Sarah Mitchell",
+        "role": "Voyageuse d'Aventure"
+      },
+      "2": {
+        "content": "J'avais besoin d'une location de voiture et d'un hôtel rapidement pour une conférence à Kigali. Leur équipe a tout organisé en quelques heures. Service professionnel, fiable et excellent.",
+        "country": "États-Unis",
+        "name": "John Davis",
+        "role": "Voyageur d'Affaires"
+      },
+      "3": {
+        "content": "Voyager avec des enfants peut être stressant, mais Vizit Africa a tout géré. Le resort du lac Kivu qu'ils ont suggéré était parfait pour notre famille. Nous reviendrons!",
+        "country": "Kenya",
+        "name": "Aisha Mohammed",
+        "role": "Vacances en Famille"
+      },
+      "4": {
+        "content": "En tant que voyageur solo, la sécurité était ma priorité. Leurs guides locaux m'ont mis complètement à l'aise tout en me montrant des joyaux cachés que je n'aurais jamais trouvés seul.",
+        "country": "Singapour",
+        "name": "Marcus Chen",
+        "role": "Explorateur Solo"
+      },
+      "5": {
+        "content": "L'heure dorée à Akagera était magique. Ils savaient exactement où nous positionner pour les meilleures photos. Mon portfolio n'a jamais été aussi beau!",
+        "country": "France",
+        "name": "Emma Laurent",
+        "role": "Photographe"
+      }
+    },
+    "overline": "Ce Qu'ils Disent",
+    "title": "Histoires de Voyageurs"
+  },
+  "WhyUs": {
+    "benefits": [
+      "Prix en temps réel de partenaires vérifiés",
+      "Experts locaux avec une connaissance approfondie du Rwanda",
+      "Support 24h/24 et 7j/7 pendant votre voyage",
+      "Réservation et annulation flexibles",
+      "Coûts transparents sans frais cachés"
+    ],
+    "description": "Nous ne réservons pas seulement des voyages; nous créons des héritages personnels. Voici ce qui distingue nos voyages.",
+    "overline": "Pourquoi Nous Choisir",
+    "stats": {
+      "countries": {
+        "label": "Pays Servis",
+        "value": "15+"
+      },
+      "rating": {
+        "label": "Note Moyenne",
+        "value": "4.9"
+      },
+      "travelers": {
+        "label": "Voyageurs Heureux",
+        "value": "200+"
+      }
+    },
+    "title": "La Différence Vizit"
   }
 }

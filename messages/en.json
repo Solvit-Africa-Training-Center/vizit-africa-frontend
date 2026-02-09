@@ -761,7 +761,7 @@
         }
       }
     },
-    "bookings": {
+      "bookings": {
       "title": "Confirmed Bookings",
       "subtitle": "Manage and fulfill confirmed travel bookings",
       "card": {
@@ -778,6 +778,37 @@
       "empty": {
         "title": "No confirmed bookings yet",
         "description": "Bookings will appear here once customers complete payment."
+      },
+      "fulfill": {
+        "back": "Back to Bookings",
+        "title": "Booking Fulfillment",
+        "paid": "Paid",
+        "downloadInvoice": "Download Invoice",
+        "progress": {
+          "title": "Fulfillment Progress"
+        },
+        "actions": {
+          "title": "Action Items",
+          "uploadTickets": "Upload Flight Tickets",
+          "confirmHotel": "Confirm Hotel Reservation",
+          "issueCarVoucher": "Issue Car Voucher",
+          "finalizeItinerary": "Finalize Guide Itinerary",
+          "sendDocuments": "Send Final Documents to Client",
+          "complete": "Mark Booking Complete"
+        },
+        "customer": {
+          "title": "Customer Details",
+          "name": "Name",
+          "email": "Email",
+          "phone": "Phone"
+        },
+        "payment": {
+          "title": "Payment Summary",
+          "total": "Total Amount",
+          "method": "Paid via",
+          "date": "Date",
+          "status": "Paid in Full"
+        }
       }
     },
     "inventory": {
@@ -814,76 +845,137 @@
       "createTitle": "Create Custom Package",
       "editTitle": "Edit Package",
       "subtitle": "Build a custom itinerary for",
+      "back": "Back to Requests",
       "tabs": {
         "itinerary": "Itinerary",
         "pricing": "Pricing & Inclusions",
         "documents": "Documents"
       },
       "details": {
+        "title": "Request Details",
         "status": "Status",
         "travelers": "Travelers",
-        "dates": "Dates"
+        "dates": "Dates",
+        "customer": "Customer",
+        "services": "Services Requested",
+        "notes": "Notes"
       },
       "actions": {
         "saveDraft": "Save Draft",
-        "sendQuote": "Send Quote"
+        "sendQuote": "Send Quote",
+        "add": "Add",
+        "options": "Options"
+      },
+      "units": {
+        "perNight": "/night",
+        "perDay": "/day",
+        "passengers": "passengers"
       }
     },
-    "Profile": {
-      "header": {
-        "title": "Traveler Profile",
-        "subtitle": "Sarah's Journey",
-        "signOut": "Sign Out"
-      },
-      "tabs": {
-        "overview": "Overview",
-        "trips": "My Trips",
-        "saved": "Saved",
-        "settings": "Settings"
-      },
-      "overview": {
-        "nextTrip": {
-          "label": "Up Next",
-          "daysLeft": "Days Left",
-          "status": "Status",
-          "confirmed": "Confirmed",
-          "travelers": "Travelers",
-          "adults": "Adults"
-        },
-        "pendingRequests": {
-          "title": "Pending Requests"
-        },
-        "stats": {
-          "title": "Your Stats",
-          "trips": "Trips Taken",
-          "days": "Days Traveled",
-          "reviews": "Reviews"
-        }
-      },
-      "trips": {
-        "title": "Trip History",
-        "planNew": "Plan New Trip",
-        "upcoming": "Upcoming",
-        "viewDetails": "View Details"
-      },
-      "saved": {
-        "emptyTitle": "No Saved Items",
-        "emptyDescription": "Items you bookmark will appear here."
-      },
-      "settings": {
-        "title": "Account Settings",
-        "fullName": "Full Name",
-        "email": "Email Address",
-        "save": "Save Changes"
-      }
-    },
+
     "Languages": {
       "en": "English",
       "fr": "Français",
       "es": "Español",
       "de": "Deutsch",
       "pt": "Português",
-      "ar": "العربية"
+      "ar": "العربية",
+      "he": "עברית"
+    }
+  },
+  "Profile": {
+    "header": {
+      "title": "Traveler Profile",
+      "subtitle": "Sarah's Journey",
+      "signOut": "Sign Out"
+    },
+    "tabs": {
+      "overview": "Overview",
+      "trips": "My Trips",
+      "saved": "Saved",
+      "settings": "Settings"
+    },
+    "overview": {
+      "nextTrip": {
+        "label": "Up Next",
+        "imageAlt": "Next Trip",
+        "daysLeft": "Days Left",
+        "status": "Status",
+        "confirmed": "Confirmed",
+        "travelers": "Travelers",
+        "adults": "Adults"
+      },
+      "pendingRequests": {
+        "title": "Pending Requests"
+      },
+      "stats": {
+        "title": "Your Stats",
+        "trips": "Trips Taken",
+        "days": "Days Traveled",
+        "reviews": "Reviews"
+      }
+    },
+    "trips": {
+      "title": "Trip History",
+      "planNew": "Plan New Trip",
+      "upcoming": "Upcoming",
+      "viewDetails": "View Details"
+    },
+    "saved": {
+      "emptyTitle": "No Saved Items",
+      "emptyDescription": "Items you bookmark will appear here."
+    },
+    "settings": {
+      "title": "Account Settings",
+      "fullName": "Full Name",
+      "email": "Email Address",
+      "save": "Save Changes"
+    }
+  },
+  "LandingExperiences": {
+    "overline": "Curated Experiences",
+    "title": "Journey Through\nThe Landscape",
+    "cta": "Explore",
+    "items": {
+      "1": {
+        "title": "Mountain Gorillas",
+        "location": "Volcanoes National Park",
+        "description": "Face-to-face encounters with gentle giants."
+      },
+      "2": {
+        "title": "Chimpanzee Trekking",
+        "location": "Nyungwe Forest",
+        "description": "Ancient rainforests teeming with primates."
+      },
+      "3": {
+        "title": "Game Drive Safari",
+        "location": "Akagera National Park",
+        "description": "Lions, rhinos, and elephants in the savannah."
+      },
+      "4": {
+        "title": "Lake Kivu Relaxation",
+        "location": "Western Province",
+        "description": "Unwind on the shores of Rwanda's largest lake."
+      },
+      "5": {
+        "title": "Kigali Cultural Tour",
+        "location": "Kigali City",
+        "description": "Vibrant markets, art galleries, and history."
+      }
+    }
+  },
+  "LandingGallery": {
+    "overline": "Visual Stories",
+    "title": "Captured \nMoments",
+    "description": "See the world through the eyes of our travelers. From luxury stays to wild adventures.",
+    "viewAll": "View Full Gallery",
+    "items": {
+      "1": { "alt": "Imigongo Art", "caption": "Cultural Heritage" },
+      "2": { "alt": "Kigali Convention Center", "caption": "Modern Kigali" },
+      "3": { "alt": "Tea Plantation", "caption": "Nyungwe Tea" },
+      "4": { "alt": "Gorilla Trekking", "caption": "Once in a Lifetime" },
+      "5": { "alt": "Safari Sunset", "caption": "Golden Plains" },
+      "6": { "alt": "Canopy Walk", "caption": "Above the Trees" }
     }
   }
 }

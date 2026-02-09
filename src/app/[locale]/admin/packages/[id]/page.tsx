@@ -17,12 +17,12 @@ import {
   RiUserLine,
   RiAddLine,
   RiDeleteBinLine,
+  RiStarLine,
 } from "@remixicon/react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { use } from "react";
 
-// Client component wrapper for using hooks
 function PackageBuilderContent({ id }: { id: string }) {
   const t = useTranslations("Admin.packages");
   const tCommon = useTranslations("Admin.requests.table.badges");
@@ -38,7 +38,7 @@ function PackageBuilderContent({ id }: { id: string }) {
             className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-2"
           >
             <RiArrowLeftLine className="size-4" />
-            Back to Requests
+            {t("back")}
           </Link>
           <h1 className="font-display text-2xl md:text-3xl font-bold text-foreground">
             {t("createTitle")}
@@ -57,12 +57,12 @@ function PackageBuilderContent({ id }: { id: string }) {
         <div className="lg:col-span-1">
           <div className="bg-card border border-border rounded-lg p-5 sticky top-28">
             <h2 className="font-semibold text-foreground mb-4">
-              Request Details
+              {t("details.title")}
             </h2>
 
             <div className="space-y-4 text-sm">
               <div>
-                <p className="text-muted-foreground">Customer</p>
+                <p className="text-muted-foreground">{t("details.customer")}</p>
                 <p className="font-medium text-foreground">{request.name}</p>
                 <p className="text-muted-foreground">{request.email}</p>
               </div>
@@ -84,7 +84,7 @@ function PackageBuilderContent({ id }: { id: string }) {
               </div>
 
               <div>
-                <p className="text-muted-foreground">Services Requested</p>
+                <p className="text-muted-foreground">{t("details.services")}</p>
                 <div className="flex flex-wrap gap-1 mt-1">
                   {request.needsFlights && (
                     <span className="text-xs bg-primary-subtle text-primary px-2 py-0.5 rounded">
@@ -111,7 +111,7 @@ function PackageBuilderContent({ id }: { id: string }) {
 
               {request.notes && (
                 <div>
-                  <p className="text-muted-foreground">Notes</p>
+                  <p className="text-muted-foreground">{t("details.notes")}</p>
                   <p className="text-foreground">{request.notes}</p>
                 </div>
               )}
@@ -128,12 +128,12 @@ function PackageBuilderContent({ id }: { id: string }) {
                     <RiPlaneLine className="size-4 text-primary" />
                   </div>
                   <h3 className="font-semibold text-foreground">
-                    {tCommon("flights")} Options
+                    {tCommon("flights")} {t("actions.options")}
                   </h3>
                 </div>
                 <Button variant="ghost" size="sm">
                   <RiAddLine />
-                  Add {tCommon("flights")}
+                  {t("actions.add")} {tCommon("flights")}
                 </Button>
               </div>
               <div className="p-4 space-y-3">
@@ -178,12 +178,12 @@ function PackageBuilderContent({ id }: { id: string }) {
                     <RiBuilding2Line className="size-4 text-primary" />
                   </div>
                   <h3 className="font-semibold text-foreground">
-                    {tCommon("hotels")} Options
+                    {tCommon("hotels")} {t("actions.options")}
                   </h3>
                 </div>
                 <Button variant="ghost" size="sm">
                   <RiAddLine />
-                  Add {tCommon("hotels")}
+                  {t("actions.add")} {tCommon("hotels")}
                 </Button>
               </div>
               <div className="p-4 space-y-3">
@@ -198,13 +198,16 @@ function PackageBuilderContent({ id }: { id: string }) {
                           {hotel.name}
                         </p>
                         <p className="text-sm text-muted-foreground">
-                          {hotel.area} • ★{hotel.rating}
+                          {hotel.area} •{" "}
+                          <RiStarLine className="size-3.5 inline" />{" "}
+                          {hotel.rating}
                         </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
                       <span className="font-mono font-semibold">
-                        ${hotel.pricePerNight}/night
+                        ${hotel.pricePerNight}
+                        {t("units.perNight")}
                       </span>
                       <button
                         type="button"
@@ -228,12 +231,12 @@ function PackageBuilderContent({ id }: { id: string }) {
                   </div>
                   <h3 className="font-semibold text-foreground">
                     {" "}
-                    {tCommon("car")} Options
+                    {tCommon("car")} {t("actions.options")}
                   </h3>
                 </div>
                 <Button variant="ghost" size="sm">
                   <RiAddLine />
-                  Add {tCommon("car")}
+                  {t("actions.add")} {tCommon("car")}
                 </Button>
               </div>
               <div className="p-4 space-y-3">
@@ -248,13 +251,14 @@ function PackageBuilderContent({ id }: { id: string }) {
                           {car.name}
                         </p>
                         <p className="text-sm text-muted-foreground">
-                          {car.capacity} passengers • {car.type}
+                          {car.capacity} {t("units.passengers")} • {car.type}
                         </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
                       <span className="font-mono font-semibold">
-                        ${car.pricePerDay}/day
+                        ${car.pricePerDay}
+                        {t("units.perDay")}
                       </span>
                       <button
                         type="button"
@@ -277,12 +281,12 @@ function PackageBuilderContent({ id }: { id: string }) {
                     <RiUserLine className="size-4 text-primary" />
                   </div>
                   <h3 className="font-semibold text-foreground">
-                    {tCommon("guide")} Options
+                    {tCommon("guide")} {t("actions.options")}
                   </h3>
                 </div>
                 <Button variant="ghost" size="sm">
                   <RiAddLine />
-                  Add {tCommon("guide")}
+                  {t("actions.add")} {tCommon("guide")}
                 </Button>
               </div>
               <div className="p-4 space-y-3">
@@ -303,7 +307,8 @@ function PackageBuilderContent({ id }: { id: string }) {
                     </div>
                     <div className="flex items-center gap-3">
                       <span className="font-mono font-semibold">
-                        ${guide.pricePerDay}/day
+                        ${guide.pricePerDay}
+                        {t("units.perDay")}
                       </span>
                       <button
                         type="button"

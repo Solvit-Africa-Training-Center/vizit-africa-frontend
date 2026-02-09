@@ -1,0 +1,34 @@
+### Register User
+POST {{baseUrl}}/accounts/users/
+Content-Type: application/json
+
+{
+  "full_name": "John Doe",
+  "email": "saadnkurunziza@gmail.com",
+  "phone_number": "0790963467",
+  "password": "Test1234!",
+  "re_password": "Test1234!",
+  "role": "CLIENT"
+}
+
+### Verify Email
+POST {{baseUrl}}/accounts/users/verify_email/
+Content-Type: application/json
+
+{
+  "email": "saadnkurunziza@gmail.com",
+  "code": "991689"
+}
+
+### Login
+POST {{baseUrl}}/accounts/login/
+Content-Type: application/json
+
+{
+  "email": "saadnkurunziza@gmail.com",
+  "password": "Test1234!"
+}
+
+### Get User
+GET {{baseUrl}}/accounts/users/1/
+Authorization: Bearer {{token}}

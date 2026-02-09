@@ -23,11 +23,12 @@ export function LanguageSwitcher({
   const pathname = usePathname();
 
   const languages = [
-    { code: "en", label: "English" }, // Hardcoded fallbacks to prevent empty rendering if keys missing
+    { code: "en", label: "English" },
     { code: "fr", label: "Français" },
     { code: "es", label: "Español" },
     { code: "de", label: "Deutsch" },
     { code: "pt", label: "Português" },
+    { code: "he", label: "עברית" },
     { code: "ar", label: "العربية" },
   ];
 

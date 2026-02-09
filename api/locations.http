@@ -1,0 +1,10 @@
+### Create Location
+POST {{baseUrl}}/locations/
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Serengeti National Park",
+  "latitude": -2.333333,
+  "longitude": 34.833333
+}
