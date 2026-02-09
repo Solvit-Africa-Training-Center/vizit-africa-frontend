@@ -70,7 +70,7 @@ function ConfirmationContent() {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-3 pt-4">
-          <Link href="/dashboard" className="flex-1">
+          <Link href="/profile" className="flex-1">
             <Button className="w-full" size="lg">
               Go to Dashboard <RiArrowRightLine />
             </Button>

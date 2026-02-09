@@ -7,7 +7,6 @@ import {
   Services,
   SocialProof,
   ExperienceShowcase,
-  CoolPlaces,
   Gallery,
   Testimonials,
   WhyUs,
@@ -26,7 +25,7 @@ export const metadata: Metadata = {
       "Experience the best of Rwanda with custom travel packages. From gorilla trekking to Kigali city tours, we handle flights, hotels, and guides.",
     images: [
       {
-        url: "/images/og-image.jpg", // TODO: replace with actual image
+        url: "/images/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Vizit Africa Travel Experience",
@@ -68,9 +67,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <SocialProof />
-
       <Services />
-      <CoolPlaces />
       <Destinations />
       <ExperienceShowcase />
       <HowItWorks />

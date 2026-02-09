@@ -1,7 +1,6 @@
 "use client";
 
 import type { Hotel } from "../../lib/plan_trip-types";
-import { Badge } from "@/components/ui/badge";
 import { RiMapPinLine, RiCheckLine, RiHotelLine } from "@remixicon/react";
 
 interface HotelCardProps {
@@ -20,56 +19,83 @@ export function HotelCard({
   return (
     <div
       onClick={onSelect}
-      className={`group relative border-2 rounded-xl overflow-hidden cursor-pointer transition-all ${
+      className={`group relative border transition-all duration-300 cursor-pointer ${
         isSelected
-          ? "border-primary bg-primary-subtle"
-          : "border-border bg-white hover:border-primary/50"
+          ? "border-primary bg-primary/5"
+          : "border-border bg-white hover:border-primary"
       }`}
     >
-      <div className="aspect-video bg-muted relative">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <RiHotelLine className="size-10 text-muted-foreground/50" />
+      {/* Selection Indicator */}
+      <div
+        className={`absolute top-0 right-0 p-3 z-10 transition-opacity duration-300 ${isSelected ? "opacity-100" : "opacity-0"}`}
+      >
+        <div className="size-6 bg-primary text-primary-foreground flex items-center justify-center">
+          <RiCheckLine className="size-4" />
         </div>
-
-        {isSelected && (
-          <div className="absolute top-2 right-2 size-6 rounded-full bg-primary text-white flex items-center justify-center">
-            <RiCheckLine className="size-4" />
-          </div>
-        )}
       </div>
 
-      <div className="p-4">
-        <h4 className="font-semibold text-foreground mb-1 line-clamp-1">
-          {hotel.name}
-        </h4>
-        <p className="text-sm text-muted-foreground flex items-center gap-1 mb-2">
-          <RiMapPinLine className="size-3 shrink-0" />
-          <span className="line-clamp-1">{hotel.address}</span>
-        </p>
-
-        <div className="flex flex-wrap gap-1 mb-3">
-          {hotel.amenities.slice(0, 3).map((a) => (
-            <Badge key={a} variant="secondary" className="text-xs">
-              {a}
-            </Badge>
-          ))}
-          {hotel.amenities.length > 3 && (
-            <Badge variant="outline" className="text-xs">
-              +{hotel.amenities.length - 3}
-            </Badge>
-          )}
+      <div className="flex flex-col h-full">
+        {/* Image Area */}
+        <div className="aspect-[4/3] bg-muted relative overflow-hidden">
+          <div className="absolute inset-0 flex items-center justify-center bg-muted/50">
+            <RiHotelLine className="size-10 text-muted-foreground/30" />
+          </div>
+          {/* Star Rating Badge */}
+          <div className="absolute bottom-0 left-0 bg-white/90 backdrop-blur-sm px-3 py-1 border-t border-r border-border">
+            <div className="flex gap-0.5">
+              {Array.from({ length: hotel.stars }).map((_, i) => (
+                <span key={i} className="text-primary text-xs">
+                  ★
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
 
-        <div className="flex items-end justify-between pt-3 border-t border-border">
+        {/* Content */}
+        <div className="p-5 flex flex-col flex-1 gap-4">
           <div>
-            <p className="text-xs text-muted-foreground">{days} nights</p>
-            <p className="font-bold text-lg text-foreground">
-              ${hotel.pricePerNight * days}
+            <h4 className="font-display text-xl font-bold uppercase tracking-tight text-foreground line-clamp-1 group-hover:text-primary transition-colors">
+              {hotel.name}
+            </h4>
+            <div className="flex items-center gap-2 mt-2 text-muted-foreground">
+              <RiMapPinLine className="size-3.5 shrink-0" />
+              <span className="text-sm font-light line-clamp-1">
+                {hotel.address}
+              </span>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            {hotel.amenities.slice(0, 3).map((a) => (
+              <span
+                key={a}
+                className="text-[10px] uppercase tracking-wider px-2 py-1 border border-border text-muted-foreground"
+              >
+                {a}
+              </span>
+            ))}
+            {hotel.amenities.length > 3 && (
+              <span className="text-[10px] uppercase tracking-wider px-2 py-1 border border-border text-muted-foreground">
+                +{hotel.amenities.length - 3}
+              </span>
+            )}
+          </div>
+
+          <div className="mt-auto pt-4 border-t border-border/50 flex items-end justify-between">
+            <div>
+              <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">
+                Total ({days} nights)
+              </p>
+              <p className="font-display text-xl font-bold text-foreground">
+                ${hotel.pricePerNight * days}
+              </p>
+            </div>
+            <p className="text-sm font-medium text-muted-foreground">
+              ${hotel.pricePerNight}
+              <span className="text-xs font-light">/night</span>
             </p>
           </div>
-          <p className="text-xs text-muted-foreground">
-            ${hotel.pricePerNight}/night
-          </p>
         </div>
       </div>
     </div>

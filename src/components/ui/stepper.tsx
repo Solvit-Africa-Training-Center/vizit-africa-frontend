@@ -195,7 +195,7 @@ function StepperIndicator({
 
   const defaultProps = {
     className: cn(
-      "relative flex size-6 shrink-0 items-center justify-center rounded-full bg-muted font-medium text-muted-foreground text-xs data-[state=active]:bg-primary data-[state=completed]:bg-primary data-[state=active]:text-primary-foreground data-[state=completed]:text-primary-foreground",
+      "relative flex size-6 shrink-0 items-center justify-center rounded-sm bg-muted font-bold text-muted-foreground text-xs data-[state=active]:bg-primary data-[state=completed]:bg-primary data-[state=active]:text-primary-foreground data-[state=completed]:text-primary-foreground transition-all duration-300",
       className,
     ),
     "data-slot": "stepper-indicator",

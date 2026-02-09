@@ -1,7 +1,6 @@
 "use client";
 
 import type { Car } from "../../lib/plan_trip-types";
-import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
@@ -37,101 +36,135 @@ export function CarCard({
   return (
     <div
       onClick={onSelect}
-      className={`group relative border-2 rounded-xl overflow-hidden cursor-pointer transition-all ${
+      className={`group relative border transition-all duration-300 cursor-pointer ${
         isSelected
-          ? "border-primary bg-primary-subtle"
-          : "border-border bg-white hover:border-primary/50"
+          ? "border-primary bg-primary/5"
+          : "border-border bg-white hover:border-primary"
       }`}
     >
-      {/* placeholder */}
-      <div className="aspect-video bg-muted relative">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <RiCarLine className="size-10 text-muted-foreground/50" />
+      {/* Selection Indicator */}
+      <div
+        className={`absolute top-0 right-0 p-3 z-10 transition-opacity duration-300 ${isSelected ? "opacity-100" : "opacity-0"}`}
+      >
+        <div className="size-6 bg-primary text-primary-foreground flex items-center justify-center">
+          <RiCheckLine className="size-4" />
         </div>
-
-        <div className="absolute top-2 left-2 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1">
-          <span className="text-xs font-medium capitalize">{car.category}</span>
-        </div>
-
-        {isSelected && (
-          <div className="absolute top-2 right-2 size-6 rounded-full bg-primary text-white flex items-center justify-center">
-            <RiCheckLine className="size-4" />
-          </div>
-        )}
       </div>
 
-      <div className="p-4">
-        <h4 className="font-semibold text-foreground mb-2">{car.model}</h4>
-
-        <div className="flex items-center gap-3 text-sm text-muted-foreground mb-3">
-          <span className="flex items-center gap-1">
-            <RiUserLine className="size-3" />
-            {car.seats}
-          </span>
-          <span className="flex items-center gap-1">
-            <RiSettings4Line className="size-3" />
-            {car.transmission}
-          </span>
-          <span className="text-xs">{car.fuelType}</span>
-        </div>
-
-        <div className="flex flex-wrap gap-1 mb-3">
-          {car.features.slice(0, 3).map((f) => (
-            <Badge key={f} variant="secondary" className="text-xs">
-              {f}
-            </Badge>
-          ))}
-        </div>
-
-        {isSelected && (
-          <div
-            className="bg-muted/50 rounded-lg p-3 mb-3"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <RadioGroup
-              value={withDriver ? "with" : "self"}
-              onValueChange={(v) => onDriverChange(v === "with")}
-            >
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="self" id={`self-${car.id}`} />
-                  <Label
-                    htmlFor={`self-${car.id}`}
-                    className="text-sm cursor-pointer"
-                  >
-                    Self-drive
-                  </Label>
-                </div>
-                <span className="text-sm font-medium">
-                  ${car.pricePerDay}/day
-                </span>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="with" id={`with-${car.id}`} />
-                  <Label
-                    htmlFor={`with-${car.id}`}
-                    className="text-sm cursor-pointer"
-                  >
-                    With driver
-                  </Label>
-                </div>
-                <span className="text-sm font-medium">
-                  ${car.pricePerDay + driverSurcharge}/day
-                </span>
-              </div>
-            </RadioGroup>
+      <div className="flex flex-col h-full">
+        {/* Header / Image Placeholder */}
+        <div className="aspect-[4/3] bg-muted relative overflow-hidden border-b border-border">
+          <div className="absolute inset-0 flex items-center justify-center bg-muted/50">
+            <RiCarLine className="size-12 text-muted-foreground/30" />
           </div>
-        )}
+          <div className="absolute top-0 left-0 bg-white/90 backdrop-blur-sm px-4 py-2 border-b border-r border-border">
+            <span className="text-xs font-mono uppercase tracking-widest">
+              {car.category}
+            </span>
+          </div>
+        </div>
 
-        <div className="flex items-end justify-between pt-3 border-t border-border">
+        <div className="p-5 flex flex-col flex-1 gap-4">
           <div>
-            <p className="text-xs text-muted-foreground">{days} days total</p>
-            <p className="font-bold text-lg text-foreground">${total}</p>
+            <h4 className="font-display text-xl font-bold uppercase tracking-tight text-foreground mb-3 group-hover:text-primary transition-colors">
+              {car.model}
+            </h4>
+
+            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+              <span className="flex items-center gap-1.5">
+                <RiUserLine className="size-3.5" />
+                {car.seats}
+              </span>
+              <span className="w-px h-3 bg-border" />
+              <span className="flex items-center gap-1.5">
+                <RiSettings4Line className="size-3.5" />
+                {car.transmission}
+              </span>
+              <span className="w-px h-3 bg-border" />
+              <span>{car.fuelType}</span>
+            </div>
           </div>
-          <p className="text-xs text-muted-foreground">
-            ${car.pricePerDay}/day
-          </p>
+
+          <div className="flex flex-wrap gap-2">
+            {car.features.slice(0, 3).map((f) => (
+              <span
+                key={f}
+                className="text-[10px] uppercase tracking-wider px-2 py-1 border border-border text-muted-foreground"
+              >
+                {f}
+              </span>
+            ))}
+          </div>
+
+          {isSelected && (
+            <div
+              className="bg-background border border-border p-3"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <RadioGroup
+                value={withDriver ? "with" : "self"}
+                onValueChange={(v) => onDriverChange(v === "with")}
+                className="gap-3"
+              >
+                <div className="flex items-center justify-between group/option cursor-pointer">
+                  <div className="flex items-center space-x-3">
+                    <RadioGroupItem
+                      value="self"
+                      id={`self-${car.id}`}
+                      className="border-muted-foreground text-primary"
+                    />
+                    <Label
+                      htmlFor={`self-${car.id}`}
+                      className="text-sm font-medium cursor-pointer"
+                    >
+                      Self-drive
+                    </Label>
+                  </div>
+                  <span className="text-sm font-mono text-muted-foreground">
+                    ${car.pricePerDay}
+                    <span className="text-xs">/day</span>
+                  </span>
+                </div>
+
+                <div className="w-full h-px bg-border/50" />
+
+                <div className="flex items-center justify-between group/option cursor-pointer">
+                  <div className="flex items-center space-x-3">
+                    <RadioGroupItem
+                      value="with"
+                      id={`with-${car.id}`}
+                      className="border-muted-foreground text-primary"
+                    />
+                    <Label
+                      htmlFor={`with-${car.id}`}
+                      className="text-sm font-medium cursor-pointer"
+                    >
+                      With driver
+                    </Label>
+                  </div>
+                  <span className="text-sm font-mono text-muted-foreground">
+                    ${car.pricePerDay + driverSurcharge}
+                    <span className="text-xs">/day</span>
+                  </span>
+                </div>
+              </RadioGroup>
+            </div>
+          )}
+
+          <div className="mt-auto pt-4 border-t border-border/50 flex items-end justify-between">
+            <div>
+              <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">
+                Total ({days} days)
+              </p>
+              <p className="font-display text-xl font-bold text-foreground">
+                ${total}
+              </p>
+            </div>
+            <p className="text-sm font-medium text-muted-foreground">
+              ${car.pricePerDay}
+              <span className="text-xs font-light">/day</span>
+            </p>
+          </div>
         </div>
       </div>
     </div>

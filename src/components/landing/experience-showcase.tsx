@@ -1,161 +1,123 @@
 "use client";
 
-import { RiArrowRightUpLine } from "@remixicon/react";
-import { cn } from "@/lib/utils";
-import { motion, useScroll, useTransform, MotionValue } from "motion/react";
 import { useRef } from "react";
+import { motion, useScroll, useTransform } from "motion/react";
+import Image from "next/image";
+import { RiArrowRightLine } from "@remixicon/react";
 
 const experiences = [
   {
-    id: "bisate",
-    name: "Bisate Lodge",
-    location: "Volcanoes N.P.",
-    description:
-      "Nestled in the amphitheatre of an eroded volcanic cone, Bisate offers a luxurious base for gorilla trekking with sustainable architecture.",
+    id: 1,
+    title: "Mountain Gorillas",
+    location: "Volcanoes National Park",
     image:
-      "https://images.unsplash.com/photo-1667504320745-eade6c25e053?q=90&w=1600&auto=format&fit=crop",
-    color: "bg-[#2A3C35]",
+      "https://images.unsplash.com/photo-1546422724-3c4be0b20cb5?q=90&w=1600&auto=format&fit=crop",
+    description: "Face-to-face encounters with gentle giants.",
   },
   {
-    id: "magashi",
-    name: "Magashi Camp",
-    location: "Akagera N.P.",
-    description:
-      "A classic safari camp overlooking Lake Rwanyakazinga, offering exclusive access to Rwanda's only savannah big game area.",
-    image:
-      "https://images.unsplash.com/photo-1511284281977-10b7b4377cfc?q=90&w=1600&auto=format&fit=crop",
-    color: "bg-[#8C6D46]",
-  },
-  {
-    id: "nyungwe",
-    name: "Nyungwe House",
+    id: 2,
+    title: "Chimpanzee Trekking",
     location: "Nyungwe Forest",
-    description:
-      "Set amidst the rich tea plantations on the edge of the ancient rainforest, offering wellness and chimpanzee trekking.",
     image:
-      "https://images.unsplash.com/photo-1489640818597-89b1edc97db5?q=90&w=1600&auto=format&fit=crop",
-    color: "bg-[#3E4A35]",
+      "https://images.unsplash.com/photo-1547471080-7528385f7017?q=90&w=1600&auto=format&fit=crop",
+    description: "Ancient rainforests teeming with primates.",
+  },
+  {
+    id: 3,
+    title: "Game Drive Safari",
+    location: "Akagera National Park",
+    image:
+      "https://images.unsplash.com/photo-1517309995815-46fd4252e1f4?q=90&w=1600&auto=format&fit=crop",
+    description: "Lions, rhinos, and elephants in the savannah.",
+  },
+  {
+    id: 4,
+    title: "Lake Kivu Relaxation",
+    location: "Western Province",
+    image:
+      "https://images.unsplash.com/photo-1505245208761-ba872912fac0?q=90&w=1600&auto=format&fit=crop",
+    description: "Unwind on the shores of Rwanda's largest lake.",
+  },
+  {
+    id: 5,
+    title: "Kigali Cultural Tour",
+    location: "Kigali City",
+    image:
+      "https://images.unsplash.com/photo-1489447068241-b3490214e879?q=90&w=1600&auto=format&fit=crop",
+    description: "Vibrant markets, art galleries, and history.",
   },
 ];
 
-function Card({
-  data,
-  index,
-  progress,
-  range,
-  targetScale,
-}: {
-  data: (typeof experiences)[0];
-  index: number;
-  progress: MotionValue<number>;
-  range: number[];
-  targetScale: number;
-}) {
-  const container = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: container,
-    offset: ["start end", "start start"],
-  });
-
-  const imageScale = useTransform(scrollYProgress, [0, 1], [1.2, 1]);
-  const scale = useTransform(progress, range, [1, targetScale]);
-
-  return (
-    <div
-      ref={container}
-      className="h-screen flex items-center justify-center sticky top-0"
-    >
-      <motion.div
-        style={{ scale, top: `calc(-10vh + ${index * 25}px)` }}
-        className="relative flex flex-col md:flex-row h-[500px] w-full max-w-7xl rounded-3xl overflow-hidden origin-top"
-      >
-        <div className="md:w-[60%] h-full relative overflow-hidden">
-          <motion.div style={{ scale: imageScale }} className="w-full h-full">
-            <img
-              src={data.image}
-              alt={data.name}
-              className="w-full h-full object-cover"
-            />
-          </motion.div>
-          <div className="absolute inset-0 bg-black/10" />
-        </div>
-
-        <div
-          className={cn(
-            "md:w-[40%] h-full p-8 flex flex-col justify-between text-white",
-            data.color,
-          )}
-        >
-          <div className="flex items-center gap-4">
-            <span className="font-mono text-xs uppercase tracking-widest opacity-80 border border-white/30 px-3 py-1 rounded-full">
-              0{index + 1}
-            </span>
-            <span className="font-mono text-xs uppercase tracking-widest opacity-80">
-              {data.location}
-            </span>
-          </div>
-
-          <div>
-            <h3 className="text-4xl md:text-5xl font-black font-display uppercase leading-tight mb-6">
-              {data.name}
-            </h3>
-            <p className="text-lg font-light leading-relaxed opacity-90 mb-8">
-              {data.description}
-            </p>
-            <button
-              type="button"
-              className="flex items-center gap-2 group cursor-pointer text-sm font-bold uppercase tracking-widest"
-            >
-              View Lodge
-              <span className="bg-white/20 p-2 rounded-full group-hover:bg-white group-hover:text-black transition-all duration-300">
-                <RiArrowRightUpLine className="size-4" />
-              </span>
-            </button>
-          </div>
-
-          <div className="opacity-20 text-[10rem] font-black leading-none -mb-16 -ml-4 pointer-events-none">
-            {index + 1}
-          </div>
-        </div>
-      </motion.div>
-    </div>
-  );
-}
-
 export function ExperienceShowcase() {
-  const container = useRef(null);
+  const targetRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
-    target: container,
-    offset: ["start start", "end end"],
+    target: targetRef,
   });
 
-  return (
-    <section ref={container} className="bg-background relative">
-      <div className="container max-w-7xl mx-auto px-5 mb-24 pt-32">
-        <div className="max-w-2xl">
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Curated Stays
-          </h2>
-          <p className="text-muted-foreground text-lg font-light">
-            Handpicked lodges that define luxury and sustainability.
-          </p>
-        </div>
-      </div>
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-60%"]);
 
-      <div className="pb-[50vh] px-5">
-        {experiences.map((exp, i) => {
-          const targetScale = 1 - (experiences.length - i) * 0.05;
-          return (
-            <Card
-              key={exp.id}
-              data={exp}
-              index={i}
-              progress={scrollYProgress}
-              range={[i * 0.25, 1]}
-              targetScale={targetScale}
-            />
-          );
-        })}
+  return (
+    <section ref={targetRef} className="relative h-[300vh] bg-background">
+      <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
+        <div className="container max-w-7xl mx-auto px-5 mb-12">
+          <div className="max-w-2xl">
+            <span className="block text-accent-warm uppercase tracking-widest text-xs font-bold mb-4">
+              Curated Experiences
+            </span>
+            <h2 className="text-4xl md:text-6xl font-display font-black uppercase text-foreground leading-[0.9]">
+              Journey Through
+              <br />
+              The Landscape
+            </h2>
+          </div>
+        </div>
+
+        <div className="w-full pl-5 md:pl-[max(2rem,calc((100vw-80rem)/2))]">
+          <motion.div style={{ x }} className="flex gap-6 w-max">
+            {experiences.map((experience) => (
+              <div
+                key={experience.id}
+                className="group relative h-[400px] w-[300px] md:h-[500px] md:w-[400px] shrink-0 overflow-hidden bg-muted rounded-sm cursor-pointer focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2"
+              >
+                <motion.div
+                  className="w-full h-full relative"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Image
+                    src={experience.image}
+                    alt={experience.title}
+                    fill
+                    sizes="(max-width: 768px) 300px, 400px"
+                    className="object-cover transition-transform duration-500"
+                  />
+                </motion.div>
+                <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
+
+                <div className="absolute bottom-0 left-0 p-8 w-full">
+                  <span className="text-accent-warm text-xs uppercase tracking-widest font-bold block mb-2">
+                    {experience.location}
+                  </span>
+                  <h3 className="text-2xl md:text-3xl font-display font-bold text-white uppercase mb-4 leading-none">
+                    {experience.title}
+                  </h3>
+                  <div className="h-0 overflow-hidden group-hover:h-auto transition-all duration-300">
+                    <p className="text-white/80 line-clamp-3 mb-6 font-light text-sm leading-relaxed translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-100">
+                      {experience.description}
+                    </p>
+                    <button
+                      type="button"
+                      className="flex items-center gap-3 text-white text-xs uppercase tracking-widest font-bold transition-opacity duration-200 opacity-0 group-hover:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                    >
+                      Explore
+                      <RiArrowRightLine size={16} aria-hidden="true" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </motion.div>
+        </div>
       </div>
     </section>
   );

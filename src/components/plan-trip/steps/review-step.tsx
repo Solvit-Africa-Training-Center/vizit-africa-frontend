@@ -40,15 +40,15 @@ export function ReviewStep({
       exit={{ opacity: 0, y: -20 }}
       className="max-w-2xl mx-auto"
     >
-      <div className="bg-white border rounded-xl p-6 md:p-8 space-y-6">
-        <div className="text-center">
-          <div className="size-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-            <RiCheckLine className="size-8" />
+      <div className="space-y-8">
+        <div className="text-center space-y-4">
+          <div className="size-20 bg-primary/10 text-primary flex items-center justify-center mx-auto mb-6">
+            <RiCheckLine className="size-10" />
           </div>
-          <h2 className="font-display text-2xl font-bold mb-2">
+          <h2 className="font-display text-3xl font-bold uppercase tracking-tight">
             Review Your Trip
           </h2>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground text-lg font-light">
             Please review your details before confirming
           </p>
         </div>
@@ -65,18 +65,23 @@ export function ReviewStep({
           total={total}
         />
 
-        <Alert className="bg-primary-subtle border-primary/20">
-          <AlertDescription className="text-foreground">
+        <Alert className="bg-primary/5 border-primary/20 rounded-none">
+          <AlertDescription className="text-foreground text-center font-medium">
             After submitting, we'll review your request and send you a payment
             link within 24 hours.
           </AlertDescription>
         </Alert>
 
-        <div className="flex gap-3">
-          <Button variant="outline" size="lg" onClick={onBack}>
-            <RiArrowLeftLine /> Back
+        <div className="flex gap-4 pt-4">
+          <Button
+            variant="outline"
+            size="lg"
+            onClick={onBack}
+            className="flex-1"
+          >
+            <RiArrowLeftLine className="mr-2" /> Back
           </Button>
-          <Button size="lg" className="flex-1" onClick={onSubmit}>
+          <Button size="lg" className="flex-[2]" onClick={onSubmit}>
             Submit Booking Request
           </Button>
         </div>

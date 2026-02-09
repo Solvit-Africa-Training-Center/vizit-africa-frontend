@@ -6,6 +6,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import { Magnetic } from "@/components/ui/magnetic";
 import { RiArrowRightLine } from "@remixicon/react";
 import { AnimatePresence, motion, useScroll, useTransform } from "motion/react";
 import Image from "next/image";
@@ -138,13 +139,15 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.8 }}
             className="mt-12 flex flex-col md:flex-row md:items-center gap-8"
           >
-            <Button
-              size="lg"
-              className="rounded-full h-16 px-10 text-lg bg-primary hover:bg-primary-light text-white border-none transition-transform hover:scale-105 w-full md:w-auto"
-            >
-              Start Planning
-              <RiArrowRightLine />
-            </Button>
+            <Magnetic>
+              <Button
+                size="lg"
+                className="rounded-sm h-16 px-10 text-lg bg-primary hover:bg-primary-light text-white border-none transition-transform hover:scale-105 w-full md:w-auto"
+              >
+                Start Planning
+                <RiArrowRightLine />
+              </Button>
+            </Magnetic>
 
             <div className="lg:hidden flex items-center gap-4">
               {SLIDES.map((_, index) => (
@@ -152,7 +155,7 @@ export function Hero() {
                   key={index}
                   type="button"
                   onClick={() => handleSlideChange(index)}
-                  className={`h-1.5 rounded-full transition-all duration-500 ${
+                  className={`h-0.5 transition-all duration-500 ${
                     index === currentSlide
                       ? "w-12 bg-white"
                       : "w-4 bg-white/40 hover:bg-white/60"
@@ -194,7 +197,7 @@ export function Hero() {
                   side="left"
                   align="center"
                   sideOffset={20}
-                  className="w-[280px] p-0 bg-black/80 backdrop-blur-md border-white/10 overflow-hidden"
+                  className="w-[280px] p-0 bg-black/80 backdrop-blur-md border-white/10 overflow-hidden rounded-sm"
                 >
                   <div className="relative h-32 w-full">
                     <Image

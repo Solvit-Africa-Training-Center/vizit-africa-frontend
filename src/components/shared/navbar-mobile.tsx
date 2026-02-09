@@ -19,7 +19,7 @@ export function NavbarMobile({ isOpen, onClose }: NavbarMobileProps) {
           <Link
             key={link.href}
             href={link.href}
-            className="block text-base font-medium text-foreground/80 hover:text-primary transition-colors py-2 border-b border-border/50 last:border-0"
+            className="block font-display font-medium uppercase tracking-widest text-sm text-foreground/80 hover:text-primary transition-colors py-2 border-b border-border/50 last:border-0"
             onClick={onClose}
           >
             {link.label}
@@ -28,14 +28,17 @@ export function NavbarMobile({ isOpen, onClose }: NavbarMobileProps) {
         <div className="pt-4 space-y-3">
           <Link
             href="/login"
-            className="block text-center text-sm font-medium text-muted-foreground hover:text-foreground py-2"
+            className="block text-center font-display font-medium uppercase tracking-widest text-xs text-muted-foreground hover:text-foreground py-2"
             onClick={onClose}
           >
             Log in
           </Link>
           <Link href="/plan-trip" onClick={onClose} className="block">
-            <Button size="lg" className="w-full">
-              Get Started
+            <Button
+              size="lg"
+              className="w-full rounded-sm font-display font-bold uppercase tracking-wider text-xs"
+            >
+              Start Planning
             </Button>
           </Link>
         </div>

@@ -35,97 +35,111 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="bg-[oklch(18%_0_0)] text-white">
-      <div className="mx-auto max-w-7xl px-5 md:px-10 py-16">
-        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-12">
-          {/* Brand */}
-          <div className="lg:col-span-2">
-            <Link href="/" className="inline-block mb-4">
-              <span className="font-display text-2xl font-bold text-white">
+    <footer
+      id="main-footer"
+      className="bg-black text-white py-24 border-t border-white/10"
+    >
+      <div className="mx-auto max-w-7xl px-5 md:px-10">
+        <div className="grid md:grid-cols-12 gap-12 lg:gap-24">
+          <div className="md:col-span-5 lg:col-span-4 space-y-8">
+            <Link href="/" className="inline-block">
+              <span className="font-display text-3xl font-bold uppercase tracking-tight text-white">
                 Vizit Africa
               </span>
             </Link>
-            <p className="text-sm text-gray-400 leading-relaxed mb-6 max-w-sm">
+            <p className="text-base text-gray-400 leading-relaxed max-w-sm font-light">
               Your trusted Rwanda travel partner. Professional planning for
               unforgettable African experiences.
             </p>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
                   aria-label={social.label}
-                  className="size-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition-colors duration-300"
+                  className="size-10 flex items-center justify-center border border-white/20 text-white hover:bg-white hover:text-black transition-all duration-300"
                 >
-                  <social.icon className="size-4" />
+                  <social.icon className="size-5" aria-hidden="true" />
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Explore */}
-          <div>
-            <h4 className="font-semibold text-sm uppercase tracking-wider text-white mb-4">
-              Explore
-            </h4>
-            <ul className="space-y-3">
-              {footerLinks.services.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-gray-400 hover:text-white transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <div className="md:col-span-7 lg:col-span-8 grid grid-cols-2 md:grid-cols-3 gap-12">
+            <div>
+              <h4 className="font-display font-bold text-sm uppercase tracking-widest text-white mb-8">
+                Explore
+              </h4>
+              <ul className="space-y-4">
+                {footerLinks.services.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-gray-400 hover:text-white transition-colors uppercase tracking-wider"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          {/* Company */}
-          <div>
-            <h4 className="font-semibold text-sm uppercase tracking-wider text-white mb-4">
-              Company
-            </h4>
-            <ul className="space-y-3">
-              {footerLinks.company.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-gray-400 hover:text-white transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+            <div>
+              <h4 className="font-display font-bold text-sm uppercase tracking-widest text-white mb-8">
+                Company
+              </h4>
+              <ul className="space-y-4">
+                {footerLinks.company.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-gray-400 hover:text-white transition-colors uppercase tracking-wider"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          {/* Contact */}
-          <div>
-            <h4 className="font-semibold text-sm uppercase tracking-wider text-white mb-4">
-              Contact
-            </h4>
-            <ul className="space-y-3">
-              {footerLinks.contact.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-gray-400 hover:text-white transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <div className="col-span-2 md:col-span-1">
+              <h4 className="font-display font-bold text-sm uppercase tracking-widest text-white mb-8">
+                Contact
+              </h4>
+              <ul className="space-y-4">
+                {footerLinks.contact.map((link) => (
+                  <li key={link.label}>
+                    <a
+                      href={link.href}
+                      className="text-sm text-gray-400 hover:text-white transition-colors block"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-gray-500">
+        <div className="mt-24 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
+          <p className="text-xs text-gray-500 uppercase tracking-wider">
             © 2025 Vizit Africa. All rights reserved.
           </p>
+          <div className="flex gap-8">
+            <Link
+              href="/privacy"
+              className="text-xs text-gray-500 hover:text-white uppercase tracking-wider transition-colors"
+            >
+              Privacy
+            </Link>
+            <Link
+              href="/terms"
+              className="text-xs text-gray-500 hover:text-white uppercase tracking-wider transition-colors"
+            >
+              Terms
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

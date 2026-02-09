@@ -5,7 +5,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
-import Image from "next/image";
+import { ParallaxImage } from "@/components/ui/parallax-image";
+import { SectionTitle } from "./section-title";
 
 const galleryImages = [
   {
@@ -60,41 +61,43 @@ export function Gallery() {
   return (
     <section
       ref={containerRef}
-      className="py-32 bg-background border-t border-border/50 overflow-hidden"
+      className="py-24 md:py-32 bg-muted/30 overflow-hidden"
     >
-      <div className="mx-auto max-w-7xl px-5 md:px-10 mb-16 flex flex-col md:flex-row items-end justify-between gap-8">
-        <div className="max-w-2xl">
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Captured Moments
-          </h2>
-          <p className="text-muted-foreground text-lg font-light">
-            See the world through the eyes of our travelers. From luxury stays
-            to wild adventures.
-          </p>
-        </div>
+      <div className="container max-w-7xl mx-auto px-5 md:px-10 mb-16 flex flex-col md:flex-row items-end justify-between gap-8">
+        <SectionTitle
+          overline="Visual Stories"
+          title={
+            <>
+              Captured <br />
+              Moments
+            </>
+          }
+          description="See the world through the eyes of our travelers. From luxury stays to wild adventures."
+          className="max-w-2xl mb-0"
+        />
         <Link href="/gallery">
-          <Button variant="outline" className="rounded-full px-6">
+          <Button variant="outline" className="rounded-lg px-6">
             View Full Gallery <RiArrowRightLine />
           </Button>
         </Link>
       </div>
 
-      <div className="mx-auto max-w-7xl px-5 md:px-10 grid grid-cols-1 md:grid-cols-3 gap-8">
-        <motion.div style={{ y: y1 }} className="flex flex-col gap-8 md:mt-12">
-          {galleryImages.slice(0, 2).map((img, i) => (
-            <GalleryCard key={i} img={img} className="aspect-square" />
+      <div className="container max-w-7xl mx-auto px-5 md:px-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <motion.div style={{ y: y1 }} className="flex flex-col gap-6 md:mt-12">
+          {galleryImages.slice(0, 2).map((img) => (
+            <GalleryCard key={img.id} img={img} className="aspect-square" />
           ))}
         </motion.div>
 
-        <motion.div style={{ y: y2 }} className="flex flex-col gap-8">
-          {galleryImages.slice(2, 4).map((img, i) => (
-            <GalleryCard key={i} img={img} className="aspect-[4/3]" />
+        <motion.div style={{ y: y2 }} className="flex flex-col gap-6">
+          {galleryImages.slice(2, 4).map((img) => (
+            <GalleryCard key={img.id} img={img} className="aspect-[4/3]" />
           ))}
         </motion.div>
 
-        <motion.div style={{ y: y3 }} className="flex flex-col gap-8 md:mt-24">
-          {galleryImages.slice(4, 6).map((img, i) => (
-            <GalleryCard key={i} img={img} className="aspect-square" />
+        <motion.div style={{ y: y3 }} className="flex flex-col gap-6 md:mt-24">
+          {galleryImages.slice(4, 6).map((img) => (
+            <GalleryCard key={img.id} img={img} className="aspect-square" />
           ))}
         </motion.div>
       </div>
@@ -120,20 +123,21 @@ function GalleryCard({
     <div
       className={`relative group overflow-hidden rounded-2xl cursor-pointer ${className}`}
     >
-      <Image
+      <ParallaxImage
         src={img.src}
         alt={img.alt}
         fill
-        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+        sizes="(max-width: 768px) 100vw, 33vw"
+        loading="lazy"
+        containerClassName="w-full h-full"
+        imageClassName="transition-transform duration-300 group-hover:scale-[1.05]"
       />
-      <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300" />
-      <div className="absolute inset-0 flex flex-col justify-end p-8 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-        <p className="text-white/80 font-mono text-xs uppercase tracking-widest mb-2">
+      <div className="absolute inset-0 bg-black/20 group-hover:bg-black/35 transition-colors duration-200" />
+      <div className="absolute inset-0 flex flex-col justify-end p-6 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+        <p className="text-white/80 font-mono text-xs uppercase tracking-widest mb-1">
           {img.caption}
         </p>
-        <h3 className="text-white font-display text-2xl font-bold">
-          {img.alt}
-        </h3>
+        <h3 className="text-white font-display text-xl font-bold">{img.alt}</h3>
       </div>
     </div>
   );

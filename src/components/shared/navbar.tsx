@@ -1,10 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { RiMenuLine, RiCloseLine } from "@remixicon/react";
+import { motion, useScroll, useMotionValueEvent } from "motion/react";
 import { Button } from "@/components/ui/button";
+import { Magnetic } from "@/components/ui/magnetic";
 import { cn } from "@/lib/utils";
 import Logo from "./logo";
 import { navLinks } from "./nav-links";
@@ -18,38 +20,31 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { scrollY } = useScroll();
 
-  const heroRoutes = [
-    "/",
-    "/experiences",
-    "/gallery",
-    "/about",
-    "/contact",
-    "/services",
-  ];
+  const heroRoutes = ["/"];
 
   const hasHero = heroRoutes.includes(pathname);
   const showSolid = forceSolid || isScrolled || !hasHero;
 
   const logoVariant = showSolid ? "default" : "light";
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setIsScrolled(latest > 20);
+  });
 
   return (
     <>
-      <header
+      <motion.header
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out",
           showSolid
-            ? "bg-white/80 backdrop-blur-md border-b border-border/50 py-3"
+            ? "bg-background/80 backdrop-blur-xl border-b border-border/40 py-4"
             : "bg-transparent py-6",
         )}
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       >
         <nav className="mx-auto max-w-7xl px-5 md:px-10 flex items-center justify-between">
           <Logo variant={logoVariant} />
@@ -61,7 +56,7 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "text-sm font-medium transition-colors duration-300",
+                  "font-display font-medium uppercase tracking-widest text-xs transition-colors duration-200",
                   showSolid
                     ? "text-muted-foreground hover:text-foreground"
                     : "text-white/80 hover:text-white",
@@ -71,38 +66,38 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
               </Link>
             ))}
           </div>
-
-          {/* cta */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-6">
             <Link
               href="/login"
               className={cn(
-                "text-sm font-medium transition-colors duration-300",
+                "font-display font-medium uppercase tracking-widest text-xs transition-colors duration-200",
                 showSolid
                   ? "text-muted-foreground hover:text-foreground"
                   : "text-white/80 hover:text-white",
               )}
             >
-              Login
+              Log in
             </Link>
             <Link href="/plan-trip">
-              <Button
-                size="sm"
-                variant={showSolid ? "default" : "secondary"}
-                className={cn(
-                  "rounded-full transition-all duration-300 font-medium",
-                  !showSolid && "bg-white text-primary hover:bg-white/90",
-                )}
-              >
-                Get Started
-              </Button>
+              <Magnetic>
+                <Button
+                  size="sm"
+                  variant={showSolid ? "default" : "secondary"}
+                  className={cn(
+                    "rounded-sm font-display font-bold uppercase tracking-wider text-xs px-6 transition-all duration-300",
+                    !showSolid && "bg-white text-primary hover:bg-white/90",
+                  )}
+                >
+                  Start Planning
+                </Button>
+              </Magnetic>
             </Link>
           </div>
 
           <button
             type="button"
             className={cn(
-              "md:hidden p-2 transition-colors duration-300 rounded-md",
+              "md:hidden p-2 transition-colors duration-200 rounded-sm",
               showSolid
                 ? "text-foreground hover:bg-muted"
                 : "text-white hover:bg-white/10",
@@ -122,7 +117,7 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
             )}
           </button>
         </nav>
-      </header>
+      </motion.header>
 
       <NavbarMobile
         isOpen={isMobileMenuOpen}

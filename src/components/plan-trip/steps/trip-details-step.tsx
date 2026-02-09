@@ -10,7 +10,11 @@ import {
 } from "@remixicon/react";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Calendar } from "@/components/ui/calendar";
@@ -41,9 +45,9 @@ export function TripDetailsStep({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="max-w-2xl mx-auto"
+      className="max-w-2xl"
     >
-      <div className="bg-white border rounded-xl p-6 md:p-8 space-y-6">
+      <div className="space-y-8">
         <div>
           <h2 className="font-display text-2xl font-bold mb-2">Trip Details</h2>
           <p className="text-muted-foreground">
@@ -51,22 +55,25 @@ export function TripDetailsStep({
           </p>
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="departureCity">Departing From</Label>
-          <div className="relative">
-            <RiMapPinLine className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
-            <Input
-              id="departureCity"
-              placeholder="e.g. New York, London, Dubai"
-              value={tripInfo.departureCity}
-              onChange={(e) =>
-                setTripInfo({
-                  ...tripInfo,
-                  departureCity: e.target.value,
-                })
-              }
-              className="pl-10 bg-white"
-            />
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="departureCity">Departing From</Label>
+            <InputGroup>
+              <InputGroupInput
+                id="departureCity"
+                placeholder="e.g. New York, London, Dubai"
+                value={tripInfo.departureCity}
+                onChange={(e) =>
+                  setTripInfo({
+                    ...tripInfo,
+                    departureCity: e.target.value,
+                  })
+                }
+              />
+              <InputGroupAddon>
+                <RiMapPinLine />
+              </InputGroupAddon>
+            </InputGroup>
           </div>
         </div>
 
@@ -157,52 +164,54 @@ export function TripDetailsStep({
           </div>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-4">
+        <div className="grid sm:grid-cols-2 gap-6">
           <div className="space-y-2">
             <Label htmlFor="adults">Adults</Label>
-            <div className="relative">
-              <RiTeamLine className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
-              <Input
+            <InputGroup>
+              <InputGroupInput
                 id="adults"
                 type="number"
                 min={1}
                 max={20}
                 value={tripInfo.adults}
-                onChange={(e) =>
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setTripInfo({
                     ...tripInfo,
                     adults: parseInt(e.target.value) || 1,
                   })
                 }
-                className="pl-10 bg-white"
               />
-            </div>
+              <InputGroupAddon>
+                <RiTeamLine />
+              </InputGroupAddon>
+            </InputGroup>
           </div>
           <div className="space-y-2">
             <Label htmlFor="children">Children (0-12)</Label>
-            <div className="relative">
-              <RiTeamLine className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
-              <Input
+            <InputGroup>
+              <InputGroupInput
                 id="children"
                 type="number"
                 min={0}
                 max={10}
                 value={tripInfo.children}
-                onChange={(e) =>
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setTripInfo({
                     ...tripInfo,
                     children: parseInt(e.target.value) || 0,
                   })
                 }
-                className="pl-10 bg-white"
               />
-            </div>
+              <InputGroupAddon>
+                <RiTeamLine />
+              </InputGroupAddon>
+            </InputGroup>
           </div>
         </div>
 
         <div className="space-y-2">
           <Label>Trip Purpose</Label>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             {[
               "leisure",
               "business",
@@ -220,10 +229,10 @@ export function TripDetailsStep({
                     tripPurpose: purpose as TripInfo["tripPurpose"],
                   })
                 }
-                className={`px-3 py-2 rounded-lg border text-sm font-medium capitalize transition-all ${
+                className={`px-4 py-3 rounded-none border text-sm font-medium capitalize transition-all duration-300 hover:tracking-wide ${
                   tripInfo.tripPurpose === purpose
                     ? "bg-primary text-white border-primary"
-                    : "bg-white text-foreground border-border hover:border-primary/50"
+                    : "bg-background text-foreground border-border hover:border-primary"
                 }`}
               >
                 {purpose}

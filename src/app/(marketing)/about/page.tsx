@@ -1,192 +1,169 @@
 "use client";
-import { Navbar } from "@/components/shared";
-import { teamMembers } from "@/lib/dummy-data";
-import {
-  RiShieldCheckLine,
-  RiHeart3Line,
-  RiMapPin2Line,
-  RiStarLine,
-} from "@remixicon/react";
-import Image from "next/image";
-import { motion } from "motion/react";
 
-const avatars = [
-  "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&w=1000&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?q=80&w=1000&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1000&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop",
+import { Navbar } from "@/components/shared";
+import { Footer } from "@/components/landing";
+import { teamMembers } from "@/lib/dummy-data";
+import { motion, useScroll, useTransform } from "motion/react";
+import Image from "next/image";
+import { RevealText } from "@/components/ui/reveal-text";
+import { ParallaxImage } from "@/components/ui/parallax-image";
+import { useRef } from "react";
+import { cn } from "@/lib/utils";
+
+const values = [
+  {
+    order: "01",
+    title: "Respect",
+    description:
+      "We honor the land, the wildlife, and the communities we visit. Every footprint we leave is mindful.",
+  },
+  {
+    order: "02",
+    title: "Authenticity",
+    description:
+      "We don't stage experiences. We facilitate genuine connections with the real people and culture of Rwanda.",
+  },
+  {
+    order: "03",
+    title: "Impact",
+    description:
+      "Tourism is a force for good. A portion of every journey goes directly to community upliftment.",
+  },
+  {
+    order: "04",
+    title: "Excellence",
+    description:
+      "From the vehicle you ride in to the coffee you drink, we obsess over every detail of your journey.",
+  },
 ];
 
 export default function AboutPage() {
+  const teamContainerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: teamContainerRef,
+    offset: ["start end", "end start"],
+  });
+
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-20%"]);
+
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-background">
-        {/* hero */}
-        <section className="relative h-[60vh] md:h-[70vh] flex items-center justify-center overflow-hidden">
-          <div className="absolute inset-0 z-0">
-            <Image
-              src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?q=90&w=2600&auto=format&fit=crop"
-              alt="Community in Rwanda"
-              fill
-              className="object-cover"
-              priority
-            />
-            <div className="absolute inset-0 bg-black/50" />
+      <div className="min-h-screen bg-background pt-32 pb-24">
+        <header className="px-5 md:px-10 max-w-7xl mx-auto mb-32 md:mb-48">
+          <div className="flex flex-col gap-8">
+            <span className="text-sm font-mono uppercase tracking-widest text-muted-foreground block">
+              Established 2018
+            </span>
+            <h1 className="font-display text-7xl md:text-[10rem] font-black uppercase tracking-tighter leading-[0.8] text-foreground">
+              <RevealText text="The Vizit Story" />
+            </h1>
+          </div>
+        </header>
+
+        <section className="px-5 md:px-10 max-w-7xl mx-auto mb-32 md:mb-48">
+          <div className="grid md:grid-cols-12 gap-8">
+            <div className="md:col-span-8 md:col-start-3">
+              <p className="font-display text-3xl md:text-5xl font-bold leading-tight indent-12 md:indent-24">
+                <span className="text-primary">We don't just visit.</span> We
+                immerse. Vizit Africa was born from a simple yet radical belief:
+                that travel should be more than sightseeing—it should be
+                soul-stirring.
+              </p>
+              <p className="font-display text-3xl md:text-5xl font-bold leading-tight mt-12 text-muted-foreground/60">
+                We strip away the artificial layers of tourism to reveal the
+                raw, beating heart of Rwanda.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="mb-32 md:mb-48 overflow-hidden">
+          <div className="px-5 md:px-10 max-w-7xl mx-auto mb-12 flex items-end justify-between">
+            <h2 className="font-display text-4xl md:text-6xl font-bold uppercase">
+              The Guides
+            </h2>
+            <p className="text-muted-foreground max-w-xs text-right hidden md:block">
+              Locals. Storytellers. Experts. <br /> Meet the people who know
+              Rwanda best.
+            </p>
           </div>
 
-          <div className="relative z-20 text-center px-4 max-w-4xl mx-auto mt-20">
+          <div ref={teamContainerRef} className="relative w-full">
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
+              style={{ x }}
+              className="flex gap-8 px-5 md:px-10 w-max cursor-grab active:cursor-grabbing"
             >
-              <span className="text-white/80 font-mono uppercase tracking-widest text-sm md:text-base mb-4 block">
-                Since 2018
-              </span>
-              <h1 className="font-display text-5xl md:text-7xl font-bold text-white mb-6">
-                Our Story
-              </h1>
-              <p className="text-xl md:text-2xl text-white/90 leading-relaxed font-light">
-                Founded from a passion for sharing Rwanda's breathtaking beauty
-                and resilience with the world. We believe in travel that
-                connects, inspires, and transforms.
-              </p>
+              {teamMembers.map((member, i) => (
+                <div
+                  key={member.id}
+                  className="relative w-[80vw] md:w-[25vw] aspect-[3/4] group shrink-0"
+                >
+                  <div className="absolute inset-0 overflow-hidden rounded-sm bg-muted">
+                    <ParallaxImage
+                      src={
+                        [
+                          "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&w=1000&auto=format&fit=crop",
+                          "https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?q=80&w=1000&auto=format&fit=crop",
+                          "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1000&auto=format&fit=crop",
+                          "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop",
+                        ][i % 4]
+                      }
+                      alt={member.name}
+                      fill
+                      className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                      containerClassName="w-full h-[120%]"
+                    />
+                  </div>
+                  <div className="absolute -bottom-8 left-0">
+                    <h3 className="font-display text-4xl font-bold uppercase text-foreground">
+                      {member.name}
+                    </h3>
+                    <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                      {member.role}
+                    </p>
+                  </div>
+                </div>
+              ))}
+              <div className="w-[10vw] shrink-0" />
             </motion.div>
           </div>
         </section>
 
-        {/* mission & values */}
-        <section className="py-24 px-5 md:px-10 max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="font-display text-4xl font-bold text-foreground mb-4">
-              Our Mission & Values
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto font-light">
-              We are dedicated to providing authentic, seamless, and
-              unforgettable travel experiences while supporting local
-              communities.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-card p-10 rounded-3xl border border-border/50 transition-all duration-300 group">
-              <div className="size-20 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform">
-                <RiShieldCheckLine className="size-10" />
-              </div>
-              <h3 className="font-display text-2xl font-bold mb-4 text-foreground">
-                Trust & Safety
-              </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Your safety is our priority. We partner with verified operators
-                and provide 24/7 support throughout your journey, ensuring peace
-                of mind.
-              </p>
-            </div>
-
-            <div className="bg-card p-10 rounded-3xl border border-border/50 transition-all duration-300 group relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-4 opacity-10">
-                <RiHeart3Line className="size-32 text-accent-warm" />
-              </div>
-              <div className="size-20 rounded-2xl bg-accent-warm/10 text-accent-warm flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform relative z-10">
-                <RiHeart3Line className="size-10" />
-              </div>
-              <h3 className="font-display text-2xl font-bold mb-4 text-foreground relative z-10">
-                Local Impact
-              </h3>
-              <p className="text-muted-foreground leading-relaxed relative z-10">
-                We believe in tourism that gives back. A portion of every
-                booking supports local conservation and community projects
-                across Rwanda.
-              </p>
-            </div>
-
-            <div className="bg-card p-10 rounded-3xl border border-border/50 transition-all duration-300 group">
-              <div className="size-20 rounded-2xl bg-accent-success/10 text-accent-success flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform">
-                <RiMapPin2Line className="size-10" />
-              </div>
-              <h3 className="font-display text-2xl font-bold mb-4 text-foreground">
-                Authentic Experiences
-              </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Go beyond the guidebooks. Our local experts connect you with the
-                real people, culture, and hidden gems of Rwanda that others
-                miss.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* team */}
-        <section className="bg-card py-24 border-t border-border">
-          <div className="px-5 md:px-10 max-w-7xl mx-auto">
-            <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-              <div className="max-w-2xl">
-                <h2 className="font-display text-4xl font-bold text-foreground mb-6">
-                  Meet the Team
-                </h2>
-                <p className="text-muted-foreground text-lg font-light leading-relaxed">
-                  The passionate experts working behind the scenes to make your
-                  dream trip a reality. We are locals, travelers, and planners
-                  at heart.
+        <section className="px-5 md:px-10 max-w-7xl mx-auto mb-32">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
+            {values.map((val) => (
+              <div
+                key={val.title}
+                className="flex flex-col border-t border-foreground pt-6 group hover:border-primary transition-colors duration-500"
+              >
+                <span className="font-mono text-sm text-muted-foreground mb-4">
+                  ({val.order})
+                </span>
+                <h3 className="font-display text-3xl font-bold mb-4 uppercase group-hover:text-primary transition-colors duration-300">
+                  {val.title}
+                </h3>
+                <p className="text-muted-foreground/80 leading-relaxed text-sm">
+                  {val.description}
                 </p>
               </div>
-              <div className="flex items-center gap-3 text-primary font-bold bg-primary/5 px-6 py-3 rounded-full border border-primary/10">
-                <RiStarLine className="size-6 fill-current" />
-                <span>40+ Years Combined Experience</span>
-              </div>
-            </div>
-
-            <div className="grid md:grid-cols-4 gap-8">
-              {teamMembers.map((member, i) => (
-                <div key={member.id} className="group">
-                  <div className="relative aspect-[3/4] overflow-hidden rounded-2xl mb-6 bg-muted transition-all duration-500">
-                    <Image
-                      src={avatars[i % avatars.length]}
-                      alt={member.name}
-                      fill
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-x-0 bottom-0 py-4 bg-gradient-to-t from-black/80 to-transparent flex justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <span className="text-white text-xs font-bold uppercase tracking-widest">
-                        Connect
-                      </span>
-                    </div>
-                  </div>
-                  <h3 className="font-display text-xl font-bold text-foreground group-hover:text-primary transition-colors">
-                    {member.name}
-                  </h3>
-                  <p className="text-primary font-medium text-sm mb-3 uppercase tracking-wider">
-                    {member.role}
-                  </p>
-                  <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3">
-                    {member.bio}
-                  </p>
-                </div>
-              ))}
-            </div>
+            ))}
           </div>
         </section>
 
-        {/* cta */}
-        <section className="py-24 px-5 md:px-10 bg-primary-dark text-primary-foreground text-center relative overflow-hidden">
-          <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] animate-pulse" />
-          <div className="max-w-3xl mx-auto relative z-10">
-            <h2 className="font-display text-4xl md:text-5xl font-bold mb-8">
-              Ready to meet us in Kigali?
-            </h2>
-            <p className="text-xl opacity-80 mb-10 font-light max-w-2xl mx-auto">
-              Let's plan a trip that exceeds your expectations. Coffee is on us.
-            </p>
-            <a
-              href="/contact"
-              className="inline-flex items-center justify-center h-16 px-10 rounded-full bg-card text-foreground font-bold text-lg hover:bg-muted hover:scale-105 transition-all duration-300"
-            >
-              Start Planning
-            </a>
-          </div>
+        <section className="px-5 md:px-10 max-w-7xl mx-auto text-center">
+          <h2 className="font-display text-5xl md:text-8xl font-black uppercase tracking-tight mb-8">
+            Start Your Journey
+          </h2>
+          <a href="/contact" className="inline-block relative group">
+            <span className="font-mono text-lg uppercase tracking-widest text-foreground group-hover:text-primary transition-colors duration-300">
+              Get in Touch
+            </span>
+            <span className="absolute bottom-0 left-0 w-full h-px bg-foreground group-hover:bg-primary transition-colors duration-300 origin-left group-hover:scale-x-100" />
+          </a>
         </section>
       </div>
+      <Footer />
     </>
   );
 }

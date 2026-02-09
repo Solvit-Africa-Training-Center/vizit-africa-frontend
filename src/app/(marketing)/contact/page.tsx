@@ -1,258 +1,279 @@
 "use client";
+
 import { Navbar } from "@/components/shared";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
   RiMailLine,
-  RiPhoneLine,
   RiMapPinLine,
   RiWhatsappLine,
-  RiTimeLine,
-  RiQuestionLine,
   RiArrowRightLine,
+  RiArrowRightUpLine,
 } from "@remixicon/react";
 import Image from "next/image";
 import { motion } from "motion/react";
+import Link from "next/link";
+import { RevealText } from "@/components/ui/reveal-text";
+import { Magnetic } from "@/components/ui/magnetic";
 
 export default function ContactPage() {
   return (
     <>
       <Navbar />
       <div className="min-h-screen bg-background">
-        <section className="relative h-[60vh] md:h-[70vh] flex items-center justify-center overflow-hidden">
-          <div className="absolute inset-0 z-0">
-            <Image
-              src="https://images.unsplash.com/photo-1596701725345-3dbd4d7a7836?q=90&w=2600&auto=format&fit=crop"
-              alt="Contact Support"
-              fill
-              className="object-cover"
-              priority
-            />
-            <div className="absolute inset-0 bg-black/50" />
-          </div>
-          <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-10 text-center text-white mt-20">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-            >
-              <span className="text-white/80 font-mono uppercase tracking-widest text-sm md:text-base mb-4 block">
-                We're Here For You
-              </span>
-              <h1 className="font-display text-5xl md:text-7xl font-bold mb-6">
-                Get in Touch
-              </h1>
-              <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto font-light leading-relaxed">
-                Have questions about your Rwanda trip? We're here to help you
-                plan the perfect experience.
-              </p>
-            </motion.div>
-          </div>
-        </section>
+        <div className="lg:grid lg:grid-cols-2 min-h-screen">
+          <div className="relative h-[60vh] lg:h-screen w-full bg-black text-white lg:sticky lg:top-0 flex flex-col justify-between overflow-hidden">
+            <div className="absolute inset-0 z-0 overflow-hidden">
+              <motion.div
+                initial={{ scale: 1 }}
+                animate={{ scale: 1.1 }}
+                transition={{
+                  duration: 20,
+                  ease: "linear",
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                }}
+                className="w-full h-full"
+              >
+                <Image
+                  src="https://images.unsplash.com/photo-1596701725345-3dbd4d7a7836?q=90&w=2600&auto=format&fit=crop"
+                  alt="Contact Background"
+                  fill
+                  className="object-cover opacity-60"
+                  priority
+                />
+              </motion.div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent lg:bg-gradient-to-r lg:from-black/80 lg:via-black/20 lg:to-transparent" />
+            </div>
 
-        <section className="mx-auto max-w-7xl px-5 md:px-10 py-24">
-          <div className="grid lg:grid-cols-5 gap-8">
-            <div className="lg:col-span-2 space-y-6">
-              <div className="bg-card border border-border rounded-xl p-6 md:p-8 ">
-                <h2 className="font-display text-2xl font-bold text-foreground mb-6">
-                  Contact Information
-                </h2>
-
-                <div className="space-y-6">
-                  <div className="flex items-start gap-4">
-                    <div className="size-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                      <RiMailLine className="size-5 text-primary" />
-                    </div>
-                    <div>
-                      <p className="font-medium text-foreground">Email Us</p>
-                      <a
-                        href="mailto:hello@vizitafrica.rw"
-                        className="text-muted-foreground hover:text-primary transition-colors"
-                      >
-                        hello@vizitafrica.rw
-                      </a>
-                      <p className="text-xs text-muted-foreground mt-1">
-                        Response within 2 hours
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-4">
-                    <div className="size-10 rounded-full bg-accent-success/10 flex items-center justify-center shrink-0">
-                      <RiWhatsappLine className="size-5 text-accent-success" />
-                    </div>
-                    <div>
-                      <p className="font-medium text-foreground">
-                        WhatsApp Support
-                      </p>
-                      <a
-                        href="https://wa.me/250788123456"
-                        className="text-muted-foreground hover:text-accent-success transition-colors"
-                      >
-                        +250 788 123 456
-                      </a>
-                      <p className="text-xs text-muted-foreground mt-1">
-                        Available 24/7
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-4">
-                    <div className="size-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                      <RiPhoneLine className="size-5 text-primary" />
-                    </div>
-                    <div>
-                      <p className="font-medium text-foreground">Call Us</p>
-                      <a
-                        href="tel:+250788123456"
-                        className="text-muted-foreground hover:text-primary transition-colors"
-                      >
-                        +250 788 123 456
-                      </a>
-                      <p className="text-xs text-muted-foreground mt-1">
-                        Mon-Sat, 8am - 6pm
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-4">
-                    <div className="size-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                      <RiMapPinLine className="size-5 text-primary" />
-                    </div>
-                    <div>
-                      <p className="font-medium text-foreground">
-                        Visit Our Office
-                      </p>
-                      <p className="text-muted-foreground text-sm leading-relaxed">
-                        Kigali Heights, 4th Floor
-                        <br />
-                        KG 7 Ave, Kigali, Rwanda
-                      </p>
-                    </div>
-                  </div>
+            <div className="relative z-10 p-8 md:p-12 lg:p-20 flex flex-col h-full justify-between">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="mt-20 lg:mt-0"
+              >
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md mb-8">
+                  <span className="w-2 h-2 rounded-full bg-accent-success animate-pulse" />
+                  <span className="text-xs font-mono uppercase tracking-widest text-white/90">
+                    Open for New Adventures
+                  </span>
                 </div>
+                <h1 className="font-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[0.95] tracking-tight mb-6">
+                  <RevealText text="Let's plan your" className="block" />
+                  <span className="text-white/50">legacy trip.</span>
+                </h1>
+                <p className="text-base md:text-lg text-white/80 max-w-md font-light leading-relaxed">
+                  Have questions about our tours or need a custom itinerary?
+                  We're here to help you plan the perfect experience.
+                </p>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.8 }}
+                className="hidden lg:grid gap-8 p-8 bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10"
+              >
+                <ContactItem
+                  icon={RiMailLine}
+                  label="Email Us"
+                  value="hello@vizitafrica.rw"
+                  href="mailto:hello@vizitafrica.rw"
+                />
+                <ContactItem
+                  icon={RiWhatsappLine}
+                  label="WhatsApp"
+                  value="+250 788 123 456"
+                  href="https://wa.me/250788123456"
+                />
+                <ContactItem
+                  icon={RiMapPinLine}
+                  label="Visit Us"
+                  value="Kigali Heights, 4th Floor"
+                  sub="KG 7 Ave, Kigali, Rwanda"
+                />
+              </motion.div>
+            </div>
+          </div>
+
+          <div className="w-full flex flex-col justify-center p-8 md:p-12 lg:p-20 bg-background lg:min-h-screen">
+            <div className="max-w-xl mx-auto w-full py-12 lg:py-0">
+              <div className="mb-12">
+                <h2 className="font-display text-2xl md:text-3xl font-bold mb-3">
+                  Send us a message
+                </h2>
+                <p className="text-muted-foreground text-base">
+                  Fill out the form below and our team will get back to you
+                  within 24 hours.
+                </p>
               </div>
 
-              <div className="bg-primary text-primary-foreground rounded-xl p-6 md:p-8 ">
-                <h3 className="font-bold text-lg mb-2 flex items-center gap-2">
-                  <RiTimeLine className="size-5" />
-                  Office Hours
+              <form className="space-y-8">
+                <div className="grid md:grid-cols-2 gap-x-6 gap-y-8">
+                  <FormGroup
+                    label="First Name"
+                    id="firstName"
+                    placeholder="Jane"
+                  />
+                  <FormGroup
+                    label="Last Name"
+                    id="lastName"
+                    placeholder="Doe"
+                  />
+                </div>
+
+                <FormGroup
+                  label="Email Address"
+                  id="email"
+                  type="email"
+                  placeholder="jane@example.com"
+                />
+
+                <FormGroup
+                  label="Phone Number"
+                  id="phone"
+                  type="tel"
+                  placeholder="+1 (555) 000-0000"
+                />
+
+                <div className="space-y-4 group">
+                  <label
+                    htmlFor="message"
+                    className="text-sm font-medium uppercase tracking-wider text-muted-foreground group-focus-within:text-primary transition-colors"
+                  >
+                    Message
+                  </label>
+                  <Textarea
+                    id="message"
+                    rows={4}
+                    placeholder="Tell us about your travel plans..."
+                    className="resize-none border-x-0 border-t-0 border-b border-border/50 rounded-none px-0 focus-visible:ring-0 focus-visible:border-primary text-lg transition-all duration-300 bg-transparent shadow-none placeholder:text-muted-foreground/30 min-h-[80px] py-3"
+                  />
+                </div>
+
+                <div className="pt-8">
+                  <Magnetic>
+                    <Button
+                      size="lg"
+                      className="w-full h-16 rounded-full text-lg group relative overflow-hidden"
+                    >
+                      <span className="relative z-10 flex items-center justify-center gap-2">
+                        Send Message
+                        <RiArrowRightLine className="size-5 group-hover:translate-x-1 transition-transform" />
+                      </span>
+                    </Button>
+                  </Magnetic>
+                </div>
+              </form>
+
+              <div className="mt-20 lg:hidden space-y-8 pt-12 border-t border-border">
+                <h3 className="font-display text-2xl font-bold">
+                  Contact Details
                 </h3>
-                <div className="space-y-2 text-primary-foreground/90 text-sm">
-                  <div className="flex justify-between">
-                    <span>Monday - Friday</span>
-                    <span>8:00 AM - 6:00 PM</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Saturday</span>
-                    <span>9:00 AM - 2:00 PM</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Sunday</span>
-                    <span>Closed</span>
-                  </div>
+                <div className="space-y-6">
+                  <MobileContactItem
+                    icon={RiMailLine}
+                    label="Email"
+                    value="hello@vizitafrica.rw"
+                    href="mailto:hello@vizitafrica.rw"
+                  />
+                  <MobileContactItem
+                    icon={RiWhatsappLine}
+                    label="WhatsApp"
+                    value="+250 788 123 456"
+                    href="https://wa.me/250788123456"
+                  />
+                  <MobileContactItem
+                    icon={RiMapPinLine}
+                    label="Office"
+                    value="Kigali Heights, 4th Floor"
+                  />
                 </div>
               </div>
             </div>
-
-            <div className="lg:col-span-3">
-              <div className="bg-card border border-border rounded-xl p-6 md:p-8 ">
-                <h2 className="font-display text-2xl font-bold text-foreground mb-6">
-                  Send us a Message
-                </h2>
-                <form className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label htmlFor="name" className="text-sm font-medium">
-                        Name
-                      </label>
-                      <Input
-                        id="name"
-                        placeholder="Your full name"
-                        className="bg-muted"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <label htmlFor="email" className="text-sm font-medium">
-                        Email
-                      </label>
-                      <Input
-                        id="email"
-                        type="email"
-                        placeholder="you@example.com"
-                        className="bg-muted"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <label htmlFor="phone" className="text-sm font-medium">
-                      Phone Number
-                    </label>
-                    <Input
-                      id="phone"
-                      placeholder="+1 (555) 000-0000"
-                      className="bg-muted"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <label htmlFor="subject" className="text-sm font-medium">
-                      Subject
-                    </label>
-                    <Input
-                      id="subject"
-                      placeholder="What can we help you with?"
-                      className="bg-muted"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <label htmlFor="message" className="text-sm font-medium">
-                      Message
-                    </label>
-                    <Textarea
-                      id="message"
-                      rows={6}
-                      className="bg-muted"
-                      placeholder="Tell us about your travel plans or questions..."
-                    />
-                  </div>
-
-                  <Button className="w-full md:w-auto h-12 px-8 text-base">
-                    Send Message
-                    <RiArrowRightLine className="size-5" />
-                  </Button>
-                </form>
-              </div>
-
-              <div className="mt-6 grid sm:grid-cols-2 gap-4">
-                <a
-                  href="/#faq"
-                  className="flex items-center justify-between p-4 bg-card border border-border rounded-lg hover:border-primary/50 transition-colors group"
-                >
-                  <span className="flex items-center gap-3 font-medium text-foreground">
-                    <RiQuestionLine className="size-5 text-primary" />
-                    Read our FAQs
-                  </span>
-                  <RiArrowRightLine className="size-4 text-muted-foreground group-hover:translate-x-1 transition-transform" />
-                </a>
-                <a
-                  href="mailto:support@vizitafrica.rw"
-                  className="flex items-center justify-between p-4 bg-card border border-border rounded-lg hover:border-primary/50 transition-colors group"
-                >
-                  <span className="flex items-center gap-3 font-medium text-foreground">
-                    <RiMailLine className="size-5 text-primary" />
-                    Support Center
-                  </span>
-                  <RiArrowRightLine className="size-4 text-muted-foreground group-hover:translate-x-1 transition-transform" />
-                </a>
-              </div>
-            </div>
           </div>
-        </section>
+        </div>
       </div>
     </>
+  );
+}
+
+function ContactItem({ icon: Icon, label, value, href, sub }: any) {
+  const Content = () => (
+    <div className="flex items-start gap-4 group cursor-pointer">
+      <div className="size-12 rounded-full bg-white/10 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-white/20 transition-all duration-300">
+        <Icon className="size-5 text-white" />
+      </div>
+      <div>
+        <p className="text-xs font-bold text-white/40 mb-1 uppercase tracking-widest">
+          {label}
+        </p>
+        <div className="flex items-center gap-2">
+          <p className="text-xl font-display font-medium text-white group-hover:text-accent-warm transition-colors">
+            {value}
+          </p>
+          {href && (
+            <RiArrowRightUpLine className="size-4 text-white/20 group-hover:text-accent-warm group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all" />
+          )}
+        </div>
+
+        {sub && <p className="text-sm text-white/40 mt-1">{sub}</p>}
+      </div>
+    </div>
+  );
+
+  if (href) {
+    return (
+      <Link href={href}>
+        <Content />
+      </Link>
+    );
+  }
+
+  return <Content />;
+}
+
+function MobileContactItem({ icon: Icon, label, value, href }: any) {
+  const Content = () => (
+    <div className="flex items-center gap-4">
+      <div className="size-10 rounded-full bg-muted flex items-center justify-center shrink-0">
+        <Icon className="size-5 text-foreground" />
+      </div>
+      <div>
+        <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-0.5">
+          {label}
+        </p>
+        <p className="text-lg font-medium text-foreground">{value}</p>
+      </div>
+    </div>
+  );
+
+  if (href)
+    return (
+      <Link href={href}>
+        <Content />
+      </Link>
+    );
+  return <Content />;
+}
+
+function FormGroup({ label, id, type = "text", placeholder }: any) {
+  return (
+    <div className="space-y-4 group">
+      <label
+        htmlFor={id}
+        className="text-sm font-medium uppercase tracking-wider text-muted-foreground group-focus-within:text-primary transition-colors"
+      >
+        {label}
+      </label>
+      <Input
+        id={id}
+        type={type}
+        placeholder={placeholder}
+        className="border-x-0 border-t-0 border-b border-border/50 rounded-none px-0 focus-visible:ring-0 focus-visible:border-primary text-lg transition-all duration-300 h-10 bg-transparent shadow-none placeholder:text-muted-foreground/30"
+      />
+    </div>
   );
 }

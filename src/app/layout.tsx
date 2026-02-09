@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { DM_Sans, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { SmoothScroller } from "@/components/smooth-scroller";
+import { CustomCursor } from "@/components/ui/custom-cursor";
+import { ScrollProgress } from "@/components/ui/scroll-progress";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -51,7 +53,11 @@ export default function RootLayout({
       <body
         className={`${dmSans.variable} ${inter.variable} ${jetbrainsMono.variable} font-sans antialiased`}
       >
-        <SmoothScroller>{children}</SmoothScroller>
+        <SmoothScroller>
+          <CustomCursor />
+          <ScrollProgress />
+          {children}
+        </SmoothScroller>
       </body>
     </html>
   );

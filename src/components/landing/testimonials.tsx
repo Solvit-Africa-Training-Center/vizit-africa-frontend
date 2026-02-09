@@ -1,12 +1,12 @@
 "use client";
 
-import { RiDoubleQuotesL, RiStarFill } from "@remixicon/react";
-import { motion, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
+import { SectionTitle } from "./section-title";
+import { motion } from "motion/react";
 import Image from "next/image";
+import React from "react";
+import { cn } from "@/lib/utils";
 
-// Enhanced testimonials with Unsplash photos
-const testimonials = [
+const testimonials: TestimonialData[] = [
   {
     id: "t-1",
     name: "Sarah Mitchell",
@@ -64,58 +64,6 @@ const testimonials = [
   },
 ];
 
-export function Testimonials() {
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
-  });
-
-  const x1 = useTransform(scrollYProgress, [0, 1], [0, -150]);
-  const x2 = useTransform(scrollYProgress, [0, 1], [0, 150]);
-
-  return (
-    <section
-      ref={containerRef}
-      className="py-24 bg-muted/50 text-foreground border-t border-border/50 overflow-hidden"
-    >
-      <div className="mx-auto max-w-7xl px-5 md:px-10 mb-16">
-        <h2 className="font-display text-4xl md:text-5xl font-bold mb-4 text-foreground text-center">
-          Traveler Stories
-        </h2>
-        <p className="text-muted-foreground text-lg font-light text-center max-w-2xl mx-auto">
-          Real stories from real trips. See why thousands of adventurers choose
-          Vizit Africa.
-        </p>
-      </div>
-
-      <div className="relative">
-        <div className="absolute inset-y-0 left-0 w-32 bg-linear-to-r from-zinc-50 to-transparent z-10" />
-        <div className="absolute inset-y-0 right-0 w-32 bg-linear-to-l from-zinc-50 to-transparent z-10" />
-
-        {/* Row 1 - Left */}
-        <motion.div style={{ x: x1 }} className="flex gap-6 mb-6 w-max px-4">
-          {[...testimonials, ...testimonials].map((testimonial, i) => (
-            <TestimonialCard key={`row1-${i}`} testimonial={testimonial} />
-          ))}
-        </motion.div>
-
-        {/* Row 2 - Right */}
-        <motion.div
-          style={{ x: x2 }}
-          className="flex gap-6 w-max px-4 -ml-[400px]"
-        >
-          {[...testimonials, ...testimonials]
-            .reverse()
-            .map((testimonial, i) => (
-              <TestimonialCard key={`row2-${i}`} testimonial={testimonial} />
-            ))}
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
 interface TestimonialData {
   id: string;
   name: string;
@@ -126,43 +74,104 @@ interface TestimonialData {
   rating: number;
 }
 
-function TestimonialCard({ testimonial }: { testimonial: TestimonialData }) {
+const allTestimonials = [...testimonials, ...testimonials, ...testimonials];
+const col1 = allTestimonials.slice(0, 5);
+const col2 = allTestimonials.slice(5, 10);
+const col3 = allTestimonials.slice(10, 15);
+
+export function Testimonials() {
   return (
-    <div className="shrink-0 w-[380px] p-6 bg-white rounded-2xl border border-border/40 transition-all duration-300 group">
-      {/* Header with Avatar and Stars */}
-      <div className="flex items-start justify-between mb-4">
-        <div className="flex items-center gap-3">
-          <div className="relative size-12 rounded-full overflow-hidden ring-2 ring-primary/10">
-            <Image
-              src={testimonial.avatar}
-              alt={testimonial.name}
-              fill
-              className="object-cover"
-            />
-          </div>
-          <div>
-            <h4 className="font-bold text-foreground text-sm">
-              {testimonial.name}
-            </h4>
-            <p className="text-xs text-muted-foreground">
-              {testimonial.role} • {testimonial.country}
-            </p>
-          </div>
+    <section className="relative py-24 md:py-32 bg-muted/30 overflow-hidden">
+      <div className="container max-w-7xl mx-auto px-5 md:px-10">
+        <div className="flex flex-col items-center justify-center text-center mb-16">
+          <SectionTitle
+            overline="What They Say"
+            title="Traveler Stories"
+            description="Real stories from real trips. See why thousands of adventurers choose Vizit Africa."
+            align="center"
+            className="mb-0"
+          />
         </div>
-        <RiDoubleQuotesL className="size-6 text-primary/20 group-hover:text-primary transition-colors" />
-      </div>
 
-      {/* Star Rating */}
-      <div className="flex gap-0.5 mb-4">
-        {Array.from({ length: testimonial.rating }).map((_, i) => (
-          <RiStarFill key={i} className="size-4 text-amber-400" />
+        <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 h-[800px] overflow-hidden mask-[linear-gradient(to_bottom,transparent,black_20%,black_80%,transparent)]">
+          <TestimonialsColumn testimonials={col1} duration={45} />
+          <TestimonialsColumn
+            testimonials={col2}
+            className="hidden md:block"
+            duration={55}
+          />
+          <TestimonialsColumn
+            testimonials={col3}
+            className="hidden lg:block"
+            duration={50}
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function TestimonialsColumn({
+  testimonials,
+  className,
+  duration = 10,
+}: {
+  testimonials: TestimonialData[];
+  className?: string;
+  duration?: number;
+}) {
+  return (
+    <div className={className}>
+      <motion.div
+        animate={{
+          y: "-50%",
+        }}
+        transition={{
+          duration: duration,
+          repeat: Number.POSITIVE_INFINITY,
+          ease: "linear",
+          repeatType: "loop",
+        }}
+        className="flex flex-col gap-6 pb-6"
+      >
+        {[...new Array(2)].map((_, i) => (
+          <React.Fragment key={i}>
+            {testimonials.map((testimonial, index) => (
+              <figure
+                key={`${testimonial.id}-${i}-${index}`}
+                className={cn(
+                  "relative w-full rounded-3xl border bg-card p-8 shadow-xs",
+                  "cursor-pointer transition-all duration-300 hover:shadow-md hover:border-primary/20",
+                )}
+              >
+                <blockquote className="text-sm leading-relaxed text-muted-foreground mb-6">
+                  "{testimonial.content}"
+                </blockquote>
+
+                <div className="flex items-center gap-4">
+                  <div className="relative size-10 rounded-xl overflow-hidden bg-muted">
+                    <Image
+                      src={testimonial.avatar}
+                      alt={testimonial.name}
+                      fill
+                      sizes="40px"
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <figcaption className="text-sm font-semibold text-foreground">
+                      {testimonial.name}
+                    </figcaption>
+                    <p className="text-xs text-muted-foreground">
+                      {testimonial.role}
+                    </p>
+                  </div>
+                </div>
+              </figure>
+            ))}
+          </React.Fragment>
         ))}
-      </div>
-
-      {/* Content */}
-      <p className="text-sm font-light leading-relaxed text-foreground/80 line-clamp-4">
-        "{testimonial.content}"
-      </p>
+      </motion.div>
     </div>
   );
 }

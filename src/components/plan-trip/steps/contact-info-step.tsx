@@ -9,7 +9,11 @@ import {
 } from "@remixicon/react";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group";
 import { Label } from "@/components/ui/label";
 import type { TripInfo } from "@/lib/plan_trip-types";
 
@@ -34,9 +38,9 @@ export function ContactInfoStep({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="max-w-2xl mx-auto"
+      className="max-w-2xl"
     >
-      <div className="bg-white border rounded-xl p-6 md:p-8 space-y-6">
+      <div className="space-y-8">
         <div>
           <h2 className="font-display text-2xl font-bold mb-2">
             Contact Information
@@ -46,25 +50,25 @@ export function ContactInfoStep({
           </p>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-6">
           <div className="space-y-2">
             <Label htmlFor="name">Full Name</Label>
-            <Input
-              id="name"
-              placeholder="John Doe"
-              value={tripInfo.name}
-              onChange={(e) =>
-                setTripInfo({ ...tripInfo, name: e.target.value })
-              }
-              className="bg-white"
-            />
+            <InputGroup>
+              <InputGroupInput
+                id="name"
+                placeholder="John Doe"
+                value={tripInfo.name}
+                onChange={(e) =>
+                  setTripInfo({ ...tripInfo, name: e.target.value })
+                }
+              />
+            </InputGroup>
           </div>
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid sm:grid-cols-2 gap-6">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <div className="relative">
-                <RiMailLine className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
-                <Input
+              <InputGroup>
+                <InputGroupInput
                   id="email"
                   type="email"
                   placeholder="you@example.com"
@@ -75,15 +79,16 @@ export function ContactInfoStep({
                       email: e.target.value,
                     })
                   }
-                  className="pl-10 bg-white"
                 />
-              </div>
+                <InputGroupAddon>
+                  <RiMailLine />
+                </InputGroupAddon>
+              </InputGroup>
             </div>
             <div className="space-y-2">
               <Label htmlFor="phone">Phone (Optional)</Label>
-              <div className="relative">
-                <RiPhoneLine className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
-                <Input
+              <InputGroup>
+                <InputGroupInput
                   id="phone"
                   type="tel"
                   placeholder="+1 234 567 8900"
@@ -94,9 +99,11 @@ export function ContactInfoStep({
                       phone: e.target.value,
                     })
                   }
-                  className="pl-10 bg-white"
                 />
-              </div>
+                <InputGroupAddon>
+                  <RiPhoneLine />
+                </InputGroupAddon>
+              </InputGroup>
             </div>
           </div>
         </div>

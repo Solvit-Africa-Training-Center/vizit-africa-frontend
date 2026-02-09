@@ -127,19 +127,31 @@ export function ServicesStep({
       exit={{ opacity: 0, y: -20 }}
     >
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <div className="flex items-center justify-between gap-4 mb-6">
-          <TabsList className="border">
-            <TabsTrigger value="hotels" className="">
-              <RiHotelLine className="size-4" />
-              <span className="hidden sm:inline">Hotels</span>
+        <div className="flex flex-col gap-6 mb-8">
+          <TabsList
+            variant="editorial"
+            className="w-full border-b border-border"
+          >
+            <TabsTrigger
+              value="hotels"
+              className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-0 pb-2 text-base font-display font-medium uppercase tracking-wide"
+            >
+              <RiHotelLine className="size-4 mr-2" />
+              Hotels
             </TabsTrigger>
-            <TabsTrigger value="cars" className="">
-              <RiCarLine className="size-4" />
-              <span className="hidden sm:inline">Cars</span>
+            <TabsTrigger
+              value="cars"
+              className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-0 pb-2 text-base font-display font-medium uppercase tracking-wide"
+            >
+              <RiCarLine className="size-4 mr-2" />
+              Cars
             </TabsTrigger>
-            <TabsTrigger value="guides" className="">
-              <RiUserStarLine className="size-4" />
-              <span className="hidden sm:inline">Guides</span>
+            <TabsTrigger
+              value="guides"
+              className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-0 pb-2 text-base font-display font-medium uppercase tracking-wide"
+            >
+              <RiUserStarLine className="size-4 mr-2" />
+              Guides
             </TabsTrigger>
           </TabsList>
 
@@ -165,7 +177,7 @@ export function ServicesStep({
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-[1fr_280px] gap-6">
+        <div className="space-y-6">
           <div>
             <InlineFilters
               activeTab={activeTab}
@@ -278,20 +290,6 @@ export function ServicesStep({
                 <RiArrowRightLine />
               </Button>
             </div>
-          </div>
-
-          <div className="hidden lg:block">
-            <BookingSummary
-              currentStep={3}
-              tripInfo={tripInfo}
-              selections={selections}
-              days={days}
-              travelers={travelers}
-              driverSurcharge={DRIVER_SURCHARGE}
-              subtotal={subtotal}
-              serviceFee={serviceFee}
-              total={total}
-            />
           </div>
         </div>
       </Tabs>
