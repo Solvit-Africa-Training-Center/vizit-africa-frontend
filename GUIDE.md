@@ -1,30 +1,13 @@
-# API implementation guide
+# Implementation guide
 
-## Authentication
-
-### Register
-
-```typescript
-const register = async (credentials: RegisterCredentials) => {
-  const response = await apiClient.register(credentials);
-  return response;
-};
-```
-
-### Verify
-
-```typescript
-const verify = async (credentials: VerifyCredentials) => {
-  const response = await apiClient.verify(credentials);
-  return response;
-};
-```
-
-### Login
-
-```typescript
-const login = async (credentials: LoginCredentials) => {
-  const response = await apiClient.login(credentials);
-  return response;
-};
-```
+- AUTHENTICATION: Register -> Verify email -> Login
+- ADMIN: Register services
+         Allow vendors
+         Access to everything
+         Control vendors and services
+         Follow on requests
+         Return response on requests with prices
+         Get requests statuses
+- USERS: Can see servicess, make booking requests, get feedback on their requests with prices, make payments to confirms their reqest, can apply to be vendors
+-VENDORS: Can register a service under their speciality
+See requests made on their services
