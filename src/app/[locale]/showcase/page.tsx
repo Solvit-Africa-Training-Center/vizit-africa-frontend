@@ -11,11 +11,7 @@ import {
 } from "@/components/ui/accordion";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
-import {
-  Avatar,
-  AvatarImage,
-  AvatarFallback,
-} from "@/components/ui/avatar";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -43,8 +39,8 @@ export default function ShowcasePage() {
         <div className="flex flex-wrap gap-4">
           <Button>Default</Button>
           <Button variant="outline">Outline</Button>
-          <Button variant="editorial">Editorial</Button>
-          <Button variant="link-hover">Link Hover</Button>
+          <Button variant="secondary">Secondary</Button>
+          <Button variant="link">Link</Button>
         </div>
       </section>
 
@@ -54,7 +50,7 @@ export default function ShowcasePage() {
         </h2>
         <div className="flex flex-wrap gap-4">
           <Badge>Default</Badge>
-          <Badge variant="outline-sharp">Outline Sharp</Badge>
+          <Badge variant="outline">Outline Sharp</Badge>
           <Badge variant="editorial">Editorial</Badge>
           <Badge variant="status">
             <span className="size-1.5 rounded-full bg-green-500 mr-1.5" />
@@ -129,7 +125,7 @@ export default function ShowcasePage() {
           Tabs
         </h2>
         <Tabs defaultValue="account" className="w-[400px]">
-          <TabsList variant="editorial">
+          <TabsList>
             <TabsTrigger value="account">Account</TabsTrigger>
             <TabsTrigger value="password">Password</TabsTrigger>
           </TabsList>

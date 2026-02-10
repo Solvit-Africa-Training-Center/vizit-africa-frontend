@@ -124,10 +124,7 @@ export function ServicesStep({
     >
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <div className="flex flex-col gap-6 mb-8">
-          <TabsList
-            variant="editorial"
-            className="w-full border-b border-border"
-          >
+          <TabsList className="w-full border-b border-border">
             <TabsTrigger
               value="hotels"
               className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-0 pb-2 text-base font-display font-medium uppercase tracking-wide"

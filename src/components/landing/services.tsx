@@ -11,10 +11,10 @@ import { useTranslations } from "next-intl";
 gsap.registerPlugin(ScrollTrigger);
 
 const serviceImages = [
-  "https://images.unsplash.com/photo-1721402495451-41724ae641a4?q=90&w=1600&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1756245994882-cf32d49fde5a?q=90&w=1600&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1609861517208-e5b7b4cd4b87?q=90&w=1600&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1664760536218-44efb2696288?q=90&w=1600&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1436491865332-7a61a1042759?q=90&w=1600&auto=format&fit=crop", // Flight/Plane
+  "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=90&w=1600&auto=format&fit=crop", // Hotel
+  "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=90&w=1600&auto=format&fit=crop", // Car/Road
+  "https://images.unsplash.com/photo-1596423736730-86d5267d32c9?q=90&w=1600&auto=format&fit=crop", // Guide/Map
 ];
 
 const serviceKeys = ["flights", "hotels", "experiences", "transfers"] as const;

@@ -10,7 +10,13 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 
-type Category = "Hotels" | "BnBs" | "Car Rentals" | "Guides" | "All";
+type Category =
+  | "Flights"
+  | "Hotels"
+  | "BnBs"
+  | "Car Rentals"
+  | "Guides"
+  | "All";
 type SortOption =
   | "Recommended"
   | "Price: Low to High"
@@ -29,133 +35,166 @@ interface Service {
 
 export default function ServicesPage() {
   const t = useTranslations("ServicesPage");
-  const tCommon = useTranslations("Common");
 
-  const servicesData: Service[] = [
-    {
-      id: "the-retreat",
-      title: t("items.the-retreat.title"),
-      category: "Hotels",
-      description: t("items.the-retreat.description"),
-      price: "From $450 / night",
-      image:
-        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2600&auto=format&fit=crop",
-      details: [
-        t("items.the-retreat.details.0"),
-        t("items.the-retreat.details.1"),
-        t("items.the-retreat.details.2"),
-        t("items.the-retreat.details.3"),
-      ],
-    },
-    {
-      id: "one-and-only",
-      title: t("items.one-and-only.title"),
-      category: "Hotels",
-      description: t("items.one-and-only.description"),
-      price: "From $3,500 / night",
-      image:
-        "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2600&auto=format&fit=crop",
-      details: [
-        t("items.one-and-only.details.0"),
-        t("items.one-and-only.details.1"),
-        t("items.one-and-only.details.2"),
-        t("items.one-and-only.details.3"),
-      ],
-    },
-    {
-      id: "kigali-soul",
-      title: t("items.kigali-soul.title"),
-      category: "BnBs",
-      description: t("items.kigali-soul.description"),
-      price: "From $80 / night",
-      image:
-        "https://images.unsplash.com/photo-1439066615861-d1af74d74000?q=80&w=2600&auto=format&fit=crop",
-      details: [
-        t("items.kigali-soul.details.0"),
-        t("items.kigali-soul.details.1"),
-        t("items.kigali-soul.details.2"),
-        t("items.kigali-soul.details.3"),
-      ],
-    },
-    {
-      id: "lavender-home",
-      title: t("items.lavender-home.title"),
-      category: "BnBs",
-      description: t("items.lavender-home.description"),
-      price: "From $65 / night",
-      image:
-        "https://images.unsplash.com/photo-1493809842364-78817add7ffb?q=80&w=2600&auto=format&fit=crop",
-      details: [
-        t("items.lavender-home.details.0"),
-        t("items.lavender-home.details.1"),
-        t("items.lavender-home.details.2"),
-        t("items.lavender-home.details.3"),
-      ],
-    },
-    {
-      id: "land-cruiser-v8",
-      title: t("items.land-cruiser-v8.title"),
-      category: "Car Rentals",
-      description: t("items.land-cruiser-v8.description"),
-      price: "$150 / day",
-      image:
-        "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=2600&auto=format&fit=crop",
-      details: [
-        t("items.land-cruiser-v8.details.0"),
-        t("items.land-cruiser-v8.details.1"),
-        t("items.land-cruiser-v8.details.2"),
-        t("items.land-cruiser-v8.details.3"),
-      ],
-    },
-    {
-      id: "rav4-hire",
-      title: t("items.rav4-hire.title"),
-      category: "Car Rentals",
-      description: t("items.rav4-hire.description"),
-      price: "$80 / day",
-      image:
-        "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?q=80&w=2600&auto=format&fit=crop",
-      details: [
-        t("items.rav4-hire.details.0"),
-        t("items.rav4-hire.details.1"),
-        t("items.rav4-hire.details.2"),
-        t("items.rav4-hire.details.3"),
-      ],
-    },
-    {
-      id: "guide-alex",
-      title: t("items.guide-alex.title"),
-      category: "Guides",
-      description: t("items.guide-alex.description"),
-      price: "$100 / day",
-      image:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2600&auto=format&fit=crop",
-      details: [
-        t("items.guide-alex.details.0"),
-        t("items.guide-alex.details.1"),
-        t("items.guide-alex.details.2"),
-        t("items.guide-alex.details.3"),
-      ],
-    },
-    {
-      id: "guide-sarah",
-      title: t("items.guide-sarah.title"),
-      category: "Guides",
-      description: t("items.guide-sarah.description"),
-      price: "$120 / day",
-      image:
-        "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&w=2600&auto=format&fit=crop",
-      details: [
-        t("items.guide-sarah.details.0"),
-        t("items.guide-sarah.details.1"),
-        t("items.guide-sarah.details.2"),
-        t("items.guide-sarah.details.3"),
-      ],
-    },
-  ];
+  const servicesData: Service[] = useMemo(
+    () => [
+      {
+        id: "rwandair-direct",
+        title: t("items.rwandair-direct.title"),
+        category: "Flights",
+        description: t("items.rwandair-direct.description"),
+        price: "From $600",
+        image:
+          "https://images.unsplash.com/photo-1436491865332-7a61a1042759?q=80&w=2600&auto=format&fit=crop",
+        details: [
+          t("items.rwandair-direct.details.0"),
+          t("items.rwandair-direct.details.1"),
+          t("items.rwandair-direct.details.2"),
+          t("items.rwandair-direct.details.3"),
+        ],
+      },
+      {
+        id: "klm-royal",
+        title: t("items.klm-royal.title"),
+        category: "Flights",
+        description: t("items.klm-royal.description"),
+        price: "From $850",
+        image:
+          "https://images.unsplash.com/photo-1542296332-2e44a99cfef9?q=80&w=2600&auto=format&fit=crop",
+        details: [
+          t("items.klm-royal.details.0"),
+          t("items.klm-royal.details.1"),
+          t("items.klm-royal.details.2"),
+          t("items.klm-royal.details.3"),
+        ],
+      },
+      {
+        id: "the-retreat",
+        title: t("items.the-retreat.title"),
+        category: "Hotels",
+        description: t("items.the-retreat.description"),
+        price: "From $450 / night",
+        image:
+          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2600&auto=format&fit=crop",
+        details: [
+          t("items.the-retreat.details.0"),
+          t("items.the-retreat.details.1"),
+          t("items.the-retreat.details.2"),
+          t("items.the-retreat.details.3"),
+        ],
+      },
+      {
+        id: "one-and-only",
+        title: t("items.one-and-only.title"),
+        category: "Hotels",
+        description: t("items.one-and-only.description"),
+        price: "From $3,500 / night",
+        image:
+          "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2600&auto=format&fit=crop",
+        details: [
+          t("items.one-and-only.details.0"),
+          t("items.one-and-only.details.1"),
+          t("items.one-and-only.details.2"),
+          t("items.one-and-only.details.3"),
+        ],
+      },
+      {
+        id: "kigali-soul",
+        title: t("items.kigali-soul.title"),
+        category: "BnBs",
+        description: t("items.kigali-soul.description"),
+        price: "From $80 / night",
+        image:
+          "https://images.unsplash.com/photo-1439066615861-d1af74d74000?q=80&w=2600&auto=format&fit=crop",
+        details: [
+          t("items.kigali-soul.details.0"),
+          t("items.kigali-soul.details.1"),
+          t("items.kigali-soul.details.2"),
+          t("items.kigali-soul.details.3"),
+        ],
+      },
+      {
+        id: "lavender-home",
+        title: t("items.lavender-home.title"),
+        category: "BnBs",
+        description: t("items.lavender-home.description"),
+        price: "From $65 / night",
+        image:
+          "https://images.unsplash.com/photo-1493809842364-78817add7ffb?q=80&w=2600&auto=format&fit=crop",
+        details: [
+          t("items.lavender-home.details.0"),
+          t("items.lavender-home.details.1"),
+          t("items.lavender-home.details.2"),
+          t("items.lavender-home.details.3"),
+        ],
+      },
+      {
+        id: "land-cruiser-v8",
+        title: t("items.land-cruiser-v8.title"),
+        category: "Car Rentals",
+        description: t("items.land-cruiser-v8.description"),
+        price: "$150 / day",
+        image:
+          "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=2600&auto=format&fit=crop",
+        details: [
+          t("items.land-cruiser-v8.details.0"),
+          t("items.land-cruiser-v8.details.1"),
+          t("items.land-cruiser-v8.details.2"),
+          t("items.land-cruiser-v8.details.3"),
+        ],
+      },
+      {
+        id: "rav4-hire",
+        title: t("items.rav4-hire.title"),
+        category: "Car Rentals",
+        description: t("items.rav4-hire.description"),
+        price: "$80 / day",
+        image:
+          "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?q=80&w=2600&auto=format&fit=crop",
+        details: [
+          t("items.rav4-hire.details.0"),
+          t("items.rav4-hire.details.1"),
+          t("items.rav4-hire.details.2"),
+          t("items.rav4-hire.details.3"),
+        ],
+      },
+      {
+        id: "guide-alex",
+        title: t("items.guide-alex.title"),
+        category: "Guides",
+        description: t("items.guide-alex.description"),
+        price: "$100 / day",
+        image:
+          "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2600&auto=format&fit=crop",
+        details: [
+          t("items.guide-alex.details.0"),
+          t("items.guide-alex.details.1"),
+          t("items.guide-alex.details.2"),
+          t("items.guide-alex.details.3"),
+        ],
+      },
+      {
+        id: "guide-sarah",
+        title: t("items.guide-sarah.title"),
+        category: "Guides",
+        description: t("items.guide-sarah.description"),
+        price: "$120 / day",
+        image:
+          "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&w=2600&auto=format&fit=crop",
+        details: [
+          t("items.guide-sarah.details.0"),
+          t("items.guide-sarah.details.1"),
+          t("items.guide-sarah.details.2"),
+          t("items.guide-sarah.details.3"),
+        ],
+      },
+    ],
+    [t],
+  );
 
   const categories: { label: string; value: Category }[] = [
     { label: t("categories.all"), value: "All" },
+    { label: t("categories.flights"), value: "Flights" },
     { label: t("categories.hotels"), value: "Hotels" },
     { label: t("categories.bnbs"), value: "BnBs" },
     { label: t("categories.carRentals"), value: "Car Rentals" },
