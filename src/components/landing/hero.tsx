@@ -21,20 +21,19 @@ gsap.registerPlugin(ScrollTrigger);
 const HERO_SLIDES = [
   {
     id: 1,
-    image:
-      "https://images.unsplash.com/photo-1436491865332-7a61a1042759?q=90&w=2400&auto=format&fit=crop", // Plane wing
+    image: "/bookflight.jpeg",
     key: "1",
   },
   {
     id: 2,
     image:
-      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=90&w=2400&auto=format&fit=crop", // Hotel view
+      "/Kigali.jpeg", // Hotel view
     key: "2",
   },
   {
     id: 3,
     image:
-      "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=90&w=2400&auto=format&fit=crop", // Driving
+      "/ca.jpg", // Driving
     key: "3",
   },
   {
@@ -46,7 +45,7 @@ const HERO_SLIDES = [
   {
     id: 5,
     image:
-      "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=90&w=2400&auto=format&fit=crop", // Travel/Planning
+      "/plan.jpg", // Travel/Planning
     key: "5",
   },
 ];
