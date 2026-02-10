@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "@tanstack/react-form";
 import { toast } from "sonner";
 import {
@@ -41,21 +42,17 @@ import { VendorForm } from "./vendor-form";
 import { RiAddLine, RiSearchLine } from "@remixicon/react";
 
 export function ServiceForm() {
-  const [vendors, setVendors] = useState<
-    { id: string | number; business_name: string }[]
-  >([]);
-  const [isVendorValid, setIsVendorValid] = useState(false);
-  const [isVendorDialogOpen, setIsVendorDialogOpen] = useState(false);
-
-  useEffect(() => {
-    async function fetchVendors() {
+  const { data: vendorsData, isLoading: isVendorsLoading } = useQuery({
+    queryKey: ["vendors"],
+    queryFn: async () => {
       const res = await getVendors();
-      if (res.success) {
-        setVendors(res.data);
-      }
-    }
-    fetchVendors();
-  }, []);
+      if (!res.success) throw new Error(res.error);
+      return res.data;
+    },
+  });
+
+  const vendors = vendorsData || [];
+  const [isVendorDialogOpen, setIsVendorDialogOpen] = useState(false);
 
   const form = useForm({
     defaultValues: {
@@ -85,8 +82,10 @@ export function ServiceForm() {
     },
   });
 
+  const queryClient = useQueryClient();
+
   const handleVendorCreated = (newVendor: any) => {
-    setVendors((prev) => [...prev, newVendor]);
+    queryClient.invalidateQueries({ queryKey: ["vendors"] });
     form.setFieldValue("vendor", newVendor.id);
     setIsVendorDialogOpen(false);
     toast.success(`Vendor ${newVendor.business_name} selected`);
@@ -180,26 +179,30 @@ export function ServiceForm() {
               <Label>Vendor</Label>
               <div className="flex gap-2">
                 <div className="flex-1">
-                  <Autocomplete
-                    value={
-                      vendors.find((v) => v.id === field.state.value) || null
-                    }
-                    onValueChange={(val: any) => field.handleChange(val?.id)}
-                  >
-                    <AutocompleteTrigger>
-                      <AutocompleteValue placeholder="Search vendor..." />
-                    </AutocompleteTrigger>
-                    <AutocompletePopup>
-                      <AutocompleteInput placeholder="Search vendors..." />
-                      <AutocompleteList>
-                        {vendors.map((vendor) => (
-                          <AutocompleteItem key={vendor.id} value={vendor}>
-                            {vendor.business_name}
-                          </AutocompleteItem>
-                        ))}
-                      </AutocompleteList>
-                    </AutocompletePopup>
-                  </Autocomplete>
+                  {isVendorsLoading ? (
+                    <div className="h-10 w-full animate-pulse rounded-md border border-input bg-muted" />
+                  ) : (
+                    <Autocomplete
+                      value={
+                        vendors.find((v) => v.id === field.state.value) || null
+                      }
+                      onValueChange={(val: any) => field.handleChange(val?.id)}
+                    >
+                      <AutocompleteTrigger>
+                        <AutocompleteValue placeholder="Search vendor..." />
+                      </AutocompleteTrigger>
+                      <AutocompletePopup>
+                        <AutocompleteInput placeholder="Search vendors..." />
+                        <AutocompleteList>
+                          {vendors.map((vendor: any) => (
+                            <AutocompleteItem key={vendor.id} value={vendor}>
+                              {vendor.business_name}
+                            </AutocompleteItem>
+                          ))}
+                        </AutocompleteList>
+                      </AutocompletePopup>
+                    </Autocomplete>
+                  )}
                 </div>
 
                 <Dialog
