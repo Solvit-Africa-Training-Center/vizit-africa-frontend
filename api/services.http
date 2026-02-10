@@ -1,4 +1,4 @@
-### Create Service (Approved Vendor Only)
+### create service (approved vendor only)
 POST {{baseUrl}}/services/
 Authorization: Bearer {{token}}
 Content-Type: application/json
@@ -14,7 +14,7 @@ Content-Type: application/json
   "location": 1
 }
 
-### Add Service Media
+### add service media
 POST {{baseUrl}}/services/media/
 Authorization: Bearer {{token}}
 Content-Type: application/json
@@ -26,7 +26,7 @@ Content-Type: application/json
   "sort_order": 1
 }
 
-### Create Availability
+### create availability
 POST {{baseUrl}}/services/availability/
 Authorization: Bearer {{token}}
 Content-Type: application/json
@@ -40,7 +40,7 @@ Content-Type: application/json
   "is_blocked": false
 }
 
-### Create Discount
+### create discount
 POST {{baseUrl}}/services/discounts/
 Authorization: Bearer {{token}}
 Content-Type: application/json
