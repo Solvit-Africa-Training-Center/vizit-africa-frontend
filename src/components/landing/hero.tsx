@@ -22,31 +22,31 @@ const HERO_SLIDES = [
   {
     id: 1,
     image:
-      "https://images.unsplash.com/photo-1546422724-3c4be0b20cb5?q=90&w=2400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1436491865332-7a61a1042759?q=90&w=2400&auto=format&fit=crop", // Plane wing
     key: "1",
   },
   {
     id: 2,
     image:
-      "https://images.unsplash.com/photo-1516426122078-c23e76319801?q=90&w=2400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=90&w=2400&auto=format&fit=crop", // Hotel view
     key: "2",
   },
   {
     id: 3,
     image:
-      "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=90&w=2400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=90&w=2400&auto=format&fit=crop", // Driving
     key: "3",
   },
   {
     id: 4,
     image:
-      "https://images.unsplash.com/photo-1505245208761-ba872912fac0?q=90&w=2400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1527631746610-bca00a040d60?q=90&w=2400&auto=format&fit=crop", // Guide/Discussion
     key: "4",
   },
   {
     id: 5,
     image:
-      "https://images.unsplash.com/photo-1489640818597-89b1edc97db5?q=90&w=2400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=90&w=2400&auto=format&fit=crop", // Travel/Planning
     key: "5",
   },
 ];

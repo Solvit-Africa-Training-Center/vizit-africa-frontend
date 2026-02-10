@@ -1,13 +1,13 @@
 {
   "Common": {
     "brandName": "Vizit Africa",
-    "startPlanning": "Start Planning",
-    "learnMore": "Learn More",
+    "startPlanning": "Book Your Trip",
+    "learnMore": "View Options",
     "viewAll": "View All",
     "bookNow": "Book Now",
-    "contactUs": "Contact Us",
+    "contactUs": "Contact Support",
     "getInTouch": "Get in Touch",
-    "sendMessage": "Send Message",
+    "sendMessage": "Send Request",
     "login": "Log in",
     "signup": "Sign up",
     "signIn": "Sign In",
@@ -15,7 +15,7 @@
     "localTime": "Local Time",
     "back": "Back",
     "continue": "Continue",
-    "submit": "Submit"
+    "submit": "Search Flights"
   },
   "Navigation": {
     "services": "Services",
@@ -27,112 +27,112 @@
   "Hero": {
     "slides": {
       "1": {
-        "subheading": "Visit Rwanda 2026",
-        "heading1": "Majestic",
-        "heading2": "Horizon",
-        "description": "Discover the untold stories of the heart of Africa. Where mist meets mountain, and silence speaks volumes."
+        "subheading": "Seamless Travel",
+        "heading1": "Book",
+        "heading2": "Flights",
+        "description": "Compare airlines, find the best routes, and secure your seat to the heart of Africa in minutes."
       },
       "2": {
-        "subheading": "Wildlife Sanctuary",
-        "heading1": "Wild",
-        "heading2": "Heart",
-        "description": "Experience the pulse of the jungle and the serene beauty of our protected highlands."
+        "subheading": "Premium Stays",
+        "heading1": "Reserve",
+        "heading2": "Hotels",
+        "description": "From boutique lodges to 5-star resorts. curated accommodations verified for quality and comfort."
       },
       "3": {
-        "subheading": "Gorilla Highlands",
-        "heading1": "Mist",
-        "heading2": "Valley",
-        "description": "Encounter gentle giants in their natural habitat. A profound connection with nature's rarest treasures."
+        "subheading": "Explore Freely",
+        "heading1": "Rent",
+        "heading2": "Vehicles",
+        "description": " rugged 4x4s for safari or luxury sedans for the city. Drive yourself or book a professional chauffeur."
       },
       "4": {
-        "subheading": "Lake Kivu",
-        "heading1": "Serene",
-        "heading2": "Shores",
-        "description": "Relax by the emerald waters of Lake Kivu. A paradise for relaxation, adventure, and reflection."
+        "subheading": "Expert Guidance",
+        "heading1": "Hire",
+        "heading2": "Guides",
+        "description": "Connect with local experts who know every trail, bird species, and hidden cultural gem."
       },
       "5": {
-        "subheading": "Vibrant Culture",
-        "heading1": "Urban",
-        "heading2": "Rhythm",
-        "description": "Feel the energy of Kigali. A city of innovation, art, and warm hospitality rising from the hills."
+        "subheading": "Complete Packages",
+        "heading1": "Plan",
+        "heading2": "Trips",
+        "description": "Bundle flights, hotels, and experiences into one seamless itinerary. We handle the logistics."
       }
     },
-    "location": "Volcanoes N.P.",
-    "coordinates": "1°28'S, 29°32'E"
+    "location": "Kigali Int. Airport",
+    "coordinates": "1°58'S, 30°08'E"
   },
   "SocialProof": {
     "tagline": "Trusted by global travelers & partners"
   },
   "Services": {
-    "overline": "Our Services",
-    "title": "World Class Services",
-    "description": "We handle everything from the moment you leave your doorstep until you return, changed forever.",
+    "overline": "Travel Logistics",
+    "title": "Everything You Need",
+    "description": "We don't just inspire travel; we facilitate it. A complete booking engine for every aspect of your journey.",
     "items": {
       "flights": {
-        "title": "Luxury Flights",
-        "description": "Private charters & premium class access."
+        "title": "Book Flights",
+        "description": "International & domestic routes."
       },
       "hotels": {
-        "title": "Curated Hotels",
-        "description": "From boutique lodges to 5-star resorts."
+        "title": "Book Stays",
+        "description": "Hotels, lodges & BnBs."
       },
       "experiences": {
-        "title": "Exclusive Experiences",
-        "description": "Gorilla trekking, tea plantations, and more."
+        "title": "Rent Vehicles",
+        "description": "Self-drive or chauffeur options."
       },
       "transfers": {
-        "title": "VIP Transfers",
-        "description": "Seamless ground transportation."
+        "title": "Hire Guides",
+        "description": "Certified local experts."
       }
     }
   },
   "Destinations": {
-    "overline": "Discover Rwanda",
-    "title": "Diverse Landscapes",
-    "description": "From mist-covered mountains to golden savannahs, explore the varied beauty of the land of a thousand hills.",
+    "overline": "Popular Routes",
+    "title": "Fly To",
+    "description": "Direct connections to Rwanda's most visited regions. Book your flight and accommodation in one go.",
     "regions": {
       "volcanoes": {
-        "name": "Volcanoes N.P.",
-        "subtitle": "Gorilla Trekking"
+        "name": "Musanze (VNP)",
+        "subtitle": "45m Flight / 2h Drive"
       },
       "akagera": {
-        "name": "Akagera N.P.",
-        "subtitle": "Big 5 Safari"
+        "name": "Akagera (ANP)",
+        "subtitle": "30m Flight / 2.5h Drive"
       },
       "nyungwe": {
-        "name": "Nyungwe Forest",
-        "subtitle": "Primate Trekking"
+        "name": "Kamembe (NNP)",
+        "subtitle": "35m Flight"
       },
       "kivu": {
-        "name": "Lake Kivu",
-        "subtitle": "Coastal Relaxation"
+        "name": "Rubavu (Gisenyi)",
+        "subtitle": "35m Flight"
       },
       "kigali": {
         "name": "Kigali City",
-        "subtitle": "Urban Culture"
+        "subtitle": "International Hub"
       }
     }
   },
   "HowItWorks": {
-    "overline": "Your Journey Starts Here",
-    "title": "Four Steps to Paradise",
-    "description": "From your first inquiry to landing in Kigali — we orchestrate every detail so you can focus on the adventure.",
+    "overline": "Simple Booking",
+    "title": "Plan Book Fly",
+    "description": "A streamlined process to get you from planning to boarding pass in minutes.",
     "steps": {
       "1": {
-        "title": "Share Your Plan",
-        "description": "Tell us your travel dates, group size, and what you'd like to experience."
+        "title": "Search",
+        "description": "Enter your dates and destinations to see real-time availability for flights and hotels."
       },
       "2": {
-        "title": "We Find Best Options",
-        "description": "Our team sources current availability and prices from trusted partners."
+        "title": "Select",
+        "description": "Compare options by price, rating, or duration. Choose what fits your schedule."
       },
       "3": {
-        "title": "Choose Your Preferences",
-        "description": "Select from personalized options for flights, stays, transport, and guides."
+        "title": "Add Extras",
+        "description": "Add a rental car, airport transfer, or a local guide to your itinerary with one click."
       },
       "4": {
-        "title": "Confirm & Go",
-        "description": "We handle all bookings and logistics. You just enjoy your journey."
+        "title": "Checkout",
+        "description": "Secure travel with instant confirmation and digital tickets delivered to your phone."
       }
     }
   },
@@ -233,15 +233,15 @@
     }
   },
   "CTA": {
-    "overline": "The Journey Begins",
-    "title": "Ready to",
-    "titleHighlight": "Disappear?",
-    "description": "Escape the ordinary. We handle the logistics, permits, and luxury accommodations. You just show up and breathe.",
-    "startPlanning": "Start Planning",
-    "contactTeam": "Contact Team",
-    "concierge": "Concierge Direct",
-    "emailUs": "Email Us",
-    "whatsapp": "WhatsApp"
+    "overline": "Ready to go?",
+    "title": "Book Your",
+    "titleHighlight": "Flight Now",
+    "description": "Don't wait. Prices and availability change daily. Secure your trip to Rwanda today.",
+    "startPlanning": "Search Flights",
+    "contactTeam": "Contact Support",
+    "concierge": "Group Bookings",
+    "emailUs": "Email Support",
+    "whatsapp": "Chat with Agent"
   },
   "Footer": {
     "tagline": "Your trusted Rwanda travel partner. Professional planning for unforgettable African experiences.",
@@ -264,13 +264,13 @@
   },
   "About": {
     "established": "Established 2018",
-    "title": "The Vizit Story",
-    "intro1": "We don't just visit.",
-    "intro2": "We immerse. Vizit Africa was born from a simple yet radical belief: that travel should be more than sightseeing—it should be soul-stirring.",
-    "intro3": "We strip away the artificial layers of tourism to reveal the raw, beating heart of Rwanda.",
-    "guidesTitle": "The Guides",
-    "guidesDescription": "Locals. Storytellers. Experts. Meet the people who know Rwanda best.",
-    "startJourney": "Start Your Journey",
+    "title": "Vizit Logistics",
+    "intro1": "Global standards, local expertise.",
+    "intro2": "Vizit Africa is a fully integrated travel logistics partner. We control the entire value chain from fleet management to hotel partnerships.",
+    "intro3": "Reliability is our currency. We deliver seamless execution for complex itineraries.",
+    "guidesTitle": "Our Infrastructure",
+    "guidesDescription": "Private fleet. Verified accommodation partners. 24/7 Operations Center.",
+    "startJourney": "Partner With Us",
     "values": {
       "1": {
         "title": "Respect",
@@ -292,10 +292,10 @@
   },
   "Contact": {
     "openStatus": "Open for New Adventures",
-    "title": "Let's plan your",
-    "titleSub": "legacy trip.",
-    "description": "Have questions about our tours or need a custom itinerary? We're here to help you plan the perfect experience.",
-    "emailUs": "Email Us",
+    "title": "24/7 Support",
+    "titleSub": "Center",
+    "description": "Our operations team is on standby to assist with bookings, itinerary changes, and on-ground logistics.",
+    "emailUs": "Email Support",
     "whatsapp": "WhatsApp",
     "visitUs": "Visit Us",
     "address": "Kigali Heights, 4th Floor",
@@ -343,6 +343,7 @@
     "sort": "Sort:",
     "categories": {
       "all": "All",
+      "flights": "Flights",
       "hotels": "Hotels",
       "bnbs": "BnBs",
       "carRentals": "Car Rentals",
@@ -357,6 +358,26 @@
     "noResults": "No services found matching your criteria.",
     "bookService": "Book This Service",
     "items": {
+      "rwandair-direct": {
+        "title": "RwandAir Direct",
+        "description": "Daily direct flights from London, Brussels, and Dubai.",
+        "details": [
+          "Dreamliner Business Class.",
+          "Generous baggage allowance.",
+          "Winne of 'Best Airline Staff'.",
+          "Seamless connections."
+        ]
+      },
+      "klm-royal": {
+        "title": "KLM Royal Dutch",
+        "description": "Reliable connections via Amsterdam Schiphol.",
+        "details": [
+          "Daily flights.",
+          "World Class Service.",
+          "Sustainability focus.",
+          "SkyTeam Alliance Member."
+        ]
+      },
       "the-retreat": {
         "title": "The Retreat by Heaven",
         "description": "Kigali's premier luxury boutique hotel with solar-heated pools.",
@@ -500,8 +521,8 @@
   },
   "Gallery": {
     "overline": "The Collection",
-    "title": "Visual Stories",
-    "description": "A curated selection of moments captured across the Land of a Thousand Hills.",
+    "title": "Our Fleet & Stays",
+    "description": "Inspect the hardware. We own our fleet and partner only with the best.",
     "filterBy": "Filter By",
     "featured": {
       "overline": "Featured • Wildlife",
@@ -513,8 +534,10 @@
       "text": "In the heart of Africa, every landscape tells a story of resilience and beauty."
     },
     "categories": {
-      "all": "all",
-      "wildlife": "wildlife",
+      "all": "All",
+      "fleet": "Fleet",
+      "stays": "Stays",
+      "wildlife": "Wildlife",
       "nature": "nature",
       "culture": "culture",
       "adventure": "adventure",
@@ -522,18 +545,18 @@
       "urban": "urban"
     },
     "items": {
-      "1": { "alt": "Imigongo Art", "caption": "Cultural Heritage" },
-      "2": { "alt": "Kigali Convention Center", "caption": "Modern Kigali" },
-      "3": { "alt": "Tea Plantation", "caption": "Nyungwe Tea" },
-      "4": { "alt": "Gorilla Trekking", "caption": "Once in a Lifetime" },
-      "5": { "alt": "Safari Sunset", "caption": "Golden Plains" },
-      "6": { "alt": "Canopy Walk", "caption": "Above the Trees" },
-      "7": { "alt": "Lake Kivu", "caption": "Serene Waters" },
-      "8": { "alt": "Mount Bisoke", "caption": "Volcanic Views" },
-      "9": { "alt": "Giraffes", "caption": "Akagera Giants" },
-      "10": { "alt": "Traditional Dance", "caption": "Intore Dancers" },
-      "11": { "alt": "Chimpanzee", "caption": "Primate Cousins" },
-      "12": { "alt": "Coffee Cherries", "caption": "Rwanda's Gold" }
+      "1": { "alt": "Luxury SUV Interior", "caption": "Fleet Comfort" },
+      "2": { "alt": "Safari Land Cruiser", "caption": "Off-road Ready" },
+      "3": { "alt": "Business Class Seat", "caption": "Premium Air" },
+      "4": { "alt": "The Retreat", "caption": "Kigali Luxury" },
+      "5": { "alt": "One&Only", "caption": "Mountain Views" },
+      "6": { "alt": "Bisate Lodge", "caption": "Volcano Base" },
+      "7": { "alt": "Akagera Game Drive", "caption": "Wildlife Spotting" },
+      "8": { "alt": "Gorilla Encounter", "caption": "Primate Trek" },
+      "9": { "alt": "Helicopter Transfer", "caption": "Scenic Route" },
+      "10": { "alt": "Private Dining", "caption": "Exclusive Service" },
+      "11": { "alt": "Canopy Walk", "caption": "Rainforest View" },
+      "12": { "alt": "Lake Kivu Boat", "caption": "Water Transport" }
     }
   },
   "Meta": {
@@ -762,7 +785,7 @@
         }
       }
     },
-      "bookings": {
+    "bookings": {
       "title": "Confirmed Bookings",
       "subtitle": "Manage and fulfill confirmed travel bookings",
       "card": {

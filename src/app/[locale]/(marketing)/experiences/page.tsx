@@ -15,7 +15,6 @@ import { useTranslations } from "next-intl";
 
 export default function ExperiencesPage() {
   const t = useTranslations("Experiences");
-  const tNav = useTranslations("Navigation");
 
   const experiences = [
     {
@@ -257,7 +256,16 @@ function ExperienceItem({
   onActivate,
   labels,
 }: {
-  experience: any;
+  experience: {
+    id: string;
+    title: string;
+    location: string;
+    duration: string;
+    price: number;
+    image: string;
+    description: string;
+    tags: string[];
+  };
   isActive: boolean;
   onActivate: () => void;
   labels: {

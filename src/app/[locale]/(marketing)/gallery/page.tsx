@@ -18,43 +18,43 @@ export default function GalleryPage() {
   const galleryImages = [
     {
       id: 1,
-      src: "https://images.unsplash.com/photo-1547891654-e66ed7ebb968?q=80&w=2600&auto=format&fit=crop",
+      src: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?q=80&w=2600&auto=format&fit=crop",
       alt: t("items.1.alt"),
       caption: t("items.1.caption"),
-      category: tCategories("culture"),
+      category: tCategories("fleet"),
       aspect: "aspect-[3/4]",
-      rawCategory: "culture",
+      rawCategory: "fleet",
     },
     {
       id: 2,
-      src: "https://images.unsplash.com/photo-1543832923-44667a44c804?q=80&w=2600&auto=format&fit=crop",
+      src: "https://images.unsplash.com/photo-1525207934214-58e69fa7543e?q=80&w=2600&auto=format&fit=crop",
       alt: t("items.2.alt"),
       caption: t("items.2.caption"),
-      category: tCategories("urban"),
+      category: tCategories("fleet"),
       aspect: "aspect-[4/3]",
-      rawCategory: "urban",
+      rawCategory: "fleet",
     },
     {
       id: 3,
-      src: "https://images.unsplash.com/photo-1504198458649-3128b932f49e?q=80&w=2600&auto=format&fit=crop",
+      src: "https://images.unsplash.com/photo-1436491865332-7a61a1042759?q=80&w=2600&auto=format&fit=crop",
       alt: t("items.3.alt"),
       caption: t("items.3.caption"),
-      category: tCategories("nature"),
+      category: tCategories("fleet"),
       aspect: "aspect-square",
-      rawCategory: "nature",
+      rawCategory: "fleet",
     },
     {
       id: 4,
-      src: "https://images.unsplash.com/photo-1628105658145-2b0444319808?q=80&w=2600&auto=format&fit=crop",
+      src: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2600&auto=format&fit=crop",
       alt: t("items.4.alt"),
       caption: t("items.4.caption"),
-      category: tCategories("wildlife"),
+      category: tCategories("stays"),
       aspect: "aspect-[3/4]",
-      rawCategory: "wildlife",
+      rawCategory: "stays",
     },
     {
       id: 5,
-      src: "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?q=80&w=2600&auto=format&fit=crop",
+      src: "https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=2600&auto=format&fit=crop",
       alt: t("items.5.alt"),
       caption: t("items.5.caption"),
       category: tCategories("wildlife"),
@@ -128,6 +128,8 @@ export default function GalleryPage() {
 
   const categories = [
     { label: t("categories.all"), value: "all" },
+    { label: t("categories.fleet"), value: "fleet" },
+    { label: t("categories.stays"), value: "stays" },
     { label: t("categories.wildlife"), value: "wildlife" },
     { label: t("categories.nature"), value: "nature" },
     { label: t("categories.culture"), value: "culture" },
@@ -330,7 +332,15 @@ function GalleryItem({
   index,
   onClick,
 }: {
-  img: any;
+  img: {
+    id: number;
+    src: string;
+    alt: string;
+    caption: string;
+    category: string;
+    aspect: string;
+    rawCategory: string;
+  };
   index: number;
   onClick: () => void;
 }) {
