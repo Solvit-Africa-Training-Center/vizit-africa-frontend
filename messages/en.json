@@ -333,6 +333,13 @@
       "confirmPassword": "Confirm Password",
       "haveAccount": "Already have an account?",
       "signIn": "Sign in"
+    },
+    "verifyEmail": {
+      "title": "Verify Email",
+      "success": "Email verified successfully",
+      "error": "Invalid verification code",
+      "backToLogin": "Back to Login",
+      "goToProfile": "Go to Profile"
     }
   },
   "ServicesPage": {
@@ -905,6 +912,16 @@
       "pt": "Português",
       "ar": "العربية",
       "he": "עברית"
+    },
+    "createService": {
+      "title": "Create Service",
+      "subtitle": "Create a new service",
+      "back": "Back to Services"
+    },
+    "createVendor": {
+      "title": "Create Vendor",
+      "subtitle": "Create a new vendor",
+      "back": "Back to Vendors"
     }
   },
   "Profile": {

@@ -15,6 +15,7 @@ import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -216,6 +217,7 @@ export function Hero() {
             <Magnetic>
               <Button
                 size="lg"
+                render={<Link href={"/plan-trip"}/>}
                 className="rounded-sm h-16 px-10 text-lg bg-primary hover:bg-primary-light text-white border-none transition-transform hover:scale-105 w-full md:w-auto"
               >
                 {tCommon("startPlanning")}

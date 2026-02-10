@@ -51,8 +51,8 @@ export async function login(
     );
 
     const cookieStore = await cookies();
-    cookieStore.set("accessToken", data.accessToken, COOKIE_OPTIONS);
-    cookieStore.set("refreshToken", data.refreshToken, COOKIE_OPTIONS);
+    cookieStore.set("accessToken", data.access, COOKIE_OPTIONS);
+    cookieStore.set("refreshToken", data.refresh, COOKIE_OPTIONS);
 
     return { success: true, data };
   } catch (error) {
@@ -78,20 +78,21 @@ export async function register(
   }
 
   try {
-    const data = await api.post(
-      endpoints.auth.register,
-      validation.data,
-      registerResponseSchema,
-      {
-        requiresAuth: false,
-      },
-    );
+    // const data = await api.post(
+    //   endpoints.auth.register,
+    //   validation.data,
+    //   registerResponseSchema,
+    //   {
+    //     requiresAuth: false,
+    //   },
+    // );
 
-    const cookieStore = await cookies();
-    cookieStore.set("accessToken", data.accessToken, COOKIE_OPTIONS);
-    cookieStore.set("refreshToken", data.refreshToken, COOKIE_OPTIONS);
+    // const cookieStore = await cookies();
+    // cookieStore.set("accessToken", data.access, COOKIE_OPTIONS);
+    // cookieStore.set("refreshToken", data.refresh, COOKIE_OPTIONS);
+    console.log(validation.data)
 
-    return { success: true, data };
+    return { success: false, error: "Validation failed" };
   } catch (error) {
     const err = error as ApiError;
     return {

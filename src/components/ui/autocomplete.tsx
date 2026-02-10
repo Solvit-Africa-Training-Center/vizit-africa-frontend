@@ -73,11 +73,24 @@ function AutocompleteClear({
 
 function AutocompleteValue({
   className,
+  placeholder,
   ...props
-}: AutocompletePrimitive.Value.Props & { className?: string }) {
+}: AutocompletePrimitive.Value.Props & {
+  className?: string
+  placeholder?: string
+}) {
   return (
     <span className={cn("truncate", className)} data-slot="autocomplete-value">
-      <AutocompletePrimitive.Value {...props} />
+      <AutocompletePrimitive.Value {...props}>
+        {(value: string) => {
+          if (!value && placeholder) {
+            return (
+              <span className="text-muted-foreground">{placeholder}</span>
+            )
+          }
+          return value
+        }}
+      </AutocompletePrimitive.Value>
     </span>
   )
 }

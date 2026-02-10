@@ -1,34 +1,11 @@
-"use client";
+import { LoginForm } from "@/components/forms/login-form";
+import { Link } from "@/i18n/navigation";
+import { getTranslations } from "next-intl/server";
 
-import { Button } from "@/components/ui/button";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "@/components/ui/input-group";
-import { Label } from "@/components/ui/label";
-import { Link, useRouter } from "@/i18n/navigation";
-import {
-  RiArrowRightLine,
-  RiLockPasswordLine,
-  RiMailLine,
-  RiShieldUserLine,
-} from "@remixicon/react";
-import { useTranslations } from "next-intl";
 
-export default function LoginPage() {
-  const router = useRouter();
-  const t = useTranslations("Auth.login");
-  const tCommon = useTranslations("Common");
-
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    router.push("/profile");
-  };
-
-  const handleAdminLogin = () => {
-    router.push("/admin");
-  };
+export default async function LoginPage() {
+  const t = await getTranslations("Auth.login");
+  const tCommon = await getTranslations("Common");
 
   return (
     <div className="w-full">
@@ -46,54 +23,7 @@ export default function LoginPage() {
         </p>
       </div>
 
-      <form onSubmit={handleLogin} className="space-y-6">
-        <div className="space-y-2">
-          <Label htmlFor="email">{t("emailLabel")}</Label>
-
-          <InputGroup>
-            <InputGroupInput
-              id="email"
-              type="email"
-              placeholder="name@example.com"
-              defaultValue="sarah@example.com"
-            />
-            <InputGroupAddon>
-              <RiMailLine />
-            </InputGroupAddon>
-          </InputGroup>
-        </div>
-
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <Label htmlFor="password">{t("passwordLabel")}</Label>
-            <Link
-              href="#"
-              className="text-xs font-medium uppercase tracking-wider text-muted-foreground hover:text-primary transition-colors"
-            >
-              {t("forgot")}
-            </Link>
-          </div>
-          <InputGroup>
-            <InputGroupInput
-              id="password"
-              type="password"
-              placeholder="••••••••"
-              defaultValue="password123"
-            />
-            <InputGroupAddon>
-              <RiLockPasswordLine />
-            </InputGroupAddon>
-          </InputGroup>
-        </div>
-
-        <Button
-          type="submit"
-          className="w-full h-14 rounded-sm gap-2 text-base font-bold uppercase tracking-wide mt-4"
-        >
-          {tCommon("signIn")}
-          <RiArrowRightLine className="size-5" />
-        </Button>
-      </form>
+     <LoginForm />
 
       <div className="relative my-10">
         <div className="absolute inset-0 flex items-center">
@@ -106,14 +36,6 @@ export default function LoginPage() {
         </div>
       </div>
 
-      <Button
-        type="button"
-        variant="outline"
-        onClick={handleAdminLogin}
-        className="w-full h-12 rounded-sm gap-2 text-sm font-medium border-border/50 hover:bg-muted/30"
-      >
-        {t("adminAccess")}
-      </Button>
 
       <p className="text-center text-sm text-muted-foreground mt-8 font-light">
         {t("noAccount")}{" "}

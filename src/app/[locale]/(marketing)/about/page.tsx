@@ -133,7 +133,7 @@ export default function AboutPage() {
                       }
                       alt={member.name}
                       fill
-                      className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                      className="object-cover transition-all duration-700"
                       containerClassName="w-full h-[120%]"
                     />
                   </div>

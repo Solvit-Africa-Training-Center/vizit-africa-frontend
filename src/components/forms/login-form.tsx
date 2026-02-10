@@ -11,19 +11,24 @@ import {
   InputGroupInput,
 } from "../ui/input-group";
 import {
+  RiAlertLine,
   RiArrowRightLine,
+  RiEyeLine,
   RiLockPasswordLine,
   RiMailLine,
 } from "@remixicon/react";
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { Button } from "../ui/button";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export function LoginForm() {
   const t = useTranslations("Auth.login");
   const tCommon = useTranslations("Common");
   const router = useRouter();
-
+  const [showPassword, setShowPassword] = useState(false);
+const [error, setError] = useState<string | null>(null);
   const form = useForm({
     defaultValues: {
       email: "",
@@ -36,12 +41,9 @@ export function LoginForm() {
       const result = await login(value);
       if (result.success) {
         toast.success("Logged in successfully");
-        router.push("/dashboard");
+        router.push("/profile");
       } else {
-        toast.error(result.error);
-        if (result.fieldErrors) {
-          console.error(result.fieldErrors);
-        }
+        setError(result.error);
       }
     },
   });
@@ -55,6 +57,13 @@ export function LoginForm() {
       }}
       className="space-y-6"
     >
+        {error && (
+        <Alert variant={"destructive"}>
+          <RiAlertLine/>
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription className="mt-1">{error}</AlertDescription>
+        </Alert>
+      )}
       <form.Field name="email">
         {(field) => (
           <div className="space-y-2">
@@ -89,14 +98,20 @@ export function LoginForm() {
             <InputGroup>
               <InputGroupInput
                 id="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
                 value={field.state.value}
                 onBlur={field.handleBlur}
-                onChange={(e) => field.handleChange(e.target.value)}
+                onChange={(e) => field.handleChange(e.target.value as string)}
               />
               <InputGroupAddon>
                 <RiLockPasswordLine />
+              </InputGroupAddon>
+              <InputGroupAddon
+              align={"inline-end"}
+              onClick={() => setShowPassword(!showPassword)}
+              >
+                <RiEyeLine />
               </InputGroupAddon>
             </InputGroup>
             {field.state.meta.errors ? (

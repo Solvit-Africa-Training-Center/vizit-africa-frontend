@@ -34,6 +34,8 @@ import {
   AutocompleteItem,
   AutocompleteList,
   AutocompletePopup,
+  AutocompletePortal,
+  AutocompletePositioner,
   AutocompleteTrigger,
   AutocompleteValue,
 } from "@/components/ui/autocomplete";
@@ -92,8 +94,7 @@ export function ServiceForm() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-card rounded-lg border shadow-sm">
-      <h2 className="text-2xl font-bold mb-6">Create New Service</h2>
+
 
       <form
         onSubmit={(e) => {
@@ -191,16 +192,23 @@ export function ServiceForm() {
                       <AutocompleteTrigger>
                         <AutocompleteValue placeholder="Search vendor..." />
                       </AutocompleteTrigger>
-                      <AutocompletePopup>
-                        <AutocompleteInput placeholder="Search vendors..." />
-                        <AutocompleteList>
-                          {vendors.map((vendor: any) => (
-                            <AutocompleteItem key={vendor.id} value={vendor}>
-                              {vendor.business_name}
-                            </AutocompleteItem>
-                          ))}
-                        </AutocompleteList>
-                      </AutocompletePopup>
+                      <AutocompletePortal>
+                        <AutocompletePositioner>
+                          <AutocompletePopup>
+                            <AutocompleteInput placeholder="Search vendors..." />
+                            <AutocompleteList>
+                              {vendors.map((vendor: any) => (
+                                <AutocompleteItem
+                                  key={vendor.id}
+                                  value={vendor}
+                                >
+                                  {vendor.business_name}
+                                </AutocompleteItem>
+                              ))}
+                            </AutocompleteList>
+                          </AutocompletePopup>
+                        </AutocompletePositioner>
+                      </AutocompletePortal>
                     </Autocomplete>
                   )}
                 </div>
@@ -346,6 +354,6 @@ export function ServiceForm() {
           </Button>
         </div>
       </form>
-    </div>
+
   );
 }

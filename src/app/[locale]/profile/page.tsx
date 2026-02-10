@@ -120,7 +120,7 @@ export default function ProfilePage({
                       </div>
 
                       <div>
-                        <h2 className="font-display text-4xl md:text-5xl font-bold mb-2">
+                        <h2 className="font-display text-4xl md:text-5xl font-bold text-primary-foreground mb-2">
                           Rwanda Retreat
                         </h2>
                         <p className="text-lg font-light opacity-90 flex items-center gap-2">

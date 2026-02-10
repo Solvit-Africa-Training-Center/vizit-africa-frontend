@@ -14,6 +14,7 @@ import {
   InputGroupInput,
 } from "../ui/input-group";
 import {
+  RiAlertLine,
   RiArrowRightLine,
   RiLockPasswordLine,
   RiMailLine,
@@ -23,12 +24,15 @@ import {
 import { Button } from "../ui/button";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+import { useState } from "react";
 
 export function RegisterForm() {
   const t = useTranslations("Auth.signup");
   const tCommon = useTranslations("Common");
   const router = useRouter();
-
+  const [error, setError] = useState<string | null>(null);
+   console.log(error);
   const form = useForm({
     defaultValues: {
       full_name: "",
@@ -36,21 +40,19 @@ export function RegisterForm() {
       phone_number: "",
       password: "",
       re_password: "",
-      role: "CLIENT",
+      role: "CLIENT" as "CLIENT" | "VENDOR" | "ADMIN",
     },
     validators: {
       onChange: registerInputSchema,
     },
     onSubmit: async ({ value }) => {
       const result = await register(value);
+   
       if (result.success) {
         toast.success("Account created successfully");
         router.push("/login");
       } else {
-        toast.error(result.error);
-        if (result.fieldErrors) {
-          console.error(result.fieldErrors);
-        }
+        setError(result.error);
       }
     },
   });
@@ -64,6 +66,13 @@ export function RegisterForm() {
       }}
       className="space-y-6"
     >
+      {error && (
+        <Alert variant={"destructive"}>
+          <RiAlertLine/>
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription className="mt-1">{error}</AlertDescription>
+        </Alert>
+      )}
       <form.Field name="full_name">
         {(field) => (
           <div className="space-y-2">
