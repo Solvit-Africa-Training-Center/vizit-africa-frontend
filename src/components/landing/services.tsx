@@ -125,11 +125,11 @@ function ServiceCard({
 
       <div className="absolute inset-0 p-8 flex flex-col justify-end">
         <div className="translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-          <div className="w-12 h-[1px] bg-white/60 mb-4" aria-hidden="true" />
-          <h3 className="text-3xl font-medium uppercase text-white tracking-tight mb-2">
+          <div className="w-12 h-[1px] bg-primary-foreground/60 mb-4" aria-hidden="true" />
+          <h3 className="text-3xl font-medium uppercase text-primary-foreground tracking-tight mb-2">
             {service.title}
           </h3>
-          <p className="text-white/80 font-light text-lg">
+          <p className="text-primary-foreground/80 font-light text-lg">
             {service.description}
           </p>
         </div>

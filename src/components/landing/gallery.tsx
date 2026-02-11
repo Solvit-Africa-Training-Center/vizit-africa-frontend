@@ -124,10 +124,10 @@ function GalleryCard({
       />
       <div className="absolute inset-0 bg-black/20 group-hover:bg-black/35 transition-colors duration-200" />
       <div className="absolute inset-0 flex flex-col justify-end p-6 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-        <p className="text-white/80 font-mono text-xs uppercase tracking-widest mb-1">
+        <p className="text-primary-foreground/80 font-mono text-xs uppercase tracking-widest mb-1">
           {t(`items.${img.id}.caption`)}
         </p>
-        <h3 className="text-white font-display text-xl font-medium">
+        <h3 className="text-primary-foreground font-display text-xl font-medium">
           {t(`items.${img.id}.alt`)}
         </h3>
       </div>

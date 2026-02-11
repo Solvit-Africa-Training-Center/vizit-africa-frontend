@@ -1,14 +1,19 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Navbar } from "@/components/shared";
-import { Footer } from "@/components/landing";
-import { motion, AnimatePresence } from "motion/react";
-import { RevealText } from "@/components/ui/reveal-text";
-import { RiSearchLine, RiArrowRightUpLine } from "@remixicon/react";
+import { AnimatePresence } from "motion/react";
+import { RiSearchLine } from "@remixicon/react";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { PageHeader } from "@/components/shared/page-header";
+import { ServiceItem } from "@/components/service-item";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type Category =
   | "Flights"
@@ -23,7 +28,7 @@ type SortOption =
   | "Price: High to Low"
   | "A-Z";
 
-interface Service {
+export interface Service {
   id: string;
   title: string;
   category: Category;
@@ -233,20 +238,14 @@ export default function ServicesPage() {
   }, [searchQuery, activeCategory, sortBy, servicesData]);
 
   return (
-    <>
-      <Navbar />
+  
       <div className="min-h-screen bg-background pt-32 pb-24">
-        <header className="px-5 md:px-10 max-w-7xl mx-auto mb-20">
-          <span className="text-sm font-mono uppercase tracking-widest text-muted-foreground mb-4 block">
-            {t("overline")}
-          </span>
-          <h1 className="font-display text-7xl md:text-9xl font-medium uppercase tracking-tighter leading-[0.8] mb-8">
-            <RevealText text={t("title")} />
-          </h1>
-          <p className="text-xl md:text-2xl font-light text-muted-foreground max-w-2xl leading-relaxed">
-            {t("description")}
-          </p>
-        </header>
+        <PageHeader
+          title={t("title")}
+          overline={t("overline")}
+          description={t("description")}
+          className="mb-20"
+        />
 
         <div className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-border/50">
           <div className="px-5 md:px-10 max-w-7xl mx-auto py-4 flex flex-col md:flex-row gap-6 md:items-center justify-between">
@@ -286,17 +285,21 @@ export default function ServicesPage() {
                 <span className="text-xs font-mono uppercase text-muted-foreground hidden md:inline">
                   {t("sort")}
                 </span>
-                <select
+                <Select
                   value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value as SortOption)}
-                  className="bg-transparent text-sm font-medium uppercase tracking-wider border-none focus:ring-0 cursor-pointer text-foreground"
+                  onValueChange={(value) => setSortBy(value as SortOption)}
                 >
-                  {sortOptionsList.map((opt) => (
-                    <option key={opt.value} value={opt.value}>
-                      {opt.label}
-                    </option>
-                  ))}
-                </select>
+                  <SelectTrigger className="w-[180px] bg-transparent border-none text-sm font-medium uppercase tracking-wider focus:ring-0 text-foreground ring-0 shadow-none px-0 gap-2">
+                    <SelectValue placeholder={t("sort")} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {sortOptionsList.map((opt) => (
+                      <SelectItem key={opt.value} value={opt.value}>
+                        {opt.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             </div>
           </div>
@@ -328,116 +331,7 @@ export default function ServicesPage() {
           </div>
         </section>
       </div>
-      <Footer />
-    </>
+  
   );
 }
 
-function ServiceItem({
-  service,
-  isExpanded,
-  onToggle,
-  bookLabel,
-}: {
-  service: Service;
-  isExpanded: boolean;
-  onToggle: () => void;
-  bookLabel: string;
-}) {
-  return (
-    <motion.div
-      layout
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="border-b border-border/50 group"
-    >
-      <button
-        type="button"
-        onClick={onToggle}
-        className="w-full py-8 md:py-12 flex flex-col md:flex-row md:items-center justify-between gap-4 text-left outline-hidden"
-      >
-        <div className="flex-1">
-          <span className="text-xs font-mono uppercase tracking-widest text-primary mb-2 block">
-            {service.category}
-          </span>
-          <h2 className="font-display text-3xl md:text-5xl font-medium group-hover:text-primary transition-colors duration-300">
-            {service.title}
-          </h2>
-        </div>
-
-        <div className="flex items-center justify-between md:justify-end gap-8 w-full md:w-auto">
-          <span className="font-mono text-sm md:text-base text-muted-foreground">
-            {service.price}
-          </span>
-          <div
-            className={cn(
-              "size-12 rounded-full border border-border flex items-center justify-center transition-all duration-300 group-hover:border-primary group-hover:text-primary",
-              isExpanded ? "rotate-45" : "rotate-0",
-            )}
-          >
-            <RiArrowRightUpLine className="size-6" />
-          </div>
-        </div>
-      </button>
-
-      <AnimatePresence>
-        {isExpanded && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            className="overflow-hidden"
-          >
-            <div className="pb-12 md:pb-16 grid md:grid-cols-12 gap-8 md:gap-12">
-              <div className="md:col-span-4 relative aspect-[4/3] rounded-sm overflow-hidden bg-muted">
-                <Image
-                  src={service.image}
-                  alt={service.title}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="md:col-span-8 flex flex-col justify-between">
-                <div>
-                  <p className="text-xl md:text-2xl font-light leading-relaxed mb-8 text-foreground/90">
-                    {service.description}
-                  </p>
-                  <ul className="grid md:grid-cols-2 gap-4 mb-8">
-                    {service.details.map((detail, i) => (
-                      <li
-                        key={i}
-                        className="flex items-start gap-2 text-muted-foreground"
-                      >
-                        <span className="text-primary mt-1.5 size-1.5 rounded-full bg-primary shrink-0" />
-                        <span>{detail}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div>
-                  <a
-                    href={`/plan-trip?service=${
-                      service.category === "Hotels" ||
-                      service.category === "BnBs"
-                        ? "hotels"
-                        : service.category === "Car Rentals"
-                          ? "cars"
-                          : service.category === "Guides"
-                            ? "guides"
-                            : "hotels"
-                    }`}
-                    className="inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-foreground font-medium uppercase tracking-widest text-sm hover:bg-primary/90 transition-colors"
-                  >
-                    {bookLabel}
-                  </a>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
-  );
-}

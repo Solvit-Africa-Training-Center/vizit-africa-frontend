@@ -673,7 +673,8 @@
       "perDay": "/ day",
       "withDriver": "w/ Driver",
       "nights": "nights",
-      "days": "days"
+      "days": "days",
+      "destination": "Destination"
     },
     "data": {
       "amenities": {

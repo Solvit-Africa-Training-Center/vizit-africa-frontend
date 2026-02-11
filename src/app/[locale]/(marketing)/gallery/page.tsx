@@ -3,13 +3,11 @@
 import Image from "next/image";
 import { useState } from "react";
 import { RiCloseLine, RiArrowRightLine } from "@remixicon/react";
-import { Navbar } from "@/components/shared";
-import { Footer } from "@/components/landing";
 import { motion, AnimatePresence } from "motion/react";
-import { RevealText } from "@/components/ui/reveal-text";
 import { ParallaxImage } from "@/components/ui/parallax-image";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
+import { PageHeader } from "@/components/shared/page-header";
 
 export default function GalleryPage() {
   const t = useTranslations("Gallery");
@@ -150,22 +148,14 @@ export default function GalleryPage() {
 
   return (
     <>
-      <Navbar />
       <div className="min-h-screen bg-background pt-32 pb-24">
-        <header className="px-5 md:px-10 max-w-7xl mx-auto mb-24 md:mb-32">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-12">
-            <div className="max-w-2xl">
-              <span className="text-sm font-mono uppercase tracking-widest text-muted-foreground mb-4 block">
-                {t("overline")}
-              </span>
-              <h1 className="font-display text-7xl md:text-9xl font-medium uppercase tracking-tighter leading-[0.85] mb-8">
-                <RevealText text={t("title")} />
-              </h1>
-              <p className="text-xl md:text-2xl font-light text-muted-foreground max-w-lg leading-relaxed">
-                {t("description")}
-              </p>
-            </div>
 
+        <PageHeader
+          title={t("title")}
+          overline={t("overline")}
+          description={t("description")}
+          layout="split"
+        >
             <div className="flex flex-col items-start md:items-end gap-2 min-w-[200px]">
               <span className="text-xs font-medium uppercase tracking-widest text-primary mb-2">
                 {t("filterBy")}
@@ -186,8 +176,7 @@ export default function GalleryPage() {
                 </button>
               ))}
             </div>
-          </div>
-        </header>
+        </PageHeader>
 
         <section className="px-5 md:px-10 max-w-7xl mx-auto mb-32 grid grid-cols-1 md:grid-cols-12 gap-8 items-end">
           <div className="md:col-span-8 relative aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden rounded-sm">
@@ -268,7 +257,7 @@ export default function GalleryPage() {
           </motion.div>
         </section>
       </div>
-      <Footer />
+
 
       <AnimatePresence>
         {selectedImage && (
@@ -283,7 +272,7 @@ export default function GalleryPage() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors p-4 z-50 group"
+              className="absolute top-6 right-6 text-primary-foreground/50 hover:text-primary-foreground transition-colors p-4 z-50 group"
               onClick={() => setSelectedImage(null)}
             >
               <RiCloseLine className="size-10 group-hover:rotate-90 transition-transform duration-300" />
@@ -310,10 +299,10 @@ export default function GalleryPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
                   >
-                    <span className="text-white/60 font-mono uppercase tracking-widest text-sm mb-2 block">
+                    <span className="text-primary-foreground/60 font-mono uppercase tracking-widest text-sm mb-2 block">
                       {selectedImage.category} • {selectedImage.caption}
                     </span>
-                    <h2 className="text-white font-display text-4xl md:text-5xl font-medium uppercase">
+                    <h2 className="text-primary-foreground font-display text-4xl md:text-5xl font-medium uppercase">
                       {selectedImage.alt}
                     </h2>
                   </motion.div>
@@ -375,15 +364,15 @@ function GalleryItem({
 
       <div className="absolute inset-x-0 bottom-0 p-6 flex flex-col justify-end translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out">
         <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent -z-10" />
-        <span className="text-white/70 font-mono text-xs uppercase tracking-widest mb-1">
+        <span className="text-primary-foreground/70 font-mono text-xs uppercase tracking-widest mb-1">
           {img.category}
         </span>
         <div className="flex items-center justify-between">
-          <h3 className="text-white font-display text-2xl font-medium uppercase leading-none">
+          <h3 className="text-primary-foreground font-display text-2xl font-medium uppercase leading-none">
             {img.alt}
           </h3>
-          <div className="bg-white/20 backdrop-blur-md p-2 rounded-full">
-            <RiArrowRightLine className="size-5 text-white" />
+          <div className="bg-primary-foreground/20 backdrop-blur-md p-2 rounded-full">
+            <RiArrowRightLine className="size-5 text-primary-foreground" />
           </div>
         </div>
       </div>

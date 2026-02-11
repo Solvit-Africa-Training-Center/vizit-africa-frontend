@@ -90,7 +90,7 @@ export function TripDetailsStep({
                     <Button
                       variant={"outline"}
                       className={cn(
-                        "w-full pl-10 text-left font-normal bg-white justify-start relative",
+                        "w-full pl-10 text-left font-normal bg-primary-foreground justify-start relative",
                         !tripInfo.arrivalDate && "text-muted-foreground",
                       )}
                     />
@@ -132,7 +132,7 @@ export function TripDetailsStep({
                     <Button
                       variant={"outline"}
                       className={cn(
-                        "w-full pl-10 text-left font-normal bg-white justify-start relative",
+                        "w-full pl-10 text-left font-normal bg-primary-foreground justify-start relative",
                         !tripInfo.departureDate && "text-muted-foreground",
                       )}
                     />
@@ -234,7 +234,7 @@ export function TripDetailsStep({
                 }
                 className={`px-4 py-3 rounded-none border text-sm font-medium capitalize transition-all duration-300 hover:tracking-wide ${
                   tripInfo.tripPurpose === purpose
-                    ? "bg-primary text-white border-primary"
+                    ? "bg-primary text-primary-foreground border-primary"
                     : "bg-background text-foreground border-border hover:border-primary"
                 }`}
               >
@@ -256,7 +256,7 @@ export function TripDetailsStep({
                 specialRequests: e.target.value,
               })
             }
-            className="min-h-[100px] bg-white"
+            className="min-h-[100px] bg-primary-foreground"
           />
         </div>
 

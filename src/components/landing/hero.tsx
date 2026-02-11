@@ -131,8 +131,8 @@ export function Hero() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="flex items-center gap-4 mb-8"
               >
-                <div className="w-12 h-px bg-white/60" />
-                <span className="text-white/80 uppercase tracking-widest text-xs font-medium">
+                <div className="w-12 h-px bg-primary-foreground/60" />
+                <span className="text-primary-foreground/80 uppercase tracking-widest text-xs font-medium">
                   {slideContent.subheading}
                 </span>
               </motion.div>
@@ -142,7 +142,7 @@ export function Hero() {
                   initial={{ y: "100%" }}
                   animate={{ y: 0 }}
                   transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-                  className="text-5xl md:text-7xl lg:text-8xl font-medium font-display text-white uppercase leading-[0.9] tracking-tighter"
+                  className="text-5xl md:text-7xl lg:text-8xl font-medium font-display text-primary-foreground uppercase leading-[0.9] tracking-tighter"
                 >
                   {slideContent.heading1}
                 </motion.h1>
@@ -168,7 +168,7 @@ export function Hero() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1, delay: 0.6 }}
-                  className="text-lg text-white/80 max-w-md font-light leading-relaxed mb-6 md:mb-2"
+                  className="text-lg text-primary-foreground/80 max-w-md font-light leading-relaxed mb-6 md:mb-2"
                 >
                   {slideContent.description}
                 </motion.p>
@@ -186,7 +186,7 @@ export function Hero() {
               <Button
                 size="lg"
                 render={<Link href={"/plan-trip"} />}
-                className="rounded-sm h-16 px-10 text-lg bg-primary hover:bg-primary-light text-white border-none transition-transform hover:scale-105 w-full md:w-auto"
+                className="rounded-sm h-16 px-10 text-lg bg-primary hover:bg-primary-light text-primary-foreground border-none transition-transform hover:scale-105 w-full md:w-auto"
               >
                 {tCommon("startPlanning")}
                 <RiArrowRightLine />
@@ -201,8 +201,8 @@ export function Hero() {
                   onClick={() => handleSlideChange(index)}
                   className={`h-0.5 transition-all duration-500 ${
                     index === currentSlide
-                      ? "w-12 bg-white"
-                      : "w-4 bg-white/40 hover:bg-white/60"
+                      ? "w-12 bg-primary-foreground"
+                      : "w-4 bg-primary-foreground/40 hover:bg-primary-foreground/60"
                   }`}
                   aria-label={`Go to slide ${index + 1}`}
                 />
@@ -228,8 +228,8 @@ export function Hero() {
                   onClick={() => handleSlideChange(index)}
                   className={`group flex items-center justify-end gap-3 transition-colors duration-300 ${
                     isActive
-                      ? "text-white"
-                      : "text-white/40 hover:text-white/80"
+                      ? "text-primary-foreground"
+                      : "text-primary-foreground/40 hover:text-primary-foreground/80"
                   }`}
                 >
                   <span className="text-[10px] font-mono uppercase tracking-[0.2em]">
@@ -257,10 +257,10 @@ export function Hero() {
                     />
                     <div className="absolute inset-0 bg-linear-to-t from-black via-black/20 to-transparent" />
                     <div className="absolute bottom-3 left-4 right-4">
-                      <p className="text-[10px] uppercase tracking-[0.2em] text-white/70 mb-1">
+                      <p className="text-[10px] uppercase tracking-[0.2em] text-primary-foreground/70 mb-1">
                         {hoverContent.subheading}
                       </p>
-                      <h3 className="text-xl font-display font-medium text-white uppercase leading-tight">
+                      <h3 className="text-xl font-display font-medium text-primary-foreground uppercase leading-tight">
                         {hoverContent.heading1} {hoverContent.heading2}
                       </h3>
                     </div>
@@ -271,15 +271,15 @@ export function Hero() {
           })}
         </div>
 
-        <div className="flex flex-col gap-6 text-right text-white/50 font-mono text-[10px] uppercase tracking-[0.2em] border-r border-white/20 pr-6">
+        <div className="flex flex-col gap-6 text-right text-primary-foreground/50 font-mono text-[10px] uppercase tracking-[0.2em] border-r border-white/20 pr-6">
           <div className="group cursor-default">
-            <span className="block text-white mb-1 group-hover:text-primary transition-colors">
+            <span className="block text-primary-foreground mb-1 group-hover:text-primary transition-colors">
               {t("location")}
             </span>
             {t("coordinates")}
           </div>
           <div>
-            <span className="block text-white mb-1">
+            <span className="block text-primary-foreground mb-1">
               {tCommon("localTime")}
             </span>
             <span className="tabular-nums">GMT+2 (CAT)</span>

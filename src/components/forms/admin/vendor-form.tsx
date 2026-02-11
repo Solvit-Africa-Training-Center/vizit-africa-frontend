@@ -8,7 +8,6 @@ import {
 } from "@/lib/schema/vendor-schema";
 import { createVendorProfile } from "@/actions/vendors";
 import { Label } from "@/components/ui/label";
-// Using standard inputs for now, or could use InputGroup if consistent
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -31,7 +30,7 @@ export function VendorForm({ onSuccess }: VendorFormProps) {
   const form = useForm({
     defaultValues: {
       business_name: "",
-      vendor_type: "individual",
+      vendor_type: "individual" as "individual" | "company" | "tour_operator" | "transport_provider" | "accommodation_provider" | "guide",
       description: "",
       contact_phone: "",
       address: "",

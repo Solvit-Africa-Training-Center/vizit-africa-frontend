@@ -1,10 +1,6 @@
 "use client";
 
-import { Navbar } from "@/components/shared";
-import { Footer } from "@/components/landing";
-import { Button } from "@/components/ui/button";
-import { RevealText } from "@/components/ui/reveal-text";
-import { Magnetic } from "@/components/ui/magnetic";
+
 import { RiArrowRightLine, RiArrowDownLine } from "@remixicon/react";
 import Link from "next/link";
 import NextImage from "next/image";
@@ -12,6 +8,8 @@ import { motion, useInView, AnimatePresence } from "motion/react";
 import { useRef, useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
+import { PageHeader } from "@/components/shared/page-header";
+import { Button } from "@/components/ui/button";
 
 export default function ExperiencesPage() {
   const t = useTranslations("Experiences");
@@ -124,20 +122,13 @@ export default function ExperiencesPage() {
   };
 
   return (
-    <>
-      <Navbar />
       <div className="min-h-screen bg-background text-foreground">
-        <header className="pt-32 pb-8 px-5 md:px-10 max-w-7xl mx-auto border-b border-border/40">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
-            <div>
-              <span className="text-sm font-mono uppercase tracking-widest text-muted-foreground mb-4 block">
-                {t("overline")}
-              </span>
-              <h1 className="font-display text-5xl md:text-8xl font-medium uppercase tracking-tight leading-[0.9]">
-                <RevealText text={t("title")} />
-              </h1>
-            </div>
-
+        <PageHeader
+          title={t("title")}
+          overline={t("overline")}
+          layout="split"
+          className="border-b border-border/40 pb-8"
+        >
             <div className="flex flex-wrap gap-4 mb-2">
               {experiences.map((cat) => (
                 <button
@@ -151,8 +142,7 @@ export default function ExperiencesPage() {
                 </button>
               ))}
             </div>
-          </div>
-        </header>
+        </PageHeader>
 
         <div className="relative flex flex-col md:flex-row">
           <div className="w-full md:w-1/2 px-5 md:px-10 py-12 md:py-24 space-y-32 md:space-y-48">
@@ -225,12 +215,12 @@ export default function ExperiencesPage() {
                   className="flex flex-col gap-2"
                 >
                   <div className="flex items-center gap-3">
-                    <span className="text-white/60 text-xs font-mono uppercase tracking-widest">
+                    <span className="text-primary-foreground/60 text-xs font-mono uppercase tracking-widest">
                       0{allExperiences.findIndex((e) => e.id === activeId) + 1}{" "}
                       / 0{allExperiences.length}
                     </span>
-                    <span className="h-px w-12 bg-white/20" />
-                    <span className="text-white text-sm font-medium uppercase tracking-widest">
+                    <span className="h-px w-12 bg-primary-foreground/20" />
+                    <span className="text-primary-foreground text-sm font-medium uppercase tracking-widest">
                       {allExperiences.find((e) => e.id === activeId)?.location}
                     </span>
                   </div>
@@ -240,8 +230,6 @@ export default function ExperiencesPage() {
           </div>
         </div>
       </div>
-      <Footer />
-    </>
   );
 }
 
@@ -301,9 +289,7 @@ function ExperienceItem({
       <h2
         className={cn(
           "font-display font-medium uppercase leading-[0.85] mb-10 transition-all duration-500",
-          isActive
-            ? "text-5xl md:text-7xl text-foreground"
-            : "text-4xl md:text-5xl text-muted-foreground",
+         "text-2xl md:text-4xl text-foreground",
         )}
       >
         {experience.title}
@@ -350,20 +336,20 @@ function ExperienceItem({
       </p>
 
       <Link href={`/plan-trip?experience=${experience.id}`}>
-        <Magnetic>
+
           <Button
             size="lg"
             className={cn(
               "rounded-xl px-8 h-14 text-base transition-all duration-300 group",
               isActive
-                ? "bg-primary text-white shadow-lg shadow-primary/20"
+                ? "bg-primary text-primary-foreground"
                 : "bg-muted text-muted-foreground hover:bg-muted-foreground/10",
             )}
           >
             {labels.requestQuote}{" "}
             <RiArrowRightLine className="ml-2 group-hover:translate-x-1 transition-transform" />
           </Button>
-        </Magnetic>
+     
       </Link>
     </div>
   );

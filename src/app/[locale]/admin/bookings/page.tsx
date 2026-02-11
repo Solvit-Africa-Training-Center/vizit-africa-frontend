@@ -28,7 +28,7 @@ export default function BookingsPage() {
         {sampleBookings.map((booking) => (
           <div
             key={booking.id}
-            className="bg-white border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-md hover:border-primary/30 transition-all"
+            className="bg-primary-foreground border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-md hover:border-primary/30 transition-all"
           >
             <div className="p-5 border-b border-border bg-linear-to-r from-primary/5 to-transparent">
               <div className="flex items-center justify-between">

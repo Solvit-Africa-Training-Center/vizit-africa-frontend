@@ -107,19 +107,19 @@ export function Destinations() {
 
                 <div className="absolute inset-0 p-6 flex flex-col justify-between">
                   <div className="flex justify-end">
-                    <div className="bg-white/10 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    <div className="bg-primary-foreground/10 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                       <RiArrowRightUpLine
-                        className="text-white w-5 h-5"
+                        className="text-primary-foreground w-5 h-5"
                         aria-hidden="true"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <span className="text-xs font-mono uppercase tracking-widest text-white/80 block mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                    <span className="text-xs font-mono uppercase tracking-widest text-primary-foreground/80 block mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
                       {region.subtitle}
                     </span>
-                    <h3 className="text-2xl md:text-3xl font-display font-medium text-white uppercase leading-none">
+                    <h3 className="text-2xl md:text-3xl font-display font-medium text-primary-foreground uppercase leading-none">
                       {region.name}
                     </h3>
                   </div>

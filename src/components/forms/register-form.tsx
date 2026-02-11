@@ -4,6 +4,7 @@ import { useForm } from "@tanstack/react-form";
 import { toast } from "sonner";
 import {
   registerInputSchema,
+  registerObjectSchema,
   type RegisterInput,
 } from "@/lib/schema/auth-schema";
 import { register } from "@/actions/auth";
@@ -43,7 +44,7 @@ export function RegisterForm() {
       role: "CLIENT" as "CLIENT" | "VENDOR" | "ADMIN",
     },
     validators: {
-      onChange: registerInputSchema,
+      onChange: registerObjectSchema,
     },
     onSubmit: async ({ value }) => {
       const result = await register(value);

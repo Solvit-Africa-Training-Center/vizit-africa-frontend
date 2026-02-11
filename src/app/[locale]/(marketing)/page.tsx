@@ -1,18 +1,15 @@
 import {
   CTA,
   FAQ,
-  Footer,
   Hero,
   Destinations,
   Services,
   SocialProof,
-  ExperienceShowcase,
   Gallery,
   Testimonials,
   WhyUs,
   HowItWorks,
 } from "@/components/landing";
-import { Navbar } from "@/components/shared";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -61,21 +58,19 @@ export default function Home() {
     <>
       <script
         type="application/ld+json"
+        // biome-ignore lint/correctness/useDangerouslySetInnerHTML: ggg
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Navbar />
       <Hero />
       <SocialProof />
       <Services />
       <Destinations />
-      <ExperienceShowcase />
       <HowItWorks />
       <Gallery />
       <Testimonials />
       <WhyUs />
       <FAQ />
       <CTA />
-      <Footer />
     </>
   );
 }

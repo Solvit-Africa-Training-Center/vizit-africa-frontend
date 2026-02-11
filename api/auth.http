@@ -30,7 +30,7 @@ Content-Type: application/json
 }
 
 ### Get User
-GET {{baseUrl}}/accounts/users/1/
+GET {{baseUrl}}/accounts/users/7febf7a7-7e84-43b0-891f-bc31b543f151/
 Authorization: Bearer {{token}}
 
 ### Me

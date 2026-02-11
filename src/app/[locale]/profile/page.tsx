@@ -3,7 +3,7 @@
 import { Navbar } from "@/components/shared";
 import { Footer } from "@/components/landing";
 import { Button } from "@/components/ui/button";
-import { sampleBookings, sampleRequests } from "@/lib/dummy-data";
+import {sampleRequests } from "@/lib/dummy-data";
 import {
   RiMapPinLine,
   RiCalendarLine,
@@ -19,12 +19,15 @@ import { motion, AnimatePresence } from "motion/react";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { Label } from "@/components/ui/label";
+import { useUser } from "@/components/user-provider";
+import { Empty, EmptyDescription, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
+import { Badge } from "@/components/ui/badge";
 
 type Tab = "overview" | "trips" | "saved" | "settings";
 
 export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState<Tab>("overview");
-  const _activeTrip = sampleBookings[0];
+    const { user } = useUser();
   const t = useTranslations("Profile");
   const tCommon = useTranslations("Admin.requests.table.badges");
 
@@ -46,7 +49,7 @@ export default function ProfilePage() {
                 {t("header.title")}
               </span>
               <h1 className="font-display text-5xl md:text-7xl font-medium text-foreground">
-                {t("header.subtitle")}
+                {user?.full_name}'s Profile
               </h1>
             </div>
 
@@ -102,9 +105,9 @@ export default function ProfilePage() {
                     />
                     <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors" />
 
-                    <div className="absolute inset-0 p-8 md:p-12 flex flex-col justify-between text-white">
+                    <div className="absolute inset-0 p-8 md:p-12 flex flex-col justify-between text-primary-foreground">
                       <div className="flex justify-between items-start">
-                        <span className="bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1 text-xs font-medium uppercase tracking-wider rounded-full text-white">
+                        <span className="bg-primary-foreground/10 backdrop-blur-md border border-primary-foreground/20 px-3 py-1 text-xs font-medium uppercase tracking-wider rounded-full text-primary-foreground">
                           {t("overview.nextTrip.label")}
                         </span>
                         <div className="text-right">
@@ -126,7 +129,7 @@ export default function ProfilePage() {
                           Mar 15 - Mar 22, 2025
                         </p>
 
-                        <div className="mt-8 pt-8 border-t border-white/10 grid grid-cols-2 gap-8">
+                        <div className="mt-8 pt-8 border-t border-primary-foreground/10 grid grid-cols-2 gap-8">
                           <div>
                             <p className="text-xs font-mono uppercase opacity-70 mb-1">
                               {t("overview.nextTrip.status")}
@@ -245,11 +248,7 @@ export default function ProfilePage() {
                           Mar 15 - Mar 22, 2025
                         </p>
                       </div>
-                      <div>
-                        <span className="border border-green-200 text-green-700 bg-green-50/50 px-3 py-1 rounded-full text-xs font-medium uppercase tracking-wider">
-                          {t("trips.upcoming")}
-                        </span>
-                      </div>
+                      <Badge variant="success-outline">Outbound</Badge>
                       <div className="text-right">
                         <Button variant="outline">
                           {t("trips.viewDetails")}
@@ -261,13 +260,13 @@ export default function ProfilePage() {
               )}
 
               {activeTab === "saved" && (
-                <div className="text-center py-24 text-muted-foreground">
-                  <RiBookmarkLine className="size-12 mx-auto mb-4 opacity-20" />
-                  <h3 className="text-xl font-display font-medium mb-2">
-                    {t("saved.emptyTitle")}
-                  </h3>
-                  <p>{t("saved.emptyDescription")}</p>
-                </div>
+                <Empty>
+                  <EmptyMedia>
+                    <RiBookmarkLine className="size-8" />
+                  </EmptyMedia>
+                  <EmptyTitle>{t("saved.emptyTitle")}</EmptyTitle>
+                  <EmptyDescription>{t("saved.emptyDescription")}</EmptyDescription>
+                </Empty>
               )}
 
               {activeTab === "settings" && (

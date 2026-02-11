@@ -68,7 +68,7 @@ export default function FulfillmentPage() {
 
       <div className="grid lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white border border-border rounded-xl p-6 shadow-sm">
+          <div className="bg-primary-foreground border border-border rounded-xl p-6 shadow-sm">
             <div className="flex justify-between items-end mb-2">
               <h3 className="font-medium">{t("progress.title")}</h3>
               <span className="font-mono">{Math.round(progress)}%</span>
@@ -81,7 +81,7 @@ export default function FulfillmentPage() {
             </div>
           </div>
 
-          <div className="bg-white border border-border rounded-xl overflow-hidden shadow-sm">
+          <div className="bg-primary-foreground border border-border rounded-xl overflow-hidden shadow-sm">
             <div className="p-4 border-b border-border bg-muted/30">
               <h3 className="font-medium flex items-center gap-2">
                 <RiFileListLine className="size-5 text-primary" />
@@ -190,7 +190,7 @@ export default function FulfillmentPage() {
         </div>
 
         <div className="lg:col-span-1 space-y-6">
-          <div className="bg-white border border-border rounded-xl p-6 shadow-sm">
+          <div className="bg-primary-foreground border border-border rounded-xl p-6 shadow-sm">
             <h3 className="font-medium mb-4">{t("customer.title")}</h3>
             <div className="space-y-4 text-sm">
               <div>
@@ -208,7 +208,7 @@ export default function FulfillmentPage() {
             </div>
           </div>
 
-          <div className="bg-white border border-border rounded-xl p-6 shadow-sm">
+          <div className="bg-primary-foreground border border-border rounded-xl p-6 shadow-sm">
             <h3 className="font-medium mb-4">{t("payment.title")}</h3>
             <div className="space-y-3 text-sm">
               <div className="flex justify-between">

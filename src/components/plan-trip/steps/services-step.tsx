@@ -190,7 +190,7 @@ export function ServicesStep({
 
             <TabsContent value="hotels" className="mt-0">
               {paginatedHotels.length === 0 ? (
-                <div className="text-center py-12 text-muted-foreground bg-white border rounded-xl">
+                <div className="text-center py-12 text-muted-foreground bg-primary-foreground border rounded-xl">
                   {t("noHotels")}
                 </div>
               ) : (
@@ -217,7 +217,7 @@ export function ServicesStep({
 
             <TabsContent value="cars" className="mt-0">
               {paginatedCars.length === 0 ? (
-                <div className="text-center py-12 text-muted-foreground bg-white border rounded-xl">
+                <div className="text-center py-12 text-muted-foreground bg-primary-foreground border rounded-xl">
                   {t("noCars")}
                 </div>
               ) : (

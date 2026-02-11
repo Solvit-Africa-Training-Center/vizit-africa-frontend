@@ -55,13 +55,13 @@ export const useTripStore = create<TripState>()(
 
       tripInfo: initialTripInfo,
       updateTripInfo: (info) =>
-        set((state) => ({
+        set((state: TripState) => ({
           tripInfo: { ...state.tripInfo, ...info },
         })),
 
       selections: initialSelections,
       setSelections: (selectionsOrUpdater) =>
-        set((state) => {
+        set((state: TripState) => {
           const newSelections =
             typeof selectionsOrUpdater === "function"
               ? selectionsOrUpdater(state.selections)
@@ -84,7 +84,7 @@ export const useTripStore = create<TripState>()(
     }),
     {
       name: "vizit-trip-storage",
-      partialize: (state) => ({
+      partialize: (state: TripState) => ({
         currentStep: state.currentStep,
         tripInfo: state.tripInfo,
         selections: state.selections,

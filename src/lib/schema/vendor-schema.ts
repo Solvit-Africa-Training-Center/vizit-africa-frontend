@@ -8,7 +8,13 @@ export const createVendorInputSchema = z.object({
     "transport_provider",
     "accommodation_provider",
     "guide",
+    "individual",
+    "company",
   ]),
+  description: z.string(),
+  contact_phone: z.string(),
+  address: z.string(),
+  website: z.string(),
 });
 
 export type CreateVendorInput = z.infer<typeof createVendorInputSchema>;

@@ -19,7 +19,7 @@ export function GuideCard({ guide, isSelected, onToggle }: GuideCardProps) {
       className={`group relative border transition-all duration-300 cursor-pointer ${
         isSelected
           ? "border-primary bg-primary/5"
-          : "border-border bg-white hover:border-primary"
+          : "border-border bg-primary-foreground hover:border-primary"
       }`}
     >
       <div

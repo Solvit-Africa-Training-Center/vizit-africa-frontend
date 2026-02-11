@@ -46,14 +46,14 @@ export function HowItWorks() {
                 className="group relative"
               >
                 <div
-                  className="font-display text-8xl md:text-9xl font-medium text-white/20 mb-6 leading-none select-none transition-colors duration-500 group-hover:text-accent-warm"
+                  className="font-display text-8xl md:text-9xl font-medium text-primary-foreground/20 mb-6 leading-none select-none transition-colors duration-500 group-hover:text-primary"
                   aria-hidden="true"
                 >
                   {step.step.toString().padStart(2, "0")}
                 </div>
 
                 <div className="space-y-4 pr-4">
-                  <h3 className="text-xl font-display font-medium uppercase tracking-tight text-background group-hover:text-accent-warm transition-colors duration-300">
+                  <h3 className="text-xl font-display font-medium uppercase tracking-tight text-background group-hover:text-primary transition-colors duration-300">
                     {step.title}
                   </h3>
                   <p className="text-background/60 font-light leading-relaxed text-sm md:text-base">

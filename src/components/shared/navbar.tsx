@@ -44,20 +44,16 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
 
   const heroRoutes = ["/"];
   const hasHero = heroRoutes.includes(pathname);
-  // refined logic: minimal mode on hero until scrolled
   const showSolid = forceSolid || isScrolled || !hasHero;
 
-  // Scrolled state: minimalist "glass"
-  // Unscrolled (Hero): completely transparent
   const headerClass = cn(
     "fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
     showSolid
-      ? "py-4 bg-white/80 backdrop-blur-xl border-b border-black/5"
+      ? "py-4 bg-primary-foreground/60 backdrop-blur-xl border-b border-black/5"
       : "py-6 bg-transparent",
   );
 
-  // Text colors
-  const textColorClass = showSolid ? "text-slate-900" : "text-white";
+  const textColorClass = showSolid ? "text-primary" : "text-primary-foreground";
 
   const logoVariant = showSolid ? "default" : "light";
 
@@ -87,38 +83,48 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       >
         <nav className="mx-auto max-w-[1400px] px-6 md:px-12 flex items-center justify-between">
-          {/* Left: Logo */}
           <div className="shrink-0 w-[140px]">
             <div className="scale-90 origin-left transition-transform duration-500">
               <Logo variant={logoVariant} />
             </div>
           </div>
 
-          {/* Center: Navigation Links */}
           <div className="hidden md:flex items-center gap-10 absolute left-1/2 -translate-x-1/2">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  "relative group font-display font-medium uppercase tracking-[0.2em] text-[11px] transition-colors duration-300",
-                  textColorClass,
-                  showSolid ? "hover:text-primary" : "hover:text-white/70",
-                )}
-              >
-                {link.label}
-                <span
+            {navLinks.map((link) => {
+              const isActive =
+                link.href === "/"
+                  ? pathname === "/"
+                  : pathname.startsWith(link.href);
+
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
                   className={cn(
-                    "absolute -bottom-1 left-0 w-0 h-px transition-all duration-300 ease-out group-hover:w-full",
-                    showSolid ? "bg-primary" : "bg-white",
+                    "relative group font-display font-medium uppercase tracking-[0.2em] text-[11px] transition-colors duration-300",
+                    isActive
+                      ? showSolid
+                        ? "text-primary"
+                        : "text-primary-foreground"
+                      : showSolid
+                        ? "text-foreground hover:text-primary"
+                        : "text-primary-foreground/70 hover:text-primary-foreground",
                   )}
-                />
-              </Link>
-            ))}
+                >
+                  {link.label}
+                  <span
+                    className={cn(
+                      "absolute -bottom-1 left-0 h-px transition-all duration-300 ease-out",
+                      showSolid ? "bg-primary" : "bg-primary-foreground",
+                      isActive ? "w-full" : "w-0 group-hover:w-full",
+                    )}
+                  />
+                </Link>
+              );
+            })}
           </div>
 
-          {/* Right: Actions */}
-          <div className="hidden md:flex items-center gap-6 justify-end w-[140px]">
+          <div className="hidden md:flex items-center gap-6 justify-end">
             <LanguageSwitcher variant={showSolid ? "default" : "light"} />
 
             {user ? (
@@ -133,7 +139,7 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
                     <span className="font-display font-medium uppercase tracking-widest text-[10px]">
                       {user.full_name.split(" ")[0]}
                     </span>
-                    <div className="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center backdrop-blur-sm border border-white/10">
+                    <div className="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center backdrop-blur-sm border border-primary-foreground/10">
                       <RiUserLine className="w-4 h-4" />
                     </div>
                   </div>
@@ -173,7 +179,7 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
               <Link
                 href="/login"
                 className={cn(
-                  "font-display font-medium uppercase tracking-[0.15em] text-[11px] transition-opacity hover:opacity-70",
+                  "font-display font-medium uppercase text-[11px] transition-opacity hover:opacity-70",
                   textColorClass,
                 )}
               >
@@ -181,23 +187,21 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
               </Link>
             )}
 
-            <Magnetic>
+
               <Link href="/plan-trip">
                 <Button
                   size="sm"
                   variant={showSolid ? "default" : "secondary"}
                   className={cn(
                     "rounded-sm font-display font-medium uppercase tracking-wider text-xs px-6 transition-all duration-300",
-                    !showSolid && "bg-white text-primary hover:bg-white/90",
+                    !showSolid && "bg-primary-foreground text-primary hover:bg-primary-foreground/90",
                   )}
                 >
                   {tCommon("startPlanning")}
                 </Button>
               </Link>
-            </Magnetic>
           </div>
 
-          {/* Mobile Menu Toggle */}
           <button
             type="button"
             className={cn(

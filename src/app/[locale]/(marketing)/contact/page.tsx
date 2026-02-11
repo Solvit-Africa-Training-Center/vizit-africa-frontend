@@ -1,6 +1,5 @@
 "use client";
 
-import { Navbar } from "@/components/shared";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -14,20 +13,19 @@ import {
 import Image from "next/image";
 import { motion } from "motion/react";
 import Link from "next/link";
-import { RevealText } from "@/components/ui/reveal-text";
 import { Magnetic } from "@/components/ui/magnetic";
 import { useTranslations } from "next-intl";
+import { RevealText } from "@/components/ui/reveal-text";
+import { PageHeader } from "@/components/shared/page-header";
 
 export default function ContactPage() {
   const t = useTranslations("Contact");
   const tCommon = useTranslations("Common");
 
   return (
-    <>
-      <Navbar />
       <div className="min-h-screen bg-background">
         <div className="lg:grid lg:grid-cols-2 min-h-screen">
-          <div className="relative h-[60vh] lg:h-screen w-full bg-black text-white lg:sticky lg:top-0 flex flex-col justify-between overflow-hidden">
+          <div className="relative h-[60vh] lg:h-screen w-full bg-black text-primary-foreground lg:sticky lg:top-0 flex flex-col justify-between overflow-hidden">
             <div className="absolute inset-0 z-0 overflow-hidden">
               <motion.div
                 initial={{ scale: 1 }}
@@ -58,26 +56,33 @@ export default function ContactPage() {
                 transition={{ duration: 0.8, ease: "easeOut" }}
                 className="mt-20 lg:mt-0"
               >
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md mb-8">
-                  <span className="w-2 h-2 rounded-full bg-accent-success animate-pulse" />
-                  <span className="text-xs font-mono uppercase tracking-widest text-white/90">
-                    {t("openStatus")}
-                  </span>
-                </div>
-                <h1 className="font-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-medium leading-[0.95] tracking-tight mb-6">
-                  <RevealText text={t("title")} className="block" />
-                  <span className="text-white/50">{t("titleSub")}</span>
-                </h1>
-                <p className="text-base md:text-lg text-white/80 max-w-md font-light leading-relaxed">
-                  {t("description")}
-                </p>
+                <PageHeader
+                  theme="dark"
+          
+                  className="p-0 mb-0 max-w-none"
+                  overline={
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-foreground/10 backdrop-blur-md">
+                      <span className="w-2 h-2 rounded-full bg-accent-success animate-pulse" />
+                      <span className="text-xs font-mono uppercase tracking-widest text-primary-foreground/90">
+                        {t("openStatus")}
+                      </span>
+                    </div>
+                  }
+                  title={
+                    <>
+                      <RevealText text={t("title")} className="block" />
+                      <span className="text-primary-foreground/50">{t("titleSub")}</span>
+                    </>
+                  }
+                  description={t("description")}
+                />
               </motion.div>
 
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.8 }}
-                className="hidden lg:grid gap-8 p-8 bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10"
+                className="hidden lg:grid gap-8 p-8 bg-primary-foreground/5 backdrop-blur-xl rounded-3xl border border-white/10"
               >
                 <ContactItem
                   icon={RiMailLine}
@@ -198,30 +203,37 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
-    </>
   );
 }
 
-function ContactItem({ icon: Icon, label, value, href, sub }: any) {
+interface ContactItemProps {
+  icon: React.ElementType;
+  label: string;
+  value: string;
+  href?: string;
+  sub?: string;
+}
+
+function ContactItem({ icon: Icon, label, value, href, sub }: ContactItemProps) {
   const Content = () => (
     <div className="flex items-start gap-4 group cursor-pointer">
-      <div className="size-12 rounded-full bg-white/10 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-white/20 transition-all duration-300">
-        <Icon className="size-5 text-white" />
+      <div className="size-12 rounded-full bg-primary-foreground/10 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-primary-foreground/20 transition-all duration-300">
+        <Icon className="size-5 text-primary-foreground" />
       </div>
       <div>
-        <p className="text-xs font-medium text-white/40 mb-1 uppercase tracking-widest">
+        <p className="text-xs font-medium text-primary-foreground/40 mb-1 uppercase tracking-widest">
           {label}
         </p>
         <div className="flex items-center gap-2">
-          <p className="text-xl font-display font-medium text-white group-hover:text-accent-warm transition-colors">
+          <p className="text-xl font-display font-medium text-primary-foreground group-hover:text-accent-warm transition-colors">
             {value}
           </p>
           {href && (
-            <RiArrowRightUpLine className="size-4 text-white/20 group-hover:text-accent-warm group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all" />
+            <RiArrowRightUpLine className="size-4 text-primary-foreground/20 group-hover:text-accent-warm group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all" />
           )}
         </div>
 
-        {sub && <p className="text-sm text-white/40 mt-1">{sub}</p>}
+        {sub && <p className="text-sm text-primary-foreground/40 mt-1">{sub}</p>}
       </div>
     </div>
   );
@@ -237,7 +249,14 @@ function ContactItem({ icon: Icon, label, value, href, sub }: any) {
   return <Content />;
 }
 
-function MobileContactItem({ icon: Icon, label, value, href }: any) {
+interface MobileContactItemProps {
+  icon: React.ElementType;
+  label: string;
+  value: string;
+  href?: string;
+}
+
+function MobileContactItem({ icon: Icon, label, value, href }: MobileContactItemProps) {
   const Content = () => (
     <div className="flex items-center gap-4">
       <div className="size-10 rounded-full bg-muted flex items-center justify-center shrink-0">
@@ -261,7 +280,14 @@ function MobileContactItem({ icon: Icon, label, value, href }: any) {
   return <Content />;
 }
 
-function FormGroup({ label, id, type = "text", placeholder }: any) {
+interface FormGroupProps {
+  label: string;
+  id: string;
+  type?: string;
+  placeholder?: string;
+}
+
+function FormGroup({ label, id, type = "text", placeholder }: FormGroupProps) {
   return (
     <div className="space-y-4 group">
       <label

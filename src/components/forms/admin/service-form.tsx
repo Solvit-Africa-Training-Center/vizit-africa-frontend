@@ -59,14 +59,14 @@ export function ServiceForm() {
   const form = useForm({
     defaultValues: {
       title: "",
-      service_type: "tour",
+      service_type: "tour" as "tour" | "accommodation" | "transport" | "experience",
       description: "",
       base_price: 0,
       currency: "USD",
       capacity: 1,
-      status: "draft",
-      location: "",
-      vendor: "",
+      status: "draft" as "active" | "inactive" | "draft",
+      location: "" as string | number,
+      vendor: "" as string | number,
     },
     validators: {
       onChange: createServiceInputSchema,
@@ -184,13 +184,14 @@ export function ServiceForm() {
                     <div className="h-10 w-full animate-pulse rounded-md border border-input bg-muted" />
                   ) : (
                     <Autocomplete
-                      value={
-                        vendors.find((v) => v.id === field.state.value) || null
-                      }
-                      onValueChange={(val: any) => field.handleChange(val?.id)}
+                      value={field.state.value}
+                      onValueChange={(val: any) => field.handleChange(val)}
                     >
                       <AutocompleteTrigger>
-                        <AutocompleteValue placeholder="Search vendor..." />
+                        <span className="truncate">
+                          {vendors.find((v) => v.id === field.state.value)
+                            ?.business_name || "Search vendor..."}
+                        </span>
                       </AutocompleteTrigger>
                       <AutocompletePortal>
                         <AutocompletePositioner>
@@ -200,7 +201,7 @@ export function ServiceForm() {
                               {vendors.map((vendor: any) => (
                                 <AutocompleteItem
                                   key={vendor.id}
-                                  value={vendor}
+                                  value={vendor.id}
                                 >
                                   {vendor.business_name}
                                 </AutocompleteItem>

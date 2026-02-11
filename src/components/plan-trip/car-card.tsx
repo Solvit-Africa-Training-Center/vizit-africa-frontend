@@ -45,7 +45,7 @@ export function CarCard({
       className={`group relative border transition-all duration-300 cursor-pointer ${
         isSelected
           ? "border-primary bg-primary/5"
-          : "border-border bg-white hover:border-primary"
+          : "border-border bg-primary-foreground hover:border-primary"
       }`}
     >
       <div
@@ -61,7 +61,7 @@ export function CarCard({
           <div className="absolute inset-0 flex items-center justify-center bg-muted/50">
             <RiCarLine className="size-12 text-muted-foreground/30" />
           </div>
-          <div className="absolute top-0 left-0 bg-white/90 backdrop-blur-sm px-4 py-2 border-b border-r border-border">
+          <div className="absolute top-0 left-0 bg-primary-foreground/90 backdrop-blur-sm px-4 py-2 border-b border-r border-border">
             <span className="text-xs font-mono uppercase tracking-widest">
               {tTypes(car.category as any)}
             </span>
