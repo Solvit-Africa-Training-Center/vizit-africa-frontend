@@ -11,10 +11,10 @@ import { useTranslations } from "next-intl";
 gsap.registerPlugin(ScrollTrigger);
 
 const serviceImages = [
-  "https://images.unsplash.com/photo-1436491865332-7a61a1042759?q=90&w=1600&auto=format&fit=crop", // Flight/Plane
-  "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=90&w=1600&auto=format&fit=crop", // Hotel
-  "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=90&w=1600&auto=format&fit=crop", // Car/Road
-  "https://images.unsplash.com/photo-1596423736730-86d5267d32c9?q=90&w=1600&auto=format&fit=crop", // Guide/Map
+  "/images/rwanda-sky-scrapers.jpg", // flights
+  "/images/hotel.jpg", // hotels
+  "/images/tourism-guide-vehicle-car.jpg", // experiences (Rent Vehicles)
+  "/images/guide.jpg", // transfers (Hire Guides)
 ];
 
 const serviceKeys = ["flights", "hotels", "experiences", "transfers"] as const;
@@ -58,13 +58,13 @@ export function Services() {
   }));
 
   return (
-    <section ref={containerRef} className="py-24 md:py-32 bg-background">
+    <section ref={containerRef} className="py-20 md:py-24 bg-background">
       <div className="container max-w-7xl mx-auto px-5 md:px-10">
         <SectionTitle
           overline={t("overline")}
           title={t("title")}
           description={t("description")}
-          className="max-w-2xl mb-16"
+          className="max-w-2xl mb-12"
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -91,7 +91,7 @@ function ServiceCard({
   service: { title: string; description: string; image: string };
 }) {
   return (
-    <div className="service-card group relative overflow-hidden rounded-sm aspect-[4/3] md:aspect-[16/10]">
+    <div className="service-card group relative overflow-hidden rounded-sm aspect-[4/3] md:aspect-[3/2]">
       <div className="absolute inset-0">
         <Image
           src={service.image}

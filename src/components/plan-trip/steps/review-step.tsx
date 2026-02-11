@@ -49,7 +49,7 @@ export function ReviewStep({
           <div className="size-20 bg-primary/10 text-primary flex items-center justify-center mx-auto mb-6">
             <RiCheckLine className="size-10" />
           </div>
-          <h2 className="font-display text-3xl font-bold uppercase tracking-tight">
+          <h2 className="font-display text-3xl font-medium uppercase tracking-tight">
             {t("title")}
           </h2>
           <p className="text-muted-foreground text-lg font-light">
@@ -84,7 +84,7 @@ export function ReviewStep({
           >
             <RiArrowLeftLine className="mr-2" /> {tCommon("back")}
           </Button>
-          <Button size="lg" className="flex-[2]" onClick={onSubmit}>
+          <Button size="lg" className="flex-2" onClick={onSubmit}>
             {t("submit")}
           </Button>
         </div>

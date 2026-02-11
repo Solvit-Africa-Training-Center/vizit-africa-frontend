@@ -29,8 +29,7 @@ export default function ExperiencesPage() {
           price: 1500,
           rating: 5.0,
           reviews: 124,
-          image:
-            "https://images.unsplash.com/photo-1547891654-e66ed7ebb968?q=80&w=2600&auto=format&fit=crop",
+          image: "/images/wildlife-silverback-gorilla.jpg",
           description: t("items.gorilla-trekking.description"),
           tags: ["Adventure", "Wildlife", "Physical"],
         },
@@ -42,8 +41,7 @@ export default function ExperiencesPage() {
           price: 450,
           rating: 4.9,
           reviews: 92,
-          image:
-            "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?q=80&w=2600&auto=format&fit=crop",
+          image: "/images/wildlife-ankole-cow.jpg",
           description: t("items.akagera-safari.description"),
           tags: ["Wildlife", "Safari", "Nature"],
         },
@@ -55,8 +53,7 @@ export default function ExperiencesPage() {
           price: 200,
           rating: 4.7,
           reviews: 64,
-          image:
-            "https://images.unsplash.com/photo-1489392191049-fc10c97e64b6?q=80&w=2600&auto=format&fit=crop",
+          image: "/images/rwanda-walk-path-in-forest.jpg",
           description: t("items.nyungwe-canopy.description"),
           tags: ["Adventure", "Nature", "Hiking"],
         },
@@ -75,7 +72,7 @@ export default function ExperiencesPage() {
           rating: 4.8,
           reviews: 85,
           image:
-            "https://images.unsplash.com/photo-1543832923-44667a44c804?q=80&w=2600&auto=format&fit=crop",
+            "/images/city-kigali-roundabout-with-woman-and-child-statue.jpg",
           description: t("items.kigali-city-tour.description"),
           tags: ["Culture", "History", "Urban"],
         },
@@ -87,8 +84,7 @@ export default function ExperiencesPage() {
           price: 350,
           rating: 4.8,
           reviews: 45,
-          image:
-            "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=2600&auto=format&fit=crop",
+          image: "/images/kivu-grass-seats.jpg",
           description: t("items.lake-kivu-relax.description"),
           tags: ["Relaxation", "Water", "Leisure"],
         },
@@ -106,8 +102,7 @@ export default function ExperiencesPage() {
           price: 75,
           rating: 4.6,
           reviews: 38,
-          image:
-            "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?q=80&w=2600&auto=format&fit=crop",
+          image: "/images/a-hill.jpg",
           description: t("items.bisoke-hike.description"),
           tags: ["Hiking", "Adventure", "Physical"],
         },
@@ -138,7 +133,7 @@ export default function ExperiencesPage() {
               <span className="text-sm font-mono uppercase tracking-widest text-muted-foreground mb-4 block">
                 {t("overline")}
               </span>
-              <h1 className="font-display text-5xl md:text-8xl font-black uppercase tracking-tight leading-[0.9]">
+              <h1 className="font-display text-5xl md:text-8xl font-medium uppercase tracking-tight leading-[0.9]">
                 <RevealText text={t("title")} />
               </h1>
             </div>
@@ -149,7 +144,7 @@ export default function ExperiencesPage() {
                   type="button"
                   key={cat.id}
                   onClick={() => scrollToCategory(cat.id)}
-                  className="text-sm font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors flex items-center gap-1 group"
+                  className="text-sm font-medium uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors flex items-center gap-1 group"
                 >
                   {cat.category}
                   <RiArrowDownLine className="size-4 opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all" />
@@ -165,7 +160,7 @@ export default function ExperiencesPage() {
               <div key={category.id} id={category.id} className="scroll-mt-32">
                 <div className="flex items-center gap-4 mb-16 md:mb-24">
                   <span className="h-px bg-border flex-1" />
-                  <span className="font-display font-bold text-2xl uppercase text-muted-foreground/50">
+                  <span className="font-display font-medium text-2xl uppercase text-muted-foreground/50">
                     {category.category}
                   </span>
                   <span className="h-px bg-border flex-1" />
@@ -235,7 +230,7 @@ export default function ExperiencesPage() {
                       / 0{allExperiences.length}
                     </span>
                     <span className="h-px w-12 bg-white/20" />
-                    <span className="text-white text-sm font-bold uppercase tracking-widest">
+                    <span className="text-white text-sm font-medium uppercase tracking-widest">
                       {allExperiences.find((e) => e.id === activeId)?.location}
                     </span>
                   </div>
@@ -296,7 +291,7 @@ function ExperienceItem({
         {experience.tags.map((tag: string) => (
           <span
             key={tag}
-            className="text-[10px] font-bold uppercase tracking-widest text-primary border border-primary/20 px-2 py-1 rounded-sm"
+            className="text-[10px] font-medium uppercase tracking-widest text-primary border border-primary/20 px-2 py-1 rounded-sm"
           >
             {tag}
           </span>
@@ -305,7 +300,7 @@ function ExperienceItem({
 
       <h2
         className={cn(
-          "font-display font-bold uppercase leading-[0.85] mb-10 transition-all duration-500",
+          "font-display font-medium uppercase leading-[0.85] mb-10 transition-all duration-500",
           isActive
             ? "text-5xl md:text-7xl text-foreground"
             : "text-4xl md:text-5xl text-muted-foreground",
@@ -344,7 +339,7 @@ function ExperienceItem({
           <span className="text-muted-foreground text-[10px] uppercase tracking-widest mb-2">
             {labels.startingFrom}
           </span>
-          <span className="font-display font-bold text-xl text-primary">
+          <span className="font-display font-medium text-xl text-primary">
             ${experience.price}
           </span>
         </div>

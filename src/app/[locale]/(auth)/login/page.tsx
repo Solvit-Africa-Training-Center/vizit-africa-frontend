@@ -2,7 +2,6 @@ import { LoginForm } from "@/components/forms/login-form";
 import { Link } from "@/i18n/navigation";
 import { getTranslations } from "next-intl/server";
 
-
 export default async function LoginPage() {
   const t = await getTranslations("Auth.login");
   const tCommon = await getTranslations("Common");
@@ -11,11 +10,11 @@ export default async function LoginPage() {
     <div className="w-full">
       <div className="mb-10">
         <Link href="/" className="inline-block mb-4">
-          <span className="font-display text-2xl font-bold text-primary">
+          <span className="font-display text-2xl font-medium text-primary">
             {tCommon("brandName")}
           </span>
         </Link>
-        <h1 className="font-display text-4xl font-black uppercase text-foreground mb-2">
+        <h1 className="font-display text-4xl font-medium uppercase text-foreground mb-2">
           {t("title")}
         </h1>
         <p className="text-muted-foreground text-lg font-light">
@@ -23,7 +22,7 @@ export default async function LoginPage() {
         </p>
       </div>
 
-     <LoginForm />
+      <LoginForm />
 
       <div className="relative my-10">
         <div className="absolute inset-0 flex items-center">
@@ -35,7 +34,6 @@ export default async function LoginPage() {
           </span>
         </div>
       </div>
-
 
       <p className="text-center text-sm text-muted-foreground mt-8 font-light">
         {t("noAccount")}{" "}

@@ -40,7 +40,7 @@ function PackageBuilderContent({ id }: { id: string }) {
             <RiArrowLeftLine className="size-4" />
             {t("back")}
           </Link>
-          <h1 className="font-display text-2xl md:text-3xl font-bold text-foreground">
+          <h1 className="font-display text-2xl md:text-3xl font-medium text-foreground">
             {t("createTitle")}
           </h1>
           <p className="text-muted-foreground mt-1">

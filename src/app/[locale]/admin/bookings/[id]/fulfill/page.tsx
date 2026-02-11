@@ -47,7 +47,7 @@ export default function FulfillmentPage() {
         </Link>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="font-display text-2xl md:text-3xl font-bold text-foreground flex items-center gap-3">
+            <h1 className="font-display text-2xl md:text-3xl font-medium text-foreground flex items-center gap-3">
               {t("title")}
               <span className="text-sm font-sans font-normal bg-green-100 text-green-700 px-2 py-1 rounded">
                 {t("paid")}
@@ -70,7 +70,7 @@ export default function FulfillmentPage() {
         <div className="lg:col-span-2 space-y-6">
           <div className="bg-white border border-border rounded-xl p-6 shadow-sm">
             <div className="flex justify-between items-end mb-2">
-              <h3 className="font-bold">{t("progress.title")}</h3>
+              <h3 className="font-medium">{t("progress.title")}</h3>
               <span className="font-mono">{Math.round(progress)}%</span>
             </div>
             <div className="h-2 bg-muted rounded-full overflow-hidden">
@@ -83,7 +83,7 @@ export default function FulfillmentPage() {
 
           <div className="bg-white border border-border rounded-xl overflow-hidden shadow-sm">
             <div className="p-4 border-b border-border bg-muted/30">
-              <h3 className="font-bold flex items-center gap-2">
+              <h3 className="font-medium flex items-center gap-2">
                 <RiFileListLine className="size-5 text-primary" />
                 {t("actions.title")}
               </h3>
@@ -191,7 +191,7 @@ export default function FulfillmentPage() {
 
         <div className="lg:col-span-1 space-y-6">
           <div className="bg-white border border-border rounded-xl p-6 shadow-sm">
-            <h3 className="font-bold mb-4">{t("customer.title")}</h3>
+            <h3 className="font-medium mb-4">{t("customer.title")}</h3>
             <div className="space-y-4 text-sm">
               <div>
                 <p className="text-muted-foreground">{t("customer.name")}</p>
@@ -209,13 +209,13 @@ export default function FulfillmentPage() {
           </div>
 
           <div className="bg-white border border-border rounded-xl p-6 shadow-sm">
-            <h3 className="font-bold mb-4">{t("payment.title")}</h3>
+            <h3 className="font-medium mb-4">{t("payment.title")}</h3>
             <div className="space-y-3 text-sm">
               <div className="flex justify-between">
                 <span className="text-muted-foreground">
                   {t("payment.total")}
                 </span>
-                <span className="font-bold">$2,520.00</span>
+                <span className="font-medium">$2,520.00</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">
@@ -230,7 +230,7 @@ export default function FulfillmentPage() {
                 <span className="font-medium">Feb 04, 2025</span>
               </div>
               <div className="pt-3 border-t border-border">
-                <span className="inline-flex items-center gap-1 text-green-700 bg-green-100 px-2 py-0.5 rounded text-xs font-bold uppercase">
+                <span className="inline-flex items-center gap-1 text-green-700 bg-green-100 px-2 py-0.5 rounded text-xs font-medium uppercase">
                   {t("payment.status")}
                 </span>
               </div>

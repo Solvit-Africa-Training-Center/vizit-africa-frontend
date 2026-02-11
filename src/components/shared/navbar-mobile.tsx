@@ -4,6 +4,13 @@ import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { LanguageSwitcher } from "./language-switcher";
+import { useUser } from "@/components/user-provider";
+import { logout } from "@/actions/auth";
+import {
+  RiUserLine,
+  RiLogoutBoxRLine,
+  RiDashboardLine,
+} from "@remixicon/react";
 
 interface NavbarMobileProps {
   isOpen: boolean;
@@ -13,6 +20,7 @@ interface NavbarMobileProps {
 export function NavbarMobile({ isOpen, onClose }: NavbarMobileProps) {
   const t = useTranslations("Navigation");
   const tCommon = useTranslations("Common");
+  const { user } = useUser();
 
   const navLinks = [
     { href: "/services", label: t("services") },
@@ -21,6 +29,11 @@ export function NavbarMobile({ isOpen, onClose }: NavbarMobileProps) {
     { href: "/about", label: t("aboutUs") },
     { href: "/contact", label: t("contact") },
   ];
+
+  const handleLogout = async () => {
+    await logout();
+    window.location.href = "/";
+  };
 
   if (!isOpen) return null;
 
@@ -41,21 +54,59 @@ export function NavbarMobile({ isOpen, onClose }: NavbarMobileProps) {
           <div className="flex justify-center py-2">
             <LanguageSwitcher />
           </div>
-          <Link
-            href="/login"
-            className="block text-center font-display font-medium uppercase tracking-widest text-xs text-muted-foreground hover:text-foreground py-2"
-            onClick={onClose}
-          >
-            {tCommon("login")}
-          </Link>
-          <Link href="/plan-trip" onClick={onClose} className="block">
-            <Button
-              size="lg"
-              className="w-full rounded-sm font-display font-bold uppercase tracking-wider text-xs"
-            >
-              {tCommon("startPlanning")}
-            </Button>
-          </Link>
+
+          {user ? (
+            <>
+              <Link
+                href="/profile"
+                className="flex items-center justify-center gap-2 font-display font-medium uppercase tracking-widest text-xs text-foreground hover:text-primary py-2"
+                onClick={onClose}
+              >
+                <RiUserLine className="w-4 h-4" />
+                {user.full_name.split(" ")[0]}
+              </Link>
+              {user.role === "ADMIN" && (
+                <Link
+                  href="/admin"
+                  className="flex items-center justify-center gap-2 font-display font-medium uppercase tracking-widest text-xs text-muted-foreground hover:text-foreground py-2"
+                  onClick={onClose}
+                >
+                  <RiDashboardLine className="w-4 h-4" />
+                  Dashboard
+                </Link>
+              )}
+              <Button
+                variant="outline"
+                size="lg"
+                className="w-full rounded-sm font-display font-medium uppercase tracking-wider text-xs"
+                onClick={() => {
+                  handleLogout();
+                  onClose();
+                }}
+              >
+                <RiLogoutBoxRLine className="w-4 h-4 mr-2" />
+                Logout
+              </Button>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="block text-center font-display font-medium uppercase tracking-widest text-xs text-muted-foreground hover:text-foreground py-2"
+                onClick={onClose}
+              >
+                {tCommon("login")}
+              </Link>
+              <Link href="/plan-trip" onClick={onClose} className="block">
+                <Button
+                  size="lg"
+                  className="w-full rounded-sm font-display font-medium uppercase tracking-wider text-xs"
+                >
+                  {tCommon("startPlanning")}
+                </Button>
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </div>

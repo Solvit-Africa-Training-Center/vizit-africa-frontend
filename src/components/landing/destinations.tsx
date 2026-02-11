@@ -11,36 +11,31 @@ const regionData = [
   {
     id: "volcanoes",
     key: "volcanoes",
-    image:
-      "https://images.unsplash.com/photo-1662612732223-1fe6ea43263e?q=90&w=1600&auto=format&fit=crop",
+    image: "/images/wildlife-silverback-gorilla.jpg",
     className: "md:col-span-2 md:row-span-2",
   },
   {
     id: "akagera",
     key: "akagera",
-    image:
-      "https://images.unsplash.com/photo-1621268405207-3dfc641fceeb?q=90&w=1600&auto=format&fit=crop",
+    image: "/images/giraffe.jpg",
     className: "md:col-span-1 md:row-span-1",
   },
   {
     id: "nyungwe",
     key: "nyungwe",
-    image:
-      "https://images.unsplash.com/photo-1489640818597-89b1edc97db5?q=90&w=1600&auto=format&fit=crop",
+    image: "/images/rwanda-walk-path-in-forest.jpg",
     className: "md:col-span-1 md:row-span-2",
   },
   {
     id: "kivu",
     key: "kivu",
-    image:
-      "https://images.unsplash.com/photo-1514548383638-cef9251a73ec?q=90&w=1600&auto=format&fit=crop",
+    image: "/images/kivu-boats.jpg",
     className: "md:col-span-1 md:row-span-1",
   },
   {
     id: "kigali",
     key: "kigali",
-    image:
-      "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=90&w=1600&auto=format&fit=crop",
+    image: "/images/city-kigali-roundabout-with-woman-and-child-statue.jpg",
     className: "md:col-span-1 md:row-span-1",
   },
 ];
@@ -55,7 +50,7 @@ export function Destinations() {
   }));
 
   return (
-    <section className="py-32 bg-background relative overflow-hidden">
+    <section className="py-24 bg-background relative overflow-hidden">
       <div className="container max-w-7xl mx-auto px-5">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
           <SectionTitle
@@ -83,7 +78,7 @@ export function Destinations() {
       </div>
 
       <div className="container max-w-7xl mx-auto px-5">
-        <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 h-[1200px] md:h-[600px]">
+        <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 min-h-[600px] md:aspect-2/1">
           {regions.map((region, i) => (
             <motion.div
               key={region.id}
@@ -119,7 +114,7 @@ export function Destinations() {
                   <span className="text-xs font-mono uppercase tracking-widest text-white/80 block mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
                     {region.subtitle}
                   </span>
-                  <h3 className="text-2xl md:text-3xl font-display font-bold text-white uppercase leading-none">
+                  <h3 className="text-2xl md:text-3xl font-display font-medium text-white uppercase leading-none">
                     {region.name}
                   </h3>
                 </div>

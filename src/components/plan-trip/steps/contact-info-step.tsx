@@ -46,7 +46,9 @@ export function ContactInfoStep({
     >
       <div className="space-y-8">
         <div>
-          <h2 className="font-display text-2xl font-bold mb-2">{t("title")}</h2>
+          <h2 className="font-display text-2xl font-medium mb-2">
+            {t("title")}
+          </h2>
           <p className="text-muted-foreground">{t("subtitle")}</p>
         </div>
 

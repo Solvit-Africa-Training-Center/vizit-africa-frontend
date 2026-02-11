@@ -6,10 +6,11 @@ export const createServiceInputSchema = z.object({
   service_type: z.enum(["tour", "accommodation", "transport", "experience"]),
   description: z.string().min(10),
   base_price: z.number().min(0),
-  currency: z.string().default("USD"),
+  currency: z.string(),
   capacity: z.number().min(1),
-  status: z.enum(["active", "inactive", "draft"]).default("draft"),
+  status: z.enum(["active", "inactive", "draft"]),
   location: z.number().or(z.string()), // Location ID
+  vendor: z.number().or(z.string()), // Vendor ID
 });
 
 export type CreateServiceInput = z.infer<typeof createServiceInputSchema>;

@@ -17,7 +17,7 @@ export default function BookingsPage() {
     <div className="mx-auto max-w-7xl px-5 md:px-10 py-8">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="font-display text-2xl md:text-3xl font-bold text-foreground">
+          <h1 className="font-display text-2xl md:text-3xl font-medium text-foreground">
             {t("title")}
           </h1>
           <p className="text-muted-foreground mt-1">{t("subtitle")}</p>
@@ -35,11 +35,11 @@ export default function BookingsPage() {
                 <span className="text-xs font-mono text-muted-foreground">
                   #{booking.id.toUpperCase()}
                 </span>
-                <span className="text-xs font-bold uppercase tracking-wider bg-green-100 text-green-700 px-2 py-1 rounded">
+                <span className="text-xs font-medium uppercase tracking-wider bg-green-100 text-green-700 px-2 py-1 rounded">
                   {t("card.paid")}
                 </span>
               </div>
-              <h3 className="font-display text-lg font-bold text-foreground mt-2">
+              <h3 className="font-display text-lg font-medium text-foreground mt-2">
                 Gorilla Trekking Adventure
               </h3>
             </div>

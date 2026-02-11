@@ -10,7 +10,7 @@ export function SocialProof() {
   return (
     <section className="bg-muted/30 py-10 overflow-hidden relative">
       <div className="container max-w-7xl mx-auto px-5 mb-8 text-center">
-        <p className="text-sm font-medium text-muted-foreground uppercase tracking-widest">
+        <p className="text-center text-sm font-normal uppercase tracking-widest text-muted-foreground/60 mb-8">
           {t("tagline")}
         </p>
       </div>
@@ -39,7 +39,7 @@ export function SocialProof() {
               key={`${partner.name}-${i}`}
               className="flex items-center gap-4 opacity-50  hover:opacity-100 transition-[filter,opacity] duration-200 cursor-pointer"
             >
-              <span className="text-xl font-bold font-display text-foreground/80">
+              <span className="text-xl font-medium font-display text-foreground/80">
                 {partner.name}
               </span>
             </div>

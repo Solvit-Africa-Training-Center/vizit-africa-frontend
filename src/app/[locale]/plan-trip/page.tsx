@@ -77,7 +77,7 @@ export default function PlanTripPage() {
           <div className="mb-12 md:mb-16">
             <RevealText
               text={tHeader("title")}
-              className="font-display text-4xl md:text-6xl font-black uppercase text-foreground mb-4"
+              className="font-display text-4xl md:text-6xl font-medium uppercase text-foreground mb-4"
               delay={0.1}
             />
             <motion.p

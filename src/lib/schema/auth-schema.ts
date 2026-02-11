@@ -3,11 +3,11 @@ import z from "zod";
 export const userSchema = z.object({
   id: z.string(),
   full_name: z.string(),
-  email: z.email(),
+  email: z.string().email(),
   phone_number: z.string(),
   bio: z.string().optional(),
   role: z.string(),
-  prefferred_currency: z.string(),
+  preferred_currency: z.string(),
 });
 
 export type User = z.infer<typeof userSchema>;

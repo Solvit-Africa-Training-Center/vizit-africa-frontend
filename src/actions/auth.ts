@@ -78,21 +78,16 @@ export async function register(
   }
 
   try {
-    // const data = await api.post(
-    //   endpoints.auth.register,
-    //   validation.data,
-    //   registerResponseSchema,
-    //   {
-    //     requiresAuth: false,
-    //   },
-    // );
+    const data = await api.post(
+      endpoints.auth.register,
+      validation.data,
+      registerResponseSchema,
+      {
+        requiresAuth: false,
+      },
+    );
 
-    // const cookieStore = await cookies();
-    // cookieStore.set("accessToken", data.access, COOKIE_OPTIONS);
-    // cookieStore.set("refreshToken", data.refresh, COOKIE_OPTIONS);
-    console.log(validation.data)
-
-    return { success: false, error: "Validation failed" };
+    return { success: true, data };
   } catch (error) {
     const err = error as ApiError;
     return {
@@ -138,11 +133,6 @@ export async function getCurrentUser(): Promise<ActionResult<User>> {
     const data = await api.get(endpoints.auth.me, userSchema);
     return { success: true, data };
   } catch (error) {
-    if (error instanceof ApiError && error.status === 401) {
-      const cookieStore = await cookies();
-      cookieStore.delete("accessToken");
-      cookieStore.delete("refreshToken");
-    }
     const err = error as ApiError;
     return {
       success: false,

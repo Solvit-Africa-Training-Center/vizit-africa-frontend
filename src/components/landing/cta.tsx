@@ -58,7 +58,7 @@ export function CTA() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.1 }}
-                  className="font-display text-primary-foreground text-6xl md:text-8xl font-black uppercase leading-[0.85] tracking-tight mb-8"
+                  className="font-display text-primary-foreground text-6xl md:text-8xl font-medium uppercase leading-[0.85] tracking-tight mb-8"
                 >
                   {t("title")} <br />
                   <span className="text-transparent bg-clip-text bg-linear-to-r from-primary to-white/80 font-serif italic pr-4">
@@ -112,7 +112,7 @@ export function CTA() {
 
             <div className="lg:col-span-5 relative h-full min-h-[400px] bg-neutral-900 border-t lg:border-t-0 lg:border-l border-white/5 group overflow-hidden">
               <Image
-                src="https://images.unsplash.com/photo-1519095616913-6f319517c76f?q=90&w=1200&auto=format&fit=crop"
+                src="/images/tourism-guide-vehicle-car.jpg"
                 alt="Safari jeep under African night sky"
                 fill
                 sizes="(max-width: 1024px) 100vw, 40vw"

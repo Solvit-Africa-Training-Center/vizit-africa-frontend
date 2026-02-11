@@ -32,7 +32,7 @@ export function RegisterForm() {
   const tCommon = useTranslations("Common");
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
-   console.log(error);
+
   const form = useForm({
     defaultValues: {
       full_name: "",
@@ -47,10 +47,10 @@ export function RegisterForm() {
     },
     onSubmit: async ({ value }) => {
       const result = await register(value);
-   
+
       if (result.success) {
-        toast.success("Account created successfully");
-        router.push("/login");
+        toast.success("Account created! Check your email to verify.");
+        router.push(`/verify-email?email=${encodeURIComponent(value.email)}`);
       } else {
         setError(result.error);
       }
@@ -68,7 +68,7 @@ export function RegisterForm() {
     >
       {error && (
         <Alert variant={"destructive"}>
-          <RiAlertLine/>
+          <RiAlertLine />
           <AlertTitle>Error</AlertTitle>
           <AlertDescription className="mt-1">{error}</AlertDescription>
         </Alert>
@@ -210,7 +210,7 @@ export function RegisterForm() {
       <div className="pt-2">
         <Button
           type="submit"
-          className="w-full h-14 rounded-sm gap-2 text-base font-bold uppercase tracking-wide"
+          className="w-full h-14 rounded-sm gap-2 text-base font-medium uppercase tracking-wide"
           disabled={form.state.isSubmitting}
         >
           {form.state.isSubmitting ? "Creating..." : tCommon("createAccount")}

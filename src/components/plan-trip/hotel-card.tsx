@@ -55,7 +55,7 @@ export function HotelCard({
 
         <div className="p-5 flex flex-col flex-1 gap-4">
           <div>
-            <h4 className="font-display text-xl font-bold uppercase tracking-tight text-foreground line-clamp-1 group-hover:text-primary transition-colors">
+            <h4 className="font-display text-xl font-medium uppercase tracking-tight text-foreground line-clamp-1 group-hover:text-primary transition-colors">
               {hotel.name}
             </h4>
             <div className="flex items-center gap-2 mt-2 text-muted-foreground">
@@ -87,7 +87,7 @@ export function HotelCard({
               <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">
                 Total ({days} {tSummary("nights")})
               </p>
-              <p className="font-display text-xl font-bold text-foreground">
+              <p className="font-display text-xl font-medium text-foreground">
                 ${hotel.pricePerNight * days}
               </p>
             </div>

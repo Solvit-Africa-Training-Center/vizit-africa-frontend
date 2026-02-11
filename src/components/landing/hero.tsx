@@ -1,5 +1,6 @@
 "use client";
 
+import { HERO_SLIDES } from "@/lib/landing-data";
 import { Button } from "@/components/ui/button";
 import {
   HoverCard,
@@ -18,39 +19,6 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const HERO_SLIDES = [
-  {
-    id: 1,
-    image:
-      "https://images.unsplash.com/photo-1436491865332-7a61a1042759?q=90&w=2400&auto=format&fit=crop", // Plane wing
-    key: "1",
-  },
-  {
-    id: 2,
-    image:
-      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=90&w=2400&auto=format&fit=crop", // Hotel view
-    key: "2",
-  },
-  {
-    id: 3,
-    image:
-      "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=90&w=2400&auto=format&fit=crop", // Driving
-    key: "3",
-  },
-  {
-    id: 4,
-    image:
-      "https://images.unsplash.com/photo-1527631746610-bca00a040d60?q=90&w=2400&auto=format&fit=crop", // Guide/Discussion
-    key: "4",
-  },
-  {
-    id: 5,
-    image:
-      "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=90&w=2400&auto=format&fit=crop", // Travel/Planning
-    key: "5",
-  },
-];
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -121,10 +89,10 @@ export function Hero() {
         <AnimatePresence mode="popLayout">
           <motion.div
             key={slide.id}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1.2 }}
+            transition={{ duration: 1.6, ease: "easeOut" }}
             className="absolute inset-0 w-full h-full"
           >
             <Image
@@ -137,8 +105,8 @@ export function Hero() {
           </motion.div>
         </AnimatePresence>
 
-        <div className="absolute inset-0 bg-black/30" />
-        <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-black/20" />
+        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-linear-to-t from-black via-black/40 to-transparent" />
       </div>
 
       <div className="absolute inset-0 z-20 pointer-events-none opacity-20 mix-blend-overlay">
@@ -164,7 +132,7 @@ export function Hero() {
                 className="flex items-center gap-4 mb-8"
               >
                 <div className="w-12 h-px bg-white/60" />
-                <span className="text-white/80 uppercase tracking-[0.3em] text-xs font-medium">
+                <span className="text-white/80 uppercase tracking-widest text-xs font-medium">
                   {slideContent.subheading}
                 </span>
               </motion.div>
@@ -173,8 +141,8 @@ export function Hero() {
                 <motion.h1
                   initial={{ y: "100%" }}
                   animate={{ y: 0 }}
-                  transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                  className="text-7xl md:text-9xl lg:text-[11rem] font-black font-display text-white uppercase leading-[0.8] tracking-tighter"
+                  transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+                  className="text-5xl md:text-7xl lg:text-8xl font-medium font-display text-white uppercase leading-[0.9] tracking-tighter"
                 >
                   {slideContent.heading1}
                 </motion.h1>
@@ -186,11 +154,11 @@ export function Hero() {
                     initial={{ y: "100%" }}
                     animate={{ y: 0 }}
                     transition={{
-                      duration: 1,
+                      duration: 1.4,
                       delay: 0.1,
                       ease: [0.16, 1, 0.3, 1],
                     }}
-                    className="text-7xl md:text-9xl lg:text-[11rem] font-black font-display text-transparent bg-clip-text bg-linear-to-r from-primary-light to-white uppercase leading-[0.8] tracking-tighter"
+                    className="text-5xl md:text-7xl lg:text-8xl font-medium font-display text-transparent bg-clip-text bg-linear-to-r from-primary-light to-white uppercase leading-[0.9] tracking-tighter"
                   >
                     {slideContent.heading2}
                   </motion.h1>
@@ -199,8 +167,8 @@ export function Hero() {
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.6 }}
-                  className="text-lg md:text-xl text-white/80 max-w-md font-light leading-relaxed mb-6 md:mb-4"
+                  transition={{ duration: 1, delay: 0.6 }}
+                  className="text-lg text-white/80 max-w-md font-light leading-relaxed mb-6 md:mb-2"
                 >
                   {slideContent.description}
                 </motion.p>
@@ -217,7 +185,7 @@ export function Hero() {
             <Magnetic>
               <Button
                 size="lg"
-                render={<Link href={"/plan-trip"}/>}
+                render={<Link href={"/plan-trip"} />}
                 className="rounded-sm h-16 px-10 text-lg bg-primary hover:bg-primary-light text-white border-none transition-transform hover:scale-105 w-full md:w-auto"
               >
                 {tCommon("startPlanning")}

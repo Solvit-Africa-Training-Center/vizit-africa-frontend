@@ -18,7 +18,7 @@ export default function GalleryPage() {
   const galleryImages = [
     {
       id: 1,
-      src: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?q=80&w=2600&auto=format&fit=crop",
+      src: "/images/tourism-guide-vehicle-car.jpg",
       alt: t("items.1.alt"),
       caption: t("items.1.caption"),
       category: tCategories("fleet"),
@@ -27,7 +27,7 @@ export default function GalleryPage() {
     },
     {
       id: 2,
-      src: "https://images.unsplash.com/photo-1525207934214-58e69fa7543e?q=80&w=2600&auto=format&fit=crop",
+      src: "/images/rwanda-landscape-1.jpg",
       alt: t("items.2.alt"),
       caption: t("items.2.caption"),
       category: tCategories("fleet"),
@@ -36,7 +36,7 @@ export default function GalleryPage() {
     },
     {
       id: 3,
-      src: "https://images.unsplash.com/photo-1436491865332-7a61a1042759?q=80&w=2600&auto=format&fit=crop",
+      src: "/images/kivu-boats.jpg",
       alt: t("items.3.alt"),
       caption: t("items.3.caption"),
       category: tCategories("fleet"),
@@ -45,7 +45,7 @@ export default function GalleryPage() {
     },
     {
       id: 4,
-      src: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2600&auto=format&fit=crop",
+      src: "/images/hotel.jpg",
       alt: t("items.4.alt"),
       caption: t("items.4.caption"),
       category: tCategories("stays"),
@@ -54,7 +54,7 @@ export default function GalleryPage() {
     },
     {
       id: 5,
-      src: "https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=2600&auto=format&fit=crop",
+      src: "/images/wildlife-silverback-gorilla.jpg",
       alt: t("items.5.alt"),
       caption: t("items.5.caption"),
       category: tCategories("wildlife"),
@@ -63,7 +63,7 @@ export default function GalleryPage() {
     },
     {
       id: 6,
-      src: "https://images.unsplash.com/photo-1489392191049-fc10c97e64b6?q=80&w=2600&auto=format&fit=crop",
+      src: "/images/rwanda-walk-path-in-forest.jpg",
       alt: t("items.6.alt"),
       caption: t("items.6.caption"),
       category: tCategories("adventure"),
@@ -72,7 +72,7 @@ export default function GalleryPage() {
     },
     {
       id: 7,
-      src: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=2600&auto=format&fit=crop",
+      src: "/images/kivu-grass-seats.jpg",
       alt: t("items.7.alt"),
       caption: t("items.7.caption"),
       category: tCategories("relax"),
@@ -81,7 +81,7 @@ export default function GalleryPage() {
     },
     {
       id: 8,
-      src: "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?q=80&w=2600&auto=format&fit=crop",
+      src: "/images/cyclists-competition.jpg",
       alt: t("items.8.alt"),
       caption: t("items.8.caption"),
       category: tCategories("adventure"),
@@ -90,7 +90,7 @@ export default function GalleryPage() {
     },
     {
       id: 9,
-      src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2600&auto=format&fit=crop",
+      src: "/images/giraffe.jpg",
       alt: t("items.9.alt"),
       caption: t("items.9.caption"),
       category: tCategories("wildlife"),
@@ -99,7 +99,7 @@ export default function GalleryPage() {
     },
     {
       id: 10,
-      src: "https://images.unsplash.com/photo-1578323769534-7389c9df3ee0?q=80&w=2600&auto=format&fit=crop",
+      src: "/images/city-kigali-roundabout-with-woman-and-child-statue.jpg",
       alt: t("items.10.alt"),
       caption: t("items.10.caption"),
       category: tCategories("culture"),
@@ -108,7 +108,7 @@ export default function GalleryPage() {
     },
     {
       id: 11,
-      src: "https://images.unsplash.com/photo-1517260739337-6799d2ffdeee?q=80&w=2600&auto=format&fit=crop",
+      src: "/images/wildlife-ankole-cow.jpg",
       alt: t("items.11.alt"),
       caption: t("items.11.caption"),
       category: tCategories("wildlife"),
@@ -117,7 +117,7 @@ export default function GalleryPage() {
     },
     {
       id: 12,
-      src: "https://images.unsplash.com/photo-1547823065-4c3f56846f43?q=80&w=2600&auto=format&fit=crop",
+      src: "/images/traditional-dancers-men-and-women-black-white.jpg",
       alt: t("items.12.alt"),
       caption: t("items.12.caption"),
       category: tCategories("culture"),
@@ -158,7 +158,7 @@ export default function GalleryPage() {
               <span className="text-sm font-mono uppercase tracking-widest text-muted-foreground mb-4 block">
                 {t("overline")}
               </span>
-              <h1 className="font-display text-7xl md:text-9xl font-black uppercase tracking-tighter leading-[0.85] mb-8">
+              <h1 className="font-display text-7xl md:text-9xl font-medium uppercase tracking-tighter leading-[0.85] mb-8">
                 <RevealText text={t("title")} />
               </h1>
               <p className="text-xl md:text-2xl font-light text-muted-foreground max-w-lg leading-relaxed">
@@ -167,7 +167,7 @@ export default function GalleryPage() {
             </div>
 
             <div className="flex flex-col items-start md:items-end gap-2 min-w-[200px]">
-              <span className="text-xs font-bold uppercase tracking-widest text-primary mb-2">
+              <span className="text-xs font-medium uppercase tracking-widest text-primary mb-2">
                 {t("filterBy")}
               </span>
               {categories.map((cat) => (
@@ -192,7 +192,7 @@ export default function GalleryPage() {
         <section className="px-5 md:px-10 max-w-7xl mx-auto mb-32 grid grid-cols-1 md:grid-cols-12 gap-8 items-end">
           <div className="md:col-span-8 relative aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden rounded-sm">
             <ParallaxImage
-              src="https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?q=80&w=2600&auto=format&fit=crop"
+              src="/images/nyungwe-park.jpg"
               alt="Feature"
               fill
               className="object-cover"
@@ -203,7 +203,7 @@ export default function GalleryPage() {
             <span className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-4">
               {t("featured.overline")}
             </span>
-            <p className="font-display text-3xl md:text-4xl font-bold uppercase leading-none mb-4">
+            <p className="font-display text-3xl md:text-4xl font-medium uppercase leading-none mb-4">
               {t("featured.title")}
             </p>
             <p className="text-muted-foreground leading-relaxed">
@@ -233,7 +233,7 @@ export default function GalleryPage() {
         <section className="w-full h-[80vh] relative flex items-center justify-center overflow-hidden mb-32">
           <div className="absolute inset-0 z-0">
             <ParallaxImage
-              src="https://images.unsplash.com/photo-1628105658145-2b0444319808?q=80&w=2600&auto=format&fit=crop"
+              src="/images/lake-kivu-sunset.jpg"
               alt="Cinematic Break"
               fill
               className="object-cover brightness-50"
@@ -244,7 +244,7 @@ export default function GalleryPage() {
             <span className="text-foreground/60 font-mono text-sm uppercase tracking-widest mb-6 block">
               {t("quote.overline")}
             </span>
-            <blockquote className="font-display text-4xl md:text-6xl font-bold leading-tight mb-8">
+            <blockquote className="font-display text-4xl md:text-6xl font-medium leading-tight mb-8">
               "{t("quote.text")}"
             </blockquote>
           </div>
@@ -313,7 +313,7 @@ export default function GalleryPage() {
                     <span className="text-white/60 font-mono uppercase tracking-widest text-sm mb-2 block">
                       {selectedImage.category} • {selectedImage.caption}
                     </span>
-                    <h2 className="text-white font-display text-4xl md:text-5xl font-bold uppercase">
+                    <h2 className="text-white font-display text-4xl md:text-5xl font-medium uppercase">
                       {selectedImage.alt}
                     </h2>
                   </motion.div>
@@ -379,7 +379,7 @@ function GalleryItem({
           {img.category}
         </span>
         <div className="flex items-center justify-between">
-          <h3 className="text-white font-display text-2xl font-bold uppercase leading-none">
+          <h3 className="text-white font-display text-2xl font-medium uppercase leading-none">
             {img.alt}
           </h3>
           <div className="bg-white/20 backdrop-blur-md p-2 rounded-full">

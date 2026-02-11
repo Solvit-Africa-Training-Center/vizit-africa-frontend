@@ -22,11 +22,7 @@ import { Label } from "@/components/ui/label";
 
 type Tab = "overview" | "trips" | "saved" | "settings";
 
-export default function ProfilePage({
-  params: { locale },
-}: {
-  params: { locale: string };
-}) {
+export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState<Tab>("overview");
   const _activeTrip = sampleBookings[0];
   const t = useTranslations("Profile");
@@ -49,7 +45,7 @@ export default function ProfilePage({
               <span className="text-sm font-mono uppercase tracking-widest text-muted-foreground mb-4 block">
                 {t("header.title")}
               </span>
-              <h1 className="font-display text-5xl md:text-7xl font-bold text-foreground">
+              <h1 className="font-display text-5xl md:text-7xl font-medium text-foreground">
                 {t("header.subtitle")}
               </h1>
             </div>
@@ -69,7 +65,7 @@ export default function ProfilePage({
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as Tab)}
                 className={cn(
-                  "flex items-center gap-2 pb-4 text-sm font-bold uppercase tracking-widest transition-all relative whitespace-nowrap",
+                  "flex items-center gap-2 pb-4 text-sm font-medium uppercase tracking-widest transition-all relative whitespace-nowrap",
                   activeTab === tab.id
                     ? "text-primary"
                     : "text-muted-foreground hover:text-foreground",
@@ -97,7 +93,7 @@ export default function ProfilePage({
             >
               {activeTab === "overview" && (
                 <div className="grid lg:grid-cols-2 gap-12">
-                  <div className="group relative aspect-[4/5] md:aspect-[16/9] lg:aspect-square overflow-hidden rounded-sm bg-muted">
+                  <div className="group relative aspect-4/5 md:aspect-video lg:aspect-square overflow-hidden rounded-sm bg-muted">
                     <Image
                       src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2600&auto=format&fit=crop"
                       alt={t("overview.nextTrip.imageAlt")}
@@ -108,11 +104,13 @@ export default function ProfilePage({
 
                     <div className="absolute inset-0 p-8 md:p-12 flex flex-col justify-between text-white">
                       <div className="flex justify-between items-start">
-                        <span className="bg-white/20 backdrop-blur px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full">
+                        <span className="bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1 text-xs font-medium uppercase tracking-wider rounded-full text-white">
                           {t("overview.nextTrip.label")}
                         </span>
                         <div className="text-right">
-                          <p className="text-3xl font-display font-bold">14</p>
+                          <p className="text-3xl font-display font-medium">
+                            14
+                          </p>
                           <p className="text-xs font-mono uppercase opacity-80">
                             {t("overview.nextTrip.daysLeft")}
                           </p>
@@ -120,7 +118,7 @@ export default function ProfilePage({
                       </div>
 
                       <div>
-                        <h2 className="font-display text-4xl md:text-5xl font-bold text-primary-foreground mb-2">
+                        <h2 className="font-display text-4xl md:text-5xl font-medium text-primary-foreground mb-2">
                           Rwanda Retreat
                         </h2>
                         <p className="text-lg font-light opacity-90 flex items-center gap-2">
@@ -128,12 +126,12 @@ export default function ProfilePage({
                           Mar 15 - Mar 22, 2025
                         </p>
 
-                        <div className="mt-8 pt-8 border-t border-white/20 grid grid-cols-2 gap-8">
+                        <div className="mt-8 pt-8 border-t border-white/10 grid grid-cols-2 gap-8">
                           <div>
                             <p className="text-xs font-mono uppercase opacity-70 mb-1">
                               {t("overview.nextTrip.status")}
                             </p>
-                            <p className="font-bold">
+                            <p className="font-medium">
                               {t("overview.nextTrip.confirmed")}
                             </p>
                           </div>
@@ -141,7 +139,7 @@ export default function ProfilePage({
                             <p className="text-xs font-mono uppercase opacity-70 mb-1">
                               {t("overview.nextTrip.travelers")}
                             </p>
-                            <p className="font-bold">
+                            <p className="font-medium">
                               2 {t("overview.nextTrip.adults")}
                             </p>
                           </div>
@@ -152,7 +150,7 @@ export default function ProfilePage({
 
                   <div className="space-y-12">
                     <div>
-                      <h3 className="font-display text-2xl font-bold mb-6">
+                      <h3 className="font-display text-2xl font-medium mb-6">
                         {t("overview.pendingRequests.title")}
                       </h3>
                       <div className="space-y-4">
@@ -163,14 +161,14 @@ export default function ProfilePage({
                           >
                             <div className="flex justify-between items-start mb-4">
                               <div>
-                                <h4 className="font-bold text-lg mb-1">
+                                <h4 className="font-medium text-lg mb-1">
                                   {req.purpose}
                                 </h4>
                                 <p className="text-sm text-muted-foreground">
                                   {new Date(req.createdAt).toLocaleDateString()}
                                 </p>
                               </div>
-                              <span className="text-xs font-bold uppercase tracking-wider bg-orange-100 text-orange-700 px-2 py-1 rounded-full">
+                              <span className="text-xs font-medium uppercase tracking-wider border border-border px-2 py-1 rounded-full text-muted-foreground">
                                 {req.status}
                               </span>
                             </div>
@@ -192,7 +190,7 @@ export default function ProfilePage({
                     </div>
 
                     <div className="border-t border-border pt-12">
-                      <h3 className="font-display text-2xl font-bold mb-6">
+                      <h3 className="font-display text-2xl font-medium mb-6">
                         {t("overview.stats.title")}
                       </h3>
                       <div className="grid grid-cols-3 gap-8">
@@ -229,7 +227,7 @@ export default function ProfilePage({
               {activeTab === "trips" && (
                 <div className="space-y-8">
                   <div className="flex items-center justify-between">
-                    <h2 className="font-display text-3xl font-bold">
+                    <h2 className="font-display text-3xl font-medium">
                       {t("trips.title")}
                     </h2>
                     <Button>
@@ -240,7 +238,7 @@ export default function ProfilePage({
                   <div className="border-y border-border divide-y divide-border">
                     <div className="py-8 grid md:grid-cols-4 gap-6 items-center group">
                       <div className="md:col-span-2">
-                        <h3 className="font-display text-2xl font-bold mb-2 group-hover:text-primary transition-colors">
+                        <h3 className="font-display text-2xl font-medium mb-2 group-hover:text-primary transition-colors">
                           Gorilla Trekking Adventure
                         </h3>
                         <p className="text-muted-foreground">
@@ -248,7 +246,7 @@ export default function ProfilePage({
                         </p>
                       </div>
                       <div>
-                        <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                        <span className="border border-green-200 text-green-700 bg-green-50/50 px-3 py-1 rounded-full text-xs font-medium uppercase tracking-wider">
                           {t("trips.upcoming")}
                         </span>
                       </div>
@@ -265,7 +263,7 @@ export default function ProfilePage({
               {activeTab === "saved" && (
                 <div className="text-center py-24 text-muted-foreground">
                   <RiBookmarkLine className="size-12 mx-auto mb-4 opacity-20" />
-                  <h3 className="text-xl font-display font-bold mb-2">
+                  <h3 className="text-xl font-display font-medium mb-2">
                     {t("saved.emptyTitle")}
                   </h3>
                   <p>{t("saved.emptyDescription")}</p>
@@ -274,12 +272,12 @@ export default function ProfilePage({
 
               {activeTab === "settings" && (
                 <div className="max-w-2xl">
-                  <h2 className="font-display text-3xl font-bold mb-8">
+                  <h2 className="font-display text-3xl font-medium mb-8">
                     {t("settings.title")}
                   </h2>
                   <div className="space-y-8">
                     <div className="grid gap-4">
-                      <Label className="text-sm font-bold uppercase tracking-wider text-muted-foreground">
+                      <Label className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
                         {t("settings.fullName")}
                       </Label>
                       <input
@@ -290,7 +288,7 @@ export default function ProfilePage({
                       />
                     </div>
                     <div className="grid gap-4">
-                      <Label className="text-sm font-bold uppercase tracking-wider text-muted-foreground">
+                      <Label className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
                         {t("settings.email")}
                       </Label>
                       <input

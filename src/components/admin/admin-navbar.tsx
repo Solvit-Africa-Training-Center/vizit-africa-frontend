@@ -37,7 +37,7 @@ export function AdminNavbar() {
       <div className="flex h-16 items-center px-5 md:px-10">
         <div className="mr-8 hidden md:flex">
           <Link href="/admin" className="mr-6 flex items-center space-x-2">
-            <span className="font-display text-xl font-bold text-primary">
+            <span className="font-display text-xl font-medium text-primary">
               {t("brand")}
             </span>
           </Link>
@@ -69,10 +69,9 @@ export function AdminNavbar() {
         </nav>
 
         <div className="flex items-center gap-4">
-            <LanguageSwitcher variant={"default"} />
+          <LanguageSwitcher variant={"default"} />
           <Link href="/">
             <Button variant="ghost" size="sm" className="text-muted-foreground">
-         
               <span className="hidden sm:inline">{t("publicSite")}</span>
             </Button>
           </Link>

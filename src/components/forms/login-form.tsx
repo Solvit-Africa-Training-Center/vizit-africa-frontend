@@ -28,7 +28,7 @@ export function LoginForm() {
   const tCommon = useTranslations("Common");
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const form = useForm({
     defaultValues: {
       email: "",
@@ -57,9 +57,9 @@ const [error, setError] = useState<string | null>(null);
       }}
       className="space-y-6"
     >
-        {error && (
+      {error && (
         <Alert variant={"destructive"}>
-          <RiAlertLine/>
+          <RiAlertLine />
           <AlertTitle>Error</AlertTitle>
           <AlertDescription className="mt-1">{error}</AlertDescription>
         </Alert>
@@ -108,8 +108,8 @@ const [error, setError] = useState<string | null>(null);
                 <RiLockPasswordLine />
               </InputGroupAddon>
               <InputGroupAddon
-              align={"inline-end"}
-              onClick={() => setShowPassword(!showPassword)}
+                align={"inline-end"}
+                onClick={() => setShowPassword(!showPassword)}
               >
                 <RiEyeLine />
               </InputGroupAddon>
@@ -126,7 +126,7 @@ const [error, setError] = useState<string | null>(null);
       <div className="pt-2">
         <Button
           type="submit"
-          className="w-full h-14 rounded-sm gap-2 text-base font-bold uppercase tracking-wide"
+          className="w-full h-14 rounded-sm gap-2 text-base font-medium uppercase tracking-wide"
           disabled={form.state.isSubmitting}
         >
           {form.state.isSubmitting ? "Logging in..." : tCommon("login")}

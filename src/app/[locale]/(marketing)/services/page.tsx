@@ -44,8 +44,7 @@ export default function ServicesPage() {
         category: "Flights",
         description: t("items.rwandair-direct.description"),
         price: "From $600",
-        image:
-          "https://images.unsplash.com/photo-1436491865332-7a61a1042759?q=80&w=2600&auto=format&fit=crop",
+        image: "/images/rwanda-sky-scrapers.jpg",
         details: [
           t("items.rwandair-direct.details.0"),
           t("items.rwandair-direct.details.1"),
@@ -59,8 +58,7 @@ export default function ServicesPage() {
         category: "Flights",
         description: t("items.klm-royal.description"),
         price: "From $850",
-        image:
-          "https://images.unsplash.com/photo-1542296332-2e44a99cfef9?q=80&w=2600&auto=format&fit=crop",
+        image: "/images/rwanda-landscape.jpg",
         details: [
           t("items.klm-royal.details.0"),
           t("items.klm-royal.details.1"),
@@ -74,8 +72,7 @@ export default function ServicesPage() {
         category: "Hotels",
         description: t("items.the-retreat.description"),
         price: "From $450 / night",
-        image:
-          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2600&auto=format&fit=crop",
+        image: "/images/hotel.jpg",
         details: [
           t("items.the-retreat.details.0"),
           t("items.the-retreat.details.1"),
@@ -89,8 +86,7 @@ export default function ServicesPage() {
         category: "Hotels",
         description: t("items.one-and-only.description"),
         price: "From $3,500 / night",
-        image:
-          "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2600&auto=format&fit=crop",
+        image: "/images/bed-in-hotel-with-yellowish-lightings.jpg",
         details: [
           t("items.one-and-only.details.0"),
           t("items.one-and-only.details.1"),
@@ -104,8 +100,7 @@ export default function ServicesPage() {
         category: "BnBs",
         description: t("items.kigali-soul.description"),
         price: "From $80 / night",
-        image:
-          "https://images.unsplash.com/photo-1439066615861-d1af74d74000?q=80&w=2600&auto=format&fit=crop",
+        image: "/images/coffee.jpg",
         details: [
           t("items.kigali-soul.details.0"),
           t("items.kigali-soul.details.1"),
@@ -119,8 +114,7 @@ export default function ServicesPage() {
         category: "BnBs",
         description: t("items.lavender-home.description"),
         price: "From $65 / night",
-        image:
-          "https://images.unsplash.com/photo-1493809842364-78817add7ffb?q=80&w=2600&auto=format&fit=crop",
+        image: "/images/agaseke-black-white.jpg",
         details: [
           t("items.lavender-home.details.0"),
           t("items.lavender-home.details.1"),
@@ -134,8 +128,7 @@ export default function ServicesPage() {
         category: "Car Rentals",
         description: t("items.land-cruiser-v8.description"),
         price: "$150 / day",
-        image:
-          "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=2600&auto=format&fit=crop",
+        image: "/images/tourism-guide-vehicle-car.jpg",
         details: [
           t("items.land-cruiser-v8.details.0"),
           t("items.land-cruiser-v8.details.1"),
@@ -149,8 +142,7 @@ export default function ServicesPage() {
         category: "Car Rentals",
         description: t("items.rav4-hire.description"),
         price: "$80 / day",
-        image:
-          "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?q=80&w=2600&auto=format&fit=crop",
+        image: "/images/road-through-hill.jpg",
         details: [
           t("items.rav4-hire.details.0"),
           t("items.rav4-hire.details.1"),
@@ -164,8 +156,7 @@ export default function ServicesPage() {
         category: "Guides",
         description: t("items.guide-alex.description"),
         price: "$100 / day",
-        image:
-          "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2600&auto=format&fit=crop",
+        image: "/images/guide.jpg",
         details: [
           t("items.guide-alex.details.0"),
           t("items.guide-alex.details.1"),
@@ -179,8 +170,7 @@ export default function ServicesPage() {
         category: "Guides",
         description: t("items.guide-sarah.description"),
         price: "$120 / day",
-        image:
-          "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&w=2600&auto=format&fit=crop",
+        image: "/images/woman-tailoring.jpg",
         details: [
           t("items.guide-sarah.details.0"),
           t("items.guide-sarah.details.1"),
@@ -250,7 +240,7 @@ export default function ServicesPage() {
           <span className="text-sm font-mono uppercase tracking-widest text-muted-foreground mb-4 block">
             {t("overline")}
           </span>
-          <h1 className="font-display text-7xl md:text-9xl font-black uppercase tracking-tighter leading-[0.8] mb-8">
+          <h1 className="font-display text-7xl md:text-9xl font-medium uppercase tracking-tighter leading-[0.8] mb-8">
             <RevealText text={t("title")} />
           </h1>
           <p className="text-xl md:text-2xl font-light text-muted-foreground max-w-2xl leading-relaxed">
@@ -279,7 +269,7 @@ export default function ServicesPage() {
                     key={cat.value}
                     onClick={() => setActiveCategory(cat.value)}
                     className={cn(
-                      "px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border transition-all whitespace-nowrap",
+                      "px-4 py-1.5 rounded-full text-xs font-medium uppercase tracking-widest border transition-all whitespace-nowrap",
                       activeCategory === cat.value
                         ? "bg-foreground text-background border-foreground"
                         : "border-border text-muted-foreground hover:border-foreground/50 hover:text-foreground",
@@ -299,7 +289,7 @@ export default function ServicesPage() {
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as SortOption)}
-                  className="bg-transparent text-sm font-bold uppercase tracking-wider border-none focus:ring-0 cursor-pointer text-foreground"
+                  className="bg-transparent text-sm font-medium uppercase tracking-wider border-none focus:ring-0 cursor-pointer text-foreground"
                 >
                   {sortOptionsList.map((opt) => (
                     <option key={opt.value} value={opt.value}>
@@ -371,7 +361,7 @@ function ServiceItem({
           <span className="text-xs font-mono uppercase tracking-widest text-primary mb-2 block">
             {service.category}
           </span>
-          <h2 className="font-display text-3xl md:text-5xl font-bold group-hover:text-primary transition-colors duration-300">
+          <h2 className="font-display text-3xl md:text-5xl font-medium group-hover:text-primary transition-colors duration-300">
             {service.title}
           </h2>
         </div>
@@ -429,7 +419,7 @@ function ServiceItem({
                 <div>
                   <a
                     href="/contact"
-                    className="inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-foreground font-bold uppercase tracking-widest text-sm hover:bg-primary/90 transition-colors"
+                    className="inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-foreground font-medium uppercase tracking-widest text-sm hover:bg-primary/90 transition-colors"
                   >
                     {bookLabel}
                   </a>

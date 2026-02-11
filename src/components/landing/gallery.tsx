@@ -78,7 +78,7 @@ export function Gallery() {
 
         <motion.div style={{ y: y2 }} className="flex flex-col gap-6">
           {galleryImages.slice(2, 4).map((img) => (
-            <GalleryCard key={img.id} img={img} className="aspect-[4/3]" />
+            <GalleryCard key={img.id} img={img} className="aspect-4/3" />
           ))}
         </motion.div>
 
@@ -105,7 +105,7 @@ function GalleryCard({
   className?: string;
 }) {
   const t = useTranslations("LandingGallery");
-  
+
   return (
     <div
       className={`relative group overflow-hidden rounded-2xl cursor-pointer ${className}`}
@@ -124,7 +124,7 @@ function GalleryCard({
         <p className="text-white/80 font-mono text-xs uppercase tracking-widest mb-1">
           {t(`items.${img.id}.caption`)}
         </p>
-        <h3 className="text-white font-display text-xl font-bold">
+        <h3 className="text-white font-display text-xl font-medium">
           {t(`items.${img.id}.alt`)}
         </h3>
       </div>

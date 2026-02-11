@@ -4,7 +4,7 @@ export const endpoints = {
     register: "/accounts/users/",
     verifyEmail: "/accounts/users/verify_email/",
     user: (id: string | number) => `/accounts/users/${id}/`,
-    me: "/accounts/users/me/",
+    me: "/accounts/users/profile/",
   },
   bookings: {
     items: {

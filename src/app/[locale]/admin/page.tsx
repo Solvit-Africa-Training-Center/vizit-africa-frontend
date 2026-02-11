@@ -39,7 +39,7 @@ export default function AdminDashboard() {
     <div className="mx-auto max-w-7xl px-5 md:px-10 py-8">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="font-display text-2xl md:text-3xl font-bold text-foreground">
+          <h1 className="font-display text-2xl md:text-3xl font-medium text-foreground">
             {t("title")}
           </h1>
           <p className="text-muted-foreground mt-1">{t("subtitle")}</p>
@@ -59,7 +59,7 @@ export default function AdminDashboard() {
                 <stat.icon className="size-6" />
               </div>
               <div>
-                <p className="font-mono text-2xl font-bold text-foreground">
+                <p className="font-mono text-2xl font-medium text-foreground">
                   {stat.value}
                 </p>
                 <p className="text-sm text-muted-foreground">{stat.label}</p>

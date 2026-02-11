@@ -13,28 +13,23 @@ gsap.registerPlugin(ScrollTrigger);
 const experiences = [
   {
     id: 1,
-    image:
-      "https://images.unsplash.com/photo-1546422724-3c4be0b20cb5?q=90&w=1600&auto=format&fit=crop",
+    image: "/images/rwanda-lens-11.jpg",
   },
   {
     id: 2,
-    image:
-      "https://images.unsplash.com/photo-1516426122078-c23e76319801?q=90&w=1600&auto=format&fit=crop",
+    image: "/images/rwanda-lens-15.jpg",
   },
   {
     id: 3,
-    image:
-      "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=90&w=1600&auto=format&fit=crop",
+    image: "/images/nyungwe-sunset.jpg",
   },
   {
     id: 4,
-    image:
-      "https://images.unsplash.com/photo-1505245208761-ba872912fac0?q=90&w=1600&auto=format&fit=crop",
+    image: "/images/rwanda-bamboos.jpg",
   },
   {
     id: 5,
-    image:
-      "https://images.unsplash.com/photo-1489447068241-b3490214e879?q=90&w=1600&auto=format&fit=crop",
+    image: "/images/rwanda-hills-2.jpg",
   },
 ];
 
@@ -77,10 +72,10 @@ export function ExperienceShowcase() {
       <div ref={containerRef} className="h-full flex flex-col justify-center">
         <div className="container max-w-7xl mx-auto px-5 mb-12 shrink-0">
           <div className="max-w-2xl">
-            <span className="block text-accent-warm uppercase tracking-widest text-xs font-bold mb-4">
+            <span className="block text-accent-warm uppercase tracking-widest text-xs font-medium mb-4">
               {t("overline")}
             </span>
-            <h2 className="text-4xl md:text-6xl font-display font-black uppercase text-foreground leading-[0.9] whitespace-pre-line">
+            <h2 className="text-4xl md:text-6xl font-display font-medium uppercase text-foreground leading-[0.9] whitespace-pre-line">
               {t("title")}
             </h2>
           </div>
@@ -105,10 +100,10 @@ export function ExperienceShowcase() {
                 <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
 
                 <div className="absolute bottom-0 left-0 p-8 w-full">
-                  <span className="text-accent-warm text-xs uppercase tracking-widest font-bold block mb-2">
+                  <span className="text-accent-warm text-xs uppercase tracking-widest font-medium block mb-2">
                     {t(`items.${experience.id}.location`)}
                   </span>
-                  <h3 className="text-2xl md:text-3xl font-display font-bold text-white uppercase mb-4 leading-none">
+                  <h3 className="text-2xl md:text-3xl font-display font-medium text-white uppercase mb-4 leading-none">
                     {t(`items.${experience.id}.title`)}
                   </h3>
                   <div className="h-0 overflow-hidden group-hover:h-auto transition-all duration-500 ease-out">
@@ -117,7 +112,7 @@ export function ExperienceShowcase() {
                     </p>
                     <button
                       type="button"
-                      className="flex items-center gap-3 text-white text-xs uppercase tracking-widest font-bold transition-opacity duration-200 opacity-0 group-hover:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                      className="flex items-center gap-3 text-white text-xs uppercase tracking-widest font-medium transition-opacity duration-200 opacity-0 group-hover:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                     >
                       {t("cta")}
                       <RiArrowRightLine size={16} aria-hidden="true" />

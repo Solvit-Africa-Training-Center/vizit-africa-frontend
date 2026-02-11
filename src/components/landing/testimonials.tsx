@@ -122,7 +122,7 @@ function TestimonialsColumn({
                     />
                   </div>
                   <div className="flex flex-col">
-                    <figcaption className="text-sm font-semibold text-foreground">
+                    <figcaption className="text-sm font-medium text-foreground">
                       {testimonial.name}
                     </figcaption>
                     <p className="text-xs text-muted-foreground">

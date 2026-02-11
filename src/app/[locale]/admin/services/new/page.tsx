@@ -7,7 +7,7 @@ export default function CreateServicePage() {
   return (
     <div className="container mx-auto py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight">Create Service</h1>
+        <h1 className="text-3xl font-medium tracking-tight">Create Service</h1>
         <p className="text-muted-foreground mt-2">
           Add a new service to the catalog by selecting a vendor and filling out
           the details.

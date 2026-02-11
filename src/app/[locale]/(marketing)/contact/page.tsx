@@ -64,7 +64,7 @@ export default function ContactPage() {
                     {t("openStatus")}
                   </span>
                 </div>
-                <h1 className="font-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[0.95] tracking-tight mb-6">
+                <h1 className="font-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-medium leading-[0.95] tracking-tight mb-6">
                   <RevealText text={t("title")} className="block" />
                   <span className="text-white/50">{t("titleSub")}</span>
                 </h1>
@@ -104,7 +104,7 @@ export default function ContactPage() {
           <div className="w-full flex flex-col justify-center p-8 md:p-12 lg:p-20 bg-background lg:min-h-screen">
             <div className="max-w-xl mx-auto w-full py-12 lg:py-0">
               <div className="mb-12">
-                <h2 className="font-display text-2xl md:text-3xl font-bold mb-3">
+                <h2 className="font-display text-2xl md:text-3xl font-medium mb-3">
                   {t("formTitle")}
                 </h2>
                 <p className="text-muted-foreground text-base">
@@ -171,7 +171,7 @@ export default function ContactPage() {
               </form>
 
               <div className="mt-20 lg:hidden space-y-8 pt-12 border-t border-border">
-                <h3 className="font-display text-2xl font-bold">
+                <h3 className="font-display text-2xl font-medium">
                   {t("contactDetails")}
                 </h3>
                 <div className="space-y-6">
@@ -209,7 +209,7 @@ function ContactItem({ icon: Icon, label, value, href, sub }: any) {
         <Icon className="size-5 text-white" />
       </div>
       <div>
-        <p className="text-xs font-bold text-white/40 mb-1 uppercase tracking-widest">
+        <p className="text-xs font-medium text-white/40 mb-1 uppercase tracking-widest">
           {label}
         </p>
         <div className="flex items-center gap-2">
@@ -244,7 +244,7 @@ function MobileContactItem({ icon: Icon, label, value, href }: any) {
         <Icon className="size-5 text-foreground" />
       </div>
       <div>
-        <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-0.5">
+        <p className="text-xs font-medium text-muted-foreground uppercase tracking-widest mb-0.5">
           {label}
         </p>
         <p className="text-lg font-medium text-foreground">{value}</p>

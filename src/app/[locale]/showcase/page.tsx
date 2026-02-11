@@ -28,7 +28,7 @@ import { RiInformationLine } from "@remixicon/react";
 export default function ShowcasePage() {
   return (
     <div className="p-10 space-y-12 max-w-4xl mx-auto bg-background min-h-screen">
-      <h1 className="font-display text-4xl font-bold">
+      <h1 className="font-display text-4xl font-medium">
         Component Showcase (Sharp Editorial)
       </h1>
 

@@ -34,7 +34,7 @@ export function SectionTitle({
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-accent-warm uppercase tracking-widest text-xs font-bold block mb-3"
+          className="text-accent-warm uppercase tracking-widest text-xs font-medium block mb-3"
         >
           {overline}
         </motion.span>
@@ -45,7 +45,7 @@ export function SectionTitle({
         viewport={{ once: true }}
         transition={{ delay: 0.1, duration: 0.4 }}
         className={cn(
-          "font-display text-4xl md:text-5xl lg:text-6xl font-black uppercase leading-[0.9] mb-6 text-balance",
+          "font-display text-3xl md:text-5xl font-medium uppercase leading-tight mb-6 text-balance",
           dark ? "text-background" : "text-foreground",
         )}
       >

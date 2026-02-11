@@ -32,3 +32,8 @@ Content-Type: application/json
 ### Get User
 GET {{baseUrl}}/accounts/users/1/
 Authorization: Bearer {{token}}
+
+### Me
+GET {{baseUrl}}/accounts/users/profile/
+Authorization: Bearer {{token}}
+

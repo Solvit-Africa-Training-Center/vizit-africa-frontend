@@ -30,8 +30,8 @@ export function BookingSummary({
   const formatCurrency = (amount: number) => `$${amount.toFixed(2)}`;
 
   return (
-    <div className="bg-white border rounded-xl p-5 space-y-4 sticky top-28">
-      <h3 className="font-display text-lg font-bold text-foreground">
+    <div className="bg-muted/30 rounded-xl p-6 space-y-6 sticky top-28">
+      <h3 className="font-display text-lg font-medium text-foreground">
         {t("title")}
       </h3>
 
@@ -85,7 +85,7 @@ export function BookingSummary({
               <span className="text-muted-foreground">{t("serviceFee")}</span>
               <span>{formatCurrency(serviceFee)}</span>
             </div>
-            <div className="flex justify-between text-lg font-bold pt-2 border-t border-border">
+            <div className="flex justify-between text-lg font-medium pt-2 border-t border-border">
               <span>{t("total")}</span>
               <span className="text-primary">{formatCurrency(total)}</span>
             </div>

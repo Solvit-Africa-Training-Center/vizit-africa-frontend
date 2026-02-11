@@ -38,7 +38,7 @@ export function WhyUs() {
                   key={i}
                   className="border-l border-primary/20 pl-6 group hover:border-primary transition-colors duration-300"
                 >
-                  <div className="font-display text-6xl font-black text-primary mb-2 tabular-nums tracking-tighter">
+                  <div className="font-display text-6xl font-medium text-primary mb-2 tabular-nums tracking-tighter">
                     {stat.value}
                   </div>
                   <div className="text-xs font-medium uppercase tracking-widest text-muted-foreground">

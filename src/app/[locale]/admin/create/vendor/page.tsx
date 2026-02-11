@@ -1,16 +1,16 @@
-import React from 'react'
-import { getTranslations } from 'next-intl/server'
-import { Link } from '@/i18n';
-import { RiArrowLeftLine } from '@remixicon/react';
-import { VendorForm } from '@/components/forms/admin/vendor-form';
+import React from "react";
+import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n";
+import { RiArrowLeftLine } from "@remixicon/react";
+import { VendorForm } from "@/components/forms/admin/vendor-form";
 
 const page = async () => {
-    const t = await getTranslations("Admin.createVendor");
+  const t = await getTranslations("Admin.createVendor");
   return (
     <div className="mx-auto max-w-7xl px-5 md:px-10 py-8">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="font-display text-2xl md:text-3xl font-bold text-foreground">
+          <h1 className="font-display text-2xl md:text-3xl font-medium text-foreground">
             {t("title")}
           </h1>
           <p className="text-muted-foreground mt-1">{t("subtitle")}</p>
@@ -25,9 +25,9 @@ const page = async () => {
         </Link>
       </div>
 
-      <VendorForm/>
+      <VendorForm />
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;
