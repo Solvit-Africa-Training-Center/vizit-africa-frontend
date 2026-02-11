@@ -18,6 +18,7 @@ interface BookingSummaryProps {
 
 export function BookingSummary({
   currentStep,
+  tripInfo,
   selections,
   days,
   travelers,
@@ -38,6 +39,14 @@ export function BookingSummary({
       {currentStep >= 3 ? (
         <>
           <div className="text-sm space-y-2 pb-4 border-b border-border">
+            {tripInfo?.destination && (
+              <div className="flex justify-between pb-2 mb-2 border-b border-border/50 border-dashed">
+                <span className="text-muted-foreground">
+                  {t("destination")}
+                </span>
+                <span className="font-medium">{tripInfo.destination}</span>
+              </div>
+            )}
             <div className="flex justify-between">
               <span className="text-muted-foreground">{t("days")}</span>
               <span className="font-medium">

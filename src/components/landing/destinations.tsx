@@ -6,6 +6,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { SectionTitle } from "./section-title";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 const regionData = [
   {
@@ -80,46 +81,51 @@ export function Destinations() {
       <div className="container max-w-7xl mx-auto px-5">
         <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 min-h-[600px] md:aspect-2/1">
           {regions.map((region, i) => (
-            <motion.div
+            <Link
+              href={`/plan-trip?destination=${region.name}`}
               key={region.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.4 }}
-              className={cn(
-                "group relative overflow-hidden rounded-3xl cursor-pointer focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2",
-                region.className,
-              )}
+              className="contents"
             >
-              <Image
-                src={region.image}
-                alt={region.name}
-                fill
-                sizes="(max-width: 768px) 100vw, 25vw"
-                className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-              />
-              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-300" />
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.4 }}
+                className={cn(
+                  "group relative overflow-hidden rounded-3xl cursor-pointer focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2",
+                  region.className,
+                )}
+              >
+                <Image
+                  src={region.image}
+                  alt={region.name}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 25vw"
+                  className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                />
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-300" />
 
-              <div className="absolute inset-0 p-6 flex flex-col justify-between">
-                <div className="flex justify-end">
-                  <div className="bg-white/10 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                    <RiArrowRightUpLine
-                      className="text-white w-5 h-5"
-                      aria-hidden="true"
-                    />
+                <div className="absolute inset-0 p-6 flex flex-col justify-between">
+                  <div className="flex justify-end">
+                    <div className="bg-white/10 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                      <RiArrowRightUpLine
+                        className="text-white w-5 h-5"
+                        aria-hidden="true"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <span className="text-xs font-mono uppercase tracking-widest text-white/80 block mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                      {region.subtitle}
+                    </span>
+                    <h3 className="text-2xl md:text-3xl font-display font-medium text-white uppercase leading-none">
+                      {region.name}
+                    </h3>
                   </div>
                 </div>
-
-                <div>
-                  <span className="text-xs font-mono uppercase tracking-widest text-white/80 block mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                    {region.subtitle}
-                  </span>
-                  <h3 className="text-2xl md:text-3xl font-display font-medium text-white uppercase leading-none">
-                    {region.name}
-                  </h3>
-                </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            </Link>
           ))}
         </div>
       </div>

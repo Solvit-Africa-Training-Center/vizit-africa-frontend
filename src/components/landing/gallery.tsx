@@ -1,7 +1,7 @@
 "use client";
 
 import { RiArrowRightLine } from "@remixicon/react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
@@ -97,6 +97,8 @@ interface GalleryImage {
   src: string;
 }
 
+// ... (GalleryCard function)
+
 function GalleryCard({
   img,
   className,
@@ -107,8 +109,9 @@ function GalleryCard({
   const t = useTranslations("LandingGallery");
 
   return (
-    <div
-      className={`relative group overflow-hidden rounded-2xl cursor-pointer ${className}`}
+    <Link
+      href={`/plan-trip?note=Interested in gallery image: ${t(`items.${img.id}.alt`)}`}
+      className={`block relative group overflow-hidden rounded-2xl cursor-pointer ${className}`}
     >
       <ParallaxImage
         src={img.src}
@@ -128,6 +131,6 @@ function GalleryCard({
           {t(`items.${img.id}.alt`)}
         </h3>
       </div>
-    </div>
+    </Link>
   );
 }

@@ -8,6 +8,8 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslations } from "next-intl";
 
+import { Link } from "@/i18n/navigation";
+
 gsap.registerPlugin(ScrollTrigger);
 
 const serviceImages = [
@@ -18,6 +20,14 @@ const serviceImages = [
 ];
 
 const serviceKeys = ["flights", "hotels", "experiences", "transfers"] as const;
+
+// Map keys to plan-trip service params
+const linkKeyMap: Record<string, string> = {
+  flights: "hotels", // No flights tab yet, default to hotels or handle differently? Using 'hotels' as fallback for now or maybe add a query param that opens a modal? Actually plan-trip only has hotels/cars/guides. Let's map strict.
+  hotels: "hotels",
+  experiences: "cars", // "Rent Vehicles" image suggests cars
+  transfers: "guides", // "Hire Guides" image suggests guides
+};
 
 export function Services() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -55,6 +65,7 @@ export function Services() {
     title: t(`items.${key}.title`),
     description: t(`items.${key}.description`),
     image: serviceImages[index],
+    linkKey: linkKeyMap[key] || "hotels",
   }));
 
   return (
@@ -88,10 +99,18 @@ export function Services() {
 function ServiceCard({
   service,
 }: {
-  service: { title: string; description: string; image: string };
+  service: {
+    title: string;
+    description: string;
+    image: string;
+    linkKey: string;
+  };
 }) {
   return (
-    <div className="service-card group relative overflow-hidden rounded-sm aspect-[4/3] md:aspect-[3/2]">
+    <Link
+      href={`/plan-trip?service=${service.linkKey}`}
+      className="service-card group relative overflow-hidden rounded-sm aspect-[4/3] md:aspect-[3/2] block"
+    >
       <div className="absolute inset-0">
         <Image
           src={service.image}
@@ -107,7 +126,7 @@ function ServiceCard({
       <div className="absolute inset-0 p-8 flex flex-col justify-end">
         <div className="translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
           <div className="w-12 h-[1px] bg-white/60 mb-4" aria-hidden="true" />
-          <h3 className="text-3xl font-black uppercase text-white tracking-tight mb-2">
+          <h3 className="text-3xl font-medium uppercase text-white tracking-tight mb-2">
             {service.title}
           </h3>
           <p className="text-white/80 font-light text-lg">
@@ -115,6 +134,6 @@ function ServiceCard({
           </p>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

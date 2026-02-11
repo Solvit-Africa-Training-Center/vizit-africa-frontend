@@ -38,14 +38,27 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
   const t = useTranslations("Navigation");
   const tCommon = useTranslations("Common");
   const { user } = useUser();
-  console.log({ user });
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { scrollY } = useScroll();
 
   const heroRoutes = ["/"];
   const hasHero = heroRoutes.includes(pathname);
+  // refined logic: minimal mode on hero until scrolled
   const showSolid = forceSolid || isScrolled || !hasHero;
+
+  // Scrolled state: minimalist "glass"
+  // Unscrolled (Hero): completely transparent
+  const headerClass = cn(
+    "fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
+    showSolid
+      ? "py-4 bg-white/80 backdrop-blur-xl border-b border-black/5"
+      : "py-6 bg-transparent",
+  );
+
+  // Text colors
+  const textColorClass = showSolid ? "text-slate-900" : "text-white";
+
   const logoVariant = showSolid ? "default" : "light";
 
   const navLinks = [
@@ -57,7 +70,7 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
   ];
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    setIsScrolled(latest > 20);
+    setIsScrolled(latest > 50);
   });
 
   const handleLogout = async () => {
@@ -68,88 +81,88 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
   return (
     <>
       <motion.header
-        className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out",
-          showSolid
-            ? "bg-background/80 backdrop-blur-xl border-b border-border/40 py-4"
-            : "bg-transparent py-6",
-        )}
+        className={headerClass}
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       >
-        <nav className="mx-auto max-w-7xl px-5 md:px-10 flex items-center justify-between">
-          <Logo variant={logoVariant} />
-          <div className="hidden md:flex items-center gap-8">
+        <nav className="mx-auto max-w-[1400px] px-6 md:px-12 flex items-center justify-between">
+          {/* Left: Logo */}
+          <div className="shrink-0 w-[140px]">
+            <div className="scale-90 origin-left transition-transform duration-500">
+              <Logo variant={logoVariant} />
+            </div>
+          </div>
+
+          {/* Center: Navigation Links */}
+          <div className="hidden md:flex items-center gap-10 absolute left-1/2 -translate-x-1/2">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "font-display font-medium uppercase tracking-widest text-xs transition-colors duration-200",
-                  showSolid
-                    ? "text-muted-foreground hover:text-foreground"
-                    : "text-white/80 hover:text-white",
+                  "relative group font-display font-medium uppercase tracking-[0.2em] text-[11px] transition-colors duration-300",
+                  textColorClass,
+                  showSolid ? "hover:text-primary" : "hover:text-white/70",
                 )}
               >
                 {link.label}
+                <span
+                  className={cn(
+                    "absolute -bottom-1 left-0 w-0 h-px transition-all duration-300 ease-out group-hover:w-full",
+                    showSolid ? "bg-primary" : "bg-white",
+                  )}
+                />
               </Link>
             ))}
           </div>
-          <div className="hidden md:flex items-center gap-6">
+
+          {/* Right: Actions */}
+          <div className="hidden md:flex items-center gap-6 justify-end w-[140px]">
             <LanguageSwitcher variant={showSolid ? "default" : "light"} />
 
             {user ? (
               <DropdownMenu>
-                <DropdownMenuTrigger
-                  render={
-                    <button
-                      type="button"
-                      className={cn(
-                        "flex items-center gap-2 font-display font-medium uppercase tracking-widest text-xs transition-colors duration-200 cursor-pointer",
-                        showSolid
-                          ? "text-muted-foreground hover:text-foreground"
-                          : "text-white/80 hover:text-white",
-                      )}
-                    />
-                  }
-                >
-                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                    <RiUserLine className="w-4 h-4 text-primary" />
-                  </div>
-                  <span className="hidden lg:inline">
-                    {user.full_name.split(" ")[0]}
-                  </span>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
-                  <DropdownMenuItem
-                    render={
-                      <Link
-                        href="/profile"
-                        className="flex items-center gap-2"
-                      />
-                    }
+                <DropdownMenuTrigger className="outline-none">
+                  <div
+                    className={cn(
+                      "flex items-center gap-2 cursor-pointer transition-opacity hover:opacity-70",
+                      textColorClass,
+                    )}
                   >
-                    <RiUserLine className="w-4 h-4" />
-                    Profile
+                    <span className="font-display font-medium uppercase tracking-widest text-[10px]">
+                      {user.full_name.split(" ")[0]}
+                    </span>
+                    <div className="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center backdrop-blur-sm border border-white/10">
+                      <RiUserLine className="w-4 h-4" />
+                    </div>
+                  </div>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48 p-2">
+                  <DropdownMenuItem>
+                    <Link
+                      href="/profile"
+                      className="flex items-center cursor-pointer w-full"
+                    >
+                      <RiUserLine className="w-4 h-4 mr-2" />
+                      Profile
+                    </Link>
                   </DropdownMenuItem>
                   {user.role === "ADMIN" && (
-                    <DropdownMenuItem
-                      render={
-                        <Link
-                          href="/admin"
-                          className="flex items-center gap-2"
-                        />
-                      }
-                    >
-                      <RiDashboardLine className="w-4 h-4" />
-                      Dashboard
+                    <DropdownMenuItem>
+                      <Link
+                        href="/admin"
+                        className="flex items-center cursor-pointer w-full"
+                      >
+                        <RiDashboardLine className="w-4 h-4 mr-2" />
+                        Dashboard
+                      </Link>
                     </DropdownMenuItem>
                   )}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     onClick={handleLogout}
-                    className="text-destructive focus:text-destructive"
+                    className="text-destructive focus:text-destructive cursor-pointer"
                   >
                     <RiLogoutBoxRLine className="w-4 h-4 mr-2" />
                     Logout
@@ -160,18 +173,16 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
               <Link
                 href="/login"
                 className={cn(
-                  "font-display font-medium uppercase tracking-widest text-xs transition-colors duration-200",
-                  showSolid
-                    ? "text-muted-foreground hover:text-foreground"
-                    : "text-white/80 hover:text-white",
+                  "font-display font-medium uppercase tracking-[0.15em] text-[11px] transition-opacity hover:opacity-70",
+                  textColorClass,
                 )}
               >
                 {tCommon("login")}
               </Link>
             )}
 
-            <Link href="/plan-trip">
-              <Magnetic>
+            <Magnetic>
+              <Link href="/plan-trip">
                 <Button
                   size="sm"
                   variant={showSolid ? "default" : "secondary"}
@@ -182,27 +193,22 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
                 >
                   {tCommon("startPlanning")}
                 </Button>
-              </Magnetic>
-            </Link>
+              </Link>
+            </Magnetic>
           </div>
+
+          {/* Mobile Menu Toggle */}
           <button
             type="button"
             className={cn(
-              "md:hidden p-2 transition-colors duration-200 rounded-sm",
-              showSolid
-                ? "text-foreground hover:bg-muted"
-                : "text-white hover:bg-white/10",
+              "md:hidden p-2 transition-colors duration-200",
+              textColorClass,
             )}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
           >
             {isMobileMenuOpen ? (
-              <RiCloseLine
-                className={cn(
-                  "size-6",
-                  showSolid ? "text-foreground" : "text-white",
-                )}
-              />
+              <RiCloseLine className="size-6" />
             ) : (
               <RiMenuLine className="size-6" />
             )}

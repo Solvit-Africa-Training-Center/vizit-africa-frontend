@@ -1,11 +1,8 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
-import type {
-  TripInfo,
-  Selections,
-  FilterState,
-} from "../lib/plan_trip-types";
+import { useSearchParams } from "next/navigation";
+import type { FilterState } from "../lib/plan_trip-types";
 import {
   MOCK_HOTELS,
   MOCK_CARS,
@@ -13,32 +10,63 @@ import {
   SERVICE_FEE_RATE,
   ITEMS_PER_PAGE,
 } from "../lib/plan-trip-data";
+import { useTripStore } from "@/store/trip-store";
 
 export function usePlanTrip() {
-  const [currentStep, setCurrentStep] = useState(1);
+  const searchParams = useSearchParams();
+  const {
+    currentStep,
+    setCurrentStep,
+    tripInfo,
+    updateTripInfo,
+    selections,
+    setSelections,
+    activeTab,
+    setActiveTab,
+    resetTrip,
+  } = useTripStore();
 
-  const [tripInfo, setTripInfo] = useState<TripInfo>({
-    departureCity: "",
-    arrivalDate: "",
-    departureDate: "",
-    adults: 2,
-    children: 0,
-    tripPurpose: "leisure",
-    specialRequests: "",
-    name: "",
-    email: "",
-    phone: "",
-  });
+  // Handle URL params for deep linking
+  // Handle URL params for deep linking
+  useEffect(() => {
+    const serviceType = searchParams.get("service");
+    const experienceId = searchParams.get("experience");
+    const destination = searchParams.get("destination");
+    const note = searchParams.get("note");
 
-  const [selections, setSelections] = useState<Selections>({
-    hotel: null,
-    car: null,
-    carWithDriver: false,
-    guide: null,
-  });
+    if (serviceType) {
+      // If coming from a "Book" button on Services page
+      setCurrentStep(3); // Jump to Services step
+      if (["hotels", "cars", "guides"].includes(serviceType)) {
+        setActiveTab(serviceType);
+      }
+    } else if (destination) {
+      if (tripInfo.destination !== destination) {
+        updateTripInfo({ destination });
+      }
+      setCurrentStep(1);
+    } else if (experienceId || note) {
+      // If coming from Experiences page or Gallery
+      const newNote = note || `Interested in experience: ${experienceId}`;
+      if (!tripInfo.specialRequests.includes(newNote)) {
+        updateTripInfo({
+          specialRequests: tripInfo.specialRequests
+            ? `${tripInfo.specialRequests}\n${newNote}`
+            : newNote,
+        });
+      }
+      setCurrentStep(1); // Start at beginning but with context
+    }
+  }, [
+    searchParams,
+    setCurrentStep,
+    setActiveTab,
+    updateTripInfo,
+    tripInfo.specialRequests,
+    tripInfo.destination,
+  ]);
 
-  const [activeTab, setActiveTab] = useState("hotels");
-
+  // Local state for filters/pagination (doesn't need persistence)
   const [hotelSearch, setHotelSearch] = useState("");
   const [hotelPriceFilter, setHotelPriceFilter] =
     useState<FilterState["priceRange"]>("all");
@@ -123,9 +151,9 @@ export function usePlanTrip() {
 
   useEffect(
     () => setHotelPage(1),
-    [],
+    [hotelSearch, hotelPriceFilter, hotelStarsFilter],
   );
-  useEffect(() => setCarPage(1), []);
+  useEffect(() => setCarPage(1), [carSearch, carCategoryFilter]);
 
   const subtotal = useMemo(() => {
     let sum = 0;
@@ -149,7 +177,10 @@ export function usePlanTrip() {
     tripInfo.adults >= 1;
 
   const canProceedToServices = tripInfo.name && tripInfo.email;
-  const canProceedToReview = selections.hotel && selections.car;
+  // Relaxed requirement: allow proceeding if EITHER hotel OR car is selected, or neither (optional)
+  // But strict mode: at least one service. Let's keep strict for now.
+  const canProceedToReview =
+    selections.hotel || selections.car || selections.guide;
 
   const resetHotelFilters = () => {
     setHotelSearch("");
@@ -166,7 +197,7 @@ export function usePlanTrip() {
     currentStep,
     setCurrentStep,
     tripInfo,
-    setTripInfo,
+    setTripInfo: updateTripInfo, // Map to store action
     selections,
     setSelections,
     activeTab,
@@ -206,5 +237,6 @@ export function usePlanTrip() {
 
     resetHotelFilters,
     resetCarFilters,
+    resetTrip,
   };
 }

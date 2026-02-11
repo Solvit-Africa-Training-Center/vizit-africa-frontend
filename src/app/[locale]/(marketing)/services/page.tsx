@@ -418,7 +418,16 @@ function ServiceItem({
 
                 <div>
                   <a
-                    href="/contact"
+                    href={`/plan-trip?service=${
+                      service.category === "Hotels" ||
+                      service.category === "BnBs"
+                        ? "hotels"
+                        : service.category === "Car Rentals"
+                          ? "cars"
+                          : service.category === "Guides"
+                            ? "guides"
+                            : "hotels"
+                    }`}
                     className="inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-foreground font-medium uppercase tracking-widest text-sm hover:bg-primary/90 transition-colors"
                   >
                     {bookLabel}

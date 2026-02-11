@@ -8,11 +8,18 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { useTranslations } from "next-intl";
+import { useTripStore } from "@/store/trip-store";
+import { useEffect } from "react";
 
 function ConfirmationContent() {
   const searchParams = useSearchParams();
   const requestId = searchParams.get("id") || "REQ-UNKNOWN";
   const t = useTranslations("PlanTrip.confirmation");
+
+  // Clear persistent data on successful booking
+  useEffect(() => {
+    useTripStore.getState().resetTrip();
+  }, []);
 
   return (
     <div className="bg-background max-w-3xl mx-auto">

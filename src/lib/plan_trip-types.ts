@@ -1,4 +1,3 @@
-
 export interface Flight {
   id: string;
   airline: string;
@@ -58,6 +57,7 @@ export interface TripInfo {
   name: string;
   email: string;
   phone: string;
+  destination?: string;
 }
 
 export interface Selections {
