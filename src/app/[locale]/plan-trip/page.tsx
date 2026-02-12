@@ -1,34 +1,32 @@
 "use client";
 
-import { BookingSummary, Stepper } from "@/components/plan-trip";
+import { BookingSummary } from "@/components/plan-trip";
 import { ContactInfoStep } from "@/components/plan-trip/steps/contact-info-step";
-import { ReviewStep } from "@/components/plan-trip/steps/review-step";
+import { FlightStep } from "@/components/plan-trip/steps/flight-step";
 import { ServicesStep } from "@/components/plan-trip/steps/services-step";
-import { TripDetailsStep } from "@/components/plan-trip/steps/trip-details-step";
 import { Navbar } from "@/components/shared/navbar";
 import { RevealText } from "@/components/ui/reveal-text";
 import { usePlanTrip } from "@/hooks/use-plan-trip";
+import { useTripForm } from "@/hooks/use-trip-form";
 import { DRIVER_SURCHARGE } from "@/lib/plan-trip-data";
-import { AnimatePresence, motion } from "motion/react";
-import { useState } from "react";
+import { TripSection } from "@/components/plan-trip/trip-section";
+import { ContextBanner } from "@/components/plan-trip/context-banner";
+import { motion } from "motion/react";
+import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
+import { useTripStore } from "@/store/trip-store";
+import {
+  RiFlightTakeoffLine,
+  RiHotelLine,
+  RiUserLine,
+  RiCheckDoubleLine,
+} from "@remixicon/react";
 
 export default function PlanTripPage() {
   const tHeader = useTranslations("PlanTrip.header");
-  const tSteps = useTranslations("PlanTrip.steps");
-  const tReview = useTranslations("PlanTrip.review");
-
-  const STEPS = [
-    { num: 1, label: tSteps("tripDetails") },
-    { num: 2, label: tSteps("contact") },
-    { num: 3, label: tSteps("services") },
-    { num: 4, label: tSteps("review") },
-  ];
 
   const {
-    currentStep,
-    setCurrentStep,
     tripInfo,
     setTripInfo,
     selections,
@@ -62,19 +60,43 @@ export default function PlanTripPage() {
     filteredCars,
   } = usePlanTrip();
 
-  const [showMobileSummary, setShowMobileSummary] = useState(false);
+  const form = useTripForm();
+  const entrySource = useTripStore((s) => s.entrySource);
+
+  const flightSummary = selections.flight
+    ? `${selections.flight.airline} ${selections.flight.flightNumber} · $${selections.flight.price}`
+    : undefined;
+
+  const servicesSummary = (() => {
+    const parts: string[] = [];
+    if (selections.hotel) parts.push(selections.hotel.name);
+    if (selections.car) parts.push(selections.car.model);
+    if (selections.guide) parts.push("Guide");
+    return parts.length > 0 ? parts.join(" · ") : undefined;
+  })();
+
+  const detailsSummary =
+    tripInfo.name && tripInfo.email
+      ? `${tripInfo.name} · ${tripInfo.email}`
+      : undefined;
+
+  const canSubmit = !!(tripInfo.name && tripInfo.email);
 
   const handleSubmit = () => {
-    setCurrentStep(4);
-    toast.success(tReview("success"));
+    if (!canSubmit) {
+      toast.error("Please fill in your name and email before submitting.");
+      return;
+    }
+    form.handleSubmit();
+    toast.success("Trip request submitted successfully!");
   };
 
   return (
     <>
-      <Navbar />
+      <Navbar forceSolid />
       <main className="min-h-screen bg-background pt-24 pb-32">
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-12 md:mb-16">
+          <div className="mb-8 md:mb-12">
             <RevealText
               text={tHeader("title")}
               className="font-display text-4xl md:text-6xl font-medium uppercase text-foreground mb-4"
@@ -90,94 +112,107 @@ export default function PlanTripPage() {
             </motion.p>
           </div>
 
-          <div className="grid lg:grid-cols-[1fr_400px] gap-12 items-start">
-            <div className="space-y-8">
-              <Stepper
-                currentStep={currentStep}
-                steps={STEPS}
-                onStepClick={setCurrentStep}
-              />
+          <ContextBanner destination={tripInfo.destination} />
 
-              <AnimatePresence mode="wait">
-                {currentStep === 1 && (
-                  <TripDetailsStep
-                    tripInfo={tripInfo}
-                    setTripInfo={setTripInfo}
-                    onNext={() => setCurrentStep(2)}
-                    canProceed={true}
-                  />
-                )}
+          <div className="grid lg:grid-cols-[1fr_380px] gap-8 items-start">
+            <div className="space-y-3">
+              {/* flight section */}
+              <TripSection
+                icon={<RiFlightTakeoffLine className="size-5" />}
+                title="Flight"
+                status={selections.flight ? "selected" : "empty"}
+                summary={flightSummary}
+                defaultExpanded={
+                  entrySource === "widget" ||
+                  entrySource === "flights" ||
+                  entrySource === "direct"
+                }
+              >
+                <FlightStep
+                  form={form}
+                  tripInfo={tripInfo}
+                  setTripInfo={setTripInfo}
+                  selections={selections}
+                  setSelections={setSelections}
+                  onNext={() => {}}
+                />
+              </TripSection>
 
-                {currentStep === 2 && (
-                  <ContactInfoStep
-                    tripInfo={tripInfo}
-                    setTripInfo={setTripInfo}
-                    onNext={() => setCurrentStep(3)}
-                    onBack={() => setCurrentStep(1)}
-                    canProceed={true}
-                  />
-                )}
+              {/* services section (hotels, cars, guides) */}
+              <TripSection
+                icon={<RiHotelLine className="size-5" />}
+                title="Stay & Services"
+                status={
+                  selections.hotel || selections.car || selections.guide
+                    ? "selected"
+                    : "empty"
+                }
+                summary={servicesSummary}
+                defaultExpanded={entrySource === "services"}
+              >
+                <ServicesStep
+                  selections={selections}
+                  setSelections={
+                    setSelections as (s: typeof selections) => void
+                  }
+                  activeTab={activeTab}
+                  setActiveTab={setActiveTab}
+                  showMobileSummary={false}
+                  setShowMobileSummary={() => {}}
+                  tripInfo={tripInfo}
+                  days={days}
+                  total={total}
+                  travelers={travelers}
+                  subtotal={subtotal}
+                  serviceFee={serviceFee}
+                  paginatedHotels={paginatedHotels}
+                  paginatedCars={paginatedCars}
+                  hotelTotalPages={hotelTotalPages}
+                  carTotalPages={carTotalPages}
+                  hotelCount={filteredHotels.length}
+                  carCount={filteredCars.length}
+                  hotelSearch={hotelSearch}
+                  setHotelSearch={setHotelSearch}
+                  hotelPriceFilter={hotelPriceFilter}
+                  setHotelPriceFilter={setHotelPriceFilter}
+                  hotelStarsFilter={hotelStarsFilter}
+                  setHotelStarsFilter={setHotelStarsFilter}
+                  carSearch={carSearch}
+                  setCarSearch={setCarSearch}
+                  carCategoryFilter={carCategoryFilter}
+                  setCarCategoryFilter={setCarCategoryFilter}
+                  hotelPage={hotelPage}
+                  setHotelPage={setHotelPage}
+                  carPage={carPage}
+                  setCarPage={setCarPage}
+                />
+              </TripSection>
 
-                {currentStep === 3 && (
-                  <ServicesStep
-                    selections={selections}
-                    setSelections={setSelections}
-                    activeTab={activeTab}
-                    setActiveTab={setActiveTab}
-                    showMobileSummary={showMobileSummary}
-                    setShowMobileSummary={setShowMobileSummary}
-                    tripInfo={tripInfo}
-                    days={days}
-                    total={total}
-                    travelers={travelers}
-                    subtotal={subtotal}
-                    serviceFee={serviceFee}
-                    paginatedHotels={paginatedHotels}
-                    paginatedCars={paginatedCars}
-                    hotelTotalPages={hotelTotalPages}
-                    carTotalPages={carTotalPages}
-                    hotelCount={filteredHotels.length}
-                    carCount={filteredCars.length}
-                    hotelSearch={hotelSearch}
-                    setHotelSearch={setHotelSearch}
-                    hotelPriceFilter={hotelPriceFilter}
-                    setHotelPriceFilter={setHotelPriceFilter}
-                    hotelStarsFilter={hotelStarsFilter}
-                    setHotelStarsFilter={setHotelStarsFilter}
-                    carSearch={carSearch}
-                    setCarSearch={setCarSearch}
-                    carCategoryFilter={carCategoryFilter}
-                    setCarCategoryFilter={setCarCategoryFilter}
-                    hotelPage={hotelPage}
-                    setHotelPage={setHotelPage}
-                    carPage={carPage}
-                    setCarPage={setCarPage}
-                    onNext={() => setCurrentStep(4)}
-                    onBack={() => setCurrentStep(2)}
-                    canProceed={true}
-                  />
-                )}
-
-                {currentStep === 4 && (
-                  <ReviewStep
-                    tripInfo={tripInfo}
-                    selections={selections}
-                    days={days}
-                    travelers={travelers}
-                    subtotal={subtotal}
-                    serviceFee={serviceFee}
-                    total={total}
-                    onBack={() => setCurrentStep(3)}
-                    onSubmit={handleSubmit}
-                  />
-                )}
-              </AnimatePresence>
+              {/* traveler details section */}
+              <TripSection
+                icon={<RiUserLine className="size-5" />}
+                title="Your Details"
+                status={detailsSummary ? "selected" : "empty"}
+                summary={detailsSummary}
+                defaultExpanded={
+                  entrySource !== "widget" &&
+                  entrySource !== "direct" &&
+                  !!(selections.flight || selections.hotel)
+                }
+              >
+                <ContactInfoStep
+                  form={form}
+                  tripInfo={tripInfo}
+                  setTripInfo={setTripInfo}
+                />
+              </TripSection>
             </div>
 
+            {/* sticky sidebar */}
             <div className="hidden lg:block relative">
-              <div className="sticky top-24">
+              <div className="sticky top-24 space-y-4">
                 <BookingSummary
-                  currentStep={currentStep}
+                  currentStep={1}
                   tripInfo={tripInfo}
                   selections={selections}
                   days={days}
@@ -187,7 +222,42 @@ export default function PlanTripPage() {
                   serviceFee={serviceFee}
                   total={total}
                 />
+                <Button
+                  onClick={handleSubmit}
+                  disabled={!canSubmit}
+                  size="lg"
+                  className="w-full rounded-sm font-display font-medium uppercase tracking-wider text-sm gap-2"
+                >
+                  <RiCheckDoubleLine className="size-5" />
+                  Submit Trip Request
+                </Button>
+                {!canSubmit && (
+                  <p className="text-xs text-muted-foreground text-center">
+                    Fill in your name & email to submit
+                  </p>
+                )}
               </div>
+            </div>
+          </div>
+
+          {/* mobile submit */}
+          <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-lg border-t border-border p-4 z-30">
+            <div className="flex items-center justify-between gap-4 max-w-7xl mx-auto">
+              <div>
+                <p className="text-xs text-muted-foreground">Estimated total</p>
+                <p className="text-xl font-display font-bold">
+                  ${total.toFixed(0)}
+                </p>
+              </div>
+              <Button
+                onClick={handleSubmit}
+                disabled={!canSubmit}
+                size="lg"
+                className="rounded-sm font-display font-medium uppercase tracking-wider text-sm gap-2"
+              >
+                <RiCheckDoubleLine className="size-5" />
+                Submit
+              </Button>
             </div>
           </div>
         </div>

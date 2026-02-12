@@ -1,6 +1,7 @@
 "use client";
 
 import { RiArrowRightLine } from "@remixicon/react";
+import { AddToTripButton } from "@/components/plan-trip/add-to-trip-button";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { motion, useScroll, useTransform } from "motion/react";
@@ -109,8 +110,7 @@ function GalleryCard({
   const t = useTranslations("LandingGallery");
 
   return (
-    <Link
-      href={`/plan-trip?note=Interested in gallery image: ${t(`items.${img.id}.alt`)}`}
+    <div
       className={`block relative group overflow-hidden rounded-2xl cursor-pointer ${className}`}
     >
       <ParallaxImage
@@ -127,10 +127,17 @@ function GalleryCard({
         <p className="text-primary-foreground/80 font-mono text-xs uppercase tracking-widest mb-1">
           {t(`items.${img.id}.caption`)}
         </p>
-        <h3 className="text-primary-foreground font-display text-xl font-medium">
+        <h3 className="text-primary-foreground font-display text-xl font-medium mb-3">
           {t(`items.${img.id}.alt`)}
         </h3>
+        <AddToTripButton
+          type="note"
+          note={`Gallery: ${t(`items.${img.id}.alt`)} - ${t(`items.${img.id}.caption`)}`}
+          label="Add to Trip"
+          size="sm"
+          className="w-fit"
+        />
       </div>
-    </Link>
+    </div>
   );
 }

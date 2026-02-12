@@ -84,7 +84,7 @@ export function CTA() {
                 transition={{ delay: 0.3 }}
                 className="flex flex-wrap items-center gap-6"
               >
-                <Link href="/plan-trip" className="flex-1 sm:flex-none">
+                <Link href="/flights" className="flex-1 sm:flex-none">
                   <Magnetic>
                     <Button className="w-full sm:w-auto h-20 px-10 rounded-sm bg-primary-foreground text-black hover:bg-primary-foreground/95 text-xl font-medium transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white group">
                       <span className="flex items-center gap-2">

@@ -7,10 +7,10 @@ import {
   RiUserLine,
   RiLogoutBoxRLine,
   RiDashboardLine,
+  RiSuitcaseLine,
 } from "@remixicon/react";
 import { motion, useScroll, useMotionValueEvent } from "motion/react";
 import { Button } from "@/components/ui/button";
-import { Magnetic } from "@/components/ui/magnetic";
 import { cn } from "@/lib/utils";
 import Logo from "./logo";
 import { NavbarMobile } from "./navbar-mobile";
@@ -19,6 +19,7 @@ import { Link, usePathname } from "@/i18n/navigation";
 import { LanguageSwitcher } from "./language-switcher";
 import { useUser } from "@/components/user-provider";
 import { logout } from "@/actions/auth";
+import { useTripStore } from "@/store/trip-store";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -38,6 +39,8 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
   const t = useTranslations("Navigation");
   const tCommon = useTranslations("Common");
   const { user } = useUser();
+  const hasActiveTrip = useTripStore((s) => s.hasActiveTrip());
+  const tripItemCount = useTripStore((s) => s.itemCount());
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { scrollY } = useScroll();
@@ -58,9 +61,9 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
   const logoVariant = showSolid ? "default" : "light";
 
   const navLinks = [
-    { href: "/services", label: t("services") },
+    { href: "/flights", label: t("flights") },
+    { href: "/services", label: t("destinations") },
     { href: "/experiences", label: t("experiences") },
-    { href: "/gallery", label: t("gallery") },
     { href: "/about", label: t("aboutUs") },
     { href: "/contact", label: t("contact") },
   ];
@@ -187,19 +190,27 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
               </Link>
             )}
 
-
-              <Link href="/plan-trip">
-                <Button
-                  size="sm"
-                  variant={showSolid ? "default" : "secondary"}
-                  className={cn(
-                    "rounded-sm font-display font-medium uppercase tracking-wider text-xs px-6 transition-all duration-300",
-                    !showSolid && "bg-primary-foreground text-primary hover:bg-primary-foreground/90",
-                  )}
-                >
-                  {tCommon("startPlanning")}
-                </Button>
-              </Link>
+            <Link href="/plan-trip">
+              <Button
+                size="sm"
+                variant={showSolid ? "default" : "secondary"}
+                className={cn(
+                  "rounded-sm font-display font-medium uppercase tracking-wider text-xs px-6 transition-all duration-300 gap-2",
+                  !showSolid &&
+                    "bg-primary-foreground text-primary hover:bg-primary-foreground/90",
+                )}
+              >
+                {hasActiveTrip ? (
+                  <>
+                    <RiSuitcaseLine className="size-4" />
+                    {tripItemCount} {tripItemCount === 1 ? "item" : "items"} ·
+                    View Trip
+                  </>
+                ) : (
+                  tCommon("startPlanning")
+                )}
+              </Button>
+            </Link>
           </div>
 
           <button

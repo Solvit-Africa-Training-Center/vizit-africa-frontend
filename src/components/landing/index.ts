@@ -1,4 +1,6 @@
 export * from "./hero";
+export * from "./flight-search-widget";
+export * from "./popular-routes";
 export * from "./destinations";
 export * from "./services";
 export * from "./social-proof";

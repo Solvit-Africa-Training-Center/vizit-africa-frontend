@@ -55,11 +55,23 @@ export function BookingSummary({
             </div>
             <div className="flex justify-between">
               <span className="text-muted-foreground">{t("travelers")}</span>
-              <span className="font-medium">{travelers}</span>
+              <span className="font-medium">
+                {travelers}{" "}
+                {tripInfo.infants
+                  ? `(+${tripInfo.infants} infant${tripInfo.infants > 1 ? "s" : ""})`
+                  : ""}
+              </span>
             </div>
           </div>
 
           <div className="space-y-2 text-sm">
+            <SummaryItem
+              label={t("flight")}
+              isSelected={!!selections.flight}
+              value={
+                selections.flight ? selections.flight.price * travelers : null
+              }
+            />
             <SummaryItem
               label={t("accommodation")}
               isSelected={!!selections.hotel}

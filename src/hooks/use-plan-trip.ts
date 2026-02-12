@@ -11,62 +11,71 @@ import {
   ITEMS_PER_PAGE,
 } from "../lib/plan-trip-data";
 import { useTripStore } from "@/store/trip-store";
+import { flights } from "@/lib/dummy-data";
 
 export function usePlanTrip() {
   const searchParams = useSearchParams();
   const {
-    currentStep,
-    setCurrentStep,
     tripInfo,
     updateTripInfo,
     selections,
     setSelections,
-    activeTab,
-    setActiveTab,
+    setEntrySource,
+    addFlight,
+    setDestination,
+    addNote,
     resetTrip,
   } = useTripStore();
 
-  // Handle URL params for deep linking
-  // Handle URL params for deep linking
+  // detect entry source and pre-fill from url params
   useEffect(() => {
-    const serviceType = searchParams.get("service");
-    const experienceId = searchParams.get("experience");
+    const from = searchParams.get("from");
+    const to = searchParams.get("to");
     const destination = searchParams.get("destination");
+    const serviceType = searchParams.get("service");
+    const flightId = searchParams.get("flight");
+    const experienceId = searchParams.get("experience");
     const note = searchParams.get("note");
+    const departDate = searchParams.get("depart");
+    const returnDate = searchParams.get("return");
+    const adultsParam = searchParams.get("adults");
+    const childrenParam = searchParams.get("children");
+    const infantsParam = searchParams.get("infants");
 
-    if (serviceType) {
-      // If coming from a "Book" button on Services page
-      setCurrentStep(3); // Jump to Services step
-      if (["hotels", "cars", "guides"].includes(serviceType)) {
-        setActiveTab(serviceType);
-      }
+    // pre-fill traveler counts + dates
+    const updates: Partial<typeof tripInfo> = {};
+    if (departDate && tripInfo.departureDate !== departDate)
+      updates.departureDate = departDate;
+    if (returnDate && tripInfo.returnDate !== returnDate)
+      updates.returnDate = returnDate;
+    if (adultsParam) updates.adults = parseInt(adultsParam);
+    if (childrenParam) updates.children = parseInt(childrenParam);
+    if (infantsParam) updates.infants = parseInt(infantsParam);
+    if (from) updates.departureCity = from;
+    if (to) updates.destination = to;
+    if (Object.keys(updates).length > 0) updateTripInfo(updates);
+
+    // detect source
+    if (from || to) {
+      setEntrySource("widget");
+    } else if (flightId) {
+      setEntrySource("flights");
+      const match = flights.find((f) => f.id === flightId);
+      if (match && !selections.flight) addFlight(match);
     } else if (destination) {
-      if (tripInfo.destination !== destination) {
-        updateTripInfo({ destination });
-      }
-      setCurrentStep(1);
+      setEntrySource("destinations");
+      if (tripInfo.destination !== destination) setDestination(destination);
+    } else if (serviceType) {
+      setEntrySource("services");
     } else if (experienceId || note) {
-      // If coming from Experiences page or Gallery
+      setEntrySource(experienceId ? "experiences" : "gallery");
       const newNote = note || `Interested in experience: ${experienceId}`;
-      if (!tripInfo.specialRequests.includes(newNote)) {
-        updateTripInfo({
-          specialRequests: tripInfo.specialRequests
-            ? `${tripInfo.specialRequests}\n${newNote}`
-            : newNote,
-        });
-      }
-      setCurrentStep(1); // Start at beginning but with context
+      if (!tripInfo.specialRequests.includes(newNote)) addNote(newNote);
     }
-  }, [
-    searchParams,
-    setCurrentStep,
-    setActiveTab,
-    updateTripInfo,
-    tripInfo.specialRequests,
-    tripInfo.destination,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
 
-  // Local state for filters/pagination (doesn't need persistence)
+  // local state for filters/pagination
   const [hotelSearch, setHotelSearch] = useState("");
   const [hotelPriceFilter, setHotelPriceFilter] =
     useState<FilterState["priceRange"]>("all");
@@ -79,25 +88,28 @@ export function usePlanTrip() {
   const [hotelPage, setHotelPage] = useState(1);
   const [carPage, setCarPage] = useState(1);
 
+  // which service tab is active (still used in services section)
+  const [activeTab, setActiveTab] = useState(
+    searchParams.get("service") || "hotels",
+  );
+
   const days = useMemo(() => {
-    if (!tripInfo.arrivalDate || !tripInfo.departureDate) return 3;
-    const arrival = new Date(tripInfo.arrivalDate);
-    const departure = new Date(tripInfo.departureDate);
+    if (!tripInfo.departureDate || !tripInfo.returnDate) return 3;
+    const depart = new Date(tripInfo.departureDate);
+    const ret = new Date(tripInfo.returnDate);
     const diff = Math.ceil(
-      (departure.getTime() - arrival.getTime()) / (1000 * 60 * 60 * 24),
+      (ret.getTime() - depart.getTime()) / (1000 * 60 * 60 * 24),
     );
     return diff > 0 ? diff : 3;
-  }, [tripInfo.arrivalDate, tripInfo.departureDate]);
+  }, [tripInfo.departureDate, tripInfo.returnDate]);
 
   const filteredHotels = useMemo(() => {
     let result = MOCK_HOTELS;
-
     if (hotelSearch) {
       result = result.filter((h) =>
         h.name.toLowerCase().includes(hotelSearch.toLowerCase()),
       );
     }
-
     if (hotelPriceFilter !== "all") {
       result = result.filter((h) => {
         if (hotelPriceFilter === "budget") return h.pricePerNight < 150;
@@ -107,7 +119,6 @@ export function usePlanTrip() {
         return true;
       });
     }
-
     if (hotelStarsFilter !== "all") {
       result = result.filter((h) => {
         if (hotelStarsFilter === "5") return h.stars === 5;
@@ -116,23 +127,19 @@ export function usePlanTrip() {
         return true;
       });
     }
-
     return result;
   }, [hotelSearch, hotelPriceFilter, hotelStarsFilter]);
 
   const filteredCars = useMemo(() => {
     let result = MOCK_CARS;
-
     if (carSearch) {
       result = result.filter((c) =>
         c.model.toLowerCase().includes(carSearch.toLowerCase()),
       );
     }
-
     if (carCategoryFilter !== "all") {
       result = result.filter((c) => c.category === carCategoryFilter);
     }
-
     return result;
   }, [carSearch, carCategoryFilter]);
 
@@ -155,8 +162,18 @@ export function usePlanTrip() {
   );
   useEffect(() => setCarPage(1), [carSearch, carCategoryFilter]);
 
+  const travelers =
+    tripInfo.adults + tripInfo.children + (tripInfo.infants || 0);
+
   const subtotal = useMemo(() => {
     let sum = 0;
+    if (selections.flight) {
+      const adultPrice = selections.flight.price;
+      const infantPrice = Math.round(adultPrice * 0.1);
+      const standardTravelers = tripInfo.adults + tripInfo.children;
+      const infants = tripInfo.infants || 0;
+      sum += standardTravelers * adultPrice + infants * infantPrice;
+    }
     if (selections.hotel) sum += selections.hotel.pricePerNight * days;
     if (selections.car) {
       sum += selections.car.pricePerDay * days;
@@ -164,23 +181,10 @@ export function usePlanTrip() {
     }
     if (selections.guide) sum += selections.guide.price;
     return sum;
-  }, [selections, days]);
+  }, [selections, days, tripInfo.adults, tripInfo.children, tripInfo.infants]);
 
   const serviceFee = subtotal * SERVICE_FEE_RATE;
   const total = subtotal + serviceFee;
-  const travelers = tripInfo.adults + tripInfo.children;
-
-  const canProceedToContact =
-    tripInfo.departureCity &&
-    tripInfo.arrivalDate &&
-    tripInfo.departureDate &&
-    tripInfo.adults >= 1;
-
-  const canProceedToServices = tripInfo.name && tripInfo.email;
-  // Relaxed requirement: allow proceeding if EITHER hotel OR car is selected, or neither (optional)
-  // But strict mode: at least one service. Let's keep strict for now.
-  const canProceedToReview =
-    selections.hotel || selections.car || selections.guide;
 
   const resetHotelFilters = () => {
     setHotelSearch("");
@@ -194,10 +198,8 @@ export function usePlanTrip() {
   };
 
   return {
-    currentStep,
-    setCurrentStep,
     tripInfo,
-    setTripInfo: updateTripInfo, // Map to store action
+    setTripInfo: updateTripInfo,
     selections,
     setSelections,
     activeTab,
@@ -230,10 +232,6 @@ export function usePlanTrip() {
     paginatedCars,
     hotelTotalPages,
     carTotalPages,
-
-    canProceedToContact,
-    canProceedToServices,
-    canProceedToReview,
 
     resetHotelFilters,
     resetCarFilters,

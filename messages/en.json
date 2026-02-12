@@ -1,7 +1,8 @@
 {
   "Common": {
     "brandName": "Vizit Africa",
-    "startPlanning": "Book Your Trip",
+    "startPlanning": "Search Flights",
+    "bookFlight": "Book a Flight",
     "learnMore": "View Options",
     "viewAll": "View All",
     "bookNow": "Book Now",
@@ -18,10 +19,10 @@
     "submit": "Search Flights"
   },
   "Navigation": {
-    "services": "Services",
+    "flights": "Flights",
+    "destinations": "Destinations",
     "experiences": "Experiences",
-    "gallery": "Gallery",
-    "aboutUs": "About Us",
+    "aboutUs": "About",
     "contact": "Contact"
   },
   "Hero": {
@@ -61,17 +62,13 @@
     "coordinates": "1°58'S, 30°08'E"
   },
   "SocialProof": {
-    "tagline": "Trusted by global travelers & partners"
+    "tagline": "Partnered with leading airlines"
   },
   "Services": {
-    "overline": "Travel Logistics",
-    "title": "Everything You Need",
-    "description": "We don't just inspire travel; we facilitate it. A complete booking engine for every aspect of your journey.",
+    "overline": "Complete Your Trip",
+    "title": "Add-Ons",
+    "description": "Enhance your flight with premium accommodation, reliable transport, and expert local guides.",
     "items": {
-      "flights": {
-        "title": "Book Flights",
-        "description": "International & domestic routes."
-      },
       "hotels": {
         "title": "Book Stays",
         "description": "Hotels, lodges & BnBs."
@@ -85,6 +82,15 @@
         "description": "Certified local experts."
       }
     }
+  },
+  "PopularRoutes": {
+    "overline": "Top Routes",
+    "title": "Popular Flights",
+    "description": "Most booked routes to Kigali. Real-time pricing from partner airlines.",
+    "fromLabel": "From",
+    "direct": "Direct",
+    "oneStop": "1 Stop",
+    "searchRoute": "Search this route"
   },
   "Destinations": {
     "overline": "Popular Routes",
@@ -115,24 +121,24 @@
   },
   "HowItWorks": {
     "overline": "Simple Booking",
-    "title": "Plan Book Fly",
-    "description": "A streamlined process to get you from planning to boarding pass in minutes.",
+    "title": "Search Book Fly",
+    "description": "From search to boarding pass in minutes.",
     "steps": {
       "1": {
-        "title": "Search",
-        "description": "Enter your dates and destinations to see real-time availability for flights and hotels."
+        "title": "Search Flights",
+        "description": "Enter your origin, dates, and passengers to find the best fares to Rwanda."
       },
       "2": {
-        "title": "Select",
-        "description": "Compare options by price, rating, or duration. Choose what fits your schedule."
+        "title": "Add Extras",
+        "description": "Bundle a hotel, rental car, or local guide with your flight — all optional."
       },
       "3": {
-        "title": "Add Extras",
-        "description": "Add a rental car, airport transfer, or a local guide to your itinerary with one click."
+        "title": "Book & Confirm",
+        "description": "Secure checkout with instant confirmation and digital tickets to your phone."
       },
       "4": {
-        "title": "Checkout",
-        "description": "Secure travel with instant confirmation and digital tickets delivered to your phone."
+        "title": "Fly & Explore",
+        "description": "We handle the logistics. You land, and your car, hotel, or guide is ready."
       }
     }
   },
@@ -193,50 +199,50 @@
   "FAQ": {
     "overline": "Got Questions?",
     "title": "We Have Answers",
-    "description": "Everything you need to know about planning your unforgettable journey to Rwanda.",
+    "description": "Everything you need to know about booking flights and traveling to Rwanda.",
     "cantFindAnswer": "Can't find your answer?",
     "cantFindMobile": "Can't find what you're looking for?",
     "contactTeam": "Contact our team",
     "items": {
       "1": {
-        "question": "How far in advance should I book?",
-        "answer": "We recommend booking at least 3-4 weeks in advance, especially if you're planning gorilla trekking permits which can sell out months ahead. For peak season (June-September, December-February), book 2-3 months early."
+        "question": "What airlines fly to Rwanda?",
+        "answer": "RwandAir, KLM, Qatar Airways, Turkish Airlines, Ethiopian Airlines, Kenya Airways, and Brussels Airlines all serve Kigali International Airport with regular connections from major global hubs."
       },
       "2": {
-        "question": "What payment methods do you accept?",
-        "answer": "We accept all major credit cards (Visa, MasterCard, American Express), bank transfers, and mobile money (MTN MoMo, Airtel Money). Payment plans are available for larger bookings."
+        "question": "How far in advance should I book my flight?",
+        "answer": "For the best fares, book 6-8 weeks ahead. Peak season (June-September, December-February) fills up fast — book 2-3 months early. Last-minute deals are occasionally available."
       },
       "3": {
-        "question": "Can I modify my booking after confirmation?",
-        "answer": "Yes! You can modify most bookings up to 48 hours before your arrival date. Changes to gorilla permits are subject to availability and Rwanda Development Board policies."
-      },
-      "4": {
-        "question": "Do you provide airport pickup?",
-        "answer": "Absolutely. All our packages include the option for airport pickup at Kigali International Airport. Our drivers will meet you at arrivals with a name board."
-      },
-      "5": {
-        "question": "What's included in the tour guide service?",
-        "answer": "Our guides provide full-day services including transportation, entrance fees to attractions, meals, and expert commentary. They handle all logistics so you can focus on the experience."
-      },
-      "6": {
-        "question": "Is Rwanda safe for tourists?",
-        "answer": "Rwanda is one of the safest countries in Africa for tourists. Kigali is consistently ranked as one of the cleanest and most secure capital cities on the continent."
-      },
-      "7": {
-        "question": "What should I pack for gorilla trekking?",
-        "answer": "Essential items include: waterproof hiking boots, long pants, long-sleeved shirt, rain jacket, gardening gloves, and a daypack. We provide a detailed packing list upon booking."
-      },
-      "8": {
         "question": "Do I need a visa to visit Rwanda?",
         "answer": "Most nationalities can obtain a visa on arrival or e-visa. African Union passport holders and citizens of some countries enter visa-free. We'll help you understand your specific requirements."
+      },
+      "4": {
+        "question": "Can I add a hotel or car to my flight booking?",
+        "answer": "Yes! After selecting your flight, you can add hotels, car rentals, and local guides as optional add-ons — all in one booking flow."
+      },
+      "5": {
+        "question": "What's the baggage allowance?",
+        "answer": "Baggage allowance varies by airline and class. Economy typically includes 23kg checked + 7kg carry-on. Business class allows 32kg+. We display the allowance for each flight in the search results."
+      },
+      "6": {
+        "question": "Can I change or cancel my flight?",
+        "answer": "Yes! Most bookings can be modified up to 48 hours before departure. Cancellation policies depend on the airline and fare class. We clearly display flexibility options during booking."
+      },
+      "7": {
+        "question": "Do you offer multi-city flights?",
+        "answer": "Absolutely. Search for multi-city itineraries to combine Kigali with Nairobi, Addis Ababa, or other African destinations. Great for regional exploration."
+      },
+      "8": {
+        "question": "What payment methods do you accept?",
+        "answer": "We accept all major credit cards (Visa, MasterCard, American Express), bank transfers, and mobile money (MTN MoMo, Airtel Money). Payment plans are available for larger bookings."
       }
     }
   },
   "CTA": {
-    "overline": "Ready to go?",
-    "title": "Book Your",
-    "titleHighlight": "Flight Now",
-    "description": "Don't wait. Prices and availability change daily. Secure your trip to Rwanda today.",
+    "overline": "Ready to fly?",
+    "title": "Find Your",
+    "titleHighlight": "Flight",
+    "description": "Prices and availability change daily. Lock in the best fare to Rwanda now.",
     "startPlanning": "Search Flights",
     "contactTeam": "Contact Support",
     "concierge": "Group Bookings",
@@ -568,8 +574,8 @@
   },
   "Meta": {
     "home": {
-      "title": "Vizit Africa | Curated Travel Experiences in Rwanda",
-      "description": "Experience the best of Rwanda with custom travel packages. From gorilla trekking to Kigali city tours, we handle flights, hotels, and guides."
+      "title": "Vizit Africa | Book Flights to Rwanda & Africa",
+      "description": "Find and book the best flights to Rwanda. Add hotels, car rentals, and local guides to complete your African adventure."
     },
     "about": {
       "title": "About Us | Vizit Africa",
@@ -590,9 +596,9 @@
       "description": "Customize your perfect African adventure. We'll handle the details while you focus on the journey."
     },
     "steps": {
-      "tripDetails": "Trip Details",
-      "contact": "Contact",
-      "services": "Services",
+      "flight": "Flight",
+      "addOns": "Add-Ons",
+      "travelerDetails": "Traveler Details",
       "review": "Review"
     },
     "tripDetails": {
@@ -616,10 +622,29 @@
       },
       "specialRequests": "Special Requests (Optional)",
       "requestsPlaceholder": "Any dietary requirements, accessibility needs, or special occasions...",
-      "continue": "Continue to Contact Info"
+      "continue": "Continue to Traveler Details"
     },
-    "contactInfo": {
-      "title": "Contact Information",
+    "flight": {
+      "title": "Find Your Flight",
+      "subtitle": "Start your journey with the best flight options to Rwanda.",
+      "from": "From",
+      "to": "To",
+      "departure": "Departure",
+      "travelers": "Travelers",
+      "search": "Search Flights",
+      "searching": "Searching...",
+      "flightsFound": "Flights Found",
+      "perPerson": "Prices per person",
+      "select": "Select",
+      "selected": "Selected",
+      "skip": "Skip flights",
+      "skipForNow": "Skip for now",
+      "findFlights": "Find Flights",
+      "noFlights": "No flights found",
+      "tryAgain": "Try changing your search criteria"
+    },
+    "travelerDetails": {
+      "title": "Traveler Details",
       "subtitle": "How can we reach you about your booking?",
       "fullName": "Full Name",
       "namePlaceholder": "John Doe",
@@ -627,9 +652,9 @@
       "emailPlaceholder": "you@example.com",
       "phone": "Phone (Optional)",
       "phonePlaceholder": "+1 234 567 8900",
-      "continue": "Continue to Services"
+      "continue": "Continue to Add-Ons"
     },
-    "services": {
+    "addOns": {
       "tabs": {
         "hotels": "Hotels",
         "cars": "Cars",
@@ -674,7 +699,9 @@
       "withDriver": "w/ Driver",
       "nights": "nights",
       "days": "days",
-      "destination": "Destination"
+      "destination": "Destination",
+      "infant": "infant",
+      "infants": "infants"
     },
     "data": {
       "amenities": {

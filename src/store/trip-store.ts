@@ -1,28 +1,53 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { TripInfo, Selections, FilterState } from "@/lib/plan_trip-types";
+import type {
+  TripInfo,
+  Selections,
+  Flight,
+  Hotel,
+  Car,
+  Guide,
+} from "@/lib/plan_trip-types";
+
+type EntrySource =
+  | "widget"
+  | "destinations"
+  | "services"
+  | "flights"
+  | "experiences"
+  | "gallery"
+  | "direct";
 
 interface TripState {
-  // Navigation
-  currentStep: number;
-  setCurrentStep: (step: number) => void;
-
-  // Trip Details
   tripInfo: TripInfo;
-  updateTripInfo: (info: Partial<TripInfo>) => void;
-
-  // Selections
   selections: Selections;
+  entrySource: EntrySource;
+
+  // computed-like helpers
+  hasActiveTrip: () => boolean;
+  itemCount: () => number;
+
+  // granular update actions
+  updateTripInfo: (info: Partial<TripInfo>) => void;
   setSelections: (
     selections: Partial<Selections> | ((prev: Selections) => Selections),
   ) => void;
 
-  // UI State (Not persisted, but kept in store for easy access if needed,
-  // though hook handles local UI state like activeTab often)
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
+  // convenience actions for "add to trip" pattern
+  addFlight: (flight: Flight) => void;
+  addHotel: (hotel: Hotel) => void;
+  addCar: (car: Car, withDriver?: boolean) => void;
+  addGuide: (guide: Guide) => void;
+  addNote: (note: string) => void;
+  setDestination: (destination: string) => void;
+  setEntrySource: (source: EntrySource) => void;
 
-  // Actions
+  // removals
+  removeFlight: () => void;
+  removeHotel: () => void;
+  removeCar: () => void;
+  removeGuide: () => void;
+
   resetTrip: () => void;
 }
 
@@ -32,6 +57,7 @@ const initialTripInfo: TripInfo = {
   departureDate: "",
   adults: 2,
   children: 0,
+  infants: 0,
   tripPurpose: "leisure",
   specialRequests: "",
   name: "",
@@ -41,6 +67,7 @@ const initialTripInfo: TripInfo = {
 };
 
 const initialSelections: Selections = {
+  flight: null,
   hotel: null,
   car: null,
   carWithDriver: false,
@@ -49,19 +76,41 @@ const initialSelections: Selections = {
 
 export const useTripStore = create<TripState>()(
   persist(
-    (set) => ({
-      currentStep: 1,
-      setCurrentStep: (step) => set({ currentStep: step }),
-
+    (set, get) => ({
       tripInfo: initialTripInfo,
+      selections: initialSelections,
+      entrySource: "direct" as EntrySource,
+
+      hasActiveTrip: () => {
+        const { selections, tripInfo } = get();
+        return !!(
+          selections.flight ||
+          selections.hotel ||
+          selections.car ||
+          selections.guide ||
+          tripInfo.destination ||
+          tripInfo.specialRequests
+        );
+      },
+
+      itemCount: () => {
+        const { selections, tripInfo } = get();
+        let count = 0;
+        if (selections.flight) count++;
+        if (selections.hotel) count++;
+        if (selections.car) count++;
+        if (selections.guide) count++;
+        if (tripInfo.specialRequests) count++;
+        return count;
+      },
+
       updateTripInfo: (info) =>
-        set((state: TripState) => ({
+        set((state) => ({
           tripInfo: { ...state.tripInfo, ...info },
         })),
 
-      selections: initialSelections,
       setSelections: (selectionsOrUpdater) =>
-        set((state: TripState) => {
+        set((state) => {
           const newSelections =
             typeof selectionsOrUpdater === "function"
               ? selectionsOrUpdater(state.selections)
@@ -71,24 +120,80 @@ export const useTripStore = create<TripState>()(
           };
         }),
 
-      activeTab: "hotels",
-      setActiveTab: (tab) => set({ activeTab: tab }),
+      addFlight: (flight) =>
+        set((state) => ({
+          selections: { ...state.selections, flight },
+        })),
+
+      addHotel: (hotel) =>
+        set((state) => ({
+          selections: { ...state.selections, hotel },
+        })),
+
+      addCar: (car, withDriver = false) =>
+        set((state) => ({
+          selections: { ...state.selections, car, carWithDriver: withDriver },
+        })),
+
+      addGuide: (guide) =>
+        set((state) => ({
+          selections: { ...state.selections, guide },
+        })),
+
+      addNote: (note) =>
+        set((state) => ({
+          tripInfo: {
+            ...state.tripInfo,
+            specialRequests: state.tripInfo.specialRequests
+              ? `${state.tripInfo.specialRequests}\n${note}`
+              : note,
+          },
+        })),
+
+      setDestination: (destination) =>
+        set((state) => ({
+          tripInfo: { ...state.tripInfo, destination },
+        })),
+
+      setEntrySource: (source) => set({ entrySource: source }),
+
+      removeFlight: () =>
+        set((state) => ({
+          selections: { ...state.selections, flight: null },
+        })),
+
+      removeHotel: () =>
+        set((state) => ({
+          selections: { ...state.selections, hotel: null },
+        })),
+
+      removeCar: () =>
+        set((state) => ({
+          selections: {
+            ...state.selections,
+            car: null,
+            carWithDriver: false,
+          },
+        })),
+
+      removeGuide: () =>
+        set((state) => ({
+          selections: { ...state.selections, guide: null },
+        })),
 
       resetTrip: () =>
         set({
-          currentStep: 1,
           tripInfo: initialTripInfo,
           selections: initialSelections,
-          activeTab: "hotels",
+          entrySource: "direct" as EntrySource,
         }),
     }),
     {
       name: "vizit-trip-storage",
-      partialize: (state: TripState) => ({
-        currentStep: state.currentStep,
+      partialize: (state) => ({
         tripInfo: state.tripInfo,
         selections: state.selections,
-        activeTab: state.activeTab,
+        entrySource: state.entrySource,
       }),
     },
   ),

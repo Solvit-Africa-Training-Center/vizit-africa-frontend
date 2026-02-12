@@ -1,13 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import {
-  RiHotelLine,
-  RiCarLine,
-  RiUserStarLine,
-  RiArrowLeftLine,
-  RiArrowRightLine,
-} from "@remixicon/react";
+import { RiHotelLine, RiCarLine, RiUserStarLine } from "@remixicon/react";
 
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -69,10 +63,6 @@ interface ServicesStepProps {
   setHotelPage: (page: number) => void;
   carPage: number;
   setCarPage: (page: number) => void;
-
-  onNext: () => void;
-  onBack: () => void;
-  canProceed: boolean;
 }
 
 export function ServicesStep({
@@ -108,12 +98,8 @@ export function ServicesStep({
   setHotelPage,
   carPage,
   setCarPage,
-  onNext,
-  onBack,
-  canProceed,
 }: ServicesStepProps) {
-  const t = useTranslations("PlanTrip.services");
-  const tCommon = useTranslations("Common");
+  const t = useTranslations("PlanTrip.addOns");
 
   return (
     <motion.div
@@ -272,16 +258,6 @@ export function ServicesStep({
                 ))}
               </div>
             </TabsContent>
-
-            <div className="mt-6 flex justify-between">
-              <Button variant="outline" onClick={onBack}>
-                <RiArrowLeftLine /> {tCommon("back")}
-              </Button>
-              <Button size="lg" disabled={!canProceed} onClick={onNext}>
-                {t("reviewBooking")}
-                <RiArrowRightLine />
-              </Button>
-            </div>
           </div>
         </div>
       </Tabs>

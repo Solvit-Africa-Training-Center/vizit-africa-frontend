@@ -1,14 +1,20 @@
 export interface Flight {
   id: string;
   airline: string;
+  airlineLogo?: string;
   flightNumber: string;
-  origin: string;
-  destination: string;
+  departureCity: string;
+  departureAirport: string;
   departureTime: string;
+  arrivalCity: string;
+  arrivalAirport: string;
   arrivalTime: string;
   duration: string;
-  stops: string;
+  stops: number;
+  cabinClass: "economy" | "business" | "first";
   price: number;
+  currency: string;
+  seatsAvailable?: number;
 }
 
 export interface Hotel {
@@ -44,8 +50,10 @@ export interface TripInfo {
   departureCity: string;
   arrivalDate: string;
   departureDate: string;
+  returnDate?: string;
   adults: number;
   children: number;
+  infants: number;
   tripPurpose:
     | "leisure"
     | "business"
@@ -61,6 +69,7 @@ export interface TripInfo {
 }
 
 export interface Selections {
+  flight: Flight | null;
   hotel: Hotel | null;
   car: Car | null;
   carWithDriver: boolean;

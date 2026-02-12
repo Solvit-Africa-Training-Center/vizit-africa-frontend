@@ -11,7 +11,9 @@ import {
   RiUserLine,
   RiLogoutBoxRLine,
   RiDashboardLine,
+  RiSuitcaseLine,
 } from "@remixicon/react";
+import { useTripStore } from "@/store/trip-store";
 
 interface NavbarMobileProps {
   isOpen: boolean;
@@ -23,11 +25,13 @@ export function NavbarMobile({ isOpen, onClose }: NavbarMobileProps) {
   const tCommon = useTranslations("Common");
   const { user } = useUser();
   const pathname = usePathname();
+  const hasActiveTrip = useTripStore((s) => s.hasActiveTrip());
+  const tripItemCount = useTripStore((s) => s.itemCount());
 
   const navLinks = [
-    { href: "/services", label: t("services") },
+    { href: "/flights", label: t("flights") },
+    { href: "/services", label: t("destinations") },
     { href: "/experiences", label: t("experiences") },
-    { href: "/gallery", label: t("gallery") },
     { href: "/about", label: t("aboutUs") },
     { href: "/contact", label: t("contact") },
   ];
@@ -53,7 +57,7 @@ export function NavbarMobile({ isOpen, onClose }: NavbarMobileProps) {
                 "block font-display font-medium uppercase tracking-widest text-sm transition-colors py-2 border-b border-border/50 last:border-0",
                 isActive
                   ? "text-primary"
-                  : "text-foreground/80 hover:text-primary"
+                  : "text-foreground/80 hover:text-primary",
               )}
               onClick={onClose}
             >
@@ -111,9 +115,17 @@ export function NavbarMobile({ isOpen, onClose }: NavbarMobileProps) {
               <Link href="/plan-trip" onClick={onClose} className="block">
                 <Button
                   size="lg"
-                  className="w-full rounded-sm font-display font-medium uppercase tracking-wider text-xs"
+                  className="w-full rounded-sm font-display font-medium uppercase tracking-wider text-xs gap-2"
                 >
-                  {tCommon("startPlanning")}
+                  {hasActiveTrip ? (
+                    <>
+                      <RiSuitcaseLine className="size-4" />
+                      {tripItemCount} {tripItemCount === 1 ? "item" : "items"} ·
+                      View Trip
+                    </>
+                  ) : (
+                    tCommon("startPlanning")
+                  )}
                 </Button>
               </Link>
             </>
