@@ -53,7 +53,7 @@ export function useTripForm() {
           guide: selections.guide,
         },
       };
-      console.log("=== TRIP BOOKING SUBMISSION ===");
+      console.log("=== TRIP QUOTE REQUEST SUBMISSION ===");
       console.log(JSON.stringify(payload, null, 2));
     },
   });

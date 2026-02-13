@@ -85,10 +85,10 @@ export function HotelCard({
           <div className="mt-auto pt-4 border-t border-border/50 flex items-end justify-between">
             <div>
               <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">
-                Total ({days} {tSummary("nights")})
+                Est. Total ({days} {tSummary("nights")})
               </p>
               <p className="font-display text-xl font-medium text-foreground">
-                ${hotel.pricePerNight * days}
+                ${hotel.pricePerNight * days}*
               </p>
             </div>
             <p className="text-sm font-medium text-muted-foreground">

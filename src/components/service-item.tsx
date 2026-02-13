@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { RiArrowRightUpLine } from "@remixicon/react";
 import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
+import { AddToTripButton } from "./plan-trip/add-to-trip-button";
 
 export function ServiceItem({
   service,
@@ -87,22 +88,14 @@ export function ServiceItem({
                   </ul>
                 </div>
 
-                <div>
-                  <a
-                    href={`/plan-trip?service=${
-                      service.category === "Hotels" ||
-                      service.category === "BnBs"
-                        ? "hotels"
-                        : service.category === "Car Rentals"
-                          ? "cars"
-                          : service.category === "Guides"
-                            ? "guides"
-                            : "hotels"
-                    }`}
-                    className="inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-foreground font-medium uppercase tracking-widest text-sm hover:bg-primary/90 transition-colors"
-                  >
-                    {bookLabel}
-                  </a>
+                <div className="flex gap-4">
+                  <AddToTripButton
+                    type="note"
+                    note={`Requested Service: ${service.title} (${service.category}) - ${service.description}`}
+                    label={bookLabel}
+                    size="lg"
+                    className="px-8 rounded-none h-14 uppercase tracking-widest font-display text-sm"
+                  />
                 </div>
               </div>
             </div>

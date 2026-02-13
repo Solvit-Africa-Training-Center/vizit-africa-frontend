@@ -1,11 +1,11 @@
 {
   "Common": {
     "brandName": "Vizit Africa",
-    "startPlanning": "Search Flights",
-    "bookFlight": "Book a Flight",
+    "startPlanning": "Start Journey",
+    "bookFlight": "Plan a Flight",
     "learnMore": "View Options",
     "viewAll": "View All",
-    "bookNow": "Book Now",
+    "bookNow": "Request Quote",
     "contactUs": "Contact Support",
     "getInTouch": "Get in Touch",
     "sendMessage": "Send Request",
@@ -16,7 +16,7 @@
     "localTime": "Local Time",
     "back": "Back",
     "continue": "Continue",
-    "submit": "Search Flights"
+    "submit": "Request Quote"
   },
   "Navigation": {
     "flights": "Flights",
@@ -29,33 +29,33 @@
     "slides": {
       "1": {
         "subheading": "Seamless Travel",
-        "heading1": "Book",
+        "heading1": "Plan",
         "heading2": "Flights",
-        "description": "Compare airlines, find the best routes, and secure your seat to the heart of Africa in minutes."
+        "description": "Tell us your origin and dates. We'll manually source the best routes and fares to Rwanda for you."
       },
       "2": {
         "subheading": "Premium Stays",
-        "heading1": "Reserve",
+        "heading1": "Request",
         "heading2": "Hotels",
-        "description": "From boutique lodges to 5-star resorts. curated accommodations verified for quality and comfort."
+        "description": "Curated accommodations verified for quality and comfort. We'll secure your room at the best available rate."
       },
       "3": {
         "subheading": "Explore Freely",
-        "heading1": "Rent",
+        "heading1": "Hire",
         "heading2": "Vehicles",
-        "description": " rugged 4x4s for safari or luxury sedans for the city. Drive yourself or book a professional chauffeur."
+        "description": "Rugged 4x4s or luxury sedans. Choose your preference and we'll arrange the perfect ride with or without a driver."
       },
       "4": {
         "subheading": "Expert Guidance",
-        "heading1": "Hire",
+        "heading1": "Source",
         "heading2": "Guides",
-        "description": "Connect with local experts who know every trail, bird species, and hidden cultural gem."
+        "description": "Connect with local experts who know every trail and hidden gem. We'll match you with the right specialist."
       },
       "5": {
         "subheading": "Complete Packages",
-        "heading1": "Plan",
-        "heading2": "Trips",
-        "description": "Bundle flights, hotels, and experiences into one seamless itinerary. We handle the logistics."
+        "heading1": "Your",
+        "heading2": "Itinerary",
+        "description": "Bundle flights, hotels, and experiences. Receive a comprehensive quote and itinerary within 48 hours."
       }
     },
     "location": "Kigali Int. Airport",
@@ -120,25 +120,25 @@
     }
   },
   "HowItWorks": {
-    "overline": "Simple Booking",
-    "title": "Search Book Fly",
-    "description": "From search to boarding pass in minutes.",
+    "overline": "Expert Logistics",
+    "title": "Plan Quote Confirm Go",
+    "description": "Our streamlined process for custom African travel.",
     "steps": {
       "1": {
-        "title": "Search Flights",
-        "description": "Enter your origin, dates, and passengers to find the best fares to Rwanda."
+        "title": "Share Your Plan",
+        "description": "Tell us your travel dates, origin, and preferences through our interactive planner."
       },
       "2": {
-        "title": "Add Extras",
-        "description": "Bundle a hotel, rental car, or local guide with your flight — all optional."
+        "title": "Expert Sourcing",
+        "description": "Our specialists manually find the best real-time fares and service availability for you."
       },
       "3": {
-        "title": "Book & Confirm",
-        "description": "Secure checkout with instant confirmation and digital tickets to your phone."
+        "title": "Receive Quote",
+        "description": "Within 48 hours, you'll receive a detailed itinerary with finalized prices for approval."
       },
       "4": {
-        "title": "Fly & Explore",
-        "description": "We handle the logistics. You land, and your car, hotel, or guide is ready."
+        "title": "Secure Booking",
+        "description": "Confirm your plan with a single payment. We handle all ground logistics and tickets."
       }
     }
   },
@@ -239,11 +239,11 @@
     }
   },
   "CTA": {
-    "overline": "Ready to fly?",
-    "title": "Find Your",
-    "titleHighlight": "Flight",
-    "description": "Prices and availability change daily. Lock in the best fare to Rwanda now.",
-    "startPlanning": "Search Flights",
+    "overline": "Ready to explore?",
+    "title": "Start Your",
+    "titleHighlight": "Journey",
+    "description": "Receive a personalized itinerary and final quote within 48 hours. Expertly crafted for your perfect stay.",
+    "startPlanning": "Start Planning",
     "contactTeam": "Contact Support",
     "concierge": "Group Bookings",
     "emailUs": "Email Support",
@@ -679,10 +679,9 @@
     },
     "review": {
       "title": "Review Your Trip",
-      "subtitle": "Please review your details before confirming",
-      "alert": "After submitting, we'll review your request and send you a payment link within 24 hours.",
-      "submit": "Submit Booking Request",
-      "success": "Booking submitted! We'll contact you within 24 hours."
+      "subtitle": "Please review your preferences. Our experts will manually source the best flight routes and final service prices for your personalized itinerary.",
+      "alert": "After submitting, we'll find the best real-time options and send you a finalized quote within 48 hours.",
+      "submit": "Request Quote Now"
     },
     "summary": {
       "title": "Your Trip",
@@ -701,7 +700,9 @@
       "days": "days",
       "destination": "Destination",
       "infant": "infant",
-      "infants": "infants"
+      "infants": "infants",
+      "oneWay": "One Way",
+      "roundTrip": "Round Trip"
     },
     "data": {
       "amenities": {
@@ -750,18 +751,18 @@
       }
     },
     "confirmation": {
-      "title": "Request Received!",
-      "subtitle": "We've received your trip plan and our team is already reviewing it.",
+      "title": "Quote Request Received!",
+      "subtitle": "We've received your trip plan and our team is already sourcing the best flight and service options for you.",
       "referenceNumber": "Reference Number",
       "whatNext": "What happens next?",
       "steps": {
         "1": {
-          "title": "Expert Review (24hrs)",
-          "description": "One of our travel specialists will review your selected flights, hotels, and services to ensure availability and logistics."
+          "title": "Manual Sourcing (48hrs)",
+          "description": "Our travel specialists will manually find the best real-time flight fares and service availability based on your preferences."
         },
         "2": {
-          "title": "Personalized Proposal",
-          "description": "You'll receive a detailed itinerary with final pricing and payment options via email."
+          "title": "Receive Your Quote",
+          "description": "You'll receive a detailed itinerary with finalized pricing and a payment link via email within 2 business days."
         }
       },
       "dashboardButton": "Go to Dashboard",

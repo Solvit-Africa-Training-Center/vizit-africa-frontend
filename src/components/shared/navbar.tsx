@@ -61,7 +61,6 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
   const logoVariant = showSolid ? "default" : "light";
 
   const navLinks = [
-    { href: "/flights", label: t("flights") },
     { href: "/services", label: t("destinations") },
     { href: "/experiences", label: t("experiences") },
     { href: "/about", label: t("aboutUs") },

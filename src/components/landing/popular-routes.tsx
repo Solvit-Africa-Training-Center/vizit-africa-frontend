@@ -85,7 +85,7 @@ export function PopularRoutes() {
     const params = new URLSearchParams();
     params.set("from", `${route.from} (${route.fromCode})`);
     params.set("to", `${route.to} (${route.toCode})`);
-    router.push(`/${locale}/flights?${params.toString()}`);
+    router.push(`/${locale}/plan-trip?${params.toString()}`);
   };
 
   return (

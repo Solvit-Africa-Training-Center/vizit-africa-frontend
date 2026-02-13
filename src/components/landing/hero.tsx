@@ -13,7 +13,9 @@ import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { FlightSearchWidget } from "./flight-search-widget";
+import { TripRequestDialog } from "./trip-request-dialog";
+import { Button } from "@/components/ui/button";
+import { RiPlaneLine } from "@remixicon/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -24,6 +26,7 @@ export function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const t = useTranslations("Hero");
   const tCommon = useTranslations("Common");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -175,8 +178,17 @@ export function Hero() {
           </AnimatePresence>
         </div>
 
-        <div className="relative z-40 mt-8">
-          <FlightSearchWidget />
+        <div className="relative z-40 mt-12 pointer-events-auto">
+          <TripRequestDialog 
+            open={isDialogOpen}
+            onOpenChange={setIsDialogOpen}
+            trigger={
+              <Button size="xl" className="font-display uppercase tracking-widest text-sm h-14 px-8 rounded-full shadow-lg hover:shadow-primary/20 hover:scale-105 transition-all duration-300">
+                <RiPlaneLine className="mr-2 size-5" />
+                Start Your Journey
+              </Button>
+            } 
+          />
         </div>
 
         <div className="lg:hidden flex items-center gap-4 mt-6">

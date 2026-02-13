@@ -58,10 +58,25 @@ export function usePlanTrip() {
     // detect source
     if (from || to) {
       setEntrySource("widget");
-    } else if (flightId) {
+    } else if (flightId || serviceType === "flights") {
       setEntrySource("flights");
-      const match = flights.find((f) => f.id === flightId);
-      if (match && !selections.flight) addFlight(match);
+      if (!selections.flight) {
+        addFlight({
+          id: "requested",
+          airline: "Best Option",
+          flightNumber: "TBD",
+          departureCity: from || "",
+          arrivalCity: to || "",
+          departureAirport: "TBD",
+          arrivalAirport: "TBD",
+          departureTime: departDate || "",
+          arrivalTime: "",
+          duration: "",
+          price: 0,
+          cabinClass: "Economy",
+          stops: 0,
+        });
+      }
     } else if (destination) {
       setEntrySource("destinations");
       if (tripInfo.destination !== destination) setDestination(destination);

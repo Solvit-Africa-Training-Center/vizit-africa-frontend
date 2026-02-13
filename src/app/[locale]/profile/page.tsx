@@ -153,9 +153,14 @@ export default function ProfilePage() {
 
                   <div className="space-y-12">
                     <div>
-                      <h3 className="font-display text-2xl font-medium mb-6">
+                      <h3 className="font-display text-2xl font-medium mb-2">
                         {t("overview.pendingRequests.title")}
                       </h3>
+                      <p className="text-xs text-muted-foreground mb-6">
+                        Our experts are manually sourcing the best flight and
+                        service options for your requests. Final quotes are
+                        provided within 48 hours.
+                      </p>
                       <div className="space-y-4">
                         {sampleRequests.map((req) => (
                           <div

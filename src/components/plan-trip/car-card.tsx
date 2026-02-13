@@ -158,10 +158,10 @@ export function CarCard({
           <div className="mt-auto pt-4 border-t border-border/50 flex items-end justify-between">
             <div>
               <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">
-                Total ({days} {tSummary("days")})
+                Est. Total ({days} {tSummary("days")})
               </p>
               <p className="font-display text-xl font-medium text-foreground">
-                ${total}
+                ${total}*
               </p>
             </div>
             <p className="text-sm font-medium text-muted-foreground">

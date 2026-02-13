@@ -85,7 +85,7 @@ export function ReviewStep({
             <RiArrowLeftLine className="mr-2" /> {tCommon("back")}
           </Button>
           <Button size="lg" className="flex-2" onClick={onSubmit}>
-            {t("submit")}
+            Request Quote
           </Button>
         </div>
       </div>

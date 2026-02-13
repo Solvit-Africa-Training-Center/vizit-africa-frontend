@@ -382,14 +382,17 @@ export default function FlightsPage() {
 
           {/* results */}
           <div className="lg:col-span-3">
-            <div className="flex items-center justify-between mb-6">
-              <p className="text-sm text-muted-foreground">
-                <span className="font-medium text-foreground">
-                  {filteredFlights.length}
-                </span>{" "}
-                flights found
-              </p>
-            </div>
+        <div className="flex items-center justify-between mb-6">
+          <p className="text-sm text-muted-foreground">
+            <span className="font-medium text-foreground">
+              {filteredFlights.length}
+            </span>{" "}
+            suggested routes
+          </p>
+          <div className="bg-amber-50 border border-amber-100 rounded-sm px-4 py-2 text-[10px] text-amber-800 font-medium">
+            * All flight prices are estimates. We manually find the best real-time options for you.
+          </div>
+        </div>
 
             <div className="space-y-4">
               {filteredFlights.map((flight, index) => (
@@ -453,32 +456,24 @@ export default function FlightsPage() {
 
                     <div className="flex md:flex-col items-center md:items-end gap-3 md:gap-2 md:min-w-[140px] border-t md:border-t-0 md:border-l border-border pt-4 md:pt-0 md:pl-6">
                       <div className="text-right">
-                        <p className="text-3xl font-display font-bold">
-                          ${flight.price}
+                        <p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">
+                          Est. Price
                         </p>
-                        <p className="text-xs text-muted-foreground">
-                          per person
+                        <p className="text-3xl font-display font-bold">
+                          ${flight.price}*
+                        </p>
+                        <p className="text-[10px] text-muted-foreground italic">
+                          Starting from
                         </p>
                       </div>
-                      <div className="flex gap-2 w-full md:w-auto">
-                        <AddToTripButton
-                          type="flight"
-                          item={flight as Flight}
-                          label="Add to Trip"
-                          className="flex-1 md:flex-none"
-                        />
+                      <div className="flex gap-2 w-full md:w-auto mt-2">
                         <Link
-                          href={`/plan-trip?flight=${flight.id}`}
-                          className="flex-1 md:flex-none bg-primary hover:bg-primary-light text-primary-foreground rounded-sm py-2.5 px-6 text-center font-display font-medium uppercase tracking-wider text-xs transition-colors"
+                          href={`/${locale}/plan-trip?flight=${flight.id}&from=${flight.departureCity}&to=${flight.arrivalCity}&depart=${flight.departureTime.split("T")[0]}`}
+                          className="w-full bg-primary hover:bg-primary-light text-primary-foreground rounded-sm py-2.5 px-6 text-center font-display font-medium uppercase tracking-wider text-xs transition-colors"
                         >
-                          {t("bookNow")}
+                          Request Quote
                         </Link>
                       </div>
-                      {flight.seatsAvailable <= 10 && (
-                        <p className="text-[10px] text-amber-500 font-medium">
-                          {flight.seatsAvailable} seats left
-                        </p>
-                      )}
                     </div>
                   </div>
                 </motion.div>

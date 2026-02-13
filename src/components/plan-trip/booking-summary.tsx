@@ -67,9 +67,21 @@ export function BookingSummary({
           <div className="space-y-2 text-sm">
             <SummaryItem
               label={t("flight")}
+              subLabel={
+                selections.flight
+                  ? tripInfo.returnDate
+                    ? t("roundTrip")
+                    : t("oneWay")
+                  : undefined
+              }
               isSelected={!!selections.flight}
               value={
-                selections.flight ? selections.flight.price * travelers : null
+                selections.flight && selections.flight.id !== "requested"
+                  ? selections.flight.price * travelers
+                  : null
+              }
+              status={
+                selections.flight?.id === "requested" ? "pending" : undefined
               }
             />
             <SummaryItem
@@ -107,14 +119,19 @@ export function BookingSummary({
               <span>{formatCurrency(serviceFee)}</span>
             </div>
             <div className="flex justify-between text-lg font-medium pt-2 border-t border-border">
-              <span>{t("total")}</span>
+              <div className="flex flex-col">
+                <span>{t("total")}</span>
+                <span className="text-[10px] text-muted-foreground font-light normal-case">
+                  * Final quote in 48h
+                </span>
+              </div>
               <span className="text-primary">{formatCurrency(total)}</span>
             </div>
           </div>
         </>
       ) : (
         <div className="text-center py-8 text-muted-foreground text-sm">
-          Complete trip details to see pricing
+          Complete trip details to see estimated pricing
         </div>
       )}
     </div>
@@ -123,19 +140,41 @@ export function BookingSummary({
 
 interface SummaryItemProps {
   label: string;
+  subLabel?: string;
   isSelected: boolean;
   value: number | null;
   optional?: boolean;
+  status?: "pending" | "confirmed";
 }
 
-function SummaryItem({ label, isSelected, value, optional }: SummaryItemProps) {
+function SummaryItem({
+  label,
+  subLabel,
+  isSelected,
+  value,
+  optional,
+  status,
+}: SummaryItemProps) {
   return (
     <div className="flex items-center justify-between">
-      <span className="text-muted-foreground">{label}</span>
-      {isSelected && value !== null ? (
-        <span className="text-green-600 flex items-center gap-1">
-          <RiCheckLine className="size-4" />${value}
-        </span>
+      <div className="flex flex-col">
+        <span className="text-muted-foreground">{label}</span>
+        {isSelected && subLabel && (
+          <span className="text-[10px] text-muted-foreground/60 uppercase tracking-widest font-mono">
+            {subLabel}
+          </span>
+        )}
+      </div>
+      {isSelected ? (
+        status === "pending" || value === null ? (
+          <span className="text-amber-600 text-xs font-medium bg-amber-50 px-2 py-0.5 rounded-full border border-amber-100">
+            Pending Quote
+          </span>
+        ) : (
+          <span className="text-green-600 flex items-center gap-1">
+            <RiCheckLine className="size-4" />${value}
+          </span>
+        )
       ) : (
         <span className="text-muted-foreground">
           {optional ? "Optional" : "-"}

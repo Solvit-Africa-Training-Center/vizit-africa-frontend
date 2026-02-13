@@ -7,6 +7,8 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "motion/react";
 import type { Flight, Hotel, Car, Guide } from "@/lib/plan_trip-types";
+import { useRouter } from "next/navigation";
+import { useLocale } from "next-intl";
 
 type AddToTripType =
   | "flight"
@@ -49,6 +51,8 @@ export function AddToTripButton({
   className,
 }: AddToTripButtonProps) {
   const store = useTripStore();
+  const router = useRouter();
+  const locale = useLocale();
 
   const isAdded = (() => {
     switch (type) {
@@ -93,7 +97,7 @@ export function AddToTripButton({
       action: {
         label: "View Trip",
         onClick: () => {
-          window.location.href = "/en/plan-trip";
+          router.push(`/${locale}/plan-trip`);
         },
       },
     });

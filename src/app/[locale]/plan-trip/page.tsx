@@ -64,7 +64,9 @@ export default function PlanTripPage() {
   const entrySource = useTripStore((s) => s.entrySource);
 
   const flightSummary = selections.flight
-    ? `${selections.flight.airline} ${selections.flight.flightNumber} · $${selections.flight.price}`
+    ? selections.flight.id === "requested"
+      ? `${tripInfo.departureCity || "One Way"} to ${tripInfo.destination || "Kigali"} · ${tripInfo.returnDate ? "Round Trip" : "One Way"}`
+      : `${selections.flight.airline} ${selections.flight.flightNumber} · $${selections.flight.price}`
     : undefined;
 
   const servicesSummary = (() => {
@@ -72,6 +74,10 @@ export default function PlanTripPage() {
     if (selections.hotel) parts.push(selections.hotel.name);
     if (selections.car) parts.push(selections.car.model);
     if (selections.guide) parts.push("Guide");
+    if (tripInfo.specialRequests) {
+      const notes = tripInfo.specialRequests.split("\n").filter(Boolean);
+      parts.push(`${notes.length} Special Request${notes.length > 1 ? "s" : ""}`);
+    }
     return parts.length > 0 ? parts.join(" · ") : undefined;
   })();
 
@@ -80,6 +86,7 @@ export default function PlanTripPage() {
       ? `${tripInfo.name} · ${tripInfo.email}`
       : undefined;
 
+  const isReadyToSubmit = !!(tripInfo.name && tripInfo.email && tripInfo.departureCity && tripInfo.departureDate);
   const canSubmit = !!(tripInfo.name && tripInfo.email);
 
   const handleSubmit = () => {
@@ -143,7 +150,10 @@ export default function PlanTripPage() {
                 icon={<RiHotelLine className="size-5" />}
                 title="Stay & Services"
                 status={
-                  selections.hotel || selections.car || selections.guide
+                  selections.hotel ||
+                  selections.car ||
+                  selections.guide ||
+                  tripInfo.specialRequests
                     ? "selected"
                     : "empty"
                 }
@@ -197,7 +207,8 @@ export default function PlanTripPage() {
                 defaultExpanded={
                   entrySource !== "widget" &&
                   entrySource !== "direct" &&
-                  !!(selections.flight || selections.hotel)
+                  !!(selections.flight || selections.hotel) &&
+                  !detailsSummary
                 }
               >
                 <ContactInfoStep
@@ -211,6 +222,21 @@ export default function PlanTripPage() {
             {/* sticky sidebar */}
             <div className="hidden lg:block relative">
               <div className="sticky top-24 space-y-4">
+                {isReadyToSubmit && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="p-4 bg-primary/10 border border-primary/20 rounded-sm text-center space-y-2"
+                  >
+                    <p className="text-xs font-medium text-primary uppercase tracking-widest">
+                      Ready to Go
+                    </p>
+                    <p className="text-[10px] text-muted-foreground leading-tight">
+                      We have all your details. You can submit your request
+                      immediately.
+                    </p>
+                  </motion.div>
+                )}
                 <BookingSummary
                   currentStep={1}
                   tripInfo={tripInfo}
@@ -226,14 +252,23 @@ export default function PlanTripPage() {
                   onClick={handleSubmit}
                   disabled={!canSubmit}
                   size="lg"
-                  className="w-full rounded-sm font-display font-medium uppercase tracking-wider text-sm gap-2"
+                  className={cn(
+                    "w-full rounded-sm font-display font-medium uppercase tracking-wider text-sm gap-2 transition-all duration-500",
+                    isReadyToSubmit ? "bg-primary h-16 text-base" : "",
+                  )}
                 >
                   <RiCheckDoubleLine className="size-5" />
-                  Submit Trip Request
+                  {isReadyToSubmit
+                    ? "Submit Quote Request Now"
+                    : "Get My Quote"}
                 </Button>
+                <p className="text-[10px] text-muted-foreground text-center leading-tight">
+                  No payment required now. You'll receive a detailed itinerary
+                  and final pricing within 48 hours.
+                </p>
                 {!canSubmit && (
                   <p className="text-xs text-muted-foreground text-center">
-                    Fill in your name & email to submit
+                    Fill in your name & email to proceed
                   </p>
                 )}
               </div>
@@ -246,7 +281,7 @@ export default function PlanTripPage() {
               <div>
                 <p className="text-xs text-muted-foreground">Estimated total</p>
                 <p className="text-xl font-display font-bold">
-                  ${total.toFixed(0)}
+                  ${total.toFixed(0)}*
                 </p>
               </div>
               <Button
@@ -256,7 +291,7 @@ export default function PlanTripPage() {
                 className="rounded-sm font-display font-medium uppercase tracking-wider text-sm gap-2"
               >
                 <RiCheckDoubleLine className="size-5" />
-                Submit
+                Get Quote
               </Button>
             </div>
           </div>

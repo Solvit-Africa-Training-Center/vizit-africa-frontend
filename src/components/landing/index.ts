@@ -1,5 +1,5 @@
 export * from "./hero";
-export * from "./flight-search-widget";
+export * from "./trip-request-dialog";
 export * from "./popular-routes";
 export * from "./destinations";
 export * from "./services";
