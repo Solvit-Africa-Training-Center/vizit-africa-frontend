@@ -22,19 +22,17 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { flights } from "@/lib/dummy-data";
-import type { Flight, Selections, TripInfo } from "@/lib/plan_trip-types";
+import type { TripInfo, TripItem } from "@/lib/plan_trip-types";
 import { cn } from "@/lib/utils";
 import type { TripForm, TripFormValues } from "@/hooks/use-trip-form";
-
-const ALL_FLIGHTS = [...flights];
 
 interface FlightStepProps {
   form: TripForm;
   tripInfo: TripInfo;
   setTripInfo: (info: Partial<TripInfo>) => void;
-  selections: Selections;
-  setSelections: (selections: Partial<Selections>) => void;
+  items: TripItem[];
+  addItem: (item: TripItem) => void;
+  removeItem: (id: string) => void;
   onNext: () => void;
 }
 
@@ -42,35 +40,44 @@ export function FlightStep({
   form,
   tripInfo,
   setTripInfo,
-  selections,
-  setSelections,
+  items,
+  addItem,
+  removeItem,
   onNext,
 }: FlightStepProps) {
-  const [includeFlight, setIncludeFlight] = useState(!!selections.flight || true);
-  const [isRoundTrip, setIsRoundTrip] = useState(!!tripInfo.returnDate || true);
+  const flight = items.find((i) => i.type === "flight");
+  const [includeFlight, setIncludeFlight] = useState<boolean>(!!flight || true);
+  const [isRoundTrip, setIsRoundTrip] = useState<boolean>(!!tripInfo.returnDate || true);
 
   const handleToggleFlight = (checked: boolean) => {
     setIncludeFlight(checked);
     if (!checked) {
-      setSelections({ flight: null });
+      if (flight) removeItem(flight.id);
     } else {
-      setSelections({
-        flight: {
-          id: "requested",
-          airline: "Best Option",
-          flightNumber: "TBD",
-          departureCity: tripInfo.departureCity,
-          arrivalCity: tripInfo.destination,
-          departureAirport: "TBD",
-          arrivalAirport: "TBD",
-          departureTime: tripInfo.departureDate,
-          arrivalTime: "",
-          duration: "",
-          price: 0,
-          cabinClass: "Economy",
-          stops: 0,
-        },
-      });
+        if (!flight) {
+             addItem({
+                id: "requested",
+                type: "flight",
+                title: "Requested Flight",
+                price: 0,
+                quantity: 1,
+                data: {
+                  airline: "Best Option",
+                  flightNumber: "TBD",
+                  departureCity: tripInfo.departureCity,
+                  arrivalCity: tripInfo.destination || "",
+                  departureAirport: "TBD",
+                  arrivalAirport: "TBD",
+                  departureTime: tripInfo.departureDate,
+                  arrivalTime: "",
+                  duration: "",
+                  price: 0,
+                  cabinClass: "economy",
+                  stops: 0,
+                  currency: "USD",
+                }
+              });
+        }
     }
   };
 
@@ -414,6 +421,7 @@ export function FlightStep({
                 onChange={(e) => setTripInfo({ specialRequests: e.target.value })}
               />
             </div>
+          </div>
           </motion.div>
         )}
       </div>

@@ -18,17 +18,20 @@ import {
 } from "@/components/plan-trip";
 import type {
   TripInfo,
-  Selections,
+  TripItem,
   Hotel,
   Car,
+  Guide,
   FilterState,
 } from "@/lib/plan_trip-types";
 import { MOCK_GUIDES, DRIVER_SURCHARGE } from "@/lib/plan-trip-data";
 import { useTranslations } from "next-intl";
 
 interface ServicesStepProps {
-  selections: Selections;
-  setSelections: (selections: Selections) => void;
+  items: TripItem[];
+  addItem: (item: TripItem) => void;
+  removeItem: (id: string) => void;
+  updateItem: (id: string, updates: Partial<TripItem>) => void;
   activeTab: string;
   setActiveTab: (tab: string) => void;
   showMobileSummary: boolean;
@@ -66,8 +69,10 @@ interface ServicesStepProps {
 }
 
 export function ServicesStep({
-  selections,
-  setSelections,
+  items,
+  addItem,
+  removeItem,
+  updateItem,
   activeTab,
   setActiveTab,
   showMobileSummary,
@@ -100,6 +105,79 @@ export function ServicesStep({
   setCarPage,
 }: ServicesStepProps) {
   const t = useTranslations("PlanTrip.addOns");
+
+  const hotelItem = items.find(i => i.type === "hotel");
+  const carItem = items.find(i => i.type === "car");
+  const guideItem = items.find(i => i.type === "guide");
+
+  const handleSelectHotel = (hotel: Hotel) => {
+    if (hotelItem?.id === hotel.id) return; // already selected
+    
+    if (hotelItem) {
+        removeItem(hotelItem.id);
+    }
+    
+    addItem({
+        id: hotel.id,
+        type: "hotel",
+        title: hotel.name,
+        description: hotel.location,
+        price: hotel.pricePerNight * days,
+        data: hotel,
+        quantity: 1
+    });
+  };
+
+  const handleSelectCar = (car: Car) => {
+    if (carItem?.id === car.id) return;
+
+    if (carItem) {
+        removeItem(carItem.id);
+    }
+
+    const withDriver = false;
+    addItem({
+        id: car.id,
+        type: "car",
+        title: car.model,
+        description: `${car.seats} seats · ${car.transmission}`,
+        price: car.pricePerDay * days,
+        data: { ...car, withDriver },
+        quantity: 1
+    });
+  };
+
+  const handleCarDriverChange = (withDriver: boolean) => {
+    if (!carItem) return;
+    const car = carItem.data as Car & { withDriver?: boolean };
+    const pricePerDay = car.pricePerDay || 0;
+    const newPrice = (pricePerDay + (withDriver ? DRIVER_SURCHARGE : 0)) * days;
+
+    updateItem(carItem.id, {
+        price: newPrice,
+        data: { ...car, withDriver }
+    });
+  };
+
+  const handleToggleGuide = (guide: Guide) => {
+      const currentGuideId = guideItem?.id;
+      if (currentGuideId === guide.id && currentGuideId) {
+          removeItem(currentGuideId);
+      } else {
+          if (guideItem) removeItem(guideItem.id); 
+          
+          addItem({
+              id: guide.id,
+              type: "guide",
+              title: guide.name,
+              description: "Professional Guide",
+              price: guide.price,
+              data: guide,
+              quantity: 1
+          });
+      }
+  };
+
 
   return (
     <motion.div
@@ -143,7 +221,7 @@ export function ServicesStep({
                 <BookingSummary
                   currentStep={3}
                   tripInfo={tripInfo}
-                  selections={selections}
+                  items={items}
                   days={days}
                   travelers={travelers}
                   driverSurcharge={DRIVER_SURCHARGE}
@@ -186,9 +264,9 @@ export function ServicesStep({
                       <HotelCard
                         key={hotel.id}
                         hotel={hotel}
-                        isSelected={selections.hotel?.id === hotel.id}
+                        isSelected={hotelItem?.id === hotel.id}
                         days={days}
-                        onSelect={() => setSelections({ ...selections, hotel })}
+                        onSelect={() => handleSelectHotel(hotel)}
                       />
                     ))}
                   </div>
@@ -213,17 +291,12 @@ export function ServicesStep({
                       <CarCard
                         key={car.id}
                         car={car}
-                        isSelected={selections.car?.id === car.id}
+                        isSelected={carItem?.id === car.id}
                         days={days}
-                        withDriver={selections.carWithDriver}
+                        withDriver={carItem?.id === car.id ? carItem.data?.withDriver : false}
                         driverSurcharge={DRIVER_SURCHARGE}
-                        onSelect={() => setSelections({ ...selections, car })}
-                        onDriverChange={(withDriver) =>
-                          setSelections({
-                            ...selections,
-                            carWithDriver: withDriver,
-                          })
-                        }
+                        onSelect={() => handleSelectCar(car)}
+                        onDriverChange={handleCarDriverChange}
                       />
                     ))}
                   </div>
@@ -247,13 +320,8 @@ export function ServicesStep({
                   <GuideCard
                     key={guide.id}
                     guide={guide}
-                    isSelected={selections.guide?.id === guide.id}
-                    onToggle={() =>
-                      setSelections({
-                        ...selections,
-                        guide: selections.guide?.id === guide.id ? null : guide,
-                      })
-                    }
+                    isSelected={guideItem?.id === guide.id}
+                    onToggle={() => handleToggleGuide(guide)}
                   />
                 ))}
               </div>

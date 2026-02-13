@@ -22,6 +22,7 @@ import {
   RiUserLine,
   RiCheckDoubleLine,
 } from "@remixicon/react";
+import { cn } from "@/lib/utils";
 
 export default function PlanTripPage() {
   const tHeader = useTranslations("PlanTrip.header");
@@ -29,8 +30,10 @@ export default function PlanTripPage() {
   const {
     tripInfo,
     setTripInfo,
-    selections,
-    setSelections,
+    items,
+    addItem,
+    removeItem,
+    updateItem,
     activeTab,
     setActiveTab,
     days,
@@ -63,20 +66,26 @@ export default function PlanTripPage() {
   const form = useTripForm();
   const entrySource = useTripStore((s) => s.entrySource);
 
-  const flightSummary = selections.flight
-    ? selections.flight.id === "requested"
+  const flight = items.find((i) => i.type === "flight");
+  const hotel = items.find((i) => i.type === "hotel");
+  const car = items.find((i) => i.type === "car");
+  const guide = items.find((i) => i.type === "guide");
+  const noteItem = items.find((i) => i.type === "note");
+
+  const flightSummary = flight
+    ? flight.id === "requested"
       ? `${tripInfo.departureCity || "One Way"} to ${tripInfo.destination || "Kigali"} · ${tripInfo.returnDate ? "Round Trip" : "One Way"}`
-      : `${selections.flight.airline} ${selections.flight.flightNumber} · $${selections.flight.price}`
+      : `${flight.data?.airline || "Flight"} ${flight.data?.flightNumber || ""} · $${flight.price}`
     : undefined;
 
   const servicesSummary = (() => {
     const parts: string[] = [];
-    if (selections.hotel) parts.push(selections.hotel.name);
-    if (selections.car) parts.push(selections.car.model);
-    if (selections.guide) parts.push("Guide");
-    if (tripInfo.specialRequests) {
-      const notes = tripInfo.specialRequests.split("\n").filter(Boolean);
-      parts.push(`${notes.length} Special Request${notes.length > 1 ? "s" : ""}`);
+    if (hotel) parts.push(hotel.title);
+    if (car) parts.push(car.title);
+    if (guide) parts.push("Guide");
+    if (noteItem || tripInfo.specialRequests) {
+        // Just generic "Special Request" if present
+        parts.push("Special Request");
     }
     return parts.length > 0 ? parts.join(" · ") : undefined;
   })();
@@ -127,7 +136,7 @@ export default function PlanTripPage() {
               <TripSection
                 icon={<RiFlightTakeoffLine className="size-5" />}
                 title="Flight"
-                status={selections.flight ? "selected" : "empty"}
+                status={flight ? "selected" : "empty"}
                 summary={flightSummary}
                 defaultExpanded={
                   entrySource === "widget" ||
@@ -139,8 +148,9 @@ export default function PlanTripPage() {
                   form={form}
                   tripInfo={tripInfo}
                   setTripInfo={setTripInfo}
-                  selections={selections}
-                  setSelections={setSelections}
+                  items={items}
+                  addItem={addItem}
+                  removeItem={removeItem}
                   onNext={() => {}}
                 />
               </TripSection>
@@ -150,9 +160,10 @@ export default function PlanTripPage() {
                 icon={<RiHotelLine className="size-5" />}
                 title="Stay & Services"
                 status={
-                  selections.hotel ||
-                  selections.car ||
-                  selections.guide ||
+                  hotel ||
+                  car ||
+                  guide ||
+                  noteItem ||
                   tripInfo.specialRequests
                     ? "selected"
                     : "empty"
@@ -161,10 +172,10 @@ export default function PlanTripPage() {
                 defaultExpanded={entrySource === "services"}
               >
                 <ServicesStep
-                  selections={selections}
-                  setSelections={
-                    setSelections as (s: typeof selections) => void
-                  }
+                  items={items}
+                  addItem={addItem}
+                  removeItem={removeItem}
+                  updateItem={updateItem}
                   activeTab={activeTab}
                   setActiveTab={setActiveTab}
                   showMobileSummary={false}
@@ -207,7 +218,7 @@ export default function PlanTripPage() {
                 defaultExpanded={
                   entrySource !== "widget" &&
                   entrySource !== "direct" &&
-                  !!(selections.flight || selections.hotel) &&
+                  !!(flight || hotel) &&
                   !detailsSummary
                 }
               >
@@ -240,7 +251,7 @@ export default function PlanTripPage() {
                 <BookingSummary
                   currentStep={1}
                   tripInfo={tripInfo}
-                  selections={selections}
+                  items={items}
                   days={days}
                   travelers={travelers}
                   driverSurcharge={DRIVER_SURCHARGE}

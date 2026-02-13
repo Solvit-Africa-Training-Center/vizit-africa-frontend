@@ -183,7 +183,7 @@ export function Hero() {
             open={isDialogOpen}
             onOpenChange={setIsDialogOpen}
             trigger={
-              <Button size="xl" className="font-display uppercase tracking-widest text-sm h-14 px-8 rounded-full shadow-lg hover:shadow-primary/20 hover:scale-105 transition-all duration-300">
+              <Button size="lg" className="font-display uppercase tracking-widest text-sm h-14 px-8 rounded-full shadow-lg hover:shadow-primary/20 hover:scale-105 transition-all duration-300">
                 <RiPlaneLine className="mr-2 size-5" />
                 Start Your Journey
               </Button>

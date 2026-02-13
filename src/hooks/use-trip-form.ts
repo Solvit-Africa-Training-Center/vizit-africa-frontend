@@ -25,7 +25,7 @@ export interface TripFormValues {
 }
 
 export function useTripForm() {
-  const { tripInfo, selections } = useTripStore();
+  const { tripInfo, items } = useTripStore();
 
   const form = useForm({
     defaultValues: {
@@ -45,13 +45,7 @@ export function useTripForm() {
     onSubmit: ({ value }) => {
       const payload = {
         ...value,
-        selections: {
-          flight: selections.flight,
-          hotel: selections.hotel,
-          car: selections.car,
-          carWithDriver: selections.carWithDriver,
-          guide: selections.guide,
-        },
+        items: items,
       };
       console.log("=== TRIP QUOTE REQUEST SUBMISSION ===");
       console.log(JSON.stringify(payload, null, 2));

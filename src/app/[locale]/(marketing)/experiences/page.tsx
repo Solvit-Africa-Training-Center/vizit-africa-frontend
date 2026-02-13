@@ -334,8 +334,8 @@ function ExperienceItem({
       </p>
 
       <AddToTripButton
-        type="note"
-        note={`Experience: ${experience.title} - ${experience.description}`}
+        type="experience"
+        item={experience}
         label={labels.requestQuote}
         variant="default"
         size="lg"

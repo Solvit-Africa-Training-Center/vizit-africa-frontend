@@ -1,7 +1,7 @@
 export const HERO_SLIDES = [
   {
     id: 1,
-    image: "/images/rwanda-sky-scrapers.jpg",
+    image: "/images/gradivis.jpg",
     key: "1",
   },
   {

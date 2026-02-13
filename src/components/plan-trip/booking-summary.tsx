@@ -1,13 +1,13 @@
 "use client";
 
-import type { Selections, TripInfo } from "../../lib/plan_trip-types";
+import type { TripItem, TripInfo } from "../../lib/plan_trip-types";
 import { RiCheckLine } from "@remixicon/react";
 import { useTranslations } from "next-intl";
 
 interface BookingSummaryProps {
   currentStep: number;
   tripInfo: TripInfo;
-  selections: Selections;
+  items: TripItem[];
   days: number;
   travelers: number;
   driverSurcharge: number;
@@ -19,7 +19,7 @@ interface BookingSummaryProps {
 export function BookingSummary({
   currentStep,
   tripInfo,
-  selections,
+  items,
   days,
   travelers,
   driverSurcharge,
@@ -29,6 +29,11 @@ export function BookingSummary({
 }: BookingSummaryProps) {
   const t = useTranslations("PlanTrip.summary");
   const formatCurrency = (amount: number) => `$${amount.toFixed(2)}`;
+
+  const flight = items.find((i) => i.type === "flight");
+  const hotel = items.find((i) => i.type === "hotel");
+  const car = items.find((i) => i.type === "car");
+  const guide = items.find((i) => i.type === "guide");
 
   return (
     <div className="bg-muted/30 rounded-xl p-6 space-y-6 sticky top-28">
@@ -68,43 +73,43 @@ export function BookingSummary({
             <SummaryItem
               label={t("flight")}
               subLabel={
-                selections.flight
+                flight
                   ? tripInfo.returnDate
                     ? t("roundTrip")
                     : t("oneWay")
                   : undefined
               }
-              isSelected={!!selections.flight}
+              isSelected={!!flight}
               value={
-                selections.flight && selections.flight.id !== "requested"
-                  ? selections.flight.price * travelers
+                flight && flight.id !== "requested"
+                  ? (flight.price || 0) * travelers
                   : null
               }
               status={
-                selections.flight?.id === "requested" ? "pending" : undefined
+                flight?.id === "requested" ? "pending" : undefined
               }
             />
             <SummaryItem
               label={t("accommodation")}
-              isSelected={!!selections.hotel}
+              isSelected={!!hotel}
               value={
-                selections.hotel ? selections.hotel.pricePerNight * days : null
+                hotel && hotel.data?.pricePerNight ? hotel.data.pricePerNight * days : null
               }
             />
             <SummaryItem
               label={t("vehicle")}
-              isSelected={!!selections.car}
+              isSelected={!!car}
               value={
-                selections.car
-                  ? selections.car.pricePerDay * days +
-                    (selections.carWithDriver ? driverSurcharge * days : 0)
+                car && car.data?.pricePerDay
+                  ? car.data.pricePerDay * days +
+                    (car.data.withDriver ? driverSurcharge * days : 0)
                   : null
               }
             />
             <SummaryItem
               label={t("guide")}
-              isSelected={!!selections.guide}
-              value={selections.guide?.price ?? null}
+              isSelected={!!guide}
+              value={guide?.price ?? null}
               optional
             />
           </div>

@@ -6,21 +6,24 @@ import { RiCheckLine, RiSuitcaseLine } from "@remixicon/react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "motion/react";
-import type { Flight, Hotel, Car, Guide } from "@/lib/plan_trip-types";
+import type { Flight, Hotel, Car, Guide, Experience, Service, TripItem, TripItemType } from "@/lib/plan_trip-types";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
+import { v4 as uuidv4 } from 'uuid';
 
 type AddToTripType =
   | "flight"
   | "hotel"
   | "car"
   | "guide"
+  | "experience"
+  | "service"
   | "note"
   | "destination";
 
 interface AddToTripButtonProps {
   type: AddToTripType;
-  item?: Flight | Hotel | Car | Guide;
+  item?: Flight | Hotel | Car | Guide | Experience | Service;
   note?: string;
   destination?: string;
   withDriver?: boolean;
@@ -35,6 +38,8 @@ const toastMessages: Record<AddToTripType, string> = {
   hotel: "🏨 Hotel added to your trip",
   car: "🚗 Vehicle added to your trip",
   guide: "🧑‍💼 Guide added to your trip",
+  experience: "🦁 Experience added to your trip",
+  service: "🛠 Service added to your trip",
   note: "📝 Note added to your trip",
   destination: "📍 Destination set for your trip",
 };
@@ -54,50 +59,99 @@ export function AddToTripButton({
   const router = useRouter();
   const locale = useLocale();
 
+  // Check if item is already added. 
+  // For 'destination', we check tripInfo. 
+  // For others, checking if an item with same ID exists in `items`.
   const isAdded = (() => {
-    switch (type) {
-      case "flight":
-        return store.selections.flight?.id === (item as Flight)?.id;
-      case "hotel":
-        return store.selections.hotel?.id === (item as Hotel)?.id;
-      case "car":
-        return store.selections.car?.id === (item as Car)?.id;
-      case "guide":
-        return store.selections.guide?.id === (item as Guide)?.id;
-      case "destination":
+    if (type === "destination") {
         return store.tripInfo.destination === destination;
-      default:
-        return false;
     }
+    if (type === "note") {
+        // Notes are hard to check for uniqueness without ID, maybe just specific logic?
+        // For now, let's assume notes are append-only and always "addable" unless we want to debounce.
+        return false; 
+    }
+    if (item && 'id' in item) {
+        return store.items.some(i => i.id === item.id);
+    }
+    return false;
   })();
 
   const handleAdd = () => {
-    switch (type) {
-      case "flight":
-        store.addFlight(item as Flight);
-        break;
-      case "hotel":
-        store.addHotel(item as Hotel);
-        break;
-      case "car":
-        store.addCar(item as Car, withDriver);
-        break;
-      case "guide":
-        store.addGuide(item as Guide);
-        break;
-      case "note":
-        if (note) store.addNote(note);
-        break;
-      case "destination":
-        if (destination) store.setDestination(destination);
-        break;
+    if (type === "destination" && destination) {
+        store.setDestination(destination);
+    } else if (type === "note" && note) {
+        // Create a note item
+        const noteItem: TripItem = {
+            id: uuidv4(),
+            type: "note",
+            title: "Special Request / Note",
+            description: note,
+            data: note
+        };
+        store.addItem(noteItem);
+    } else if (item) {
+        // Construct TripItem from generic item
+        // We assume 'item' has at least id, title (or name/model), price (maybe)
+        // We strictly cast for convenience, but we should be careful.
+        
+        let title = "Unknown Item";
+        let price = 0;
+        let description = "";
+
+        // Safe extraction based on type
+        if (type === "flight") {
+            const f = item as Flight;
+            title = `${f.airline} - ${f.flightNumber}`;
+            price = f.price;
+            description = `${f.departureCity} to ${f.arrivalCity}`;
+        } else if (type === "hotel") {
+            const h = item as Hotel;
+            title = h.name;
+            price = h.pricePerNight; // Needs consideration for dates
+            description = h.address;
+        } else if (type === "car") {
+            const c = item as Car;
+            title = `${c.model} (${c.category})`;
+            price = c.pricePerDay;
+            description = withDriver ? "With Driver" : "Self Drive";
+        } else if (type === "guide") {
+            const g = item as Guide;
+            title = `${g.type} Guide`;
+            price = g.price;
+            description = g.description;
+        } else if (type === "experience") {
+            const e = item as Experience;
+            title = e.title;
+            price = e.price;
+            description = e.description || "";
+        } else if (type === "service") {
+            const s = item as Service;
+            title = s.title;
+            // price might be string in Service type, need parsing if we want number
+            // or just store as is in data
+            price = typeof s.price === 'number' ? s.price : 0; 
+            description = s.description || "";
+        }
+
+        const newItem: TripItem = {
+            id: item.id,
+            type: type as TripItemType,
+            title,
+            description,
+            price,
+            data: { ...item, withDriver }, // store full object
+            quantity: 1
+        };
+        
+        store.addItem(newItem);
     }
 
     toast.success(toastMessages[type], {
       action: {
         label: "View Trip",
         onClick: () => {
-          router.push(`/${locale}/plan-trip`);
+          router.push(`/${locale}/plan-trip/review`);
         },
       },
     });

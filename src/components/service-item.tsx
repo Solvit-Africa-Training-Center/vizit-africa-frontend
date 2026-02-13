@@ -90,8 +90,8 @@ export function ServiceItem({
 
                 <div className="flex gap-4">
                   <AddToTripButton
-                    type="note"
-                    note={`Requested Service: ${service.title} (${service.category}) - ${service.description}`}
+                    type="service"
+                    item={service}
                     label={bookLabel}
                     size="lg"
                     className="px-8 rounded-none h-14 uppercase tracking-widest font-display text-sm"

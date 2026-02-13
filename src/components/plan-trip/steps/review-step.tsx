@@ -6,13 +6,13 @@ import { RiCheckLine, RiArrowLeftLine } from "@remixicon/react";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { BookingSummary } from "@/components/plan-trip";
-import type { TripInfo, Selections } from "@/lib/plan_trip-types";
+import type { TripInfo, TripItem } from "@/lib/plan_trip-types";
 import { DRIVER_SURCHARGE } from "@/lib/plan-trip-data";
 import { useTranslations } from "next-intl";
 
 interface ReviewStepProps {
   tripInfo: TripInfo;
-  selections: Selections;
+  items: TripItem[];
   days: number;
   travelers: number;
   subtotal: number;
@@ -24,7 +24,7 @@ interface ReviewStepProps {
 
 export function ReviewStep({
   tripInfo,
-  selections,
+  items,
   days,
   travelers,
   subtotal,
@@ -60,7 +60,7 @@ export function ReviewStep({
         <BookingSummary
           currentStep={4}
           tripInfo={tripInfo}
-          selections={selections}
+          items={items}
           days={days}
           travelers={travelers}
           driverSurcharge={DRIVER_SURCHARGE}

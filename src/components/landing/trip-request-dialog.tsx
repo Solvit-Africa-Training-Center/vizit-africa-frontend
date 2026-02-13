@@ -2,51 +2,39 @@
 
 import * as React from "react";
 import { format, differenceInDays } from "date-fns";
-import {
-  CalendarIcon,
-  MapPin,
-  Users,
-  Minus,
-  Plus,
-  Info,
-  Check,
-  Phone,
-  Plane,
-} from "lucide-react";
 
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Separator } from "@/components/ui/separator";
-import { DateRange } from "react-day-picker";
+
+import type { DateRange } from "react-day-picker";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Separator } from "@/components/ui/separator";
+import { Textarea } from "@/components/ui/textarea";
 import { useTripStore } from "@/store/trip-store";
 import { useRouter } from "next/navigation";
-import { useLocale, useTranslations } from "next-intl";
-import { RiPlaneLine, RiAddLine, RiArrowRightLine } from "@remixicon/react";
+import { useLocale } from "next-intl";
+import { 
+  RiAddLine, 
+  RiArrowRightLine, 
+  RiSubtractLine,
+  RiHotelLine,
+  RiCarLine,
+  RiUserStarLine,
+  RiPlaneLine,
+  RiSuitcaseLine,
+  RiCheckboxCircleLine,
+  RiUser2Line
+} from "@remixicon/react";
 
 interface GuestCount {
   adults: number;
@@ -55,171 +43,9 @@ interface GuestCount {
 }
 
 interface TripRequestDialogProps {
-  trigger?: React.ReactNode;
+  trigger?: React.ReactElement;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
-}
-
-function GuestSelector({
-  guests,
-  onChange,
-}: {
-  guests: GuestCount;
-  onChange: (guests: GuestCount) => void;
-}) {
-  const updateGuest = (type: keyof GuestCount, delta: number) => {
-    const newValue = Math.max(0, guests[type] + delta);
-    const limits = { adults: 16, children: 15, infants: 5 };
-
-    if (newValue <= limits[type]) {
-      onChange({
-        ...guests,
-        [type]: newValue,
-      });
-    }
-  };
-
-  const totalGuests = guests.adults + guests.children + guests.infants;
-  const totalWithoutInfants = guests.adults + guests.children;
-
-  return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          className={cn(
-            "w-full justify-start text-left font-normal h-11",
-            totalGuests === 0 && "text-muted-foreground",
-          )}
-        >
-          <Users className="mr-2 h-4 w-4 shrink-0" />
-          <span className="truncate">
-            {totalGuests > 0 ? (
-              <>
-                {guests.adults > 0 &&
-                  `${guests.adults} Adult${guests.adults !== 1 ? "s" : ""}`}
-                {guests.children > 0 &&
-                  `, ${guests.children} Child${guests.children !== 1 ? "ren" : ""}`}
-                {guests.infants > 0 &&
-                  `, ${guests.infants} Infant${guests.infants !== 1 ? "s" : ""}`}
-              </>
-            ) : (
-              "Add guests"
-            )}
-          </span>
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-80" align="start">
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex-1">
-              <p className="font-medium">Adults</p>
-              <p className="text-sm text-muted-foreground">Age 13+</p>
-            </div>
-            <div className="flex items-center gap-3">
-              <Button
-                size="icon"
-                variant="outline"
-                className="h-8 w-8 rounded-full"
-                onClick={() => updateGuest("adults", -1)}
-                disabled={guests.adults === 0}
-              >
-                <Minus className="h-4 w-4" />
-              </Button>
-              <span className="w-8 text-center font-medium">
-                {guests.adults}
-              </span>
-              <Button
-                size="icon"
-                variant="outline"
-                className="h-8 w-8 rounded-full"
-                onClick={() => updateGuest("adults", 1)}
-                disabled={guests.adults >= 16}
-              >
-                <Plus className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-
-          <Separator />
-
-          <div className="flex items-center justify-between">
-            <div className="flex-1">
-              <p className="font-medium">Children</p>
-              <p className="text-sm text-muted-foreground">Age 2-12</p>
-            </div>
-            <div className="flex items-center gap-3">
-              <Button
-                size="icon"
-                variant="outline"
-                className="h-8 w-8 rounded-full"
-                onClick={() => updateGuest("children", -1)}
-                disabled={guests.children === 0}
-              >
-                <Minus className="h-4 w-4" />
-              </Button>
-              <span className="w-8 text-center font-medium">
-                {guests.children}
-              </span>
-              <Button
-                size="icon"
-                variant="outline"
-                className="h-8 w-8 rounded-full"
-                onClick={() => updateGuest("children", 1)}
-                disabled={guests.children >= 15}
-              >
-                <Plus className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-
-          <Separator />
-
-          <div className="flex items-center justify-between">
-            <div className="flex-1">
-              <p className="font-medium">Infants</p>
-              <p className="text-sm text-muted-foreground">Under 2</p>
-            </div>
-            <div className="flex items-center gap-3">
-              <Button
-                size="icon"
-                variant="outline"
-                className="h-8 w-8 rounded-full"
-                onClick={() => updateGuest("infants", -1)}
-                disabled={guests.infants === 0}
-              >
-                <Minus className="h-4 w-4" />
-              </Button>
-              <span className="w-8 text-center font-medium">
-                {guests.infants}
-              </span>
-              <Button
-                size="icon"
-                variant="outline"
-                className="h-8 w-8 rounded-full"
-                onClick={() => updateGuest("infants", 1)}
-                disabled={guests.infants >= 5}
-              >
-                <Plus className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-
-          {totalWithoutInfants > 0 && (
-            <>
-              <Separator />
-              <div className="flex items-start gap-2 rounded-lg bg-muted/50 p-3">
-                <Info className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
-                <p className="text-xs text-muted-foreground">
-                  Maximum capacity: 16 guests. Infants don't count toward total.
-                </p>
-              </div>
-            </>
-          )}
-        </div>
-      </PopoverContent>
-    </Popover>
-  );
 }
 
 export function TripRequestDialog({
@@ -229,7 +55,7 @@ export function TripRequestDialog({
 }: TripRequestDialogProps) {
   const router = useRouter();
   const locale = useLocale();
-  const { updateTripInfo, setSelections, tripInfo } = useTripStore();
+  const { updateTripInfo, tripInfo, items } = useTripStore();
 
   const [dateRange, setDateRange] = React.useState<DateRange | undefined>({
     from: tripInfo.departureDate ? new Date(tripInfo.departureDate) : undefined,
@@ -256,20 +82,45 @@ export function TripRequestDialog({
     setContactInfo((prev) => ({ ...prev, ...updates }));
   };
 
+  const handleGuestChange = (type: keyof GuestCount, delta: number) => {
+    setGuests(prev => {
+      const newValue = prev[type] + delta;
+      const limits = { adults: 16, children: 15, infants: 5 };
+      
+      if (newValue < 0) return prev;
+      if (type === 'adults' && newValue < 1) return prev;
+      if (newValue > limits[type]) return prev;
+      
+      return { ...prev, [type]: newValue };
+    });
+  };
+
   const nights =
     dateRange?.from && dateRange?.to
       ? differenceInDays(dateRange.to, dateRange.from)
       : 0;
 
-  // Pricing preview logic
-  const pricePerNight = 150;
-  const basePrice = (nights || 1) * pricePerNight;
+  // Calculate items total
+  const itemsTotal = items.reduce((acc, item) => {
+    if (item.type === "guide") {
+      return acc + (item.price || 0) * (nights || 1);
+    }
+    return acc + (item.price || 0);
+  }, 0);
+
+  const hasItems = items.length > 0;
+  const estimatedPerNight = 150;
+  const basePrice = hasItems ? itemsTotal : (nights || 1) * estimatedPerNight;
+
   const serviceFee = Math.round(basePrice * 0.12);
   const taxFee = Math.round(basePrice * 0.08);
   const totalPrice = basePrice + serviceFee + taxFee;
 
+  const totalGuests = guests.adults + guests.children + guests.infants;
+
   const canSubmit =
     dateRange?.from &&
+    dateRange?.to &&
     contactInfo.departureCity.trim() &&
     contactInfo.name.trim() &&
     contactInfo.email.trim() &&
@@ -290,364 +141,384 @@ export function TripRequestDialog({
       specialRequests: contactInfo.specialRequests,
       destination: "Kigali",
     });
-
-    if (contactInfo.needFlight) {
-      setSelections((prev) => ({
-        ...prev,
-        flight: {
-          id: "requested",
-          airline: "Best Option",
-          flightNumber: "TBD",
-          departureCity: contactInfo.departureCity,
-          arrivalCity: "Kigali",
-          departureAirport: "TBD",
-          arrivalAirport: "KGL",
-          departureTime: dateRange?.from
-            ? format(dateRange.from, "yyyy-MM-dd")
-            : "",
-          arrivalTime: "",
-          duration: "",
-          price: 0,
-          cabinClass: "Economy",
-          stops: 0,
-        },
-      }));
-    } else {
-      setSelections((prev) => ({ ...prev, flight: null }));
-    }
   };
 
   const handleRequestQuote = () => {
     saveToStore();
-    // Use query params to trigger expansion logic in usePlanTrip
-    const params = new URLSearchParams();
-    params.set("from", contactInfo.departureCity);
-    params.set("to", "Kigali");
-    if (dateRange?.from) params.set("depart", format(dateRange.from, "yyyy-MM-dd"));
-    if (dateRange?.to) params.set("return", format(dateRange.to, "yyyy-MM-dd"));
-    
-    router.push(`/${locale}/plan-trip?${params.toString()}`);
+    router.push(`/${locale}/plan-trip/review`);
     onOpenChange?.(false);
   };
 
   const handleAddAddons = () => {
     saveToStore();
-    // service=hotels expands Stay & Services section
-    const params = new URLSearchParams();
-    params.set("service", "hotels");
-    if (contactInfo.departureCity) params.set("from", contactInfo.departureCity);
-    
-    router.push(`/${locale}/plan-trip?${params.toString()}`);
+    router.push(`/${locale}/services`);
     onOpenChange?.(false);
+  };
+
+  const getItemIcon = (type: string) => {
+    switch (type) {
+      case "hotel": return RiHotelLine;
+      case "car": return RiCarLine;
+      case "guide": return RiUserStarLine;
+      case "flight": return RiPlaneLine;
+      default: return RiSuitcaseLine;
+    }
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
-      <DialogContent className="max-w-2xl p-0 overflow-hidden bg-background border-border max-h-[90vh] overflow-y-auto">
-        <DialogHeader className="space-y-1 border-b bg-gradient-to-r from-slate-50 to-white p-6">
-          <div className="flex items-start justify-between">
-            <div>
-              <DialogTitle className="text-2xl font-bold">
-                Plan Your Trip
+      {trigger && <DialogTrigger render={trigger} />}
+      <DialogContent 
+        className="sm:max-w-7xl h-[90vh] p-0 gap-0 overflow-hidden flex flex-col"
+        showCloseButton={true}
+      >
+        {/* Fixed Header */}
+        <div className="px-8 py-6 border-b bg-gradient-to-r from-primary/5 to-transparent shrink-0">
+          <div className="flex items-start justify-between gap-4">
+            <div className="space-y-1">
+              <DialogTitle className="text-2xl font-bold tracking-tight flex items-center gap-2">
+          
+                Plan Your Journey
               </DialogTitle>
-              <DialogDescription className="mt-1">
-                Complete your details for a personalized Kigali experience
+              <DialogDescription className="text-sm">
+                Customize your Kigali experience with our premium planning service
               </DialogDescription>
             </div>
-            {nights > 0 && (
-              <Badge variant="secondary" className="mt-1">
-                {nights} night{nights !== 1 ? "s" : ""}
-              </Badge>
-            )}
-          </div>
-        </DialogHeader>
-
-        <div className="p-6 space-y-6">
-          {/* Location Section */}
-          <div className="space-y-3">
-            <h3 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
-              Location
-            </h3>
-            <div className="grid gap-3 sm:grid-cols-2">
-              <div className="space-y-2">
-                <Label className="text-sm font-medium">Departure City</Label>
-                <div className="relative">
-                  <MapPin className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                  <Input
-                    placeholder="Where are you flying from?"
-                    value={contactInfo.departureCity}
-                    onChange={(e) =>
-                      updateContact({ departureCity: e.target.value })
-                    }
-                    className="h-11 pl-9"
-                  />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <Label className="text-sm font-medium">Destination</Label>
-                <div className="relative">
-                  <MapPin className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                  <Input
-                    value="Kigali, Rwanda"
-                    disabled
-                    className="h-11 pl-9 bg-muted/50 disabled:cursor-default disabled:opacity-100"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <Separator />
-
-          {/* Date and Guest Selection */}
-          <div className="space-y-3">
-            <h3 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
-              Trip Details
-            </h3>
-            <div className="grid gap-3 sm:grid-cols-2">
-              <div className="space-y-2">
-                <Label className="text-sm font-medium">
-                  Travel Dates <span className="text-destructive">*</span>
-                </Label>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className={cn(
-                        "w-full justify-start text-left font-normal h-11",
-                        !dateRange && "text-muted-foreground",
-                      )}
-                    >
-                      <CalendarIcon className="mr-2 h-4 w-4 shrink-0" />
-                      <span className="truncate">
-                        {dateRange?.from ? (
-                          dateRange.to ? (
-                            <>
-                              {format(dateRange.from, "MMM dd")} -{" "}
-                              {format(dateRange.to, "MMM dd, yyyy")}
-                            </>
-                          ) : (
-                            format(dateRange.from, "MMM dd, yyyy")
-                          )
-                        ) : (
-                          "Select dates"
-                        )}
-                      </span>
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      initialFocus
-                      mode="range"
-                      defaultMonth={dateRange?.from}
-                      selected={dateRange}
-                      onSelect={setDateRange}
-                      numberOfMonths={2}
-                      disabled={(date) => date < new Date()}
-                    />
-                  </PopoverContent>
-                </Popover>
-              </div>
-
-              <div className="space-y-2">
-                <Label className="text-sm font-medium">
-                  Guests <span className="text-destructive">*</span>
-                </Label>
-                <GuestSelector guests={guests} onChange={setGuests} />
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between p-4 border border-border rounded-lg bg-muted/30">
-              <div className="flex items-center gap-3">
-                <div className="size-8 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Plane className="size-4 text-primary" />
-                </div>
-                <div className="space-y-0.5">
-                  <Label className="text-sm font-medium">Include Flights</Label>
-                  <p className="text-xs text-muted-foreground">
-                    We'll find the best fares for your route.
-                  </p>
-                </div>
-              </div>
-              <Checkbox
-                checked={contactInfo.needFlight}
-                onCheckedChange={(checked) =>
-                  updateContact({ needFlight: checked as boolean })
-                }
-              />
-            </div>
-          </div>
-
-          <Separator />
-
-          {/* Contact Information */}
-          <div className="space-y-3">
-            <h3 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
-              Contact Information
-            </h3>
-            <div className="grid gap-4">
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor="name" className="text-sm font-medium">
-                    Full Name <span className="text-destructive">*</span>
-                  </Label>
-                  <Input
-                    id="name"
-                    placeholder="John Doe"
-                    value={contactInfo.name}
-                    onChange={(e) => updateContact({ name: e.target.value })}
-                    className="h-11"
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="phone" className="text-sm font-medium">
-                    Phone Number
-                  </Label>
-                  <div className="relative">
-                    <Phone className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                    <Input
-                      id="phone"
-                      type="tel"
-                      placeholder="+250 ..."
-                      value={contactInfo.phone}
-                      onChange={(e) => updateContact({ phone: e.target.value })}
-                      className="h-11 pl-9"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="email" className="text-sm font-medium">
-                  Email Address <span className="text-destructive">*</span>
-                </Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="john@example.com"
-                  value={contactInfo.email}
-                  onChange={(e) => updateContact({ email: e.target.value })}
-                  className="h-11"
-                  required
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Special Requests */}
-          <div className="space-y-2">
-            <Label htmlFor="requests" className="text-sm font-medium">
-              Special Requests{" "}
-              <span className="text-muted-foreground text-xs">(Optional)</span>
-            </Label>
-            <Input
-              id="requests"
-              placeholder="Dietary requirements, accessibility, etc."
-              value={contactInfo.specialRequests}
-              onChange={(e) =>
-                updateContact({ specialRequests: e.target.value })
-              }
-              className="h-11"
-            />
-          </div>
-
-          {/* Price Summary */}
-          {nights > 0 && (
-            <div className="rounded-xl border-2 bg-gradient-to-br from-slate-50 to-white p-5">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="font-semibold">Est. Quote Breakdown</h3>
-                <Badge variant="outline" className="font-mono">
-                  {nights}N
+            <div className="flex items-center gap-3 mr-5">
+              {nights > 0 && (
+                <Badge variant="secondary" className="font-mono">
+                  {nights} {nights === 1 ? "night" : "nights"}
                 </Badge>
-              </div>
-              <div className="space-y-3">
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">
-                    Avg. Base Price ({nights} nights)
-                  </span>
-                  <span className="font-medium">
-                    ${basePrice.toLocaleString()}
-                  </span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">
-                    Service fee (12%)
-                  </span>
-                  <span className="font-medium">
-                    ${serviceFee.toLocaleString()}
-                  </span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Taxes (8%)</span>
-                  <span className="font-medium">${taxFee.toLocaleString()}</span>
-                </div>
-                <Separator />
-                <div className="flex justify-between items-center pt-1">
-                  <div className="flex flex-col">
-                    <span className="font-semibold text-lg">Total Est.</span>
-                    <span className="text-[10px] text-muted-foreground">
-                      * Final quote via email in 48h
-                    </span>
-                  </div>
-                  <span className="font-bold text-2xl">
-                    ${totalPrice.toLocaleString()}
-                  </span>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Terms and Conditions */}
-          <div className="flex items-start space-x-3 rounded-lg border bg-muted/30 p-4">
-            <Checkbox
-              id="terms"
-              checked={contactInfo.agreeToTerms}
-              onCheckedChange={(checked) =>
-                updateContact({ agreeToTerms: checked as boolean })
-              }
-              className="mt-1"
-            />
-            <div className="space-y-1">
-              <Label
-                htmlFor="terms"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-              >
-                I agree to the terms and conditions
-              </Label>
-              <p className="text-xs text-muted-foreground">
-                Final pricing depends on real-time availability.
-              </p>
+              )}
+              {totalGuests > 0 && (
+                <Badge variant="outline" className="gap-1">
+                  <RiUser2Line className="size-3" />
+                  {totalGuests} {totalGuests === 1 ? "guest" : "guests"}
+                </Badge>
+              )}
             </div>
           </div>
         </div>
 
-        <CardFooter className="flex flex-col gap-3 border-t bg-slate-50/50 p-6 sm:flex-row">
-          <Button
-            type="button"
-            variant="outline"
-            className="w-full sm:w-auto"
-            onClick={handleAddAddons}
-            disabled={!dateRange?.from || !contactInfo.departureCity}
-          >
-            <RiAddLine className="mr-2 size-4" />
-            Add Add-ons
-          </Button>
-          <Button
-            className="w-full sm:flex-1"
-            disabled={!canSubmit}
-            onClick={handleRequestQuote}
-          >
-            {canSubmit ? (
-              <>
-                <RiArrowRightLine className="mr-2 size-4" />
-                Request Quote Now
-              </>
-            ) : (
-              "Complete Required Fields"
-            )}
-          </Button>
-        </CardFooter>
+
+        <div className="overflow-y-auto flex-1 min-h-0">
+          <div className="grid lg:grid-cols-2 gap-8 p-8">
+            <div className="space-y-8">
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+         
+                  <h3 className="text-lg font-semibold">Travel Dates</h3>
+                </div>
+                <div>
+                  <Calendar
+                    mode="range"
+                    selected={dateRange}
+                    onSelect={setDateRange}
+                    numberOfMonths={2}
+                    disabled={(date) => date < new Date()}
+                    className="w-full"
+                    classNames={{
+                      month: "space-y-4 w-full",
+                      caption: "flex justify-center pt-1 relative items-center",
+                      caption_label: "text-sm font-medium",
+                      table: "w-full border-collapse space-y-1",
+                      head_row: "flex",
+                      head_cell: "text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]",
+                      row: "flex w-full mt-2",
+                      cell: "text-center text-sm p-0 relative [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
+                      day: "h-9 w-9 p-0 font-normal aria-selected:opacity-100 hover:bg-accent hover:text-accent-foreground rounded-md",
+                      day_selected: "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
+                      day_today: "bg-accent text-accent-foreground font-semibold",
+                      day_outside: "text-muted-foreground opacity-50",
+                      day_disabled: "text-muted-foreground opacity-50",
+                      day_range_middle: "aria-selected:bg-accent aria-selected:text-accent-foreground",
+                      day_hidden: "invisible",
+                    }}
+                  />
+                </div>
+              </div>
+
+              {hasItems && (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+  
+                      <h3 className="text-lg font-semibold">Selected Services</h3>
+                    </div>
+                    <Badge variant="outline">{items.length} items</Badge>
+                  </div>
+                  <div className="rounded-xl border bg-card divide-y">
+                    {items.map((item) => {
+                      const Icon = getItemIcon(item.type);
+                      return (
+                        <div key={item.id} className="p-4 flex items-center gap-4 hover:bg-accent/50 transition-colors">
+                          <div className="size-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                            <Icon className="size-5 text-primary" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h4 className="font-medium text-sm">{item.title}</h4>
+                            <p className="text-xs text-muted-foreground line-clamp-1">
+                              {item.description}
+                            </p>
+                          </div>
+                          <div className="text-sm font-semibold tabular-nums">
+                            ${item.price?.toLocaleString()}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="space-y-6">
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <h3 className="text-lg font-semibold">Location Details</h3>
+                </div>
+                <div className="space-y-3">
+                  <div className="space-y-2">
+                    <Label htmlFor="departure" className="text-sm font-medium">
+                      Departure City
+                    </Label>
+                    <Input
+                      id="departure"
+                      placeholder="e.g., New York, London, Tokyo"
+                      value={contactInfo.departureCity}
+                      onChange={(e) => updateContact({ departureCity: e.target.value })}
+                      className="h-11"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium">Destination</Label>
+                    <Input
+                      value="Kigali, Rwanda"
+                      disabled
+                      className="h-11 bg-muted/50 text-muted-foreground"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <Separator />
+
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <h3 className="text-lg font-semibold">Travelers</h3>
+                </div>
+                <div className="rounded-xl border bg-card divide-y">
+                  {[
+                    { key: 'adults', label: 'Adults', sub: 'Age 12+' },
+                    { key: 'children', label: 'Children', sub: 'Age 2-11' },
+                    { key: 'infants', label: 'Infants', sub: 'Under 2' }
+                  ].map(({ key, label, sub }) => (
+                    <div key={key} className="flex items-center justify-between p-4">
+                      <div>
+                        <p className="text-sm font-medium">{label}</p>
+                        <p className="text-xs text-muted-foreground">{sub}</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          className="h-8 w-8 rounded-full"
+                          onClick={() => handleGuestChange(key as keyof GuestCount, -1)}
+                          disabled={guests[key as keyof GuestCount] <= (key === 'adults' ? 1 : 0)}
+                        >
+                          <RiSubtractLine className="size-4" />
+                        </Button>
+                        <span className="w-8 text-center text-sm font-medium tabular-nums">
+                          {guests[key as keyof GuestCount]}
+                        </span>
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          className="h-8 w-8 rounded-full"
+                          onClick={() => handleGuestChange(key as keyof GuestCount, 1)}
+                        >
+                          <RiAddLine className="size-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <Separator />
+
+              <div
+                className="flex items-center justify-between p-4 rounded-xl border bg-card hover:bg-accent/50 transition-colors cursor-pointer"
+                onClick={() => updateContact({ needFlight: !contactInfo.needFlight })}
+              >
+                <div className="flex items-center gap-3">
+                  <div className="size-10 rounded-full bg-primary/10 flex items-center justify-center">
+                    <RiPlaneLine className="size-5 text-primary" />
+                  </div>
+                  <div>
+                    <Label className="text-sm font-medium cursor-pointer">
+                      Include Flight Booking
+                    </Label>
+                    <p className="text-xs text-muted-foreground">
+                      We'll find the best fares for you
+                    </p>
+                  </div>
+                </div>
+                <Checkbox
+                  checked={contactInfo.needFlight}
+                  onCheckedChange={(checked) =>
+                    updateContact({ needFlight: checked as boolean })
+                  }
+                />
+              </div>
+
+              <Separator />
+
+              {/* Contact Information */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+
+                  <h3 className="text-lg font-semibold">Contact Information</h3>
+                </div>
+                <div className="space-y-3">
+                  <div className="space-y-2">
+                    <Label htmlFor="name" className="text-sm font-medium">
+                      Full Name
+                    </Label>
+                    <Input
+                      id="name"
+                      placeholder="John Doe"
+                      value={contactInfo.name}
+                      onChange={(e) => updateContact({ name: e.target.value })}
+                      className="h-11"
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-2">
+                      <Label htmlFor="email" className="text-sm font-medium">
+                        Email
+                      </Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        placeholder="john@example.com"
+                        value={contactInfo.email}
+                        onChange={(e) => updateContact({ email: e.target.value })}
+                        className="h-11"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="phone" className="text-sm font-medium">
+                        Phone
+                      </Label>
+                      <Input
+                        id="phone"
+                        type="tel"
+                        placeholder="+1 (555) 000-0000"
+                        value={contactInfo.phone}
+                        onChange={(e) => updateContact({ phone: e.target.value })}
+                        className="h-11"
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="requests" className="text-sm font-medium">
+                      Special Requests
+                      <span className="text-muted-foreground ml-1">(Optional)</span>
+                    </Label>
+                    <Textarea
+                      id="requests"
+                      placeholder="Any dietary requirements, accessibility needs, or special occasions..."
+                      value={contactInfo.specialRequests}
+                      onChange={(e) => updateContact({ specialRequests: e.target.value })}
+                      className="min-h-[80px] resize-none"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <Separator />
+
+              {/* Terms & Conditions */}
+              <div className="flex items-start gap-3 p-4 rounded-xl bg-muted/50">
+                <Checkbox
+                  id="terms"
+                  checked={contactInfo.agreeToTerms}
+                  onCheckedChange={(checked) =>
+                    updateContact({ agreeToTerms: checked as boolean })
+                  }
+                  className="mt-0.5"
+                />
+                <div className="space-y-1">
+                  <label
+                    htmlFor="terms"
+                    className="text-sm font-medium leading-none cursor-pointer"
+                  >
+                    I agree to the terms and conditions
+                  </label>
+                  <p className="text-xs text-muted-foreground">
+                    By proceeding, you agree to our privacy policy and booking terms.
+                    Final availability subject to confirmation.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Fixed Footer */}
+        <div className="border-t bg-background px-8 py-6 shrink-0">
+          <div className="flex items-center justify-between gap-6">
+            {/* Price Summary */}
+            <div className="space-y-1">
+              <p className="text-xs text-muted-foreground uppercase tracking-wider">
+                {hasItems ? "Total Estimate" : "Estimated Total"}
+              </p>
+              <div className="flex items-baseline gap-2">
+                <span className="text-3xl font-bold text-primary tabular-nums">
+                  ${totalPrice.toLocaleString()}
+                </span>
+                {nights > 0 && (
+                  <span className="text-sm text-muted-foreground">
+                    for {nights} {nights === 1 ? "night" : "nights"}
+                  </span>
+                )}
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex items-center gap-3">
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={handleAddAddons}
+                disabled={!dateRange?.from || !contactInfo.departureCity}
+                className="gap-2"
+              >
+                <RiAddLine className="size-4" />
+                Add Extras
+              </Button>
+              <Button
+                size="lg"
+                onClick={handleRequestQuote}
+                disabled={!canSubmit}
+                className="gap-2 min-w-[180px]"
+              >
+                {canSubmit ? (
+                  <>
+                    Request Quote
+                    <RiArrowRightLine className="size-4" />
+                  </>
+                ) : (
+                  <>
+                    <RiCheckboxCircleLine className="size-4" />
+                    Complete Form
+                  </>
+                )}
+              </Button>
+            </div>
+          </div>
+        </div>
       </DialogContent>
     </Dialog>
   );

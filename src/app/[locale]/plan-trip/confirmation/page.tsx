@@ -16,9 +16,8 @@ function ConfirmationContent() {
   const requestId = searchParams.get("id") || "REQ-UNKNOWN";
   const t = useTranslations("PlanTrip.confirmation");
 
-  // Clear persistent data on successful booking
   useEffect(() => {
-    useTripStore.getState().resetTrip();
+    useTripStore.getState().clearTrip();
   }, []);
 
   return (

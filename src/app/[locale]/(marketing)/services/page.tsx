@@ -49,7 +49,7 @@ export default function ServicesPage() {
         category: "Flights",
         description: t("items.rwandair-direct.description"),
         price: "From $600",
-        image: "/images/rwanda-sky-scrapers.jpg",
+        image: "/images/gradivis.jpg",
         details: [
           t("items.rwandair-direct.details.0"),
           t("items.rwandair-direct.details.1"),

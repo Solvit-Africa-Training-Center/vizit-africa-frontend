@@ -28,6 +28,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
+import { TripRequestDialog } from "@/components/landing/trip-request-dialog";
 
 interface NavbarProps {
   forceSolid?: boolean;
@@ -43,6 +44,7 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
   const tripItemCount = useTripStore((s) => s.itemCount());
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isTripDialogOpen, setIsTripDialogOpen] = useState(false);
   const { scrollY } = useScroll();
 
   const heroRoutes = ["/"];
@@ -189,27 +191,31 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
               </Link>
             )}
 
-            <Link href="/plan-trip">
-              <Button
-                size="sm"
-                variant={showSolid ? "default" : "secondary"}
-                className={cn(
-                  "rounded-sm font-display font-medium uppercase tracking-wider text-xs px-6 transition-all duration-300 gap-2",
-                  !showSolid &&
-                    "bg-primary-foreground text-primary hover:bg-primary-foreground/90",
-                )}
-              >
-                {hasActiveTrip ? (
-                  <>
-                    <RiSuitcaseLine className="size-4" />
-                    {tripItemCount} {tripItemCount === 1 ? "item" : "items"} ·
-                    View Trip
-                  </>
-                ) : (
-                  tCommon("startPlanning")
-                )}
-              </Button>
-            </Link>
+            <Button
+              size="sm"
+              variant={showSolid ? "default" : "secondary"}
+              className={cn(
+                "rounded-sm font-display font-medium uppercase tracking-wider text-xs px-6 transition-all duration-300 gap-2",
+                !showSolid &&
+                  "bg-primary-foreground text-primary hover:bg-primary-foreground/90",
+              )}
+              onClick={() => setIsTripDialogOpen(true)}
+            >
+              {hasActiveTrip ? (
+                <>
+                  <RiSuitcaseLine className="size-4" />
+                  {tripItemCount} {tripItemCount === 1 ? "item" : "items"} ·
+                  View Trip
+                </>
+              ) : (
+                tCommon("startPlanning")
+              )}
+            </Button>
+            
+            <TripRequestDialog 
+              open={isTripDialogOpen} 
+              onOpenChange={setIsTripDialogOpen} 
+            />
           </div>
 
           <button

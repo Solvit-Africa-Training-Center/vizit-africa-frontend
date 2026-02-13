@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type {
   TripInfo,
-  Selections,
+  TripItem,
   Flight,
   Hotel,
   Car,
@@ -20,35 +20,26 @@ type EntrySource =
 
 interface TripState {
   tripInfo: TripInfo;
-  selections: Selections;
+  // Previously 'selections', now we use a flexible list of items
+  items: TripItem[];
+  
   entrySource: EntrySource;
 
   // computed-like helpers
   hasActiveTrip: () => boolean;
   itemCount: () => number;
+  getItem: (id: string) => TripItem | undefined;
 
-  // granular update actions
+  // global info updates
   updateTripInfo: (info: Partial<TripInfo>) => void;
-  setSelections: (
-    selections: Partial<Selections> | ((prev: Selections) => Selections),
-  ) => void;
-
-  // convenience actions for "add to trip" pattern
-  addFlight: (flight: Flight) => void;
-  addHotel: (hotel: Hotel) => void;
-  addCar: (car: Car, withDriver?: boolean) => void;
-  addGuide: (guide: Guide) => void;
-  addNote: (note: string) => void;
   setDestination: (destination: string) => void;
   setEntrySource: (source: EntrySource) => void;
 
-  // removals
-  removeFlight: () => void;
-  removeHotel: () => void;
-  removeCar: () => void;
-  removeGuide: () => void;
-
-  resetTrip: () => void;
+  // item management
+  addItem: (item: TripItem) => void;
+  removeItem: (id: string) => void;
+  updateItem: (id: string, updates: Partial<TripItem>) => void;
+  clearTrip: () => void;
 }
 
 const initialTripInfo: TripInfo = {
@@ -66,88 +57,29 @@ const initialTripInfo: TripInfo = {
   destination: "",
 };
 
-const initialSelections: Selections = {
-  flight: null,
-  hotel: null,
-  car: null,
-  carWithDriver: false,
-  guide: null,
-};
-
 export const useTripStore = create<TripState>()(
   persist(
     (set, get) => ({
       tripInfo: initialTripInfo,
-      selections: initialSelections,
+      items: [],
       entrySource: "direct" as EntrySource,
 
       hasActiveTrip: () => {
-        const { selections, tripInfo } = get();
-        return !!(
-          selections.flight ||
-          selections.hotel ||
-          selections.car ||
-          selections.guide ||
-          tripInfo.destination ||
-          tripInfo.specialRequests
-        );
+        const { items, tripInfo } = get();
+        return items.length > 0 || !!tripInfo.destination || !!tripInfo.specialRequests;
       },
 
       itemCount: () => {
-        const { selections, tripInfo } = get();
-        let count = 0;
-        if (selections.flight) count++;
-        if (selections.hotel) count++;
-        if (selections.car) count++;
-        if (selections.guide) count++;
-        if (tripInfo.specialRequests) count++;
-        return count;
+        return get().items.length;
+      },
+
+      getItem: (id) => {
+          return get().items.find(i => i.id === id);
       },
 
       updateTripInfo: (info) =>
         set((state) => ({
           tripInfo: { ...state.tripInfo, ...info },
-        })),
-
-      setSelections: (selectionsOrUpdater) =>
-        set((state) => {
-          const newSelections =
-            typeof selectionsOrUpdater === "function"
-              ? selectionsOrUpdater(state.selections)
-              : selectionsOrUpdater;
-          return {
-            selections: { ...state.selections, ...newSelections },
-          };
-        }),
-
-      addFlight: (flight) =>
-        set((state) => ({
-          selections: { ...state.selections, flight },
-        })),
-
-      addHotel: (hotel) =>
-        set((state) => ({
-          selections: { ...state.selections, hotel },
-        })),
-
-      addCar: (car, withDriver = false) =>
-        set((state) => ({
-          selections: { ...state.selections, car, carWithDriver: withDriver },
-        })),
-
-      addGuide: (guide) =>
-        set((state) => ({
-          selections: { ...state.selections, guide },
-        })),
-
-      addNote: (note) =>
-        set((state) => ({
-          tripInfo: {
-            ...state.tripInfo,
-            specialRequests: state.tripInfo.specialRequests
-              ? `${state.tripInfo.specialRequests}\n${note}`
-              : note,
-          },
         })),
 
       setDestination: (destination) =>
@@ -157,42 +89,43 @@ export const useTripStore = create<TripState>()(
 
       setEntrySource: (source) => set({ entrySource: source }),
 
-      removeFlight: () =>
+      addItem: (item) =>
+        set((state) => {
+            // Avoid duplicates if needed, or allow them. 
+            // For now, let's allow multiples unless ID is identical.
+            const exists = state.items.find((i) => i.id === item.id);
+            if (exists) {
+                // If it exists, maybe just update it? or ignore?
+                // Let's replace it to ensure latest data
+                return {
+                    items: state.items.map(i => i.id === item.id ? item : i)
+                };
+            }
+            return { items: [...state.items, item] };
+        }),
+
+      removeItem: (id) =>
         set((state) => ({
-          selections: { ...state.selections, flight: null },
+          items: state.items.filter((i) => i.id !== id),
         })),
 
-      removeHotel: () =>
+      updateItem: (id, updates) =>
         set((state) => ({
-          selections: { ...state.selections, hotel: null },
+          items: state.items.map((i) => (i.id === id ? { ...i, ...updates } : i)),
         })),
 
-      removeCar: () =>
-        set((state) => ({
-          selections: {
-            ...state.selections,
-            car: null,
-            carWithDriver: false,
-          },
-        })),
-
-      removeGuide: () =>
-        set((state) => ({
-          selections: { ...state.selections, guide: null },
-        })),
-
-      resetTrip: () =>
+      clearTrip: () =>
         set({
           tripInfo: initialTripInfo,
-          selections: initialSelections,
+          items: [],
           entrySource: "direct" as EntrySource,
         }),
     }),
     {
-      name: "vizit-trip-storage",
+      name: "vizit-trip-storage-v2", // Updated version key to avoid conflicts
       partialize: (state) => ({
         tripInfo: state.tripInfo,
-        selections: state.selections,
+        items: state.items,
         entrySource: state.entrySource,
       }),
     },

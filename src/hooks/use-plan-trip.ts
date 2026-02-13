@@ -18,13 +18,13 @@ export function usePlanTrip() {
   const {
     tripInfo,
     updateTripInfo,
-    selections,
-    setSelections,
+    items,
+    addItem,
+    removeItem,
+    updateItem,
+    clearTrip,
     setEntrySource,
-    addFlight,
     setDestination,
-    addNote,
-    resetTrip,
   } = useTripStore();
 
   // detect entry source and pre-fill from url params
@@ -60,23 +60,7 @@ export function usePlanTrip() {
       setEntrySource("widget");
     } else if (flightId || serviceType === "flights") {
       setEntrySource("flights");
-      if (!selections.flight) {
-        addFlight({
-          id: "requested",
-          airline: "Best Option",
-          flightNumber: "TBD",
-          departureCity: from || "",
-          arrivalCity: to || "",
-          departureAirport: "TBD",
-          arrivalAirport: "TBD",
-          departureTime: departDate || "",
-          arrivalTime: "",
-          duration: "",
-          price: 0,
-          cabinClass: "Economy",
-          stops: 0,
-        });
-      }
+      // Logic for adding flight if needed - skipping for now as explicit add is better
     } else if (destination) {
       setEntrySource("destinations");
       if (tripInfo.destination !== destination) setDestination(destination);
@@ -84,8 +68,18 @@ export function usePlanTrip() {
       setEntrySource("services");
     } else if (experienceId || note) {
       setEntrySource(experienceId ? "experiences" : "gallery");
-      const newNote = note || `Interested in experience: ${experienceId}`;
-      if (!tripInfo.specialRequests.includes(newNote)) addNote(newNote);
+      if (note) {
+          // Add note as item
+          const noteItem = {
+              id: "note-" + Date.now(),
+              type: "note" as const,
+              title: "Special Request",
+              description: note,
+              data: note,
+              price: 0
+          };
+          addItem(noteItem);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
@@ -180,23 +174,38 @@ export function usePlanTrip() {
   const travelers =
     tripInfo.adults + tripInfo.children + (tripInfo.infants || 0);
 
+  // Update item prices when days change
+  useEffect(() => {
+    items.forEach((item) => {
+      if (item.type === "hotel" && item.data && "pricePerNight" in item.data) {
+        const newPrice = (item.data.pricePerNight as number) * days;
+        if (item.price !== newPrice) {
+          updateItem(item.id, { price: newPrice });
+        }
+      } else if (item.type === "car" && item.data && "pricePerDay" in item.data) {
+        let newPrice = (item.data.pricePerDay as number) * days;
+        if (item.data.withDriver) {
+          newPrice += DRIVER_SURCHARGE * days;
+        }
+        if (item.price !== newPrice) {
+          updateItem(item.id, { price: newPrice });
+        }
+      }
+    });
+  }, [days, items, updateItem]);
+
   const subtotal = useMemo(() => {
-    let sum = 0;
-    if (selections.flight) {
-      const adultPrice = selections.flight.price;
-      const infantPrice = Math.round(adultPrice * 0.1);
-      const standardTravelers = tripInfo.adults + tripInfo.children;
-      const infants = tripInfo.infants || 0;
-      sum += standardTravelers * adultPrice + infants * infantPrice;
-    }
-    if (selections.hotel) sum += selections.hotel.pricePerNight * days;
-    if (selections.car) {
-      sum += selections.car.pricePerDay * days;
-      if (selections.carWithDriver) sum += DRIVER_SURCHARGE * days;
-    }
-    if (selections.guide) sum += selections.guide.price;
-    return sum;
-  }, [selections, days, tripInfo.adults, tripInfo.children, tripInfo.infants]);
+    return items.reduce((sum, item) => {
+      if (item.type === "flight") {
+        const adultPrice = item.price || 0;
+        // Simple calculation to match BookingSummary: price * travelers
+        // Assuming flight price stored is per-person base price
+        // Note: Infants usually cheaper, but BookingSummary uses simplified flight.price * travelers
+        return sum + adultPrice * travelers;
+      }
+      return sum + (item.price || 0);
+    }, 0);
+  }, [items, travelers]);
 
   const serviceFee = subtotal * SERVICE_FEE_RATE;
   const total = subtotal + serviceFee;
@@ -215,8 +224,12 @@ export function usePlanTrip() {
   return {
     tripInfo,
     setTripInfo: updateTripInfo,
-    selections,
-    setSelections,
+    items,
+    addItem,
+    removeItem,
+    updateItem,
+    clearTrip,
+    
     activeTab,
     setActiveTab,
 
@@ -250,6 +263,5 @@ export function usePlanTrip() {
 
     resetHotelFilters,
     resetCarFilters,
-    resetTrip,
   };
 }

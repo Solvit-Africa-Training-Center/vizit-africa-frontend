@@ -11,7 +11,7 @@ export default function MarketingLayout({
   return (
     <>
       <Navbar />
-      <main>{children}</main>
+      {children}
       <Footer />
     </>
   );

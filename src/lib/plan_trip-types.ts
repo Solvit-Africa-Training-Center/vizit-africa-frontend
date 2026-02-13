@@ -25,6 +25,7 @@ export interface Hotel {
   pricePerNight: number;
   amenities: string[];
   rating: number;
+  location: string;
 }
 
 export interface Car {
@@ -40,10 +41,45 @@ export interface Car {
 
 export interface Guide {
   id: string;
+  name: string;
   type: string;
   description: string;
   price: number;
   languages: string[];
+}
+
+export interface Experience {
+    id: string;
+    title: string;
+    description?: string;
+    price: number;
+    duration?: string;
+    location?: string;
+}
+
+export interface Service {
+    id: string;
+    title: string;
+    description?: string;
+    price: string | number;
+    category: string;
+}
+
+export type TripItemType = "flight" | "hotel" | "car" | "guide" | "experience" | "service" | "note";
+
+export interface TripItem {
+    id: string;
+    type: TripItemType;
+    title: string;
+    description?: string;
+    price?: number;
+    currency?: string;
+    // Dates can be specific to this item
+    startDate?: string;
+    endDate?: string;
+    // Store original data object for reference if needed
+    data?: Flight | Hotel | Car | Guide | Experience | Service | any;
+    quantity?: number;
 }
 
 export interface TripInfo {

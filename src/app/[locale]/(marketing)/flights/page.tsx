@@ -16,8 +16,6 @@ import {
 } from "@remixicon/react";
 import { flights } from "@/lib/dummy-data";
 import { Link } from "@/i18n/navigation";
-import { AddToTripButton } from "@/components/plan-trip/add-to-trip-button";
-import type { Flight } from "@/lib/plan_trip-types";
 
 const POPULAR_DESTINATIONS = [
   { code: "KGL", city: "Kigali" },
@@ -105,7 +103,7 @@ const ALL_FLIGHTS = [...flights, ...EXTRA_FLIGHTS];
 
 type SortOption = "price" | "duration" | "departure";
 
-export default function FlightsPage() {
+export default function FlightsPage({ params: { locale } }: { params: { locale: string } }) {
   const searchParams = useSearchParams();
   const t = useTranslations("Common");
 
