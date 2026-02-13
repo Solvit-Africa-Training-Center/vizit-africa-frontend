@@ -19,15 +19,25 @@ import { motion, AnimatePresence } from "motion/react";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { Label } from "@/components/ui/label";
-import { useUser } from "@/components/user-provider";
+// import { useUser } from "@/components/user-provider";
 import { Empty, EmptyDescription, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
 import { Badge } from "@/components/ui/badge";
 
 type Tab = "overview" | "trips" | "saved" | "settings";
 
+const exampleResponseOfUser = {
+  bio: "Travel enthusiast",
+  email: "dontresor73@gmail.com",
+  full_name: "John Doe",
+  id: "173287d4-7aba-4b9c-8b2a-61a369927b1f",
+  phone_number: "+250781234567",
+  preferred_currency: "USD",
+  role: "ADMIN",
+}
+
 export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState<Tab>("overview");
-    const { user } = useUser();
+    // const { user } = useUser();
   const t = useTranslations("Profile");
   const tCommon = useTranslations("Admin.requests.table.badges");
 
@@ -49,7 +59,7 @@ export default function ProfilePage() {
                 {t("header.title")}
               </span>
               <h1 className="font-display text-5xl md:text-7xl font-medium text-foreground">
-                {user?.full_name}'s Profile
+                {exampleResponseOfUser.full_name}'s Profile
               </h1>
             </div>
 
@@ -279,29 +289,61 @@ export default function ProfilePage() {
                   <h2 className="font-display text-3xl font-medium mb-8">
                     {t("settings.title")}
                   </h2>
-                  <div className="space-y-8">
-                    <div className="grid gap-4">
-                      <Label className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
-                        {t("settings.fullName")}
-                      </Label>
-                      <input
-                        type="text"
-                        value="Sarah Jenkins"
-                        className="border-b border-border bg-transparent py-2 text-lg focus:outline-hidden focus:border-primary transition-colors"
-                        readOnly
-                      />
+                  <div className="space-y-6">
+                    <div className="grid gap-2">
+                       <Label className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
+                         {t("settings.fullName")}
+                       </Label>
+                       <div className="border-b border-border py-2 text-lg">
+                         {exampleResponseOfUser.full_name}
+                       </div>
                     </div>
-                    <div className="grid gap-4">
-                      <Label className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
-                        {t("settings.email")}
-                      </Label>
-                      <input
-                        type="email"
-                        value="sarah.j@example.com"
-                        className="border-b border-border bg-transparent py-2 text-lg focus:outline-hidden focus:border-primary transition-colors"
-                        readOnly
-                      />
+                    
+                    <div className="grid gap-2">
+                       <Label className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
+                         {t("settings.email")}
+                       </Label>
+                       <div className="border-b border-border py-2 text-lg">
+                         {exampleResponseOfUser.email}
+                       </div>
                     </div>
+
+                    <div className="grid gap-2">
+                       <Label className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
+                         Phone Number
+                       </Label>
+                       <div className="border-b border-border py-2 text-lg">
+                         {exampleResponseOfUser.phone_number}
+                       </div>
+                    </div>
+
+                    <div className="grid gap-2">
+                       <Label className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
+                         Bio
+                       </Label>
+                       <div className="border-b border-border py-2 text-lg">
+                         {exampleResponseOfUser.bio}
+                       </div>
+                    </div>
+
+                     <div className="grid gap-2">
+                       <Label className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
+                         Preferred Currency
+                       </Label>
+                       <div className="border-b border-border py-2 text-lg">
+                         {exampleResponseOfUser.preferred_currency}
+                       </div>
+                    </div>
+
+                    <div className="grid gap-2">
+                       <Label className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
+                         Role
+                       </Label>
+                       <div className="border-b border-border py-2 text-lg flex items-center gap-2">
+                         <Badge variant="outline">{exampleResponseOfUser.role}</Badge>
+                       </div>
+                    </div>
+
                     <div className="pt-8">
                       <Button>{t("settings.save")}</Button>
                     </div>

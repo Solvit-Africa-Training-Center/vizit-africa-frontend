@@ -61,7 +61,6 @@ export function PageHeader({
             "text-xl md:text-2xl font-light leading-relaxed",
             isDark ? "text-primary-foreground/80" : "text-muted-foreground",
             align === "center" && "mx-auto",
-            // If split, constrain width, otherwise generic max width
             isSplit ? "max-w-lg" : "max-w-2xl"
           )}
         >
