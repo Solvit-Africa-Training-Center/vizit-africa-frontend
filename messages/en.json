@@ -184,9 +184,18 @@
     "title": "The Vizit Difference",
     "description": "We don't just book trips; we craft personal legacies. Here is what sets our journeys apart from the rest.",
     "stats": {
-      "travelers": { "value": "200+", "label": "Happy Travelers" },
-      "countries": { "value": "15+", "label": "Countries Served" },
-      "rating": { "value": "4.9", "label": "Average Rating" }
+      "travelers": {
+        "value": "200+",
+        "label": "Happy Travelers"
+      },
+      "countries": {
+        "value": "15+",
+        "label": "Countries Served"
+      },
+      "rating": {
+        "value": "4.9",
+        "label": "Average Rating"
+      }
     },
     "benefits": [
       "Real-time pricing from verified partners",
@@ -342,6 +351,8 @@
     },
     "verifyEmail": {
       "title": "Verify Email",
+      "codeLabel": "Verification Code",
+      "verifyButton": "Verify Email",
       "success": "Email verified successfully",
       "error": "Invalid verification code",
       "backToLogin": "Back to Login",
@@ -558,18 +569,54 @@
       "urban": "urban"
     },
     "items": {
-      "1": { "alt": "Luxury SUV Interior", "caption": "Fleet Comfort" },
-      "2": { "alt": "Safari Land Cruiser", "caption": "Off-road Ready" },
-      "3": { "alt": "Business Class Seat", "caption": "Premium Air" },
-      "4": { "alt": "The Retreat", "caption": "Kigali Luxury" },
-      "5": { "alt": "One&Only", "caption": "Mountain Views" },
-      "6": { "alt": "Bisate Lodge", "caption": "Volcano Base" },
-      "7": { "alt": "Akagera Game Drive", "caption": "Wildlife Spotting" },
-      "8": { "alt": "Gorilla Encounter", "caption": "Primate Trek" },
-      "9": { "alt": "Helicopter Transfer", "caption": "Scenic Route" },
-      "10": { "alt": "Private Dining", "caption": "Exclusive Service" },
-      "11": { "alt": "Canopy Walk", "caption": "Rainforest View" },
-      "12": { "alt": "Lake Kivu Boat", "caption": "Water Transport" }
+      "1": {
+        "alt": "Luxury SUV Interior",
+        "caption": "Fleet Comfort"
+      },
+      "2": {
+        "alt": "Safari Land Cruiser",
+        "caption": "Off-road Ready"
+      },
+      "3": {
+        "alt": "Business Class Seat",
+        "caption": "Premium Air"
+      },
+      "4": {
+        "alt": "The Retreat",
+        "caption": "Kigali Luxury"
+      },
+      "5": {
+        "alt": "One&Only",
+        "caption": "Mountain Views"
+      },
+      "6": {
+        "alt": "Bisate Lodge",
+        "caption": "Volcano Base"
+      },
+      "7": {
+        "alt": "Akagera Game Drive",
+        "caption": "Wildlife Spotting"
+      },
+      "8": {
+        "alt": "Gorilla Encounter",
+        "caption": "Primate Trek"
+      },
+      "9": {
+        "alt": "Helicopter Transfer",
+        "caption": "Scenic Route"
+      },
+      "10": {
+        "alt": "Private Dining",
+        "caption": "Exclusive Service"
+      },
+      "11": {
+        "alt": "Canopy Walk",
+        "caption": "Rainforest View"
+      },
+      "12": {
+        "alt": "Lake Kivu Boat",
+        "caption": "Water Transport"
+      }
     }
   },
   "Meta": {
@@ -932,7 +979,6 @@
         "passengers": "passengers"
       }
     },
-
     "Languages": {
       "en": "English",
       "fr": "Français",
@@ -1040,12 +1086,30 @@
     "description": "See the world through the eyes of our travelers. From luxury stays to wild adventures.",
     "viewAll": "View Full Gallery",
     "items": {
-      "1": { "alt": "Imigongo Art", "caption": "Cultural Heritage" },
-      "2": { "alt": "Kigali Convention Center", "caption": "Modern Kigali" },
-      "3": { "alt": "Tea Plantation", "caption": "Nyungwe Tea" },
-      "4": { "alt": "Gorilla Trekking", "caption": "Once in a Lifetime" },
-      "5": { "alt": "Safari Sunset", "caption": "Golden Plains" },
-      "6": { "alt": "Canopy Walk", "caption": "Above the Trees" }
+      "1": {
+        "alt": "Imigongo Art",
+        "caption": "Cultural Heritage"
+      },
+      "2": {
+        "alt": "Kigali Convention Center",
+        "caption": "Modern Kigali"
+      },
+      "3": {
+        "alt": "Tea Plantation",
+        "caption": "Nyungwe Tea"
+      },
+      "4": {
+        "alt": "Gorilla Trekking",
+        "caption": "Once in a Lifetime"
+      },
+      "5": {
+        "alt": "Safari Sunset",
+        "caption": "Golden Plains"
+      },
+      "6": {
+        "alt": "Canopy Walk",
+        "caption": "Above the Trees"
+      }
     }
   }
 }

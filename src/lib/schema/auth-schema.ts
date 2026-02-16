@@ -53,11 +53,7 @@ export const registerInputSchema = registerObjectSchema.refine(
 
 export type RegisterInput = z.infer<typeof registerInputSchema>;
 
-export const registerResponseSchema = z.object({
-  refresh: z.string(),
-  access: z.string(),
-  user: userSchema,
-});
+export const registerResponseSchema = userSchema;
 
 export type RegisterResponse = z.infer<typeof registerResponseSchema>;
 
