@@ -9,8 +9,8 @@ export const createServiceInputSchema = z.object({
   currency: z.string(),
   capacity: z.number().min(1),
   status: z.enum(["active", "inactive", "draft"]),
-  location: z.number().or(z.string()), // Location ID
-  vendor: z.number().or(z.string()), // Vendor ID
+  location: z.number().or(z.string()),
+  user: z.string(),
 });
 
 export type CreateServiceInput = z.infer<typeof createServiceInputSchema>;

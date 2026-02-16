@@ -22,6 +22,7 @@
     "flights": "Flights",
     "destinations": "Destinations",
     "experiences": "Experiences",
+    "services": "Services",
     "aboutUs": "About",
     "contact": "Contact"
   },
@@ -772,6 +773,9 @@
   "Admin": {
     "nav": {
       "brand": "Vizit Admin",
+      "create": "Create",
+      "createService": "Create Service",
+      "createVendor": "Create Vendor",
       "overview": "Overview",
       "requests": "Requests",
       "bookings": "Bookings",

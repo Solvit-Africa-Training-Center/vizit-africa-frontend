@@ -142,7 +142,7 @@ export function CTA() {
                             {t("emailUs")}
                           </span>
                           <span className="block text-primary-foreground font-medium truncate group-hover/item:text-accent-warm transition-colors duration-200">
-                            hello@vizit.africa
+                            kesly@vizit.africa
                           </span>
                         </div>
                       </a>
@@ -160,7 +160,7 @@ export function CTA() {
                             {t("whatsapp")}
                           </span>
                           <span className="block text-primary-foreground font-medium truncate group-hover/item:text-green-400 transition-colors duration-200">
-                            +250 788 123 456
+                            +250 780486847
                           </span>
                         </div>
                       </a>

@@ -19,12 +19,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { RiAlertLine } from "@remixicon/react";
+import { useState } from "react";
 
 interface VendorFormProps {
   onSuccess?: (vendor: any) => void;
 }
 
 export function VendorForm({ onSuccess }: VendorFormProps) {
+  const [error, setError] = useState<string | null>(null);
   // const t = useTranslations("Admin.vendors"); // Assuming translations exist or will fallback
 
   const form = useForm({
@@ -47,7 +51,7 @@ export function VendorForm({ onSuccess }: VendorFormProps) {
       } else {
         toast.error(result.error);
         if (result.fieldErrors) {
-          console.error(result.fieldErrors);
+          setError(result.fieldErrors.toString());
         }
       }
     },
@@ -62,6 +66,13 @@ export function VendorForm({ onSuccess }: VendorFormProps) {
       }}
       className="space-y-4"
     >
+       {error && (
+        <Alert variant={"destructive"}>
+          <RiAlertLine />
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription className="mt-1">{error}</AlertDescription>
+        </Alert>
+      )}
       <form.Field name="business_name">
         {(field) => (
           <div className="space-y-2">

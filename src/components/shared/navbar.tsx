@@ -63,7 +63,7 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
   const logoVariant = showSolid ? "default" : "light";
 
   const navLinks = [
-    { href: "/services", label: t("destinations") },
+    { href: "/services", label: t("services") },
     { href: "/experiences", label: t("experiences") },
     { href: "/about", label: t("aboutUs") },
     { href: "/contact", label: t("contact") },
@@ -148,7 +148,7 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
                     </div>
                   </div>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48 p-2">
+                <DropdownMenuContent align="end" className="w-48">
                   <DropdownMenuItem>
                     <Link
                       href="/profile"

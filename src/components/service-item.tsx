@@ -94,7 +94,6 @@ export function ServiceItem({
                     item={service}
                     label={bookLabel}
                     size="lg"
-                    className="px-8 rounded-none h-14 uppercase tracking-widest font-display text-sm"
                   />
                 </div>
               </div>

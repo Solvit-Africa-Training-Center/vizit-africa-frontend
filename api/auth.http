@@ -11,6 +11,10 @@ Content-Type: application/json
   "role": "CLIENT"
 }
 
+### Get All Users
+GET {{baseUrl}}/accounts/users/
+Authorization: Bearer {{token}}
+
 ### Verify Email
 POST {{baseUrl}}/accounts/users/verify_email/
 Content-Type: application/json
@@ -18,6 +22,15 @@ Content-Type: application/json
 {
   "email": "saadnkurunziza@gmail.com",
   "code": "991689"
+}
+
+### Login as admin
+POST {{baseUrl}}/accounts/login/
+Content-Type: application/json
+
+{
+  "email": "dontresor73@gmail.com",
+  "password": "SecurePass123!"
 }
 
 ### Login

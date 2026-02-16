@@ -48,7 +48,7 @@ export function RegisterForm() {
     },
     onSubmit: async ({ value }) => {
       const result = await register(value);
-
+console.log(result)
       if (result.success) {
         toast.success("Account created! Check your email to verify.");
         router.push(`/verify-email?email=${encodeURIComponent(value.email)}`);

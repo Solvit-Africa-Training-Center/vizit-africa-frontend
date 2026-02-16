@@ -34,9 +34,9 @@ export function Footer() {
       { label: t("links.termsOfService"), href: "/terms" },
     ],
     contact: [
-      { label: "hello@vizitafrica.rw", href: "mailto:hello@vizitafrica.rw" },
-      { label: "+250 788 000 000", href: "tel:+250788000000" },
-      { label: "WhatsApp", href: "https://wa.me/250788000000" },
+      { label: "kesly@vizit.africa", href: "mailto:kesly@vizit.africa" },
+      { label: "+250 780486847", href: "tel:+250780486847" },
+      { label: "WhatsApp", href: "https://wa.me/+250780486847" },
     ],
   };
 

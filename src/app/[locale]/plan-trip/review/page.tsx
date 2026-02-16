@@ -20,12 +20,11 @@ import Image from "next/image";
 import { useState } from "react";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "motion/react";
-import { cn } from "@/lib/utils";
 import Link from "next/link";
 import type { TripItem } from "@/lib/plan_trip-types";
 
 export default function TripReviewPage() {
-  const t = useTranslations("PlanTrip"); // Assuming we have these or similar keys
+  const t = useTranslations("PlanTrip");
   const {
     tripInfo,
     items,
@@ -36,24 +35,18 @@ export default function TripReviewPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  // Group items or just list them
-  // Let's just list them for now but maybe sorted by type
-
   const totalPrice = items.reduce((sum, item) => sum + (item.price || 0), 0);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Mock API call
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    // Success
     setSubmitted(true);
     setIsSubmitting(false);
     toast.success("Trip request submitted successfully!");
     
-    // Ideally clear trip after some time or navigation, but let's keep it for now so they see the success state
   };
 
   if (submitted) {
@@ -88,7 +81,6 @@ export default function TripReviewPage() {
       />
 
       <div className="max-w-7xl mx-auto px-5 md:px-10 grid lg:grid-cols-12 gap-12">
-        {/* Left: Itinerary Items */}
         <div className="lg:col-span-7 space-y-8">
             <div className="flex items-center justify-between">
                 <h2 className="text-xl font-display font-medium">Your Selection ({items.length})</h2>
@@ -128,6 +120,13 @@ export default function TripReviewPage() {
                 
                 <div className="space-y-6 mb-8">
                     <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-1">
+                            <Label className="text-xs uppercase text-muted-foreground">From</Label>
+                            <div className="font-medium flex items-center gap-2">
+                                <RiMapPinLine className="size-4 text-primary" />
+                                {tripInfo.departureCity || "Not set"}
+                            </div>
+                         </div>
                          <div className="space-y-1">
                             <Label className="text-xs uppercase text-muted-foreground">Destination</Label>
                             <div className="font-medium flex items-center gap-2">
@@ -135,16 +134,17 @@ export default function TripReviewPage() {
                                 {tripInfo.destination || "Not set"}
                             </div>
                          </div>
-                         <div className="space-y-1">
-                            <Label className="text-xs uppercase text-muted-foreground">Dates</Label>
-                            <div className="font-medium flex items-center gap-2">
+                       
+                    </div>
+                    <div className="space-y-1">
+                        <Label className="text-xs uppercase text-muted-foreground">Dates</Label>
+                       <div className="font-medium flex items-center gap-2">
                                 <RiCalendarLine className="size-4 text-primary" />
                                 {tripInfo.departureDate ? (
                                     <span>{format(new Date(tripInfo.departureDate), "MMM d")} - {tripInfo.returnDate ? format(new Date(tripInfo.returnDate), "MMM d, yyyy") : "TBD"}</span>
                                 ) : "Not set"}
                             </div>
-                         </div>
-                    </div>
+                     </div>
                      <div className="space-y-1">
                         <Label className="text-xs uppercase text-muted-foreground">Travelers</Label>
                         <div className="font-medium flex items-center gap-2">

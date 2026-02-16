@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
-import { Link, usePathname } from "@/i18n/navigation";
+import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { LanguageSwitcher } from "./language-switcher";
 import { useUser } from "@/components/user-provider";
@@ -27,6 +27,7 @@ export function NavbarMobile({ isOpen, onClose }: NavbarMobileProps) {
   const pathname = usePathname();
   const hasActiveTrip = useTripStore((s) => s.hasActiveTrip());
   const tripItemCount = useTripStore((s) => s.itemCount());
+  const router = useRouter()
 
   const navLinks = [
     { href: "/services", label: t("destinations") },
@@ -37,7 +38,7 @@ export function NavbarMobile({ isOpen, onClose }: NavbarMobileProps) {
 
   const handleLogout = async () => {
     await logout();
-    window.location.href = "/";
+    router.push("/");
   };
 
   if (!isOpen) return null;

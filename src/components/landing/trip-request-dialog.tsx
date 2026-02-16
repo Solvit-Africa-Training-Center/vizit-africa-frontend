@@ -124,7 +124,6 @@ export function TripRequestDialog({
     contactInfo.departureCity.trim() &&
     contactInfo.name.trim() &&
     contactInfo.email.trim() &&
-    contactInfo.agreeToTerms &&
     guests.adults > 0;
 
   const saveToStore = () => {
@@ -172,7 +171,6 @@ export function TripRequestDialog({
         className="sm:max-w-7xl h-[90vh] p-0 gap-0 overflow-hidden flex flex-col"
         showCloseButton={true}
       >
-        {/* Fixed Header */}
         <div className="px-8 py-6 border-b bg-gradient-to-r from-primary/5 to-transparent shrink-0">
           <div className="flex items-start justify-between gap-4">
             <div className="space-y-1">
@@ -374,7 +372,6 @@ export function TripRequestDialog({
 
               <Separator />
 
-              {/* Contact Information */}
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
 
@@ -437,39 +434,13 @@ export function TripRequestDialog({
                 </div>
               </div>
 
-              <Separator />
-
-              {/* Terms & Conditions */}
-              <div className="flex items-start gap-3 p-4 rounded-xl bg-muted/50">
-                <Checkbox
-                  id="terms"
-                  checked={contactInfo.agreeToTerms}
-                  onCheckedChange={(checked) =>
-                    updateContact({ agreeToTerms: checked as boolean })
-                  }
-                  className="mt-0.5"
-                />
-                <div className="space-y-1">
-                  <label
-                    htmlFor="terms"
-                    className="text-sm font-medium leading-none cursor-pointer"
-                  >
-                    I agree to the terms and conditions
-                  </label>
-                  <p className="text-xs text-muted-foreground">
-                    By proceeding, you agree to our privacy policy and booking terms.
-                    Final availability subject to confirmation.
-                  </p>
-                </div>
-              </div>
+           
             </div>
           </div>
         </div>
 
-        {/* Fixed Footer */}
         <div className="border-t bg-background px-8 py-6 shrink-0">
           <div className="flex items-center justify-between gap-6">
-            {/* Price Summary */}
             <div className="space-y-1">
               <p className="text-xs text-muted-foreground uppercase tracking-wider">
                 {hasItems ? "Total Estimate" : "Estimated Total"}
@@ -486,7 +457,6 @@ export function TripRequestDialog({
               </div>
             </div>
 
-            {/* Action Buttons */}
             <div className="flex items-center gap-3">
               <Button
                 variant="outline"

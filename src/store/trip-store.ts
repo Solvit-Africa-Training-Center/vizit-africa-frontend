@@ -3,10 +3,6 @@ import { persist } from "zustand/middleware";
 import type {
   TripInfo,
   TripItem,
-  Flight,
-  Hotel,
-  Car,
-  Guide,
 } from "@/lib/plan_trip-types";
 
 type EntrySource =
@@ -20,12 +16,11 @@ type EntrySource =
 
 interface TripState {
   tripInfo: TripInfo;
-  // Previously 'selections', now we use a flexible list of items
   items: TripItem[];
   
   entrySource: EntrySource;
 
-  // computed-like helpers
+  // helpers
   hasActiveTrip: () => boolean;
   itemCount: () => number;
   getItem: (id: string) => TripItem | undefined;
@@ -91,12 +86,8 @@ export const useTripStore = create<TripState>()(
 
       addItem: (item) =>
         set((state) => {
-            // Avoid duplicates if needed, or allow them. 
-            // For now, let's allow multiples unless ID is identical.
             const exists = state.items.find((i) => i.id === item.id);
             if (exists) {
-                // If it exists, maybe just update it? or ignore?
-                // Let's replace it to ensure latest data
                 return {
                     items: state.items.map(i => i.id === item.id ? item : i)
                 };
@@ -122,7 +113,7 @@ export const useTripStore = create<TripState>()(
         }),
     }),
     {
-      name: "vizit-trip-storage-v2", // Updated version key to avoid conflicts
+      name: "vizit-trip-storage-v2",
       partialize: (state) => ({
         tripInfo: state.tripInfo,
         items: state.items,

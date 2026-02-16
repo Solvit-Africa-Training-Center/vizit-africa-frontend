@@ -8,6 +8,7 @@ import {
   createServiceInputSchema,
   type CreateServiceInput,
 } from "@/lib/schema/service-schema";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { createService } from "@/actions/services";
 import { getVendors } from "@/actions/vendors";
 import { Label } from "@/components/ui/label";
@@ -41,9 +42,11 @@ import {
 } from "@/components/ui/autocomplete";
 
 import { VendorForm } from "./vendor-form";
-import { RiAddLine, RiSearchLine } from "@remixicon/react";
+import { RiAddLine, RiAlertLine } from "@remixicon/react";
 
 export function ServiceForm() {
+    const [error, setError] = useState<string | null>(null);
+  const [isVendorDialogOpen, setIsVendorDialogOpen] = useState(false);
   const { data: vendorsData, isLoading: isVendorsLoading } = useQuery({
     queryKey: ["vendors"],
     queryFn: async () => {
@@ -54,8 +57,7 @@ export function ServiceForm() {
   });
 
   const vendors = vendorsData || [];
-  const [isVendorDialogOpen, setIsVendorDialogOpen] = useState(false);
-
+console.log({vendors});
   const form = useForm({
     defaultValues: {
       title: "",
@@ -66,7 +68,7 @@ export function ServiceForm() {
       capacity: 1,
       status: "draft" as "active" | "inactive" | "draft",
       location: "" as string | number,
-      vendor: "" as string | number,
+      user: "" as string,
     },
     validators: {
       onChange: createServiceInputSchema,
@@ -78,7 +80,8 @@ export function ServiceForm() {
       } else {
         toast.error(result.error);
         if (result.fieldErrors) {
-          console.error(result.fieldErrors);
+          console.log(result.fieldErrors);
+         setError(result.error);
         }
       }
     },
@@ -88,7 +91,7 @@ export function ServiceForm() {
 
   const handleVendorCreated = (newVendor: any) => {
     queryClient.invalidateQueries({ queryKey: ["vendors"] });
-    form.setFieldValue("vendor", newVendor.id);
+    form.setFieldValue("user", newVendor.id);
     setIsVendorDialogOpen(false);
     toast.success(`Vendor ${newVendor.business_name} selected`);
   };
@@ -104,6 +107,13 @@ export function ServiceForm() {
         }}
         className="space-y-6"
       >
+            {error && (
+        <Alert variant={"destructive"}>
+          <RiAlertLine />
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription className="mt-1">{error}</AlertDescription>
+        </Alert>
+      )}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <form.Field name="title">
             {(field) => (
@@ -174,7 +184,7 @@ export function ServiceForm() {
           )}
         </form.Field>
 
-        <form.Field name="vendor">
+        <form.Field name="user">
           {(field) => (
             <div className="space-y-2">
               <Label>Vendor</Label>
@@ -185,11 +195,11 @@ export function ServiceForm() {
                   ) : (
                     <Autocomplete
                       value={field.state.value}
-                      onValueChange={(val: any) => field.handleChange(val)}
+                      onValueChange={(val) => field.handleChange(val)}
                     >
                       <AutocompleteTrigger>
                         <span className="truncate">
-                          {vendors.find((v) => v.id === field.state.value)
+                          {vendors.find((v) => String(v.id) === field.state.value)
                             ?.business_name || "Search vendor..."}
                         </span>
                       </AutocompleteTrigger>
@@ -198,10 +208,10 @@ export function ServiceForm() {
                           <AutocompletePopup>
                             <AutocompleteInput placeholder="Search vendors..." />
                             <AutocompleteList>
-                              {vendors.map((vendor: any) => (
+                              {vendors.map((vendor) => (
                                 <AutocompleteItem
                                   key={vendor.id}
-                                  value={vendor.id}
+                                  value={String(vendor.id)}
                                 >
                                   {vendor.business_name}
                                 </AutocompleteItem>

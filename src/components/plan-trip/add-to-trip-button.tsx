@@ -34,14 +34,14 @@ interface AddToTripButtonProps {
 }
 
 const toastMessages: Record<AddToTripType, string> = {
-  flight: "✈ Flight added to your trip",
-  hotel: "🏨 Hotel added to your trip",
-  car: "🚗 Vehicle added to your trip",
-  guide: "🧑‍💼 Guide added to your trip",
-  experience: "🦁 Experience added to your trip",
-  service: "🛠 Service added to your trip",
-  note: "📝 Note added to your trip",
-  destination: "📍 Destination set for your trip",
+  flight: "Flight added to your trip",
+  hotel: "Hotel added to your trip",
+  car: "Vehicle added to your trip",
+  guide: "Guide added to your trip",
+  experience: "Experience added to your trip",
+  service: "Service added to your trip",
+  note: "Note added to your trip",
+  destination: "Destination set for your trip",
 };
 
 export function AddToTripButton({
@@ -59,16 +59,11 @@ export function AddToTripButton({
   const router = useRouter();
   const locale = useLocale();
 
-  // Check if item is already added. 
-  // For 'destination', we check tripInfo. 
-  // For others, checking if an item with same ID exists in `items`.
   const isAdded = (() => {
     if (type === "destination") {
         return store.tripInfo.destination === destination;
     }
     if (type === "note") {
-        // Notes are hard to check for uniqueness without ID, maybe just specific logic?
-        // For now, let's assume notes are append-only and always "addable" unless we want to debounce.
         return false; 
     }
     if (item && 'id' in item) {
@@ -81,7 +76,6 @@ export function AddToTripButton({
     if (type === "destination" && destination) {
         store.setDestination(destination);
     } else if (type === "note" && note) {
-        // Create a note item
         const noteItem: TripItem = {
             id: uuidv4(),
             type: "note",
@@ -91,15 +85,10 @@ export function AddToTripButton({
         };
         store.addItem(noteItem);
     } else if (item) {
-        // Construct TripItem from generic item
-        // We assume 'item' has at least id, title (or name/model), price (maybe)
-        // We strictly cast for convenience, but we should be careful.
-        
         let title = "Unknown Item";
         let price = 0;
         let description = "";
 
-        // Safe extraction based on type
         if (type === "flight") {
             const f = item as Flight;
             title = `${f.airline} - ${f.flightNumber}`;
@@ -108,7 +97,7 @@ export function AddToTripButton({
         } else if (type === "hotel") {
             const h = item as Hotel;
             title = h.name;
-            price = h.pricePerNight; // Needs consideration for dates
+            price = h.pricePerNight;
             description = h.address;
         } else if (type === "car") {
             const c = item as Car;
@@ -128,8 +117,6 @@ export function AddToTripButton({
         } else if (type === "service") {
             const s = item as Service;
             title = s.title;
-            // price might be string in Service type, need parsing if we want number
-            // or just store as is in data
             price = typeof s.price === 'number' ? s.price : 0; 
             description = s.description || "";
         }
@@ -140,7 +127,7 @@ export function AddToTripButton({
             title,
             description,
             price,
-            data: { ...item, withDriver }, // store full object
+            data: { ...item, withDriver },
             quantity: 1
         };
         
@@ -164,6 +151,7 @@ export function AddToTripButton({
       className={cn(
         "gap-1.5 transition-all duration-300",
         isAdded && "pointer-events-none",
+        size === "lg" ? "px-6" : "",
         className,
       )}
       onClick={handleAdd}

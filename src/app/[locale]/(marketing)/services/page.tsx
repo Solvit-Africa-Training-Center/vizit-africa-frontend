@@ -290,7 +290,7 @@ export default function ServicesPage() {
                   onValueChange={(value) => setSortBy(value as SortOption)}
                 >
                   <SelectTrigger className="w-[180px] bg-transparent border-none text-sm font-medium uppercase tracking-wider focus:ring-0 text-foreground ring-0 shadow-none px-0 gap-2">
-                    <SelectValue placeholder={t("sort")} />
+                    <SelectValue placeholder={t("sort")} className={"text-xs"}/>
                   </SelectTrigger>
                   <SelectContent>
                     {sortOptionsList.map((opt) => (

@@ -8,13 +8,19 @@ import {
   RiStoreLine,
   RiSettings3Line,
   RiLogoutBoxRLine,
-  RiGlobalLine,
   RiCheckboxCircleLine,
+  RiAddLine,
 } from "@remixicon/react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import { LanguageSwitcher } from "../shared/language-switcher";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export function AdminNavbar() {
   const pathname = usePathname();
@@ -67,6 +73,29 @@ export function AdminNavbar() {
             );
           })}
         </nav>
+
+        <div className="flex items-center gap-4 mr-4">
+          <DropdownMenu>
+            <DropdownMenuTrigger render={<Button variant="ghost" size="sm" className="gap-2"/>}>
+              
+                <RiAddLine className="size-4" />
+                <span className="hidden sm:inline">{t("create")}</span>
+             
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem render={ <Link href="/admin/create/service" className="cursor-pointer"/>}>
+               
+                  {t("createService")}
+               
+              </DropdownMenuItem>
+              <DropdownMenuItem render={ <Link href="/admin/create/vendor" className="cursor-pointer"/>}>
+               
+                  {t("createVendor")}
+               
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
 
         <div className="flex items-center gap-4">
           <LanguageSwitcher variant={"default"} />
