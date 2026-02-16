@@ -357,6 +357,19 @@
       "error": "Invalid verification code",
       "backToLogin": "Back to Login",
       "goToProfile": "Go to Profile"
+    },
+    "setPassword": {
+      "title": "Set Account Password",
+      "subtitle": "Set a secure password for your new account to access your itinerary and bookings.",
+      "newPassword": "New Password",
+      "placeholder": "Enter new password",
+      "confirmPassword": "Confirm New Password",
+      "confirmPlaceholder": "Confirm your password",
+      "submit": "Set Password",
+      "success": "Password set successfully! You are now logged in.",
+      "remembered": "Remember your password?",
+      "invalidLink": "Invalid Link",
+      "invalidLinkDesc": "This password reset link is invalid or has expired."
     }
   },
   "ServicesPage": {
