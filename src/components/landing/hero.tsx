@@ -19,6 +19,38 @@ import { RiPlaneLine } from "@remixicon/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const HERO_SLIDES = [
+  {
+    id: 1,
+    image: "/bookflight.jpeg",
+    key: "1",
+  },
+  {
+    id: 2,
+    image:
+      "/Kigali.jpeg", // Hotel view
+    key: "2",
+  },
+  {
+    id: 3,
+    image:
+      "/ca.jpg", // Driving
+    key: "3",
+  },
+  {
+    id: 4,
+    image:
+      "https://images.unsplash.com/photo-1527631746610-bca00a040d60?q=90&w=2400&auto=format&fit=crop", // Guide/Discussion
+    key: "4",
+  },
+  {
+    id: 5,
+    image:
+      "/plan.jpg", // Travel/Planning
+    key: "5",
+  },
+];
+
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const parallaxRef = useRef<HTMLDivElement>(null);
