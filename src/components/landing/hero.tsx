@@ -19,38 +19,6 @@ import { RiPlaneLine } from "@remixicon/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const HERO_SLIDES = [
-  {
-    id: 1,
-    image: "/bookflight.jpeg",
-    key: "1",
-  },
-  {
-    id: 2,
-    image:
-      "/Kigali.jpeg", // Hotel view
-    key: "2",
-  },
-  {
-    id: 3,
-    image:
-      "/ca.jpg", // Driving
-    key: "3",
-  },
-  {
-    id: 4,
-    image:
-      "https://images.unsplash.com/photo-1527631746610-bca00a040d60?q=90&w=2400&auto=format&fit=crop", // Guide/Discussion
-    key: "4",
-  },
-  {
-    id: 5,
-    image:
-      "/plan.jpg", // Travel/Planning
-    key: "5",
-  },
-];
-
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const parallaxRef = useRef<HTMLDivElement>(null);
@@ -211,7 +179,7 @@ export function Hero() {
         </div>
 
         <div className="relative z-40 mt-12 pointer-events-auto">
-          <TripRequestDialog 
+          <TripRequestDialog
             open={isDialogOpen}
             onOpenChange={setIsDialogOpen}
             trigger={
@@ -219,7 +187,7 @@ export function Hero() {
                 <RiPlaneLine className="mr-2 size-5" />
                 Start Your Journey
               </Button>
-            } 
+            }
           />
         </div>
 
@@ -229,11 +197,10 @@ export function Hero() {
               key={index}
               type="button"
               onClick={() => handleSlideChange(index)}
-              className={`h-0.5 transition-all duration-500 ${
-                index === currentSlide
+              className={`h-0.5 transition-all duration-500 ${index === currentSlide
                   ? "w-12 bg-primary-foreground"
                   : "w-4 bg-primary-foreground/40 hover:bg-primary-foreground/60"
-              }`}
+                }`}
               aria-label={`Go to slide ${index + 1}`}
             />
           ))}
@@ -255,20 +222,18 @@ export function Hero() {
                 <HoverCardTrigger
                   type="button"
                   onClick={() => handleSlideChange(index)}
-                  className={`group flex items-center justify-end gap-3 transition-colors duration-300 ${
-                    isActive
+                  className={`group flex items-center justify-end gap-3 transition-colors duration-300 ${isActive
                       ? "text-primary-foreground"
                       : "text-primary-foreground/40 hover:text-primary-foreground/80"
-                  }`}
+                    }`}
                 >
                   <span className="text-[10px] font-mono uppercase tracking-[0.2em]">
                     0{index + 1}
                   </span>
 
                   <span
-                    className={`h-px bg-current transition-all duration-500 ${
-                      isActive ? "w-8 bg-primary" : "w-4 group-hover:w-6"
-                    }`}
+                    className={`h-px bg-current transition-all duration-500 ${isActive ? "w-8 bg-primary" : "w-4 group-hover:w-6"
+                      }`}
                   />
                 </HoverCardTrigger>
                 <HoverCardContent
