@@ -12,12 +12,16 @@ import {
   type VerifyEmailInput,
   type VerifyEmailResponse,
   type User,
+  type SetPasswordInput,
+  type SetPasswordResponse,
   loginInputSchema,
   loginResponseSchema,
   registerInputSchema,
   registerResponseSchema,
   verifyEmailInputSchema,
   verifyEmailResponseSchema,
+  setPasswordInputSchema,
+  setPasswordResponseSchema,
   userSchema,
 } from "@/lib/schema/auth-schema";
 
@@ -134,6 +138,11 @@ export async function getCurrentUser(): Promise<ActionResult<User>> {
     return { success: true, data };
   } catch (error) {
     const err = error as ApiError;
+    if (err.status === 401) {
+      try {
+        await logout();
+      } catch { }
+    }
     return {
       success: false,
       error: err.message,
@@ -145,4 +154,39 @@ export async function logout(): Promise<void> {
   const cookieStore = await cookies();
   cookieStore.delete("accessToken");
   cookieStore.delete("refreshToken");
+}
+
+export async function setPassword(
+  input: SetPasswordInput,
+): Promise<ActionResult<SetPasswordResponse>> {
+  const validation = setPasswordInputSchema.safeParse(input);
+  if (!validation.success) {
+    return {
+      success: false,
+      error: "Validation failed",
+      fieldErrors: validation.error.flatten().fieldErrors,
+    };
+  }
+
+  try {
+    const data = await api.post(
+      endpoints.auth.setPassword,
+      validation.data,
+      setPasswordResponseSchema,
+      { requiresAuth: false },
+    );
+
+    const cookieStore = await cookies();
+    cookieStore.set("accessToken", data.access, COOKIE_OPTIONS);
+    cookieStore.set("refreshToken", data.refresh, COOKIE_OPTIONS);
+
+    return { success: true, data };
+  } catch (error) {
+    const err = error as ApiError;
+    return {
+      success: false,
+      error: err.message,
+      fieldErrors: err.fieldErrors,
+    };
+  }
 }

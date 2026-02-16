@@ -84,8 +84,8 @@ export default function PlanTripPage() {
     if (car) parts.push(car.title);
     if (guide) parts.push("Guide");
     if (noteItem || tripInfo.specialRequests) {
-        // Just generic "Special Request" if present
-        parts.push("Special Request");
+      // Just generic "Special Request" if present
+      parts.push("Special Request");
     }
     return parts.length > 0 ? parts.join(" · ") : undefined;
   })();
@@ -98,13 +98,12 @@ export default function PlanTripPage() {
   const isReadyToSubmit = !!(tripInfo.name && tripInfo.email && tripInfo.departureCity && tripInfo.departureDate);
   const canSubmit = !!(tripInfo.name && tripInfo.email);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!canSubmit) {
       toast.error("Please fill in your name and email before submitting.");
       return;
     }
-    form.handleSubmit();
-    toast.success("Trip request submitted successfully!");
+    await form.handleSubmit();
   };
 
   return (
@@ -151,7 +150,7 @@ export default function PlanTripPage() {
                   items={items}
                   addItem={addItem}
                   removeItem={removeItem}
-                  onNext={() => {}}
+                  onNext={() => { }}
                 />
               </TripSection>
 
@@ -161,10 +160,10 @@ export default function PlanTripPage() {
                 title="Stay & Services"
                 status={
                   hotel ||
-                  car ||
-                  guide ||
-                  noteItem ||
-                  tripInfo.specialRequests
+                    car ||
+                    guide ||
+                    noteItem ||
+                    tripInfo.specialRequests
                     ? "selected"
                     : "empty"
                 }
@@ -179,7 +178,7 @@ export default function PlanTripPage() {
                   activeTab={activeTab}
                   setActiveTab={setActiveTab}
                   showMobileSummary={false}
-                  setShowMobileSummary={() => {}}
+                  setShowMobileSummary={() => { }}
                   tripInfo={tripInfo}
                   days={days}
                   total={total}

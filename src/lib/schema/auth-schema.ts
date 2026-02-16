@@ -5,7 +5,7 @@ export const userSchema = z.object({
   full_name: z.string(),
   email: z.string().email(),
   phone_number: z.string(),
-  bio: z.string().optional(),
+  bio: z.string().nullable().optional(),
   role: z.string(),
   preferred_currency: z.string(),
 });
@@ -28,7 +28,7 @@ export const loginResponseSchema = z.object({
     email: z.email(),
     full_name: z.string(),
     role: z.string(),
-}),
+  }),
 });
 
 export type LoginResponse = z.infer<typeof loginResponseSchema>;
@@ -75,3 +75,32 @@ export const verifyEmailResponseSchema = z.object({
 });
 
 export type VerifyEmailResponse = z.infer<typeof verifyEmailResponseSchema>;
+
+// set password
+export const setPasswordInputSchema = z
+  .object({
+    uidb64: z.string(),
+    token: z.string(),
+    password: z.string().min(8, "Password must be at least 8 characters"),
+    re_password: z.string().min(8, "Password must be at least 8 characters"),
+  })
+  .refine((data) => data.password === data.re_password, {
+    message: "Passwords do not match",
+    path: ["re_password"],
+  });
+
+export type SetPasswordInput = z.infer<typeof setPasswordInputSchema>;
+
+export const setPasswordResponseSchema = z.object({
+  message: z.string(),
+  access: z.string(),
+  refresh: z.string(),
+  user: z.object({
+    id: z.string(),
+    email: z.string().email(),
+    full_name: z.string(),
+    role: z.string(),
+  }),
+});
+
+export type SetPasswordResponse = z.infer<typeof setPasswordResponseSchema>;

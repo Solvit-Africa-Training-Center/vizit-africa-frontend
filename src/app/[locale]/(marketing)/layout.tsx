@@ -1,5 +1,3 @@
-"use client";
-
 import { Footer } from "@/components/landing";
 import { Navbar } from "@/components/shared";
 

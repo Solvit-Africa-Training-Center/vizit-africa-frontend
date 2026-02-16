@@ -3,7 +3,6 @@
 import { Navbar } from "@/components/shared";
 import { Footer } from "@/components/landing";
 import { Button } from "@/components/ui/button";
-import {sampleRequests } from "@/lib/dummy-data";
 import {
   RiMapPinLine,
   RiCalendarLine,
@@ -12,34 +11,72 @@ import {
   RiSuitcaseLine,
   RiLogoutBoxRLine,
   RiPlaneLine,
+  RiInformationLine,
 } from "@remixicon/react";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { Label } from "@/components/ui/label";
-// import { useUser } from "@/components/user-provider";
+import { useUser } from "@/components/user-provider";
 import { Empty, EmptyDescription, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
 import { Badge } from "@/components/ui/badge";
+import { useQuery } from "@tanstack/react-query";
+import { getUserBookings } from "@/actions/bookings";
+import { differenceInDays } from "date-fns";
 
 type Tab = "overview" | "trips" | "saved" | "settings";
 
-const exampleResponseOfUser = {
-  bio: "Travel enthusiast",
-  email: "dontresor73@gmail.com",
-  full_name: "John Doe",
-  id: "173287d4-7aba-4b9c-8b2a-61a369927b1f",
-  phone_number: "+250781234567",
-  preferred_currency: "USD",
-  role: "ADMIN",
-}
-
 export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState<Tab>("overview");
-    // const { user } = useUser();
+  const { user } = useUser();
   const t = useTranslations("Profile");
   const tCommon = useTranslations("Admin.requests.table.badges");
+
+  const { data: bookingsData, isLoading } = useQuery({
+    queryKey: ["user-bookings"],
+    queryFn: async () => {
+      const result = await getUserBookings();
+      if (result.success) return result.data;
+      return [];
+    },
+  });
+
+  const stats = useMemo(() => {
+    if (!bookingsData) return { trips: 0, days: 0 };
+    const trips = bookingsData.filter(b => b.status === "confirmed").length;
+    let days = 0;
+    bookingsData.forEach(b => {
+      b.items.forEach(item => {
+        days += differenceInDays(new Date(item.end_date), new Date(item.start_date)) + 1;
+      });
+    });
+    return { trips, days };
+  }, [bookingsData]);
+
+  const nextTrip = useMemo(() => {
+    if (!bookingsData) return null;
+
+    // 1. Try to find the next confirmed trip
+    const confirmed = bookingsData
+      .filter(b => b.status === "confirmed" && b.items.length > 0)
+      .sort((a, b) => new Date(a.items[0].start_date).getTime() - new Date(b.items[0].start_date).getTime())[0];
+
+    if (confirmed) return confirmed;
+
+    // 2. Fallback to the latest pending request
+    const pending = bookingsData
+      .filter(b => b.status === "pending" && b.items.length > 0)
+      .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())[0];
+
+    return pending;
+  }, [bookingsData]);
+
+  const pendingRequests = useMemo(() => {
+    if (!bookingsData) return [];
+    return bookingsData.filter(b => b.status === "pending");
+  }, [bookingsData]);
 
   const tabs = [
     { id: "overview", label: t("tabs.overview"), icon: RiMapPinLine },
@@ -47,6 +84,14 @@ export default function ProfilePage() {
     { id: "saved", label: t("tabs.saved"), icon: RiBookmarkLine },
     { id: "settings", label: t("tabs.settings"), icon: RiSettings3Line },
   ];
+
+  if (!user) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p>Loading session...</p>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -59,7 +104,7 @@ export default function ProfilePage() {
                 {t("header.title")}
               </span>
               <h1 className="font-display text-5xl md:text-7xl font-medium text-foreground">
-                {exampleResponseOfUser.full_name}'s Profile
+                {user.full_name}'s Profile
               </h1>
             </div>
 
@@ -120,24 +165,28 @@ export default function ProfilePage() {
                         <span className="bg-primary-foreground/10 backdrop-blur-md border border-primary-foreground/20 px-3 py-1 text-xs font-medium uppercase tracking-wider rounded-full text-primary-foreground">
                           {t("overview.nextTrip.label")}
                         </span>
-                        <div className="text-right">
-                          <p className="text-3xl font-display font-medium">
-                            14
-                          </p>
-                          <p className="text-xs font-mono uppercase opacity-80">
-                            {t("overview.nextTrip.daysLeft")}
-                          </p>
-                        </div>
+                        {nextTrip ? (
+                          <div className="text-right">
+                            <p className="text-3xl font-display font-medium">
+                              {differenceInDays(new Date(nextTrip.items[0].start_date), new Date())}
+                            </p>
+                            <p className="text-xs font-mono uppercase opacity-80">
+                              {t("overview.nextTrip.daysLeft")}
+                            </p>
+                          </div>
+                        ) : null}
                       </div>
 
                       <div>
                         <h2 className="font-display text-4xl md:text-5xl font-medium text-primary-foreground mb-2">
-                          Rwanda Retreat
+                          {nextTrip ? (nextTrip.status === 'confirmed' ? "Upcoming Adventure" : "Request Processing") : "No Trips Planned"}
                         </h2>
-                        <p className="text-lg font-light opacity-90 flex items-center gap-2">
-                          <RiCalendarLine className="size-5" />
-                          Mar 15 - Mar 22, 2025
-                        </p>
+                        {nextTrip && (
+                          <p className="text-lg font-light opacity-90 flex items-center gap-2">
+                            <RiCalendarLine className="size-5" />
+                            {new Date(nextTrip.items[0].start_date).toLocaleDateString()} - {new Date(nextTrip.items[0].end_date).toLocaleDateString()}
+                          </p>
+                        )}
 
                         <div className="mt-8 pt-8 border-t border-primary-foreground/10 grid grid-cols-2 gap-8">
                           <div>
@@ -145,7 +194,7 @@ export default function ProfilePage() {
                               {t("overview.nextTrip.status")}
                             </p>
                             <p className="font-medium">
-                              {t("overview.nextTrip.confirmed")}
+                              {nextTrip ? (nextTrip.status === 'confirmed' ? t("overview.nextTrip.confirmed") : "In Review") : "-"}
                             </p>
                           </div>
                           <div>
@@ -153,7 +202,7 @@ export default function ProfilePage() {
                               {t("overview.nextTrip.travelers")}
                             </p>
                             <p className="font-medium">
-                              2 {t("overview.nextTrip.adults")}
+                              {nextTrip ? `${nextTrip.items[0].quantity} Unit(s)` : "-"}
                             </p>
                           </div>
                         </div>
@@ -172,38 +221,42 @@ export default function ProfilePage() {
                         provided within 48 hours.
                       </p>
                       <div className="space-y-4">
-                        {sampleRequests.map((req) => (
-                          <div
-                            key={req.id}
-                            className="border border-border p-6 rounded-sm hover:border-primary transition-colors group bg-card"
-                          >
-                            <div className="flex justify-between items-start mb-4">
-                              <div>
-                                <h4 className="font-medium text-lg mb-1">
-                                  {req.purpose}
-                                </h4>
-                                <p className="text-sm text-muted-foreground">
-                                  {new Date(req.createdAt).toLocaleDateString()}
-                                </p>
+                        {isLoading ? (
+                          <p>Loading requests...</p>
+                        ) : pendingRequests.length > 0 ? (
+                          pendingRequests.map((req) => (
+                            <div
+                              key={req.id}
+                              className="border border-border p-6 rounded-sm hover:border-primary transition-colors group bg-card"
+                            >
+                              <div className="flex justify-between items-start mb-4">
+                                <div>
+                                  <h4 className="font-medium text-lg mb-1">
+                                    Trip Request #{req.id.toString().slice(0, 8)}
+                                  </h4>
+                                  <p className="text-sm text-muted-foreground">
+                                    {new Date(req.created_at).toLocaleDateString()}
+                                  </p>
+                                </div>
+                                <span className="text-xs font-medium uppercase tracking-wider border border-border px-2 py-1 rounded-full text-muted-foreground">
+                                  {req.status}
+                                </span>
                               </div>
-                              <span className="text-xs font-medium uppercase tracking-wider border border-border px-2 py-1 rounded-full text-muted-foreground">
-                                {req.status}
-                              </span>
+                              <div className="flex flex-wrap gap-2">
+                                {req.items.map((item, idx) => (
+                                  <span key={idx} className="text-xs border border-border px-2 py-1 uppercase tracking-wider text-muted-foreground">
+                                    {item.status} Item
+                                  </span>
+                                ))}
+                              </div>
                             </div>
-                            <div className="flex gap-2">
-                              {req.needsFlights && (
-                                <span className="text-xs border border-border px-2 py-1 uppercase tracking-wider text-muted-foreground">
-                                  {tCommon("flights")}
-                                </span>
-                              )}
-                              {req.needsHotel && (
-                                <span className="text-xs border border-border px-2 py-1 uppercase tracking-wider text-muted-foreground">
-                                  {tCommon("hotels")}
-                                </span>
-                              )}
-                            </div>
+                          ))
+                        ) : (
+                          <div className="text-center py-10 border border-dashed rounded-sm">
+                            <RiInformationLine className="size-8 mx-auto mb-2 text-muted-foreground" />
+                            <p className="text-sm text-muted-foreground">No pending requests</p>
                           </div>
-                        ))}
+                        )}
                       </div>
                     </div>
 
@@ -214,7 +267,7 @@ export default function ProfilePage() {
                       <div className="grid grid-cols-3 gap-8">
                         <div>
                           <p className="text-4xl font-display font-light text-primary">
-                            01
+                            {stats.trips < 10 ? `0${stats.trips}` : stats.trips}
                           </p>
                           <p className="text-xs font-mono uppercase text-muted-foreground mt-2">
                             {t("overview.stats.trips")}
@@ -222,7 +275,7 @@ export default function ProfilePage() {
                         </div>
                         <div>
                           <p className="text-4xl font-display font-light text-primary">
-                            12
+                            {stats.days < 10 ? `0${stats.days}` : stats.days}
                           </p>
                           <p className="text-xs font-mono uppercase text-muted-foreground mt-2">
                             {t("overview.stats.days")}
@@ -230,7 +283,7 @@ export default function ProfilePage() {
                         </div>
                         <div>
                           <p className="text-4xl font-display font-light text-primary">
-                            03
+                            00
                           </p>
                           <p className="text-xs font-mono uppercase text-muted-foreground mt-2">
                             {t("overview.stats.reviews")}
@@ -254,22 +307,29 @@ export default function ProfilePage() {
                     </Button>
                   </div>
                   <div className="border-y border-border divide-y divide-border">
-                    <div className="py-8 grid md:grid-cols-4 gap-6 items-center group">
-                      <div className="md:col-span-2">
-                        <h3 className="font-display text-2xl font-medium mb-2 group-hover:text-primary transition-colors">
-                          Gorilla Trekking Adventure
-                        </h3>
-                        <p className="text-muted-foreground">
-                          Mar 15 - Mar 22, 2025
-                        </p>
+                    {bookingsData?.filter(b => b.status === "confirmed").map((trip) => (
+                      <div key={trip.id} className="py-8 grid md:grid-cols-4 gap-6 items-center group">
+                        <div className="md:col-span-2">
+                          <h3 className="font-display text-2xl font-medium mb-2 group-hover:text-primary transition-colors">
+                            {trip.items[0]?.service || "Safari Experience"}
+                          </h3>
+                          <p className="text-muted-foreground">
+                            {new Date(trip.items[0]?.start_date).toLocaleDateString()} - {new Date(trip.items[0]?.end_date).toLocaleDateString()}
+                          </p>
+                        </div>
+                        <Badge variant="success-outline">Confirmed</Badge>
+                        <div className="text-right">
+                          <Button variant="outline">
+                            {t("trips.viewDetails")}
+                          </Button>
+                        </div>
                       </div>
-                      <Badge variant="success-outline">Outbound</Badge>
-                      <div className="text-right">
-                        <Button variant="outline">
-                          {t("trips.viewDetails")}
-                        </Button>
+                    ))}
+                    {(!bookingsData || bookingsData.filter(b => b.status === "confirmed").length === 0) && (
+                      <div className="py-20 text-center">
+                        <p className="text-muted-foreground">You don't have any confirmed trips yet.</p>
                       </div>
-                    </div>
+                    )}
                   </div>
                 </div>
               )}
@@ -291,57 +351,57 @@ export default function ProfilePage() {
                   </h2>
                   <div className="space-y-6">
                     <div className="grid gap-2">
-                       <Label className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
-                         {t("settings.fullName")}
-                       </Label>
-                       <div className="border-b border-border py-2 text-lg">
-                         {exampleResponseOfUser.full_name}
-                       </div>
-                    </div>
-                    
-                    <div className="grid gap-2">
-                       <Label className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
-                         {t("settings.email")}
-                       </Label>
-                       <div className="border-b border-border py-2 text-lg">
-                         {exampleResponseOfUser.email}
-                       </div>
+                      <Label className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
+                        {t("settings.fullName")}
+                      </Label>
+                      <div className="border-b border-border py-2 text-lg">
+                        {user.full_name}
+                      </div>
                     </div>
 
                     <div className="grid gap-2">
-                       <Label className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
-                         Phone Number
-                       </Label>
-                       <div className="border-b border-border py-2 text-lg">
-                         {exampleResponseOfUser.phone_number}
-                       </div>
+                      <Label className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
+                        {t("settings.email")}
+                      </Label>
+                      <div className="border-b border-border py-2 text-lg">
+                        {user.email}
+                      </div>
                     </div>
 
                     <div className="grid gap-2">
-                       <Label className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
-                         Bio
-                       </Label>
-                       <div className="border-b border-border py-2 text-lg">
-                         {exampleResponseOfUser.bio}
-                       </div>
-                    </div>
-
-                     <div className="grid gap-2">
-                       <Label className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
-                         Preferred Currency
-                       </Label>
-                       <div className="border-b border-border py-2 text-lg">
-                         {exampleResponseOfUser.preferred_currency}
-                       </div>
+                      <Label className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
+                        Phone Number
+                      </Label>
+                      <div className="border-b border-border py-2 text-lg">
+                        {user.phone_number || "-"}
+                      </div>
                     </div>
 
                     <div className="grid gap-2">
-                       <Label className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
-                         Role
-                       </Label>
-                       <div className="border-b border-border py-2 text-lg flex items-center gap-2">
-                         <Badge variant="outline">{exampleResponseOfUser.role}</Badge>
-                       </div>
+                      <Label className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
+                        Bio
+                      </Label>
+                      <div className="border-b border-border py-2 text-lg">
+                        {user.bio || "Travel enthusiast"}
+                      </div>
+                    </div>
+
+                    <div className="grid gap-2">
+                      <Label className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
+                        Preferred Currency
+                      </Label>
+                      <div className="border-b border-border py-2 text-lg">
+                        {user.preferred_currency || "USD"}
+                      </div>
+                    </div>
+
+                    <div className="grid gap-2">
+                      <Label className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
+                        Role
+                      </Label>
+                      <div className="border-b border-border py-2 text-lg flex items-center gap-2">
+                        <Badge variant="outline">{user.role}</Badge>
+                      </div>
                     </div>
 
                     <div className="pt-8">

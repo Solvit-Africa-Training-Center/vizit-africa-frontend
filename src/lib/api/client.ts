@@ -35,7 +35,7 @@ async function handleResponse<T>(
         fieldErrors = errorData;
         errorMessage = "Validation error";
       }
-    } catch {}
+    } catch { }
 
     throw new ApiError(errorMessage, response.status, fieldErrors);
   }

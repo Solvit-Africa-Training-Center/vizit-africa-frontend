@@ -5,12 +5,15 @@ export const endpoints = {
     verifyEmail: "/accounts/users/verify_email/",
     user: (id: string | number) => `/accounts/users/${id}/`,
     me: "/accounts/users/profile/",
+    setPassword: "/accounts/users/set_password/",
   },
   bookings: {
+    list: "/bookings/",
     items: {
       create: "/bookings/items/create/",
     },
     confirm: "/bookings/confirm/",
+    submitTrip: "/bookings/submit-trip/",
     tickets: {
       generate: (id: string | number) => `/bookings/${id}/generate-ticket/`,
       verify: "/bookings/verify-ticket/",

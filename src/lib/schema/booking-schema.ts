@@ -14,16 +14,17 @@ export const addCartItemResponseSchema = z.object({
   id: z.number().or(z.string()),
   service: z.number().or(z.string()),
   quantity: z.number(),
-  total_price: z.number(),
+  total_price: z.coerce.number(),
 });
 
 export type AddCartItemResponse = z.infer<typeof addCartItemResponseSchema>;
 
 // confirm booking
 export const confirmBookingResponseSchema = z.object({
-  booking_id: z.string().or(z.number()),
-  status: z.string(),
-  message: z.string().optional(),
+  id: z.string().or(z.number()),
+  status: z.string().optional(),
+  // total_amount: z.coerce.number().optional(),
+  currency: z.string().optional(),
 });
 
 export type ConfirmBookingResponse = z.infer<
@@ -67,3 +68,34 @@ export const adminActionResponseSchema = z.object({
 });
 
 export type AdminActionResponse = z.infer<typeof adminActionResponseSchema>;
+
+// Booking List
+export const bookingItemSchema = z.object({
+  id: z.string().or(z.number()),
+  service: z.number().or(z.string()),
+  start_date: z.string(),
+  end_date: z.string(),
+  quantity: z.number(),
+  unit_price: z.coerce.number(),
+  subtotal: z.coerce.number(),
+  status: z.string(),
+  created_at: z.string(),
+});
+
+export type BookingItem = z.infer<typeof bookingItemSchema>;
+
+export const bookingSchema = z.object({
+  id: z.string().or(z.number()),
+  total_amount: z.coerce.number(),
+  currency: z.string(),
+  status: z.string(),
+  items: z.array(bookingItemSchema),
+  created_at: z.string(),
+  updated_at: z.string(),
+});
+
+export type Booking = z.infer<typeof bookingSchema>;
+
+export const bookingListSchema = z.array(bookingSchema);
+
+export type BookingList = z.infer<typeof bookingListSchema>;
