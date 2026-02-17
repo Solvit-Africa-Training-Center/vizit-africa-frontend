@@ -21,6 +21,7 @@ export type CreateVendorInput = z.infer<typeof createVendorInputSchema>;
 
 export const vendorResponseSchema = createVendorInputSchema.extend({
   id: z.number().or(z.string()),
+  user: z.number().or(z.string()).optional(),
   status: z.string(),
   is_approved: z.boolean(),
   created_at: z.string().optional(),

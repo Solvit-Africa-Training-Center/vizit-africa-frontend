@@ -36,3 +36,13 @@ export async function createLocation(
     return { success: false, error: err.message, fieldErrors: err.fieldErrors };
   }
 }
+
+export async function getLocations(): Promise<ActionResult<LocationResponse[]>> {
+  try {
+    const data = await api.get<LocationResponse[]>(endpoints.locations.list);
+    return { success: true, data };
+  } catch (error) {
+    const err = error as ApiError;
+    return { success: false, error: err.message };
+  }
+}

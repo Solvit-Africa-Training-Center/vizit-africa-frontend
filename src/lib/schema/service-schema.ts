@@ -3,22 +3,33 @@ import { z } from "zod";
 // create service
 export const createServiceInputSchema = z.object({
   title: z.string().min(3),
-  service_type: z.enum(["tour", "accommodation", "transport", "experience"]),
+  service_type: z.enum(["flight", "hotel", "bnb", "car_rental", "guide"]),
   description: z.string().min(10),
   base_price: z.number().min(0),
   currency: z.string(),
   capacity: z.number().min(1),
   status: z.enum(["active", "inactive", "draft"]),
-  location: z.number().or(z.string()), // Location ID
-  vendor: z.number().or(z.string()), // Vendor ID
+  location: z.union([z.number(), z.string().min(1), z.undefined()]), // Location ID
+  user: z.union([z.number(), z.string().trim().min(1), z.null(), z.undefined()]), // Service owner user ID
 });
 
 export type CreateServiceInput = z.infer<typeof createServiceInputSchema>;
 
-export const serviceResponseSchema = createServiceInputSchema.extend({
+export const serviceResponseSchema = z.object({
   id: z.number().or(z.string()),
+  title: z.string(),
+  service_type: z.string(),
+  description: z.string(),
+  base_price: z.union([z.number(), z.string()]),
+  currency: z.string(),
+  capacity: z.number(),
+  status: z.string(),
+  location: z.union([z.number(), z.string(), z.null()]).optional(),
+  user: z.union([z.number(), z.string(), z.null()]).optional(),
   created_at: z.string().optional(),
   updated_at: z.string().optional(),
+  external_id: z.string().nullable().optional(),
+  metadata: z.record(z.string(), z.unknown()).optional(),
 });
 
 export type ServiceResponse = z.infer<typeof serviceResponseSchema>;

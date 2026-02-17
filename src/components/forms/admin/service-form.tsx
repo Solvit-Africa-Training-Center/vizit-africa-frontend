@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "@tanstack/react-form";
 import { toast } from "sonner";
@@ -37,11 +37,21 @@ import {
   AutocompletePortal,
   AutocompletePositioner,
   AutocompleteTrigger,
-  AutocompleteValue,
 } from "@/components/ui/autocomplete";
+import { createLocation, getLocations } from "@/actions/locations";
 
 import { VendorForm } from "./vendor-form";
-import { RiAddLine, RiSearchLine } from "@remixicon/react";
+import { RiAddLine, RiCloseLine } from "@remixicon/react";
+
+const MAPBOX_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
+
+type LocationSuggestion = {
+  id: string;
+  name: string;
+  latitude: number;
+  longitude: number;
+  source: "mapbox" | "open-meteo" | "db";
+};
 
 export function ServiceForm() {
   const { data: vendorsData, isLoading: isVendorsLoading } = useQuery({
@@ -53,30 +63,83 @@ export function ServiceForm() {
     },
   });
 
+  const { data: locationsData } = useQuery({
+    queryKey: ["locations"],
+    queryFn: async () => {
+      const res = await getLocations();
+      if (!res.success) throw new Error(res.error);
+      return res.data;
+    },
+  });
+
   const vendors = vendorsData || [];
+  const locations = locationsData || [];
   const [isVendorDialogOpen, setIsVendorDialogOpen] = useState(false);
+  const [locationQuery, setLocationQuery] = useState("");
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: "success" | "error";
+    message: string;
+  } | null>(null);
+  const [locationSuggestions, setLocationSuggestions] = useState<LocationSuggestion[]>(
+    [],
+  );
+  const [isLocationSearching, setIsLocationSearching] = useState(false);
+  const localLocationSuggestions = locations
+    .filter((item) =>
+      item.name.toLowerCase().includes(locationQuery.trim().toLowerCase()),
+    )
+    .slice(0, 5);
 
   const form = useForm({
     defaultValues: {
       title: "",
-      service_type: "tour" as "tour" | "accommodation" | "transport" | "experience",
+      service_type: "flight" as
+        | "flight"
+        | "hotel"
+        | "bnb"
+        | "car_rental"
+        | "guide",
       description: "",
       base_price: 0,
       currency: "USD",
       capacity: 1,
       status: "draft" as "active" | "inactive" | "draft",
-      location: "" as string | number,
-      vendor: "" as string | number,
+      location: undefined as string | number | undefined,
+      user: undefined as string | number | null | undefined,
     },
     validators: {
       onChange: createServiceInputSchema,
     },
     onSubmit: async ({ value }) => {
-      const result = await createService(value);
+      setSubmitStatus(null);
+      const payload: CreateServiceInput = {
+        ...value,
+        location: value.location === "" ? undefined : value.location,
+        user:
+          value.user === "" || value.user === null || value.user === undefined
+            ? undefined
+            : typeof value.user === "string"
+              ? value.user.trim()
+              : value.user,
+      };
+
+      const result = await createService(payload);
       if (result.success) {
         toast.success("Service created successfully");
+        setSubmitStatus({
+          type: "success",
+          message: "Service created successfully.",
+        });
+        form.reset();
+        setLocationQuery("");
+        setLocationSuggestions([]);
       } else {
         toast.error(result.error);
+        const userError = result.fieldErrors?.user?.[0];
+        setSubmitStatus({
+          type: "error",
+          message: userError || result.error || "Failed to create service.",
+        });
         if (result.fieldErrors) {
           console.error(result.fieldErrors);
         }
@@ -88,14 +151,110 @@ export function ServiceForm() {
 
   const handleVendorCreated = (newVendor: any) => {
     queryClient.invalidateQueries({ queryKey: ["vendors"] });
-    form.setFieldValue("vendor", newVendor.id);
+    form.setFieldValue("user", String(newVendor.user));
     setIsVendorDialogOpen(false);
     toast.success(`Vendor ${newVendor.business_name} selected`);
   };
 
+  useEffect(() => {
+    if (locationQuery.trim().length < 2) {
+      setLocationSuggestions([]);
+      return;
+    }
+
+    const controller = new AbortController();
+    const timeout = setTimeout(async () => {
+      try {
+        setIsLocationSearching(true);
+        if (MAPBOX_ACCESS_TOKEN) {
+          const response = await fetch(
+            `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
+              locationQuery,
+            )}.json?autocomplete=true&types=country,region,place,locality&limit=5&access_token=${MAPBOX_ACCESS_TOKEN}`,
+            { signal: controller.signal },
+          );
+          const data = await response.json();
+          const suggestions = ((data.features || []) as any[]).map((feature) => ({
+            id: String(feature.id),
+            name: String(feature.place_name),
+            longitude: Number(feature.center?.[0]),
+            latitude: Number(feature.center?.[1]),
+            source: "mapbox" as const,
+          }));
+          setLocationSuggestions(suggestions);
+        } else {
+          const response = await fetch(
+            `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(
+              locationQuery,
+            )}&count=5&language=en&format=json`,
+            { signal: controller.signal },
+          );
+          const data = await response.json();
+          const suggestions = ((data.results || []) as any[]).map((item) => {
+            const nameParts = [item.name, item.admin1, item.country].filter(
+              Boolean,
+            );
+            return {
+              id: String(item.id ?? `${item.latitude}-${item.longitude}`),
+              name: nameParts.join(", "),
+              latitude: Number(item.latitude),
+              longitude: Number(item.longitude),
+              source: "open-meteo" as const,
+            };
+          });
+          setLocationSuggestions(suggestions);
+        }
+      } catch (error) {
+        if (!(error instanceof DOMException && error.name === "AbortError")) {
+          console.error(error);
+        }
+      } finally {
+        setIsLocationSearching(false);
+      }
+    }, 300);
+
+    return () => {
+      clearTimeout(timeout);
+      controller.abort();
+    };
+  }, [locationQuery]);
+
+  const handleLocationSelect = async (
+    field: { handleChange: (value: string | number | undefined) => void },
+    suggestion: LocationSuggestion,
+  ) => {
+    const selectedName = suggestion.name.trim();
+    const { longitude, latitude } = suggestion;
+
+    const existingLocation = locations.find(
+      (item) => item.name.toLowerCase() === selectedName.toLowerCase(),
+    );
+
+    if (existingLocation) {
+      field.handleChange(existingLocation.id);
+      setLocationQuery(existingLocation.name);
+      setLocationSuggestions([]);
+      return;
+    }
+
+    const createResult = await createLocation({
+      name: selectedName,
+      latitude,
+      longitude,
+    });
+
+    if (!createResult.success) {
+      toast.error(createResult.error);
+      return;
+    }
+
+    field.handleChange(createResult.data.id);
+    setLocationQuery(createResult.data.name);
+    setLocationSuggestions([]);
+    queryClient.invalidateQueries({ queryKey: ["locations"] });
+  };
+
   return (
-
-
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -104,6 +263,18 @@ export function ServiceForm() {
         }}
         className="space-y-6"
       >
+        {submitStatus ? (
+          <div
+            className={
+              submitStatus.type === "success"
+                ? "rounded-md border border-green-200 bg-green-50 px-3 py-2 text-sm text-green-800"
+                : "rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800"
+            }
+          >
+            {submitStatus.message}
+          </div>
+        ) : null}
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <form.Field name="title">
             {(field) => (
@@ -137,10 +308,11 @@ export function ServiceForm() {
                     <SelectValue placeholder="Select type" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="tour">Tour</SelectItem>
-                    <SelectItem value="accommodation">Accommodation</SelectItem>
-                    <SelectItem value="transport">Transport</SelectItem>
-                    <SelectItem value="experience">Experience</SelectItem>
+                    <SelectItem value="flight">Flight</SelectItem>
+                    <SelectItem value="hotel">Hotel</SelectItem>
+                    <SelectItem value="bnb">BnB</SelectItem>
+                    <SelectItem value="car_rental">Car Rental</SelectItem>
+                    <SelectItem value="guide">Guide</SelectItem>
                   </SelectContent>
                 </Select>
                 {field.state.meta.errors ? (
@@ -174,7 +346,7 @@ export function ServiceForm() {
           )}
         </form.Field>
 
-        <form.Field name="vendor">
+        <form.Field name="user">
           {(field) => (
             <div className="space-y-2">
               <Label>Vendor</Label>
@@ -184,13 +356,14 @@ export function ServiceForm() {
                     <div className="h-10 w-full animate-pulse rounded-md border border-input bg-muted" />
                   ) : (
                     <Autocomplete
-                      value={field.state.value}
+                      value={field.state.value ?? ""}
                       onValueChange={(val: any) => field.handleChange(val)}
                     >
                       <AutocompleteTrigger>
                         <span className="truncate">
-                          {vendors.find((v) => v.id === field.state.value)
-                            ?.business_name || "Search vendor..."}
+                          {vendors.find(
+                            (v) => String(v.user) === String(field.state.value),
+                          )?.business_name || "Search vendor..."}
                         </span>
                       </AutocompleteTrigger>
                       <AutocompletePortal>
@@ -201,7 +374,7 @@ export function ServiceForm() {
                               {vendors.map((vendor: any) => (
                                 <AutocompleteItem
                                   key={vendor.id}
-                                  value={vendor.id}
+                                  value={String(vendor.user)}
                                 >
                                   {vendor.business_name}
                                 </AutocompleteItem>
@@ -322,17 +495,92 @@ export function ServiceForm() {
         <form.Field name="location">
           {(field) => (
             <div className="space-y-2">
-              <Label htmlFor="location">Location ID</Label>
-              <Input
-                id="location"
-                placeholder="Location ID (e.g. 1)"
-                value={field.state.value}
-                onBlur={field.handleBlur}
-                onChange={(e) => field.handleChange(e.target.value)}
-              />
-              <p className="text-xs text-muted-foreground">
-                Enter Location ID for now.
-              </p>
+              <Label htmlFor="location">Location</Label>
+              <div className="space-y-2">
+                <div className="relative">
+                  <Input
+                    id="location"
+                    placeholder={
+                      MAPBOX_ACCESS_TOKEN
+                        ? "Search location (e.g. Kigali, Rwanda)"
+                        : "Search existing locations or enter Location ID"
+                    }
+                    value={locationQuery}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => {
+                      const nextValue = e.target.value;
+                      setLocationQuery(nextValue);
+                      if (!MAPBOX_ACCESS_TOKEN && /^\d+$/.test(nextValue.trim())) {
+                        field.handleChange(Number(nextValue.trim()));
+                        return;
+                      }
+                      field.handleChange(undefined);
+                    }}
+                  />
+                  {locationQuery ? (
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      className="absolute right-1 top-1 h-8 w-8"
+                      onClick={() => {
+                        setLocationQuery("");
+                        setLocationSuggestions([]);
+                        field.handleChange(undefined);
+                      }}
+                    >
+                      <RiCloseLine className="size-4" />
+                    </Button>
+                  ) : null}
+                </div>
+
+                <div className="rounded-md border bg-background">
+                  {isLocationSearching ? (
+                    <p className="px-3 py-2 text-sm text-muted-foreground">
+                      Searching...
+                    </p>
+                  ) : locationSuggestions.length > 0 ? (
+                    <div className="max-h-52 overflow-y-auto">
+                      {locationSuggestions.map((suggestion) => (
+                        <button
+                          key={suggestion.id}
+                          type="button"
+                          className="w-full px-3 py-2 text-left text-sm hover:bg-muted"
+                          onClick={() => handleLocationSelect(field, suggestion)}
+                        >
+                          {suggestion.name}
+                        </button>
+                      ))}
+                    </div>
+                  ) : localLocationSuggestions.length > 0 ? (
+                    <div className="max-h-52 overflow-y-auto">
+                      {localLocationSuggestions.map((item) => (
+                        <button
+                          key={String(item.id)}
+                          type="button"
+                          className="w-full px-3 py-2 text-left text-sm hover:bg-muted"
+                          onClick={() => {
+                            field.handleChange(item.id);
+                            setLocationQuery(item.name);
+                          }}
+                        >
+                          {item.name}
+                        </button>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="px-3 py-2 text-sm text-muted-foreground">
+                      Type country or city letters to search (for example: "Rwa", "Ken", "Nai").
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {field.state.value ? (
+                <p className="text-xs text-muted-foreground">
+                  Selected location ID: {String(field.state.value)}
+                </p>
+              ) : null}
               {field.state.meta.errors ? (
                 <p className="text-sm text-destructive">
                   {field.state.meta.errors.join(", ")}
