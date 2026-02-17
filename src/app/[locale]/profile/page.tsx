@@ -60,14 +60,12 @@ export default function ProfilePage() {
   const nextTrip = useMemo(() => {
     if (!bookingsData) return null;
 
-    // 1. Try to find the next confirmed trip
     const confirmed = bookingsData
       .filter(b => b.status === "confirmed" && b.items.length > 0)
       .sort((a, b) => new Date(a.items[0].start_date).getTime() - new Date(b.items[0].start_date).getTime())[0];
 
     if (confirmed) return confirmed;
 
-    // 2. Fallback to the latest pending request
     const pending = bookingsData
       .filter(b => b.status === "pending" && b.items.length > 0)
       .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())[0];

@@ -11,7 +11,6 @@ import {
   ITEMS_PER_PAGE,
 } from "../lib/plan-trip-data";
 import { useTripStore } from "@/store/trip-store";
-import { flights } from "@/lib/dummy-data";
 
 export function usePlanTrip() {
   const searchParams = useSearchParams();

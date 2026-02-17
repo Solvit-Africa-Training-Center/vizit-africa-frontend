@@ -3,10 +3,6 @@ import { persist } from "zustand/middleware";
 import type {
   TripInfo,
   TripItem,
-  Flight,
-  Hotel,
-  Car,
-  Guide,
 } from "@/lib/plan_trip-types";
 
 type EntrySource =
