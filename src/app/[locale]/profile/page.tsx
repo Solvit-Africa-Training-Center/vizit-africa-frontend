@@ -32,6 +32,54 @@ export default function ProfilePage() {
   const t = useTranslations("Profile");
   const tCommon = useTranslations("Admin.requests.table.badges");
 
+<<<<<<< HEAD
+=======
+  const { data: bookingsData, isLoading } = useQuery({
+    queryKey: ["user-bookings"],
+    queryFn: async () => {
+      const result = await getUserBookings();
+      if (result.success) return result.data;
+      return [];
+    },
+  });
+  const [acceptingId, setAcceptingId] = useState<string | null>(null);
+
+  const stats = useMemo(() => {
+    if (!bookingsData) return { trips: 0, days: 0 };
+    const trips = bookingsData.filter(b => b.status === "confirmed").length;
+    let days = 0;
+    bookingsData.forEach(b => {
+      b.items.forEach(item => {
+        days += differenceInDays(new Date(item.end_date), new Date(item.start_date)) + 1;
+      });
+    });
+    return { trips, days };
+  }, [bookingsData]);
+
+  const nextTrip = useMemo(() => {
+    if (!bookingsData) return null;
+
+    const confirmed = bookingsData
+      .filter(b => b.status === "confirmed" && b.items.length > 0)
+      .sort((a, b) => new Date(a.items[0].start_date).getTime() - new Date(b.items[0].start_date).getTime())[0];
+
+    if (confirmed) return confirmed;
+
+    const pending = bookingsData
+      .filter(b => b.status === "pending" && b.items.length > 0)
+      .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())[0];
+
+    return pending;
+  }, [bookingsData]);
+
+  const pendingRequests = useMemo(() => {
+    if (!bookingsData) return [];
+    return bookingsData.filter(
+      (b) => b.status === "pending" || b.status === "quoted" || b.quote?.status === "quoted",
+    );
+  }, [bookingsData]);
+
+>>>>>>> 6685ae0 (before)
   const tabs = [
     { id: "overview", label: t("tabs.overview"), icon: RiMapPinLine },
     { id: "trips", label: t("tabs.trips"), icon: RiSuitcaseLine },
