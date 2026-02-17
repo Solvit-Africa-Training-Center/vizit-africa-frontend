@@ -1,7 +1,4 @@
-"use client";
-
 import Link from "next/link";
-import { sampleRequests } from "@/lib/dummy-data";
 import {
   RiFileListLine,
   RiDashboardLine,
@@ -9,27 +6,33 @@ import {
   RiCheckLine,
   RiMailLine,
 } from "@remixicon/react";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
+import { getRequests } from "@/lib/data-fetching";
 
-export default function AdminDashboard() {
-  const t = useTranslations("Admin.dashboard");
+export default async function AdminDashboard() {
+  const t = await getTranslations("Admin.dashboard");
+  const requests = await getRequests();
+
+  const pendingCount = requests.filter((request) => request.status === "pending").length;
+  const quotedCount = requests.filter((request) => request.status === "quoted").length;
+  const confirmedCount = requests.filter((request) => request.status === "confirmed").length;
 
   const stats = [
     {
       label: t("stats.pending"),
-      value: 12,
+      value: pendingCount,
       icon: RiTimeLine,
       color: "text-accent-warm",
     },
     {
       label: t("stats.quoted"),
-      value: 8,
+      value: quotedCount,
       icon: RiMailLine,
       color: "text-primary",
     },
     {
       label: t("stats.confirmed"),
-      value: 24,
+      value: confirmedCount,
       icon: RiCheckLine,
       color: "text-accent-success",
     },
@@ -93,7 +96,7 @@ export default function AdminDashboard() {
           </h2>
         </div>
         <div className="divide-y divide-border">
-          {sampleRequests.map((request) => (
+          {requests.slice(0, 10).map((request) => (
             <div
               key={request.id}
               className="p-5 flex items-center justify-between hover:bg-muted/50 transition-colors"
@@ -112,7 +115,7 @@ export default function AdminDashboard() {
                   <p className="text-sm text-muted-foreground">
                     {request.travelers} {t("recentRequests.travelers")} •{" "}
                     {request.arrivalDate} {t("recentRequests.to")}{" "}
-                    {request.departureDate}
+                    {request.departureDate || ""}
                   </p>
                 </div>
               </div>

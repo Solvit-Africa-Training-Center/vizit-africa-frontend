@@ -70,6 +70,7 @@ export const requestSchema = z.object({
       "paid",
       "fulfilled",
       "quoted",
+      "confirmed",
     ])
     .default("pending"),
   createdAt: z.string(),
