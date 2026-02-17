@@ -9,11 +9,15 @@ export const endpoints = {
   },
   bookings: {
     list: "/bookings/",
+    admin: {
+      sendQuote: (id: string | number) => `/bookings/admin/bookings/${id}/send-quote/`,
+    },
     items: {
       create: "/bookings/items/create/",
     },
     confirm: "/bookings/confirm/",
     submitTrip: "/bookings/submit-trip/",
+    acceptQuote: (id: string | number) => `/bookings/${id}/accept-quote/`,
     tickets: {
       generate: (id: string | number) => `/bookings/${id}/generate-ticket/`,
       verify: "/bookings/verify-ticket/",

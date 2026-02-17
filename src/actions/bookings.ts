@@ -8,6 +8,17 @@ import { type TripInfo, type TripItem } from "@/lib/plan_trip-types";
 
 import { logout } from "./auth";
 
+function normalizeRequestedType(item: TripItem): string {
+  if (item.type !== "service") return item.type;
+
+  const category = String((item as any)?.data?.category || "").toLowerCase();
+  if (category.includes("flight")) return "flight";
+  if (category.includes("hotel") || category.includes("bnb")) return "hotel";
+  if (category.includes("car")) return "car";
+  if (category.includes("guide")) return "guide";
+  return "service";
+}
+
 /**
  * Fetch bookings for the current authenticated user
  */
@@ -46,8 +57,10 @@ export async function submitTripRequest(
         start_date: item.startDate || tripInfo.departureDate,
         end_date: item.endDate || tripInfo.returnDate,
         unit_price: item.price || 0,
-        type: item.type,
+        type: normalizeRequestedType(item),
+        category: (item as any)?.data?.category || "",
         title: item.title,
+        description: item.description || "",
       })),
     };
 
@@ -64,6 +77,58 @@ export async function submitTripRequest(
     return {
       success: false,
       error: err.message || "Failed to submit trip request",
+      fieldErrors: err.fieldErrors,
+    };
+  }
+}
+
+export async function sendQuoteForBooking(
+  bookingId: string,
+  items: Array<{
+    id?: string;
+    service?: string;
+    type?: string;
+    title?: string;
+    description?: string;
+    quantity?: number;
+    unit_price?: number;
+  }>,
+  notes = "",
+): Promise<ActionResult<any>> {
+  try {
+    const payload = {
+      items,
+      notes,
+      currency: "USD",
+    };
+
+    const data = await api.post(
+      endpoints.bookings.admin.sendQuote(bookingId),
+      payload,
+    );
+
+    return { success: true, data };
+  } catch (error) {
+    const err = error as ApiError;
+    return {
+      success: false,
+      error: err.message || "Failed to send quote",
+      fieldErrors: err.fieldErrors,
+    };
+  }
+}
+
+export async function acceptQuoteForBooking(
+  bookingId: string,
+): Promise<ActionResult<any>> {
+  try {
+    const data = await api.post(endpoints.bookings.acceptQuote(bookingId), {});
+    return { success: true, data };
+  } catch (error) {
+    const err = error as ApiError;
+    return {
+      success: false,
+      error: err.message || "Failed to accept quote",
       fieldErrors: err.fieldErrors,
     };
   }

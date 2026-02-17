@@ -24,6 +24,43 @@ export const requestSchema = z.object({
   needsCar: z.boolean().default(false),
   needsGuide: z.boolean().default(false),
   notes: z.string().optional(),
+  requestedItems: z
+    .array(
+      z.object({
+        id: z.string().optional(),
+        service: z.string().optional(),
+        type: z.string().optional(),
+        category: z.string().optional(),
+        title: z.string().optional(),
+        description: z.string().optional(),
+        price: z.coerce.number().optional(),
+        quantity: z.coerce.number().optional(),
+      }),
+    )
+    .optional(),
+  quote: z
+    .object({
+      status: z.string().optional(),
+      sent_at: z.string().optional(),
+      currency: z.string().optional(),
+      total_amount: z.coerce.number().optional(),
+      notes: z.string().optional(),
+      items: z
+        .array(
+          z.object({
+            id: z.string().optional(),
+            service: z.string().optional(),
+            type: z.string().optional(),
+            title: z.string().optional(),
+            description: z.string().optional(),
+            quantity: z.coerce.number().optional(),
+            unit_price: z.coerce.number().optional(),
+            line_total: z.coerce.number().optional(),
+          }),
+        )
+        .optional(),
+    })
+    .optional(),
   status: z
     .enum([
       "pending",

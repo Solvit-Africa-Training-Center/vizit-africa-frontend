@@ -22,6 +22,19 @@ export const getRequests = async (): Promise<Request[]> => {
   }
 };
 
+export const getRequestById = async (id: string): Promise<Request | null> => {
+  try {
+    const data = await api.get<Request>(`/bookings/admin/bookings/${id}/`, undefined, {
+      requiresAuth: true,
+      cache: "no-store",
+    } as any);
+    return data;
+  } catch (error) {
+    console.error(`Failed to fetch request ${id}:`, error);
+    return null;
+  }
+};
+
 export const getUsers = unstable_cache(
   async (): Promise<User[]> => {
     await new Promise((resolve) => setTimeout(resolve, SIMULATED_DELAY));

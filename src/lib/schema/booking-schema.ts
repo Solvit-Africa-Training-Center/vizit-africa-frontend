@@ -92,6 +92,29 @@ export const bookingSchema = z.object({
   items: z.array(bookingItemSchema),
   created_at: z.string(),
   updated_at: z.string(),
+  quote: z
+    .object({
+      status: z.string().optional(),
+      sent_at: z.string().optional(),
+      currency: z.string().optional(),
+      total_amount: z.coerce.number().optional(),
+      notes: z.string().optional(),
+      items: z
+        .array(
+          z.object({
+            id: z.string().optional(),
+            service: z.string().optional(),
+            type: z.string().optional(),
+            title: z.string().optional(),
+            quantity: z.coerce.number().optional(),
+            unit_price: z.coerce.number().optional(),
+            line_total: z.coerce.number().optional(),
+          }),
+        )
+        .optional(),
+    })
+    .nullable()
+    .optional(),
 });
 
 export type Booking = z.infer<typeof bookingSchema>;

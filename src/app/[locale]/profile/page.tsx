@@ -23,8 +23,9 @@ import { useUser } from "@/components/user-provider";
 import { Empty, EmptyDescription, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
 import { Badge } from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
-import { getUserBookings } from "@/actions/bookings";
+import { getUserBookings, acceptQuoteForBooking } from "@/actions/bookings";
 import { differenceInDays } from "date-fns";
+import { toast } from "sonner";
 
 type Tab = "overview" | "trips" | "saved" | "settings";
 
@@ -42,6 +43,7 @@ export default function ProfilePage() {
       return [];
     },
   });
+  const [acceptingId, setAcceptingId] = useState<string | null>(null);
 
   const stats = useMemo(() => {
     if (!bookingsData) return { trips: 0, days: 0 };
@@ -75,7 +77,9 @@ export default function ProfilePage() {
 
   const pendingRequests = useMemo(() => {
     if (!bookingsData) return [];
-    return bookingsData.filter(b => b.status === "pending");
+    return bookingsData.filter(
+      (b) => b.status === "pending" || b.status === "quoted" || b.quote?.status === "quoted",
+    );
   }, [bookingsData]);
 
   const tabs = [
@@ -239,15 +243,47 @@ export default function ProfilePage() {
                                   </p>
                                 </div>
                                 <span className="text-xs font-medium uppercase tracking-wider border border-border px-2 py-1 rounded-full text-muted-foreground">
-                                  {req.status}
+                                  {req.quote?.status === "quoted" ? "quoted" : req.status}
                                 </span>
                               </div>
+                              {req.quote?.status === "quoted" && (
+                                <div className="mb-3 flex items-center justify-between gap-3">
+                                  <p className="text-sm text-primary">
+                                    Quote ready: {req.quote.total_amount} {req.quote.currency || "USD"}
+                                  </p>
+                                  <Button
+                                    size="sm"
+                                    onClick={async () => {
+                                      setAcceptingId(String(req.id));
+                                      const result = await acceptQuoteForBooking(String(req.id));
+                                      setAcceptingId(null);
+                                      if (result.success) {
+                                        toast.success("Quote accepted. Your trip is now confirmed.");
+                                        window.location.reload();
+                                      } else {
+                                        toast.error(result.error || "Failed to accept quote");
+                                      }
+                                    }}
+                                    disabled={acceptingId === String(req.id)}
+                                  >
+                                    {acceptingId === String(req.id) ? "Accepting..." : "Accept Quote"}
+                                  </Button>
+                                </div>
+                              )}
                               <div className="flex flex-wrap gap-2">
-                                {req.items.map((item, idx) => (
+                                {(req.quote?.items || req.items).map((item, idx) => {
+                                  const itemType =
+                                    "type" in item
+                                      ? item.type
+                                      : "status" in item
+                                        ? item.status
+                                        : "service";
+                                  return (
                                   <span key={idx} className="text-xs border border-border px-2 py-1 uppercase tracking-wider text-muted-foreground">
-                                    {item.status} Item
+                                    {itemType || "service"} Item
                                   </span>
-                                ))}
+                                  );
+                                })}
                               </div>
                             </div>
                           ))
