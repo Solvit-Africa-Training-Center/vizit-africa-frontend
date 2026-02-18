@@ -16,7 +16,6 @@ import {
 } from "@/components/ui/select";
 
 type Category =
-  | "Flights"
   | "Hotels"
   | "BnBs"
   | "Car Rentals"
@@ -43,34 +42,6 @@ export default function ServicesPage() {
 
   const servicesData: Service[] = useMemo(
     () => [
-      {
-        id: "rwandair-direct",
-        title: t("items.rwandair-direct.title"),
-        category: "Flights",
-        description: t("items.rwandair-direct.description"),
-        price: "From $600",
-        image: "/images/gradivis.jpg",
-        details: [
-          t("items.rwandair-direct.details.0"),
-          t("items.rwandair-direct.details.1"),
-          t("items.rwandair-direct.details.2"),
-          t("items.rwandair-direct.details.3"),
-        ],
-      },
-      {
-        id: "klm-royal",
-        title: t("items.klm-royal.title"),
-        category: "Flights",
-        description: t("items.klm-royal.description"),
-        price: "From $850",
-        image: "/images/rwanda-landscape.jpg",
-        details: [
-          t("items.klm-royal.details.0"),
-          t("items.klm-royal.details.1"),
-          t("items.klm-royal.details.2"),
-          t("items.klm-royal.details.3"),
-        ],
-      },
       {
         id: "the-retreat",
         title: t("items.the-retreat.title"),
@@ -189,7 +160,6 @@ export default function ServicesPage() {
 
   const categories: { label: string; value: Category }[] = [
     { label: t("categories.all"), value: "All" },
-    { label: t("categories.flights"), value: "Flights" },
     { label: t("categories.hotels"), value: "Hotels" },
     { label: t("categories.bnbs"), value: "BnBs" },
     { label: t("categories.carRentals"), value: "Car Rentals" },

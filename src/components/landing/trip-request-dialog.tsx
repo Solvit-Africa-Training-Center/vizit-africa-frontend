@@ -33,7 +33,8 @@ import {
   RiPlaneLine,
   RiSuitcaseLine,
   RiCheckboxCircleLine,
-  RiUser2Line
+  RiUser2Line,
+  RiCloseLine
 } from "@remixicon/react";
 
 interface GuestCount {
@@ -55,7 +56,7 @@ export function TripRequestDialog({
 }: TripRequestDialogProps) {
   const router = useRouter();
   const locale = useLocale();
-  const { updateTripInfo, tripInfo, items } = useTripStore();
+  const { updateTripInfo, tripInfo, items, removeItem, addItem } = useTripStore();
 
   const [dateRange, setDateRange] = React.useState<DateRange | undefined>({
     from: tripInfo.departureDate ? new Date(tripInfo.departureDate) : undefined,
@@ -74,8 +75,6 @@ export function TripRequestDialog({
     phone: tripInfo.phone || "",
     departureCity: tripInfo.departureCity || "",
     specialRequests: tripInfo.specialRequests || "",
-    agreeToTerms: false,
-    needFlight: true,
   });
 
   const updateContact = (updates: Partial<typeof contactInfo>) => {
@@ -124,7 +123,6 @@ export function TripRequestDialog({
     contactInfo.departureCity.trim() &&
     contactInfo.name.trim() &&
     contactInfo.email.trim() &&
-    contactInfo.agreeToTerms &&
     guests.adults > 0;
 
   const saveToStore = () => {
@@ -172,7 +170,6 @@ export function TripRequestDialog({
         className="sm:max-w-7xl h-[90vh] p-0 gap-0 overflow-hidden flex flex-col"
         showCloseButton={true}
       >
-        {/* Fixed Header */}
         <div className="px-8 py-6 border-b bg-gradient-to-r from-primary/5 to-transparent shrink-0">
           <div className="flex items-start justify-between gap-4">
             <div className="space-y-1">
@@ -251,7 +248,7 @@ export function TripRequestDialog({
                     {items.map((item) => {
                       const Icon = getItemIcon(item.type);
                       return (
-                        <div key={item.id} className="p-4 flex items-center gap-4 hover:bg-accent/50 transition-colors">
+                        <div key={item.id} className="group p-4 flex items-center gap-4 hover:bg-accent/50 transition-colors relative pr-12">
                           <div className="size-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
                             <Icon className="size-5 text-primary" />
                           </div>
@@ -264,6 +261,18 @@ export function TripRequestDialog({
                           <div className="text-sm font-semibold tabular-nums">
                             ${item.price?.toLocaleString()}
                           </div>
+                          <Button
+                            variant="ghost"
+                            size="icon-xs"
+                            className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-destructive opacity-0 group-hover:opacity-100 transition-opacity"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              removeItem(item.id);
+                            }}
+                          >
+                            <RiCloseLine className="size-4" />
+                            <span className="sr-only">Remove</span>
+                          </Button>
                         </div>
                       );
                     })}
@@ -349,7 +358,20 @@ export function TripRequestDialog({
 
               <div
                 className="flex items-center justify-between p-4 rounded-xl border bg-card hover:bg-accent/50 transition-colors cursor-pointer"
-                onClick={() => updateContact({ needFlight: !contactInfo.needFlight })}
+                onClick={() => {
+                  const hasFlight = items.some(i => i.id === "flight-request");
+                  if (hasFlight) {
+                    removeItem("flight-request");
+                  } else {
+                    addItem({
+                      id: "flight-request",
+                      type: "flight",
+                      title: "Flight Booking",
+                      description: "Round-trip flight arrangement",
+                      price: 0,
+                    });
+                  }
+                }}
               >
                 <div className="flex items-center gap-3">
                   <div className="size-10 rounded-full bg-primary/10 flex items-center justify-center">
@@ -365,10 +387,20 @@ export function TripRequestDialog({
                   </div>
                 </div>
                 <Checkbox
-                  checked={contactInfo.needFlight}
-                  onCheckedChange={(checked) =>
-                    updateContact({ needFlight: checked as boolean })
-                  }
+                  checked={items.some(i => i.id === "flight-request")}
+                  onCheckedChange={(checked) => {
+                    if (checked) {
+                      addItem({
+                        id: "flight-request",
+                        type: "flight",
+                        title: "Flight Booking",
+                        description: "Round-trip flight arrangement",
+                        price: 0,
+                      });
+                    } else {
+                      removeItem("flight-request");
+                    }
+                  }}
                 />
               </div>
 
@@ -437,31 +469,9 @@ export function TripRequestDialog({
                 </div>
               </div>
 
-              <Separator />
+      
 
-              {/* Terms & Conditions */}
-              <div className="flex items-start gap-3 p-4 rounded-xl bg-muted/50">
-                <Checkbox
-                  id="terms"
-                  checked={contactInfo.agreeToTerms}
-                  onCheckedChange={(checked) =>
-                    updateContact({ agreeToTerms: checked as boolean })
-                  }
-                  className="mt-0.5"
-                />
-                <div className="space-y-1">
-                  <label
-                    htmlFor="terms"
-                    className="text-sm font-medium leading-none cursor-pointer"
-                  >
-                    I agree to the terms and conditions
-                  </label>
-                  <p className="text-xs text-muted-foreground">
-                    By proceeding, you agree to our privacy policy and booking terms.
-                    Final availability subject to confirmation.
-                  </p>
-                </div>
-              </div>
+        
             </div>
           </div>
         </div>

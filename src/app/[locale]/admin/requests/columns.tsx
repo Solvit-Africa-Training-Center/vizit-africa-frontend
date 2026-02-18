@@ -3,7 +3,7 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import type { Request } from "@/lib/schemas";
+import type { Booking } from "@/types";
 import { useTranslations } from "next-intl";
 
 // We need to wrap column definitions in a function or component to use hooks like useTranslations
@@ -45,6 +45,18 @@ const ServiceBadges = ({ flights, hotel, car, guide }: any) => {
 
 const ActionLink = ({ id, status }: { id: string; status: string }) => {
   const t = useTranslations("Admin.requests.table");
+  
+  if (status === "confirmed" || status === "paid" || status === "completed") {
+    return (
+      <Link
+        href={`/admin/bookings/${id}/fulfill`}
+        className="text-sm font-medium text-primary hover:underline"
+      >
+        {t("view")}
+      </Link>
+    );
+  }
+
   return (
     <Link
       href={`/admin/packages/${id}`}
@@ -55,7 +67,7 @@ const ActionLink = ({ id, status }: { id: string; status: string }) => {
   );
 };
 
-export const columns: ColumnDef<Request>[] = [
+export const columns: ColumnDef<Booking>[] = [
   {
     accessorKey: "name",
     header: () => <HeaderCell trKey="customer" />,

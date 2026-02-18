@@ -24,7 +24,7 @@ import type {
   Guide,
   FilterState,
 } from "@/lib/plan_trip-types";
-import { MOCK_GUIDES, DRIVER_SURCHARGE } from "@/lib/plan-trip-data";
+import { DRIVER_SURCHARGE } from "@/lib/configs";
 import { useTranslations } from "next-intl";
 
 interface ServicesStepProps {
@@ -51,6 +51,11 @@ interface ServicesStepProps {
   hotelCount: number;
   carCount: number;
 
+  hotelPage: number;
+  setHotelPage: (page: number) => void;
+  carPage: number;
+  setCarPage: (page: number) => void;
+
   hotelSearch: string;
   setHotelSearch: (s: string) => void;
   hotelPriceFilter: FilterState["priceRange"];
@@ -62,10 +67,7 @@ interface ServicesStepProps {
   carCategoryFilter: FilterState["category"];
   setCarCategoryFilter: (s: FilterState["category"]) => void;
 
-  hotelPage: number;
-  setHotelPage: (page: number) => void;
-  carPage: number;
-  setCarPage: (page: number) => void;
+  guides: Guide[];
 }
 
 export function ServicesStep({
@@ -85,6 +87,7 @@ export function ServicesStep({
   serviceFee,
   paginatedHotels,
   paginatedCars,
+  guides,
   hotelTotalPages,
   carTotalPages,
   hotelCount,
@@ -316,7 +319,7 @@ export function ServicesStep({
                 </AlertDescription>
               </Alert>
               <div className="grid sm:grid-cols-2 gap-3">
-                {MOCK_GUIDES.map((guide) => (
+                {guides.map((guide) => (
                   <GuideCard
                     key={guide.id}
                     guide={guide}

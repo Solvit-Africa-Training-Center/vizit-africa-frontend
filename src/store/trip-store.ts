@@ -16,22 +16,18 @@ type EntrySource =
 
 interface TripState {
   tripInfo: TripInfo;
-  // Previously 'selections', now we use a flexible list of items
   items: TripItem[];
   
   entrySource: EntrySource;
 
-  // computed-like helpers
   hasActiveTrip: () => boolean;
   itemCount: () => number;
   getItem: (id: string) => TripItem | undefined;
 
-  // global info updates
   updateTripInfo: (info: Partial<TripInfo>) => void;
   setDestination: (destination: string) => void;
   setEntrySource: (source: EntrySource) => void;
 
-  // item management
   addItem: (item: TripItem) => void;
   removeItem: (id: string) => void;
   updateItem: (id: string, updates: Partial<TripItem>) => void;

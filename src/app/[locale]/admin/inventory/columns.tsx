@@ -4,7 +4,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { RiEditLine, RiDeleteBinLine, RiStarFill } from "@remixicon/react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import type { Hotel, Car, Guide, Flight } from "@/lib/schemas";
+import type { ServiceResponse } from "@/lib/schema/service-schema";
 import { useTranslations } from "next-intl";
 
 const ActionsCell = () => (
@@ -31,40 +31,42 @@ const HeaderCell = ({ trKey }: { trKey: string }) => {
   return <>{t(trKey)}</>;
 };
 
-export const hotelColumns: ColumnDef<Hotel>[] = [
+export const hotelColumns: ColumnDef<ServiceResponse>[] = [
   {
-    accessorKey: "name",
+    accessorKey: "title",
     header: () => <HeaderCell trKey="name" />,
     cell: ({ row }) => (
-      <div className="font-medium">{row.getValue("name")}</div>
+      <div className="font-medium">{row.getValue("title")}</div>
     ),
   },
   {
     accessorKey: "location",
     header: () => <HeaderCell trKey="location" />,
     cell: ({ row }) => (
-      <div className="text-muted-foreground">{row.getValue("location")}</div>
+      <div className="text-muted-foreground">{String(row.getValue("location") || "-")}</div>
     ),
   },
   {
-    accessorKey: "rating",
+    accessorKey: "metadata.rating",
     header: () => <HeaderCell trKey="rating" />,
-    cell: ({ row }) => (
+    cell: ({ row }) => {
+        const rating = (row.original.metadata?.rating as number) || 0;
+        return (
       <div className="flex items-center gap-1">
         <RiStarFill className="size-3.5 text-orange-400" />
         <span className="font-medium tabular-nums">
-          {row.getValue("rating")}
+          {rating}
         </span>
       </div>
-    ),
+    )},
     size: 100,
   },
   {
-    accessorKey: "pricePerNight",
+    accessorKey: "base_price",
     header: () => <HeaderCell trKey="pricePerNight" />,
     cell: ({ row }) => (
       <div className="font-mono tabular-nums text-muted-foreground">
-        ${row.getValue("pricePerNight")}
+        {row.original.currency} {row.getValue("base_price")}
       </div>
     ),
     size: 120,
@@ -77,48 +79,48 @@ export const hotelColumns: ColumnDef<Hotel>[] = [
   },
 ];
 
-export const carColumns: ColumnDef<Car>[] = [
+export const carColumns: ColumnDef<ServiceResponse>[] = [
   {
-    accessorKey: "brand",
+    accessorKey: "metadata.brand",
     header: () => <HeaderCell trKey="vehicle" />,
     cell: ({ row }) => (
       <div className="font-medium">
-        {row.original.brand}{" "}
+        {row.original.metadata?.brand as string}{" "}
         <span className="text-muted-foreground font-normal">
-          {row.original.name}
+          {row.getValue("title")}
         </span>
       </div>
     ),
   },
   {
-    accessorKey: "type",
+    accessorKey: "service_type",
     header: () => <HeaderCell trKey="type" />,
     cell: ({ row }) => (
       <Badge
         variant="outline"
         className="capitalize font-normal text-muted-foreground"
       >
-        {row.getValue("type")}
+        {row.getValue("service_type")}
       </Badge>
     ),
     size: 100,
   },
   {
-    accessorKey: "capacity",
+    accessorKey: "metadata.capacity",
     header: () => <HeaderCell trKey="capacity" />,
     cell: ({ row }) => (
       <div className="text-muted-foreground tabular-nums">
-        {row.getValue("capacity")} Seats
+        {(row.original.metadata?.capacity as number || 0)} Seats
       </div>
     ),
     size: 120,
   },
   {
-    accessorKey: "pricePerDay",
+    accessorKey: "base_price",
     header: () => <HeaderCell trKey="pricePerDay" />,
     cell: ({ row }) => (
       <div className="font-mono tabular-nums text-muted-foreground">
-        ${row.getValue("pricePerDay")}
+        {row.original.currency} {row.getValue("base_price")}
       </div>
     ),
     size: 120,
@@ -131,20 +133,22 @@ export const carColumns: ColumnDef<Car>[] = [
   },
 ];
 
-export const guideColumns: ColumnDef<Guide>[] = [
+export const guideColumns: ColumnDef<ServiceResponse>[] = [
   {
-    accessorKey: "name",
+    accessorKey: "title",
     header: () => <HeaderCell trKey="name" />,
     cell: ({ row }) => (
-      <div className="font-medium">{row.getValue("name")}</div>
+      <div className="font-medium">{row.getValue("title")}</div>
     ),
   },
   {
-    accessorKey: "languages",
+    accessorKey: "metadata.languages",
     header: () => <HeaderCell trKey="languages" />,
-    cell: ({ row }) => (
+    cell: ({ row }) => {
+      const languages = (row.original.metadata?.languages as string[]) || [];
+      return (
       <div className="flex flex-wrap gap-1">
-        {(row.getValue("languages") as string[]).slice(0, 2).map((lang) => (
+        {languages.slice(0, 2).map((lang) => (
           <Badge
             key={lang}
             variant="secondary"
@@ -153,30 +157,30 @@ export const guideColumns: ColumnDef<Guide>[] = [
             {lang}
           </Badge>
         ))}
-        {(row.getValue("languages") as string[]).length > 2 && (
+        {languages.length > 2 && (
           <span className="text-xs text-muted-foreground self-center">
-            +{(row.getValue("languages") as string[]).length - 2}
+            +{languages.length - 2}
           </span>
         )}
       </div>
-    ),
+    )},
   },
   {
-    accessorKey: "experience",
+    accessorKey: "metadata.experience",
     header: () => <HeaderCell trKey="experience" />,
     cell: ({ row }) => (
       <div className="text-muted-foreground tabular-nums">
-        {row.getValue("experience")} Years
+        {row.original.metadata?.experience as number || 0} Years
       </div>
     ),
     size: 120,
   },
   {
-    accessorKey: "pricePerDay",
+    accessorKey: "base_price",
     header: () => <HeaderCell trKey="pricePerDay" />,
     cell: ({ row }) => (
       <div className="font-mono tabular-nums text-muted-foreground">
-        ${row.getValue("pricePerDay")}
+        {row.original.currency} {row.getValue("base_price")}
       </div>
     ),
     size: 120,
@@ -189,9 +193,9 @@ export const guideColumns: ColumnDef<Guide>[] = [
   },
 ];
 
-export const flightColumns: ColumnDef<Flight>[] = [
+export const flightColumns: ColumnDef<ServiceResponse>[] = [
   {
-    accessorFn: (row) => `${row.airline} ${row.flightNumber}`,
+    accessorFn: (row) => `${row.metadata?.airline || ''} ${row.metadata?.flightNumber || row.title}`,
     id: "flight",
     header: () => <HeaderCell trKey="flight" />,
     cell: ({ row }) => (
@@ -204,33 +208,38 @@ export const flightColumns: ColumnDef<Flight>[] = [
   {
     id: "route",
     header: () => <HeaderCell trKey="route" />,
-    cell: ({ row }) => (
+    cell: ({ row }) => {
+        const dep = row.original.metadata?.departureAirport as string;
+        const arr = row.original.metadata?.arrivalAirport as string;
+        return (
       <div className="flex items-center gap-1.5 text-sm">
-        <span className="font-medium">{row.original.departureAirport}</span>
+        <span className="font-medium">{dep || '?'}</span>
         <span className="text-muted-foreground opacity-50">→</span>
-        <span className="font-medium">{row.original.arrivalAirport}</span>
+        <span className="font-medium">{arr || '?'}</span>
       </div>
-    ),
+    )},
   },
   {
-    accessorKey: "departureTime",
+    accessorKey: "metadata.departureTime",
     header: () => <HeaderCell trKey="time" />,
-    cell: ({ row }) => (
+    cell: ({ row }) => {
+        const time = row.original.metadata?.departureTime as string;
+        return (
       <div className="tabular-nums text-muted-foreground">
-        {new Date(row.getValue("departureTime")).toLocaleTimeString([], {
+        {time ? new Date(time).toLocaleTimeString([], {
           hour: "2-digit",
           minute: "2-digit",
-        })}
+        }) : '-'}
       </div>
-    ),
+    )},
     size: 100,
   },
   {
-    accessorKey: "price",
+    accessorKey: "base_price",
     header: () => <HeaderCell trKey="price" />,
     cell: ({ row }) => (
       <div className="font-mono tabular-nums text-muted-foreground/80">
-        ${row.getValue("price")}
+        {row.original.currency} {row.getValue("base_price")}
       </div>
     ),
     size: 100,

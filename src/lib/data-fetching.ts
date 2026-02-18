@@ -1,20 +1,18 @@
 import { unstable_cache } from "next/cache";
-import { sampleRequests, users } from "@/lib/dummy-data";
-import type { Request, User } from "@/lib/schemas";
-
-const SIMULATED_DELAY = 1000;
-
+import type { Booking, User } from "@/types";
+import type { ServiceResponse } from "@/lib/schema/service-schema";
+import { endpoints } from "@/actions/endpoints";
 import { api } from "@/lib/api/client";
 
-export const getRequests = async (): Promise<Request[]> => {
+export const getRequests = async (): Promise<Booking[]> => {
   try {
-    const data = await api.get<Request[]>("/bookings/admin/bookings/", undefined, {
+    const data = await api.get<Booking[]>(endpoints.bookings.admin.list, undefined, {
       requiresAuth: true,
       next: {
         revalidate: 60,
         tags: ["requests"],
       },
-    } as any);
+    });
     return data;
   } catch (error) {
     console.error("Failed to fetch requests:", error);
@@ -22,12 +20,12 @@ export const getRequests = async (): Promise<Request[]> => {
   }
 };
 
-export const getRequestById = async (id: string): Promise<Request | null> => {
+export const getRequestById = async (id: string): Promise<Booking | null> => {
   try {
-    const data = await api.get<Request>(`/bookings/admin/bookings/${id}/`, undefined, {
+    const data = await api.get<Booking>(endpoints.bookings.admin.detail(id), undefined, {
       requiresAuth: true,
       cache: "no-store",
-    } as any);
+    });
     return data;
   } catch (error) {
     console.error(`Failed to fetch request ${id}:`, error);
@@ -37,8 +35,15 @@ export const getRequestById = async (id: string): Promise<Request | null> => {
 
 export const getUsers = unstable_cache(
   async (): Promise<User[]> => {
-    await new Promise((resolve) => setTimeout(resolve, SIMULATED_DELAY));
-    return users;
+    try {
+      const data = await api.get<User[]>(endpoints.auth.list, undefined, {
+        requiresAuth: true,
+      });
+      return data;
+    } catch (error) {
+      console.error("Failed to fetch users:", error);
+      return [];
+    }
   },
   ["users"],
   {
@@ -46,3 +51,23 @@ export const getUsers = unstable_cache(
     tags: ["users"],
   },
 );
+
+export const getServices = async (
+  category?: string,
+): Promise<ServiceResponse[]> => {
+  try {
+    const url = category
+      ? `${endpoints.services.list}?service_type=${category}`
+      : endpoints.services.list;
+    const data = await api.get<ServiceResponse[]>(url, undefined, {
+      next: {
+        revalidate: 3600,
+        tags: ["services"],
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch services:", error);
+    return [];
+  }
+};

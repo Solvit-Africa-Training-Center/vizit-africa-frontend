@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { BookingSummary } from "@/components/plan-trip";
 import type { TripInfo, TripItem } from "@/lib/plan_trip-types";
-import { DRIVER_SURCHARGE } from "@/lib/plan-trip-data";
+import { DRIVER_SURCHARGE, SERVICE_FEE_RATE } from "@/lib/configs";
 import { useTranslations } from "next-intl";
 
 interface ReviewStepProps {

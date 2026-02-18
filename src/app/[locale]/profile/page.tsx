@@ -14,6 +14,7 @@ import {
   RiInformationLine,
 } from "@remixicon/react";
 import Image from "next/image";
+import Link from "next/link";
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "@/lib/utils";
@@ -233,8 +234,10 @@ export default function ProfilePage() {
                             >
                               <div className="flex justify-between items-start mb-4">
                                 <div>
-                                  <h4 className="font-medium text-lg mb-1">
-                                    Trip Request #{req.id.toString().slice(0, 8)}
+                                  <h4 className="font-medium text-lg mb-1 hover:text-primary transition-colors">
+                                    <Link href={`/profile/bookings/${req.id}`}>
+                                      Trip Request #{req.id.toString().slice(0, 8)}
+                                    </Link>
                                   </h4>
                                   <p className="text-sm text-muted-foreground">
                                     {new Date(req.created_at).toLocaleDateString()}
@@ -353,9 +356,11 @@ export default function ProfilePage() {
                         </div>
                         <Badge variant="success-outline">Confirmed</Badge>
                         <div className="text-right">
-                          <Button variant="outline">
-                            {t("trips.viewDetails")}
-                          </Button>
+                          <Link href={`/profile/bookings/${trip.id}`}>
+                            <Button variant="outline">
+                              {t("trips.viewDetails")}
+                            </Button>
+                          </Link>
                         </div>
                       </div>
                     ))}

@@ -219,26 +219,6 @@ export default function GalleryPage() {
           </motion.div>
         </section>
 
-        <section className="w-full h-[80vh] relative flex items-center justify-center overflow-hidden mb-32">
-          <div className="absolute inset-0 z-0">
-            <ParallaxImage
-              src="/images/lake-kivu-sunset.jpg"
-              alt="Cinematic Break"
-              fill
-              className="object-cover brightness-50"
-              containerClassName="w-full h-[120%]"
-            />
-          </div>
-          <div className="relative z-10 max-w-4xl px-8 text-center">
-            <span className="text-foreground/60 font-mono text-sm uppercase tracking-widest mb-6 block">
-              {t("quote.overline")}
-            </span>
-            <blockquote className="font-display text-4xl md:text-6xl font-medium leading-tight mb-8">
-              "{t("quote.text")}"
-            </blockquote>
-          </div>
-        </section>
-
         <section className="px-5 md:px-10 max-w-7xl mx-auto">
           <motion.div
             layout

@@ -3,6 +3,7 @@
 import { api } from "@/lib/api/client";
 import { endpoints } from "./endpoints";
 import { bookingListSchema, type BookingList } from "@/lib/schema/booking-schema";
+import type { Booking } from "@/types";
 import { type ActionResult, ApiError } from "@/lib/api/types";
 import { type TripInfo, type TripItem } from "@/lib/plan_trip-types";
 
@@ -17,6 +18,22 @@ function normalizeRequestedType(item: TripItem): string {
   if (category.includes("car")) return "car";
   if (category.includes("guide")) return "guide";
   return "service";
+}
+
+/**
+ * Fetch a single booking by ID for the current authenticated user
+ */
+export async function getBookingById(id: string): Promise<ActionResult<Booking>> {
+  try {
+    const data = await api.get<Booking>(endpoints.bookings.detail(id));
+    return { success: true, data };
+  } catch (error) {
+    const err = error as ApiError;
+    return {
+      success: false,
+      error: err.message || "Failed to fetch booking",
+    };
+  }
 }
 
 /**
@@ -103,7 +120,7 @@ export async function sendQuoteForBooking(
     };
 
     const data = await api.post(
-      endpoints.bookings.admin.sendQuote(bookingId),
+      endpoints.bookings.quote(bookingId),
       payload,
     );
 
@@ -122,7 +139,7 @@ export async function acceptQuoteForBooking(
   bookingId: string,
 ): Promise<ActionResult<any>> {
   try {
-    const data = await api.post(endpoints.bookings.acceptQuote(bookingId), {});
+    const data = await api.post(endpoints.bookings.accept(bookingId), {});
     return { success: true, data };
   } catch (error) {
     const err = error as ApiError;

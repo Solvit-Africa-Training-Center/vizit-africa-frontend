@@ -2,17 +2,21 @@
 
 import { useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import type { FilterState } from "../lib/plan_trip-types";
+import type { FilterState, Hotel, Car, Guide } from "../lib/plan_trip-types";
 import {
-  MOCK_HOTELS,
-  MOCK_CARS,
-  DRIVER_SURCHARGE,
-  SERVICE_FEE_RATE,
   ITEMS_PER_PAGE,
-} from "../lib/plan-trip-data";
+  SERVICE_FEE_RATE,
+  DRIVER_SURCHARGE,
+} from "@/lib/configs";
 import { useTripStore } from "@/store/trip-store";
 
-export function usePlanTrip() {
+interface UsePlanTripProps {
+  initialHotels: Hotel[];
+  initialCars: Car[];
+  initialGuides: Guide[];
+}
+
+export function usePlanTrip({ initialHotels, initialCars, initialGuides }: UsePlanTripProps) {
   const searchParams = useSearchParams();
   const {
     tripInfo,
@@ -112,7 +116,7 @@ export function usePlanTrip() {
   }, [tripInfo.departureDate, tripInfo.returnDate]);
 
   const filteredHotels = useMemo(() => {
-    let result = MOCK_HOTELS;
+    let result = initialHotels;
     if (hotelSearch) {
       result = result.filter((h) =>
         h.name.toLowerCase().includes(hotelSearch.toLowerCase()),
@@ -136,10 +140,10 @@ export function usePlanTrip() {
       });
     }
     return result;
-  }, [hotelSearch, hotelPriceFilter, hotelStarsFilter]);
+  }, [hotelSearch, hotelPriceFilter, hotelStarsFilter, initialHotels]);
 
   const filteredCars = useMemo(() => {
-    let result = MOCK_CARS;
+    let result = initialCars;
     if (carSearch) {
       result = result.filter((c) =>
         c.model.toLowerCase().includes(carSearch.toLowerCase()),
@@ -149,7 +153,7 @@ export function usePlanTrip() {
       result = result.filter((c) => c.category === carCategoryFilter);
     }
     return result;
-  }, [carSearch, carCategoryFilter]);
+  }, [carSearch, carCategoryFilter, initialCars]);
 
   const paginatedHotels = useMemo(() => {
     const start = (hotelPage - 1) * ITEMS_PER_PAGE;
@@ -259,6 +263,8 @@ export function usePlanTrip() {
     paginatedCars,
     hotelTotalPages,
     carTotalPages,
+    
+    initialGuides, // pass guides too
 
     resetHotelFilters,
     resetCarFilters,

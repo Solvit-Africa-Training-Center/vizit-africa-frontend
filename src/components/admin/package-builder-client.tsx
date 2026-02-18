@@ -12,7 +12,7 @@ import {
 } from "@remixicon/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import type { Request } from "@/lib/schemas";
+import type { Booking } from "@/types";
 import { sendQuoteForBooking } from "@/actions/bookings";
 import { toast } from "sonner";
 
@@ -60,14 +60,14 @@ function toNumber(value: string): number {
 }
 
 interface PackageBuilderClientProps {
-  request: Request;
+  request: Booking;
 }
 
 export function PackageBuilderClient({ request }: PackageBuilderClientProps) {
   const t = useTranslations("Admin.packages");
   const tCommon = useTranslations("Admin.requests.table.badges");
   const requestedItems = (request.requestedItems || []) as RequestedItem[];
-  const quoteItems = ((request as any).quote?.items || []) as QuoteItem[];
+  const quoteItems = (request.quote?.items || []) as QuoteItem[];
   const displayItems: RequestedItem[] =
     requestedItems.length > 0
       ? requestedItems

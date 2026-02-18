@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { PageHeader } from "@/components/shared/page-header";
-import { teamMembers } from "@/lib/dummy-data";
+import { members as teamMembers } from "@/lib/configs/members";
 import { getTranslations } from "next-intl/server";
 
 

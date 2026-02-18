@@ -1,10 +1,12 @@
 import { cookies } from "next/headers";
 import { type ZodSchema, z } from "zod";
 import { ApiError } from "./types";
+import { endpoints } from "@/actions/endpoints";
 
 type FetchOptions<T = any> = RequestInit & {
   schema?: ZodSchema<T>;
   requiresAuth?: boolean;
+  _retry?: boolean;
 };
 
 const BASE_URL =
@@ -14,6 +16,47 @@ const BASE_URL =
 async function getAuthToken() {
   const cookieStore = await cookies();
   return cookieStore.get("accessToken")?.value;
+}
+
+const COOKIE_OPTIONS = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  path: "/",
+  maxAge: 7 * 24 * 60 * 60, // 7 days
+};
+
+async function refreshAccessToken() {
+  const cookieStore = await cookies();
+  const refreshToken = cookieStore.get("refreshToken")?.value;
+
+  if (!refreshToken) return null;
+
+  try {
+    const response = await fetch(`${BASE_URL}${endpoints.auth.refresh}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ refresh: refreshToken }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Refresh failed");
+    }
+
+    const data = await response.json();
+    
+    // Update cookies
+    cookieStore.set("accessToken", data.access, COOKIE_OPTIONS);
+    if (data.refresh) {
+      cookieStore.set("refreshToken", data.refresh, COOKIE_OPTIONS);
+    }
+
+    return data.access;
+  } catch (error) {
+    // Clear cookies on failure
+    cookieStore.delete("accessToken");
+    cookieStore.delete("refreshToken");
+    return null;
+  }
 }
 
 async function handleResponse<T>(
@@ -86,8 +129,34 @@ async function apiFetch<T>(
       headers: headersMap,
     });
 
-    return handleResponse<T>(response, schema);
+    return await handleResponse<T>(response, schema);
   } catch (error) {
+    // Token refresh logic for 401 errors
+    if (
+      error instanceof ApiError && 
+      error.status === 401 && 
+      !options._retry && 
+      requiresAuth
+    ) {
+      const newToken = await refreshAccessToken();
+      if (newToken) {
+        // Retry with new token
+        return apiFetch<T>(endpoint, { 
+          ...options, 
+          _retry: true,
+          // Explicitly set authorization header for retry since getAuthToken might still see old cookie?
+          // Actually, apiFetch calls getAuthToken() again.
+          // Since we called cookieStore.set(), checking next/headers behavior:
+          // cookies().get() inside the same request DOES NOT reflect set() changes in older Next.js versions,
+          // but likely we should pass it explicitly to be safe.
+          headers: {
+            ...headers,
+            Authorization: `Bearer ${newToken}`
+          }
+        });
+      }
+    }
+
     if (error instanceof ApiError) {
       throw error;
     }

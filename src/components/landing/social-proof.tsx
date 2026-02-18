@@ -1,6 +1,6 @@
 "use client";
 
-import { partnerLogos } from "@/lib/dummy-data";
+import { PARTNER_LOGOS as partnerLogos } from "@/lib/configs";
 import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
 

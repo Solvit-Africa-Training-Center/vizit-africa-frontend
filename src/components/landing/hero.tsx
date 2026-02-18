@@ -1,6 +1,6 @@
 "use client";
 
-import { HERO_SLIDES } from "@/lib/landing-data";
+import { HERO_SLIDES } from "@/lib/configs";
 import {
   HoverCard,
   HoverCardContent,
