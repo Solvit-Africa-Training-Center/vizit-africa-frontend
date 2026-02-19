@@ -6,13 +6,17 @@ import { api } from "@/lib/api/client";
 
 export const getRequests = async (): Promise<Booking[]> => {
   try {
-    const data = await api.get<Booking[]>(endpoints.bookings.admin.list, undefined, {
-      requiresAuth: true,
-      next: {
-        revalidate: 60,
-        tags: ["requests"],
+    const data = await api.get<Booking[]>(
+      endpoints.bookings.admin.list,
+      undefined,
+      {
+        requiresAuth: true,
+        next: {
+          revalidate: 60,
+          tags: ["requests"],
+        },
       },
-    });
+    );
     return data;
   } catch (error) {
     console.error("Failed to fetch requests:", error);
@@ -22,10 +26,14 @@ export const getRequests = async (): Promise<Booking[]> => {
 
 export const getRequestById = async (id: string): Promise<Booking | null> => {
   try {
-    const data = await api.get<Booking>(endpoints.bookings.admin.detail(id), undefined, {
-      requiresAuth: true,
-      cache: "no-store",
-    });
+    const data = await api.get<Booking>(
+      endpoints.bookings.admin.detail(id),
+      undefined,
+      {
+        requiresAuth: true,
+        cache: "no-store",
+      },
+    );
     return data;
   } catch (error) {
     console.error(`Failed to fetch request ${id}:`, error);
@@ -69,5 +77,23 @@ export const getServices = async (
   } catch (error) {
     console.error("Failed to fetch services:", error);
     return [];
+  }
+};
+
+export const getServiceById = async (
+  id: string,
+): Promise<ServiceResponse | null> => {
+  try {
+    const data = await api.get<ServiceResponse>(
+      endpoints.services.details(id),
+      undefined,
+      {
+        cache: "no-store",
+      },
+    );
+    return data;
+  } catch (error) {
+    console.error(`Failed to fetch service ${id}:`, error);
+    return null;
   }
 };

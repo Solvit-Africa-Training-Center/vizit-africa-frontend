@@ -42,6 +42,7 @@ import { createLocation, getLocations } from "@/actions/locations";
 
 import { VendorForm } from "./vendor-form";
 import { RiAddLine, RiCloseLine } from "@remixicon/react";
+import { FieldError } from "@/components/ui/field";
 
 const MAPBOX_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 
@@ -80,9 +81,9 @@ export function ServiceForm() {
     type: "success" | "error";
     message: string;
   } | null>(null);
-  const [locationSuggestions, setLocationSuggestions] = useState<LocationSuggestion[]>(
-    [],
-  );
+  const [locationSuggestions, setLocationSuggestions] = useState<
+    LocationSuggestion[]
+  >([]);
   const [isLocationSearching, setIsLocationSearching] = useState(false);
   const localLocationSuggestions = locations
     .filter((item) =>
@@ -174,13 +175,15 @@ export function ServiceForm() {
             { signal: controller.signal },
           );
           const data = await response.json();
-          const suggestions = ((data.features || []) as any[]).map((feature) => ({
-            id: String(feature.id),
-            name: String(feature.place_name),
-            longitude: Number(feature.center?.[0]),
-            latitude: Number(feature.center?.[1]),
-            source: "mapbox" as const,
-          }));
+          const suggestions = ((data.features || []) as any[]).map(
+            (feature) => ({
+              id: String(feature.id),
+              name: String(feature.place_name),
+              longitude: Number(feature.center?.[0]),
+              latitude: Number(feature.center?.[1]),
+              source: "mapbox" as const,
+            }),
+          );
           setLocationSuggestions(suggestions);
         } else {
           const response = await fetch(
@@ -255,354 +258,341 @@ export function ServiceForm() {
   };
 
   return (
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          form.handleSubmit();
-        }}
-        className="space-y-6"
-      >
-        {submitStatus ? (
-          <div
-            className={
-              submitStatus.type === "success"
-                ? "rounded-md border border-green-200 bg-green-50 px-3 py-2 text-sm text-green-800"
-                : "rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800"
-            }
-          >
-            {submitStatus.message}
-          </div>
-        ) : null}
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <form.Field name="title">
-            {(field) => (
-              <div className="space-y-2">
-                <Label htmlFor="title">Service Title</Label>
-                <Input
-                  id="title"
-                  placeholder="e.g. Serengeti Safari 3 Days"
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                />
-                {field.state.meta.errors ? (
-                  <p className="text-sm text-destructive">
-                    {field.state.meta.errors.join(", ")}
-                  </p>
-                ) : null}
-              </div>
-            )}
-          </form.Field>
-
-          <form.Field name="service_type">
-            {(field) => (
-              <div className="space-y-2">
-                <Label htmlFor="service_type">Service Type</Label>
-                <Select
-                  value={field.state.value}
-                  onValueChange={(val: any) => field.handleChange(val)}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="flight">Flight</SelectItem>
-                    <SelectItem value="hotel">Hotel</SelectItem>
-                    <SelectItem value="bnb">BnB</SelectItem>
-                    <SelectItem value="car_rental">Car Rental</SelectItem>
-                    <SelectItem value="guide">Guide</SelectItem>
-                  </SelectContent>
-                </Select>
-                {field.state.meta.errors ? (
-                  <p className="text-sm text-destructive">
-                    {field.state.meta.errors.join(", ")}
-                  </p>
-                ) : null}
-              </div>
-            )}
-          </form.Field>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        form.handleSubmit();
+      }}
+      className="space-y-6"
+    >
+      {submitStatus ? (
+        <div
+          className={
+            submitStatus.type === "success"
+              ? "rounded-md border border-green-200 bg-green-50 px-3 py-2 text-sm text-green-800"
+              : "rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800"
+          }
+        >
+          {submitStatus.message}
         </div>
+      ) : null}
 
-        <form.Field name="description">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <form.Field name="title">
           {(field) => (
             <div className="space-y-2">
-              <Label htmlFor="description">Description</Label>
-              <Textarea
-                id="description"
-                placeholder="Detailed description of the service..."
-                className="min-h-[120px]"
+              <Label htmlFor="title">Service Title</Label>
+              <Input
+                id="title"
+                placeholder="e.g. Serengeti Safari 3 Days"
                 value={field.state.value}
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
               />
-              {field.state.meta.errors ? (
-                <p className="text-sm text-destructive">
-                  {field.state.meta.errors.join(", ")}
-                </p>
-              ) : null}
+              {field.state.meta.isTouched && !field.state.meta.isValid && (
+                <FieldError errors={field.state.meta.errors} />
+              )}
             </div>
           )}
         </form.Field>
 
-        <form.Field name="user">
+        <form.Field name="service_type">
           {(field) => (
             <div className="space-y-2">
-              <Label>Vendor</Label>
-              <div className="flex gap-2">
-                <div className="flex-1">
-                  {isVendorsLoading ? (
-                    <div className="h-10 w-full animate-pulse rounded-md border border-input bg-muted" />
-                  ) : (
-                    <Autocomplete
-                      value={field.state.value ?? ""}
-                      onValueChange={(val: any) => field.handleChange(val)}
-                    >
-                      <AutocompleteTrigger>
-                        <span className="truncate">
-                          {vendors.find(
-                            (v) => String(v.user) === String(field.state.value),
-                          )?.business_name || "Search vendor..."}
-                        </span>
-                      </AutocompleteTrigger>
-                      <AutocompletePortal>
-                        <AutocompletePositioner>
-                          <AutocompletePopup>
-                            <AutocompleteInput placeholder="Search vendors..." />
-                            <AutocompleteList>
-                              {vendors.map((vendor: any) => (
-                                <AutocompleteItem
-                                  key={vendor.id}
-                                  value={String(vendor.user)}
-                                >
-                                  {vendor.business_name}
-                                </AutocompleteItem>
-                              ))}
-                            </AutocompleteList>
-                          </AutocompletePopup>
-                        </AutocompletePositioner>
-                      </AutocompletePortal>
-                    </Autocomplete>
-                  )}
-                </div>
+              <Label htmlFor="service_type">Service Type</Label>
+              <Select
+                value={field.state.value}
+                onValueChange={(val: any) => field.handleChange(val)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="flight">Flight</SelectItem>
+                  <SelectItem value="hotel">Hotel</SelectItem>
+                  <SelectItem value="bnb">BnB</SelectItem>
+                  <SelectItem value="car_rental">Car Rental</SelectItem>
+                  <SelectItem value="guide">Guide</SelectItem>
+                </SelectContent>
+              </Select>
+              {field.state.meta.isTouched && !field.state.meta.isValid && (
+                <FieldError errors={field.state.meta.errors} />
+              )}
+            </div>
+          )}
+        </form.Field>
+      </div>
 
-                <Dialog
-                  open={isVendorDialogOpen}
-                  onOpenChange={setIsVendorDialogOpen}
-                >
-                  <DialogTrigger
-                    render={
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        type="button"
-                        title="Add New Vendor"
-                      />
-                    }
+      <form.Field name="description">
+        {(field) => (
+          <div className="space-y-2">
+            <Label htmlFor="description">Description</Label>
+            <Textarea
+              id="description"
+              placeholder="Detailed description of the service..."
+              className="min-h-[120px]"
+              value={field.state.value}
+              onBlur={field.handleBlur}
+              onChange={(e) => field.handleChange(e.target.value)}
+            />
+            {field.state.meta.isTouched && !field.state.meta.isValid && (
+              <FieldError errors={field.state.meta.errors} />
+            )}
+          </div>
+        )}
+      </form.Field>
+
+      <form.Field name="user">
+        {(field) => (
+          <div className="space-y-2">
+            <Label>Vendor</Label>
+            <div className="flex gap-2">
+              <div className="flex-1">
+                {isVendorsLoading ? (
+                  <div className="h-10 w-full animate-pulse rounded-md border border-input bg-muted" />
+                ) : (
+                  <Autocomplete
+                    value={field.state.value ?? ""}
+                    onValueChange={(val: any) => field.handleChange(val)}
                   >
-                    <RiAddLine className="size-5" />
-                  </DialogTrigger>
-                  <DialogContent className="sm:max-w-lg">
-                    <DialogHeader>
-                      <DialogTitle>Create New Vendor</DialogTitle>
-                    </DialogHeader>
-                    <VendorForm onSuccess={handleVendorCreated} />
-                  </DialogContent>
-                </Dialog>
+                    <AutocompleteTrigger>
+                      <span className="truncate">
+                        {vendors.find(
+                          (v) => String(v.user) === String(field.state.value),
+                        )?.business_name || "Search vendor..."}
+                      </span>
+                    </AutocompleteTrigger>
+                    <AutocompletePortal>
+                      <AutocompletePositioner>
+                        <AutocompletePopup>
+                          <AutocompleteInput placeholder="Search vendors..." />
+                          <AutocompleteList>
+                            {vendors.map((vendor: any) => (
+                              <AutocompleteItem
+                                key={vendor.id}
+                                value={String(vendor.user)}
+                              >
+                                {vendor.business_name}
+                              </AutocompleteItem>
+                            ))}
+                          </AutocompleteList>
+                        </AutocompletePopup>
+                      </AutocompletePositioner>
+                    </AutocompletePortal>
+                  </Autocomplete>
+                )}
               </div>
-              {field.state.meta.errors ? (
-                <p className="text-sm text-destructive">
-                  {field.state.meta.errors.join(", ")}
-                </p>
-              ) : null}
+
+              <Dialog
+                open={isVendorDialogOpen}
+                onOpenChange={setIsVendorDialogOpen}
+              >
+                <DialogTrigger
+                  render={
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      type="button"
+                      title="Add New Vendor"
+                    />
+                  }
+                >
+                  <RiAddLine className="size-5" />
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-lg">
+                  <DialogHeader>
+                    <DialogTitle>Create New Vendor</DialogTitle>
+                  </DialogHeader>
+                  <VendorForm onSuccess={handleVendorCreated} />
+                </DialogContent>
+              </Dialog>
+            </div>
+            {field.state.meta.isTouched && !field.state.meta.isValid && (
+              <FieldError errors={field.state.meta.errors} />
+            )}
+          </div>
+        )}
+      </form.Field>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <form.Field name="base_price">
+          {(field) => (
+            <div className="space-y-2">
+              <Label htmlFor="base_price">Base Price</Label>
+              <Input
+                id="base_price"
+                type="number"
+                min="0"
+                step="0.01"
+                value={field.state.value}
+                onBlur={field.handleBlur}
+                onChange={(e) => field.handleChange(Number(e.target.value))}
+              />
+              {field.state.meta.isTouched && !field.state.meta.isValid && (
+                <FieldError errors={field.state.meta.errors} />
+              )}
             </div>
           )}
         </form.Field>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <form.Field name="base_price">
-            {(field) => (
-              <div className="space-y-2">
-                <Label htmlFor="base_price">Base Price</Label>
-                <Input
-                  id="base_price"
-                  type="number"
-                  min="0"
-                  step="0.01"
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(Number(e.target.value))}
-                />
-                {field.state.meta.errors ? (
-                  <p className="text-sm text-destructive">
-                    {field.state.meta.errors.join(", ")}
-                  </p>
-                ) : null}
-              </div>
-            )}
-          </form.Field>
-
-          <form.Field name="currency">
-            {(field) => (
-              <div className="space-y-2">
-                <Label htmlFor="currency">Currency</Label>
-                <Select
-                  value={field.state.value}
-                  onValueChange={(val: any) => field.handleChange(val)}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Currency" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="USD">USD</SelectItem>
-                    <SelectItem value="EUR">EUR</SelectItem>
-                    <SelectItem value="KES">KES</SelectItem>
-                    <SelectItem value="RWF">RWF</SelectItem>
-                  </SelectContent>
-                </Select>
-                {field.state.meta.errors ? (
-                  <p className="text-sm text-destructive">
-                    {field.state.meta.errors.join(", ")}
-                  </p>
-                ) : null}
-              </div>
-            )}
-          </form.Field>
-
-          <form.Field name="capacity">
-            {(field) => (
-              <div className="space-y-2">
-                <Label htmlFor="capacity">Capacity</Label>
-                <Input
-                  id="capacity"
-                  type="number"
-                  min="1"
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(Number(e.target.value))}
-                />
-                {field.state.meta.errors ? (
-                  <p className="text-sm text-destructive">
-                    {field.state.meta.errors.join(", ")}
-                  </p>
-                ) : null}
-              </div>
-            )}
-          </form.Field>
-        </div>
-
-        <form.Field name="location">
+        <form.Field name="currency">
           {(field) => (
             <div className="space-y-2">
-              <Label htmlFor="location">Location</Label>
-              <div className="space-y-2">
-                <div className="relative">
-                  <Input
-                    id="location"
-                    placeholder={
-                      MAPBOX_ACCESS_TOKEN
-                        ? "Search location (e.g. Kigali, Rwanda)"
-                        : "Search existing locations or enter Location ID"
+              <Label htmlFor="currency">Currency</Label>
+              <Select
+                value={field.state.value}
+                onValueChange={(val: any) => field.handleChange(val)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Currency" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="USD">USD</SelectItem>
+                  <SelectItem value="EUR">EUR</SelectItem>
+                  <SelectItem value="KES">KES</SelectItem>
+                  <SelectItem value="RWF">RWF</SelectItem>
+                </SelectContent>
+              </Select>
+              {field.state.meta.isTouched && !field.state.meta.isValid && (
+                <FieldError errors={field.state.meta.errors} />
+              )}
+            </div>
+          )}
+        </form.Field>
+
+        <form.Field name="capacity">
+          {(field) => (
+            <div className="space-y-2">
+              <Label htmlFor="capacity">Capacity</Label>
+              <Input
+                id="capacity"
+                type="number"
+                min="1"
+                value={field.state.value}
+                onBlur={field.handleBlur}
+                onChange={(e) => field.handleChange(Number(e.target.value))}
+              />
+              {field.state.meta.isTouched && !field.state.meta.isValid && (
+                <FieldError errors={field.state.meta.errors} />
+              )}
+            </div>
+          )}
+        </form.Field>
+      </div>
+
+      <form.Field name="location">
+        {(field) => (
+          <div className="space-y-2">
+            <Label htmlFor="location">Location</Label>
+            <div className="space-y-2">
+              <div className="relative">
+                <Input
+                  id="location"
+                  placeholder={
+                    MAPBOX_ACCESS_TOKEN
+                      ? "Search location (e.g. Kigali, Rwanda)"
+                      : "Search existing locations or enter Location ID"
+                  }
+                  value={locationQuery}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => {
+                    const nextValue = e.target.value;
+                    setLocationQuery(nextValue);
+                    if (
+                      !MAPBOX_ACCESS_TOKEN &&
+                      /^\d+$/.test(nextValue.trim())
+                    ) {
+                      field.handleChange(Number(nextValue.trim()));
+                      return;
                     }
-                    value={locationQuery}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => {
-                      const nextValue = e.target.value;
-                      setLocationQuery(nextValue);
-                      if (!MAPBOX_ACCESS_TOKEN && /^\d+$/.test(nextValue.trim())) {
-                        field.handleChange(Number(nextValue.trim()));
-                        return;
-                      }
+                    field.handleChange(undefined);
+                  }}
+                />
+                {locationQuery ? (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="absolute right-1 top-1 h-8 w-8"
+                    onClick={() => {
+                      setLocationQuery("");
+                      setLocationSuggestions([]);
                       field.handleChange(undefined);
                     }}
-                  />
-                  {locationQuery ? (
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="icon"
-                      className="absolute right-1 top-1 h-8 w-8"
-                      onClick={() => {
-                        setLocationQuery("");
-                        setLocationSuggestions([]);
-                        field.handleChange(undefined);
-                      }}
-                    >
-                      <RiCloseLine className="size-4" />
-                    </Button>
-                  ) : null}
-                </div>
-
-                <div className="rounded-md border bg-background">
-                  {isLocationSearching ? (
-                    <p className="px-3 py-2 text-sm text-muted-foreground">
-                      Searching...
-                    </p>
-                  ) : locationSuggestions.length > 0 ? (
-                    <div className="max-h-52 overflow-y-auto">
-                      {locationSuggestions.map((suggestion) => (
-                        <button
-                          key={suggestion.id}
-                          type="button"
-                          className="w-full px-3 py-2 text-left text-sm hover:bg-muted"
-                          onClick={() => handleLocationSelect(field, suggestion)}
-                        >
-                          {suggestion.name}
-                        </button>
-                      ))}
-                    </div>
-                  ) : localLocationSuggestions.length > 0 ? (
-                    <div className="max-h-52 overflow-y-auto">
-                      {localLocationSuggestions.map((item) => (
-                        <button
-                          key={String(item.id)}
-                          type="button"
-                          className="w-full px-3 py-2 text-left text-sm hover:bg-muted"
-                          onClick={() => {
-                            field.handleChange(item.id);
-                            setLocationQuery(item.name);
-                          }}
-                        >
-                          {item.name}
-                        </button>
-                      ))}
-                    </div>
-                  ) : (
-                    <p className="px-3 py-2 text-sm text-muted-foreground">
-                      Type country or city letters to search (for example: "Rwa", "Ken", "Nai").
-                    </p>
-                  )}
-                </div>
+                  >
+                    <RiCloseLine className="size-4" />
+                  </Button>
+                ) : null}
               </div>
 
-              {field.state.value ? (
-                <p className="text-xs text-muted-foreground">
-                  Selected location ID: {String(field.state.value)}
-                </p>
-              ) : null}
-              {field.state.meta.errors ? (
-                <p className="text-sm text-destructive">
-                  {field.state.meta.errors.join(", ")}
-                </p>
-              ) : null}
+              <div className="rounded-md border bg-background">
+                {isLocationSearching ? (
+                  <p className="px-3 py-2 text-sm text-muted-foreground">
+                    Searching...
+                  </p>
+                ) : locationSuggestions.length > 0 ? (
+                  <div className="max-h-52 overflow-y-auto">
+                    {locationSuggestions.map((suggestion) => (
+                      <button
+                        key={suggestion.id}
+                        type="button"
+                        className="w-full px-3 py-2 text-left text-sm hover:bg-muted"
+                        onClick={() => handleLocationSelect(field, suggestion)}
+                      >
+                        {suggestion.name}
+                      </button>
+                    ))}
+                  </div>
+                ) : localLocationSuggestions.length > 0 ? (
+                  <div className="max-h-52 overflow-y-auto">
+                    {localLocationSuggestions.map((item) => (
+                      <button
+                        key={String(item.id)}
+                        type="button"
+                        className="w-full px-3 py-2 text-left text-sm hover:bg-muted"
+                        onClick={() => {
+                          field.handleChange(item.id);
+                          setLocationQuery(item.name);
+                        }}
+                      >
+                        {item.name}
+                      </button>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="px-3 py-2 text-sm text-muted-foreground">
+                    Type country or city letters to search (for example: "Rwa",
+                    "Ken", "Nai").
+                  </p>
+                )}
+              </div>
             </div>
-          )}
-        </form.Field>
 
-        <div className="pt-4 flex justify-end gap-4">
-          <Button variant="outline" type="button" onClick={() => form.reset()}>
-            Reset
-          </Button>
-          <Button
-            type="submit"
-            disabled={form.state.isSubmitting}
-            className="min-w-[150px]"
-          >
-            {form.state.isSubmitting ? "Creating..." : "Create Service"}
-          </Button>
-        </div>
-      </form>
+            {field.state.value ? (
+              <p className="text-xs text-muted-foreground">
+                Selected location ID: {String(field.state.value)}
+              </p>
+            ) : null}
+            {field.state.meta.isTouched && !field.state.meta.isValid && (
+              <FieldError errors={field.state.meta.errors} />
+            )}
+          </div>
+        )}
+      </form.Field>
 
+      <div className="pt-4 flex justify-end gap-4">
+        <Button variant="outline" type="button" onClick={() => form.reset()}>
+          Reset
+        </Button>
+        <Button
+          type="submit"
+          disabled={form.state.isSubmitting}
+          className="min-w-[150px]"
+        >
+          {form.state.isSubmitting ? "Creating..." : "Create Service"}
+        </Button>
+      </div>
+    </form>
   );
 }

@@ -8,6 +8,15 @@ export const endpoints = {
     me: "/accounts/users/profile/",
     setPassword: "/accounts/users/set_password/",
     refresh: "/accounts/token/refresh/",
+    googleLogin: "/accounts/login/google/",
+  },
+  accounts: {
+    savedItems: {
+      list: "/accounts/saved-items/",
+      create: "/accounts/saved-items/",
+      remove: "/accounts/saved-items/remove/",
+    },
+    contact: "/accounts/contact/",
   },
   bookings: {
     list: "/bookings/",
@@ -21,18 +30,23 @@ export const endpoints = {
     },
     confirm: "/bookings/confirm/",
     submitTrip: "/bookings/submit-trip/",
-    
+
     // RESTful Quote Management
     quote: (id: string | number) => `/bookings/${id}/quote/`,
     accept: (id: string | number) => `/bookings/${id}/accept/`,
-    
+    cancel: (id: string | number) => `/bookings/${id}/cancel/`,
+    notifyVendor: (id: string | number) => `/bookings/${id}/notify-vendor/`,
+
     tickets: {
       generate: (id: string | number) => `/bookings/${id}/generate-ticket/`,
+      download: (id: string | number) => `/bookings/${id}/download-ticket/`,
       verify: "/bookings/verify-ticket/",
     },
     commission: (id: string | number) => `/bookings/${id}/commission/`,
     payout: (id: string | number) => `/bookings/${id}/payout/`,
     refund: (id: string | number) => `/bookings/${id}/refund/`,
+    transactions: "/bookings/transactions/",
+    vendorPayouts: "/bookings/vendor-payouts/",
   },
   services: {
     create: "/services/",

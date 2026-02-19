@@ -1,9 +1,41 @@
-import { Service } from "@/app/[locale]/(marketing)/services/page";
+import type { ServiceResponse } from "@/lib/schema/service-schema";
 import { cn } from "@/lib/utils";
 import { RiArrowRightUpLine } from "@remixicon/react";
 import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import { AddToTripButton } from "./plan-trip/add-to-trip-button";
+
+const TYPE_LABELS: Record<string, string> = {
+  hotel: "Hotels",
+  bnb: "BnBs",
+  car_rental: "Car Rentals",
+  guide: "Guides",
+  flight: "Flights",
+  experience: "Experiences",
+};
+
+function formatPrice(service: ServiceResponse): string {
+  const price =
+    typeof service.base_price === "string"
+      ? Number.parseFloat(service.base_price)
+      : service.base_price;
+
+  const suffix =
+    service.service_type === "hotel" || service.service_type === "bnb"
+      ? " / night"
+      : service.service_type === "car_rental" ||
+          service.service_type === "guide"
+        ? " / day"
+        : "";
+
+  return `$${price.toLocaleString()}${suffix}`;
+}
+
+function getImage(service: ServiceResponse): string {
+  const media = service.media;
+  if (media && media.length > 0) return media[0].media_url;
+  return "/images/rwanda-landscape.jpg";
+}
 
 export function ServiceItem({
   service,
@@ -11,11 +43,15 @@ export function ServiceItem({
   onToggle,
   bookLabel,
 }: {
-  service: Service;
+  service: ServiceResponse;
   isExpanded: boolean;
   onToggle: () => void;
   bookLabel: string;
 }) {
+  const category = TYPE_LABELS[service.service_type] || service.service_type;
+  const price = formatPrice(service);
+  const image = getImage(service);
+
   return (
     <motion.div
       layout
@@ -31,7 +67,7 @@ export function ServiceItem({
       >
         <div className="flex-1">
           <span className="text-xs font-mono uppercase tracking-widest text-primary mb-2 block">
-            {service.category}
+            {category}
           </span>
           <h2 className="font-display text-2xl md:text-4xl font-medium group-hover:text-primary transition-colors duration-300">
             {service.title}
@@ -40,7 +76,7 @@ export function ServiceItem({
 
         <div className="flex items-center justify-between md:justify-end gap-8 w-full md:w-auto">
           <span className="font-mono text-sm md:text-base text-muted-foreground">
-            {service.price}
+            {price}
           </span>
           <div
             className={cn(
@@ -62,9 +98,9 @@ export function ServiceItem({
             className="overflow-hidden"
           >
             <div className="pb-12 md:pb-16 grid md:grid-cols-12 gap-8 md:gap-12">
-              <div className="md:col-span-4 relative aspect-[4/3] rounded-sm overflow-hidden bg-muted">
+              <div className="md:col-span-4 relative aspect-4/3 rounded-sm overflow-hidden bg-muted">
                 <Image
-                  src={service.image}
+                  src={image}
                   alt={service.title}
                   fill
                   className="object-cover"
@@ -75,23 +111,20 @@ export function ServiceItem({
                   <p className="text-xl md:text-2xl font-light leading-relaxed mb-8 text-foreground/90">
                     {service.description}
                   </p>
-                  <ul className="grid md:grid-cols-2 gap-4 mb-8">
-                    {service.details.map((detail, i) => (
-                      <li
-                        key={i}
-                        className="flex items-start gap-2 text-muted-foreground"
-                      >
-                        <span className="text-primary mt-1.5 size-1.5 rounded-full bg-primary shrink-0" />
-                        <span>{detail}</span>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
 
                 <div className="flex gap-4">
                   <AddToTripButton
                     type="service"
-                    item={service}
+                    item={{
+                      id: String(service.id),
+                      title: service.title,
+                      price:
+                        typeof service.base_price === "string"
+                          ? Number.parseFloat(service.base_price)
+                          : service.base_price,
+                      image,
+                    }}
                     label={bookLabel}
                     size="lg"
                     className="px-8 rounded-none h-14 uppercase tracking-widest font-display text-sm"

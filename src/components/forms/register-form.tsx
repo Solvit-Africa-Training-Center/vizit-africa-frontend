@@ -27,6 +27,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { useState } from "react";
+import { FieldError } from "../ui/field";
 
 export function RegisterForm() {
   const t = useTranslations("Auth.signup");
@@ -48,7 +49,7 @@ export function RegisterForm() {
     },
     onSubmit: async ({ value }) => {
       const result = await register(value);
-
+      console.log(result);
       if (result.success) {
         toast.success("Account created! Check your email to verify.");
         router.push(`/verify-email?email=${encodeURIComponent(value.email)}`);
@@ -92,11 +93,9 @@ export function RegisterForm() {
                 <RiUserLine />
               </InputGroupAddon>
             </InputGroup>
-            {field.state.meta.errors ? (
-              <p className="text-sm text-destructive">
-                {field.state.meta.errors.join(", ")}
-              </p>
-            ) : null}
+            {field.state.meta.isTouched && !field.state.meta.isValid && (
+              <FieldError errors={field.state.meta.errors} />
+            )}
           </div>
         )}
       </form.Field>
@@ -119,11 +118,9 @@ export function RegisterForm() {
                 <RiMailLine />
               </InputGroupAddon>
             </InputGroup>
-            {field.state.meta.errors ? (
-              <p className="text-sm text-destructive">
-                {field.state.meta.errors.join(", ")}
-              </p>
-            ) : null}
+            {field.state.meta.isTouched && !field.state.meta.isValid && (
+              <FieldError errors={field.state.meta.errors} />
+            )}
           </div>
         )}
       </form.Field>
@@ -146,11 +143,9 @@ export function RegisterForm() {
                 <RiPhoneLine />
               </InputGroupAddon>
             </InputGroup>
-            {field.state.meta.errors ? (
-              <p className="text-sm text-destructive">
-                {field.state.meta.errors.join(", ")}
-              </p>
-            ) : null}
+            {field.state.meta.isTouched && !field.state.meta.isValid && (
+              <FieldError errors={field.state.meta.errors} />
+            )}
           </div>
         )}
       </form.Field>
@@ -172,11 +167,9 @@ export function RegisterForm() {
                 <RiLockPasswordLine />
               </InputGroupAddon>
             </InputGroup>
-            {field.state.meta.errors ? (
-              <p className="text-sm text-destructive">
-                {field.state.meta.errors.join(", ")}
-              </p>
-            ) : null}
+            {field.state.meta.isTouched && !field.state.meta.isValid && (
+              <FieldError errors={field.state.meta.errors} />
+            )}
           </div>
         )}
       </form.Field>
@@ -199,11 +192,9 @@ export function RegisterForm() {
                 <RiLockPasswordLine />
               </InputGroupAddon>
             </InputGroup>
-            {field.state.meta.errors ? (
-              <p className="text-sm text-destructive">
-                {field.state.meta.errors.join(", ")}
-              </p>
-            ) : null}
+            {field.state.meta.isTouched && !field.state.meta.isValid && (
+              <FieldError errors={field.state.meta.errors} />
+            )}
           </div>
         )}
       </form.Field>

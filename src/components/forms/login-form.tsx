@@ -22,6 +22,7 @@ import { Button } from "../ui/button";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { FieldError } from "../ui/field";
 
 export function LoginForm() {
   const t = useTranslations("Auth.login");
@@ -37,13 +38,24 @@ export function LoginForm() {
     validators: {
       onChange: loginInputSchema,
     },
-    onSubmit: async ({ value }) => {
+    onSubmit: async ({ value, formApi }) => {
       const result = await login(value);
       if (result.success) {
         toast.success("Logged in successfully");
         router.push("/profile");
       } else {
         setError(result.error);
+
+        if (result.fieldErrors) {
+          Object.entries(result.fieldErrors).forEach(([field, errors]) => {
+            if (field === "email" || field === "password") {
+              formApi.setFieldMeta(field, (prev) => ({
+                ...prev,
+                errors: errors,
+              }));
+            }
+          });
+        }
       }
     },
   });
@@ -82,11 +94,9 @@ export function LoginForm() {
                 <RiMailLine />
               </InputGroupAddon>
             </InputGroup>
-            {field.state.meta.errors ? (
-              <p className="text-sm text-destructive">
-                {field.state.meta.errors.join(", ")}
-              </p>
-            ) : null}
+            {field.state.meta.isTouched && !field.state.meta.isValid && (
+              <FieldError errors={field.state.meta.errors} />
+            )}
           </div>
         )}
       </form.Field>
@@ -114,11 +124,9 @@ export function LoginForm() {
                 <RiEyeLine />
               </InputGroupAddon>
             </InputGroup>
-            {field.state.meta.errors ? (
-              <p className="text-sm text-destructive">
-                {field.state.meta.errors.join(", ")}
-              </p>
-            ) : null}
+            {field.state.meta.isTouched && !field.state.meta.isValid && (
+              <FieldError errors={field.state.meta.errors} />
+            )}
           </div>
         )}
       </form.Field>

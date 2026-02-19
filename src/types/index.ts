@@ -1,4 +1,4 @@
-export type UserRole = 'CLIENT' | 'ADMIN' | 'VENDOR';
+export type UserRole = "CLIENT" | "ADMIN" | "VENDOR";
 
 export interface User {
   id: string;
@@ -9,23 +9,29 @@ export interface User {
   is_active?: boolean;
 }
 
-export type ItemType = 'flight' | 'hotel' | 'car' | 'activity' | 'custom' | 'service';
+export type ItemType =
+  | "flight"
+  | "hotel"
+  | "car"
+  | "activity"
+  | "custom"
+  | "service";
 
 export interface BookingItem {
   id: string;
-  service?: string; // ID of the service if linked
+  service?: string | null;
   item_type: ItemType;
   title: string;
   description?: string;
-  start_date?: string;
-  end_date?: string;
+  start_date?: string | null;
+  end_date?: string | null;
   quantity: number;
   unit_price: number;
   subtotal: number;
   status: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
   created_at: string;
-  service_details?: any; // For admin view only
+  service_details?: unknown;
 }
 
 export interface PackageQuoteItem {
@@ -37,11 +43,11 @@ export interface PackageQuoteItem {
   quantity: number;
   unit_price: number;
   line_total: number;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 export interface PackageQuote {
-  status: 'quoted' | 'accepted' | 'expired';
+  status: "quoted" | "accepted" | "expired";
   sent_at: string;
   sent_by: string;
   currency: string;
@@ -53,43 +59,54 @@ export interface PackageQuote {
   accepted_by?: string;
 }
 
-export type BookingStatus = 'pending' | 'quoted' | 'confirmed' | 'cancelled' | 'completed';
+export type BookingStatus =
+  | "pending"
+  | "quoted"
+  | "confirmed"
+  | "cancelled"
+  | "completed";
 
+// matches enriched BookingSerializer response
 export interface Booking {
   id: string;
-  // Guest/User Info
   name: string;
   email: string;
   phone: string;
-  
-  // Trip Details
-  arrivalDate?: string;
-  departureDate?: string;
+  arrivalDate?: string | null;
+  departureDate?: string | null;
   travelers: number;
   adults: number;
   children: number;
   infants: number;
-  
-  // Needs
   needsFlights: boolean;
   needsHotel: boolean;
   needsCar: boolean;
   needsGuide: boolean;
-  
-  // Meta
   status: BookingStatus;
   currency: string;
   total_amount: number;
-  notes?: string;
   specialRequests?: string;
   tripPurpose?: string;
+  items: BookingItem[];
+  quote?: PackageQuote | null;
   createdAt: string;
-  updatedAt?: string;
-  
-  // Relationships
-  items: BookingItem[]; // Confirmed items
-  requestedItems?: any[]; // Raw requests from form
-  quote?: PackageQuote;
+}
+
+// admin response includes extra fields
+export interface AdminBooking extends Booking {
+  notes?: string;
+  requestedItems?: RequestedItem[];
+}
+
+export interface RequestedItem {
+  id?: string;
+  service?: string;
+  type: string;
+  title: string;
+  description?: string;
+  price?: number;
+  quantity?: number;
+  category?: string;
 }
 
 export interface PaginatedResponse<T> {

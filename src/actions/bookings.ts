@@ -2,17 +2,22 @@
 
 import { api } from "@/lib/api/client";
 import { endpoints } from "./endpoints";
-import { bookingListSchema, type BookingList } from "@/lib/schema/booking-schema";
-import type { Booking } from "@/types";
-import { type ActionResult, ApiError } from "@/lib/api/types";
-import { type TripInfo, type TripItem } from "@/lib/plan_trip-types";
+import { bookingListSchema, bookingSchema } from "@/lib/schema/booking-schema";
+import type { BookingList } from "@/lib/schema/booking-schema";
+import type { Booking, AdminBooking } from "@/types";
+import type { ActionResult } from "@/lib/api/types";
+import { ApiError } from "@/lib/api/types";
+import type { TripInfo, TripItem } from "@/lib/plan_trip-types";
 
 import { logout } from "./auth";
 
 function normalizeRequestedType(item: TripItem): string {
   if (item.type !== "service") return item.type;
 
-  const category = String((item as any)?.data?.category || "").toLowerCase();
+  const data = (item as Record<string, unknown>)?.data as
+    | Record<string, string>
+    | undefined;
+  const category = String(data?.category || "").toLowerCase();
   if (category.includes("flight")) return "flight";
   if (category.includes("hotel") || category.includes("bnb")) return "hotel";
   if (category.includes("car")) return "car";
@@ -23,15 +28,49 @@ function normalizeRequestedType(item: TripItem): string {
 /**
  * Fetch a single booking by ID for the current authenticated user
  */
-export async function getBookingById(id: string): Promise<ActionResult<Booking>> {
+export async function getBookingById(
+  id: string,
+): Promise<ActionResult<Booking>> {
   try {
-    const data = await api.get<Booking>(endpoints.bookings.detail(id));
+    const data = await api.get(endpoints.bookings.detail(id), bookingSchema);
     return { success: true, data };
   } catch (error) {
     const err = error as ApiError;
     return {
       success: false,
       error: err.message || "Failed to fetch booking",
+    };
+  }
+}
+
+export async function getAdminBookings(): Promise<
+  ActionResult<AdminBooking[]>
+> {
+  try {
+    const data = await api.get<AdminBooking[]>(endpoints.bookings.admin.list);
+    return { success: true, data };
+  } catch (error) {
+    const err = error as ApiError;
+    return {
+      success: false,
+      error: err.message || "Failed to fetch admin bookings",
+    };
+  }
+}
+
+export async function getAdminBookingById(
+  id: string,
+): Promise<ActionResult<AdminBooking>> {
+  try {
+    const data = await api.get<AdminBooking>(
+      endpoints.bookings.admin.detail(id),
+    );
+    return { success: true, data };
+  } catch (error) {
+    const err = error as ApiError;
+    return {
+      success: false,
+      error: err.message || "Failed to fetch admin booking",
     };
   }
 }
@@ -48,7 +87,7 @@ export async function getUserBookings(): Promise<ActionResult<BookingList>> {
     if (err.status === 401) {
       try {
         await logout();
-      } catch { }
+      } catch {}
     }
     return {
       success: false,
@@ -63,7 +102,7 @@ export async function getUserBookings(): Promise<ActionResult<BookingList>> {
 export async function submitTripRequest(
   tripInfo: TripInfo,
   items: TripItem[],
-): Promise<ActionResult<any>> {
+): Promise<ActionResult<Record<string, unknown>>> {
   try {
     const payload = {
       ...tripInfo,
@@ -73,6 +112,10 @@ export async function submitTripRequest(
         quantity: item.quantity || 1,
         start_date: item.startDate || tripInfo.departureDate,
         end_date: item.endDate || tripInfo.returnDate,
+        start_time: item.startTime,
+        end_time: item.endTime,
+        is_round_trip: item.isRoundTrip,
+        return_date: item.returnDate,
         unit_price: item.price || 0,
         type: normalizeRequestedType(item),
         category: (item as any)?.data?.category || "",
@@ -85,7 +128,6 @@ export async function submitTripRequest(
       endpoints.bookings.submitTrip,
       payload,
       undefined,
-      { requiresAuth: false },
     );
 
     return { success: true, data };
@@ -111,7 +153,7 @@ export async function sendQuoteForBooking(
     unit_price?: number;
   }>,
   notes = "",
-): Promise<ActionResult<any>> {
+): Promise<ActionResult<Record<string, unknown>>> {
   try {
     const payload = {
       items,
@@ -119,10 +161,7 @@ export async function sendQuoteForBooking(
       currency: "USD",
     };
 
-    const data = await api.post(
-      endpoints.bookings.quote(bookingId),
-      payload,
-    );
+    const data = await api.post(endpoints.bookings.quote(bookingId), payload);
 
     return { success: true, data };
   } catch (error) {
@@ -137,7 +176,7 @@ export async function sendQuoteForBooking(
 
 export async function acceptQuoteForBooking(
   bookingId: string,
-): Promise<ActionResult<any>> {
+): Promise<ActionResult<Record<string, unknown>>> {
   try {
     const data = await api.post(endpoints.bookings.accept(bookingId), {});
     return { success: true, data };
@@ -146,6 +185,49 @@ export async function acceptQuoteForBooking(
     return {
       success: false,
       error: err.message || "Failed to accept quote",
+      fieldErrors: err.fieldErrors,
+    };
+  }
+}
+
+export async function cancelBooking(
+  bookingId: string,
+): Promise<ActionResult<Record<string, unknown>>> {
+  try {
+    const data = await api.post(endpoints.bookings.cancel(bookingId), {});
+    return { success: true, data };
+  } catch (error) {
+    const err = error as ApiError;
+    return {
+      success: false,
+      error: err.message || "Failed to cancel booking",
+      fieldErrors: err.fieldErrors,
+    };
+  }
+}
+
+export async function notifyVendor(
+  bookingId: string,
+  itemId?: string,
+  serviceId?: string,
+  details?: Record<string, unknown>,
+): Promise<ActionResult<Record<string, unknown>>> {
+  try {
+    const payload = {
+      item_id: itemId,
+      service_id: serviceId,
+      ...details,
+    };
+    const data = await api.post(
+      endpoints.bookings.notifyVendor(bookingId),
+      payload,
+    );
+    return { success: true, data };
+  } catch (error) {
+    const err = error as ApiError;
+    return {
+      success: false,
+      error: err.message || "Failed to notify vendor",
       fieldErrors: err.fieldErrors,
     };
   }

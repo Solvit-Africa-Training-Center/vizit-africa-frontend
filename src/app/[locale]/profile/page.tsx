@@ -21,12 +21,24 @@ import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { Label } from "@/components/ui/label";
 import { useUser } from "@/components/user-provider";
-import { Empty, EmptyDescription, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
+import {
+  Empty,
+  EmptyDescription,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty";
 import { Badge } from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
-import { getUserBookings, acceptQuoteForBooking } from "@/actions/bookings";
-import { differenceInDays } from "date-fns";
+import {
+  getUserBookings,
+  acceptQuoteForBooking,
+  cancelBooking,
+} from "@/actions/bookings";
+import { differenceInDays, isPast, parseISO } from "date-fns";
 import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
+import { getSavedItems } from "@/actions/accounts";
+import { SaveButton } from "@/components/shared/save-button";
 
 type Tab = "overview" | "trips" | "saved" | "settings";
 
@@ -34,7 +46,6 @@ export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState<Tab>("overview");
   const { user } = useUser();
   const t = useTranslations("Profile");
-  const tCommon = useTranslations("Admin.requests.table.badges");
 
   const { data: bookingsData, isLoading } = useQuery({
     queryKey: ["user-bookings"],
@@ -45,15 +56,42 @@ export default function ProfilePage() {
     },
   });
   const [acceptingId, setAcceptingId] = useState<string | null>(null);
+  const [cancellingId, setCancellingId] = useState<string | null>(null);
 
   const stats = useMemo(() => {
     if (!bookingsData) return { trips: 0, days: 0 };
-    const trips = bookingsData.filter(b => b.status === "confirmed").length;
+
+    // Only count confirmed trips
+    const confirmedTrips = bookingsData.filter((b) => b.status === "confirmed");
+    const trips = confirmedTrips.length;
+
     let days = 0;
-    bookingsData.forEach(b => {
-      b.items.forEach(item => {
-        days += differenceInDays(new Date(item.end_date), new Date(item.start_date)) + 1;
+    confirmedTrips.forEach((b) => {
+      // Only count days for ended or in-progress trips (start date <= now)
+      // Check if trip has started
+      const hasStarted = b.items.some((item) => {
+        if (!item.start_date) return false;
+        try {
+          return isPast(parseISO(item.start_date));
+        } catch {
+          return false;
+        }
       });
+
+      if (hasStarted) {
+        b.items.forEach((item) => {
+          if (!item.start_date || !item.end_date) return;
+          try {
+            days +=
+              differenceInDays(
+                parseISO(item.end_date),
+                parseISO(item.start_date),
+              ) + 1;
+          } catch {
+            // ignore date parse errors
+          }
+        });
+      }
     });
     return { trips, days };
   }, [bookingsData]);
@@ -62,14 +100,21 @@ export default function ProfilePage() {
     if (!bookingsData) return null;
 
     const confirmed = bookingsData
-      .filter(b => b.status === "confirmed" && b.items.length > 0)
-      .sort((a, b) => new Date(a.items[0].start_date).getTime() - new Date(b.items[0].start_date).getTime())[0];
+      .filter((b) => b.status === "confirmed" && b.items.length > 0)
+      .sort(
+        (a, b) =>
+          new Date(a.items[0].start_date).getTime() -
+          new Date(b.items[0].start_date).getTime(),
+      )[0];
 
     if (confirmed) return confirmed;
 
     const pending = bookingsData
-      .filter(b => b.status === "pending" && b.items.length > 0)
-      .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())[0];
+      .filter((b) => b.status === "pending" && b.items.length > 0)
+      .sort(
+        (a, b) =>
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
+      )[0];
 
     return pending;
   }, [bookingsData]);
@@ -77,7 +122,10 @@ export default function ProfilePage() {
   const pendingRequests = useMemo(() => {
     if (!bookingsData) return [];
     return bookingsData.filter(
-      (b) => b.status === "pending" || b.status === "quoted" || b.quote?.status === "quoted",
+      (b) =>
+        b.status === "pending" ||
+        b.status === "quoted" ||
+        b.quote?.status === "quoted",
     );
   }, [bookingsData]);
 
@@ -171,7 +219,10 @@ export default function ProfilePage() {
                         {nextTrip ? (
                           <div className="text-right">
                             <p className="text-3xl font-display font-medium">
-                              {differenceInDays(new Date(nextTrip.items[0].start_date), new Date())}
+                              {differenceInDays(
+                                new Date(nextTrip.items[0].start_date),
+                                new Date(),
+                              )}
                             </p>
                             <p className="text-xs font-mono uppercase opacity-80">
                               {t("overview.nextTrip.daysLeft")}
@@ -182,12 +233,22 @@ export default function ProfilePage() {
 
                       <div>
                         <h2 className="font-display text-4xl md:text-5xl font-medium text-primary-foreground mb-2">
-                          {nextTrip ? (nextTrip.status === 'confirmed' ? "Upcoming Adventure" : "Request Processing") : "No Trips Planned"}
+                          {nextTrip
+                            ? nextTrip.status === "confirmed"
+                              ? "Upcoming Adventure"
+                              : "Request Processing"
+                            : "No Trips Planned"}
                         </h2>
                         {nextTrip && (
                           <p className="text-lg font-light opacity-90 flex items-center gap-2">
                             <RiCalendarLine className="size-5" />
-                            {new Date(nextTrip.items[0].start_date).toLocaleDateString()} - {new Date(nextTrip.items[0].end_date).toLocaleDateString()}
+                            {new Date(
+                              nextTrip.items[0].start_date,
+                            ).toLocaleDateString()}{" "}
+                            -{" "}
+                            {new Date(
+                              nextTrip.items[0].end_date,
+                            ).toLocaleDateString()}
                           </p>
                         )}
 
@@ -197,7 +258,11 @@ export default function ProfilePage() {
                               {t("overview.nextTrip.status")}
                             </p>
                             <p className="font-medium">
-                              {nextTrip ? (nextTrip.status === 'confirmed' ? t("overview.nextTrip.confirmed") : "In Review") : "-"}
+                              {nextTrip
+                                ? nextTrip.status === "confirmed"
+                                  ? t("overview.nextTrip.confirmed")
+                                  : "In Review"
+                                : "-"}
                             </p>
                           </div>
                           <div>
@@ -205,7 +270,9 @@ export default function ProfilePage() {
                               {t("overview.nextTrip.travelers")}
                             </p>
                             <p className="font-medium">
-                              {nextTrip ? `${nextTrip.items[0].quantity} Unit(s)` : "-"}
+                              {nextTrip
+                                ? `${nextTrip.items[0].quantity} Unit(s)`
+                                : "-"}
                             </p>
                           </div>
                         </div>
@@ -236,62 +303,154 @@ export default function ProfilePage() {
                                 <div>
                                   <h4 className="font-medium text-lg mb-1 hover:text-primary transition-colors">
                                     <Link href={`/profile/bookings/${req.id}`}>
-                                      Trip Request #{req.id.toString().slice(0, 8)}
+                                      Trip Request #
+                                      {req.id.toString().slice(0, 8)}
                                     </Link>
                                   </h4>
                                   <p className="text-sm text-muted-foreground">
-                                    {new Date(req.created_at).toLocaleDateString()}
+                                    {new Date(
+                                      req.created_at,
+                                    ).toLocaleDateString()}
                                   </p>
                                 </div>
                                 <span className="text-xs font-medium uppercase tracking-wider border border-border px-2 py-1 rounded-full text-muted-foreground">
-                                  {req.quote?.status === "quoted" ? "quoted" : req.status}
+                                  {req.quote?.status === "quoted"
+                                    ? "quoted"
+                                    : req.status}
                                 </span>
                               </div>
+
+                              <div className="mb-4 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-muted-foreground">
+                                <div>
+                                  <span className="block text-xs uppercase opacity-70">
+                                    Created
+                                  </span>
+                                  {new Date(
+                                    req.created_at,
+                                  ).toLocaleDateString()}
+                                </div>
+                                <div>
+                                  <span className="block text-xs uppercase opacity-70">
+                                    Items
+                                  </span>
+                                  {req.items.length} items
+                                </div>
+                                {req.items[0]?.start_date && (
+                                  <div>
+                                    <span className="block text-xs uppercase opacity-70">
+                                      Start Date
+                                    </span>
+                                    {new Date(
+                                      req.items[0].start_date,
+                                    ).toLocaleDateString()}
+                                  </div>
+                                )}
+                              </div>
+
                               {req.quote?.status === "quoted" && (
-                                <div className="mb-3 flex items-center justify-between gap-3">
-                                  <p className="text-sm text-primary">
-                                    Quote ready: {req.quote.total_amount} {req.quote.currency || "USD"}
+                                <div className="mb-3 flex items-center justify-between gap-3 bg-muted/30 p-3 rounded-md border border-border/50">
+                                  <p className="text-sm font-medium text-primary">
+                                    Quote Ready:{" "}
+                                    <span className="text-lg">
+                                      {req.quote.total_amount}{" "}
+                                      {req.quote.currency || "USD"}
+                                    </span>
                                   </p>
                                   <Button
                                     size="sm"
                                     onClick={async () => {
                                       setAcceptingId(String(req.id));
-                                      const result = await acceptQuoteForBooking(String(req.id));
+                                      const result =
+                                        await acceptQuoteForBooking(
+                                          String(req.id),
+                                        );
                                       setAcceptingId(null);
                                       if (result.success) {
-                                        toast.success("Quote accepted. Your trip is now confirmed.");
+                                        toast.success(
+                                          "Quote accepted. Your trip is now confirmed.",
+                                        );
                                         window.location.reload();
                                       } else {
-                                        toast.error(result.error || "Failed to accept quote");
+                                        toast.error(
+                                          result.error ||
+                                            "Failed to accept quote",
+                                        );
                                       }
                                     }}
-                                    disabled={acceptingId === String(req.id)}
+                                    disabled={
+                                      acceptingId === String(req.id) ||
+                                      cancellingId === String(req.id)
+                                    }
                                   >
-                                    {acceptingId === String(req.id) ? "Accepting..." : "Accept Quote"}
+                                    {acceptingId === String(req.id) ? (
+                                      <Loader2 className="animate-spin size-4 mr-2" />
+                                    ) : null}
+                                    Accept Quote
                                   </Button>
                                 </div>
                               )}
-                              <div className="flex flex-wrap gap-2">
-                                {(req.quote?.items || req.items).map((item, idx) => {
-                                  const itemType =
-                                    "type" in item
-                                      ? item.type
-                                      : "status" in item
-                                        ? item.status
-                                        : "service";
-                                  return (
-                                  <span key={idx} className="text-xs border border-border px-2 py-1 uppercase tracking-wider text-muted-foreground">
-                                    {itemType || "service"} Item
-                                  </span>
-                                  );
-                                })}
+
+                              <div className="flex items-center justify-between mt-4 pt-4 border-t border-border/50">
+                                <Link href={`/profile/bookings/${req.id}`}>
+                                  <Button variant="outline" size="sm">
+                                    View Details
+                                  </Button>
+                                </Link>
+
+                                {(req.status === "pending" ||
+                                  req.status === "quoted") && (
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                                    disabled={
+                                      cancellingId === String(req.id) ||
+                                      acceptingId === String(req.id)
+                                    }
+                                    onClick={async () => {
+                                      if (
+                                        !confirm(
+                                          "Are you sure you want to cancel this request? This action cannot be undone.",
+                                        )
+                                      )
+                                        return;
+
+                                      setCancellingId(String(req.id));
+                                      const result = await cancelBooking(
+                                        String(req.id),
+                                      );
+                                      setCancellingId(null);
+
+                                      if (result.success) {
+                                        toast.success(
+                                          "Booking request cancelled successfully.",
+                                        );
+                                        window.location.reload();
+                                      } else {
+                                        toast.error(
+                                          result.error ||
+                                            "Failed to cancel booking",
+                                        );
+                                      }
+                                    }}
+                                  >
+                                    {cancellingId === String(req.id) ? (
+                                      <Loader2 className="animate-spin size-4 mr-2" />
+                                    ) : (
+                                      <RiInformationLine className="size-4 mr-2" />
+                                    )}
+                                    Cancel Request
+                                  </Button>
+                                )}
                               </div>
                             </div>
                           ))
                         ) : (
                           <div className="text-center py-10 border border-dashed rounded-sm">
                             <RiInformationLine className="size-8 mx-auto mb-2 text-muted-foreground" />
-                            <p className="text-sm text-muted-foreground">No pending requests</p>
+                            <p className="text-sm text-muted-foreground">
+                              No pending requests
+                            </p>
                           </div>
                         )}
                       </div>
@@ -344,44 +503,51 @@ export default function ProfilePage() {
                     </Button>
                   </div>
                   <div className="border-y border-border divide-y divide-border">
-                    {bookingsData?.filter(b => b.status === "confirmed").map((trip) => (
-                      <div key={trip.id} className="py-8 grid md:grid-cols-4 gap-6 items-center group">
-                        <div className="md:col-span-2">
-                          <h3 className="font-display text-2xl font-medium mb-2 group-hover:text-primary transition-colors">
-                            {trip.items[0]?.service || "Safari Experience"}
-                          </h3>
-                          <p className="text-muted-foreground">
-                            {new Date(trip.items[0]?.start_date).toLocaleDateString()} - {new Date(trip.items[0]?.end_date).toLocaleDateString()}
-                          </p>
+                    {bookingsData
+                      ?.filter((b) => b.status === "confirmed")
+                      .map((trip) => (
+                        <div
+                          key={trip.id}
+                          className="py-8 grid md:grid-cols-4 gap-6 items-center group"
+                        >
+                          <div className="md:col-span-2">
+                            <h3 className="font-display text-2xl font-medium mb-2 group-hover:text-primary transition-colors">
+                              {trip.items[0]?.service || "Safari Experience"}
+                            </h3>
+                            <p className="text-muted-foreground">
+                              {new Date(
+                                trip.items[0]?.start_date,
+                              ).toLocaleDateString()}{" "}
+                              -{" "}
+                              {new Date(
+                                trip.items[0]?.end_date,
+                              ).toLocaleDateString()}
+                            </p>
+                          </div>
+                          <Badge variant="success-outline">Confirmed</Badge>
+                          <div className="text-right">
+                            <Link href={`/profile/bookings/${trip.id}`}>
+                              <Button variant="outline">
+                                {t("trips.viewDetails")}
+                              </Button>
+                            </Link>
+                          </div>
                         </div>
-                        <Badge variant="success-outline">Confirmed</Badge>
-                        <div className="text-right">
-                          <Link href={`/profile/bookings/${trip.id}`}>
-                            <Button variant="outline">
-                              {t("trips.viewDetails")}
-                            </Button>
-                          </Link>
-                        </div>
-                      </div>
-                    ))}
-                    {(!bookingsData || bookingsData.filter(b => b.status === "confirmed").length === 0) && (
+                      ))}
+                    {(!bookingsData ||
+                      bookingsData.filter((b) => b.status === "confirmed")
+                        .length === 0) && (
                       <div className="py-20 text-center">
-                        <p className="text-muted-foreground">You don't have any confirmed trips yet.</p>
+                        <p className="text-muted-foreground">
+                          You don't have any confirmed trips yet.
+                        </p>
                       </div>
                     )}
                   </div>
                 </div>
               )}
 
-              {activeTab === "saved" && (
-                <Empty>
-                  <EmptyMedia>
-                    <RiBookmarkLine className="size-8" />
-                  </EmptyMedia>
-                  <EmptyTitle>{t("saved.emptyTitle")}</EmptyTitle>
-                  <EmptyDescription>{t("saved.emptyDescription")}</EmptyDescription>
-                </Empty>
-              )}
+              {activeTab === "saved" && <SavedItemsTab t={t} />}
 
               {activeTab === "settings" && (
                 <div className="max-w-2xl">

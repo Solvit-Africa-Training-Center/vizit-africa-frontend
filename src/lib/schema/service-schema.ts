@@ -3,17 +3,36 @@ import { z } from "zod";
 // create service
 export const createServiceInputSchema = z.object({
   title: z.string().min(3),
-  service_type: z.enum(["flight", "hotel", "bnb", "car_rental", "guide"]),
+  service_type: z.enum([
+    "flight",
+    "hotel",
+    "bnb",
+    "car_rental",
+    "guide",
+    "experience",
+  ]),
   description: z.string().min(10),
   base_price: z.number().min(0),
   currency: z.string(),
   capacity: z.number().min(1),
   status: z.enum(["active", "inactive", "draft"]),
-  location: z.union([z.number(), z.string().min(1), z.undefined()]), // Location ID
-  user: z.union([z.number(), z.string().trim().min(1), z.null(), z.undefined()]), // Service owner user ID
+  location: z.union([z.number(), z.string().min(1), z.undefined()]),
+  user: z.union([
+    z.number(),
+    z.string().trim().min(1),
+    z.null(),
+    z.undefined(),
+  ]),
 });
 
 export type CreateServiceInput = z.infer<typeof createServiceInputSchema>;
+
+export const serviceMediaSchema = z.object({
+  id: z.number().or(z.string()),
+  media_url: z.string(),
+  media_type: z.string(),
+  sort_order: z.number(),
+});
 
 export const serviceResponseSchema = z.object({
   id: z.number().or(z.string()),
@@ -30,6 +49,7 @@ export const serviceResponseSchema = z.object({
   updated_at: z.string().optional(),
   external_id: z.string().nullable().optional(),
   metadata: z.record(z.string(), z.unknown()).optional(),
+  media: z.array(serviceMediaSchema).optional(),
 });
 
 export type ServiceResponse = z.infer<typeof serviceResponseSchema>;

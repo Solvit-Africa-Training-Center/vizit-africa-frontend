@@ -837,6 +837,7 @@
       "bookings": "Bookings",
       "inventory": "Inventory",
       "settings": "Settings",
+      "create": "Create",
       "publicSite": "Public Site",
       "logout": "Logout"
     },

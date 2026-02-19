@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import {
   RiDashboardLine,
   RiFileListLine,
@@ -10,15 +9,26 @@ import {
   RiLogoutBoxRLine,
   RiGlobalLine,
   RiCheckboxCircleLine,
+  RiAddLine,
+  RiArrowDownSLine,
+  RiServiceLine,
+  RiUserStarLine,
 } from "@remixicon/react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import { LanguageSwitcher } from "../shared/language-switcher";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export function AdminNavbar() {
   const pathname = usePathname();
   const t = useTranslations("Admin.nav");
+  const tAdmin = useTranslations("Admin");
 
   const adminLinks = [
     { href: "/admin", label: t("overview"), icon: RiDashboardLine },
@@ -68,7 +78,33 @@ export function AdminNavbar() {
           })}
         </nav>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 md:gap-4">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="sm" className="gap-2 h-9 px-3">
+                <RiAddLine className="size-4" />
+                <span className="hidden sm:inline font-medium">
+                  {t("create")}
+                </span>
+                <RiArrowDownSLine className="size-4 opacity-50" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48">
+              <Link href="/admin/create/service">
+                <DropdownMenuItem className="gap-2 cursor-pointer">
+                  <RiServiceLine className="size-4" />
+                  <span>{tAdmin("createService.title")}</span>
+                </DropdownMenuItem>
+              </Link>
+              <Link href="/admin/create/vendor">
+                <DropdownMenuItem className="gap-2 cursor-pointer">
+                  <RiUserStarLine className="size-4" />
+                  <span>{tAdmin("createVendor.title")}</span>
+                </DropdownMenuItem>
+              </Link>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
           <LanguageSwitcher variant={"default"} />
           <Link href="/">
             <Button variant="ghost" size="sm" className="text-muted-foreground">

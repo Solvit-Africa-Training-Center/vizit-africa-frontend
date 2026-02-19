@@ -43,7 +43,7 @@ async function refreshAccessToken() {
     }
 
     const data = await response.json();
-    
+
     // Update cookies
     cookieStore.set("accessToken", data.access, COOKIE_OPTIONS);
     if (data.refresh) {
@@ -69,16 +69,24 @@ async function handleResponse<T>(
 
     try {
       const errorData = await response.json();
-      errorMessage = errorData.detail || errorData.message || errorMessage;
-      if (
-        typeof errorData === "object" &&
-        !errorData.detail &&
-        !errorData.message
-      ) {
-        fieldErrors = errorData;
-        errorMessage = "Validation error";
+
+      // Handle standardized backend error format: { status: "error", message: "...", errors: {...} }
+      if (errorData.status === "error") {
+        errorMessage = errorData.message || errorMessage;
+        fieldErrors = errorData.errors as Record<string, string[]>;
+      } else {
+        // Fallback for legacy/other structures
+        errorMessage = errorData.detail || errorData.message || errorMessage;
+        if (
+          typeof errorData === "object" &&
+          !errorData.detail &&
+          !errorData.message
+        ) {
+          fieldErrors = errorData;
+          errorMessage = "Validation error";
+        }
       }
-    } catch { }
+    } catch {}
 
     throw new ApiError(errorMessage, response.status, fieldErrors);
   }
@@ -133,16 +141,16 @@ async function apiFetch<T>(
   } catch (error) {
     // Token refresh logic for 401 errors
     if (
-      error instanceof ApiError && 
-      error.status === 401 && 
-      !options._retry && 
+      error instanceof ApiError &&
+      error.status === 401 &&
+      !options._retry &&
       requiresAuth
     ) {
       const newToken = await refreshAccessToken();
       if (newToken) {
         // Retry with new token
-        return apiFetch<T>(endpoint, { 
-          ...options, 
+        return apiFetch<T>(endpoint, {
+          ...options,
           _retry: true,
           // Explicitly set authorization header for retry since getAuthToken might still see old cookie?
           // Actually, apiFetch calls getAuthToken() again.
@@ -151,8 +159,8 @@ async function apiFetch<T>(
           // but likely we should pass it explicitly to be safe.
           headers: {
             ...headers,
-            Authorization: `Bearer ${newToken}`
-          }
+            Authorization: `Bearer ${newToken}`,
+          },
         });
       }
     }

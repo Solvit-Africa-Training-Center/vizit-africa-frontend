@@ -19,6 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { FieldError } from "@/components/ui/field";
 
 interface VendorFormProps {
   onSuccess?: (vendor: any) => void;
@@ -30,7 +31,13 @@ export function VendorForm({ onSuccess }: VendorFormProps) {
   const form = useForm({
     defaultValues: {
       business_name: "",
-      vendor_type: "individual" as "individual" | "company" | "tour_operator" | "transport_provider" | "accommodation_provider" | "guide",
+      vendor_type: "individual" as
+        | "individual"
+        | "company"
+        | "tour_operator"
+        | "transport_provider"
+        | "accommodation_provider"
+        | "guide",
       description: "",
       contact_phone: "",
       address: "",
@@ -73,11 +80,9 @@ export function VendorForm({ onSuccess }: VendorFormProps) {
               onBlur={field.handleBlur}
               onChange={(e) => field.handleChange(e.target.value)}
             />
-            {field.state.meta.errors ? (
-              <p className="text-sm text-destructive">
-                {field.state.meta.errors.join(", ")}
-              </p>
-            ) : null}
+            {field.state.meta.isTouched && !field.state.meta.isValid && (
+              <FieldError errors={field.state.meta.errors} />
+            )}
           </div>
         )}
       </form.Field>
@@ -98,11 +103,9 @@ export function VendorForm({ onSuccess }: VendorFormProps) {
                 <SelectItem value="company">Company</SelectItem>
               </SelectContent>
             </Select>
-            {field.state.meta.errors ? (
-              <p className="text-sm text-destructive">
-                {field.state.meta.errors.join(", ")}
-              </p>
-            ) : null}
+            {field.state.meta.isTouched && !field.state.meta.isValid && (
+              <FieldError errors={field.state.meta.errors} />
+            )}
           </div>
         )}
       </form.Field>
@@ -118,11 +121,9 @@ export function VendorForm({ onSuccess }: VendorFormProps) {
               onBlur={field.handleBlur}
               onChange={(e) => field.handleChange(e.target.value)}
             />
-            {field.state.meta.errors ? (
-              <p className="text-sm text-destructive">
-                {field.state.meta.errors.join(", ")}
-              </p>
-            ) : null}
+            {field.state.meta.isTouched && !field.state.meta.isValid && (
+              <FieldError errors={field.state.meta.errors} />
+            )}
           </div>
         )}
       </form.Field>
@@ -138,11 +139,9 @@ export function VendorForm({ onSuccess }: VendorFormProps) {
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
               />
-              {field.state.meta.errors ? (
-                <p className="text-sm text-destructive">
-                  {field.state.meta.errors.join(", ")}
-                </p>
-              ) : null}
+              {field.state.meta.isTouched && !field.state.meta.isValid && (
+                <FieldError errors={field.state.meta.errors} />
+              )}
             </div>
           )}
         </form.Field>
@@ -158,11 +157,9 @@ export function VendorForm({ onSuccess }: VendorFormProps) {
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
               />
-              {field.state.meta.errors ? (
-                <p className="text-sm text-destructive">
-                  {field.state.meta.errors.join(", ")}
-                </p>
-              ) : null}
+              {field.state.meta.isTouched && !field.state.meta.isValid && (
+                <FieldError errors={field.state.meta.errors} />
+              )}
             </div>
           )}
         </form.Field>
@@ -178,11 +175,9 @@ export function VendorForm({ onSuccess }: VendorFormProps) {
               onBlur={field.handleBlur}
               onChange={(e) => field.handleChange(e.target.value)}
             />
-            {field.state.meta.errors ? (
-              <p className="text-sm text-destructive">
-                {field.state.meta.errors.join(", ")}
-              </p>
-            ) : null}
+            {field.state.meta.isTouched && !field.state.meta.isValid && (
+              <FieldError errors={field.state.meta.errors} />
+            )}
           </div>
         )}
       </form.Field>

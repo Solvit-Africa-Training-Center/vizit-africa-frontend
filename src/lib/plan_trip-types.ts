@@ -26,6 +26,7 @@ export interface Hotel {
   amenities: string[];
   rating: number;
   location: string;
+  image?: string;
 }
 
 export interface Car {
@@ -37,6 +38,7 @@ export interface Car {
   transmission: string;
   fuelType: string;
   features: string[];
+  image?: string;
 }
 
 export interface Guide {
@@ -44,42 +46,61 @@ export interface Guide {
   name: string;
   type: string;
   description: string;
-  price: number;
-  languages: string[];
+  price?: number;
+  image?: string;
+  // Booking Enhancements
+  startTime?: string; // HH:mm
+  endTime?: string; // HH:mm
+  isRoundTrip?: boolean;
+  returnDate?: string; // ISO Date string
+  data?: Record<string, any>;
 }
 
 export interface Experience {
-    id: string;
-    title: string;
-    description?: string;
-    price: number;
-    duration?: string;
-    location?: string;
+  id: string;
+  title: string;
+  description?: string;
+  price: number;
+  duration?: string;
+  location?: string;
+  image?: string;
 }
 
 export interface Service {
-    id: string;
-    title: string;
-    description?: string;
-    price: string | number;
-    category: string;
+  id: string;
+  title: string;
+  description?: string;
+  price: string | number;
+  category: string;
+  image?: string;
 }
 
-export type TripItemType = "flight" | "hotel" | "car" | "guide" | "experience" | "service" | "note";
+export type TripItemType =
+  | "flight"
+  | "hotel"
+  | "car"
+  | "guide"
+  | "experience"
+  | "service"
+  | "note";
 
 export interface TripItem {
-    id: string;
-    type: TripItemType;
-    title: string;
-    description?: string;
-    price?: number;
-    currency?: string;
-    // Dates can be specific to this item
-    startDate?: string;
-    endDate?: string;
-    // Store original data object for reference if needed
-    data?: Flight | Hotel | Car | Guide | Experience | Service | any;
-    quantity?: number;
+  id: string;
+  type: TripItemType;
+  title: string;
+  description?: string;
+  price?: number;
+  currency?: string;
+  // Dates can be specific to this item
+  startDate?: string;
+  endDate?: string;
+  startTime?: string;
+  endTime?: string;
+  isRoundTrip?: boolean;
+  returnDate?: string;
+  // Store original data object for reference if needed
+  data?: Flight | Hotel | Car | Guide | Experience | Service | any;
+  quantity?: number;
 }
 
 export interface TripInfo {
