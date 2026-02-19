@@ -1,33 +1,40 @@
 "use client";
 
 import {
+  RiArrowLeftDoubleLine,
+  RiArrowLeftSLine,
+  RiArrowRightDoubleLine,
+  RiArrowRightSLine,
+  RiCloseLine,
+} from "@remixicon/react";
+import {
   type ColumnDef,
-  type SortingState,
   type ColumnFiltersState,
-  type VisibilityState,
-  type RowSelectionState,
+  flexRender,
   getCoreRowModel,
   getFacetedRowModel,
   getFacetedUniqueValues,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  useReactTable,
-  flexRender,
   type PaginationState,
+  type RowSelectionState,
+  type SortingState,
+  useReactTable,
+  type VisibilityState,
 } from "@tanstack/react-table";
-import * as React from "react";
-import {
-  RiArrowLeftSLine,
-  RiArrowRightSLine,
-  RiArrowLeftDoubleLine,
-  RiArrowRightDoubleLine,
-  RiCloseLine,
-} from "@remixicon/react";
-
-import { cn } from "@/lib/utils";
+import type * as React from "react";
 import { Button } from "@/components/ui/button";
+import { DataTableFacetedFilter } from "@/components/ui/data-table-faceted-filter";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -36,16 +43,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
-import { DataTableFacetedFilter } from "@/components/ui/data-table-faceted-filter";
-import { DataTableViewOptions } from "@/components/ui/data-table-view-options";
 
 export type DataTableState = {
   sorting: SortingState;
@@ -92,6 +89,11 @@ export function DataTable<TData, TValue>({
   callbacks,
   isLoading = false,
 }: DataTableProps<TData, TValue>) {
+  const resetToFirstPage = {
+    pageIndex: 0,
+    pageSize: state.pagination.pageSize,
+  };
+
   const table = useReactTable({
     data,
     columns,
@@ -105,14 +107,18 @@ export function DataTable<TData, TValue>({
     onSortingChange: (updater) => {
       const next =
         typeof updater === "function" ? updater(state.sorting) : updater;
-      callbacks.onStateChange({ sorting: next });
+      callbacks.onStateChange({
+        sorting: next,
+        pagination: resetToFirstPage,
+      });
     },
     onColumnFiltersChange: (updater) => {
       const next =
-        typeof updater === "function"
-          ? updater(state.columnFilters)
-          : updater;
-      callbacks.onStateChange({ columnFilters: next });
+        typeof updater === "function" ? updater(state.columnFilters) : updater;
+      callbacks.onStateChange({
+        columnFilters: next,
+        pagination: resetToFirstPage,
+      });
     },
     onColumnVisibilityChange: (updater) => {
       const next =
@@ -123,9 +129,7 @@ export function DataTable<TData, TValue>({
     },
     onRowSelectionChange: (updater) => {
       const next =
-        typeof updater === "function"
-          ? updater(state.rowSelection)
-          : updater;
+        typeof updater === "function" ? updater(state.rowSelection) : updater;
       callbacks.onStateChange({ rowSelection: next });
     },
     onPaginationChange: (updater) => {
@@ -194,7 +198,6 @@ export function DataTable<TData, TValue>({
             </Button>
           )}
         </div>
-        <DataTableViewOptions table={table} />
       </div>
 
       <div className="rounded-md border bg-card">

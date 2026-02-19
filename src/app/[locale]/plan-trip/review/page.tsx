@@ -1,33 +1,31 @@
 "use client";
 
-import { useTripStore } from "@/store/trip-store";
-import { PageHeader } from "@/components/shared/page-header";
-import { Button } from "@/components/ui/button";
-import { submitTripRequest } from "@/actions/bookings";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import {
-  RiDeleteBinLine,
   RiCalendarLine,
-  RiMapPinLine,
-  RiUserLine,
   RiCheckLine,
-  RiArrowRightLine,
+  RiDeleteBinLine,
+  RiMapPinLine,
+  RiStickyNoteLine,
+  RiUserLine,
 } from "@remixicon/react";
 import { format } from "date-fns";
-import { useTranslations } from "next-intl";
+import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import { useState } from "react";
 import { toast } from "sonner";
-import { motion, AnimatePresence } from "motion/react";
-import { cn } from "@/lib/utils";
-import Link from "next/link";
-import type { TripItem } from "@/lib/plan_trip-types";
+import { submitTripRequest } from "@/actions/bookings";
+import { PageHeader } from "@/components/shared/page-header";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
+import { Link } from "@/i18n/navigation";
+import type { TripItem } from "@/lib/plan_trip-types";
+import { buildValidationErrorMessage } from "@/lib/validation/error-message";
+import { useTripStore } from "@/store/trip-store";
 
 export default function TripReviewPage() {
-  const t = useTranslations("PlanTrip"); // Assuming we have these or similar keys
   const { tripInfo, items, removeItem, updateTripInfo, clearTrip, updateItem } =
     useTripStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -49,7 +47,12 @@ export default function TripReviewPage() {
         toast.success("Trip request submitted successfully!");
         clearTrip();
       } else {
-        toast.error(result.error || "Failed to submit trip request");
+        toast.error(
+          buildValidationErrorMessage({
+            fieldErrors: result.fieldErrors,
+            fallback: result.error || "Failed to submit trip request",
+          }),
+        );
       }
     } catch (error) {
       console.error("Submission error:", error);
@@ -274,7 +277,9 @@ function TripItemCard({
   onUpdate: (updates: Partial<TripItem>) => void;
 }) {
   const image =
-    item.data?.image || item.data?.airlineLogo || "/images/placeholder.jpg";
+    item.data?.image ||
+    item.data?.airlineLogo ||
+    "/images/rwanda-landscape.jpg";
 
   // Toggle editing
   const [isEditing, setIsEditing] = useState(false);
@@ -294,7 +299,7 @@ function TripItemCard({
           )}
           {item.type === "note" && (
             <div className="flex items-center justify-center w-full h-full text-muted-foreground">
-              <span className="text-4xl">📝</span>
+              <RiStickyNoteLine className="size-8" />
             </div>
           )}
         </div>

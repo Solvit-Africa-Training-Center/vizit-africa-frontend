@@ -1,15 +1,35 @@
 "use client";
 
+import {
+  RiAddLine,
+  RiArrowRightLine,
+  RiCarLine,
+  RiCheckboxCircleLine,
+  RiCloseLine,
+  RiHotelLine,
+  RiPlaneLine,
+  RiSubtractLine,
+  RiSuitcaseLine,
+  RiUser2Line,
+  RiUserStarLine,
+} from "@remixicon/react";
+import { differenceInDays, format } from "date-fns";
+import { useRouter } from "next/navigation";
+import { useLocale } from "next-intl";
 import * as React from "react";
-import { format, differenceInDays } from "date-fns";
-
+import type { DateRange } from "react-day-picker";
+import {
+  Autocomplete,
+  AutocompleteInput,
+  AutocompleteItem,
+  AutocompleteList,
+  AutocompletePopup,
+  AutocompletePortal,
+  AutocompletePositioner,
+} from "@/components/ui/autocomplete";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-
-import type { DateRange } from "react-day-picker";
-import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
@@ -18,24 +38,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
+import { useLocationAutocomplete } from "@/hooks/use-location-autocomplete";
 import { useTripStore } from "@/store/trip-store";
-import { useRouter } from "next/navigation";
-import { useLocale } from "next-intl";
-import { 
-  RiAddLine, 
-  RiArrowRightLine, 
-  RiSubtractLine,
-  RiHotelLine,
-  RiCarLine,
-  RiUserStarLine,
-  RiPlaneLine,
-  RiSuitcaseLine,
-  RiCheckboxCircleLine,
-  RiUser2Line,
-  RiCloseLine
-} from "@remixicon/react";
 
 interface GuestCount {
   adults: number;
@@ -56,7 +64,8 @@ export function TripRequestDialog({
 }: TripRequestDialogProps) {
   const router = useRouter();
   const locale = useLocale();
-  const { updateTripInfo, tripInfo, items, removeItem, addItem } = useTripStore();
+  const { updateTripInfo, tripInfo, items, removeItem, addItem } =
+    useTripStore();
 
   const [dateRange, setDateRange] = React.useState<DateRange | undefined>({
     from: tripInfo.departureDate ? new Date(tripInfo.departureDate) : undefined,
@@ -81,15 +90,42 @@ export function TripRequestDialog({
     setContactInfo((prev) => ({ ...prev, ...updates }));
   };
 
+  const {
+    query: departureQuery,
+    setQuery: setDepartureQuery,
+    suggestions: departureSuggestions,
+    isSearching: isDepartureSearching,
+    isLocating: isDepartureLocating,
+    error: departureLocationError,
+    detectCurrentLocation: detectCurrentDepartureLocation,
+  } = useLocationAutocomplete({
+    initialQuery: tripInfo.departureCity || "",
+    countryCodes: "rw,ke,tz,ug,za,ng,gh",
+  });
+
+  const handleDepartureChange = (value: string) => {
+    setDepartureQuery(value);
+    updateContact({ departureCity: value });
+  };
+
+  const handleUseCurrentDepartureLocation = async () => {
+    const suggestion = await detectCurrentDepartureLocation();
+    if (!suggestion) {
+      return;
+    }
+
+    handleDepartureChange(suggestion.name);
+  };
+
   const handleGuestChange = (type: keyof GuestCount, delta: number) => {
-    setGuests(prev => {
+    setGuests((prev) => {
       const newValue = prev[type] + delta;
       const limits = { adults: 16, children: 15, infants: 5 };
-      
+
       if (newValue < 0) return prev;
-      if (type === 'adults' && newValue < 1) return prev;
+      if (type === "adults" && newValue < 1) return prev;
       if (newValue > limits[type]) return prev;
-      
+
       return { ...prev, [type]: newValue };
     });
   };
@@ -128,7 +164,9 @@ export function TripRequestDialog({
   const saveToStore = () => {
     updateTripInfo({
       departureCity: contactInfo.departureCity,
-      departureDate: dateRange?.from ? format(dateRange.from, "yyyy-MM-dd") : "",
+      departureDate: dateRange?.from
+        ? format(dateRange.from, "yyyy-MM-dd")
+        : "",
       returnDate: dateRange?.to ? format(dateRange.to, "yyyy-MM-dd") : "",
       adults: guests.adults,
       children: guests.children,
@@ -155,18 +193,23 @@ export function TripRequestDialog({
 
   const getItemIcon = (type: string) => {
     switch (type) {
-      case "hotel": return RiHotelLine;
-      case "car": return RiCarLine;
-      case "guide": return RiUserStarLine;
-      case "flight": return RiPlaneLine;
-      default: return RiSuitcaseLine;
+      case "hotel":
+        return RiHotelLine;
+      case "car":
+        return RiCarLine;
+      case "guide":
+        return RiUserStarLine;
+      case "flight":
+        return RiPlaneLine;
+      default:
+        return RiSuitcaseLine;
     }
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       {trigger && <DialogTrigger render={trigger} />}
-      <DialogContent 
+      <DialogContent
         className="sm:max-w-7xl h-[90vh] p-0 gap-0 overflow-hidden flex flex-col"
         showCloseButton={true}
       >
@@ -174,11 +217,11 @@ export function TripRequestDialog({
           <div className="flex items-start justify-between gap-4">
             <div className="space-y-1">
               <DialogTitle className="text-2xl font-bold tracking-tight flex items-center gap-2">
-          
                 Plan Your Journey
               </DialogTitle>
               <DialogDescription className="text-sm">
-                Customize your Kigali experience with our premium planning service
+                Customize your Kigali experience with our premium planning
+                service
               </DialogDescription>
             </div>
             <div className="flex items-center gap-3 mr-5">
@@ -197,13 +240,11 @@ export function TripRequestDialog({
           </div>
         </div>
 
-
         <div className="overflow-y-auto flex-1 min-h-0">
           <div className="grid lg:grid-cols-2 gap-8 p-8">
             <div className="space-y-8">
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
-         
                   <h3 className="text-lg font-semibold">Travel Dates</h3>
                 </div>
                 <div>
@@ -220,15 +261,19 @@ export function TripRequestDialog({
                       caption_label: "text-sm font-medium",
                       table: "w-full border-collapse space-y-1",
                       head_row: "flex",
-                      head_cell: "text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]",
+                      head_cell:
+                        "text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]",
                       row: "flex w-full mt-2",
                       cell: "text-center text-sm p-0 relative [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
                       day: "h-9 w-9 p-0 font-normal aria-selected:opacity-100 hover:bg-accent hover:text-accent-foreground rounded-md",
-                      day_selected: "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
-                      day_today: "bg-accent text-accent-foreground font-semibold",
+                      day_selected:
+                        "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
+                      day_today:
+                        "bg-accent text-accent-foreground font-semibold",
                       day_outside: "text-muted-foreground opacity-50",
                       day_disabled: "text-muted-foreground opacity-50",
-                      day_range_middle: "aria-selected:bg-accent aria-selected:text-accent-foreground",
+                      day_range_middle:
+                        "aria-selected:bg-accent aria-selected:text-accent-foreground",
                       day_hidden: "invisible",
                     }}
                   />
@@ -239,8 +284,9 @@ export function TripRequestDialog({
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-  
-                      <h3 className="text-lg font-semibold">Selected Services</h3>
+                      <h3 className="text-lg font-semibold">
+                        Selected Services
+                      </h3>
                     </div>
                     <Badge variant="outline">{items.length} items</Badge>
                   </div>
@@ -248,12 +294,17 @@ export function TripRequestDialog({
                     {items.map((item) => {
                       const Icon = getItemIcon(item.type);
                       return (
-                        <div key={item.id} className="group p-4 flex items-center gap-4 hover:bg-accent/50 transition-colors relative pr-12">
+                        <div
+                          key={item.id}
+                          className="group p-4 flex items-center gap-4 hover:bg-accent/50 transition-colors relative pr-12"
+                        >
                           <div className="size-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
                             <Icon className="size-5 text-primary" />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <h4 className="font-medium text-sm">{item.title}</h4>
+                            <h4 className="font-medium text-sm">
+                              {item.title}
+                            </h4>
                             <p className="text-xs text-muted-foreground line-clamp-1">
                               {item.description}
                             </p>
@@ -291,13 +342,68 @@ export function TripRequestDialog({
                     <Label htmlFor="departure" className="text-sm font-medium">
                       Departure City
                     </Label>
-                    <Input
-                      id="departure"
-                      placeholder="e.g., New York, London, Tokyo"
-                      value={contactInfo.departureCity}
-                      onChange={(e) => updateContact({ departureCity: e.target.value })}
-                      className="h-11"
-                    />
+                    <Autocomplete
+                      value={departureQuery}
+                      onValueChange={(value) => {
+                        handleDepartureChange(value);
+                      }}
+                    >
+                      <AutocompleteInput
+                        id="departure"
+                        placeholder="e.g., New York, London, Tokyo"
+                        className="h-11"
+                      />
+                      <AutocompletePortal>
+                        <AutocompletePositioner>
+                          <AutocompletePopup className="w-[var(--anchor-width)]">
+                            <AutocompleteList className="max-h-56 overflow-y-auto">
+                              {isDepartureSearching ? (
+                                <div className="px-3 py-2 text-sm text-muted-foreground">
+                                  Searching...
+                                </div>
+                              ) : null}
+
+                              {!isDepartureSearching
+                                ? departureSuggestions.map((suggestion) => (
+                                    <AutocompleteItem
+                                      key={suggestion.id}
+                                      value={suggestion.name}
+                                    >
+                                      {suggestion.name}
+                                    </AutocompleteItem>
+                                  ))
+                                : null}
+
+                              {!isDepartureSearching &&
+                              departureSuggestions.length === 0 ? (
+                                <div className="px-3 py-2 text-sm text-muted-foreground">
+                                  Type at least 2 letters to search locations.
+                                </div>
+                              ) : null}
+                            </AutocompleteList>
+                          </AutocompletePopup>
+                        </AutocompletePositioner>
+                      </AutocompletePortal>
+                    </Autocomplete>
+                    <div className="flex items-center justify-between gap-3">
+                      <p className="text-xs text-muted-foreground">
+                        Pick from suggestions or use browser geolocation.
+                      </p>
+                      <Button
+                        type="button"
+                        size="sm"
+                        variant="outline"
+                        loading={isDepartureLocating}
+                        onClick={() => void handleUseCurrentDepartureLocation()}
+                      >
+                        Use my location
+                      </Button>
+                    </div>
+                    {departureLocationError ? (
+                      <p className="text-xs text-destructive">
+                        {departureLocationError}
+                      </p>
+                    ) : null}
                   </div>
                   <div className="space-y-2">
                     <Label className="text-sm font-medium">Destination</Label>
@@ -318,11 +424,14 @@ export function TripRequestDialog({
                 </div>
                 <div className="rounded-xl border bg-card divide-y">
                   {[
-                    { key: 'adults', label: 'Adults', sub: 'Age 12+' },
-                    { key: 'children', label: 'Children', sub: 'Age 2-11' },
-                    { key: 'infants', label: 'Infants', sub: 'Under 2' }
+                    { key: "adults", label: "Adults", sub: "Age 12+" },
+                    { key: "children", label: "Children", sub: "Age 2-11" },
+                    { key: "infants", label: "Infants", sub: "Under 2" },
                   ].map(({ key, label, sub }) => (
-                    <div key={key} className="flex items-center justify-between p-4">
+                    <div
+                      key={key}
+                      className="flex items-center justify-between p-4"
+                    >
                       <div>
                         <p className="text-sm font-medium">{label}</p>
                         <p className="text-xs text-muted-foreground">{sub}</p>
@@ -332,8 +441,13 @@ export function TripRequestDialog({
                           variant="outline"
                           size="icon"
                           className="h-8 w-8 rounded-full"
-                          onClick={() => handleGuestChange(key as keyof GuestCount, -1)}
-                          disabled={guests[key as keyof GuestCount] <= (key === 'adults' ? 1 : 0)}
+                          onClick={() =>
+                            handleGuestChange(key as keyof GuestCount, -1)
+                          }
+                          disabled={
+                            guests[key as keyof GuestCount] <=
+                            (key === "adults" ? 1 : 0)
+                          }
                         >
                           <RiSubtractLine className="size-4" />
                         </Button>
@@ -344,7 +458,9 @@ export function TripRequestDialog({
                           variant="outline"
                           size="icon"
                           className="h-8 w-8 rounded-full"
-                          onClick={() => handleGuestChange(key as keyof GuestCount, 1)}
+                          onClick={() =>
+                            handleGuestChange(key as keyof GuestCount, 1)
+                          }
                         >
                           <RiAddLine className="size-4" />
                         </Button>
@@ -359,7 +475,9 @@ export function TripRequestDialog({
               <div
                 className="flex items-center justify-between p-4 rounded-xl border bg-card hover:bg-accent/50 transition-colors cursor-pointer"
                 onClick={() => {
-                  const hasFlight = items.some(i => i.id === "flight-request");
+                  const hasFlight = items.some(
+                    (i) => i.id === "flight-request",
+                  );
                   if (hasFlight) {
                     removeItem("flight-request");
                   } else {
@@ -387,7 +505,7 @@ export function TripRequestDialog({
                   </div>
                 </div>
                 <Checkbox
-                  checked={items.some(i => i.id === "flight-request")}
+                  checked={items.some((i) => i.id === "flight-request")}
                   onCheckedChange={(checked) => {
                     if (checked) {
                       addItem({
@@ -409,7 +527,6 @@ export function TripRequestDialog({
               {/* Contact Information */}
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
-
                   <h3 className="text-lg font-semibold">Contact Information</h3>
                 </div>
                 <div className="space-y-3">
@@ -435,7 +552,9 @@ export function TripRequestDialog({
                         type="email"
                         placeholder="john@example.com"
                         value={contactInfo.email}
-                        onChange={(e) => updateContact({ email: e.target.value })}
+                        onChange={(e) =>
+                          updateContact({ email: e.target.value })
+                        }
                         className="h-11"
                       />
                     </div>
@@ -448,7 +567,9 @@ export function TripRequestDialog({
                         type="tel"
                         placeholder="+1 (555) 000-0000"
                         value={contactInfo.phone}
-                        onChange={(e) => updateContact({ phone: e.target.value })}
+                        onChange={(e) =>
+                          updateContact({ phone: e.target.value })
+                        }
                         className="h-11"
                       />
                     </div>
@@ -456,22 +577,22 @@ export function TripRequestDialog({
                   <div className="space-y-2">
                     <Label htmlFor="requests" className="text-sm font-medium">
                       Special Requests
-                      <span className="text-muted-foreground ml-1">(Optional)</span>
+                      <span className="text-muted-foreground ml-1">
+                        (Optional)
+                      </span>
                     </Label>
                     <Textarea
                       id="requests"
                       placeholder="Any dietary requirements, accessibility needs, or special occasions..."
                       value={contactInfo.specialRequests}
-                      onChange={(e) => updateContact({ specialRequests: e.target.value })}
+                      onChange={(e) =>
+                        updateContact({ specialRequests: e.target.value })
+                      }
                       className="min-h-[80px] resize-none"
                     />
                   </div>
                 </div>
               </div>
-
-      
-
-        
             </div>
           </div>
         </div>

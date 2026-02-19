@@ -1,15 +1,14 @@
 "use client";
 
-import { Navbar } from "@/components/shared";
-import { Footer } from "@/components/landing";
-import { Button } from "@/components/ui/button";
-import { RiCheckboxCircleFill, RiArrowRightLine } from "@remixicon/react";
-import Link from "next/link";
+import { RiArrowRightLine, RiCheckboxCircleFill } from "@remixicon/react";
 import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
 import { useTranslations } from "next-intl";
+import { Suspense, useEffect } from "react";
+import { Footer } from "@/components/landing";
+import { Navbar } from "@/components/shared";
+import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 import { useTripStore } from "@/store/trip-store";
-import { useEffect } from "react";
 
 function ConfirmationContent() {
   const searchParams = useSearchParams();

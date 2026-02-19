@@ -1,24 +1,33 @@
 "use server";
 
-import { type ActionResult, ApiError } from "@/lib/api/types";
 import { api } from "@/lib/api/client";
-import { endpoints } from "./endpoints";
+import type { ActionResult, ApiError } from "@/lib/api/types";
 import {
   type CashTransactionInput,
-  type PaymentResponse,
   cashTransactionInputSchema,
+  type PaymentResponse,
   paymentResponseSchema,
 } from "@/lib/schema/payment-schema";
+import {
+  buildValidationErrorMessage,
+  normalizeFieldErrors,
+} from "@/lib/validation/error-message";
+import { endpoints } from "./endpoints";
 
 export async function cashIn(
   input: CashTransactionInput,
 ): Promise<ActionResult<PaymentResponse>> {
   const validation = cashTransactionInputSchema.safeParse(input);
   if (!validation.success) {
+    const flattened = validation.error.flatten();
+    const fieldErrors = normalizeFieldErrors(flattened.fieldErrors);
     return {
       success: false,
-      error: "Validation failed",
-      fieldErrors: validation.error.flatten().fieldErrors,
+      error: buildValidationErrorMessage({
+        fieldErrors,
+        formErrors: flattened.formErrors,
+      }),
+      fieldErrors,
     };
   }
 
@@ -40,10 +49,15 @@ export async function cashOut(
 ): Promise<ActionResult<PaymentResponse>> {
   const validation = cashTransactionInputSchema.safeParse(input);
   if (!validation.success) {
+    const flattened = validation.error.flatten();
+    const fieldErrors = normalizeFieldErrors(flattened.fieldErrors);
     return {
       success: false,
-      error: "Validation failed",
-      fieldErrors: validation.error.flatten().fieldErrors,
+      error: buildValidationErrorMessage({
+        fieldErrors,
+        formErrors: flattened.formErrors,
+      }),
+      fieldErrors,
     };
   }
 

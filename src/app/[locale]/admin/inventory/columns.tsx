@@ -1,20 +1,18 @@
 "use client";
 
-import { useState } from "react";
-import type { ColumnDef, Row } from "@tanstack/react-table";
 import {
-  RiEditLine,
   RiDeleteBinLine,
+  RiEditLine,
   RiMore2Line,
   RiSettings3Line,
 } from "@remixicon/react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import type { ColumnDef, Row } from "@tanstack/react-table";
+import { Link } from "@/i18n/navigation";
+import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
 import { toast } from "sonner";
 import { deleteService } from "@/actions/services";
-import type { ServiceResponse } from "@/lib/schema/service-schema";
-import { useTranslations } from "next-intl";
-import Link from "next/link";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -25,6 +23,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -34,8 +34,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import type { ServiceResponse } from "@/lib/schema/service-schema";
 
 const ActionsCell = ({ row }: { row: Row<ServiceResponse> }) => {
+  const router = useRouter();
   const [isDeleting, setIsDeleting] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
@@ -47,6 +49,7 @@ const ActionsCell = ({ row }: { row: Row<ServiceResponse> }) => {
       if (result.success) {
         toast.success("Service deleted");
         setIsDeleteDialogOpen(false);
+        router.refresh();
       } else {
         toast.error(result.error || "Failed to delete");
       }

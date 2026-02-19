@@ -1,6 +1,7 @@
 export const siteConfig = {
   name: "Vizit Africa",
-  description: "Experience the heart of Africa with our comprehensive travel services.", // added description
+  description:
+    "Experience the heart of Africa with our comprehensive travel services.", // added description
   url: "https://vizit.africa", // assumed url
   ogImage: "https://vizit.africa/og.jpg",
   links: {
@@ -53,13 +54,13 @@ export const HERO_SLIDES = [
 ] as const;
 
 export const PARTNER_LOGOS = [
-  { name: "RwandAir", logo: "/images/partners/rwandair.svg" },
-  { name: "Kenya Airways", logo: "/images/partners/kenya-airways.svg" },
-  { name: "Ethiopian Airlines", logo: "/images/partners/ethiopian.svg" },
-  { name: "Qatar Airways", logo: "/images/partners/qatar.svg" },
-  { name: "Serena Hotels", logo: "/images/partners/serena.svg" },
-  { name: "Marriott", logo: "/images/partners/marriott.svg" },
-  { name: "Radisson", logo: "/images/partners/radisson.svg" },
+  { name: "RwandAir", logo: "/logo.svg" },
+  { name: "Kenya Airways", logo: "/logo.svg" },
+  { name: "Ethiopian Airlines", logo: "/logo.svg" },
+  { name: "Qatar Airways", logo: "/logo.svg" },
+  { name: "Serena Hotels", logo: "/logo.svg" },
+  { name: "Marriott", logo: "/logo.svg" },
+  { name: "Radisson", logo: "/logo.svg" },
 ];
 
 export const STATS = [
@@ -133,49 +134,49 @@ export const PROCESS_STEPS = [
 export const GALLERY_IMAGES = [
   {
     id: "g-1",
-    src: "/images/gallery/gorilla.jpg",
+    src: "/images/wildlife-silverback-gorilla.jpg",
     alt: "Mountain Gorilla",
     category: "experiences",
     caption: "Gorilla Trekking in Volcanoes National Park",
   },
   {
     id: "g-2",
-    src: "/images/gallery/kigali-night.jpg",
+    src: "/images/kigali-convention-center.jpg",
     alt: "Kigali Skyline",
     category: "experiences",
     caption: "Kigali City Convention Center at Night",
   },
   {
     id: "g-3",
-    src: "/images/gallery/akagera-safari.jpg",
+    src: "/images/buffaloes.jpg",
     alt: "Safari Game Drive",
     category: "experiences",
     caption: "Game Drive in Akagera National Park",
   },
   {
     id: "g-4",
-    src: "/images/gallery/hotel-pool.jpg",
+    src: "/images/hotel.jpg",
     alt: "Hotel Pool",
     category: "hotels",
     caption: "Infinity Pool at Lake Kivu",
   },
   {
     id: "g-5",
-    src: "/images/gallery/land-cruiser.jpg",
+    src: "/images/tourism-guide-vehicle-car.jpg",
     alt: "Safari Vehicle",
     category: "transport",
     caption: "Our Fleet of 4x4 Safari Vehicles",
   },
   {
     id: "g-6",
-    src: "/images/gallery/coffee-tour.jpg",
+    src: "/images/coffee.jpg",
     alt: "Coffee Plantation",
     category: "experiences",
     caption: "Rwandan Coffee Experience Tour",
   },
 ];
 
-// Re-export specific values for backward compatibility if needed, 
+// Re-export specific values for backward compatibility if needed,
 export const { socials, contact: contacts } = siteConfig;
 
 export const DRIVER_SURCHARGE = 35;

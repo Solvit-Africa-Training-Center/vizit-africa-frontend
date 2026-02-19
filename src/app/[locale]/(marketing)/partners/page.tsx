@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   RiArrowRightLine,
   RiCheckboxCircleLine,
@@ -6,8 +5,9 @@ import {
   RiLineChartLine,
   RiTeamLine,
 } from "@remixicon/react";
-import Link from "next/link";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 
 export default function PartnersPage() {
   return (
@@ -16,7 +16,7 @@ export default function PartnersPage() {
       <section className="relative h-[80vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/gallery/IMG_9723.JPG" // Placeholder, ideally specific vendor image
+            src="/images/tourism-guide-vehicle-car.jpg"
             alt="Partner with Vizit Africa"
             fill
             className="object-cover opacity-30"
@@ -129,7 +129,7 @@ export default function PartnersPage() {
             </div>
             <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-2xl">
               <Image
-                src="/images/gallery/IMG_9788.JPG"
+                src="/images/hotel.jpg"
                 alt="Vendor Dashboard Preview"
                 fill
                 className="object-cover"
@@ -141,7 +141,7 @@ export default function PartnersPage() {
 
       {/* CTA Section */}
       <section className="py-24 bg-primary text-primary-foreground relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/noise.png')] opacity-10 mix-blend-overlay"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary to-primary/80" />
         <div className="container relative z-10 px-4 md:px-6 text-center">
           <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">
             Ready to Scale Your Business?

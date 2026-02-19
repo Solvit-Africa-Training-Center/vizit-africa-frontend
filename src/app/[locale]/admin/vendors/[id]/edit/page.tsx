@@ -1,9 +1,8 @@
-import { getVendorById } from "@/lib/data-fetching";
-import { VendorForm } from "@/components/forms/admin/vendor-form";
-import { notFound, redirect } from "next/navigation";
-import { getTranslations } from "next-intl/server";
 import { RiArrowLeftLine, RiBuilding4Line } from "@remixicon/react";
-import Link from "next/link";
+import { notFound, redirect } from "next/navigation";
+import { VendorForm } from "@/components/forms/admin/vendor-form";
+import { Link } from "@/i18n/navigation";
+import { getVendorById } from "@/lib/data-fetching";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -12,7 +11,6 @@ interface PageProps {
 export default async function EditVendorPage({ params }: PageProps) {
   const { id } = await params;
   const vendor = await getVendorById(id);
-  const t = await getTranslations("Admin.vendors");
 
   if (!vendor) {
     notFound();
@@ -22,11 +20,11 @@ export default async function EditVendorPage({ params }: PageProps) {
     <div className="max-w-3xl mx-auto py-8 px-4">
       <div className="mb-6">
         <Link
-          href="/admin/inventory"
+          href="/admin/vendors"
           className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-2"
         >
           <RiArrowLeftLine className="size-4" />
-          Back to Inventory
+          Back to Vendors
         </Link>
         <div className="flex items-center gap-3">
           <div className="p-2 bg-primary/10 text-primary rounded-lg">
@@ -46,7 +44,7 @@ export default async function EditVendorPage({ params }: PageProps) {
           initialData={vendor}
           onSuccess={async () => {
             "use server";
-            redirect("/admin/inventory");
+            redirect("/admin/vendors");
           }}
         />
       </div>

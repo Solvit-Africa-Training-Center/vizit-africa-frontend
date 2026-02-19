@@ -1,29 +1,33 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { type ActionResult, ApiError } from "@/lib/api/types";
 import { api } from "@/lib/api/client";
-import { endpoints } from "./endpoints";
+import type { ActionResult, ApiError } from "@/lib/api/types";
 import {
   type LoginInput,
   type LoginResponse,
-  type RegisterInput,
-  type RegisterResponse,
-  type VerifyEmailInput,
-  type VerifyEmailResponse,
-  type User,
-  type SetPasswordInput,
-  type SetPasswordResponse,
   loginInputSchema,
   loginResponseSchema,
+  type RegisterInput,
+  type RegisterResponse,
   registerInputSchema,
   registerResponseSchema,
-  verifyEmailInputSchema,
-  verifyEmailResponseSchema,
+  type SetPasswordInput,
+  type SetPasswordResponse,
   setPasswordInputSchema,
   setPasswordResponseSchema,
+  type User,
   userSchema,
+  type VerifyEmailInput,
+  type VerifyEmailResponse,
+  verifyEmailInputSchema,
+  verifyEmailResponseSchema,
 } from "@/lib/schema/auth-schema";
+import {
+  buildValidationErrorMessage,
+  normalizeFieldErrors,
+} from "@/lib/validation/error-message";
+import { endpoints } from "./endpoints";
 
 const COOKIE_OPTIONS = {
   httpOnly: true,
@@ -37,10 +41,15 @@ export async function login(
 ): Promise<ActionResult<LoginResponse>> {
   const validation = loginInputSchema.safeParse(input);
   if (!validation.success) {
+    const flattened = validation.error.flatten();
+    const fieldErrors = normalizeFieldErrors(flattened.fieldErrors);
     return {
       success: false,
-      error: "Validation failed",
-      fieldErrors: validation.error.flatten().fieldErrors,
+      error: buildValidationErrorMessage({
+        fieldErrors,
+        formErrors: flattened.formErrors,
+      }),
+      fieldErrors,
     };
   }
 
@@ -74,10 +83,15 @@ export async function register(
 ): Promise<ActionResult<RegisterResponse>> {
   const validation = registerInputSchema.safeParse(input);
   if (!validation.success) {
+    const flattened = validation.error.flatten();
+    const fieldErrors = normalizeFieldErrors(flattened.fieldErrors);
     return {
       success: false,
-      error: "Validation failed",
-      fieldErrors: validation.error.flatten().fieldErrors,
+      error: buildValidationErrorMessage({
+        fieldErrors,
+        formErrors: flattened.formErrors,
+      }),
+      fieldErrors,
     };
   }
 
@@ -107,10 +121,15 @@ export async function verifyEmail(
 ): Promise<ActionResult<VerifyEmailResponse>> {
   const validation = verifyEmailInputSchema.safeParse(input);
   if (!validation.success) {
+    const flattened = validation.error.flatten();
+    const fieldErrors = normalizeFieldErrors(flattened.fieldErrors);
     return {
       success: false,
-      error: "Validation failed",
-      fieldErrors: validation.error.flatten().fieldErrors,
+      error: buildValidationErrorMessage({
+        fieldErrors,
+        formErrors: flattened.formErrors,
+      }),
+      fieldErrors,
     };
   }
 
@@ -141,7 +160,7 @@ export async function getCurrentUser(): Promise<ActionResult<User>> {
     if (err.status === 401) {
       try {
         await logout();
-      } catch { }
+      } catch {}
     }
     return {
       success: false,
@@ -161,10 +180,15 @@ export async function setPassword(
 ): Promise<ActionResult<SetPasswordResponse>> {
   const validation = setPasswordInputSchema.safeParse(input);
   if (!validation.success) {
+    const flattened = validation.error.flatten();
+    const fieldErrors = normalizeFieldErrors(flattened.fieldErrors);
     return {
       success: false,
-      error: "Validation failed",
-      fieldErrors: validation.error.flatten().fieldErrors,
+      error: buildValidationErrorMessage({
+        fieldErrors,
+        formErrors: flattened.formErrors,
+      }),
+      fieldErrors,
     };
   }
 

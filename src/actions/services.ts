@@ -1,37 +1,46 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { type ActionResult, ApiError } from "@/lib/api/types";
 import { api } from "@/lib/api/client";
-import { endpoints } from "./endpoints";
+import type { ActionResult, ApiError } from "@/lib/api/types";
 import {
-  type CreateServiceInput,
-  type ServiceResponse,
   type AddServiceMediaInput,
-  type ServiceMediaResponse,
-  type CreateAvailabilityInput,
   type AvailabilityResponse,
-  type CreateDiscountInput,
-  type DiscountResponse,
-  createServiceInputSchema,
-  serviceResponseSchema,
   addServiceMediaInputSchema,
-  serviceMediaResponseSchema,
-  createAvailabilityInputSchema,
   availabilityResponseSchema,
+  type CreateAvailabilityInput,
+  type CreateDiscountInput,
+  type CreateServiceInput,
+  createAvailabilityInputSchema,
   createDiscountInputSchema,
+  createServiceInputSchema,
+  type DiscountResponse,
   discountResponseSchema,
+  type ServiceMediaResponse,
+  type ServiceResponse,
+  serviceMediaResponseSchema,
+  serviceResponseSchema,
 } from "@/lib/schema/service-schema";
+import {
+  buildValidationErrorMessage,
+  normalizeFieldErrors,
+} from "@/lib/validation/error-message";
+import { endpoints } from "./endpoints";
 
 export async function createService(
   input: CreateServiceInput,
 ): Promise<ActionResult<ServiceResponse>> {
   const validation = createServiceInputSchema.safeParse(input);
   if (!validation.success) {
+    const flattened = validation.error.flatten();
+    const fieldErrors = normalizeFieldErrors(flattened.fieldErrors);
     return {
       success: false,
-      error: "Validation failed",
-      fieldErrors: validation.error.flatten().fieldErrors,
+      error: buildValidationErrorMessage({
+        fieldErrors,
+        formErrors: flattened.formErrors,
+      }),
+      fieldErrors,
     };
   }
 
@@ -55,10 +64,15 @@ export async function updateService(
 ): Promise<ActionResult<ServiceResponse>> {
   const validation = createServiceInputSchema.safeParse(input);
   if (!validation.success) {
+    const flattened = validation.error.flatten();
+    const fieldErrors = normalizeFieldErrors(flattened.fieldErrors);
     return {
       success: false,
-      error: "Validation failed",
-      fieldErrors: validation.error.flatten().fieldErrors,
+      error: buildValidationErrorMessage({
+        fieldErrors,
+        formErrors: flattened.formErrors,
+      }),
+      fieldErrors,
     };
   }
 
@@ -82,10 +96,15 @@ export async function addServiceMedia(
 ): Promise<ActionResult<ServiceMediaResponse>> {
   const validation = addServiceMediaInputSchema.safeParse(input);
   if (!validation.success) {
+    const flattened = validation.error.flatten();
+    const fieldErrors = normalizeFieldErrors(flattened.fieldErrors);
     return {
       success: false,
-      error: "Validation failed",
-      fieldErrors: validation.error.flatten().fieldErrors,
+      error: buildValidationErrorMessage({
+        fieldErrors,
+        formErrors: flattened.formErrors,
+      }),
+      fieldErrors,
     };
   }
 
@@ -107,10 +126,15 @@ export async function createAvailability(
 ): Promise<ActionResult<AvailabilityResponse>> {
   const validation = createAvailabilityInputSchema.safeParse(input);
   if (!validation.success) {
+    const flattened = validation.error.flatten();
+    const fieldErrors = normalizeFieldErrors(flattened.fieldErrors);
     return {
       success: false,
-      error: "Validation failed",
-      fieldErrors: validation.error.flatten().fieldErrors,
+      error: buildValidationErrorMessage({
+        fieldErrors,
+        formErrors: flattened.formErrors,
+      }),
+      fieldErrors,
     };
   }
 
@@ -132,10 +156,15 @@ export async function createDiscount(
 ): Promise<ActionResult<DiscountResponse>> {
   const validation = createDiscountInputSchema.safeParse(input);
   if (!validation.success) {
+    const flattened = validation.error.flatten();
+    const fieldErrors = normalizeFieldErrors(flattened.fieldErrors);
     return {
       success: false,
-      error: "Validation failed",
-      fieldErrors: validation.error.flatten().fieldErrors,
+      error: buildValidationErrorMessage({
+        fieldErrors,
+        formErrors: flattened.formErrors,
+      }),
+      fieldErrors,
     };
   }
 

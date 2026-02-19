@@ -1,49 +1,43 @@
 "use client";
 
-import { Navbar } from "@/components/shared";
-import { Footer } from "@/components/landing";
-import { Button } from "@/components/ui/button";
 import {
-  RiMapPinLine,
-  RiCalendarLine,
-  RiSettings3Line,
   RiBookmarkLine,
-  RiSuitcaseLine,
-  RiLogoutBoxRLine,
-  RiPlaneLine,
+  RiCalendarLine,
   RiInformationLine,
+  RiLogoutBoxRLine,
+  RiMapPinLine,
+  RiPlaneLine,
+  RiSettings3Line,
+  RiSuitcaseLine,
 } from "@remixicon/react";
-import Image from "next/image";
-import Link from "next/link";
-import { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { cn } from "@/lib/utils";
-import { useTranslations } from "next-intl";
-import { Label } from "@/components/ui/label";
-import { useUser } from "@/components/user-provider";
-import {
-  Empty,
-  EmptyDescription,
-  EmptyMedia,
-  EmptyTitle,
-} from "@/components/ui/empty";
-import { Badge } from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
+import { differenceInDays, isPast, parseISO } from "date-fns";
+import { AnimatePresence, motion } from "motion/react";
+import Image from "next/image";
+import { useTranslations } from "next-intl";
+import { useMemo, useState } from "react";
+import { toast } from "sonner";
 import {
-  getUserBookings,
   acceptQuoteForBooking,
   cancelBooking,
+  getUserBookings,
 } from "@/actions/bookings";
-import type { Booking } from "@/lib/schema/booking-schema";
-import { differenceInDays, isPast, parseISO } from "date-fns";
-import { toast } from "sonner";
+import { Footer } from "@/components/landing";
+import { CompletedRequestsSchedule } from "@/components/schedule";
+import { Navbar } from "@/components/shared";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
-import { getSavedItems } from "@/actions/accounts";
-import { SaveButton } from "@/components/shared/save-button";
+import { useUser } from "@/components/user-provider";
+import { Link } from "@/i18n/navigation";
+import type { Booking } from "@/lib/schema/booking-schema";
+import { cn } from "@/lib/utils";
 
 type Tab = "overview" | "trips" | "saved" | "settings";
+type Translator = (key: string) => string;
 
-function SavedItemsTab({ t }: { t: any }) {
+function SavedItemsTab({ t }: { t: Translator }) {
   return (
     <div className="text-center py-20 border border-dashed rounded-sm">
       <RiBookmarkLine className="size-8 mx-auto mb-2 text-muted-foreground" />
@@ -72,14 +66,16 @@ export default function ProfilePage() {
     if (!bookingsData) return { trips: 0, days: 0 };
 
     // Only count confirmed trips
-    const confirmedTrips = (bookingsData || []).filter((b: Booking) => b.status === "confirmed");
+    const confirmedTrips = (bookingsData || []).filter(
+      (b: Booking) => b.status === "confirmed",
+    );
     const trips = confirmedTrips.length;
 
     let days = 0;
     confirmedTrips.forEach((b: Booking) => {
       // Only count days for ended or in-progress trips (start date <= now)
       // Check if trip has started
-      const hasStarted = b.items.some((item: any) => {
+      const hasStarted = b.items.some((item) => {
         if (!item.start_date) return false;
         try {
           return isPast(parseISO(item.start_date));
@@ -89,7 +85,7 @@ export default function ProfilePage() {
       });
 
       if (hasStarted) {
-        b.items.forEach((item: any) => {
+        b.items.forEach((item) => {
           if (!item.start_date || !item.end_date) return;
           try {
             days +=
@@ -139,6 +135,11 @@ export default function ProfilePage() {
         b.status === "quoted" ||
         b.quote?.status === "quoted",
     );
+  }, [bookingsData]);
+
+  const completedRequests = useMemo(() => {
+    if (!bookingsData) return [];
+    return bookingsData.filter((b: Booking) => b.status === "completed");
   }, [bookingsData]);
 
   const tabs = [
@@ -253,7 +254,7 @@ export default function ProfilePage() {
                               : "Request Processing"
                             : "No Trips Planned"}
                         </h2>
-                        {nextTrip && nextTrip.items[0]?.start_date && (
+                        {nextTrip?.items[0]?.start_date && (
                           <p className="text-lg font-light opacity-90 flex items-center gap-2">
                             <RiCalendarLine className="size-5" />
                             {new Date(
@@ -341,9 +342,7 @@ export default function ProfilePage() {
                                   <span className="block text-xs uppercase opacity-70">
                                     Created
                                   </span>
-                                  {new Date(
-                                    req.createdAt,
-                                  ).toLocaleDateString()}
+                                  {new Date(req.createdAt).toLocaleDateString()}
                                 </div>
                                 <div>
                                   <span className="block text-xs uppercase opacity-70">
@@ -518,51 +517,17 @@ export default function ProfilePage() {
                       {t("trips.planNew")}
                     </Button>
                   </div>
-                                      <div className="border-y border-border divide-y divide-border">
-                                      {bookingsData
-                                        ?.filter((b: Booking) => b.status === "confirmed")
-                                        .map((trip: Booking) => (
-                                          <div
-                                            key={trip.id}
-                                            className="py-8 grid md:grid-cols-4 gap-6 items-center group"
-                                          >
-                                            <div className="md:col-span-2">
-                                              <h3 className="font-display text-2xl font-medium mb-2 group-hover:text-primary transition-colors">
-                                                {trip.items[0]?.service || "Safari Experience"}
-                                              </h3>
-                                              <p className="text-muted-foreground">
-                                                {trip.items[0]?.start_date
-                                                  ? new Date(
-                                                      trip.items[0].start_date,
-                                                    ).toLocaleDateString()
-                                                  : ""}{" "}
-                                                -{" "}
-                                                {trip.items[0]?.end_date
-                                                  ? new Date(
-                                                      trip.items[0].end_date,
-                                                    ).toLocaleDateString()
-                                                  : ""}
-                                              </p>
-                                            </div>
-                                            <Badge variant="success-outline">Confirmed</Badge>
-                                            <div className="text-right">
-                                              <Link href={`/profile/bookings/${trip.id}`}>
-                                                <Button variant="outline">
-                                                  {t("trips.viewDetails")}
-                                                </Button>
-                                              </Link>
-                                            </div>
-                                          </div>
-                                        ))}
-                                      {(!bookingsData ||
-                                        bookingsData.filter((b: Booking) => b.status === "confirmed")
-                                          .length === 0) && (                      <div className="py-20 text-center">
-                        <p className="text-muted-foreground">
-                          You don't have any confirmed trips yet.
-                        </p>
-                      </div>
-                    )}
-                  </div>
+
+                  {isLoading ? (
+                    <div className="py-20 text-center border border-dashed rounded-sm">
+                      <p className="text-muted-foreground">Loading trips...</p>
+                    </div>
+                  ) : (
+                    <CompletedRequestsSchedule
+                      bookings={completedRequests}
+                      emptyMessage="You don't have completed requests yet."
+                    />
+                  )}
                 </div>
               )}
 

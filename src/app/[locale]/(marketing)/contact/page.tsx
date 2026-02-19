@@ -10,7 +10,6 @@ import {
 } from "@remixicon/react";
 import { motion } from "motion/react";
 import Image from "next/image";
-import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -154,7 +153,9 @@ export default function ContactPage() {
   );
 }
 
-function ContactForm({ t, tCommon }: { t: any; tCommon: any }) {
+type Translate = (key: string) => string;
+
+function ContactForm({ t, tCommon }: { t: Translate; tCommon: Translate }) {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -184,7 +185,9 @@ function ContactForm({ t, tCommon }: { t: any; tCommon: any }) {
         toast.success("Message sent successfully!");
         (e.target as HTMLFormElement).reset();
       } else {
-        toast.error("Failed to send message. Please try again.");
+        toast.error(
+          result.error || "Failed to send message. Please try again.",
+        );
       }
     } catch {
       toast.error("An error occurred");
@@ -314,10 +317,15 @@ function ContactItem({
   );
 
   if (href) {
+    const isExternal = href.startsWith("http");
     return (
-      <Link href={href}>
+      <a
+        href={href}
+        target={isExternal ? "_blank" : undefined}
+        rel="noreferrer"
+      >
         <Content />
-      </Link>
+      </a>
     );
   }
 
@@ -351,12 +359,18 @@ function MobileContactItem({
     </div>
   );
 
-  if (href)
+  if (href) {
+    const isExternal = href.startsWith("http");
     return (
-      <Link href={href}>
+      <a
+        href={href}
+        target={isExternal ? "_blank" : undefined}
+        rel="noreferrer"
+      >
         <Content />
-      </Link>
+      </a>
     );
+  }
   return <Content />;
 }
 

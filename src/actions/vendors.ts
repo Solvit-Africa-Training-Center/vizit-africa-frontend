@@ -1,25 +1,34 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { type ActionResult, ApiError } from "@/lib/api/types";
 import { api } from "@/lib/api/client";
-import { endpoints } from "./endpoints";
+import type { ActionResult, ApiError } from "@/lib/api/types";
 import {
   type CreateVendorInput,
-  type VendorResponse,
   createVendorInputSchema,
+  type VendorResponse,
   vendorResponseSchema,
 } from "@/lib/schema/vendor-schema";
+import {
+  buildValidationErrorMessage,
+  normalizeFieldErrors,
+} from "@/lib/validation/error-message";
+import { endpoints } from "./endpoints";
 
 export async function createVendorProfile(
   input: CreateVendorInput,
 ): Promise<ActionResult<VendorResponse>> {
   const validation = createVendorInputSchema.safeParse(input);
   if (!validation.success) {
+    const flattened = validation.error.flatten();
+    const fieldErrors = normalizeFieldErrors(flattened.fieldErrors);
     return {
       success: false,
-      error: "Validation failed",
-      fieldErrors: validation.error.flatten().fieldErrors,
+      error: buildValidationErrorMessage({
+        fieldErrors,
+        formErrors: flattened.formErrors,
+      }),
+      fieldErrors,
     };
   }
 
@@ -42,10 +51,15 @@ export async function updateVendor(
 ): Promise<ActionResult<VendorResponse>> {
   const validation = createVendorInputSchema.safeParse(input);
   if (!validation.success) {
+    const flattened = validation.error.flatten();
+    const fieldErrors = normalizeFieldErrors(flattened.fieldErrors);
     return {
       success: false,
-      error: "Validation failed",
-      fieldErrors: validation.error.flatten().fieldErrors,
+      error: buildValidationErrorMessage({
+        fieldErrors,
+        formErrors: flattened.formErrors,
+      }),
+      fieldErrors,
     };
   }
 

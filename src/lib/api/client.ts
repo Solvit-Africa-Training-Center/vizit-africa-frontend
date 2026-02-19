@@ -1,7 +1,9 @@
 import { cookies } from "next/headers";
 import { type ZodSchema, z } from "zod";
-import { ApiError } from "./types";
 import { endpoints } from "@/actions/endpoints";
+import { buildValidationErrorMessage } from "@/lib/validation/error-message";
+import type { FieldErrors } from "./types";
+import { ApiError } from "./types";
 
 type FetchOptions<T = any> = RequestInit & {
   schema?: ZodSchema<T>;
@@ -12,6 +14,55 @@ type FetchOptions<T = any> = RequestInit & {
 const BASE_URL =
   process.env.NEXT_PUBLIC_API_URL ||
   "https://linguistic-murial-adventist-university-of-central-afri-7975ce32.koyeb.app/api";
+const IS_DEV = process.env.NODE_ENV !== "production";
+const GENERIC_VALIDATION_MESSAGES = new Set([
+  "validation failed",
+  "invalid input",
+  "invalid data",
+  "bad request",
+]);
+
+function isGenericValidationMessage(message: string): boolean {
+  const normalized = message.trim().toLowerCase().replace(/[.!]+$/, "");
+  return GENERIC_VALIDATION_MESSAGES.has(normalized);
+}
+
+function normalizeApiFieldErrors(value: unknown): FieldErrors | undefined {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return undefined;
+  }
+
+  const normalized: FieldErrors = {};
+  for (const [key, entry] of Object.entries(value as Record<string, unknown>)) {
+    if (Array.isArray(entry)) {
+      const messages = entry.filter(
+        (item): item is string =>
+          typeof item === "string" && Boolean(item.trim()),
+      );
+      if (messages.length > 0) {
+        normalized[key] = messages;
+      }
+      continue;
+    }
+
+    if (typeof entry === "string" && entry.trim()) {
+      normalized[key] = [entry];
+      continue;
+    }
+
+    if (entry && typeof entry === "object" && !Array.isArray(entry)) {
+      const nested = normalizeApiFieldErrors(entry);
+      if (nested) {
+        const nestedMessages = Object.values(nested).flat();
+        if (nestedMessages.length > 0) {
+          normalized[key] = nestedMessages;
+        }
+      }
+    }
+  }
+
+  return Object.keys(normalized).length > 0 ? normalized : undefined;
+}
 
 async function getAuthToken() {
   const cookieStore = await cookies();
@@ -51,7 +102,7 @@ async function refreshAccessToken() {
     }
 
     return data.access;
-  } catch (error) {
+  } catch {
     // Clear cookies on failure
     cookieStore.delete("accessToken");
     cookieStore.delete("refreshToken");
@@ -65,23 +116,29 @@ async function handleResponse<T>(
 ): Promise<T> {
   if (!response.ok) {
     let errorMessage = "An error occurred";
-    let fieldErrors = undefined;
+    let fieldErrors: FieldErrors | undefined;
 
     try {
       const errorData = await response.json();
-      console.log(
-        "[Client] Raw Error Response:",
-        JSON.stringify(errorData, null, 2),
+      if (IS_DEV) {
+        console.log(
+          "[Client] Raw Error Response:",
+          JSON.stringify(errorData, null, 2),
+        );
+      }
+
+      const extractedFieldErrors = normalizeApiFieldErrors(
+        errorData.errors || errorData.fieldErrors || errorData,
       );
 
       // Handle standardized backend error format: { status: "error", message: "...", errors: {...} }
       if (errorData.status === "error") {
-        console.log("[Client] Detected standardized error format");
-        errorMessage = errorData.message || errorMessage;
-        fieldErrors = errorData.errors || errorData.fieldErrors;
+        errorMessage = errorData.message || errorData.detail || errorMessage;
+        fieldErrors = extractedFieldErrors;
       } else {
         // Fallback for legacy/other structures
         errorMessage = errorData.detail || errorData.message || errorMessage;
+        fieldErrors = extractedFieldErrors;
 
         // If the error data itself is an object of field errors (common in DRF)
         if (
@@ -90,21 +147,33 @@ async function handleResponse<T>(
           !errorData.message &&
           !errorData.status
         ) {
-          console.log("[Client] Detected DRF-style field errors");
-          fieldErrors = errorData;
-          errorMessage = "Validation error";
+          errorMessage = buildValidationErrorMessage({
+            fieldErrors,
+            fallback: "Please review the form fields.",
+          });
         }
       }
-      console.log("[Client] Extracted Field Errors:", fieldErrors);
+
+      if (
+        fieldErrors &&
+        (!errorMessage.trim() || isGenericValidationMessage(errorMessage))
+      ) {
+        errorMessage = buildValidationErrorMessage({
+          fieldErrors,
+          fallback: "Please review the form fields.",
+        });
+      }
+
+      if (IS_DEV && fieldErrors) {
+        console.log("[Client] Extracted Field Errors:", fieldErrors);
+      }
     } catch (e) {
-      console.error("Error parsing error response:", e);
+      if (IS_DEV) {
+        console.error("Error parsing error response:", e);
+      }
     }
 
-    throw new ApiError(
-      errorMessage,
-      response.status,
-      fieldErrors as Record<string, string[]>,
-    );
+    throw new ApiError(errorMessage, response.status, fieldErrors);
   }
 
   if (response.status === 204) {

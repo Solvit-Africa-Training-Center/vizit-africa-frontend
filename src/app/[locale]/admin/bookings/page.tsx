@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { getRequests } from "@/lib/data-fetching";
 import {
   RiCheckboxCircleLine,

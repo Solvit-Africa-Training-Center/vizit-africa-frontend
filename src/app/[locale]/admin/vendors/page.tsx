@@ -1,9 +1,8 @@
-import { getVendors } from "@/actions/vendors";
+import { getVendors } from "@/lib/data-fetching";
 import AdminVendorsClient from "./admin-vendors-client";
 
 export default async function AdminVendorsPage() {
-  const result = await getVendors();
-  const vendors = result.success ? result.data : [];
+  const vendors = await getVendors();
 
   return <AdminVendorsClient vendors={vendors} />;
 }

@@ -1,14 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import {
-  DataTable,
-  type DataTableState,
-} from "@/components/ui/data-table";
 import { RiStoreLine, RiTimeLine } from "@remixicon/react";
-import { vendorColumns, pendingVendorColumns } from "./columns";
+import { useState } from "react";
+import { DataTable, type DataTableState } from "@/components/ui/data-table";
+import { createDefaultDataTableState } from "@/components/ui/data-table-state";
 import type { VendorResponse } from "@/lib/schema/vendor-schema";
-import { useTranslations } from "next-intl";
+import { pendingVendorColumns, vendorColumns } from "./columns";
 
 interface AdminVendorsClientProps {
   vendors: VendorResponse[];
@@ -18,18 +15,23 @@ export default function AdminVendorsClient({
   vendors,
 }: AdminVendorsClientProps) {
   const [activeTab, setActiveTab] = useState<"active" | "pending">("active");
-  const t = useTranslations("Admin.vendors");
+  const [activeTableState, setActiveTableState] = useState(
+    createDefaultDataTableState(),
+  );
+  const [pendingTableState, setPendingTableState] = useState(
+    createDefaultDataTableState(),
+  );
 
-  const [tableState, setTableState] = useState<DataTableState>({
-    sorting: [],
-    columnFilters: [],
-    columnVisibility: {},
-    rowSelection: {},
-    pagination: { pageIndex: 0, pageSize: 10 },
-  });
+  const tableState =
+    activeTab === "active" ? activeTableState : pendingTableState;
 
   const handleStateChange = (updates: Partial<DataTableState>) => {
-    setTableState((prev) => ({ ...prev, ...updates }));
+    if (activeTab === "active") {
+      setActiveTableState((prev) => ({ ...prev, ...updates }));
+      return;
+    }
+
+    setPendingTableState((prev) => ({ ...prev, ...updates }));
   };
 
   const activeVendors = vendors.filter((v) => v.is_approved);
@@ -42,9 +44,10 @@ export default function AdminVendorsClient({
       options: [
         { label: "Hotel", value: "hotel" },
         { label: "Car Rental", value: "car_rental" },
-        { label: "Tour Operator", value: "tour_operator" },
-        { label: "Activity Provider", value: "activity_provider" },
         { label: "Guide", value: "guide" },
+        { label: "Experience", value: "experience" },
+        { label: "Transport", value: "transport" },
+        { label: "Other", value: "other" },
       ],
     },
   ];

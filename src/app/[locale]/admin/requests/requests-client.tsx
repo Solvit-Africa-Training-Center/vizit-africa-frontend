@@ -1,46 +1,27 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
 import { RiDashboardLine, RiFileListLine } from "@remixicon/react";
-import {
-  DataTable,
-  type DataTableState,
-} from "@/components/ui/data-table";
-import { columns } from "./columns";
-import { getRequests } from "@/lib/data-fetching";
+import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
-import { useQuery } from "@tanstack/react-query";
-import { Spinner } from "@/components/ui/spinner";
+import { useState } from "react";
+import { DataTable, type DataTableState } from "@/components/ui/data-table";
+import { createDefaultDataTableState } from "@/components/ui/data-table-state";
 import type { Booking } from "@/lib/schema/booking-schema";
+import { columns } from "./columns";
 
 interface RequestsClientProps {
-  initialRequests?: Booking[];
+  requests: Booking[];
 }
 
-export default function RequestsClient({
-  initialRequests,
-}: RequestsClientProps) {
+export default function RequestsClient({ requests }: RequestsClientProps) {
   const t = useTranslations("Admin.requests");
   const tNav = useTranslations("Admin.nav");
 
-  const [tableState, setTableState] = useState<DataTableState>({
-    sorting: [],
-    columnFilters: [],
-    columnVisibility: {},
-    rowSelection: {},
-    pagination: { pageIndex: 0, pageSize: 10 },
-  });
+  const [tableState, setTableState] = useState(createDefaultDataTableState());
 
   const handleStateChange = (updates: Partial<DataTableState>) => {
     setTableState((prev) => ({ ...prev, ...updates }));
   };
-
-  const { data: requests, isLoading } = useQuery({
-    queryKey: ["admin-requests", tableState.columnFilters, tableState.sorting, tableState.pagination],
-    queryFn: () => getRequests(),
-    initialData: initialRequests,
-  });
 
   const filterFields = [
     {
@@ -50,6 +31,8 @@ export default function RequestsClient({
         { label: "Pending", value: "pending" },
         { label: "Quoted", value: "quoted" },
         { label: "Confirmed", value: "confirmed" },
+        { label: "Cancelled", value: "cancelled" },
+        { label: "Completed", value: "completed" },
       ],
     },
   ];
@@ -82,20 +65,13 @@ export default function RequestsClient({
         </Link>
       </div>
 
-      {isLoading && !requests ? (
-        <div className="flex justify-center py-20">
-          <Spinner className="size-8" />
-        </div>
-      ) : (
-        <DataTable
-          columns={columns}
-          data={requests || []}
-          filterFields={filterFields}
-          state={tableState}
-          callbacks={{ onStateChange: handleStateChange }}
-          isLoading={isLoading}
-        />
-      )}
+      <DataTable
+        columns={columns}
+        data={requests}
+        filterFields={filterFields}
+        state={tableState}
+        callbacks={{ onStateChange: handleStateChange }}
+      />
     </div>
   );
 }

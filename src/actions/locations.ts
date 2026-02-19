@@ -1,25 +1,34 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { type ActionResult, ApiError } from "@/lib/api/types";
 import { api } from "@/lib/api/client";
-import { endpoints } from "./endpoints";
+import type { ActionResult, ApiError } from "@/lib/api/types";
 import {
   type CreateLocationInput,
-  type LocationResponse,
   createLocationInputSchema,
+  type LocationResponse,
   locationResponseSchema,
 } from "@/lib/schema/location-schema";
+import {
+  buildValidationErrorMessage,
+  normalizeFieldErrors,
+} from "@/lib/validation/error-message";
+import { endpoints } from "./endpoints";
 
 export async function createLocation(
   input: CreateLocationInput,
 ): Promise<ActionResult<LocationResponse>> {
   const validation = createLocationInputSchema.safeParse(input);
   if (!validation.success) {
+    const flattened = validation.error.flatten();
+    const fieldErrors = normalizeFieldErrors(flattened.fieldErrors);
     return {
       success: false,
-      error: "Validation failed",
-      fieldErrors: validation.error.flatten().fieldErrors,
+      error: buildValidationErrorMessage({
+        fieldErrors,
+        formErrors: flattened.formErrors,
+      }),
+      fieldErrors,
     };
   }
 
@@ -37,7 +46,9 @@ export async function createLocation(
   }
 }
 
-export async function getLocations(): Promise<ActionResult<LocationResponse[]>> {
+export async function getLocations(): Promise<
+  ActionResult<LocationResponse[]>
+> {
   try {
     const data = await api.get<LocationResponse[]>(endpoints.locations.list);
     return { success: true, data };

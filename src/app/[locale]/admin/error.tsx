@@ -1,8 +1,9 @@
 "use client";
 
+import { RiAlertLine, RiRefreshLine } from "@remixicon/react";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { RiAlertLine, RiRefreshLine } from "@remixicon/react";
+import { Link } from "@/i18n/navigation";
 
 export default function AdminError({
   error,
@@ -33,7 +34,7 @@ export default function AdminError({
           <RiRefreshLine className="size-4" />
           Try again
         </Button>
-        <Button variant="outline" render={<a href="/admin" />}>
+        <Button variant="outline" render={<Link href="/admin" />}>
           Return to Dashboard
         </Button>
       </div>

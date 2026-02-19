@@ -1,10 +1,9 @@
-import { getServiceById } from "@/lib/data-fetching";
-import { ServiceForm } from "@/components/forms/admin/service-form";
-import { notFound, redirect } from "next/navigation";
-import { getTranslations } from "next-intl/server";
 import { RiArrowLeftLine, RiMapPin2Line } from "@remixicon/react";
-import Link from "next/link";
-import { ServiceResponse } from "@/lib/schema/service-schema";
+import { notFound, redirect } from "next/navigation";
+import { ServiceForm } from "@/components/forms/admin/service-form";
+import { Link } from "@/i18n/navigation";
+import { getServiceById } from "@/lib/data-fetching";
+import type { ServiceResponse } from "@/lib/schema/service-schema";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -13,7 +12,6 @@ interface PageProps {
 export default async function EditServicePage({ params }: PageProps) {
   const { id } = await params;
   const service = await getServiceById(id);
-  const t = await getTranslations("Admin.services");
 
   if (!service) {
     notFound();
@@ -23,7 +21,7 @@ export default async function EditServicePage({ params }: PageProps) {
     <div className="max-w-4xl mx-auto py-8 px-4">
       <div className="mb-6">
         <Link
-          href="/admin/inventory?tab=services"
+          href="/admin/inventory"
           className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-2"
         >
           <RiArrowLeftLine className="size-4" />
@@ -49,7 +47,7 @@ export default async function EditServicePage({ params }: PageProps) {
           initialData={service as ServiceResponse}
           onSuccess={async () => {
             "use server";
-            redirect("/admin/inventory?tab=services");
+            redirect("/admin/inventory");
           }}
         />
       </div>

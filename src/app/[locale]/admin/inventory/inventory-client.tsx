@@ -1,5 +1,7 @@
 "use client";
 
+import { RiAddLine } from "@remixicon/react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -7,42 +9,24 @@ import {
   type DataTableFilterField,
   type DataTableState,
 } from "@/components/ui/data-table";
-import { RiAddLine } from "@remixicon/react";
-import { serviceColumns } from "./columns";
-import { useTranslations } from "next-intl";
+import { createDefaultDataTableState } from "@/components/ui/data-table-state";
+import { useRouter } from "@/i18n/navigation";
 import type { ServiceResponse } from "@/lib/schema/service-schema";
-import { useRouter } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
-import { getServices } from "@/lib/data-fetching";
-import { Spinner } from "@/components/ui/spinner";
+import { serviceColumns } from "./columns";
 
 interface InventoryClientProps {
-  initialServices?: ServiceResponse[];
+  services: ServiceResponse[];
 }
 
-export default function InventoryClient({
-  initialServices,
-}: InventoryClientProps) {
+export default function InventoryClient({ services }: InventoryClientProps) {
   const t = useTranslations("Admin.inventory");
   const router = useRouter();
 
-  const [tableState, setTableState] = useState<DataTableState>({
-    sorting: [],
-    columnFilters: [],
-    columnVisibility: {},
-    rowSelection: {},
-    pagination: { pageIndex: 0, pageSize: 10 },
-  });
+  const [tableState, setTableState] = useState(createDefaultDataTableState());
 
   const handleStateChange = (updates: Partial<DataTableState>) => {
     setTableState((prev) => ({ ...prev, ...updates }));
   };
-
-  const { data: services, isLoading } = useQuery({
-    queryKey: ["admin-services", tableState.columnFilters, tableState.sorting, tableState.pagination],
-    queryFn: () => getServices(),
-    initialData: initialServices,
-  });
 
   // Define filters for Services
   const serviceFilters: DataTableFilterField[] = [
@@ -50,6 +34,7 @@ export default function InventoryClient({
       label: "Type",
       value: "service_type",
       options: [
+        { label: "Flight", value: "flight" },
         { label: "Hotel", value: "hotel" },
         { label: "Car", value: "car" },
         { label: "Activity", value: "activity" },
@@ -64,13 +49,14 @@ export default function InventoryClient({
       options: [
         { label: "Active", value: "active" },
         { label: "Inactive", value: "inactive" },
-        { label: "Draft", value: "draft" },
+        { label: "Pending", value: "pending" },
+        { label: "Deleted", value: "deleted" },
       ],
     },
   ];
 
   const handleAddNew = () => {
-    // Navigate to create service page or open modal
+    router.push("/admin/create/service");
   };
 
   return (
@@ -90,22 +76,15 @@ export default function InventoryClient({
         </div>
       </div>
 
-      {isLoading && !services ? (
-        <div className="flex justify-center py-20">
-          <Spinner className="size-8" />
-        </div>
-      ) : (
-        <DataTable
-          columns={serviceColumns}
-          data={services || []}
-          filterFields={serviceFilters}
-          searchPlaceholder="Search services..."
-          searchColumn="title"
-          state={tableState}
-          callbacks={{ onStateChange: handleStateChange }}
-          isLoading={isLoading}
-        />
-      )}
+      <DataTable
+        columns={serviceColumns}
+        data={services}
+        filterFields={serviceFilters}
+        searchPlaceholder="Search services..."
+        searchColumn="title"
+        state={tableState}
+        callbacks={{ onStateChange: handleStateChange }}
+      />
     </div>
   );
 }

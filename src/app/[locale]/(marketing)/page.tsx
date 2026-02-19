@@ -1,16 +1,16 @@
+import type { Metadata } from "next";
 import {
   CTA,
+  Destinations,
   FAQ,
   Hero,
+  HowItWorks,
   PopularRoutes,
-  Destinations,
   Services,
   SocialProof,
   Testimonials,
   WhyUs,
-  HowItWorks,
 } from "@/components/landing";
-import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Vizit Africa | Book Flights to Rwanda & Africa",
@@ -22,10 +22,10 @@ export const metadata: Metadata = {
       "Find and book the best flights to Rwanda. Add hotels, car rentals, and local guides to complete your African adventure.",
     images: [
       {
-        url: "/images/og-image.jpg",
+        url: "/images/rwanda-landscape.jpg",
         width: 1200,
         height: 630,
-        alt: "Vizit Africa — Book Flights to Rwanda",
+        alt: "Vizit Africa - Book Flights to Rwanda",
       },
     ],
   },

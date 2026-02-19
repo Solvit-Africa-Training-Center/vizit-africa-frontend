@@ -11,7 +11,7 @@ import {
   RiDownloadLine,
   RiArrowLeftLine,
 } from "@remixicon/react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import type { Booking, RequestedItem } from "@/lib/schema/booking-schema";
@@ -67,7 +67,9 @@ export default function FulfillClient({ booking }: FulfillClientProps) {
           <div>
             <h1 className="font-display text-2xl md:text-3xl font-medium text-foreground flex items-center gap-3">
               {t("title")}
-              <span className={`text-sm font-sans font-normal px-2 py-1 rounded ${booking.status === 'confirmed' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
+              <span
+                className={`text-sm font-sans font-normal px-2 py-1 rounded ${booking.status === "confirmed" ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700"}`}
+              >
                 {booking.status}
               </span>
             </h1>
@@ -242,23 +244,29 @@ export default function FulfillClient({ booking }: FulfillClientProps) {
                   {t("payment.total")}
                 </span>
                 <span className="font-medium">
-                  {booking.quote?.currency} {booking.quote?.total_amount?.toLocaleString() || "-"}
+                  {booking.quote?.currency}{" "}
+                  {booking.quote?.total_amount?.toLocaleString() || "-"}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">
                   {t("payment.method")}
                 </span>
-                <span className="font-medium">Credit Card</span> {/* Hardcoded for now unless in schema */}
+                <span className="font-medium">Credit Card</span>{" "}
+                {/* Hardcoded for now unless in schema */}
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">
                   {t("payment.date")}
                 </span>
-                <span className="font-medium">{booking.createdAt ? formatDate(booking.createdAt) : "-"}</span>
+                <span className="font-medium">
+                  {booking.createdAt ? formatDate(booking.createdAt) : "-"}
+                </span>
               </div>
               <div className="pt-3 border-t border-border">
-                <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium uppercase ${booking.status === 'confirmed' ? 'text-green-700 bg-green-100' : 'text-yellow-700 bg-yellow-100'}`}>
+                <span
+                  className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium uppercase ${booking.status === "confirmed" ? "text-green-700 bg-green-100" : "text-yellow-700 bg-yellow-100"}`}
+                >
                   {booking.status}
                 </span>
               </div>

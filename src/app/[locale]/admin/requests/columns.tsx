@@ -3,7 +3,7 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
 import { facetedFilterFn } from "@/lib/utils";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import type { Booking } from "@/lib/schema/booking-schema";
 import { useTranslations } from "next-intl";
 

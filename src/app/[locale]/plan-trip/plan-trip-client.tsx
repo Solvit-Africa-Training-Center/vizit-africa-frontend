@@ -1,29 +1,30 @@
 "use client";
 
+import {
+  RiCheckDoubleLine,
+  RiFlightTakeoffLine,
+  RiHotelLine,
+  RiUserLine,
+} from "@remixicon/react";
+import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
+import { useMemo, useState } from "react";
+import { toast } from "sonner";
 import { BookingSummary } from "@/components/plan-trip";
+import { ContextBanner } from "@/components/plan-trip/context-banner";
 import { ContactInfoStep } from "@/components/plan-trip/steps/contact-info-step";
 import { FlightStep } from "@/components/plan-trip/steps/flight-step";
 import { ServicesStep } from "@/components/plan-trip/steps/services-step";
+import { TripSection } from "@/components/plan-trip/trip-section";
 import { Navbar } from "@/components/shared/navbar";
+import { Button } from "@/components/ui/button";
 import { RevealText } from "@/components/ui/reveal-text";
 import { usePlanTrip } from "@/hooks/use-plan-trip";
 import { useTripForm } from "@/hooks/use-trip-form";
 import { DRIVER_SURCHARGE } from "@/lib/configs";
-import { TripSection } from "@/components/plan-trip/trip-section";
-import { ContextBanner } from "@/components/plan-trip/context-banner";
-import { motion } from "motion/react";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
-import { useTranslations } from "next-intl";
-import { useTripStore } from "@/store/trip-store";
-import {
-  RiFlightTakeoffLine,
-  RiHotelLine,
-  RiUserLine,
-  RiCheckDoubleLine,
-} from "@remixicon/react";
+import type { Car, Guide, Hotel } from "@/lib/plan_trip-types";
 import { cn } from "@/lib/utils";
-import type { Hotel, Car, Guide } from "@/lib/plan_trip-types";
+import { useTripStore } from "@/store/trip-store";
 
 interface PlanTripClientProps {
   hotels: Hotel[];
@@ -31,8 +32,54 @@ interface PlanTripClientProps {
   guides: Guide[];
 }
 
-export default function PlanTripClient({ hotels, cars, guides }: PlanTripClientProps) {
+interface AiRecommendations {
+  destination: string;
+  itinerarySummary: string;
+  totalEstimatedBudget: number;
+  hotels: Hotel[];
+  cars: Car[];
+  guides: Guide[];
+}
+
+function mergeById<T extends { id: string }>(
+  primary: T[],
+  secondary: T[],
+): T[] {
+  const merged = new Map<string, T>();
+  primary.forEach((item) => {
+    merged.set(item.id, item);
+  });
+  secondary.forEach((item) => {
+    if (!merged.has(item.id)) {
+      merged.set(item.id, item);
+    }
+  });
+  return Array.from(merged.values());
+}
+
+export default function PlanTripClient({
+  hotels,
+  cars,
+  guides,
+}: PlanTripClientProps) {
   const tHeader = useTranslations("PlanTrip.header");
+  const [aiRecommendations, setAiRecommendations] =
+    useState<AiRecommendations | null>(null);
+  const [isGeneratingAi, setIsGeneratingAi] = useState(false);
+  const [aiError, setAiError] = useState<string | null>(null);
+
+  const mergedHotels = useMemo(
+    () => mergeById(hotels, aiRecommendations?.hotels ?? []),
+    [hotels, aiRecommendations],
+  );
+  const mergedCars = useMemo(
+    () => mergeById(cars, aiRecommendations?.cars ?? []),
+    [cars, aiRecommendations],
+  );
+  const mergedGuides = useMemo(
+    () => mergeById(guides, aiRecommendations?.guides ?? []),
+    [guides, aiRecommendations],
+  );
 
   const {
     tripInfo,
@@ -70,13 +117,79 @@ export default function PlanTripClient({ hotels, cars, guides }: PlanTripClientP
     filteredCars,
     initialGuides,
   } = usePlanTrip({
-    initialHotels: hotels,
-    initialCars: cars,
-    initialGuides: guides,
+    initialHotels: mergedHotels,
+    initialCars: mergedCars,
+    initialGuides: mergedGuides,
   });
 
   const form = useTripForm();
   const entrySource = useTripStore((s) => s.entrySource);
+
+  const handleGenerateAiRecommendations = async () => {
+    const destination = tripInfo.destination?.trim();
+    const startDate = tripInfo.departureDate;
+    const endDate = tripInfo.returnDate;
+
+    if (!destination || !startDate || !endDate) {
+      const message = "Add destination, departure date, and return date first.";
+      setAiError(message);
+      toast.error(message);
+      return;
+    }
+
+    setAiError(null);
+    setIsGeneratingAi(true);
+
+    try {
+      const response = await fetch("/api/ai", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          destination,
+          startDate,
+          endDate,
+          groupSize: Math.max(
+            1,
+            tripInfo.adults + tripInfo.children + tripInfo.infants,
+          ),
+          tripPurpose: tripInfo.tripPurpose,
+          specialRequests: tripInfo.specialRequests || undefined,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data?.error || "Failed to generate AI recommendations.",
+        );
+      }
+
+      setAiRecommendations({
+        destination: data.destination,
+        itinerarySummary: data.itinerarySummary,
+        totalEstimatedBudget: data.totalEstimatedBudget,
+        hotels: Array.isArray(data.hotels) ? data.hotels : [],
+        cars: Array.isArray(data.cars) ? data.cars : [],
+        guides: Array.isArray(data.guides) ? data.guides : [],
+      });
+      toast.success("AI suggestions added. You can still choose manually.");
+    } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Failed to generate AI recommendations.";
+      setAiError(message);
+      toast.error(message);
+    } finally {
+      setIsGeneratingAi(false);
+    }
+  };
+
+  const handleClearAiRecommendations = () => {
+    setAiRecommendations(null);
+    setAiError(null);
+  };
 
   const flight = items.find((i) => i.type === "flight");
   const hotel = items.find((i) => i.type === "hotel");
@@ -107,7 +220,12 @@ export default function PlanTripClient({ hotels, cars, guides }: PlanTripClientP
       ? `${tripInfo.name} · ${tripInfo.email}`
       : undefined;
 
-  const isReadyToSubmit = !!(tripInfo.name && tripInfo.email && tripInfo.departureCity && tripInfo.departureDate);
+  const isReadyToSubmit = !!(
+    tripInfo.name &&
+    tripInfo.email &&
+    tripInfo.departureCity &&
+    tripInfo.departureDate
+  );
   const canSubmit = !!(tripInfo.name && tripInfo.email);
 
   const handleSubmit = async () => {
@@ -140,6 +258,50 @@ export default function PlanTripClient({ hotels, cars, guides }: PlanTripClientP
           </div>
 
           <ContextBanner destination={tripInfo.destination} />
+          <div className="mb-6 rounded-sm border border-border bg-card px-4 py-4">
+            <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+              <div>
+                <p className="text-sm font-medium uppercase tracking-wide text-foreground">
+                  AI Assist (Optional)
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Generate extra hotel, car, and guide suggestions from your
+                  trip details.
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleGenerateAiRecommendations}
+                  disabled={isGeneratingAi}
+                >
+                  {isGeneratingAi ? "Generating..." : "Generate Suggestions"}
+                </Button>
+                {aiRecommendations && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleClearAiRecommendations}
+                    disabled={isGeneratingAi}
+                  >
+                    Clear AI
+                  </Button>
+                )}
+              </div>
+            </div>
+            {aiError && (
+              <p className="mt-2 text-xs text-destructive">{aiError}</p>
+            )}
+            {aiRecommendations && (
+              <p className="mt-2 text-xs text-muted-foreground">
+                Added {aiRecommendations.hotels.length} hotels,{" "}
+                {aiRecommendations.cars.length} cars, and{" "}
+                {aiRecommendations.guides.length} guides.{" "}
+                {aiRecommendations.itinerarySummary}
+              </p>
+            )}
+          </div>
 
           <div className="grid lg:grid-cols-[1fr_380px] gap-8 items-start">
             <div className="space-y-3">
@@ -162,7 +324,7 @@ export default function PlanTripClient({ hotels, cars, guides }: PlanTripClientP
                   items={items}
                   addItem={addItem}
                   removeItem={removeItem}
-                  onNext={() => { }}
+                  onNext={() => {}}
                 />
               </TripSection>
 
@@ -172,10 +334,10 @@ export default function PlanTripClient({ hotels, cars, guides }: PlanTripClientP
                 title="Stay & Services"
                 status={
                   hotel ||
-                    car ||
-                    guideItem ||
-                    noteItem ||
-                    tripInfo.specialRequests
+                  car ||
+                  guideItem ||
+                  noteItem ||
+                  tripInfo.specialRequests
                     ? "selected"
                     : "empty"
                 }
@@ -190,7 +352,7 @@ export default function PlanTripClient({ hotels, cars, guides }: PlanTripClientP
                   activeTab={activeTab}
                   setActiveTab={setActiveTab}
                   showMobileSummary={false}
-                  setShowMobileSummary={() => { }}
+                  setShowMobileSummary={() => {}}
                   tripInfo={tripInfo}
                   days={days}
                   total={total}

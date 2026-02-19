@@ -4,5 +4,5 @@ import DashboardClient from "./dashboard-client";
 export default async function AdminDashboard() {
   const requests = await getRequests();
 
-  return <DashboardClient initialRequests={requests} />;
+  return <DashboardClient requests={requests} />;
 }

@@ -4,5 +4,5 @@ import RequestsClient from "./requests-client";
 export default async function RequestsPage() {
   const requests = await getRequests();
 
-  return <RequestsClient initialRequests={requests} />;
+  return <RequestsClient requests={requests} />;
 }

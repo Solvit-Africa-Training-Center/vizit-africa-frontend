@@ -19,7 +19,7 @@ import {
   RiUserLine,
   RiInformationLine,
 } from "@remixicon/react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
@@ -102,19 +102,23 @@ export default function BookingDetailPage({ params }: PageProps) {
   }
 
   const quote = booking.quote;
-  const showQuote = (booking.status === "quoted" || booking.status === "pending") && quote;
-  const showItinerary = booking.status === "confirmed" || booking.status === "completed";
+  const showQuote =
+    (booking.status === "quoted" || booking.status === "pending") && quote;
+  const showItinerary =
+    booking.status === "confirmed" || booking.status === "completed";
 
   // If confirmed, items are in booking.items. If quoted, items are in quote.items
-  const displayItems = showItinerary ? booking.items : (quote?.items || []);
+  const displayItems = showItinerary ? booking.items : quote?.items || [];
 
-  const totalAmount = showItinerary 
+  const totalAmount = showItinerary
     ? booking.items.reduce((sum, item) => sum + (item.subtotal || 0), 0)
-    : (quote?.total_amount || 0);
-  
-  const currency = (showItinerary
-    ? (booking.items[0]?.metadata?.currency as string || "USD") // Fallback, though ideally booking has currency
-    : (quote?.currency || "USD")) as string;
+    : quote?.total_amount || 0;
+
+  const currency = (
+    showItinerary
+      ? (booking.items[0]?.metadata?.currency as string) || "USD" // Fallback, though ideally booking has currency
+      : quote?.currency || "USD"
+  ) as string;
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -132,15 +136,20 @@ export default function BookingDetailPage({ params }: PageProps) {
               <div>
                 <h1 className="font-display text-3xl md:text-4xl font-medium text-foreground flex items-center gap-3">
                   {booking.tripPurpose || "Trip Details"}
-                  <Badge variant={booking.status === "confirmed" ? "success" : "secondary"}>
+                  <Badge
+                    variant={
+                      booking.status === "confirmed" ? "success" : "secondary"
+                    }
+                  >
                     {booking.status}
                   </Badge>
                 </h1>
                 <p className="text-muted-foreground mt-2">
-                  Booking #{booking.id.toUpperCase().slice(0, 8)} • {formatDate(booking.createdAt)}
+                  Booking #{booking.id.toUpperCase().slice(0, 8)} •{" "}
+                  {formatDate(booking.createdAt)}
                 </p>
               </div>
-              
+
               {showQuote && (
                 <div className="flex gap-3">
                   <Button variant="outline" disabled={processing}>
@@ -164,32 +173,44 @@ export default function BookingDetailPage({ params }: PageProps) {
                     Quote Ready for Review
                   </h3>
                   <p className="text-sm text-foreground/80">
-                    We have prepared a custom quote for your trip based on your requirements. 
-                    Please review the details below. This quote is valid for 48 hours.
+                    We have prepared a custom quote for your trip based on your
+                    requirements. Please review the details below. This quote is
+                    valid for 48 hours.
                   </p>
                 </div>
               )}
 
               {/* Items List */}
               <div className="space-y-4">
-                <h2 className="text-xl font-display font-medium">Itinerary Details</h2>
+                <h2 className="text-xl font-display font-medium">
+                  Itinerary Details
+                </h2>
                 {displayItems.length > 0 ? (
                   displayItems.map((item: any, index: number) => (
-                    <div 
-                      key={item.id || index} 
+                    <div
+                      key={item.id || index}
                       className="bg-card border border-border rounded-xl p-5 flex flex-col md:flex-row gap-4"
                     >
                       <div className="size-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 text-primary">
-                        {item.type === 'flight' ? <RiPlaneLine className="size-6" /> :
-                         item.type === 'hotel' ? <RiHotelLine className="size-6" /> :
-                         item.type === 'car' ? <RiCarLine className="size-6" /> :
-                         <RiFileListLine className="size-6" />}
+                        {item.type === "flight" ? (
+                          <RiPlaneLine className="size-6" />
+                        ) : item.type === "hotel" ? (
+                          <RiHotelLine className="size-6" />
+                        ) : item.type === "car" ? (
+                          <RiCarLine className="size-6" />
+                        ) : (
+                          <RiFileListLine className="size-6" />
+                        )}
                       </div>
                       <div className="flex-1">
                         <div className="flex justify-between items-start">
                           <div>
-                            <h3 className="font-medium text-lg">{item.title || "Service Item"}</h3>
-                            <p className="text-sm text-muted-foreground mt-1">{item.description}</p>
+                            <h3 className="font-medium text-lg">
+                              {item.title || "Service Item"}
+                            </h3>
+                            <p className="text-sm text-muted-foreground mt-1">
+                              {item.description}
+                            </p>
                           </div>
                           <div className="text-right">
                             <p className="font-medium">
@@ -204,21 +225,29 @@ export default function BookingDetailPage({ params }: PageProps) {
                         </div>
                         {/* Metadata display if needed */}
                         {item.metadata && (
-                           <div className="mt-3 pt-3 border-t border-border/50 grid grid-cols-2 gap-2 text-sm">
-                             {Object.entries(item.metadata).map(([key, value]) => (
-                               <div key={key}>
-                                 <span className="text-muted-foreground capitalize">{key.replace('_', ' ')}: </span>
-                                 <span className="font-medium">{String(value)}</span>
-                               </div>
-                             ))}
-                           </div>
+                          <div className="mt-3 pt-3 border-t border-border/50 grid grid-cols-2 gap-2 text-sm">
+                            {Object.entries(item.metadata).map(
+                              ([key, value]) => (
+                                <div key={key}>
+                                  <span className="text-muted-foreground capitalize">
+                                    {key.replace("_", " ")}:{" "}
+                                  </span>
+                                  <span className="font-medium">
+                                    {String(value)}
+                                  </span>
+                                </div>
+                              ),
+                            )}
+                          </div>
                         )}
                       </div>
                     </div>
                   ))
                 ) : (
                   <div className="text-center py-12 border border-dashed border-border rounded-xl">
-                    <p className="text-muted-foreground">No items details available yet.</p>
+                    <p className="text-muted-foreground">
+                      No items details available yet.
+                    </p>
                   </div>
                 )}
               </div>
@@ -230,7 +259,9 @@ export default function BookingDetailPage({ params }: PageProps) {
                 <div className="space-y-3 pb-6 border-b border-border">
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Subtotal</span>
-                    <span>{currency} {totalAmount.toLocaleString()}</span>
+                    <span>
+                      {currency} {totalAmount.toLocaleString()}
+                    </span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Taxes & Fees</span>
@@ -243,11 +274,14 @@ export default function BookingDetailPage({ params }: PageProps) {
                     {currency} {totalAmount.toLocaleString()}
                   </span>
                 </div>
-                
+
                 {showItinerary && (
                   <div className="mt-6 pt-6 border-t border-border">
                     <h4 className="font-medium mb-3">Documents</h4>
-                    <Button variant="outline" className="w-full justify-start gap-2">
+                    <Button
+                      variant="outline"
+                      className="w-full justify-start gap-2"
+                    >
                       <RiDownloadLine className="size-4" />
                       Download Itinerary
                     </Button>

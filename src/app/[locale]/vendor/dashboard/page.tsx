@@ -1,23 +1,28 @@
+import { RiTimeLine } from "@remixicon/react";
 import { getCurrentUser } from "@/actions/auth";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import { RiTimeLine } from "@remixicon/react";
-import Link from "next/link";
-import { redirect } from "next/navigation";
+import { Link, redirect } from "@/i18n/navigation";
 
-export default async function VendorDashboardPage() {
+export default async function VendorDashboardPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
   const userResult = await getCurrentUser();
 
-  if (!userResult.success || !userResult.data) {
-    redirect("/login");
+  const user = userResult.success ? userResult.data : null;
+  if (!user) {
+    redirect({ href: "/login", locale });
+    return null;
   }
-
-  const user = userResult.data;
   const isVendor = user.role === "VENDOR";
 
   // If not a vendor, redirect to home or apply
   if (!isVendor) {
-    redirect("/partners/apply");
+    redirect({ href: "/partners/apply", locale });
+    return null;
   }
 
   const vendorProfile = user.vendor_profile;
@@ -70,17 +75,12 @@ export default async function VendorDashboardPage() {
     );
   }
 
-  // Approved Vendor Dashboard
-  // Ideally this would show stats, recent bookings, etc.
-  // For now, we reuse components or show a placeholder dashboard.
-  // We can redirect to the inventory page or show the inventory here.
-
   return (
     <div className="container py-10">
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-3xl font-display font-bold">Vendor Dashboard</h1>
-        <Button render={<Link href="/admin/inventory" />}>
-          Manage Inventory
+        <Button variant="outline" render={<Link href="/" />}>
+          View Public Site
         </Button>
       </div>
 
@@ -105,7 +105,8 @@ export default async function VendorDashboardPage() {
 
       <div className="mt-10 p-10 text-center border border-dashed rounded-xl">
         <p className="text-muted-foreground">
-          Recent activity will appear here.
+          Recent activity will appear here. Inventory management for vendors is
+          being rolled out.
         </p>
       </div>
     </div>

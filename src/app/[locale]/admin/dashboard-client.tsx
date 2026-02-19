@@ -1,41 +1,30 @@
 "use client";
 
-import Link from "next/link";
 import {
-  RiFileListLine,
-  RiDashboardLine,
-  RiTimeLine,
   RiCheckLine,
+  RiDashboardLine,
+  RiFileListLine,
   RiMailLine,
+  RiTimeLine,
 } from "@remixicon/react";
+import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
-import { getRequests } from "@/lib/data-fetching";
-import { useQuery } from "@tanstack/react-query";
-import { Spinner } from "@/components/ui/spinner";
 import type { Booking } from "@/lib/schema/booking-schema";
 
 interface DashboardClientProps {
-  initialRequests?: Booking[];
+  requests: Booking[];
 }
 
-export default function DashboardClient({
-  initialRequests,
-}: DashboardClientProps) {
+export default function DashboardClient({ requests }: DashboardClientProps) {
   const t = useTranslations("Admin.dashboard");
 
-  const { data: requests, isLoading } = useQuery({
-    queryKey: ["admin-requests"],
-    queryFn: () => getRequests(),
-    initialData: initialRequests,
-  });
-
-  const pendingCount = (requests || []).filter(
+  const pendingCount = requests.filter(
     (request) => request.status === "pending",
   ).length;
-  const quotedCount = (requests || []).filter(
+  const quotedCount = requests.filter(
     (request) => request.status === "quoted",
   ).length;
-  const confirmedCount = (requests || []).filter(
+  const confirmedCount = requests.filter(
     (request) => request.status === "confirmed",
   ).length;
 
@@ -118,16 +107,12 @@ export default function DashboardClient({
           </h2>
         </div>
         <div className="divide-y divide-border">
-          {isLoading && !requests ? (
-            <div className="p-10 flex justify-center">
-              <Spinner className="size-8" />
-            </div>
-          ) : (requests || []).length === 0 ? (
+          {requests.length === 0 ? (
             <div className="p-10 text-center text-muted-foreground">
               No recent requests found.
             </div>
           ) : (
-            (requests || []).slice(0, 10).map((request) => (
+            requests.slice(0, 10).map((request) => (
               <div
                 key={request.id}
                 className="p-5 flex items-center justify-between hover:bg-muted/50 transition-colors"
@@ -142,9 +127,11 @@ export default function DashboardClient({
                     </span>
                   </div>
                   <div>
-                    <p className="font-medium text-foreground">{request.name}</p>
+                    <p className="font-medium text-foreground">
+                      {request.name}
+                    </p>
                     <p className="text-sm text-muted-foreground">
-                      {request.travelers} {t("recentRequests.travelers")} •{" "}
+                      {request.travelers} {t("recentRequests.travelers")} -{" "}
                       {request.arrivalDate} {t("recentRequests.to")}{" "}
                       {request.departureDate || ""}
                     </p>

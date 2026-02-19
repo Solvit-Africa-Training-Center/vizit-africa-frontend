@@ -1,7 +1,7 @@
 "use client";
 
 import { RiEqualizerLine } from "@remixicon/react";
-import { Table } from "@tanstack/react-table";
+import type { Table } from "@tanstack/react-table";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -21,13 +21,9 @@ interface DataTableViewOptionsProps<TData> {
 export function DataTableViewOptions<TData>({
   table,
 }: DataTableViewOptionsProps<TData>) {
-  const { columnVisibility } = table.getState();
   const allHideableColumns = table
-    .getAllColumns()
-    .filter(
-      (column) =>
-        typeof column.accessorFn !== "undefined" && column.getCanHide(),
-    );
+    .getAllLeafColumns()
+    .filter((column) => column.getCanHide());
 
   return (
     <DropdownMenu>
@@ -54,11 +50,12 @@ export function DataTableViewOptions<TData>({
 
             return (
               <DropdownMenuCheckboxItem
-                key={`${column.id}-${column.getIsVisible()}`}
+                key={column.id}
                 className="capitalize"
                 checked={column.getIsVisible()}
-                onCheckedChange={(value) => column.toggleVisibility(!!value)}
-                onSelect={(event) => event.preventDefault()}
+                onCheckedChange={(checked) =>
+                  column.toggleVisibility(Boolean(checked))
+                }
               >
                 {label.replace(/_/g, " ")}
               </DropdownMenuCheckboxItem>
