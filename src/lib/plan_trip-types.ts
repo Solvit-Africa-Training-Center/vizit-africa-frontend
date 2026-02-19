@@ -1,15 +1,20 @@
-
 export interface Flight {
   id: string;
   airline: string;
+  airlineLogo?: string;
   flightNumber: string;
-  origin: string;
-  destination: string;
+  departureCity: string;
+  departureAirport: string;
   departureTime: string;
+  arrivalCity: string;
+  arrivalAirport: string;
   arrivalTime: string;
   duration: string;
-  stops: string;
+  stops: number;
+  cabinClass: "economy" | "business" | "first";
   price: number;
+  currency: string;
+  seatsAvailable?: number;
 }
 
 export interface Hotel {
@@ -20,6 +25,7 @@ export interface Hotel {
   pricePerNight: number;
   amenities: string[];
   rating: number;
+  location: string;
 }
 
 export interface Car {
@@ -35,18 +41,55 @@ export interface Car {
 
 export interface Guide {
   id: string;
+  name: string;
   type: string;
   description: string;
   price: number;
   languages: string[];
 }
 
+export interface Experience {
+    id: string;
+    title: string;
+    description?: string;
+    price: number;
+    duration?: string;
+    location?: string;
+}
+
+export interface Service {
+    id: string;
+    title: string;
+    description?: string;
+    price: string | number;
+    category: string;
+}
+
+export type TripItemType = "flight" | "hotel" | "car" | "guide" | "experience" | "service" | "note";
+
+export interface TripItem {
+    id: string;
+    type: TripItemType;
+    title: string;
+    description?: string;
+    price?: number;
+    currency?: string;
+    // Dates can be specific to this item
+    startDate?: string;
+    endDate?: string;
+    // Store original data object for reference if needed
+    data?: Flight | Hotel | Car | Guide | Experience | Service | any;
+    quantity?: number;
+}
+
 export interface TripInfo {
   departureCity: string;
   arrivalDate: string;
   departureDate: string;
+  returnDate?: string;
   adults: number;
   children: number;
+  infants: number;
   tripPurpose:
     | "leisure"
     | "business"
@@ -58,9 +101,11 @@ export interface TripInfo {
   name: string;
   email: string;
   phone: string;
+  destination?: string;
 }
 
 export interface Selections {
+  flight: Flight | null;
   hotel: Hotel | null;
   car: Car | null;
   carWithDriver: boolean;

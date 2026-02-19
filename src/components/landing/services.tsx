@@ -7,17 +7,23 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const serviceImages = [
-  "https://images.unsplash.com/photo-1436491865332-7a61a1042759?q=90&w=1600&auto=format&fit=crop", // Flight/Plane
-  "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=90&w=1600&auto=format&fit=crop", // Hotel
-  "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=90&w=1600&auto=format&fit=crop", // Car/Road
-  "https://images.unsplash.com/photo-1596423736730-86d5267d32c9?q=90&w=1600&auto=format&fit=crop", // Guide/Map
+  "/images/hotel.jpg",
+  "/images/tourism-guide-vehicle-car.jpg",
+  "/images/guide.jpg",
 ];
 
-const serviceKeys = ["flights", "hotels", "experiences", "transfers"] as const;
+const serviceKeys = ["hotels", "experiences", "transfers"] as const;
+
+const linkKeyMap: Record<string, string> = {
+  hotels: "hotels",
+  experiences: "cars",
+  transfers: "guides",
+};
 
 export function Services() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -30,10 +36,7 @@ export function Services() {
 
       gsap.fromTo(
         cards,
-        {
-          opacity: 0,
-          y: 50,
-        },
+        { opacity: 0, y: 50 },
         {
           opacity: 1,
           y: 0,
@@ -55,66 +58,67 @@ export function Services() {
     title: t(`items.${key}.title`),
     description: t(`items.${key}.description`),
     image: serviceImages[index],
+    linkKey: linkKeyMap[key] || "hotels",
   }));
 
   return (
-    <section ref={containerRef} className="py-24 md:py-32 bg-background">
-      <div className="container max-w-7xl mx-auto px-5 md:px-10">
-        <SectionTitle
-          overline={t("overline")}
-          title={t("title")}
-          description={t("description")}
-          className="max-w-2xl mb-16"
-        />
+    <div ref={containerRef}>
+      <SectionTitle
+        overline={t("overline")}
+        title={t("title")}
+        description={t("description")}
+      />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="flex flex-col gap-8 md:mt-0">
-            {services.slice(0, 2).map((service, i) => (
-              <ServiceCard key={i} service={service} />
-            ))}
-          </div>
-
-          <div className="flex flex-col gap-8 md:mt-12">
-            {services.slice(2, 4).map((service, i) => (
-              <ServiceCard key={i} service={service} />
-            ))}
-          </div>
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
+        {services.map((service, i) => (
+          <ServiceCard key={i} service={service} />
+        ))}
       </div>
-    </section>
+    </div>
   );
 }
 
 function ServiceCard({
   service,
 }: {
-  service: { title: string; description: string; image: string };
+  service: {
+    title: string;
+    description: string;
+    image: string;
+    linkKey: string;
+  };
 }) {
   return (
-    <div className="service-card group relative overflow-hidden rounded-sm aspect-[4/3] md:aspect-[16/10]">
+    <Link
+      href={`/plan-trip?service=${service.linkKey}`}
+      className="service-card group relative overflow-hidden rounded-sm aspect-[4/3] block"
+    >
       <div className="absolute inset-0">
         <Image
           src={service.image}
           alt={service.title}
           fill
-          sizes="(max-width: 768px) 100vw, 50vw"
+          sizes="(max-width: 768px) 100vw, 33vw"
           loading="lazy"
           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
         />
         <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-300" />
       </div>
 
-      <div className="absolute inset-0 p-8 flex flex-col justify-end">
+      <div className="absolute inset-0 p-6 flex flex-col justify-end">
         <div className="translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-          <div className="w-12 h-[1px] bg-white/60 mb-4" aria-hidden="true" />
-          <h3 className="text-3xl font-black uppercase text-white tracking-tight mb-2">
+          <div
+            className="w-10 h-[1px] bg-primary-foreground/60 mb-3"
+            aria-hidden="true"
+          />
+          <h3 className="text-2xl font-medium uppercase text-primary-foreground tracking-tight mb-1">
             {service.title}
           </h3>
-          <p className="text-white/80 font-light text-lg">
+          <p className="text-primary-foreground/80 font-light text-sm">
             {service.description}
           </p>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

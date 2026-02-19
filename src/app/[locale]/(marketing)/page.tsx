@@ -1,34 +1,31 @@
 import {
   CTA,
   FAQ,
-  Footer,
   Hero,
+  PopularRoutes,
   Destinations,
   Services,
   SocialProof,
-  ExperienceShowcase,
-  Gallery,
   Testimonials,
   WhyUs,
   HowItWorks,
 } from "@/components/landing";
-import { Navbar } from "@/components/shared";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Vizit Africa | Curated Travel Experiences in Rwanda",
+  title: "Vizit Africa | Book Flights to Rwanda & Africa",
   description:
-    "Experience the best of Rwanda with custom travel packages. From gorilla trekking to Kigali city tours, we handle flights, hotels, and guides.",
+    "Find and book the best flights to Rwanda. Add hotels, car rentals, and local guides to complete your African adventure.",
   openGraph: {
-    title: "Vizit Africa | Curated Travel Experiences in Rwanda",
+    title: "Vizit Africa | Book Flights to Rwanda & Africa",
     description:
-      "Experience the best of Rwanda with custom travel packages. From gorilla trekking to Kigali city tours, we handle flights, hotels, and guides.",
+      "Find and book the best flights to Rwanda. Add hotels, car rentals, and local guides to complete your African adventure.",
     images: [
       {
         url: "/images/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Vizit Africa Travel Experience",
+        alt: "Vizit Africa — Book Flights to Rwanda",
       },
     ],
   },
@@ -36,10 +33,11 @@ export const metadata: Metadata = {
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "TravelAgency",
+  "@type": ["TravelAgency", "OnlineBusiness"],
   name: "Vizit Africa",
   image: "https://vizit.africa/logo.png",
-  description: "Professional travel planning for your Rwanda experience.",
+  description:
+    "Book flights to Rwanda and Africa. Add hotels, car rentals, and local guides.",
   address: {
     "@type": "PostalAddress",
     streetAddress: "KN 3 Ave",
@@ -61,21 +59,35 @@ export default function Home() {
     <>
       <script
         type="application/ld+json"
+        // biome-ignore lint: schema markup requires dangerouslySetInnerHTML
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Navbar />
       <Hero />
       <SocialProof />
-      <Services />
-      <Destinations />
-      <ExperienceShowcase />
+
+      <section className="py-20 md:py-28 bg-background">
+        <div className="container max-w-7xl mx-auto px-5 md:px-10">
+          <PopularRoutes />
+        </div>
+      </section>
+
+      <section className="py-20 md:py-28 bg-background border-t border-border">
+        <div className="container max-w-7xl mx-auto px-5 md:px-10">
+          <Destinations />
+        </div>
+      </section>
+
+      <section className="py-20 md:py-28 bg-background border-t border-border">
+        <div className="container max-w-7xl mx-auto px-5 md:px-10">
+          <Services />
+        </div>
+      </section>
+
       <HowItWorks />
-      <Gallery />
       <Testimonials />
       <WhyUs />
       <FAQ />
       <CTA />
-      <Footer />
     </>
   );
 }

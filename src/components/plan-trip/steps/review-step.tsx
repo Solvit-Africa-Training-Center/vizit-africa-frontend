@@ -6,13 +6,13 @@ import { RiCheckLine, RiArrowLeftLine } from "@remixicon/react";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { BookingSummary } from "@/components/plan-trip";
-import type { TripInfo, Selections } from "@/lib/plan_trip-types";
+import type { TripInfo, TripItem } from "@/lib/plan_trip-types";
 import { DRIVER_SURCHARGE } from "@/lib/plan-trip-data";
 import { useTranslations } from "next-intl";
 
 interface ReviewStepProps {
   tripInfo: TripInfo;
-  selections: Selections;
+  items: TripItem[];
   days: number;
   travelers: number;
   subtotal: number;
@@ -24,7 +24,7 @@ interface ReviewStepProps {
 
 export function ReviewStep({
   tripInfo,
-  selections,
+  items,
   days,
   travelers,
   subtotal,
@@ -49,7 +49,7 @@ export function ReviewStep({
           <div className="size-20 bg-primary/10 text-primary flex items-center justify-center mx-auto mb-6">
             <RiCheckLine className="size-10" />
           </div>
-          <h2 className="font-display text-3xl font-bold uppercase tracking-tight">
+          <h2 className="font-display text-3xl font-medium uppercase tracking-tight">
             {t("title")}
           </h2>
           <p className="text-muted-foreground text-lg font-light">
@@ -60,7 +60,7 @@ export function ReviewStep({
         <BookingSummary
           currentStep={4}
           tripInfo={tripInfo}
-          selections={selections}
+          items={items}
           days={days}
           travelers={travelers}
           driverSurcharge={DRIVER_SURCHARGE}
@@ -84,8 +84,8 @@ export function ReviewStep({
           >
             <RiArrowLeftLine className="mr-2" /> {tCommon("back")}
           </Button>
-          <Button size="lg" className="flex-[2]" onClick={onSubmit}>
-            {t("submit")}
+          <Button size="lg" className="flex-2" onClick={onSubmit}>
+            Request Quote
           </Button>
         </div>
       </div>

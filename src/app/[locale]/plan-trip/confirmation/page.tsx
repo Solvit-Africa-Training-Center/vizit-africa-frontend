@@ -8,30 +8,38 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { useTranslations } from "next-intl";
+import { useTripStore } from "@/store/trip-store";
+import { useEffect } from "react";
 
 function ConfirmationContent() {
   const searchParams = useSearchParams();
   const requestId = searchParams.get("id") || "REQ-UNKNOWN";
   const t = useTranslations("PlanTrip.confirmation");
 
+  useEffect(() => {
+    useTripStore.getState().clearTrip();
+  }, []);
+
   return (
-    <div className="bg-white border border-border rounded-xl overflow-hidden text-center max-w-2xl mx-auto">
-      <div className="p-8 border-b border-border bg-accent-success/5">
-        <div className="mx-auto w-20 h-20 rounded-full bg-accent-success/20 flex items-center justify-center mb-6">
-          <RiCheckboxCircleFill className="size-12 text-accent-success" />
+    <div className="bg-background max-w-3xl mx-auto">
+      <div className="p-8 md:p-12 text-center">
+        <div className="mx-auto w-16 h-16 rounded-full bg-primary/5 flex items-center justify-center mb-6">
+          <RiCheckboxCircleFill className="size-8 text-primary" />
         </div>
-        <h1 className="font-display text-3xl font-bold text-foreground mb-4">
+        <h1 className="font-display text-3xl font-medium text-foreground mb-4">
           {t("title")}
         </h1>
-        <p className="text-lg text-muted-foreground">{t("subtitle")}</p>
+        <p className="text-lg text-muted-foreground max-w-md mx-auto">
+          {t("subtitle")}
+        </p>
       </div>
 
-      <div className="p-8 space-y-6">
-        <div className="bg-muted/50 rounded-lg p-4">
-          <p className="text-sm text-muted-foreground mb-1">
+      <div className="px-8 pb-12 space-y-8 max-w-lg mx-auto">
+        <div className="text-center py-4 border-y border-border/40">
+          <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-2">
             {t("referenceNumber")}
           </p>
-          <p className="font-mono text-xl font-bold tracking-wider">
+          <p className="font-display text-2xl font-medium tracking-wide">
             {requestId}
           </p>
         </div>
@@ -40,7 +48,7 @@ function ConfirmationContent() {
           <h3 className="font-semibold text-lg">{t("whatNext")}</h3>
           <ol className="space-y-4">
             <li className="flex gap-4">
-              <span className="shrink-0 size-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm">
+              <span className="shrink-0 size-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-medium text-sm">
                 1
               </span>
               <div>
@@ -53,7 +61,7 @@ function ConfirmationContent() {
               </div>
             </li>
             <li className="flex gap-4">
-              <span className="shrink-0 size-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm">
+              <span className="shrink-0 size-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-medium text-sm">
                 2
               </span>
               <div>

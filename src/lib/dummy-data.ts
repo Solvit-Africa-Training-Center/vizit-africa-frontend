@@ -493,25 +493,25 @@ export const services = [
     icon: "plane",
     title: "Flights",
     description:
-      "Current pricing and multiple options from major airlines serving Rwanda.",
+      "We source the most convenient and cost-effective flight options based on your trip details.",
   },
   {
     icon: "building",
     title: "Hotels",
     description:
-      "Handpicked partners across Kigali, Musanze, and Lake Kivu regions.",
+      "Handpicked partner stays across Kigali, Musanze, and Lake Kivu regions at estimated rates.",
   },
   {
     icon: "car",
     title: "Car Rental",
     description:
-      "Flexible fleet from compact sedans to safari-ready Land Cruisers.",
+      "A flexible fleet from compact sedans to safari-ready Land Cruisers with optional drivers.",
   },
   {
     icon: "user",
     title: "Guides",
     description:
-      "Local experts for wildlife, history, culture, and adventure experiences.",
+      "Local experts for wildlife, history, culture, and adventure experiences at daily rates.",
   },
 ];
 
@@ -520,25 +520,25 @@ export const processSteps = [
     step: 1,
     title: "Share Your Plan",
     description:
-      "Tell us your travel dates, group size, and what you'd like to experience.",
+      "Tell us your travel dates, group size, and what you'd like to experience using our planner.",
   },
   {
     step: 2,
-    title: "We Find Best Options",
+    title: "We Source Options",
     description:
-      "Our team sources current availability and prices from trusted partners.",
+      "Our team manually finds the best real-time availability and prices from our trusted partners.",
   },
   {
     step: 3,
-    title: "Choose Your Preferences",
+    title: "Receive Your Quote",
     description:
-      "Select from personalized options for flights, stays, transport, and guides.",
+      "Within 48 hours, you'll receive a detailed itinerary with final prices for your approval.",
   },
   {
     step: 4,
-    title: "Confirm & Go",
+    title: "Confirm & Enjoy",
     description:
-      "We handle all bookings and logistics. You just enjoy your journey.",
+      "Once you approve and pay, we handle all the logistics so you can focus on your journey.",
   },
 ];
 

@@ -19,9 +19,9 @@ export function Stepper({ currentStep, steps, onStepClick }: StepperProps) {
             }`}
           >
             <span
-              className={`size-8 flex items-center justify-center text-sm font-bold border transition-all ${
+              className={`size-8 flex items-center justify-center text-sm font-medium border transition-all ${
                 currentStep === step.num
-                  ? "border-primary bg-primary text-white"
+                  ? "border-primary bg-primary text-primary-foreground"
                   : currentStep > step.num
                     ? "border-foreground bg-foreground text-background"
                     : "border-border bg-transparent"
@@ -33,7 +33,7 @@ export function Stepper({ currentStep, steps, onStepClick }: StepperProps) {
                 step.num.toString().padStart(2, "0")
               )}
             </span>
-            <span className="font-display font-bold uppercase tracking-wider text-sm">
+            <span className="font-display font-medium uppercase tracking-wider text-sm">
               {step.label}
             </span>
           </button>

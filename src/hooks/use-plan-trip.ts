@@ -1,11 +1,8 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
-import type {
-  TripInfo,
-  Selections,
-  FilterState,
-} from "../lib/plan_trip-types";
+import { useSearchParams } from "next/navigation";
+import type { FilterState } from "../lib/plan_trip-types";
 import {
   MOCK_HOTELS,
   MOCK_CARS,
@@ -13,32 +10,80 @@ import {
   SERVICE_FEE_RATE,
   ITEMS_PER_PAGE,
 } from "../lib/plan-trip-data";
+import { useTripStore } from "@/store/trip-store";
 
 export function usePlanTrip() {
-  const [currentStep, setCurrentStep] = useState(1);
+  const searchParams = useSearchParams();
+  const {
+    tripInfo,
+    updateTripInfo,
+    items,
+    addItem,
+    removeItem,
+    updateItem,
+    clearTrip,
+    setEntrySource,
+    setDestination,
+  } = useTripStore();
 
-  const [tripInfo, setTripInfo] = useState<TripInfo>({
-    departureCity: "",
-    arrivalDate: "",
-    departureDate: "",
-    adults: 2,
-    children: 0,
-    tripPurpose: "leisure",
-    specialRequests: "",
-    name: "",
-    email: "",
-    phone: "",
-  });
+  // detect entry source and pre-fill from url params
+  useEffect(() => {
+    const from = searchParams.get("from");
+    const to = searchParams.get("to");
+    const destination = searchParams.get("destination");
+    const serviceType = searchParams.get("service");
+    const flightId = searchParams.get("flight");
+    const experienceId = searchParams.get("experience");
+    const note = searchParams.get("note");
+    const departDate = searchParams.get("depart");
+    const returnDate = searchParams.get("return");
+    const adultsParam = searchParams.get("adults");
+    const childrenParam = searchParams.get("children");
+    const infantsParam = searchParams.get("infants");
 
-  const [selections, setSelections] = useState<Selections>({
-    hotel: null,
-    car: null,
-    carWithDriver: false,
-    guide: null,
-  });
+    // pre-fill traveler counts + dates
+    const updates: Partial<typeof tripInfo> = {};
+    if (departDate && tripInfo.departureDate !== departDate)
+      updates.departureDate = departDate;
+    if (returnDate && tripInfo.returnDate !== returnDate)
+      updates.returnDate = returnDate;
+    if (adultsParam) updates.adults = parseInt(adultsParam);
+    if (childrenParam) updates.children = parseInt(childrenParam);
+    if (infantsParam) updates.infants = parseInt(infantsParam);
+    if (from) updates.departureCity = from;
+    if (to) updates.destination = to;
+    if (Object.keys(updates).length > 0) updateTripInfo(updates);
 
-  const [activeTab, setActiveTab] = useState("hotels");
+    // detect source
+    if (from || to) {
+      setEntrySource("widget");
+    } else if (flightId || serviceType === "flights") {
+      setEntrySource("flights");
+      // Logic for adding flight if needed - skipping for now as explicit add is better
+    } else if (destination) {
+      setEntrySource("destinations");
+      if (tripInfo.destination !== destination) setDestination(destination);
+    } else if (serviceType) {
+      setEntrySource("services");
+    } else if (experienceId || note) {
+      setEntrySource(experienceId ? "experiences" : "gallery");
+      if (note) {
+          // Add note as item
+          const noteItem = {
+              id: "note-" + Date.now(),
+              type: "note" as const,
+              title: "Special Request",
+              description: note,
+              data: note,
+              price: 0
+          };
+          addItem(noteItem);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
 
+  // local state for filters/pagination
   const [hotelSearch, setHotelSearch] = useState("");
   const [hotelPriceFilter, setHotelPriceFilter] =
     useState<FilterState["priceRange"]>("all");
@@ -51,25 +96,28 @@ export function usePlanTrip() {
   const [hotelPage, setHotelPage] = useState(1);
   const [carPage, setCarPage] = useState(1);
 
+  // which service tab is active (still used in services section)
+  const [activeTab, setActiveTab] = useState(
+    searchParams.get("service") || "hotels",
+  );
+
   const days = useMemo(() => {
-    if (!tripInfo.arrivalDate || !tripInfo.departureDate) return 3;
-    const arrival = new Date(tripInfo.arrivalDate);
-    const departure = new Date(tripInfo.departureDate);
+    if (!tripInfo.departureDate || !tripInfo.returnDate) return 3;
+    const depart = new Date(tripInfo.departureDate);
+    const ret = new Date(tripInfo.returnDate);
     const diff = Math.ceil(
-      (departure.getTime() - arrival.getTime()) / (1000 * 60 * 60 * 24),
+      (ret.getTime() - depart.getTime()) / (1000 * 60 * 60 * 24),
     );
     return diff > 0 ? diff : 3;
-  }, [tripInfo.arrivalDate, tripInfo.departureDate]);
+  }, [tripInfo.departureDate, tripInfo.returnDate]);
 
   const filteredHotels = useMemo(() => {
     let result = MOCK_HOTELS;
-
     if (hotelSearch) {
       result = result.filter((h) =>
         h.name.toLowerCase().includes(hotelSearch.toLowerCase()),
       );
     }
-
     if (hotelPriceFilter !== "all") {
       result = result.filter((h) => {
         if (hotelPriceFilter === "budget") return h.pricePerNight < 150;
@@ -79,7 +127,6 @@ export function usePlanTrip() {
         return true;
       });
     }
-
     if (hotelStarsFilter !== "all") {
       result = result.filter((h) => {
         if (hotelStarsFilter === "5") return h.stars === 5;
@@ -88,23 +135,19 @@ export function usePlanTrip() {
         return true;
       });
     }
-
     return result;
   }, [hotelSearch, hotelPriceFilter, hotelStarsFilter]);
 
   const filteredCars = useMemo(() => {
     let result = MOCK_CARS;
-
     if (carSearch) {
       result = result.filter((c) =>
         c.model.toLowerCase().includes(carSearch.toLowerCase()),
       );
     }
-
     if (carCategoryFilter !== "all") {
       result = result.filter((c) => c.category === carCategoryFilter);
     }
-
     return result;
   }, [carSearch, carCategoryFilter]);
 
@@ -123,33 +166,48 @@ export function usePlanTrip() {
 
   useEffect(
     () => setHotelPage(1),
-    [],
+    [hotelSearch, hotelPriceFilter, hotelStarsFilter],
   );
-  useEffect(() => setCarPage(1), []);
+  useEffect(() => setCarPage(1), [carSearch, carCategoryFilter]);
+
+  const travelers =
+    tripInfo.adults + tripInfo.children + (tripInfo.infants || 0);
+
+  // Update item prices when days change
+  useEffect(() => {
+    items.forEach((item) => {
+      if (item.type === "hotel" && item.data && "pricePerNight" in item.data) {
+        const newPrice = (item.data.pricePerNight as number) * days;
+        if (item.price !== newPrice) {
+          updateItem(item.id, { price: newPrice });
+        }
+      } else if (item.type === "car" && item.data && "pricePerDay" in item.data) {
+        let newPrice = (item.data.pricePerDay as number) * days;
+        if (item.data.withDriver) {
+          newPrice += DRIVER_SURCHARGE * days;
+        }
+        if (item.price !== newPrice) {
+          updateItem(item.id, { price: newPrice });
+        }
+      }
+    });
+  }, [days, items, updateItem]);
 
   const subtotal = useMemo(() => {
-    let sum = 0;
-    if (selections.hotel) sum += selections.hotel.pricePerNight * days;
-    if (selections.car) {
-      sum += selections.car.pricePerDay * days;
-      if (selections.carWithDriver) sum += DRIVER_SURCHARGE * days;
-    }
-    if (selections.guide) sum += selections.guide.price;
-    return sum;
-  }, [selections, days]);
+    return items.reduce((sum, item) => {
+      if (item.type === "flight") {
+        const adultPrice = item.price || 0;
+        // Simple calculation to match BookingSummary: price * travelers
+        // Assuming flight price stored is per-person base price
+        // Note: Infants usually cheaper, but BookingSummary uses simplified flight.price * travelers
+        return sum + adultPrice * travelers;
+      }
+      return sum + (item.price || 0);
+    }, 0);
+  }, [items, travelers]);
 
   const serviceFee = subtotal * SERVICE_FEE_RATE;
   const total = subtotal + serviceFee;
-  const travelers = tripInfo.adults + tripInfo.children;
-
-  const canProceedToContact =
-    tripInfo.departureCity &&
-    tripInfo.arrivalDate &&
-    tripInfo.departureDate &&
-    tripInfo.adults >= 1;
-
-  const canProceedToServices = tripInfo.name && tripInfo.email;
-  const canProceedToReview = selections.hotel && selections.car;
 
   const resetHotelFilters = () => {
     setHotelSearch("");
@@ -163,12 +221,14 @@ export function usePlanTrip() {
   };
 
   return {
-    currentStep,
-    setCurrentStep,
     tripInfo,
-    setTripInfo,
-    selections,
-    setSelections,
+    setTripInfo: updateTripInfo,
+    items,
+    addItem,
+    removeItem,
+    updateItem,
+    clearTrip,
+    
     activeTab,
     setActiveTab,
 
@@ -199,10 +259,6 @@ export function usePlanTrip() {
     paginatedCars,
     hotelTotalPages,
     carTotalPages,
-
-    canProceedToContact,
-    canProceedToServices,
-    canProceedToReview,
 
     resetHotelFilters,
     resetCarFilters,

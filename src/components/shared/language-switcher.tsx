@@ -8,7 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-// import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { RiGlobalLine, RiCheckLine } from "@remixicon/react";
 import { cn } from "@/lib/utils";
 
@@ -39,14 +39,14 @@ export function LanguageSwitcher({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        className={cn(
-          "inline-flex items-center justify-center rounded-full h-8 w-8 px-0 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background",
-          variant === "light"
-            ? "text-white/80 hover:text-white hover:bg-white/10"
-            : "text-muted-foreground hover:text-foreground hover:bg-accent hover:text-accent-foreground",
-        )}
+        render={
+          <Button
+   variant={"ghost"}
+   className={cn(variant === "light" && "text-primary-foreground")}
+          />
+        }
       >
-        <RiGlobalLine className="size-4" />
+        <RiGlobalLine />
         <span className="sr-only">Switch Language</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[150px]">

@@ -19,7 +19,7 @@ export function GuideCard({ guide, isSelected, onToggle }: GuideCardProps) {
       className={`group relative border transition-all duration-300 cursor-pointer ${
         isSelected
           ? "border-primary bg-primary/5"
-          : "border-border bg-white hover:border-primary"
+          : "border-border bg-primary-foreground hover:border-primary"
       }`}
     >
       <div
@@ -38,7 +38,7 @@ export function GuideCard({ guide, isSelected, onToggle }: GuideCardProps) {
         <div className="flex-1 min-w-0 pt-0.5">
           <div className="flex items-start justify-between gap-4 mb-2">
             <div>
-              <h4 className="font-display text-lg font-bold uppercase tracking-tight text-foreground group-hover:text-primary transition-colors">
+              <h4 className="font-display text-lg font-medium uppercase tracking-tight text-foreground group-hover:text-primary transition-colors">
                 {tTypes(guide.id as any)}
               </h4>
             </div>
@@ -61,10 +61,10 @@ export function GuideCard({ guide, isSelected, onToggle }: GuideCardProps) {
 
           <div className="flex items-center justify-between pt-4 border-t border-border/50">
             <span className="text-[10px] uppercase tracking-widest text-muted-foreground">
-              Daily Rate
+              Est. Daily Rate
             </span>
-            <p className="font-display text-xl font-bold text-foreground">
-              ${guide.price}
+            <p className="font-display text-xl font-medium text-foreground">
+              ${guide.price}*
             </p>
           </div>
         </div>

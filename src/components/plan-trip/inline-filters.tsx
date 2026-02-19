@@ -71,7 +71,7 @@ export function InlineFilters({
               placeholder={t("search")}
               value={hotelSearch}
               onChange={(e) => setHotelSearch(e.target.value)}
-              className="pl-9 h-9 bg-white"
+              className="pl-9 h-9 bg-primary-foreground"
             />
           </div>
 
@@ -81,7 +81,7 @@ export function InlineFilters({
               setHotelPriceFilter(val as FilterState["priceRange"])
             }
           >
-            <SelectTrigger className="w-[140px] bg-white">
+            <SelectTrigger className="w-[140px] bg-primary-foreground">
               <SelectValue placeholder={t("price")} />
             </SelectTrigger>
             <SelectContent>
@@ -98,7 +98,7 @@ export function InlineFilters({
               setHotelStarsFilter(val as FilterState["stars"])
             }
           >
-            <SelectTrigger className="w-[130px] bg-white">
+            <SelectTrigger className="w-[130px] bg-primary-foreground">
               <SelectValue placeholder={t("stars")} />
             </SelectTrigger>
             <SelectContent>
@@ -133,7 +133,7 @@ export function InlineFilters({
               placeholder={t("search")}
               value={carSearch}
               onChange={(e) => setCarSearch(e.target.value)}
-              className="pl-9 bg-white"
+              className="pl-9 bg-primary-foreground"
             />
           </div>
 
@@ -143,7 +143,7 @@ export function InlineFilters({
               setCarCategoryFilter(val as FilterState["category"])
             }
           >
-            <SelectTrigger className="w-[130px] bg-white">
+            <SelectTrigger className="w-[130px] bg-primary-foreground">
               <SelectValue placeholder={t("category")} />
             </SelectTrigger>
             <SelectContent>

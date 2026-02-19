@@ -1,7 +1,8 @@
 "use client";
 
 import { RiArrowRightLine } from "@remixicon/react";
-import Link from "next/link";
+import { AddToTripButton } from "@/components/plan-trip/add-to-trip-button";
+import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
@@ -78,7 +79,7 @@ export function Gallery() {
 
         <motion.div style={{ y: y2 }} className="flex flex-col gap-6">
           {galleryImages.slice(2, 4).map((img) => (
-            <GalleryCard key={img.id} img={img} className="aspect-[4/3]" />
+            <GalleryCard key={img.id} img={img} className="aspect-4/3" />
           ))}
         </motion.div>
 
@@ -97,6 +98,8 @@ interface GalleryImage {
   src: string;
 }
 
+// ... (GalleryCard function)
+
 function GalleryCard({
   img,
   className,
@@ -105,10 +108,10 @@ function GalleryCard({
   className?: string;
 }) {
   const t = useTranslations("LandingGallery");
-  
+
   return (
     <div
-      className={`relative group overflow-hidden rounded-2xl cursor-pointer ${className}`}
+      className={`block relative group overflow-hidden rounded-2xl cursor-pointer ${className}`}
     >
       <ParallaxImage
         src={img.src}
@@ -121,12 +124,19 @@ function GalleryCard({
       />
       <div className="absolute inset-0 bg-black/20 group-hover:bg-black/35 transition-colors duration-200" />
       <div className="absolute inset-0 flex flex-col justify-end p-6 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-        <p className="text-white/80 font-mono text-xs uppercase tracking-widest mb-1">
+        <p className="text-primary-foreground/80 font-mono text-xs uppercase tracking-widest mb-1">
           {t(`items.${img.id}.caption`)}
         </p>
-        <h3 className="text-white font-display text-xl font-bold">
+        <h3 className="text-primary-foreground font-display text-xl font-medium mb-3">
           {t(`items.${img.id}.alt`)}
         </h3>
+        <AddToTripButton
+          type="note"
+          note={`Gallery: ${t(`items.${img.id}.alt`)} - ${t(`items.${img.id}.caption`)}`}
+          label="Add to Trip"
+          size="sm"
+          className="w-fit"
+        />
       </div>
     </div>
   );

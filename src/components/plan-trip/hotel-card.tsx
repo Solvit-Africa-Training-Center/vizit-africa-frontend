@@ -26,7 +26,7 @@ export function HotelCard({
       className={`group relative border transition-all duration-300 cursor-pointer ${
         isSelected
           ? "border-primary bg-primary/5"
-          : "border-border bg-white hover:border-primary"
+          : "border-border bg-primary-foreground hover:border-primary"
       }`}
     >
       <div
@@ -42,7 +42,7 @@ export function HotelCard({
           <div className="absolute inset-0 flex items-center justify-center bg-muted/50">
             <RiHotelLine className="size-10 text-muted-foreground/30" />
           </div>
-          <div className="absolute bottom-0 left-0 bg-white/90 backdrop-blur-sm px-3 py-1 border-t border-r border-border">
+          <div className="absolute bottom-0 left-0 bg-primary-foreground/90 backdrop-blur-sm px-3 py-1 border-t border-r border-border">
             <div className="flex gap-0.5">
               {Array.from({ length: hotel.stars }).map((_, i) => (
                 <span key={i} className="text-primary text-xs">
@@ -55,7 +55,7 @@ export function HotelCard({
 
         <div className="p-5 flex flex-col flex-1 gap-4">
           <div>
-            <h4 className="font-display text-xl font-bold uppercase tracking-tight text-foreground line-clamp-1 group-hover:text-primary transition-colors">
+            <h4 className="font-display text-xl font-medium uppercase tracking-tight text-foreground line-clamp-1 group-hover:text-primary transition-colors">
               {hotel.name}
             </h4>
             <div className="flex items-center gap-2 mt-2 text-muted-foreground">
@@ -85,10 +85,10 @@ export function HotelCard({
           <div className="mt-auto pt-4 border-t border-border/50 flex items-end justify-between">
             <div>
               <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">
-                Total ({days} {tSummary("nights")})
+                Est. Total ({days} {tSummary("nights")})
               </p>
-              <p className="font-display text-xl font-bold text-foreground">
-                ${hotel.pricePerNight * days}
+              <p className="font-display text-xl font-medium text-foreground">
+                ${hotel.pricePerNight * days}*
               </p>
             </div>
             <p className="text-sm font-medium text-muted-foreground">

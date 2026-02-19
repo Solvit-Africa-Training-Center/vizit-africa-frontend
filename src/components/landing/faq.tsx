@@ -50,7 +50,7 @@ export function FAQ() {
               </div>
               <Link
                 href="/contact"
-                className="inline-block mt-4 text-primary font-bold hover:underline underline-offset-4"
+                className="inline-block mt-4 text-primary font-medium hover:underline underline-offset-4"
               >
                 {t("contactTeam")}
               </Link>
@@ -65,7 +65,7 @@ export function FAQ() {
                   value={`item-${index}`}
                   className="border-b border-border/40 last:border-0 px-0 bg-transparent transition-all duration-200"
                 >
-                  <AccordionTrigger className="text-left font-display text-xl uppercase font-bold py-6 hover:no-underline hover:text-primary transition-colors">
+                  <AccordionTrigger className="text-left font-display text-xl uppercase font-medium py-6 hover:no-underline hover:text-primary transition-colors">
                     {item.question}
                   </AccordionTrigger>
                   <AccordionContent className="text-muted-foreground leading-relaxed pb-6 text-base font-light">
@@ -81,7 +81,7 @@ export function FAQ() {
               </p>
               <Link
                 href="/contact"
-                className="text-primary font-bold hover:underline underline-offset-4"
+                className="text-primary font-medium hover:underline underline-offset-4"
               >
                 {t("contactTeam")}
               </Link>

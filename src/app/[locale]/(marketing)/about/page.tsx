@@ -1,23 +1,13 @@
-"use client";
-
-import { Navbar } from "@/components/shared";
-import { Footer } from "@/components/landing";
+import Image from "next/image";
+import { PageHeader } from "@/components/shared/page-header";
 import { teamMembers } from "@/lib/dummy-data";
-import { RevealText } from "@/components/ui/reveal-text";
-import { ParallaxImage } from "@/components/ui/parallax-image";
-import { useRef } from "react";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-gsap.registerPlugin(ScrollTrigger);
 
-export default function AboutPage() {
-  const t = useTranslations("About");
-  const tCommon = useTranslations("Common");
-  const containerRef = useRef<HTMLDivElement>(null);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+export default async function AboutPage() {
+  const t = await getTranslations("About");
+  const tCommon = await getTranslations("Common");
 
   const values = [
     {
@@ -42,56 +32,24 @@ export default function AboutPage() {
     },
   ];
 
-  useGSAP(
-    () => {
-      const scrollContainer = scrollContainerRef.current;
-      if (!scrollContainer) return;
-
-      const totalWidth = scrollContainer.scrollWidth;
-      const viewportWidth = window.innerWidth;
-      const scrollDistance = totalWidth - viewportWidth + viewportWidth * 0.1;
-
-      if (totalWidth > viewportWidth) {
-        gsap.to(scrollContainer, {
-          x: -scrollDistance,
-          ease: "none",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            pin: true,
-            scrub: 1,
-            start: "top 20%",
-            end: `+=${scrollDistance}`,
-            invalidateOnRefresh: true,
-          },
-        });
-      }
-    },
-    { scope: containerRef },
-  );
-
   return (
-    <>
-      <Navbar />
-      <div className="min-h-screen bg-background pt-32 pb-24">
-        <header className="px-5 md:px-10 max-w-7xl mx-auto mb-32 md:mb-48">
-          <div className="flex flex-col gap-8">
-            <span className="text-sm font-mono uppercase tracking-widest text-muted-foreground block">
-              {t("established")}
-            </span>
-            <h1 className="font-display text-7xl md:text-[10rem] font-black uppercase tracking-tighter leading-[0.8] text-foreground">
-              <RevealText text={t("title")} />
-            </h1>
-          </div>
-        </header>
 
-        <section className="px-5 md:px-10 max-w-7xl mx-auto mb-32 md:mb-48">
-          <div className="grid md:grid-cols-12 gap-8">
+      <div className="min-h-screen bg-background pt-32 pb-24">
+        <PageHeader
+           title={t("title")}
+           overline={t("established")}
+      
+           className="mb-32 md:mb-48"
+        />
+
+        <section className="max-w-7xl mx-auto px-5 md:px-10 mb-32 md:mb-48">
+          <div className="">
             <div className="md:col-span-8 md:col-start-3">
-              <p className="font-display text-3xl md:text-5xl font-bold leading-tight indent-12 md:indent-24">
+              <p className="font-display text-2xl md:text-3xl font-medium leading-tight">
                 <span className="text-primary">{t("intro1")}</span>{" "}
                 {t("intro2")}
               </p>
-              <p className="font-display text-3xl md:text-5xl font-bold leading-tight mt-12 text-muted-foreground/60">
+              <p className="font-display text-2xl md:text-3xl font-medium leading-tight mt-12 text-muted-foreground/60">
                 {t("intro3")}
               </p>
             </div>
@@ -99,11 +57,11 @@ export default function AboutPage() {
         </section>
 
         <section
-          ref={containerRef}
-          className="mb-32 md:mb-48 overflow-hidden py-12"
+       
+          className="mb-32 md:mb-48 overflow-hidden py-12 max-w-7xl px-5 md:px-10 mx-auto"
         >
-          <div className="px-5 md:px-10 max-w-7xl mx-auto mb-12 flex items-end justify-between">
-            <h2 className="font-display text-4xl md:text-6xl font-bold uppercase">
+          <div className="mb-12 flex items-end justify-between">
+            <h2 className="font-display text-2xl md:text-4xl font-medium uppercase">
               {t("guidesTitle")}
             </h2>
             <p className="text-muted-foreground max-w-xs text-right hidden md:block">
@@ -111,34 +69,32 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="w-full">
+          <div className="">
             <div
-              ref={scrollContainerRef}
-              className="flex gap-8 px-5 md:px-10 w-max"
+              className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-8"
             >
               {teamMembers.map((member, i) => (
                 <div
                   key={member.id}
-                  className="relative w-[80vw] md:w-[25vw] aspect-[3/4] group shrink-0"
+                  className="relative group flex flex-col gap-2"
                 >
-                  <div className="absolute inset-0 overflow-hidden rounded-sm bg-muted">
-                    <ParallaxImage
+                  <div className="relative h-80 w-full">
+                    <Image
                       src={
                         [
-                          "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&w=1000&auto=format&fit=crop",
-                          "https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?q=80&w=1000&auto=format&fit=crop",
-                          "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1000&auto=format&fit=crop",
-                          "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop",
+                          "/images/guide.jpg",
+                          "/images/guide-with-walkie-talkie.jpg",
+                          "/images/woman-smiling-in-window--black-white.jpg",
+                          "/images/marco-lopez.jpg",
                         ][i % 4]
                       }
                       alt={member.name}
                       fill
-                      className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
-                      containerClassName="w-full h-[120%]"
+                      className="object-cover transition-all duration-700"
                     />
                   </div>
-                  <div className="absolute -bottom-8 left-0">
-                    <h3 className="font-display text-4xl font-bold uppercase text-foreground">
+                  <div className="flex flex-col gap-1">
+                    <h3 className="font-display text-4xl font-medium uppercase text-foreground">
                       {member.name}
                     </h3>
                     <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
@@ -147,7 +103,7 @@ export default function AboutPage() {
                   </div>
                 </div>
               ))}
-              <div className="w-[10vw] shrink-0" />
+         
             </div>
           </div>
         </section>
@@ -162,7 +118,7 @@ export default function AboutPage() {
                 <span className="font-mono text-sm text-muted-foreground mb-4">
                   ({val.order})
                 </span>
-                <h3 className="font-display text-3xl font-bold mb-4 uppercase group-hover:text-primary transition-colors duration-300">
+                <h3 className="font-display text-3xl font-medium mb-4 uppercase group-hover:text-primary transition-colors duration-300">
                   {val.title}
                 </h3>
                 <p className="text-muted-foreground/80 leading-relaxed text-sm">
@@ -174,7 +130,7 @@ export default function AboutPage() {
         </section>
 
         <section className="px-5 md:px-10 max-w-7xl mx-auto text-center">
-          <h2 className="font-display text-5xl md:text-8xl font-black uppercase tracking-tight mb-8">
+          <h2 className="font-display text-4xl md:text-5xl font-medium uppercase tracking-tight mb-8">
             {t("startJourney")}
           </h2>
           <a href="/contact" className="inline-block relative group">
@@ -185,7 +141,5 @@ export default function AboutPage() {
           </a>
         </section>
       </div>
-      <Footer />
-    </>
   );
 }

@@ -45,7 +45,7 @@ export function CarCard({
       className={`group relative border transition-all duration-300 cursor-pointer ${
         isSelected
           ? "border-primary bg-primary/5"
-          : "border-border bg-white hover:border-primary"
+          : "border-border bg-primary-foreground hover:border-primary"
       }`}
     >
       <div
@@ -57,11 +57,11 @@ export function CarCard({
       </div>
 
       <div className="flex flex-col h-full">
-        <div className="aspect-[4/3] bg-muted relative overflow-hidden border-b border-border">
+        <div className="aspect-4/3 bg-muted relative overflow-hidden border-b border-border">
           <div className="absolute inset-0 flex items-center justify-center bg-muted/50">
             <RiCarLine className="size-12 text-muted-foreground/30" />
           </div>
-          <div className="absolute top-0 left-0 bg-white/90 backdrop-blur-sm px-4 py-2 border-b border-r border-border">
+          <div className="absolute top-0 left-0 bg-primary-foreground/90 backdrop-blur-sm px-4 py-2 border-b border-r border-border">
             <span className="text-xs font-mono uppercase tracking-widest">
               {tTypes(car.category as any)}
             </span>
@@ -70,7 +70,7 @@ export function CarCard({
 
         <div className="p-5 flex flex-col flex-1 gap-4">
           <div>
-            <h4 className="font-display text-xl font-bold uppercase tracking-tight text-foreground mb-3 group-hover:text-primary transition-colors">
+            <h4 className="font-display text-xl font-medium uppercase tracking-tight text-foreground mb-3 group-hover:text-primary transition-colors">
               {car.model}
             </h4>
 
@@ -158,10 +158,10 @@ export function CarCard({
           <div className="mt-auto pt-4 border-t border-border/50 flex items-end justify-between">
             <div>
               <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">
-                Total ({days} {tSummary("days")})
+                Est. Total ({days} {tSummary("days")})
               </p>
-              <p className="font-display text-xl font-bold text-foreground">
-                ${total}
+              <p className="font-display text-xl font-medium text-foreground">
+                ${total}*
               </p>
             </div>
             <p className="text-sm font-medium text-muted-foreground">

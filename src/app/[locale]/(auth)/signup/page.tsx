@@ -8,7 +8,7 @@ export default async function SignupPage() {
   return (
     <div className="w-full">
       <div className="mb-10">
-        <h1 className="font-display text-4xl font-black uppercase text-foreground mb-2">
+        <h1 className="font-display text-4xl font-medium uppercase text-foreground mb-2">
           {t("title")}
         </h1>
         <p className="text-muted-foreground text-lg font-light">
@@ -16,7 +16,7 @@ export default async function SignupPage() {
         </p>
       </div>
 
-     <RegisterForm/>
+      <RegisterForm />
 
       <p className="text-center text-sm text-muted-foreground mt-8 font-light">
         {t("haveAccount")}{" "}

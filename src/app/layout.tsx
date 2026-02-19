@@ -78,7 +78,7 @@ export default async function RootLayout({ children, params }: Props) {
       >
         <DirectionProvider direction={direction}>
           <SmoothScroller>
-            <CustomCursor />
+            {/* <CustomCursor /> */}
             <ScrollProgress />
             {children}
           </SmoothScroller>

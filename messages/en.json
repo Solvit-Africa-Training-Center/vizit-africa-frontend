@@ -1,10 +1,11 @@
 {
   "Common": {
     "brandName": "Vizit Africa",
-    "startPlanning": "Book Your Trip",
+    "startPlanning": "Start Journey",
+    "bookFlight": "Plan a Flight",
     "learnMore": "View Options",
     "viewAll": "View All",
-    "bookNow": "Book Now",
+    "bookNow": "Request Quote",
     "contactUs": "Contact Support",
     "getInTouch": "Get in Touch",
     "sendMessage": "Send Request",
@@ -15,63 +16,59 @@
     "localTime": "Local Time",
     "back": "Back",
     "continue": "Continue",
-    "submit": "Search Flights"
+    "submit": "Request Quote"
   },
   "Navigation": {
-    "services": "Services",
+    "flights": "Flights",
+    "destinations": "Destinations",
     "experiences": "Experiences",
-    "gallery": "Gallery",
-    "aboutUs": "About Us",
+    "aboutUs": "About",
     "contact": "Contact"
   },
   "Hero": {
     "slides": {
       "1": {
         "subheading": "Seamless Travel",
-        "heading1": "Book",
+        "heading1": "Plan",
         "heading2": "Flights",
-        "description": "Compare airlines, find the best routes, and secure your seat to the heart of Africa in minutes."
+        "description": "Tell us your origin and dates. We'll manually source the best routes and fares to Rwanda for you."
       },
       "2": {
         "subheading": "Premium Stays",
-        "heading1": "Reserve",
+        "heading1": "Request",
         "heading2": "Hotels",
-        "description": "From boutique lodges to 5-star resorts. curated accommodations verified for quality and comfort."
+        "description": "Curated accommodations verified for quality and comfort. We'll secure your room at the best available rate."
       },
       "3": {
         "subheading": "Explore Freely",
-        "heading1": "Rent",
+        "heading1": "Hire",
         "heading2": "Vehicles",
-        "description": " rugged 4x4s for safari or luxury sedans for the city. Drive yourself or book a professional chauffeur."
+        "description": "Rugged 4x4s or luxury sedans. Choose your preference and we'll arrange the perfect ride with or without a driver."
       },
       "4": {
         "subheading": "Expert Guidance",
-        "heading1": "Hire",
+        "heading1": "Source",
         "heading2": "Guides",
-        "description": "Connect with local experts who know every trail, bird species, and hidden cultural gem."
+        "description": "Connect with local experts who know every trail and hidden gem. We'll match you with the right specialist."
       },
       "5": {
         "subheading": "Complete Packages",
-        "heading1": "Plan",
-        "heading2": "Trips",
-        "description": "Bundle flights, hotels, and experiences into one seamless itinerary. We handle the logistics."
+        "heading1": "Your",
+        "heading2": "Itinerary",
+        "description": "Bundle flights, hotels, and experiences. Receive a comprehensive quote and itinerary within 48 hours."
       }
     },
     "location": "Kigali Int. Airport",
     "coordinates": "1°58'S, 30°08'E"
   },
   "SocialProof": {
-    "tagline": "Trusted by global travelers & partners"
+    "tagline": "Partnered with leading airlines"
   },
   "Services": {
-    "overline": "Travel Logistics",
-    "title": "Everything You Need",
-    "description": "We don't just inspire travel; we facilitate it. A complete booking engine for every aspect of your journey.",
+    "overline": "Complete Your Trip",
+    "title": "Add-Ons",
+    "description": "Enhance your flight with premium accommodation, reliable transport, and expert local guides.",
     "items": {
-      "flights": {
-        "title": "Book Flights",
-        "description": "International & domestic routes."
-      },
       "hotels": {
         "title": "Book Stays",
         "description": "Hotels, lodges & BnBs."
@@ -85,6 +82,15 @@
         "description": "Certified local experts."
       }
     }
+  },
+  "PopularRoutes": {
+    "overline": "Top Routes",
+    "title": "Popular Flights",
+    "description": "Most booked routes to Kigali. Real-time pricing from partner airlines.",
+    "fromLabel": "From",
+    "direct": "Direct",
+    "oneStop": "1 Stop",
+    "searchRoute": "Search this route"
   },
   "Destinations": {
     "overline": "Popular Routes",
@@ -114,25 +120,25 @@
     }
   },
   "HowItWorks": {
-    "overline": "Simple Booking",
-    "title": "Plan Book Fly",
-    "description": "A streamlined process to get you from planning to boarding pass in minutes.",
+    "overline": "Expert Logistics",
+    "title": "Plan Quote Confirm Go",
+    "description": "Our streamlined process for custom African travel.",
     "steps": {
       "1": {
-        "title": "Search",
-        "description": "Enter your dates and destinations to see real-time availability for flights and hotels."
+        "title": "Share Your Plan",
+        "description": "Tell us your travel dates, origin, and preferences through our interactive planner."
       },
       "2": {
-        "title": "Select",
-        "description": "Compare options by price, rating, or duration. Choose what fits your schedule."
+        "title": "Expert Sourcing",
+        "description": "Our specialists manually find the best real-time fares and service availability for you."
       },
       "3": {
-        "title": "Add Extras",
-        "description": "Add a rental car, airport transfer, or a local guide to your itinerary with one click."
+        "title": "Receive Quote",
+        "description": "Within 48 hours, you'll receive a detailed itinerary with finalized prices for approval."
       },
       "4": {
-        "title": "Checkout",
-        "description": "Secure travel with instant confirmation and digital tickets delivered to your phone."
+        "title": "Secure Booking",
+        "description": "Confirm your plan with a single payment. We handle all ground logistics and tickets."
       }
     }
   },
@@ -178,9 +184,18 @@
     "title": "The Vizit Difference",
     "description": "We don't just book trips; we craft personal legacies. Here is what sets our journeys apart from the rest.",
     "stats": {
-      "travelers": { "value": "200+", "label": "Happy Travelers" },
-      "countries": { "value": "15+", "label": "Countries Served" },
-      "rating": { "value": "4.9", "label": "Average Rating" }
+      "travelers": {
+        "value": "200+",
+        "label": "Happy Travelers"
+      },
+      "countries": {
+        "value": "15+",
+        "label": "Countries Served"
+      },
+      "rating": {
+        "value": "4.9",
+        "label": "Average Rating"
+      }
     },
     "benefits": [
       "Real-time pricing from verified partners",
@@ -193,51 +208,51 @@
   "FAQ": {
     "overline": "Got Questions?",
     "title": "We Have Answers",
-    "description": "Everything you need to know about planning your unforgettable journey to Rwanda.",
+    "description": "Everything you need to know about booking flights and traveling to Rwanda.",
     "cantFindAnswer": "Can't find your answer?",
     "cantFindMobile": "Can't find what you're looking for?",
     "contactTeam": "Contact our team",
     "items": {
       "1": {
-        "question": "How far in advance should I book?",
-        "answer": "We recommend booking at least 3-4 weeks in advance, especially if you're planning gorilla trekking permits which can sell out months ahead. For peak season (June-September, December-February), book 2-3 months early."
+        "question": "What airlines fly to Rwanda?",
+        "answer": "RwandAir, KLM, Qatar Airways, Turkish Airlines, Ethiopian Airlines, Kenya Airways, and Brussels Airlines all serve Kigali International Airport with regular connections from major global hubs."
       },
       "2": {
-        "question": "What payment methods do you accept?",
-        "answer": "We accept all major credit cards (Visa, MasterCard, American Express), bank transfers, and mobile money (MTN MoMo, Airtel Money). Payment plans are available for larger bookings."
+        "question": "How far in advance should I book my flight?",
+        "answer": "For the best fares, book 6-8 weeks ahead. Peak season (June-September, December-February) fills up fast — book 2-3 months early. Last-minute deals are occasionally available."
       },
       "3": {
-        "question": "Can I modify my booking after confirmation?",
-        "answer": "Yes! You can modify most bookings up to 48 hours before your arrival date. Changes to gorilla permits are subject to availability and Rwanda Development Board policies."
-      },
-      "4": {
-        "question": "Do you provide airport pickup?",
-        "answer": "Absolutely. All our packages include the option for airport pickup at Kigali International Airport. Our drivers will meet you at arrivals with a name board."
-      },
-      "5": {
-        "question": "What's included in the tour guide service?",
-        "answer": "Our guides provide full-day services including transportation, entrance fees to attractions, meals, and expert commentary. They handle all logistics so you can focus on the experience."
-      },
-      "6": {
-        "question": "Is Rwanda safe for tourists?",
-        "answer": "Rwanda is one of the safest countries in Africa for tourists. Kigali is consistently ranked as one of the cleanest and most secure capital cities on the continent."
-      },
-      "7": {
-        "question": "What should I pack for gorilla trekking?",
-        "answer": "Essential items include: waterproof hiking boots, long pants, long-sleeved shirt, rain jacket, gardening gloves, and a daypack. We provide a detailed packing list upon booking."
-      },
-      "8": {
         "question": "Do I need a visa to visit Rwanda?",
         "answer": "Most nationalities can obtain a visa on arrival or e-visa. African Union passport holders and citizens of some countries enter visa-free. We'll help you understand your specific requirements."
+      },
+      "4": {
+        "question": "Can I add a hotel or car to my flight booking?",
+        "answer": "Yes! After selecting your flight, you can add hotels, car rentals, and local guides as optional add-ons — all in one booking flow."
+      },
+      "5": {
+        "question": "What's the baggage allowance?",
+        "answer": "Baggage allowance varies by airline and class. Economy typically includes 23kg checked + 7kg carry-on. Business class allows 32kg+. We display the allowance for each flight in the search results."
+      },
+      "6": {
+        "question": "Can I change or cancel my flight?",
+        "answer": "Yes! Most bookings can be modified up to 48 hours before departure. Cancellation policies depend on the airline and fare class. We clearly display flexibility options during booking."
+      },
+      "7": {
+        "question": "Do you offer multi-city flights?",
+        "answer": "Absolutely. Search for multi-city itineraries to combine Kigali with Nairobi, Addis Ababa, or other African destinations. Great for regional exploration."
+      },
+      "8": {
+        "question": "What payment methods do you accept?",
+        "answer": "We accept all major credit cards (Visa, MasterCard, American Express), bank transfers, and mobile money (MTN MoMo, Airtel Money). Payment plans are available for larger bookings."
       }
     }
   },
   "CTA": {
-    "overline": "Ready to go?",
-    "title": "Book Your",
-    "titleHighlight": "Flight Now",
-    "description": "Don't wait. Prices and availability change daily. Secure your trip to Rwanda today.",
-    "startPlanning": "Search Flights",
+    "overline": "Ready to explore?",
+    "title": "Start Your",
+    "titleHighlight": "Journey",
+    "description": "Receive a personalized itinerary and final quote within 48 hours. Expertly crafted for your perfect stay.",
+    "startPlanning": "Start Planning",
     "contactTeam": "Contact Support",
     "concierge": "Group Bookings",
     "emailUs": "Email Support",
@@ -333,6 +348,28 @@
       "confirmPassword": "Confirm Password",
       "haveAccount": "Already have an account?",
       "signIn": "Sign in"
+    },
+    "verifyEmail": {
+      "title": "Verify Email",
+      "codeLabel": "Verification Code",
+      "verifyButton": "Verify Email",
+      "success": "Email verified successfully",
+      "error": "Invalid verification code",
+      "backToLogin": "Back to Login",
+      "goToProfile": "Go to Profile"
+    },
+    "setPassword": {
+      "title": "Set Account Password",
+      "subtitle": "Set a secure password for your new account to access your itinerary and bookings.",
+      "newPassword": "New Password",
+      "placeholder": "Enter new password",
+      "confirmPassword": "Confirm New Password",
+      "confirmPlaceholder": "Confirm your password",
+      "submit": "Set Password",
+      "success": "Password set successfully! You are now logged in.",
+      "remembered": "Remember your password?",
+      "invalidLink": "Invalid Link",
+      "invalidLinkDesc": "This password reset link is invalid or has expired."
     }
   },
   "ServicesPage": {
@@ -545,24 +582,60 @@
       "urban": "urban"
     },
     "items": {
-      "1": { "alt": "Luxury SUV Interior", "caption": "Fleet Comfort" },
-      "2": { "alt": "Safari Land Cruiser", "caption": "Off-road Ready" },
-      "3": { "alt": "Business Class Seat", "caption": "Premium Air" },
-      "4": { "alt": "The Retreat", "caption": "Kigali Luxury" },
-      "5": { "alt": "One&Only", "caption": "Mountain Views" },
-      "6": { "alt": "Bisate Lodge", "caption": "Volcano Base" },
-      "7": { "alt": "Akagera Game Drive", "caption": "Wildlife Spotting" },
-      "8": { "alt": "Gorilla Encounter", "caption": "Primate Trek" },
-      "9": { "alt": "Helicopter Transfer", "caption": "Scenic Route" },
-      "10": { "alt": "Private Dining", "caption": "Exclusive Service" },
-      "11": { "alt": "Canopy Walk", "caption": "Rainforest View" },
-      "12": { "alt": "Lake Kivu Boat", "caption": "Water Transport" }
+      "1": {
+        "alt": "Luxury SUV Interior",
+        "caption": "Fleet Comfort"
+      },
+      "2": {
+        "alt": "Safari Land Cruiser",
+        "caption": "Off-road Ready"
+      },
+      "3": {
+        "alt": "Business Class Seat",
+        "caption": "Premium Air"
+      },
+      "4": {
+        "alt": "The Retreat",
+        "caption": "Kigali Luxury"
+      },
+      "5": {
+        "alt": "One&Only",
+        "caption": "Mountain Views"
+      },
+      "6": {
+        "alt": "Bisate Lodge",
+        "caption": "Volcano Base"
+      },
+      "7": {
+        "alt": "Akagera Game Drive",
+        "caption": "Wildlife Spotting"
+      },
+      "8": {
+        "alt": "Gorilla Encounter",
+        "caption": "Primate Trek"
+      },
+      "9": {
+        "alt": "Helicopter Transfer",
+        "caption": "Scenic Route"
+      },
+      "10": {
+        "alt": "Private Dining",
+        "caption": "Exclusive Service"
+      },
+      "11": {
+        "alt": "Canopy Walk",
+        "caption": "Rainforest View"
+      },
+      "12": {
+        "alt": "Lake Kivu Boat",
+        "caption": "Water Transport"
+      }
     }
   },
   "Meta": {
     "home": {
-      "title": "Vizit Africa | Curated Travel Experiences in Rwanda",
-      "description": "Experience the best of Rwanda with custom travel packages. From gorilla trekking to Kigali city tours, we handle flights, hotels, and guides."
+      "title": "Vizit Africa | Book Flights to Rwanda & Africa",
+      "description": "Find and book the best flights to Rwanda. Add hotels, car rentals, and local guides to complete your African adventure."
     },
     "about": {
       "title": "About Us | Vizit Africa",
@@ -583,9 +656,9 @@
       "description": "Customize your perfect African adventure. We'll handle the details while you focus on the journey."
     },
     "steps": {
-      "tripDetails": "Trip Details",
-      "contact": "Contact",
-      "services": "Services",
+      "flight": "Flight",
+      "addOns": "Add-Ons",
+      "travelerDetails": "Traveler Details",
       "review": "Review"
     },
     "tripDetails": {
@@ -609,10 +682,29 @@
       },
       "specialRequests": "Special Requests (Optional)",
       "requestsPlaceholder": "Any dietary requirements, accessibility needs, or special occasions...",
-      "continue": "Continue to Contact Info"
+      "continue": "Continue to Traveler Details"
     },
-    "contactInfo": {
-      "title": "Contact Information",
+    "flight": {
+      "title": "Find Your Flight",
+      "subtitle": "Start your journey with the best flight options to Rwanda.",
+      "from": "From",
+      "to": "To",
+      "departure": "Departure",
+      "travelers": "Travelers",
+      "search": "Search Flights",
+      "searching": "Searching...",
+      "flightsFound": "Flights Found",
+      "perPerson": "Prices per person",
+      "select": "Select",
+      "selected": "Selected",
+      "skip": "Skip flights",
+      "skipForNow": "Skip for now",
+      "findFlights": "Find Flights",
+      "noFlights": "No flights found",
+      "tryAgain": "Try changing your search criteria"
+    },
+    "travelerDetails": {
+      "title": "Traveler Details",
       "subtitle": "How can we reach you about your booking?",
       "fullName": "Full Name",
       "namePlaceholder": "John Doe",
@@ -620,9 +712,9 @@
       "emailPlaceholder": "you@example.com",
       "phone": "Phone (Optional)",
       "phonePlaceholder": "+1 234 567 8900",
-      "continue": "Continue to Services"
+      "continue": "Continue to Add-Ons"
     },
-    "services": {
+    "addOns": {
       "tabs": {
         "hotels": "Hotels",
         "cars": "Cars",
@@ -647,10 +739,9 @@
     },
     "review": {
       "title": "Review Your Trip",
-      "subtitle": "Please review your details before confirming",
-      "alert": "After submitting, we'll review your request and send you a payment link within 24 hours.",
-      "submit": "Submit Booking Request",
-      "success": "Booking submitted! We'll contact you within 24 hours."
+      "subtitle": "Please review your preferences. Our experts will manually source the best flight routes and final service prices for your personalized itinerary.",
+      "alert": "After submitting, we'll find the best real-time options and send you a finalized quote within 48 hours.",
+      "submit": "Request Quote Now"
     },
     "summary": {
       "title": "Your Trip",
@@ -666,7 +757,12 @@
       "perDay": "/ day",
       "withDriver": "w/ Driver",
       "nights": "nights",
-      "days": "days"
+      "days": "days",
+      "destination": "Destination",
+      "infant": "infant",
+      "infants": "infants",
+      "oneWay": "One Way",
+      "roundTrip": "Round Trip"
     },
     "data": {
       "amenities": {
@@ -715,18 +811,18 @@
       }
     },
     "confirmation": {
-      "title": "Request Received!",
-      "subtitle": "We've received your trip plan and our team is already reviewing it.",
+      "title": "Quote Request Received!",
+      "subtitle": "We've received your trip plan and our team is already sourcing the best flight and service options for you.",
       "referenceNumber": "Reference Number",
       "whatNext": "What happens next?",
       "steps": {
         "1": {
-          "title": "Expert Review (24hrs)",
-          "description": "One of our travel specialists will review your selected flights, hotels, and services to ensure availability and logistics."
+          "title": "Manual Sourcing (48hrs)",
+          "description": "Our travel specialists will manually find the best real-time flight fares and service availability based on your preferences."
         },
         "2": {
-          "title": "Personalized Proposal",
-          "description": "You'll receive a detailed itinerary with final pricing and payment options via email."
+          "title": "Receive Your Quote",
+          "description": "You'll receive a detailed itinerary with finalized pricing and a payment link via email within 2 business days."
         }
       },
       "dashboardButton": "Go to Dashboard",
@@ -896,7 +992,6 @@
         "passengers": "passengers"
       }
     },
-
     "Languages": {
       "en": "English",
       "fr": "Français",
@@ -905,6 +1000,16 @@
       "pt": "Português",
       "ar": "العربية",
       "he": "עברית"
+    },
+    "createService": {
+      "title": "Create Service",
+      "subtitle": "Create a new service",
+      "back": "Back to Services"
+    },
+    "createVendor": {
+      "title": "Create Vendor",
+      "subtitle": "Create a new vendor",
+      "back": "Back to Vendors"
     }
   },
   "Profile": {
@@ -994,12 +1099,30 @@
     "description": "See the world through the eyes of our travelers. From luxury stays to wild adventures.",
     "viewAll": "View Full Gallery",
     "items": {
-      "1": { "alt": "Imigongo Art", "caption": "Cultural Heritage" },
-      "2": { "alt": "Kigali Convention Center", "caption": "Modern Kigali" },
-      "3": { "alt": "Tea Plantation", "caption": "Nyungwe Tea" },
-      "4": { "alt": "Gorilla Trekking", "caption": "Once in a Lifetime" },
-      "5": { "alt": "Safari Sunset", "caption": "Golden Plains" },
-      "6": { "alt": "Canopy Walk", "caption": "Above the Trees" }
+      "1": {
+        "alt": "Imigongo Art",
+        "caption": "Cultural Heritage"
+      },
+      "2": {
+        "alt": "Kigali Convention Center",
+        "caption": "Modern Kigali"
+      },
+      "3": {
+        "alt": "Tea Plantation",
+        "caption": "Nyungwe Tea"
+      },
+      "4": {
+        "alt": "Gorilla Trekking",
+        "caption": "Once in a Lifetime"
+      },
+      "5": {
+        "alt": "Safari Sunset",
+        "caption": "Golden Plains"
+      },
+      "6": {
+        "alt": "Canopy Walk",
+        "caption": "Above the Trees"
+      }
     }
   }
 }
