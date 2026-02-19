@@ -36,11 +36,11 @@ export function DataTableViewOptions<TData>({
           <Button
             variant="outline"
             size="sm"
-            className="ml-auto hidden h-8 lg:flex"
+            className="ml-auto hidden lg:flex"
           />
         }
       >
-        <RiEqualizerLine className="mr-2 h-4 w-4 opacity-60" />
+        <RiEqualizerLine />
         View
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[150px]">
@@ -54,12 +54,11 @@ export function DataTableViewOptions<TData>({
 
             return (
               <DropdownMenuCheckboxItem
-                key={column.id}
+                key={`${column.id}-${column.getIsVisible()}`}
                 className="capitalize"
-                checked={columnVisibility[column.id] !== false}
-                onCheckedChange={(checked: boolean) => {
-                  column.toggleVisibility(!!checked);
-                }}
+                checked={column.getIsVisible()}
+                onCheckedChange={(value) => column.toggleVisibility(!!value)}
+                onSelect={(event) => event.preventDefault()}
               >
                 {label.replace(/_/g, " ")}
               </DropdownMenuCheckboxItem>
