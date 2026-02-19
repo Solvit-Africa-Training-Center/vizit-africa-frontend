@@ -4,34 +4,30 @@ import {
   type ColumnDef,
   type SortingState,
   type ColumnFiltersState,
-  flexRender,
+  type VisibilityState,
+  type RowSelectionState,
   getCoreRowModel,
+  getFacetedRowModel,
+  getFacetedUniqueValues,
+  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  getFilteredRowModel,
   useReactTable,
+  flexRender,
+  type PaginationState,
 } from "@tanstack/react-table";
+import * as React from "react";
 import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  Search,
-  X,
-  Filter,
-  ChevronLeft,
-  ChevronRight,
-  ChevronsUpDown,
-} from "lucide-react";
-import { useMemo, useState } from "react";
+  RiArrowLeftSLine,
+  RiArrowRightSLine,
+  RiArrowLeftDoubleLine,
+  RiArrowRightDoubleLine,
+  RiCloseLine,
+} from "@remixicon/react";
 
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectItem,
-  SelectContent,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -40,228 +36,194 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import { DataTableFacetedFilter } from "@/components/ui/data-table-faceted-filter";
+import { DataTableViewOptions } from "@/components/ui/data-table-view-options";
+
+export type DataTableState = {
+  sorting: SortingState;
+  columnFilters: ColumnFiltersState;
+  columnVisibility: VisibilityState;
+  rowSelection: RowSelectionState;
+  pagination: PaginationState;
+};
+
+export type DataTableCallbacks = {
+  onStateChange: (state: Partial<DataTableState>) => void;
+};
 
 interface FilterOption {
   label: string;
   value: string;
-  icon?: React.ReactNode;
+  icon?: React.ComponentType<{ className?: string }>;
 }
 
-interface FilterConfig {
-  columnId: string;
-  title: string;
+export interface DataTableFilterField {
+  label: string;
+  value: string;
   options: FilterOption[];
 }
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  defaultPageSize?: number;
-  filters?: FilterConfig[];
+  filterFields?: DataTableFilterField[];
   searchPlaceholder?: string;
+  searchColumn?: string;
+  state: DataTableState;
+  callbacks: DataTableCallbacks;
+  isLoading?: boolean;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  defaultPageSize = 10,
-  filters = [],
-  searchPlaceholder = "Search all columns...",
+  filterFields = [],
+  searchPlaceholder = "Filter...",
+  searchColumn,
+  state,
+  callbacks,
+  isLoading = false,
 }: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = useState<SortingState>([]);
-  const [pagination, setPagination] = useState({
-    pageIndex: 0,
-    pageSize: defaultPageSize,
-  });
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [globalFilter, setGlobalFilter] = useState("");
-
-  const memoizedData = useMemo(() => data, [data]);
-  const memoizedColumns = useMemo(() => columns, [columns]);
-
   const table = useReactTable({
-    data: memoizedData,
-    columns: memoizedColumns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    onSortingChange: setSorting,
-    getSortedRowModel: getSortedRowModel(),
-    onPaginationChange: setPagination,
-    onColumnFiltersChange: setColumnFilters,
-    getFilteredRowModel: getFilteredRowModel(),
-    onGlobalFilterChange: setGlobalFilter,
-    globalFilterFn: "includesString",
+    data,
+    columns,
     state: {
-      sorting,
-      pagination,
-      columnFilters,
-      globalFilter,
+      sorting: state.sorting,
+      columnFilters: state.columnFilters,
+      columnVisibility: state.columnVisibility,
+      rowSelection: state.rowSelection,
+      pagination: state.pagination,
     },
+    onSortingChange: (updater) => {
+      const next =
+        typeof updater === "function" ? updater(state.sorting) : updater;
+      callbacks.onStateChange({ sorting: next });
+    },
+    onColumnFiltersChange: (updater) => {
+      const next =
+        typeof updater === "function"
+          ? updater(state.columnFilters)
+          : updater;
+      callbacks.onStateChange({ columnFilters: next });
+    },
+    onColumnVisibilityChange: (updater) => {
+      const next =
+        typeof updater === "function"
+          ? updater(state.columnVisibility)
+          : updater;
+      callbacks.onStateChange({ columnVisibility: next });
+    },
+    onRowSelectionChange: (updater) => {
+      const next =
+        typeof updater === "function"
+          ? updater(state.rowSelection)
+          : updater;
+      callbacks.onStateChange({ rowSelection: next });
+    },
+    onPaginationChange: (updater) => {
+      const next =
+        typeof updater === "function" ? updater(state.pagination) : updater;
+      callbacks.onStateChange({ pagination: next });
+    },
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFacetedRowModel: getFacetedRowModel(),
+    getFacetedUniqueValues: getFacetedUniqueValues(),
+    // Keep manual processing false so tanstack-table handles it locally
+    manualPagination: false,
+    manualSorting: false,
+    manualFiltering: false,
   });
 
-  const isFiltered =
-    table.getState().columnFilters.length > 0 || globalFilter.length > 0;
-
-  const activeFilterCount = table.getState().columnFilters.length;
+  const isFiltered = state.columnFilters.length > 0;
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div className="flex flex-1 items-center gap-3">
-          <div className="relative w-full sm:w-80">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder={searchPlaceholder}
-              value={globalFilter ?? ""}
-              onChange={(event) =>
-                table.setGlobalFilter(String(event.target.value))
-              }
-              className="pl-9 pr-4 h-10 bg-background"
-            />
-            {globalFilter && (
-              <button
-                type="button"
-                onClick={() => setGlobalFilter("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <X className="h-4 w-4" />
-              </button>
-            )}
-          </div>
-
-          {filters.map((filter) => {
-            const column = table.getColumn(filter.columnId);
-            if (!column) return null;
-
-            const selectedValue = column.getFilterValue() as string;
-            const selectedOption = filter.options.find(
-              (o) => o.value === selectedValue,
-            );
-
+      <div className="flex items-center justify-between gap-4">
+        <div className="flex flex-1 items-center space-x-2">
+          {searchColumn && (
+            <div className="relative">
+              <Input
+                placeholder={searchPlaceholder}
+                value={
+                  (table.getColumn(searchColumn)?.getFilterValue() as string) ??
+                  ""
+                }
+                onChange={(event) =>
+                  table
+                    .getColumn(searchColumn)
+                    ?.setFilterValue(event.target.value)
+                }
+                className="h-8 w-[150px] lg:w-[250px]"
+                disabled={isLoading}
+              />
+            </div>
+          )}
+          {filterFields.map((field) => {
+            const column = table.getColumn(field.value);
             return (
-              <Select
-                key={filter.columnId}
-                value={selectedValue ?? "all"}
-                onValueChange={(value) => {
-                  column.setFilterValue(value === "all" ? undefined : value);
-                }}
-              >
-                <SelectTrigger className="w-auto min-w-[140px] h-10 gap-2 bg-background">
-                  <div className="flex items-center gap-2">
-                    <Filter className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-muted-foreground">
-                      {filter.title}:
-                    </span>
-                    <span className="font-medium">
-                      {selectedOption?.label ?? "All"}
-                    </span>
-                  </div>
-                </SelectTrigger>
-                <SelectContent align="start">
-                  <SelectItem value="all">
-                    <span className="font-medium">All {filter.title}</span>
-                  </SelectItem>
-                  {filter.options.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      <div className="flex items-center gap-2">
-                        {option.icon}
-                        <span>{option.label}</span>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              column && (
+                <DataTableFacetedFilter
+                  key={field.value}
+                  column={column}
+                  title={field.label}
+                  options={field.options}
+                />
+              )
             );
           })}
-        </div>
-
-        <div className="flex items-center gap-2">
-          {activeFilterCount > 0 && (
-            <Badge variant="secondary" className="h-6 gap-1">
-              <Filter className="h-3 w-3" />
-              {activeFilterCount} filter{activeFilterCount > 1 ? "s" : ""}
-            </Badge>
-          )}
           {isFiltered && (
             <Button
               variant="ghost"
-              size={"sm"}
-              onClick={() => {
-                table.resetColumnFilters();
-                setGlobalFilter("");
-              }}
-              className="text-muted-foreground"
+              onClick={() => table.resetColumnFilters()}
+              className="h-8 px-2 lg:px-3"
+              disabled={isLoading}
             >
               Reset
-              <X />
+              <RiCloseLine className="ml-2 h-4 w-4" />
             </Button>
           )}
         </div>
+        <DataTableViewOptions table={table} />
       </div>
 
-      <div className="rounded-lg border border-border bg-card overflow-hidden">
+      <div className="rounded-md border bg-card">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow
-                key={headerGroup.id}
-                className="bg-muted/40 hover:bg-muted/40 border-b border-border"
-              >
-                {headerGroup.headers.map((header) => {
-                  const isSortable = header.column.getCanSort();
-                  const sortDirection = header.column.getIsSorted();
-
-                  return (
-                    <TableHead
-                      key={header.id}
-                      className="h-12 px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground"
-                      style={
-                        header.column.getSize() !== 150
-                          ? { width: header.column.getSize() }
-                          : undefined
-                      }
-                    >
-                      {header.isPlaceholder ? null : isSortable ? (
-                        <button
-                          type="button"
-                          className="flex items-center gap-1.5 hover:text-foreground transition-colors -ml-1 px-1 py-0.5 rounded"
-                          onClick={header.column.getToggleSortingHandler()}
-                        >
-                          {flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
-                          {sortDirection === "asc" ? (
-                            <ChevronUpIcon className="h-4 w-4" />
-                          ) : sortDirection === "desc" ? (
-                            <ChevronDownIcon className="h-4 w-4" />
-                          ) : (
-                            <ChevronsUpDown className="h-4 w-4 opacity-50" />
-                          )}
-                        </button>
-                      ) : (
-                        flexRender(
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id} colSpan={header.colSpan}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
                           header.column.columnDef.header,
                           header.getContext(),
-                        )
-                      )}
-                    </TableHead>
-                  );
-                })}
+                        )}
+                  </TableHead>
+                ))}
               </TableRow>
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows.length ? (
+            {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() ? "selected" : undefined}
-                  className="hover:bg-muted/30 transition-colors"
+                  data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="px-4 py-3">
+                    <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),
@@ -274,24 +236,9 @@ export function DataTable<TData, TValue>({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-32 text-center text-muted-foreground"
+                  className="h-24 text-center"
                 >
-                  <div className="flex flex-col items-center gap-2">
-                    <Search className="h-8 w-8 opacity-40" />
-                    <p>No results found.</p>
-                    {isFiltered && (
-                      <Button
-                        variant="link"
-                        size={"sm"}
-                        onClick={() => {
-                          table.resetColumnFilters();
-                          setGlobalFilter("");
-                        }}
-                      >
-                        Clear filters
-                      </Button>
-                    )}
-                  </div>
+                  {isLoading ? "Loading..." : "No results."}
                 </TableCell>
               </TableRow>
             )}
@@ -300,72 +247,71 @@ export function DataTable<TData, TValue>({
       </div>
 
       <div className="flex items-center justify-between px-2">
-        <p className="text-sm text-muted-foreground">
-          Showing{" "}
-          <span className="font-medium text-foreground">
-            {table.getState().pagination.pageIndex *
-              table.getState().pagination.pageSize +
-              1}
-          </span>
-          {" - "}
-          <span className="font-medium text-foreground">
-            {Math.min(
-              (table.getState().pagination.pageIndex + 1) *
-                table.getState().pagination.pageSize,
-              table.getRowCount(),
-            )}
-          </span>{" "}
-          of{" "}
-          <span className="font-medium text-foreground">
-            {table.getRowCount()}
-          </span>{" "}
-          results
-        </p>
-
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-muted-foreground">Rows per page</span>
+        <div className="flex-1 text-sm text-muted-foreground">
+          {table.getFilteredSelectedRowModel().rows.length} of{" "}
+          {table.getFilteredRowModel().rows.length} row(s) selected.
+        </div>
+        <div className="flex items-center space-x-6 lg:space-x-8">
+          <div className="flex items-center space-x-2">
+            <Label className="text-sm font-medium">Rows per page</Label>
             <Select
-              value={String(pagination.pageSize)}
+              value={`${state.pagination.pageSize}`}
               onValueChange={(value) => {
                 table.setPageSize(Number(value));
               }}
+              disabled={isLoading}
             >
               <SelectTrigger className="h-8 w-[70px]">
-                <SelectValue />
+                <SelectValue placeholder={state.pagination.pageSize} />
               </SelectTrigger>
-              <SelectContent>
-                {[5, 10, 20, 50].map((size) => (
-                  <SelectItem key={size} value={String(size)}>
-                    {size}
+              <SelectContent side="top">
+                {[10, 20, 30, 40, 50].map((pageSize) => (
+                  <SelectItem key={pageSize} value={`${pageSize}`}>
+                    {pageSize}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
           </div>
-
-          <div className="flex items-center gap-1">
+          <div className="flex w-[100px] items-center justify-center text-sm font-medium">
+            Page {state.pagination.pageIndex + 1} of {table.getPageCount()}
+          </div>
+          <div className="flex items-center space-x-2">
             <Button
               variant="outline"
-              size="icon"
-              onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}
+              className="hidden h-8 w-8 p-0 lg:flex"
+              onClick={() => table.setPageIndex(0)}
+              disabled={!table.getCanPreviousPage() || isLoading}
             >
-              <ChevronLeft />
-              <span className="sr-only">Previous page</span>
+              <span className="sr-only">Go to first page</span>
+              <RiArrowLeftDoubleLine className="h-4 w-4" />
             </Button>
-            <span className="text-sm text-muted-foreground px-2">
-              Page {table.getState().pagination.pageIndex + 1} of{" "}
-              {table.getPageCount()}
-            </span>
             <Button
               variant="outline"
-              size="icon"
-              onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}
+              className="h-8 w-8 p-0"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage() || isLoading}
             >
-              <ChevronRight />
-              <span className="sr-only">Next page</span>
+              <span className="sr-only">Go to previous page</span>
+              <RiArrowLeftSLine className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              className="h-8 w-8 p-0"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage() || isLoading}
+            >
+              <span className="sr-only">Go to next page</span>
+              <RiArrowRightSLine className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              className="hidden h-8 w-8 p-0 lg:flex"
+              onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+              disabled={!table.getCanNextPage() || isLoading}
+            >
+              <span className="sr-only">Go to last page</span>
+              <RiArrowRightDoubleLine className="h-4 w-4" />
             </Button>
           </div>
         </div>

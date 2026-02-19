@@ -836,6 +836,7 @@
       "requests": "Requests",
       "bookings": "Bookings",
       "inventory": "Inventory",
+      "vendors": "Vendors",
       "settings": "Settings",
       "create": "Create",
       "publicSite": "Public Site",

@@ -247,6 +247,7 @@ export function Hero() {
                       src={s.image}
                       alt={hoverContent.heading1}
                       fill
+                      sizes="280px"
                       className="object-cover opacity-80"
                     />
                     <div className="absolute inset-0 bg-linear-to-t from-black via-black/20 to-transparent" />

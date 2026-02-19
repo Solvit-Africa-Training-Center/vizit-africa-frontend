@@ -3,19 +3,15 @@ import { z } from "zod";
 // create service
 export const createServiceInputSchema = z.object({
   title: z.string().min(3),
-  service_type: z.enum([
-    "flight",
-    "hotel",
-    "bnb",
-    "car_rental",
-    "guide",
-    "experience",
-  ]),
+  service_type: z
+    .enum(["flight", "hotel", "car", "activity", "experience", "tour", "guide"])
+    .nullable()
+    .optional(),
   description: z.string().min(10),
   base_price: z.number().min(0),
   currency: z.string(),
   capacity: z.number().min(1),
-  status: z.enum(["active", "inactive", "draft"]),
+  status: z.enum(["active", "inactive", "pending", "deleted"]),
   location: z.union([z.number(), z.string().min(1), z.undefined()]),
   user: z.union([
     z.number(),

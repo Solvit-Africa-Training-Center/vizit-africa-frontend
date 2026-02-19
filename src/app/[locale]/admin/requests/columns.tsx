@@ -2,8 +2,9 @@
 
 import type { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
+import { facetedFilterFn } from "@/lib/utils";
 import Link from "next/link";
-import type { Booking } from "@/types";
+import type { Booking } from "@/lib/schema/booking-schema";
 import { useTranslations } from "next-intl";
 
 // We need to wrap column definitions in a function or component to use hooks like useTranslations
@@ -43,27 +44,88 @@ const ServiceBadges = ({ flights, hotel, car, guide }: any) => {
   );
 };
 
-const ActionLink = ({ id, status }: { id: string; status: string }) => {
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import {
+  RiMore2Line,
+  RiEyeLine,
+  RiFileAddLine,
+  RiCloseCircleLine,
+} from "@remixicon/react";
+
+const ActionCell = ({ id, status }: { id: string; status: string }) => {
   const t = useTranslations("Admin.requests.table");
-  
-  if (status === "confirmed" || status === "paid" || status === "completed") {
-    return (
-      <Link
-        href={`/admin/bookings/${id}/fulfill`}
-        className="text-sm font-medium text-primary hover:underline"
-      >
-        {t("view")}
-      </Link>
-    );
-  }
 
   return (
-    <Link
-      href={`/admin/packages/${id}`}
-      className="text-sm font-medium text-primary hover:underline"
-    >
-      {status === "pending" ? t("createPackage") : t("view")}
-    </Link>
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        render={<Button variant="ghost" className="h-8 w-8 p-0" />}
+      >
+        <span className="sr-only">Open menu</span>
+        <RiMore2Line className="h-4 w-4" />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuGroup>
+          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuItem
+            render={
+              <Link
+                href={`/admin/requests/${id}`}
+                className="flex items-center cursor-pointer"
+              />
+            }
+          >
+            <RiEyeLine className="mr-2 h-4 w-4" />
+            {t("view")} Details
+          </DropdownMenuItem>
+
+          {status === "pending" && (
+            <DropdownMenuItem
+              render={
+                <Link
+                  href={`/admin/packages/${id}`}
+                  className="flex items-center cursor-pointer"
+                />
+              }
+            >
+              <RiFileAddLine className="mr-2 h-4 w-4" />
+              {t("createPackage")}
+            </DropdownMenuItem>
+          )}
+
+          {(status === "confirmed" ||
+            status === "paid" ||
+            status === "completed") && (
+            <DropdownMenuItem
+              render={
+                <Link
+                  href={`/admin/bookings/${id}/fulfill`}
+                  className="flex items-center cursor-pointer"
+                />
+              }
+            >
+              <RiFileAddLine className="mr-2 h-4 w-4" />
+              Manage Fulfillment
+            </DropdownMenuItem>
+          )}
+
+          <DropdownMenuSeparator />
+
+          <DropdownMenuItem className="text-destructive focus:text-destructive cursor-pointer">
+            <RiCloseCircleLine className="mr-2 h-4 w-4" />
+            Decline Request
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 
@@ -133,10 +195,7 @@ export const columns: ColumnDef<Booking>[] = [
         </Badge>
       );
     },
-    filterFn: (row, id, value) => {
-      // filters: 'pending', 'quoted', 'confirmed' - these are values, not labels, so no translation needed for matching
-      return value.includes(row.getValue(id));
-    },
+    filterFn: facetedFilterFn,
   },
   {
     accessorKey: "createdAt",
@@ -158,7 +217,7 @@ export const columns: ColumnDef<Booking>[] = [
     ),
     cell: ({ row }) => (
       <div className="text-right">
-        <ActionLink
+        <ActionCell
           id={row.original.id}
           status={row.original.status as string}
         />

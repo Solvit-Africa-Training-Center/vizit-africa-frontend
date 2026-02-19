@@ -34,13 +34,23 @@ import {
   acceptQuoteForBooking,
   cancelBooking,
 } from "@/actions/bookings";
+import type { Booking } from "@/lib/schema/booking-schema";
 import { differenceInDays, isPast, parseISO } from "date-fns";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { Spinner } from "@/components/ui/spinner";
 import { getSavedItems } from "@/actions/accounts";
 import { SaveButton } from "@/components/shared/save-button";
 
 type Tab = "overview" | "trips" | "saved" | "settings";
+
+function SavedItemsTab({ t }: { t: any }) {
+  return (
+    <div className="text-center py-20 border border-dashed rounded-sm">
+      <RiBookmarkLine className="size-8 mx-auto mb-2 text-muted-foreground" />
+      <p className="text-sm text-muted-foreground">{t("saved.emptyTitle")}</p>
+    </div>
+  );
+}
 
 export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState<Tab>("overview");
@@ -62,14 +72,14 @@ export default function ProfilePage() {
     if (!bookingsData) return { trips: 0, days: 0 };
 
     // Only count confirmed trips
-    const confirmedTrips = bookingsData.filter((b) => b.status === "confirmed");
+    const confirmedTrips = (bookingsData || []).filter((b: Booking) => b.status === "confirmed");
     const trips = confirmedTrips.length;
 
     let days = 0;
-    confirmedTrips.forEach((b) => {
+    confirmedTrips.forEach((b: Booking) => {
       // Only count days for ended or in-progress trips (start date <= now)
       // Check if trip has started
-      const hasStarted = b.items.some((item) => {
+      const hasStarted = b.items.some((item: any) => {
         if (!item.start_date) return false;
         try {
           return isPast(parseISO(item.start_date));
@@ -79,7 +89,7 @@ export default function ProfilePage() {
       });
 
       if (hasStarted) {
-        b.items.forEach((item) => {
+        b.items.forEach((item: any) => {
           if (!item.start_date || !item.end_date) return;
           try {
             days +=
@@ -100,21 +110,23 @@ export default function ProfilePage() {
     if (!bookingsData) return null;
 
     const confirmed = bookingsData
-      .filter((b) => b.status === "confirmed" && b.items.length > 0)
-      .sort(
-        (a, b) =>
-          new Date(a.items[0].start_date).getTime() -
-          new Date(b.items[0].start_date).getTime(),
-      )[0];
+      .filter((b: Booking) => b.status === "confirmed" && b.items.length > 0)
+      .sort((a: Booking, b: Booking) => {
+        const startA = a.items[0]?.start_date;
+        const startB = b.items[0]?.start_date;
+        if (!startA || !startB) return 0;
+        return new Date(startA).getTime() - new Date(startB).getTime();
+      })[0];
 
     if (confirmed) return confirmed;
 
     const pending = bookingsData
-      .filter((b) => b.status === "pending" && b.items.length > 0)
-      .sort(
-        (a, b) =>
-          new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
-      )[0];
+      .filter((b: Booking) => b.status === "pending" && b.items.length > 0)
+      .sort((a: Booking, b: Booking) => {
+        return (
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+      })[0];
 
     return pending;
   }, [bookingsData]);
@@ -122,7 +134,7 @@ export default function ProfilePage() {
   const pendingRequests = useMemo(() => {
     if (!bookingsData) return [];
     return bookingsData.filter(
-      (b) =>
+      (b: Booking) =>
         b.status === "pending" ||
         b.status === "quoted" ||
         b.quote?.status === "quoted",
@@ -219,10 +231,12 @@ export default function ProfilePage() {
                         {nextTrip ? (
                           <div className="text-right">
                             <p className="text-3xl font-display font-medium">
-                              {differenceInDays(
-                                new Date(nextTrip.items[0].start_date),
-                                new Date(),
-                              )}
+                              {nextTrip.items[0]?.start_date
+                                ? differenceInDays(
+                                    new Date(nextTrip.items[0].start_date),
+                                    new Date(),
+                                  )
+                                : "-"}
                             </p>
                             <p className="text-xs font-mono uppercase opacity-80">
                               {t("overview.nextTrip.daysLeft")}
@@ -239,16 +253,18 @@ export default function ProfilePage() {
                               : "Request Processing"
                             : "No Trips Planned"}
                         </h2>
-                        {nextTrip && (
+                        {nextTrip && nextTrip.items[0]?.start_date && (
                           <p className="text-lg font-light opacity-90 flex items-center gap-2">
                             <RiCalendarLine className="size-5" />
                             {new Date(
                               nextTrip.items[0].start_date,
                             ).toLocaleDateString()}{" "}
                             -{" "}
-                            {new Date(
-                              nextTrip.items[0].end_date,
-                            ).toLocaleDateString()}
+                            {nextTrip.items[0].end_date
+                              ? new Date(
+                                  nextTrip.items[0].end_date,
+                                ).toLocaleDateString()
+                              : ""}
                           </p>
                         )}
 
@@ -271,7 +287,7 @@ export default function ProfilePage() {
                             </p>
                             <p className="font-medium">
                               {nextTrip
-                                ? `${nextTrip.items[0].quantity} Unit(s)`
+                                ? `${nextTrip.items[0]?.quantity || 0} Unit(s)`
                                 : "-"}
                             </p>
                           </div>
@@ -294,7 +310,7 @@ export default function ProfilePage() {
                         {isLoading ? (
                           <p>Loading requests...</p>
                         ) : pendingRequests.length > 0 ? (
-                          pendingRequests.map((req) => (
+                          pendingRequests.map((req: Booking) => (
                             <div
                               key={req.id}
                               className="border border-border p-6 rounded-sm hover:border-primary transition-colors group bg-card"
@@ -309,7 +325,7 @@ export default function ProfilePage() {
                                   </h4>
                                   <p className="text-sm text-muted-foreground">
                                     {new Date(
-                                      req.created_at,
+                                      req.createdAt,
                                     ).toLocaleDateString()}
                                   </p>
                                 </div>
@@ -326,7 +342,7 @@ export default function ProfilePage() {
                                     Created
                                   </span>
                                   {new Date(
-                                    req.created_at,
+                                    req.createdAt,
                                   ).toLocaleDateString()}
                                 </div>
                                 <div>
@@ -383,7 +399,7 @@ export default function ProfilePage() {
                                     }
                                   >
                                     {acceptingId === String(req.id) ? (
-                                      <Loader2 className="animate-spin size-4 mr-2" />
+                                      <Spinner className="size-4 mr-2" />
                                     ) : null}
                                     Accept Quote
                                   </Button>
@@ -435,7 +451,7 @@ export default function ProfilePage() {
                                     }}
                                   >
                                     {cancellingId === String(req.id) ? (
-                                      <Loader2 className="animate-spin size-4 mr-2" />
+                                      <Spinner className="size-4 mr-2" />
                                     ) : (
                                       <RiInformationLine className="size-4 mr-2" />
                                     )}
@@ -502,42 +518,45 @@ export default function ProfilePage() {
                       {t("trips.planNew")}
                     </Button>
                   </div>
-                  <div className="border-y border-border divide-y divide-border">
-                    {bookingsData
-                      ?.filter((b) => b.status === "confirmed")
-                      .map((trip) => (
-                        <div
-                          key={trip.id}
-                          className="py-8 grid md:grid-cols-4 gap-6 items-center group"
-                        >
-                          <div className="md:col-span-2">
-                            <h3 className="font-display text-2xl font-medium mb-2 group-hover:text-primary transition-colors">
-                              {trip.items[0]?.service || "Safari Experience"}
-                            </h3>
-                            <p className="text-muted-foreground">
-                              {new Date(
-                                trip.items[0]?.start_date,
-                              ).toLocaleDateString()}{" "}
-                              -{" "}
-                              {new Date(
-                                trip.items[0]?.end_date,
-                              ).toLocaleDateString()}
-                            </p>
-                          </div>
-                          <Badge variant="success-outline">Confirmed</Badge>
-                          <div className="text-right">
-                            <Link href={`/profile/bookings/${trip.id}`}>
-                              <Button variant="outline">
-                                {t("trips.viewDetails")}
-                              </Button>
-                            </Link>
-                          </div>
-                        </div>
-                      ))}
-                    {(!bookingsData ||
-                      bookingsData.filter((b) => b.status === "confirmed")
-                        .length === 0) && (
-                      <div className="py-20 text-center">
+                                      <div className="border-y border-border divide-y divide-border">
+                                      {bookingsData
+                                        ?.filter((b: Booking) => b.status === "confirmed")
+                                        .map((trip: Booking) => (
+                                          <div
+                                            key={trip.id}
+                                            className="py-8 grid md:grid-cols-4 gap-6 items-center group"
+                                          >
+                                            <div className="md:col-span-2">
+                                              <h3 className="font-display text-2xl font-medium mb-2 group-hover:text-primary transition-colors">
+                                                {trip.items[0]?.service || "Safari Experience"}
+                                              </h3>
+                                              <p className="text-muted-foreground">
+                                                {trip.items[0]?.start_date
+                                                  ? new Date(
+                                                      trip.items[0].start_date,
+                                                    ).toLocaleDateString()
+                                                  : ""}{" "}
+                                                -{" "}
+                                                {trip.items[0]?.end_date
+                                                  ? new Date(
+                                                      trip.items[0].end_date,
+                                                    ).toLocaleDateString()
+                                                  : ""}
+                                              </p>
+                                            </div>
+                                            <Badge variant="success-outline">Confirmed</Badge>
+                                            <div className="text-right">
+                                              <Link href={`/profile/bookings/${trip.id}`}>
+                                                <Button variant="outline">
+                                                  {t("trips.viewDetails")}
+                                                </Button>
+                                              </Link>
+                                            </div>
+                                          </div>
+                                        ))}
+                                      {(!bookingsData ||
+                                        bookingsData.filter((b: Booking) => b.status === "confirmed")
+                                          .length === 0) && (                      <div className="py-20 text-center">
                         <p className="text-muted-foreground">
                           You don't have any confirmed trips yet.
                         </p>

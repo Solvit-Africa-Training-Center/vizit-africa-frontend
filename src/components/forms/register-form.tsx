@@ -49,7 +49,6 @@ export function RegisterForm() {
     },
     onSubmit: async ({ value }) => {
       const result = await register(value);
-      console.log(result);
       if (result.success) {
         toast.success("Account created! Check your email to verify.");
         router.push(`/verify-email?email=${encodeURIComponent(value.email)}`);
@@ -203,10 +202,10 @@ export function RegisterForm() {
         <Button
           type="submit"
           className="w-full h-14 rounded-sm gap-2 text-base font-medium uppercase tracking-wide"
-          disabled={form.state.isSubmitting}
+          loading={form.state.isSubmitting}
         >
           {form.state.isSubmitting ? "Creating..." : tCommon("createAccount")}
-          <RiArrowRightLine className="size-5" />
+          {!form.state.isSubmitting && <RiArrowRightLine className="size-5" />}
         </Button>
       </div>
     </form>

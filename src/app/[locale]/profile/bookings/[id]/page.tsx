@@ -4,7 +4,7 @@ import { use, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { formatDate } from "@/lib/utils";
 import { getBookingById, acceptQuoteForBooking } from "@/actions/bookings";
-import type { Booking } from "@/types";
+import type { Booking } from "@/lib/schema/booking-schema";
 import { Button } from "@/components/ui/button";
 import { Navbar } from "@/components/shared";
 import { Footer } from "@/components/landing";
@@ -112,9 +112,9 @@ export default function BookingDetailPage({ params }: PageProps) {
     ? booking.items.reduce((sum, item) => sum + (item.subtotal || 0), 0)
     : (quote?.total_amount || 0);
   
-  const currency = showItinerary
-    ? (booking.items[0]?.metadata?.currency || "USD") // Fallback, though ideally booking has currency
-    : (quote?.currency || "USD");
+  const currency = (showItinerary
+    ? (booking.items[0]?.metadata?.currency as string || "USD") // Fallback, though ideally booking has currency
+    : (quote?.currency || "USD")) as string;
 
   return (
     <div className="min-h-screen bg-background flex flex-col">

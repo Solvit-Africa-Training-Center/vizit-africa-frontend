@@ -67,10 +67,17 @@ export type AdminActionResponse = z.infer<typeof adminActionResponseSchema>;
 
 // booking item — service and dates are optional for custom items
 export const bookingItemSchema = z.object({
-  id: z.string().or(z.number()),
-  service: z.string().or(z.number()).nullable().optional(),
-  item_type: z.string().optional(),
-  title: z.string().optional(),
+  id: z.coerce.string(),
+  service: z.coerce.string().nullable().optional(),
+  item_type: z.enum([
+    "flight",
+    "hotel",
+    "car",
+    "activity",
+    "custom",
+    "service",
+  ]),
+  title: z.string(),
   description: z.string().optional(),
   start_date: z.string().nullable().optional(),
   end_date: z.string().nullable().optional(),
@@ -84,6 +91,7 @@ export const bookingItemSchema = z.object({
   status: z.string(),
   metadata: z.record(z.string(), z.unknown()).optional(),
   created_at: z.string(),
+  service_details: z.unknown().optional(),
 });
 
 export type BookingItem = z.infer<typeof bookingItemSchema>;
@@ -93,30 +101,46 @@ const quoteItemSchema = z.object({
   id: z.string().optional(),
   service: z.string().optional(),
   service_id: z.string().optional(),
-  type: z.string().optional(),
-  title: z.string().optional(),
+  type: z.enum(["flight", "hotel", "car", "activity", "custom", "service"]),
+  title: z.string(),
   description: z.string().optional(),
-  quantity: z.coerce.number().optional(),
-  unit_price: z.coerce.number().optional(),
-  line_total: z.coerce.number().optional(),
+  quantity: z.coerce.number(),
+  unit_price: z.coerce.number(),
+  line_total: z.coerce.number(),
   metadata: z.record(z.string(), z.unknown()).optional(),
 });
 
 const packageQuoteSchema = z.object({
-  status: z.string(),
-  sent_at: z.string().optional(),
-  sent_by: z.string().optional(),
-  currency: z.string().optional(),
-  total_amount: z.coerce.number().optional(),
+  status: z.enum(["quoted", "accepted", "expired"]),
+  sent_at: z.string(),
+  sent_by: z.string(),
+  currency: z.string(),
+  total_amount: z.coerce.number(),
   notes: z.string().optional(),
-  items: z.array(quoteItemSchema).optional(),
+  items: z.array(quoteItemSchema),
   expires_at: z.string().optional(),
   accepted_at: z.string().optional(),
+  accepted_by: z.string().optional(),
 });
+
+export const requestedItemSchema = z.object({
+  id: z.string().optional(),
+  service: z.string().optional(),
+  type: z.string().optional(),
+  title: z.string().optional(),
+  description: z.string().optional(),
+  price: z.coerce.number().optional(),
+  quantity: z.coerce.number().optional(),
+  category: z.string().optional(),
+  start_date: z.string().optional(),
+  end_date: z.string().optional(),
+});
+
+export type RequestedItem = z.infer<typeof requestedItemSchema>;
 
 // matches enriched BookingSerializer response
 export const bookingSchema = z.object({
-  id: z.string().or(z.number()),
+  id: z.coerce.string(),
   name: z.string(),
   email: z.string(),
   phone: z.string(),
@@ -130,7 +154,7 @@ export const bookingSchema = z.object({
   needsHotel: z.boolean(),
   needsCar: z.boolean(),
   needsGuide: z.boolean(),
-  status: z.string(),
+  status: z.enum(["pending", "quoted", "confirmed", "cancelled", "completed"]),
   currency: z.string(),
   total_amount: z.coerce.number(),
   specialRequests: z.string().optional(),
@@ -138,6 +162,9 @@ export const bookingSchema = z.object({
   items: z.array(bookingItemSchema),
   quote: packageQuoteSchema.nullable().optional(),
   createdAt: z.string(),
+  // Admin fields
+  notes: z.string().optional(),
+  requestedItems: z.array(requestedItemSchema).optional(),
 });
 
 export type Booking = z.infer<typeof bookingSchema>;
@@ -145,3 +172,5 @@ export type Booking = z.infer<typeof bookingSchema>;
 export const bookingListSchema = z.array(bookingSchema);
 
 export type BookingList = z.infer<typeof bookingListSchema>;
+
+export type AdminBooking = Booking; // Schema already includes optional admin fields

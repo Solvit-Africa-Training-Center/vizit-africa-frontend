@@ -14,7 +14,7 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import type { Booking } from "@/types";
+import type { Booking, RequestedItem } from "@/lib/schema/booking-schema";
 import { formatDate } from "@/lib/utils";
 
 interface FulfillClientProps {
@@ -42,16 +42,16 @@ export default function FulfillClient({ booking }: FulfillClientProps) {
 
   // Helpers to find items
   const flightItem = booking.requestedItems?.find(
-    (i) => i.type === "flight" || i.category === "flight"
+    (i) => i.type === "flight" || i.category === "flight",
   );
   const hotelItem = booking.requestedItems?.find(
-    (i) => i.type === "hotel" || i.category === "hotel"
+    (i) => i.type === "hotel" || i.category === "hotel",
   );
   const carItem = booking.requestedItems?.find(
-    (i) => i.type === "car" || i.category === "car"
+    (i) => i.type === "car" || i.category === "car",
   );
   const guideItem = booking.requestedItems?.find(
-    (i) => i.type === "guide" || i.category === "guide"
+    (i) => i.type === "guide" || i.category === "guide",
   );
 
   return (

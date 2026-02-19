@@ -24,6 +24,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import type { TripItem } from "@/lib/plan_trip-types";
+import { Switch } from "@/components/ui/switch";
 
 export default function TripReviewPage() {
   const t = useTranslations("PlanTrip"); // Assuming we have these or similar keys
@@ -43,8 +44,6 @@ export default function TripReviewPage() {
 
     try {
       const result = await submitTripRequest(tripInfo, items);
-      console.log({ tripInfo, items });
-      console.log({ result });
       if (result.success) {
         setSubmitted(true);
         toast.success("Trip request submitted successfully!");
@@ -264,8 +263,6 @@ export default function TripReviewPage() {
     </div>
   );
 }
-
-import { Switch } from "@/components/ui/switch";
 
 function TripItemCard({
   item,

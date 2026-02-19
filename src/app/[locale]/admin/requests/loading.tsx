@@ -30,7 +30,7 @@ export default function Loading() {
           </div>
         </div>
 
-        <div className="rounded-lg border border-border bg-card overflow-hidden">
+        <div className="space-y-4">
           <div className="p-4 space-y-4">
             {Array.from({ length: 5 }).map((_, i) => (
               <div key={i} className="flex items-center justify-between gap-4">

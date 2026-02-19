@@ -2,19 +2,21 @@ import { z } from "zod";
 
 // create vendor
 export const createVendorInputSchema = z.object({
+  email: z.string().email(),
+  full_name: z.string().min(2),
+  phone_number: z.string(),
+  bio: z.string(),
   business_name: z.string().min(2),
   vendor_type: z.enum([
-    "tour_operator",
-    "transport_provider",
-    "accommodation_provider",
+    "hotel",
+    "car_rental",
     "guide",
-    "individual",
-    "company",
+    "experience",
+    "transport",
+    "other",
   ]),
-  description: z.string(),
-  contact_phone: z.string(),
   address: z.string(),
-  website: z.string(),
+  website: z.string().url().or(z.literal("")),
 });
 
 export type CreateVendorInput = z.infer<typeof createVendorInputSchema>;

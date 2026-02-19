@@ -7,7 +7,6 @@ import {
 } from "next/font/google";
 import "./globals.css";
 import { SmoothScroller } from "@/components/smooth-scroller";
-import { CustomCursor } from "@/components/ui/custom-cursor";
 import { ScrollProgress } from "@/components/ui/scroll-progress";
 import { routing } from "@/i18n/routing";
 import { DirectionProvider } from "@/components/ui/direction";
@@ -78,7 +77,6 @@ export default async function RootLayout({ children, params }: Props) {
       >
         <DirectionProvider direction={direction}>
           <SmoothScroller>
-            {/* <CustomCursor /> */}
             <ScrollProgress />
             {children}
           </SmoothScroller>

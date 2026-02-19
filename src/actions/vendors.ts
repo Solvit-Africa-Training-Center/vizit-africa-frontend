@@ -36,6 +36,34 @@ export async function createVendorProfile(
   }
 }
 
+export async function updateVendor(
+  vendorId: string | number,
+  input: CreateVendorInput,
+): Promise<ActionResult<VendorResponse>> {
+  const validation = createVendorInputSchema.safeParse(input);
+  if (!validation.success) {
+    return {
+      success: false,
+      error: "Validation failed",
+      fieldErrors: validation.error.flatten().fieldErrors,
+    };
+  }
+
+  try {
+    const data = await api.put(
+      endpoints.vendors.details(vendorId),
+      validation.data,
+      vendorResponseSchema,
+    );
+    revalidatePath("/inventory");
+    revalidatePath(`/admin/vendors/${vendorId}/edit`);
+    return { success: true, data };
+  } catch (error) {
+    const err = error as ApiError;
+    return { success: false, error: err.message, fieldErrors: err.fieldErrors };
+  }
+}
+
 export async function approveVendor(
   vendorId: string | number,
 ): Promise<ActionResult<{ success: boolean; message: string }>> {
@@ -59,6 +87,23 @@ export async function getVendors(): Promise<ActionResult<VendorResponse[]>> {
       undefined,
     );
     return { success: true, data };
+  } catch (error) {
+    const err = error as ApiError;
+    return { success: false, error: err.message };
+  }
+}
+
+export async function deleteVendor(
+  vendorId: string | number,
+): Promise<ActionResult<{ success: boolean; message: string }>> {
+  try {
+    await api.delete(endpoints.vendors.details(vendorId));
+    revalidatePath("/admin/vendors");
+    revalidatePath("/inventory");
+    return {
+      success: true,
+      data: { success: true, message: "Vendor deleted successfully" },
+    };
   } catch (error) {
     const err = error as ApiError;
     return { success: false, error: err.message };

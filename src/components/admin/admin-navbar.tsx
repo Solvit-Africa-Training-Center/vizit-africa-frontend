@@ -39,6 +39,7 @@ export function AdminNavbar() {
       icon: RiCheckboxCircleLine,
     },
     { href: "/admin/inventory", label: t("inventory"), icon: RiStoreLine },
+    { href: "/admin/vendors", label: t("vendors"), icon: RiUserStarLine },
     { href: "/admin/settings", label: t("settings"), icon: RiSettings3Line },
   ];
 
@@ -80,15 +81,17 @@ export function AdminNavbar() {
 
         <div className="flex items-center gap-2 md:gap-4">
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" className="gap-2 h-9 px-3">
-                <RiAddLine className="size-4" />
-                <span className="hidden sm:inline font-medium">
-                  {t("create")}
-                </span>
-                <RiArrowDownSLine className="size-4 opacity-50" />
-              </Button>
-            </DropdownMenuTrigger>
+            <DropdownMenuTrigger
+              render={
+                <Button variant="ghost" size="sm" className="gap-2 h-9 px-3">
+                  <RiAddLine className="size-4" />
+                  <span className="hidden sm:inline font-medium">
+                    {t("create")}
+                  </span>
+                  <RiArrowDownSLine className="size-4 opacity-50" />
+                </Button>
+              }
+            />
             <DropdownMenuContent align="end" className="w-48">
               <Link href="/admin/create/service">
                 <DropdownMenuItem className="gap-2 cursor-pointer">
@@ -115,6 +118,14 @@ export function AdminNavbar() {
             variant="ghost"
             size="icon"
             className="text-muted-foreground hover:text-destructive"
+            onClick={async () => {
+              try {
+                await import("@/actions/auth").then((mod) => mod.logout());
+                window.location.href = "/auth/login";
+              } catch (error) {
+                console.error("Logout failed:", error);
+              }
+            }}
           >
             <RiLogoutBoxRLine />
             <span className="sr-only">{t("logout")}</span>

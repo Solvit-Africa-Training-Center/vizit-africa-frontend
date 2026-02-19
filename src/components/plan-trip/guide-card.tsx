@@ -49,7 +49,7 @@ export function GuideCard({ guide, isSelected, onToggle }: GuideCardProps) {
           </p>
 
           <div className="flex flex-wrap gap-2 mb-4">
-            {guide.languages.map((lang) => (
+            {(guide as any).languages?.map((lang: string) => (
               <span
                 key={lang}
                 className="text-[10px] uppercase tracking-wider px-2 py-0.5 border border-border text-muted-foreground"

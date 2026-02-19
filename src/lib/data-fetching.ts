@@ -1,6 +1,10 @@
+"use server";
+
 import { unstable_cache } from "next/cache";
-import type { Booking, User } from "@/types";
+import type { User } from "@/types";
+import type { Booking } from "@/lib/schema/booking-schema";
 import type { ServiceResponse } from "@/lib/schema/service-schema";
+import type { VendorResponse } from "@/lib/schema/vendor-schema";
 import { endpoints } from "@/actions/endpoints";
 import { api } from "@/lib/api/client";
 
@@ -41,7 +45,7 @@ export const getRequestById = async (id: string): Promise<Booking | null> => {
   }
 };
 
-export const getUsers = unstable_cache(
+const cachedGetUsers = unstable_cache(
   async (): Promise<User[]> => {
     try {
       const data = await api.get<User[]>(endpoints.auth.list, undefined, {
@@ -59,6 +63,8 @@ export const getUsers = unstable_cache(
     tags: ["users"],
   },
 );
+
+export const getUsers = async () => cachedGetUsers();
 
 export const getServices = async (
   category?: string,
@@ -94,6 +100,43 @@ export const getServiceById = async (
     return data;
   } catch (error) {
     console.error(`Failed to fetch service ${id}:`, error);
+    return null;
+  }
+};
+
+export const getVendors = async (): Promise<VendorResponse[]> => {
+  try {
+    const data = await api.get<VendorResponse[]>(
+      endpoints.vendors.list,
+      undefined,
+      {
+        next: {
+          revalidate: 3600,
+          tags: ["vendors"],
+        },
+      },
+    );
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch vendors:", error);
+    return [];
+  }
+};
+
+export const getVendorById = async (
+  id: string,
+): Promise<VendorResponse | null> => {
+  try {
+    const data = await api.get<VendorResponse>(
+      endpoints.vendors.details(id),
+      undefined,
+      {
+        cache: "no-store",
+      },
+    );
+    return data;
+  } catch (error) {
+    console.error(`Failed to fetch vendor ${id}:`, error);
     return null;
   }
 };

@@ -297,6 +297,7 @@ export function FlightStep({
                               )
                             }
                             disabled={tripInfo.adults <= 1}
+                            aria-label="Decrease adults"
                           >
                             <RiSubtractLine className="h-4 w-4" />
                           </Button>
@@ -314,6 +315,7 @@ export function FlightStep({
                               )
                             }
                             disabled={tripInfo.adults >= 9}
+                            aria-label="Increase adults"
                           >
                             <RiAddLine className="h-4 w-4" />
                           </Button>
@@ -339,6 +341,7 @@ export function FlightStep({
                               )
                             }
                             disabled={tripInfo.children <= 0}
+                            aria-label="Decrease children"
                           >
                             <RiSubtractLine className="h-4 w-4" />
                           </Button>
@@ -356,6 +359,7 @@ export function FlightStep({
                               )
                             }
                             disabled={tripInfo.children >= 9}
+                            aria-label="Increase children"
                           >
                             <RiAddLine className="h-4 w-4" />
                           </Button>
@@ -381,6 +385,7 @@ export function FlightStep({
                               )
                             }
                             disabled={(tripInfo.infants || 0) <= 0}
+                            aria-label="Decrease infants"
                           >
                             <RiSubtractLine className="h-4 w-4" />
                           </Button>
@@ -401,6 +406,7 @@ export function FlightStep({
                               )
                             }
                             disabled={(tripInfo.infants || 0) >= tripInfo.adults}
+                            aria-label="Increase infants"
                           >
                             <RiAddLine className="h-4 w-4" />
                           </Button>

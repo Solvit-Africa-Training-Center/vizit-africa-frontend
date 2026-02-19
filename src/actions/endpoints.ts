@@ -64,6 +64,8 @@ export const endpoints = {
     create: "/vendors/",
     approve: (id: string | number) => `/vendors/${id}/approve/`,
     list: "/vendors/",
+    detail: (id: string | number) => `/vendors/${id}/`,
+    details: (id: string | number) => `/vendors/${id}/`,
   },
   payments: {
     cashIn: "/payments/cashin/",

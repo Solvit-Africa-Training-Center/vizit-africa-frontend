@@ -7,8 +7,9 @@ import { toast } from "sonner";
 import {
   createServiceInputSchema,
   type CreateServiceInput,
+  type ServiceResponse,
 } from "@/lib/schema/service-schema";
-import { createService } from "@/actions/services";
+import { createService, updateService } from "@/actions/services";
 import { getVendors } from "@/actions/vendors";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -54,7 +55,12 @@ type LocationSuggestion = {
   source: "mapbox" | "open-meteo" | "db";
 };
 
-export function ServiceForm() {
+interface ServiceFormProps {
+  initialData?: ServiceResponse;
+  onSuccess?: (service: ServiceResponse) => void;
+}
+
+export function ServiceForm({ initialData, onSuccess }: ServiceFormProps) {
   const { data: vendorsData, isLoading: isVendorsLoading } = useQuery({
     queryKey: ["vendors"],
     queryFn: async () => {
@@ -76,7 +82,15 @@ export function ServiceForm() {
   const vendors = vendorsData || [];
   const locations = locationsData || [];
   const [isVendorDialogOpen, setIsVendorDialogOpen] = useState(false);
-  const [locationQuery, setLocationQuery] = useState("");
+  const [locationQuery, setLocationQuery] = useState(
+    initialData && initialData.location
+      ? locations.find((l) => l.id === initialData.location)?.name || ""
+      : "",
+  );
+
+  // If initial location is set but not in loaded locations yet, we might need a way to show it.
+  // For now, simple logic.
+
   const [submitStatus, setSubmitStatus] = useState<{
     type: "success" | "error";
     message: string;
@@ -93,23 +107,28 @@ export function ServiceForm() {
 
   const form = useForm({
     defaultValues: {
-      title: "",
-      service_type: "flight" as
-        | "flight"
+      title: initialData?.title || "",
+      service_type: (initialData?.service_type || "hotel") as
         | "hotel"
-        | "bnb"
-        | "car_rental"
+        | "car"
+        | "activity"
+        | "experience"
+        | "tour"
         | "guide",
-      description: "",
-      base_price: 0,
-      currency: "USD",
-      capacity: 1,
-      status: "draft" as "active" | "inactive" | "draft",
-      location: undefined as string | number | undefined,
-      user: undefined as string | number | null | undefined,
+      description: initialData?.description || "",
+      base_price: initialData ? Number(initialData.base_price) : 0,
+      currency: initialData?.currency || "USD",
+      capacity: initialData?.capacity || 1,
+      status: (initialData?.status || "pending") as
+        | "active"
+        | "inactive"
+        | "pending"
+        | "deleted",
+      location: initialData?.location as string | number | undefined,
+      user: initialData?.user as string | number | null | undefined,
     },
     validators: {
-      onChange: createServiceInputSchema,
+      onChange: createServiceInputSchema as any,
     },
     onSubmit: async ({ value }) => {
       setSubmitStatus(null);
@@ -124,25 +143,39 @@ export function ServiceForm() {
               : value.user,
       };
 
-      const result = await createService(payload);
+      const result = initialData
+        ? await updateService(initialData.id, payload)
+        : await createService(payload);
+
       if (result.success) {
-        toast.success("Service created successfully");
+        toast.success(
+          initialData
+            ? "Service updated successfully"
+            : "Service created successfully",
+        );
         setSubmitStatus({
           type: "success",
-          message: "Service created successfully.",
+          message: initialData
+            ? "Service updated successfully."
+            : "Service created successfully.",
         });
-        form.reset();
-        setLocationQuery("");
-        setLocationSuggestions([]);
+        if (!initialData) {
+          form.reset();
+          setLocationQuery("");
+          setLocationSuggestions([]);
+        }
+        onSuccess?.(result.data);
       } else {
         toast.error(result.error);
         const userError = result.fieldErrors?.user?.[0];
         setSubmitStatus({
           type: "error",
-          message: userError || result.error || "Failed to create service.",
+          message: userError || result.error || "Failed to save service.",
         });
         if (result.fieldErrors) {
           console.error(result.fieldErrors);
+          // @ts-ignore
+          form.setErrors(result.fieldErrors);
         }
       }
     },
@@ -160,6 +193,15 @@ export function ServiceForm() {
   useEffect(() => {
     if (locationQuery.trim().length < 2) {
       setLocationSuggestions([]);
+      return;
+    }
+
+    // Don't search if query matches selected ID's name (avoid loop on creation)
+    if (
+      initialData &&
+      locations.find((l) => l.id === initialData.location)?.name ===
+        locationQuery
+    ) {
       return;
     }
 
@@ -309,10 +351,11 @@ export function ServiceForm() {
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="flight">Flight</SelectItem>
                   <SelectItem value="hotel">Hotel</SelectItem>
-                  <SelectItem value="bnb">BnB</SelectItem>
-                  <SelectItem value="car_rental">Car Rental</SelectItem>
+                  <SelectItem value="car">Car</SelectItem>
+                  <SelectItem value="activity">Activity</SelectItem>
+                  <SelectItem value="experience">Experience</SelectItem>
+                  <SelectItem value="tour">Tour</SelectItem>
                   <SelectItem value="guide">Guide</SelectItem>
                 </SelectContent>
               </Select>
@@ -587,10 +630,14 @@ export function ServiceForm() {
         </Button>
         <Button
           type="submit"
-          disabled={form.state.isSubmitting}
+          loading={form.state.isSubmitting}
           className="min-w-[150px]"
         >
-          {form.state.isSubmitting ? "Creating..." : "Create Service"}
+          {form.state.isSubmitting
+            ? "Saving..."
+            : initialData
+              ? "Update Service"
+              : "Create Service"}
         </Button>
       </div>
     </form>

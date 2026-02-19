@@ -2,9 +2,13 @@
 
 import { api } from "@/lib/api/client";
 import { endpoints } from "./endpoints";
-import { bookingListSchema, bookingSchema } from "@/lib/schema/booking-schema";
-import type { BookingList } from "@/lib/schema/booking-schema";
-import type { Booking, AdminBooking } from "@/types";
+import {
+  bookingListSchema,
+  bookingSchema,
+  type Booking,
+  type AdminBooking,
+  type BookingList,
+} from "@/lib/schema/booking-schema";
 import type { ActionResult } from "@/lib/api/types";
 import { ApiError } from "@/lib/api/types";
 import type { TripInfo, TripItem } from "@/lib/plan_trip-types";
@@ -14,9 +18,7 @@ import { logout } from "./auth";
 function normalizeRequestedType(item: TripItem): string {
   if (item.type !== "service") return item.type;
 
-  const data = (item as Record<string, unknown>)?.data as
-    | Record<string, string>
-    | undefined;
+  const data = (item as any)?.data;
   const category = String(data?.category || "").toLowerCase();
   if (category.includes("flight")) return "flight";
   if (category.includes("hotel") || category.includes("bnb")) return "hotel";
@@ -102,7 +104,7 @@ export async function getUserBookings(): Promise<ActionResult<BookingList>> {
 export async function submitTripRequest(
   tripInfo: TripInfo,
   items: TripItem[],
-): Promise<ActionResult<Record<string, unknown>>> {
+): Promise<ActionResult<unknown>> {
   try {
     const payload = {
       ...tripInfo,
@@ -153,7 +155,7 @@ export async function sendQuoteForBooking(
     unit_price?: number;
   }>,
   notes = "",
-): Promise<ActionResult<Record<string, unknown>>> {
+): Promise<ActionResult<unknown>> {
   try {
     const payload = {
       items,
@@ -176,7 +178,7 @@ export async function sendQuoteForBooking(
 
 export async function acceptQuoteForBooking(
   bookingId: string,
-): Promise<ActionResult<Record<string, unknown>>> {
+): Promise<ActionResult<unknown>> {
   try {
     const data = await api.post(endpoints.bookings.accept(bookingId), {});
     return { success: true, data };
@@ -192,7 +194,7 @@ export async function acceptQuoteForBooking(
 
 export async function cancelBooking(
   bookingId: string,
-): Promise<ActionResult<Record<string, unknown>>> {
+): Promise<ActionResult<unknown>> {
   try {
     const data = await api.post(endpoints.bookings.cancel(bookingId), {});
     return { success: true, data };
@@ -211,7 +213,7 @@ export async function notifyVendor(
   itemId?: string,
   serviceId?: string,
   details?: Record<string, unknown>,
-): Promise<ActionResult<Record<string, unknown>>> {
+): Promise<ActionResult<unknown>> {
   try {
     const payload = {
       item_id: itemId,

@@ -5,13 +5,13 @@ import { toast } from "sonner";
 import {
   createVendorInputSchema,
   type CreateVendorInput,
+  type VendorResponse,
 } from "@/lib/schema/vendor-schema";
-import { createVendorProfile } from "@/actions/vendors";
+import { createVendorProfile, updateVendor } from "@/actions/vendors";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { useTranslations } from "next-intl";
 import {
   Select,
   SelectContent,
@@ -23,39 +23,48 @@ import { FieldError } from "@/components/ui/field";
 
 interface VendorFormProps {
   onSuccess?: (vendor: any) => void;
+  initialData?: VendorResponse;
 }
 
-export function VendorForm({ onSuccess }: VendorFormProps) {
-  // const t = useTranslations("Admin.vendors"); // Assuming translations exist or will fallback
-
+export function VendorForm({ onSuccess, initialData }: VendorFormProps) {
   const form = useForm({
     defaultValues: {
-      business_name: "",
-      vendor_type: "individual" as
-        | "individual"
-        | "company"
-        | "tour_operator"
-        | "transport_provider"
-        | "accommodation_provider"
-        | "guide",
-      description: "",
-      contact_phone: "",
-      address: "",
-      website: "",
+      email: initialData?.email || "",
+      full_name: initialData?.full_name || "",
+      phone_number: initialData?.phone_number || "",
+      bio: initialData?.bio || "",
+      business_name: initialData?.business_name || "",
+      vendor_type: (initialData?.vendor_type || "guide") as
+        | "hotel"
+        | "car_rental"
+        | "guide"
+        | "experience"
+        | "transport"
+        | "other",
+      address: initialData?.address || "",
+      website: initialData?.website || "",
     },
     validators: {
       onChange: createVendorInputSchema,
     },
     onSubmit: async ({ value }) => {
-      const result = await createVendorProfile(value);
-      if (result.success) {
-        toast.success("Vendor created successfully");
-        onSuccess?.(result.data);
-      } else {
-        toast.error(result.error);
-        if (result.fieldErrors) {
-          console.error(result.fieldErrors);
+      try {
+        const result = initialData
+          ? await updateVendor(initialData.id, value)
+          : await createVendorProfile(value);
+
+        if (result.success) {
+          toast.success(initialData ? "Vendor updated" : "Vendor created");
+          onSuccess?.(result.data);
+        } else {
+          toast.error(result.error);
+          if (result.fieldErrors) {
+            // @ts-ignore
+            form.setErrors(result.fieldErrors);
+          }
         }
+      } catch (error) {
+        toast.error("An error occurred");
       }
     },
   });
@@ -69,124 +78,154 @@ export function VendorForm({ onSuccess }: VendorFormProps) {
       }}
       className="space-y-4"
     >
-      <form.Field name="business_name">
-        {(field) => (
-          <div className="space-y-2">
-            <Label htmlFor="business_name">Business Name</Label>
+      <form.Field
+        name="email"
+        children={(field) => (
+          <div>
+            <Label htmlFor={field.name}>Email</Label>
             <Input
-              id="business_name"
-              placeholder="e.g. Safari Adventures Ltd"
+              id={field.name}
               value={field.state.value}
               onBlur={field.handleBlur}
               onChange={(e) => field.handleChange(e.target.value)}
             />
-            {field.state.meta.isTouched && !field.state.meta.isValid && (
-              <FieldError errors={field.state.meta.errors} />
-            )}
+            <FieldError errors={field.state.meta.errors} />
           </div>
         )}
-      </form.Field>
+      />
 
-      <form.Field name="vendor_type">
-        {(field) => (
-          <div className="space-y-2">
-            <Label htmlFor="vendor_type">Vendor Type</Label>
-            <Select
+      <form.Field
+        name="full_name"
+        children={(field) => (
+          <div>
+            <Label htmlFor={field.name}>Full Name</Label>
+            <Input
+              id={field.name}
               value={field.state.value}
-              onValueChange={(val: any) => field.handleChange(val)}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="individual">Individual</SelectItem>
-                <SelectItem value="company">Company</SelectItem>
-              </SelectContent>
-            </Select>
-            {field.state.meta.isTouched && !field.state.meta.isValid && (
-              <FieldError errors={field.state.meta.errors} />
-            )}
+              onBlur={field.handleBlur}
+              onChange={(e) => field.handleChange(e.target.value)}
+            />
+            <FieldError errors={field.state.meta.errors} />
           </div>
         )}
-      </form.Field>
+      />
 
-      <form.Field name="description">
-        {(field) => (
-          <div className="space-y-2">
-            <Label htmlFor="description">Description (Optional)</Label>
+      <form.Field
+        name="business_name"
+        children={(field) => (
+          <div>
+            <Label htmlFor={field.name}>Business Name</Label>
+            <Input
+              id={field.name}
+              value={field.state.value}
+              onBlur={field.handleBlur}
+              onChange={(e) => field.handleChange(e.target.value)}
+            />
+            <FieldError errors={field.state.meta.errors} />
+          </div>
+        )}
+      />
+
+      <div className="grid grid-cols-2 gap-4">
+        <form.Field
+          name="phone_number"
+          children={(field) => (
+            <div>
+              <Label htmlFor={field.name}>Phone</Label>
+              <Input
+                id={field.name}
+                value={field.state.value}
+                onBlur={field.handleBlur}
+                onChange={(e) => field.handleChange(e.target.value)}
+              />
+              <FieldError errors={field.state.meta.errors} />
+            </div>
+          )}
+        />
+
+        <form.Field
+          name="vendor_type"
+          children={(field) => (
+            <div>
+              <Label htmlFor={field.name}>Type</Label>
+              <Select
+                value={field.state.value}
+                onValueChange={(val) => field.handleChange(val as any)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="hotel">Hotel</SelectItem>
+                  <SelectItem value="car_rental">Car Rental</SelectItem>
+                  <SelectItem value="guide">Guide</SelectItem>
+                  <SelectItem value="experience">Experience</SelectItem>
+                  <SelectItem value="transport">Transport</SelectItem>
+                  <SelectItem value="other">Other</SelectItem>
+                </SelectContent>
+              </Select>
+              <FieldError errors={field.state.meta.errors} />
+            </div>
+          )}
+        />
+      </div>
+
+      <form.Field
+        name="address"
+        children={(field) => (
+          <div>
+            <Label htmlFor={field.name}>Address</Label>
+            <Input
+              id={field.name}
+              value={field.state.value}
+              onBlur={field.handleBlur}
+              onChange={(e) => field.handleChange(e.target.value)}
+            />
+            <FieldError errors={field.state.meta.errors} />
+          </div>
+        )}
+      />
+
+      <form.Field
+        name="website"
+        children={(field) => (
+          <div>
+            <Label htmlFor={field.name}>Website</Label>
+            <Input
+              id={field.name}
+              value={field.state.value}
+              onBlur={field.handleBlur}
+              onChange={(e) => field.handleChange(e.target.value)}
+              placeholder="https://..."
+            />
+            <FieldError errors={field.state.meta.errors} />
+          </div>
+        )}
+      />
+
+      <form.Field
+        name="bio"
+        children={(field) => (
+          <div>
+            <Label htmlFor={field.name}>Bio / Description</Label>
             <Textarea
-              id="description"
-              placeholder="Tell us about the vendor..."
-              value={field.state.value || ""}
+              id={field.name}
+              value={field.state.value}
               onBlur={field.handleBlur}
               onChange={(e) => field.handleChange(e.target.value)}
             />
-            {field.state.meta.isTouched && !field.state.meta.isValid && (
-              <FieldError errors={field.state.meta.errors} />
-            )}
+            <FieldError errors={field.state.meta.errors} />
           </div>
         )}
-      </form.Field>
+      />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <form.Field name="contact_phone">
-          {(field) => (
-            <div className="space-y-2">
-              <Label htmlFor="contact_phone">Contact Phone (Optional)</Label>
-              <Input
-                id="contact_phone"
-                value={field.state.value || ""}
-                onBlur={field.handleBlur}
-                onChange={(e) => field.handleChange(e.target.value)}
-              />
-              {field.state.meta.isTouched && !field.state.meta.isValid && (
-                <FieldError errors={field.state.meta.errors} />
-              )}
-            </div>
-          )}
-        </form.Field>
-
-        <form.Field name="website">
-          {(field) => (
-            <div className="space-y-2">
-              <Label htmlFor="website">Website (Optional)</Label>
-              <Input
-                id="website"
-                placeholder="https://..."
-                value={field.state.value || ""}
-                onBlur={field.handleBlur}
-                onChange={(e) => field.handleChange(e.target.value)}
-              />
-              {field.state.meta.isTouched && !field.state.meta.isValid && (
-                <FieldError errors={field.state.meta.errors} />
-              )}
-            </div>
-          )}
-        </form.Field>
-      </div>
-
-      <form.Field name="address">
-        {(field) => (
-          <div className="space-y-2">
-            <Label htmlFor="address">Address (Optional)</Label>
-            <Input
-              id="address"
-              value={field.state.value || ""}
-              onBlur={field.handleBlur}
-              onChange={(e) => field.handleChange(e.target.value)}
-            />
-            {field.state.meta.isTouched && !field.state.meta.isValid && (
-              <FieldError errors={field.state.meta.errors} />
-            )}
-          </div>
-        )}
-      </form.Field>
-
-      <div className="pt-2 flex justify-end">
-        <Button type="submit" disabled={form.state.isSubmitting}>
-          {form.state.isSubmitting ? "Creating..." : "Create Vendor"}
-        </Button>
-      </div>
+      <Button type="submit" disabled={form.state.isSubmitting}>
+        {form.state.isSubmitting
+          ? "Saving..."
+          : initialData
+            ? "Update Vendor"
+            : "Create Vendor"}
+      </Button>
     </form>
   );
 }

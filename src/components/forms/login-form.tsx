@@ -135,10 +135,10 @@ export function LoginForm() {
         <Button
           type="submit"
           className="w-full h-14 rounded-sm gap-2 text-base font-medium uppercase tracking-wide"
-          disabled={form.state.isSubmitting}
+          loading={form.state.isSubmitting}
         >
           {form.state.isSubmitting ? "Logging in..." : tCommon("login")}
-          <RiArrowRightLine className="size-5" />
+          {!form.state.isSubmitting && <RiArrowRightLine className="size-5" />}
         </Button>
       </div>
     </form>

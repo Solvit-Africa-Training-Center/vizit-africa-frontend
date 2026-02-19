@@ -8,6 +8,14 @@ export const userSchema = z.object({
   bio: z.string().nullable().optional(),
   role: z.string(),
   preferred_currency: z.string(),
+  vendor_profile: z
+    .object({
+      id: z.number().or(z.string()),
+      business_name: z.string(),
+      is_approved: z.boolean(),
+    })
+    .nullable()
+    .optional(),
 });
 
 export type User = z.infer<typeof userSchema>;
@@ -48,7 +56,7 @@ export const registerInputSchema = registerObjectSchema.refine(
   {
     message: "Passwords do not match",
     path: ["re_password"],
-  }
+  },
 );
 
 export type RegisterInput = z.infer<typeof registerInputSchema>;

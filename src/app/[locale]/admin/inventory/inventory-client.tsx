@@ -2,54 +2,75 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { DataTable } from "@/components/ui/data-table";
 import {
-  RiSearchLine,
-  RiAddLine,
-  RiHotelLine,
-  RiCarLine,
-  RiUserStarLine,
-  RiPlaneLine,
-} from "@remixicon/react";
-import {
-  hotelColumns,
-  carColumns,
-  guideColumns,
-  flightColumns,
-} from "./columns";
+  DataTable,
+  type DataTableFilterField,
+  type DataTableState,
+} from "@/components/ui/data-table";
+import { RiAddLine } from "@remixicon/react";
+import { serviceColumns } from "./columns";
 import { useTranslations } from "next-intl";
 import type { ServiceResponse } from "@/lib/schema/service-schema";
+import { useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { getServices } from "@/lib/data-fetching";
+import { Spinner } from "@/components/ui/spinner";
 
 interface InventoryClientProps {
-  hotels: ServiceResponse[];
-  cars: ServiceResponse[];
-  guides: ServiceResponse[];
-  flights: ServiceResponse[];
+  initialServices?: ServiceResponse[];
 }
 
 export default function InventoryClient({
-  hotels,
-  cars,
-  guides,
-  flights,
+  initialServices,
 }: InventoryClientProps) {
-  const [activeTab, setActiveTab] = useState<
-    "hotels" | "cars" | "guides" | "flights"
-  >("hotels");
   const t = useTranslations("Admin.inventory");
+  const router = useRouter();
 
-  const renderContent = () => {
-    switch (activeTab) {
-      case "hotels":
-        return <DataTable columns={hotelColumns} data={hotels} />;
-      case "cars":
-        return <DataTable columns={carColumns} data={cars} />;
-      case "guides":
-        return <DataTable columns={guideColumns} data={guides} />;
-      case "flights":
-        return <DataTable columns={flightColumns} data={flights} />;
-    }
+  const [tableState, setTableState] = useState<DataTableState>({
+    sorting: [],
+    columnFilters: [],
+    columnVisibility: {},
+    rowSelection: {},
+    pagination: { pageIndex: 0, pageSize: 10 },
+  });
+
+  const handleStateChange = (updates: Partial<DataTableState>) => {
+    setTableState((prev) => ({ ...prev, ...updates }));
+  };
+
+  const { data: services, isLoading } = useQuery({
+    queryKey: ["admin-services", tableState.columnFilters, tableState.sorting, tableState.pagination],
+    queryFn: () => getServices(),
+    initialData: initialServices,
+  });
+
+  // Define filters for Services
+  const serviceFilters: DataTableFilterField[] = [
+    {
+      label: "Type",
+      value: "service_type",
+      options: [
+        { label: "Hotel", value: "hotel" },
+        { label: "Car", value: "car" },
+        { label: "Activity", value: "activity" },
+        { label: "Experience", value: "experience" },
+        { label: "Tour", value: "tour" },
+        { label: "Guide", value: "guide" },
+      ],
+    },
+    {
+      label: "Status",
+      value: "status",
+      options: [
+        { label: "Active", value: "active" },
+        { label: "Inactive", value: "inactive" },
+        { label: "Draft", value: "draft" },
+      ],
+    },
+  ];
+
+  const handleAddNew = () => {
+    // Navigate to create service page or open modal
   };
 
   return (
@@ -61,53 +82,30 @@ export default function InventoryClient({
           </h1>
           <p className="text-muted-foreground">{t("subtitle")}</p>
         </div>
-        <div className="flex gap-2">
-          <div className="relative">
-            <RiSearchLine className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
-            <Input
-              placeholder={t("searchPlaceholder")}
-              className="pl-9 w-[250px] bg-background"
-            />
-          </div>
-          <Button>
-            <RiAddLine />
+        <div>
+          <Button onClick={handleAddNew}>
+            <RiAddLine className="size-4 mr-2" />
             {t("addNew")}
           </Button>
         </div>
       </div>
 
-      <div className="flex gap-2 mb-6 border-b border-border pb-1 overflow-x-auto">
-        <button
-          type="button"
-          onClick={() => setActiveTab("hotels")}
-          className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors flex items-center gap-2 ${activeTab === "hotels" ? "border-primary text-primary" : "border-transparent text-muted-foreground hover:text-foreground"}`}
-        >
-          <RiHotelLine className="size-4" /> {t("tabs.hotels")}
-        </button>
-        <button
-          type="button"
-          onClick={() => setActiveTab("cars")}
-          className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors flex items-center gap-2 ${activeTab === "cars" ? "border-primary text-primary" : "border-transparent text-muted-foreground hover:text-foreground"}`}
-        >
-          <RiCarLine className="size-4" /> {t("tabs.cars")}
-        </button>
-        <button
-          type="button"
-          onClick={() => setActiveTab("guides")}
-          className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors flex items-center gap-2 ${activeTab === "guides" ? "border-primary text-primary" : "border-transparent text-muted-foreground hover:text-foreground"}`}
-        >
-          <RiUserStarLine className="size-4" /> {t("tabs.guides")}
-        </button>
-        <button
-          type="button"
-          onClick={() => setActiveTab("flights")}
-          className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors flex items-center gap-2 ${activeTab === "flights" ? "border-primary text-primary" : "border-transparent text-muted-foreground hover:text-foreground"}`}
-        >
-          <RiPlaneLine className="size-4" /> {t("tabs.flights")}
-        </button>
-      </div>
-
-      {renderContent()}
+      {isLoading && !services ? (
+        <div className="flex justify-center py-20">
+          <Spinner className="size-8" />
+        </div>
+      ) : (
+        <DataTable
+          columns={serviceColumns}
+          data={services || []}
+          filterFields={serviceFilters}
+          searchPlaceholder="Search services..."
+          searchColumn="title"
+          state={tableState}
+          callbacks={{ onStateChange: handleStateChange }}
+          isLoading={isLoading}
+        />
+      )}
     </div>
   );
 }

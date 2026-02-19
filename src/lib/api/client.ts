@@ -69,26 +69,42 @@ async function handleResponse<T>(
 
     try {
       const errorData = await response.json();
+      console.log(
+        "[Client] Raw Error Response:",
+        JSON.stringify(errorData, null, 2),
+      );
 
       // Handle standardized backend error format: { status: "error", message: "...", errors: {...} }
       if (errorData.status === "error") {
+        console.log("[Client] Detected standardized error format");
         errorMessage = errorData.message || errorMessage;
-        fieldErrors = errorData.errors as Record<string, string[]>;
+        fieldErrors = errorData.errors || errorData.fieldErrors;
       } else {
         // Fallback for legacy/other structures
         errorMessage = errorData.detail || errorData.message || errorMessage;
+
+        // If the error data itself is an object of field errors (common in DRF)
         if (
           typeof errorData === "object" &&
           !errorData.detail &&
-          !errorData.message
+          !errorData.message &&
+          !errorData.status
         ) {
+          console.log("[Client] Detected DRF-style field errors");
           fieldErrors = errorData;
           errorMessage = "Validation error";
         }
       }
-    } catch {}
+      console.log("[Client] Extracted Field Errors:", fieldErrors);
+    } catch (e) {
+      console.error("Error parsing error response:", e);
+    }
 
-    throw new ApiError(errorMessage, response.status, fieldErrors);
+    throw new ApiError(
+      errorMessage,
+      response.status,
+      fieldErrors as Record<string, string[]>,
+    );
   }
 
   if (response.status === 204) {

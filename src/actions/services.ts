@@ -49,6 +49,34 @@ export async function createService(
   }
 }
 
+export async function updateService(
+  serviceId: string | number,
+  input: CreateServiceInput,
+): Promise<ActionResult<ServiceResponse>> {
+  const validation = createServiceInputSchema.safeParse(input);
+  if (!validation.success) {
+    return {
+      success: false,
+      error: "Validation failed",
+      fieldErrors: validation.error.flatten().fieldErrors,
+    };
+  }
+
+  try {
+    const data = await api.put(
+      endpoints.services.details(serviceId),
+      validation.data,
+      serviceResponseSchema,
+    );
+    revalidatePath("/inventory");
+    revalidatePath(`/admin/services/${serviceId}/edit`);
+    return { success: true, data };
+  } catch (error) {
+    const err = error as ApiError;
+    return { success: false, error: err.message, fieldErrors: err.fieldErrors };
+  }
+}
+
 export async function addServiceMedia(
   input: AddServiceMediaInput,
 ): Promise<ActionResult<ServiceMediaResponse>> {
@@ -121,5 +149,22 @@ export async function createDiscount(
   } catch (error) {
     const err = error as ApiError;
     return { success: false, error: err.message, fieldErrors: err.fieldErrors };
+  }
+}
+
+export async function deleteService(
+  serviceId: string | number,
+): Promise<ActionResult<{ success: boolean; message: string }>> {
+  try {
+    await api.delete(endpoints.services.details(serviceId));
+    revalidatePath("/inventory");
+    revalidatePath("/services");
+    return {
+      success: true,
+      data: { success: true, message: "Service deleted successfully" },
+    };
+  } catch (error) {
+    const err = error as ApiError;
+    return { success: false, error: err.message };
   }
 }

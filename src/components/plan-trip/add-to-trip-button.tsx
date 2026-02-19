@@ -118,7 +118,7 @@ export function AddToTripButton({
         } else if (type === "guide") {
             const g = item as Guide;
             title = `${g.type} Guide`;
-            price = g.price;
+            price = g.price || 0;
             description = g.description;
         } else if (type === "experience") {
             const e = item as Experience;
