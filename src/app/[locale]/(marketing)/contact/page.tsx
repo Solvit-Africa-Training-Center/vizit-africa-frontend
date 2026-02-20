@@ -90,14 +90,14 @@ export default function ContactPage() {
               <ContactItem
                 icon={RiMailLine}
                 label={t("emailUs")}
-                value="hello@vizitafrica.rw"
-                href="mailto:hello@vizitafrica.rw"
+                value="kesly@vizit.africa"
+                href="mailto:kesly@vizit.africa"
               />
               <ContactItem
                 icon={RiWhatsappLine}
                 label={t("whatsapp")}
-                value="+250 788 123 456"
-                href="https://wa.me/250788123456"
+                value="+250 780486847"
+                href="https://wa.me/250780486847"
               />
               <ContactItem
                 icon={RiMapPinLine}
@@ -130,14 +130,14 @@ export default function ContactPage() {
                 <MobileContactItem
                   icon={RiMailLine}
                   label={t("emailUs")}
-                  value="hello@vizitafrica.rw"
-                  href="mailto:hello@vizitafrica.rw"
+                  value="kesly@vizit.africa"
+                  href="mailto:kesly@vizit.africa"
                 />
                 <MobileContactItem
                   icon={RiWhatsappLine}
                   label={t("whatsapp")}
-                  value="+250 788 123 456"
-                  href="https://wa.me/250788123456"
+                  value="+250 780486847"
+                  href="https://wa.me/250780486847"
                 />
                 <MobileContactItem
                   icon={RiMapPinLine}

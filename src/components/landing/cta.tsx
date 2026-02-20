@@ -142,14 +142,14 @@ export function CTA() {
                             {t("emailUs")}
                           </span>
                           <span className="block text-primary-foreground font-medium truncate group-hover/item:text-accent-warm transition-colors duration-200">
-                            hello@vizit.africa
+                            kesly@vizit.africa
                           </span>
                         </div>
                       </a>
 
                       <a
-                        href="https://wa.me/250788123456"
-                        aria-label="Contact via WhatsApp at +250 788 123 456"
+                        href="https://wa.me/250780486847"
+                        aria-label="Contact via WhatsApp at +250 780 486 847"
                         className="flex items-center gap-4 group/item cursor-pointer p-3 rounded-sm hover:bg-primary-foreground/5 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                       >
                         <div className="w-10 h-10 rounded-sm bg-[#25D366] text-primary-foreground flex items-center justify-center shrink-0">
@@ -160,7 +160,7 @@ export function CTA() {
                             {t("whatsapp")}
                           </span>
                           <span className="block text-primary-foreground font-medium truncate group-hover/item:text-green-400 transition-colors duration-200">
-                            +250 788 123 456
+                            +250 780486847
                           </span>
                         </div>
                       </a>

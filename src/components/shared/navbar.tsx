@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   RiMenuLine,
   RiCloseLine,
@@ -63,7 +63,7 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
   const logoVariant = showSolid ? "default" : "light";
 
   const navLinks = [
-    { href: "/services", label: t("destinations") },
+    { href: "/services", label: t("ourservices") },
     { href: "/experiences", label: t("experiences") },
     { href: "/about", label: t("aboutUs") },
     { href: "/contact", label: t("contact") },
