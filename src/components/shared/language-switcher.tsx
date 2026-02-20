@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { RiGlobalLine, RiCheckLine } from "@remixicon/react";
+import { RiCheckLine, RiTranslate2 } from "@remixicon/react";
 import { cn } from "@/lib/utils";
 
 export function LanguageSwitcher({
@@ -41,12 +41,12 @@ export function LanguageSwitcher({
       <DropdownMenuTrigger
         render={
           <Button
-   variant={"ghost"}
-   className={cn(variant === "light" && "text-primary-foreground")}
+            variant={"ghost"}
+            className={cn(variant === "light" && "text-primary-foreground")}
           />
         }
       >
-        <RiGlobalLine />
+        <RiTranslate2 />
         <span className="sr-only">Switch Language</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[150px]">

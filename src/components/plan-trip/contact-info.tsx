@@ -33,17 +33,17 @@ export function ContactInfoStep({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="max-w-2xl"
+      className="max-w-xl"
     >
-      <div className="space-y-8">
+      <div className="space-y-6">
         <div>
-          <h2 className="font-display text-2xl font-medium mb-2">
+          <h2 className="font-display text-xl font-medium mb-1">
             {t("title")}
           </h2>
-          <p className="text-muted-foreground">{t("subtitle")}</p>
+          <p className="text-muted-foreground text-xs">{t("subtitle")}</p>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-4">
           <form.Field
             name="name"
             validators={{
@@ -51,13 +51,14 @@ export function ContactInfoStep({
             }}
           >
             {(field) => (
-              <div className="space-y-2">
-                <Label htmlFor="name">{t("fullName")}</Label>
+              <div className="space-y-1.5">
+                <Label htmlFor="name" className="text-[10px] uppercase tracking-wider text-muted-foreground">{t("fullName")}</Label>
                 <InputGroup>
                   <InputGroupInput
                     id="name"
                     placeholder={t("namePlaceholder")}
                     value={field.state.value}
+                    className="h-10 text-sm"
                     onChange={(e) => {
                       field.handleChange(e.target.value);
                       setTripInfo({ name: e.target.value });
@@ -66,7 +67,7 @@ export function ContactInfoStep({
                   />
                 </InputGroup>
                 {field.state.meta.errors.length > 0 && (
-                  <p className="text-xs text-destructive">
+                  <p className="text-[10px] text-destructive">
                     {field.state.meta.errors[0]}
                   </p>
                 )}
@@ -74,7 +75,7 @@ export function ContactInfoStep({
             )}
           </form.Field>
 
-          <div className="grid sm:grid-cols-2 gap-6">
+          <div className="grid sm:grid-cols-2 gap-4">
             <form.Field
               name="email"
               validators={{
@@ -87,14 +88,15 @@ export function ContactInfoStep({
               }}
             >
               {(field) => (
-                <div className="space-y-2">
-                  <Label htmlFor="email">{t("email")}</Label>
+                <div className="space-y-1.5">
+                  <Label htmlFor="email" className="text-[10px] uppercase tracking-wider text-muted-foreground">{t("email")}</Label>
                   <InputGroup>
                     <InputGroupInput
                       id="email"
                       type="email"
                       placeholder={t("emailPlaceholder")}
                       value={field.state.value}
+                      className="h-10 text-sm"
                       onChange={(e) => {
                         field.handleChange(e.target.value);
                         setTripInfo({ email: e.target.value });
@@ -102,11 +104,11 @@ export function ContactInfoStep({
                       onBlur={field.handleBlur}
                     />
                     <InputGroupAddon>
-                      <RiMailLine />
+                      <RiMailLine className="size-3.5" />
                     </InputGroupAddon>
                   </InputGroup>
                   {field.state.meta.errors.length > 0 && (
-                    <p className="text-xs text-destructive">
+                    <p className="text-[10px] text-destructive">
                       {field.state.meta.errors[0]}
                     </p>
                   )}
@@ -116,21 +118,22 @@ export function ContactInfoStep({
 
             <form.Field name="phone">
               {(field) => (
-                <div className="space-y-2">
-                  <Label htmlFor="phone">{t("phone")}</Label>
+                <div className="space-y-1.5">
+                  <Label htmlFor="phone" className="text-[10px] uppercase tracking-wider text-muted-foreground">{t("phone")}</Label>
                   <InputGroup>
                     <InputGroupInput
                       id="phone"
                       type="tel"
                       placeholder={t("phonePlaceholder")}
                       value={field.state.value}
+                      className="h-10 text-sm"
                       onChange={(e) => {
                         field.handleChange(e.target.value);
                         setTripInfo({ phone: e.target.value });
                       }}
                     />
                     <InputGroupAddon>
-                      <RiPhoneLine />
+                      <RiPhoneLine className="size-3.5" />
                     </InputGroupAddon>
                   </InputGroup>
                 </div>
@@ -140,9 +143,9 @@ export function ContactInfoStep({
 
           <form.Field name="tripPurpose">
             {(field) => (
-              <div className="space-y-2">
-                <Label>{t("purpose")}</Label>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              <div className="space-y-1.5">
+                <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">{t("purpose")}</Label>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                   {[
                     "leisure",
                     "business",
@@ -162,7 +165,7 @@ export function ContactInfoStep({
                           tripPurpose: purpose as TripInfo["tripPurpose"],
                         });
                       }}
-                      className={`px-4 py-3 rounded-none border text-sm font-medium capitalize transition-all duration-300 hover:tracking-wide ${
+                      className={`px-3 py-2 rounded-none border text-xs font-medium capitalize transition-all duration-300 ${
                         field.state.value === purpose
                           ? "bg-primary text-primary-foreground border-primary"
                           : "bg-background text-foreground border-border hover:border-primary"
@@ -178,8 +181,8 @@ export function ContactInfoStep({
 
           <form.Field name="specialRequests">
             {(field) => (
-              <div className="space-y-2">
-                <Label htmlFor="specialRequests">{t("specialRequests")}</Label>
+              <div className="space-y-1.5">
+                <Label htmlFor="specialRequests" className="text-[10px] uppercase tracking-wider text-muted-foreground">{t("specialRequests")}</Label>
                 <Textarea
                   id="specialRequests"
                   placeholder="Any specific requirements or interests?"
@@ -188,7 +191,7 @@ export function ContactInfoStep({
                     field.handleChange(e.target.value);
                     setTripInfo({ specialRequests: e.target.value });
                   }}
-                  className="min-h-[100px] bg-primary-foreground"
+                  className="min-h-[80px] text-sm bg-primary-foreground"
                 />
               </div>
             )}

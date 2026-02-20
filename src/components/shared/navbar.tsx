@@ -73,6 +73,7 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
     { href: "/services", label: t("ourservices") },
     { href: "/experiences", label: t("experiences") },
     { href: "/about", label: t("aboutUs") },
+    { href: "/gallery", label: t("gallery") },
     { href: "/contact", label: t("contact") },
   ];
 

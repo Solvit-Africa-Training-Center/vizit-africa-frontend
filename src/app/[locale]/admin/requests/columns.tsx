@@ -66,13 +66,11 @@ const ActionCell = ({ id, status }: { id: string; status: string }) => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger
-        render={<Button variant="ghost" className="h-8 w-8 p-0" />}
-      >
+      <DropdownMenuTrigger render={<Button variant="ghost" />}>
         <span className="sr-only">Open menu</span>
-        <RiMore2Line className="h-4 w-4" />
+        <RiMore2Line />
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent className="w-48" align="end">
         <DropdownMenuGroup>
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem
@@ -119,7 +117,7 @@ const ActionCell = ({ id, status }: { id: string; status: string }) => {
 
           <DropdownMenuSeparator />
 
-          <DropdownMenuItem className="text-destructive focus:text-destructive cursor-pointer">
+          <DropdownMenuItem variant="destructive">
             <RiCloseCircleLine className="mr-2 h-4 w-4" />
             Decline Request
           </DropdownMenuItem>

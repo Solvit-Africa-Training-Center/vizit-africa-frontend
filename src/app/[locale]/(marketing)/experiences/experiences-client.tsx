@@ -1,24 +1,18 @@
 "use client";
 
 import { RiArrowDownLine } from "@remixicon/react";
+import { AnimatePresence, motion, useInView } from "motion/react";
 import NextImage from "next/image";
-import { motion, useInView, AnimatePresence } from "motion/react";
-import { useRef, useState, useEffect, useMemo } from "react";
-import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
-import { PageHeader } from "@/components/shared/page-header";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AddToTripButton } from "@/components/plan-trip/add-to-trip-button";
+import { PageHeader } from "@/components/shared/page-header";
 import { SaveButton } from "@/components/shared/save-button";
 import type { ServiceResponse } from "@/lib/schema/service-schema";
+import { cn } from "@/lib/utils";
 
 interface ExperiencesClientProps {
   initialExperiences: ServiceResponse[];
-}
-
-interface ExperienceCategory {
-  id: string;
-  category: string;
-  items: ServiceResponse[];
 }
 
 const CATEGORY_MAPPING: Record<string, string> = {
@@ -26,6 +20,36 @@ const CATEGORY_MAPPING: Record<string, string> = {
   culture: "cultureLeisure",
   adventure: "adventure",
 };
+
+const CATEGORY_FALLBACK_IMAGES: Record<string, string[]> = {
+  wildlifeNature: [
+    "/images/wildlife-silverback-gorilla.jpg",
+    "/images/buffaloes.jpg",
+    "/images/elephant-with-guide.jpg",
+    "/images/rhineceros.jpg",
+  ],
+  cultureLeisure: [
+    "/images/girls-traditional-dancers-dancing-smiling.jpg",
+    "/images/men-rwanda-traditional-dancers-dancing.jpg",
+    "/images/city-kigali-roundabout-with-woman-and-child-statue.jpg",
+    "/images/lake-kivu-sunset.jpg",
+  ],
+  adventure: [
+    "/images/nyungwe-park.jpg",
+    "/images/rwanda-bamboos.jpg",
+    "/images/rwanda-walk-path-in-forest.jpg",
+    "/images/road-through-hill.jpg",
+  ],
+};
+
+function hashString(value: string): number {
+  let hash = 0;
+  for (let i = 0; i < value.length; i += 1) {
+    hash = (hash << 5) - hash + value.charCodeAt(i);
+    hash |= 0;
+  }
+  return Math.abs(hash);
+}
 
 export default function ExperiencesClient({
   initialExperiences,
@@ -86,8 +110,36 @@ export default function ExperiencesClient({
   };
 
   const getExperienceImage = (exp: ServiceResponse) => {
-    if (exp.media && exp.media.length > 0) return exp.media[0].media_url;
-    return "/images/rwanda-landscape.jpg";
+    const mediaImages = (exp.media || [])
+      .filter((m) => m.media_type === "image" || !m.media_type)
+      .sort((a, b) => a.sort_order - b.sort_order)
+      .map((m) => m.media_url)
+      .filter(Boolean);
+
+    if (mediaImages.length > 0) {
+      const mediaIdx = hashString(String(exp.id)) % mediaImages.length;
+      return mediaImages[mediaIdx];
+    }
+
+    const metadataImageKeys = [
+      "hero_image",
+      "image",
+      "coverImage",
+      "thumbnail",
+    ];
+    for (const key of metadataImageKeys) {
+      const value = exp.metadata?.[key];
+      if (typeof value === "string" && value.trim()) {
+        return value;
+      }
+    }
+
+    const metaCategory = (exp.metadata?.category as string) || "adventure";
+    const groupKey = CATEGORY_MAPPING[metaCategory] || "adventure";
+    const pool =
+      CATEGORY_FALLBACK_IMAGES[groupKey] || CATEGORY_FALLBACK_IMAGES.adventure;
+    const fallbackIdx = hashString(`${exp.id}-${exp.title}`) % pool.length;
+    return pool[fallbackIdx];
   };
 
   const getExperiencePrice = (exp: ServiceResponse) => {
@@ -291,13 +343,17 @@ function ExperienceItem({
           <span className="text-muted-foreground text-[10px] font-mono uppercase tracking-[0.2em] mb-3">
             {labels.location}
           </span>
-          <span className="font-display font-medium text-lg uppercase tracking-tight">{location}</span>
+          <span className="font-display font-medium text-lg uppercase tracking-tight">
+            {location}
+          </span>
         </div>
         <div className="flex flex-col">
           <span className="text-muted-foreground text-[10px] font-mono uppercase tracking-[0.2em] mb-3">
             {labels.duration}
           </span>
-          <span className="font-display font-medium text-lg uppercase tracking-tight">{duration}</span>
+          <span className="font-display font-medium text-lg uppercase tracking-tight">
+            {duration}
+          </span>
         </div>
         <div className="flex flex-col md:col-span-1 col-span-2">
           <span className="text-muted-foreground text-[10px] font-mono uppercase tracking-[0.2em] mb-3">
@@ -339,7 +395,10 @@ function ExperienceItem({
           type="experience"
           id={String(experience.id)}
           variant="full"
-          className={cn("h-16 w-16 rounded-full p-0 flex items-center justify-center", !isActive && "opacity-50")}
+          className={cn(
+            "h-16 w-16 rounded-full p-0 flex items-center justify-center",
+            !isActive && "opacity-50",
+          )}
         />
       </div>
     </div>

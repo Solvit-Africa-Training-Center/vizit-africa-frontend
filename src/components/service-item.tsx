@@ -198,7 +198,7 @@ export function ServiceItem({
                       <Button
                         size="lg"
                         variant={isSelected ? "destructive" : "default"}
-                        className="px-10 rounded-full h-14 uppercase tracking-widest font-display text-xs shadow-lg shadow-primary/10"
+                        className="px-8 rounded-full h-11 uppercase tracking-widest font-display text-[10px] shadow-lg shadow-primary/10"
                         onClick={() => onSelect(service, { withDriver })}
                       >
                         {isSelected ? "Remove" : bookLabel}
@@ -242,7 +242,7 @@ export function ServiceItem({
                         }}
                         label={bookLabel}
                         size="lg"
-                        className="px-10 rounded-full h-14 uppercase tracking-widest font-display text-xs shadow-lg shadow-primary/10"
+                        className="px-8 rounded-full h-11 uppercase tracking-widest font-display text-[10px] shadow-lg shadow-primary/10"
                       />
                     )}
                   </div>

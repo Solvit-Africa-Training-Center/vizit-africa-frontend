@@ -1,16 +1,25 @@
 "use client";
 
 import { RiCalendarLine, RiCheckLine, RiMapPinLine } from "@remixicon/react";
-import { format, parseISO } from "date-fns";
+import {
+  eachDayOfInterval,
+  endOfMonth,
+  format,
+  isAfter,
+  isBefore,
+  parseISO,
+  startOfMonth,
+} from "date-fns";
+import { useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Link } from "@/i18n/navigation";
-import type { Booking } from "@/lib/schema/booking-schema";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Empty,
   EmptyDescription,
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty";
+import type { Booking } from "@/lib/schema/booking-schema";
 
 interface CompletedRequestsScheduleProps {
   bookings: Booking[];
@@ -27,6 +36,12 @@ interface ScheduleEntry {
   amount: number;
   currency: string;
   location?: string;
+}
+
+interface DayBucket {
+  key: string;
+  date: Date;
+  items: ScheduleEntry[];
 }
 
 function toDate(value?: string | null): Date | null {
@@ -49,19 +64,38 @@ function formatDateRange(startDate: Date | null, endDate: Date | null): string {
   return "Flexible dates";
 }
 
-function getGroupingKey(startDate: Date | null): string {
-  return startDate ? format(startDate, "yyyy-MM-dd") : "unscheduled";
-}
-
 function getGroupingLabel(startDate: Date | null): string {
   return startDate ? format(startDate, "EEEE, MMM d, yyyy") : "No fixed date";
+}
+
+function expandCoverageDays(
+  startDate: Date | null,
+  endDate: Date | null,
+): Date[] {
+  if (!startDate && !endDate) return [];
+  const intervalStart = startDate ?? endDate;
+  const intervalEnd = endDate ?? startDate;
+  if (!intervalStart || !intervalEnd) return [];
+
+  const start = isAfter(intervalStart, intervalEnd)
+    ? intervalEnd
+    : intervalStart;
+  const end = isAfter(intervalStart, intervalEnd) ? intervalStart : intervalEnd;
+  return eachDayOfInterval({ start, end });
 }
 
 export function CompletedRequestsSchedule({
   bookings,
   emptyMessage = "You don't have completed requests yet.",
 }: CompletedRequestsScheduleProps) {
-  const entries: ScheduleEntry[] = bookings.flatMap((booking) => {
+  const completedBookings = bookings.filter(
+    (booking) => booking.status === "completed",
+  );
+  const [visibleMonth, setVisibleMonth] = useState<Date>(() =>
+    startOfMonth(new Date()),
+  );
+
+  const entries: ScheduleEntry[] = completedBookings.flatMap((booking) => {
     if (booking.items.length === 0) {
       return [
         {
@@ -110,32 +144,60 @@ export function CompletedRequestsSchedule({
     });
   });
 
-  const sortedEntries = [...entries].sort((a, b) => {
-    if (!a.startDate && !b.startDate) return 0;
-    if (!a.startDate) return 1;
-    if (!b.startDate) return -1;
-    return a.startDate.getTime() - b.startDate.getTime();
-  });
+  const { coveredDates, monthBuckets, unscheduledEntries } = useMemo(() => {
+    const allCoveredDateMap = new Map<string, Date>();
+    const monthBucketMap = new Map<string, ScheduleEntry[]>();
+    const monthStart = startOfMonth(visibleMonth);
+    const monthEnd = endOfMonth(visibleMonth);
+    const unscheduled: ScheduleEntry[] = [];
 
-  const groupedEntries = sortedEntries.reduce<
-    Array<{ key: string; label: string; items: ScheduleEntry[] }>
-  >((groups, entry) => {
-    const key = getGroupingKey(entry.startDate);
-    const existing = groups.find((group) => group.key === key);
-    if (existing) {
-      existing.items.push(entry);
-      return groups;
+    const sortedEntries = [...entries].sort((a, b) => {
+      if (!a.startDate && !b.startDate) return 0;
+      if (!a.startDate) return 1;
+      if (!b.startDate) return -1;
+      return a.startDate.getTime() - b.startDate.getTime();
+    });
+
+    for (const entry of sortedEntries) {
+      const coverageDays = expandCoverageDays(entry.startDate, entry.endDate);
+      if (coverageDays.length === 0) {
+        unscheduled.push(entry);
+        continue;
+      }
+
+      for (const day of coverageDays) {
+        const key = format(day, "yyyy-MM-dd");
+        allCoveredDateMap.set(key, day);
+
+        if (isBefore(day, monthStart) || isAfter(day, monthEnd)) {
+          continue;
+        }
+
+        const existing = monthBucketMap.get(key);
+        if (existing) {
+          existing.push(entry);
+        } else {
+          monthBucketMap.set(key, [entry]);
+        }
+      }
     }
 
-    groups.push({
-      key,
-      label: getGroupingLabel(entry.startDate),
-      items: [entry],
-    });
-    return groups;
-  }, []);
+    const buckets: DayBucket[] = [...monthBucketMap.entries()]
+      .map(([key, items]) => ({
+        key,
+        date: parseISO(key),
+        items,
+      }))
+      .sort((a, b) => a.date.getTime() - b.date.getTime());
 
-  if (bookings.length === 0) {
+    return {
+      coveredDates: [...allCoveredDateMap.values()],
+      monthBuckets: buckets,
+      unscheduledEntries: unscheduled,
+    };
+  }, [entries, visibleMonth]);
+
+  if (completedBookings.length === 0) {
     return (
       <Empty className="rounded-sm p-20 border-dashed">
         <EmptyMedia variant="icon">
@@ -154,13 +216,15 @@ export function CompletedRequestsSchedule({
           <p className="text-xs uppercase tracking-wider text-muted-foreground">
             Completed Requests
           </p>
-          <p className="mt-2 text-2xl font-medium">{bookings.length}</p>
+          <p className="mt-2 text-2xl font-medium">
+            {completedBookings.length}
+          </p>
         </div>
         <div className="rounded-sm border border-border p-4 bg-card">
           <p className="text-xs uppercase tracking-wider text-muted-foreground">
-            Scheduled Items
+            Calendar Days Covered
           </p>
-          <p className="mt-2 text-2xl font-medium">{sortedEntries.length}</p>
+          <p className="mt-2 text-2xl font-medium">{coveredDates.length}</p>
         </div>
         <div className="rounded-sm border border-border p-4 bg-card">
           <p className="text-xs uppercase tracking-wider text-muted-foreground">
@@ -173,57 +237,105 @@ export function CompletedRequestsSchedule({
         </div>
       </div>
 
-      <div className="space-y-6">
-        {groupedEntries.map((group) => (
-          <section key={group.key} className="space-y-3">
-            <h3 className="text-sm uppercase tracking-wider text-muted-foreground">
-              {group.label}
-            </h3>
-            <div className="space-y-3">
-              {group.items.map((entry) => (
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,420px),1fr]">
+        <section className="rounded-sm border border-border bg-card p-4">
+          <h3 className="text-sm uppercase tracking-wider text-muted-foreground mb-3">
+            Covered Dates Calendar (Read-only)
+          </h3>
+          <Calendar
+            // mode="unde"
+            month={visibleMonth}
+            onMonthChange={setVisibleMonth}
+            showOutsideDays
+            className="w-full p-0"
+            modifiers={{ covered: coveredDates }}
+            modifiersClassNames={{
+              covered:
+                "bg-primary/15 text-primary font-semibold rounded-(--cell-radius)",
+            }}
+          />
+        </section>
+
+        <section className="rounded-sm border border-border bg-card p-4">
+          <h3 className="text-sm uppercase tracking-wider text-muted-foreground mb-3">
+            Dates Covered in {format(visibleMonth, "MMMM yyyy")}
+          </h3>
+          {monthBuckets.length === 0 ? (
+            <p className="text-sm text-muted-foreground">
+              No completed request coverage in this month.
+            </p>
+          ) : (
+            <div className="space-y-4">
+              {monthBuckets.map((bucket) => (
                 <article
-                  key={entry.id}
-                  className="rounded-sm border border-border bg-card p-4 md:p-5"
+                  key={bucket.key}
+                  className="rounded-sm border border-border p-4"
                 >
-                  <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-                    <div className="space-y-1">
-                      <h4 className="font-medium text-base">{entry.title}</h4>
-                      <div className="text-sm text-muted-foreground flex items-center gap-2">
-                        <RiCalendarLine className="size-4" />
-                        {formatDateRange(entry.startDate, entry.endDate)}
-                      </div>
-                      {entry.location ? (
-                        <div className="text-sm text-muted-foreground flex items-center gap-2">
-                          <RiMapPinLine className="size-4" />
-                          {entry.location}
+                  <p className="text-sm font-medium mb-3">
+                    {getGroupingLabel(bucket.date)}
+                  </p>
+                  <div className="space-y-3">
+                    {bucket.items.map((entry) => (
+                      <div
+                        key={`${bucket.key}-${entry.id}`}
+                        className="rounded-sm bg-muted/40 border border-border/70 p-3"
+                      >
+                        <div className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
+                          <div className="space-y-1">
+                            <h4 className="font-medium text-sm">
+                              {entry.title}
+                            </h4>
+                            <div className="text-xs text-muted-foreground flex items-center gap-2">
+                              <RiCalendarLine className="size-3.5" />
+                              {formatDateRange(entry.startDate, entry.endDate)}
+                            </div>
+                            {entry.location ? (
+                              <div className="text-xs text-muted-foreground flex items-center gap-2">
+                                <RiMapPinLine className="size-3.5" />
+                                {entry.location}
+                              </div>
+                            ) : null}
+                          </div>
+                          <div className="text-left md:text-right">
+                            <p className="text-xs text-muted-foreground">
+                              {entry.quantity} unit(s)
+                            </p>
+                            <p className="text-sm font-medium">
+                              {entry.currency} {entry.amount.toLocaleString()}
+                            </p>
+                          </div>
                         </div>
-                      ) : null}
-                    </div>
-
-                    <div className="text-left md:text-right">
-                      <p className="text-sm text-muted-foreground">
-                        {entry.quantity} unit(s)
-                      </p>
-                      <p className="font-medium">
-                        {entry.currency} {entry.amount.toLocaleString()}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="mt-4 pt-4 border-t border-border/60">
-                    <Link
-                      className="text-sm text-primary hover:underline"
-                      href={`/profile/bookings/${entry.bookingId}`}
-                    >
-                      View request details
-                    </Link>
+                      </div>
+                    ))}
                   </div>
                 </article>
               ))}
             </div>
-          </section>
-        ))}
+          )}
+        </section>
       </div>
+
+      {unscheduledEntries.length > 0 ? (
+        <section className="rounded-sm border border-border bg-card p-4">
+          <h3 className="text-sm uppercase tracking-wider text-muted-foreground mb-3">
+            Completed Requests Without Fixed Dates
+          </h3>
+          <div className="space-y-2">
+            {unscheduledEntries.map((entry) => (
+              <div
+                key={entry.id}
+                className="rounded-sm border border-border/70 bg-muted/40 p-3"
+              >
+                <p className="font-medium text-sm">{entry.title}</p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  {entry.quantity} unit(s) • {entry.currency}{" "}
+                  {entry.amount.toLocaleString()}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null}
     </div>
   );
 }

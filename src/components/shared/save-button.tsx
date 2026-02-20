@@ -65,7 +65,7 @@ export function SaveButton({
         variant="outline"
         onClick={handleToggle}
         disabled={loading}
-        className={cn("gap-2", className)}
+        className={cn("gap-2 px-2", className)}
       >
         {loading ? (
           <RiLoader4Line className="size-4 animate-spin" />

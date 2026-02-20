@@ -1,22 +1,18 @@
 "use client";
 
-import { RiCheckDoubleLine, RiLoader4Line } from "@remixicon/react";
+import { experimental_useObject as useObject } from "@ai-sdk/react";
+import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
-import { BookingSummary } from "@/components/plan-trip";
-import { ContactInfoStep } from "@/components/plan-trip/contact-info";
-import { ServicesStep } from "@/components/plan-trip/steps/services-step";
-import { Navbar } from "@/components/shared/navbar";
-import { Button } from "@/components/ui/button";
-import { RevealText } from "@/components/ui/reveal-text";
-import { experimental_useObject as useObject } from "@ai-sdk/react";
-import { AiLoading } from "@/components/plan-trip/ai-loading";
+import { z } from "zod";
+import { AiLoading, PlanTripResults } from "@/components/plan-trip";
 import { TripDetailsInput } from "@/components/plan-trip/trip-details-input";
+import { Navbar } from "@/components/shared/navbar";
+import { PageHeader } from "@/components/shared/page-header";
 import { usePlanTrip } from "@/hooks/use-plan-trip";
 import { useTripForm } from "@/hooks/use-trip-form";
-import { DRIVER_SURCHARGE } from "@/lib/configs";
 import type { Car, Guide, Hotel } from "@/lib/plan_trip-types";
-import { z } from "zod";
+import { cn } from "@/lib/utils";
 
 interface PlanTripClientProps {
   hotels: Hotel[];
@@ -54,6 +50,7 @@ export default function PlanTripClient({
   cars,
   guides,
 }: PlanTripClientProps) {
+  const t = useTranslations("PlanTrip");
   const [aiRecommendations, setAiRecommendations] =
     useState<AiRecommendations | null>(null);
   const [aiError, setAiError] = useState<string | null>(null);
@@ -62,7 +59,6 @@ export default function PlanTripClient({
     object: partialRecommendations,
     submit,
     isLoading: isGeneratingAi,
-    error: streamingError,
   } = useObject({
     api: "/api/ai",
     schema: z.object({
@@ -84,12 +80,9 @@ export default function PlanTripClient({
     },
   });
 
-  // Use partialRecommendations while streaming, or final aiRecommendations
   const activeRecommendations = (aiRecommendations ||
     partialRecommendations) as AiRecommendations | null;
 
-  // Still merge for the underlying data/store logic if needed,
-  // though we are relying heavily on AI results now.
   const mergedHotels = useMemo(
     () => mergeById(hotels, activeRecommendations?.hotels ?? []),
     [hotels, activeRecommendations],
@@ -103,43 +96,7 @@ export default function PlanTripClient({
     [guides, activeRecommendations],
   );
 
-  const {
-    tripInfo,
-    setTripInfo,
-    items,
-    addItem,
-    removeItem,
-    updateItem,
-    activeTab,
-    setActiveTab,
-    days,
-    travelers,
-    subtotal,
-    serviceFee,
-    total,
-    // Filters and pagination props are still passed to services step if we re-use it for results
-    hotelSearch,
-    setHotelSearch,
-    hotelPriceFilter,
-    setHotelPriceFilter,
-    hotelStarsFilter,
-    setHotelStarsFilter,
-    carSearch,
-    setCarSearch,
-    carCategoryFilter,
-    setCarCategoryFilter,
-    paginatedHotels,
-    paginatedCars,
-    hotelPage,
-    setHotelPage,
-    carPage,
-    setCarPage,
-    hotelTotalPages,
-    carTotalPages,
-    filteredHotels,
-    filteredCars,
-    initialGuides,
-  } = usePlanTrip({
+  const planTrip = usePlanTrip({
     initialHotels: mergedHotels,
     initialCars: mergedCars,
     initialGuides: mergedGuides,
@@ -147,24 +104,16 @@ export default function PlanTripClient({
 
   const form = useTripForm();
 
-  // If we have AI recommendations, we are in "Results" mode.
-  // If isGeneratingAi is true, we are in "Loading" mode.
-  // Otherwise, if tripInfo.destination is missing, we are in "Input" mode.
-  // Actually, let's make it simpler:
-  // If (!aiRecommendations && !isGeneratingAi) -> Input Mode (even if some data exists, allow editing)
-  // But we might want to allow re-generating.
-
-  // Let's use a derived state for the view.
   const viewState = useMemo(() => {
     if (isGeneratingAi) return "loading";
-    if (activeRecommendations) return "results";
+    if (aiRecommendations) return "results";
     return "input";
-  }, [isGeneratingAi, activeRecommendations]);
+  }, [isGeneratingAi, aiRecommendations]);
 
   const handleGenerateAiRecommendations = () => {
-    const destination = tripInfo.destination?.trim();
-    const startDate = tripInfo.departureDate;
-    const endDate = tripInfo.returnDate;
+    const destination = planTrip.tripInfo.destination?.trim();
+    const startDate = planTrip.tripInfo.departureDate;
+    const endDate = planTrip.tripInfo.returnDate;
 
     if (!destination || !startDate || !endDate) {
       const message = "Please provide destination and dates.";
@@ -174,7 +123,7 @@ export default function PlanTripClient({
     }
 
     setAiError(null);
-    setAiRecommendations(null); // Clear previous results
+    setAiRecommendations(null);
 
     submit({
       destination,
@@ -182,10 +131,12 @@ export default function PlanTripClient({
       endDate,
       groupSize: Math.max(
         1,
-        tripInfo.adults + tripInfo.children + tripInfo.infants,
+        planTrip.tripInfo.adults +
+          planTrip.tripInfo.children +
+          planTrip.tripInfo.infants,
       ),
-      tripPurpose: tripInfo.tripPurpose,
-      specialRequests: tripInfo.specialRequests || undefined,
+      tripPurpose: planTrip.tripInfo.tripPurpose,
+      specialRequests: planTrip.tripInfo.specialRequests || undefined,
     });
   };
 
@@ -194,10 +145,8 @@ export default function PlanTripClient({
     setAiError(null);
   };
 
-  const canSubmit = !!(tripInfo.name && tripInfo.email);
-
   const handleSubmit = async () => {
-    if (!canSubmit) {
+    if (!planTrip.tripInfo.name || !planTrip.tripInfo.email) {
       toast.error("Please fill in your name and email before submitting.");
       return;
     }
@@ -207,190 +156,76 @@ export default function PlanTripClient({
   return (
     <>
       <Navbar forceSolid />
-      <main className="min-h-screen bg-background pt-24 pb-32">
-        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-8 md:mb-12 text-center">
-            <RevealText
-              text="Plan Your Journey"
-              className="font-display text-4xl md:text-6xl font-medium uppercase text-foreground mb-4 justify-center"
-              delay={0.1}
-            />
-          </div>
+      <main className="min-h-screen bg-background pt-32 pb-24">
+        <PageHeader
+          title={t("header.title")}
+          overline={t("tripDetails.title")}
+          description={t("header.description")}
+          layout="split"
+          className="mb-24 md:mb-32"
+        />
 
-          {/* Conditional View Rendering */}
-          <div className="min-h-[400px]">
-            {viewState === "loading" && <AiLoading />}
-
-            {viewState === "input" && (
-              <TripDetailsInput
-                tripInfo={tripInfo}
-                setTripInfo={setTripInfo}
-                onGenerate={handleGenerateAiRecommendations}
-                isGenerating={isGeneratingAi}
-              />
-            )}
-
-            {viewState === "results" && activeRecommendations && (
-              <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                <div className="flex flex-col md:flex-row gap-6 md:items-center justify-between bg-card border border-border p-6 rounded-xl">
-                  <div>
-                    <h3 className="text-xl font-display uppercase tracking-wide">
-                      Your Itinerary for {activeRecommendations?.destination}
-                    </h3>
-                    <p className="text-muted-foreground mt-2 max-w-3xl">
-                      {activeRecommendations?.itinerarySummary}
-                    </p>
-                  </div>
-                  <Button
-                    variant="outline"
-                    onClick={handleClearAiRecommendations}
-                  >
-                    Start Over
-                  </Button>
-                </div>
-
-                <div className="grid lg:grid-cols-[1fr_380px] gap-8 items-start">
-                  <div className="space-y-8">
-                    {/* Re-using ServicesStep but purely for displaying results now */}
-                    {/* We pass the AI recommendations which will trigger the AI view in ServicesStep */}
-                    <ServicesStep
-                      items={items}
-                      addItem={addItem}
-                      removeItem={removeItem}
-                      updateItem={updateItem}
-                      activeTab={activeTab}
-                      setActiveTab={setActiveTab}
-                      showMobileSummary={false}
-                      setShowMobileSummary={() => {}}
-                      tripInfo={tripInfo}
-                      days={days}
-                      total={total}
-                      travelers={travelers}
-                      subtotal={subtotal}
-                      serviceFee={serviceFee}
-                      paginatedHotels={paginatedHotels}
-                      paginatedCars={paginatedCars}
-                      hotelTotalPages={hotelTotalPages}
-                      carTotalPages={carTotalPages}
-                      hotelCount={filteredHotels.length}
-                      carCount={filteredCars.length}
-                      hotelSearch={hotelSearch}
-                      setHotelSearch={setHotelSearch}
-                      hotelPriceFilter={hotelPriceFilter}
-                      setHotelPriceFilter={setHotelPriceFilter}
-                      hotelStarsFilter={hotelStarsFilter}
-                      setHotelStarsFilter={setHotelStarsFilter}
-                      carSearch={carSearch}
-                      setCarSearch={setCarSearch}
-                      carCategoryFilter={carCategoryFilter}
-                      setCarCategoryFilter={setCarCategoryFilter}
-                      hotelPage={hotelPage}
-                      setHotelPage={setHotelPage}
-                      carPage={carPage}
-                      setCarPage={setCarPage}
-                      guides={initialGuides}
-                      aiRecommendations={activeRecommendations as any}
-                      onClearAi={handleClearAiRecommendations}
-                    />
-
-                    {/* We can also add the ContactInfo step here if users want to finalize */}
-                    <div className="mt-12 pt-12 border-t border-border">
-                      <h3 className="text-xl font-display uppercase tracking-wide mb-6">
-                        Finalize Your Details
-                      </h3>
-                      <ContactInfoStep
-                        form={form}
-                        tripInfo={tripInfo}
-                        setTripInfo={setTripInfo}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Sidebar */}
-                  <div className="hidden lg:block relative">
-                    <div className="sticky top-24 space-y-4 max-h-[calc(100vh-8rem)] overflow-y-auto pr-2 custom-scrollbar">
-                      <BookingSummary
-                        currentStep={3}
-                        tripInfo={tripInfo}
-                        items={items}
-                        days={days}
-                        travelers={travelers}
-                        driverSurcharge={DRIVER_SURCHARGE}
-                        subtotal={subtotal}
-                        serviceFee={serviceFee}
-                        total={total}
-                      />
-                      <form.Subscribe
-                        selector={(state) => [
-                          state.isSubmitting,
-                          state.canSubmit,
-                        ]}
-                      >
-                        {([isSubmitting, canFormSubmit]) => (
-                          <Button
-                            onClick={handleSubmit}
-                            disabled={
-                              !canSubmit || !canFormSubmit || isSubmitting
-                            }
-                            size="lg"
-                            className="w-full rounded-sm font-display font-medium uppercase tracking-wider text-sm gap-2 h-14"
-                          >
-                            {isSubmitting ? (
-                              <RiLoader4Line className="size-5 animate-spin" />
-                            ) : (
-                              <RiCheckDoubleLine className="size-5" />
-                            )}
-                            {isSubmitting ? "Submitting..." : "Submit Request"}
-                          </Button>
-                        )}
-                      </form.Subscribe>
-                      {!canSubmit && (
-                        <p className="text-xs text-muted-foreground text-center">
-                          Complete your details below to submit
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* mobile submit for results view */}
-          {viewState === "results" && (
-            <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-lg border-t border-border p-4 z-30">
-              <div className="flex items-center justify-between gap-4 max-w-7xl mx-auto">
-                <div>
-                  <p className="text-xs text-muted-foreground">
-                    Estimated total
-                  </p>
-                  <p className="text-xl font-display font-bold">
-                    ${total.toFixed(0)}*
-                  </p>
-                </div>
-                <form.Subscribe
-                  selector={(state) => [state.isSubmitting, state.canSubmit]}
-                >
-                  {([isSubmitting, canFormSubmit]) => (
-                    <Button
-                      onClick={handleSubmit}
-                      disabled={!canSubmit || !canFormSubmit || isSubmitting}
-                      size="lg"
-                      className="rounded-sm font-display font-medium uppercase tracking-wider text-sm gap-2"
-                    >
-                      {isSubmitting ? (
-                        <RiLoader4Line className="size-5 animate-spin" />
-                      ) : (
-                        <RiCheckDoubleLine className="size-5" />
-                      )}
-                      {isSubmitting ? "Submitting..." : "Submit"}
-                    </Button>
-                  )}
-                </form.Subscribe>
-              </div>
+        <div className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-border/50">
+          <div className="px-5 md:px-10 max-w-7xl mx-auto py-6 flex flex-col md:flex-row gap-8 md:items-center justify-between">
+            <div className="w-full md:w-auto">
+              <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-muted-foreground">
+                AI Trip Builder
+              </p>
+              <p className="mt-2 text-sm text-muted-foreground">
+                {planTrip.tripInfo.destination
+                  ? `Destination: ${planTrip.tripInfo.destination}`
+                  : t("tripDetails.subheading")}
+              </p>
+              {aiError ? (
+                <p className="mt-2 text-xs text-destructive">{aiError}</p>
+              ) : null}
             </div>
-          )}
+
+            <div className="flex items-center gap-3 overflow-x-auto pb-2 md:pb-0 no-scrollbar">
+              {[
+                { key: "input", label: t("tripDetails.title") },
+                { key: "loading", label: t("loading.title") },
+                { key: "results", label: "Itinerary" },
+              ].map((step) => (
+                <div
+                  key={step.key}
+                  className={cn(
+                    "px-6 py-2 rounded-full text-[10px] font-mono uppercase tracking-[0.2em] border whitespace-nowrap",
+                    viewState === step.key
+                      ? "bg-foreground text-background border-foreground"
+                      : "border-border/50 text-muted-foreground",
+                  )}
+                >
+                  {step.label}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
+
+        <section className="px-5 md:px-10 max-w-7xl mx-auto py-12 min-h-[50vh]">
+          {viewState === "loading" && <AiLoading />}
+
+          {viewState === "input" && (
+            <TripDetailsInput
+              tripInfo={planTrip.tripInfo}
+              setTripInfo={planTrip.setTripInfo}
+              onGenerate={handleGenerateAiRecommendations}
+              isGenerating={isGeneratingAi}
+            />
+          )}
+
+          {viewState === "results" && activeRecommendations && (
+            <PlanTripResults
+              activeRecommendations={activeRecommendations}
+              onClearAi={handleClearAiRecommendations}
+              planTrip={planTrip}
+              form={form}
+              handleSubmit={handleSubmit}
+              isGenerating={isGeneratingAi}
+            />
+          )}
+        </section>
       </main>
     </>
   );

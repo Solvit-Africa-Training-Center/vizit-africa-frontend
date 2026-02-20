@@ -90,9 +90,9 @@ export default function DashboardClient({ requests }: DashboardClientProps) {
         ))}
       </div>
 
-      <div className="mb-8">
+      {/* <div className="mb-8">
         <CompletedRequestsSchedule bookings={requests} />
-      </div>
+      </div> */}
 
       <div className="flex items-center gap-2 mb-6">
         <Link

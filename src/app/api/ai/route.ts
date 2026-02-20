@@ -94,7 +94,7 @@ export async function POST(req: Request) {
     const nights = calculateNights(startDate, endDate);
 
     const result = streamText({
-      model: google("gemini-2.0-flash-exp"),
+      model: google("gemini-3-flash-preview"),
       output: Output.object({
         schema: tripRecommendationsSchema,
       }),

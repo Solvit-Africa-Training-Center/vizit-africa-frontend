@@ -8,6 +8,7 @@ import {
   RiCloseLine,
   RiHotelLine,
   RiPlaneLine,
+  RiSparkling2Line,
   RiSubtractLine,
   RiSuitcaseLine,
   RiUser2Line,
@@ -44,6 +45,7 @@ import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { useLocationAutocomplete } from "@/hooks/use-location-autocomplete";
 import { useTripStore } from "@/store/trip-store";
+import { Link } from "@/i18n";
 
 interface GuestCount {
   adults: number;
@@ -619,6 +621,15 @@ export function TripRequestDialog({
 
             {/* Action Buttons */}
             <div className="flex items-center gap-3">
+              <Button
+                variant="outline"
+                size="lg"
+                className="gap-2"
+                render={<Link href={"/plan-trip"} />}
+              >
+                <RiSparkling2Line className="size-4" />
+                Use AI Assistant
+              </Button>
               <Button
                 variant="outline"
                 size="lg"

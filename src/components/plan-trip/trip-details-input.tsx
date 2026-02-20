@@ -80,48 +80,48 @@ export function TripDetailsInput({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="max-w-3xl mx-auto space-y-8 bg-card border border-border/50 p-8 rounded-xl shadow-xs"
+      className="max-w-2xl mx-auto space-y-6 bg-card border border-border/50 p-6 rounded-xl shadow-xs"
     >
-      <div className="text-center space-y-2">
-        <h2 className="text-2xl font-display font-medium uppercase tracking-wide">
+      <div className="text-center space-y-1">
+        <h2 className="text-xl font-display font-medium uppercase tracking-wide">
           {t("tripDetails.heading")}
         </h2>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-xs">
           {t("tripDetails.subheading")}
         </p>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid md:grid-cols-2 gap-4">
         {/* Destination */}
-        <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-wider text-muted-foreground">
+        <div className="space-y-1.5">
+          <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
             {t("tripDetails.whereTo")}
           </Label>
           <div className="relative">
-            <RiMapPinLine className="absolute left-3 top-3 size-4 text-muted-foreground" />
+            <RiMapPinLine className="absolute left-3 top-2.5 size-3.5 text-muted-foreground" />
             <Input
               placeholder={t("tripDetails.wherePlaceholder")}
               value={tripInfo.destination || ""}
               onChange={(e) => setTripInfo({ destination: e.target.value })}
-              className="pl-9 h-12 bg-background/50"
+              className="pl-9 h-10 text-sm bg-background/50"
             />
           </div>
         </div>
 
         {/* Dates */}
-        <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-wider text-muted-foreground">
+        <div className="space-y-1.5">
+          <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
             {t("tripDetails.when")}
           </Label>
           <Popover>
             <PopoverTrigger
               className={cn(
                 buttonVariants({ variant: "outline" }),
-                "w-full h-12 justify-start items-center text-left font-normal bg-background/50",
+                "w-full h-10 justify-start items-center text-left font-normal bg-background/50 text-sm",
                 !dateRange && "text-muted-foreground",
               )}
             >
-              <RiCalendarLine className="mr-2 size-4" />
+              <RiCalendarLine className="mr-2 size-3.5" />
               {dateRange?.from ? (
                 dateRange.to ? (
                   <>
@@ -150,13 +150,13 @@ export function TripDetailsInput({
         </div>
 
         {/* Travelers */}
-        <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-wider text-muted-foreground">
+        <div className="space-y-1.5">
+          <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
             {t("tripDetails.whosComing")}
           </Label>
           <div className="flex gap-2">
             <div className="relative flex-1">
-              <RiUserLine className="absolute left-3 top-3 size-4 text-muted-foreground" />
+              <RiUserLine className="absolute left-3 top-2.5 size-3.5 text-muted-foreground" />
               <Input
                 type="number"
                 min={1}
@@ -165,11 +165,11 @@ export function TripDetailsInput({
                 onChange={(e) =>
                   setTripInfo({ adults: parseInt(e.target.value) || 0 })
                 }
-                className="pl-9 h-12 bg-background/50"
+                className="pl-9 h-10 text-sm bg-background/50"
               />
             </div>
             <div className="relative flex-1">
-              <RiUserLine className="absolute left-3 top-3 size-4 text-muted-foreground" />
+              <RiUserLine className="absolute left-3 top-2.5 size-3.5 text-muted-foreground" />
               <Input
                 type="number"
                 min={0}
@@ -178,22 +178,22 @@ export function TripDetailsInput({
                 onChange={(e) =>
                   setTripInfo({ children: parseInt(e.target.value) || 0 })
                 }
-                className="pl-9 h-12 bg-background/50"
+                className="pl-9 h-10 text-sm bg-background/50"
               />
             </div>
           </div>
         </div>
 
         {/* Trip Purpose */}
-        <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-wider text-muted-foreground">
+        <div className="space-y-1.5">
+          <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
             {t("tripDetails.tripStyle")}
           </Label>
           <Select
             value={tripInfo.tripPurpose}
             onValueChange={(val: any) => setTripInfo({ tripPurpose: val })}
           >
-            <SelectTrigger className="h-12 bg-background/50">
+            <SelectTrigger className="h-10 text-sm bg-background/50">
               <SelectValue placeholder={t("tripDetails.selectStyle")} />
             </SelectTrigger>
             <SelectContent>
@@ -223,28 +223,28 @@ export function TripDetailsInput({
         </div>
 
         {/* Special Requests */}
-        <div className="md:col-span-2 space-y-2">
-          <Label className="text-xs uppercase tracking-wider text-muted-foreground">
+        <div className="md:col-span-2 space-y-1.5">
+          <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
             {t("tripDetails.specialWishes")}
           </Label>
           <Textarea
             placeholder={t("tripDetails.wishesPlaceholder")}
             value={tripInfo.specialRequests}
             onChange={(e) => setTripInfo({ specialRequests: e.target.value })}
-            className="min-h-[80px] bg-background/50 resize-none"
+            className="min-h-[60px] text-sm bg-background/50 resize-none"
           />
         </div>
       </div>
 
-      <div className="pt-4 flex justify-center">
+      <div className="pt-2 flex justify-center">
         <Button
           size="lg"
           onClick={onGenerate}
           disabled={!isValid || isGenerating}
-          className="h-14 px-10 text-base font-display uppercase tracking-widest relative overflow-hidden group"
+          className="h-11 px-8 text-sm font-display uppercase tracking-widest relative overflow-hidden group"
         >
           <span className="relative z-10 flex items-center gap-2">
-            <RiMagicLine className="size-5" />
+            <RiMagicLine className="size-4" />
             {isGenerating
               ? t("tripDetails.generating")
               : t("tripDetails.generate")}
