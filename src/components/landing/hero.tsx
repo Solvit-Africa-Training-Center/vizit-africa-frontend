@@ -1,21 +1,21 @@
 "use client";
 
-import { HERO_SLIDES } from "@/lib/configs";
+import { useGSAP } from "@gsap/react";
+import { RiPlaneLine } from "@remixicon/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { AnimatePresence, motion } from "motion/react";
+import Image from "next/image";
+import { useTranslations } from "next-intl";
+import { useEffect, useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { AnimatePresence, motion } from "motion/react";
-import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import { useTranslations } from "next-intl";
+import { HERO_SLIDES } from "@/lib/configs";
 import { TripRequestDialog } from "./trip-request-dialog";
-import { Button } from "@/components/ui/button";
-import { RiPlaneLine } from "@remixicon/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -183,9 +183,12 @@ export function Hero() {
             open={isDialogOpen}
             onOpenChange={setIsDialogOpen}
             trigger={
-              <Button size="lg" className="font-display uppercase tracking-widest text-sm h-14 px-8 rounded-full shadow-lg hover:shadow-primary/20 hover:scale-105 transition-all duration-300">
+              <Button
+                size="lg"
+                className="font-display uppercase tracking-widest text-sm h-14 px-8 rounded-full shadow-lg hover:shadow-primary/20 hover:scale-105 transition-all duration-300"
+              >
                 <RiPlaneLine className="mr-2 size-5" />
-                Start Your Journey
+                {tCommon("startPlanning")}
               </Button>
             }
           />
@@ -197,10 +200,11 @@ export function Hero() {
               key={index}
               type="button"
               onClick={() => handleSlideChange(index)}
-              className={`h-0.5 transition-all duration-500 ${index === currentSlide
+              className={`h-0.5 transition-all duration-500 ${
+                index === currentSlide
                   ? "w-12 bg-primary-foreground"
                   : "w-4 bg-primary-foreground/40 hover:bg-primary-foreground/60"
-                }`}
+              }`}
               aria-label={`Go to slide ${index + 1}`}
             />
           ))}
@@ -222,18 +226,20 @@ export function Hero() {
                 <HoverCardTrigger
                   type="button"
                   onClick={() => handleSlideChange(index)}
-                  className={`group flex items-center justify-end gap-3 transition-colors duration-300 ${isActive
+                  className={`group flex items-center justify-end gap-3 transition-colors duration-300 ${
+                    isActive
                       ? "text-primary-foreground"
                       : "text-primary-foreground/40 hover:text-primary-foreground/80"
-                    }`}
+                  }`}
                 >
                   <span className="text-[10px] font-mono uppercase tracking-[0.2em]">
                     0{index + 1}
                   </span>
 
                   <span
-                    className={`h-px bg-current transition-all duration-500 ${isActive ? "w-8 bg-primary" : "w-4 group-hover:w-6"
-                      }`}
+                    className={`h-px bg-current transition-all duration-500 ${
+                      isActive ? "w-8 bg-primary" : "w-4 group-hover:w-6"
+                    }`}
                   />
                 </HoverCardTrigger>
                 <HoverCardContent
