@@ -277,7 +277,7 @@ function ContactForm({ t, tCommon }: { t: Translate; tCommon: Translate }) {
 }
 
 interface ContactItemProps {
-  icon: React.ElementType;
+  icon: React.ElementType<{ className?: string }>;
   label: string;
   value: string;
   href?: string;
@@ -333,7 +333,7 @@ function ContactItem({
 }
 
 interface MobileContactItemProps {
-  icon: React.ElementType;
+  icon: React.ElementType<{ className?: string }>;
   label: string;
   value: string;
   href?: string;

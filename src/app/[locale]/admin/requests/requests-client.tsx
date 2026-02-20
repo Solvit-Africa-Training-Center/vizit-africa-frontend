@@ -70,6 +70,8 @@ export default function RequestsClient({ requests }: RequestsClientProps) {
         data={requests}
         filterFields={filterFields}
         state={tableState}
+        searchColumn="name"
+        searchPlaceholder="Search requests..."
         callbacks={{ onStateChange: handleStateChange }}
       />
     </div>

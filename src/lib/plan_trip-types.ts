@@ -39,6 +39,7 @@ export interface Car {
   fuelType: string;
   features: string[];
   image?: string;
+  withDriver?: boolean;
 }
 
 export interface Guide {

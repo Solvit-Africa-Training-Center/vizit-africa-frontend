@@ -10,7 +10,7 @@ import {
   type DataTableState,
 } from "@/components/ui/data-table";
 import { createDefaultDataTableState } from "@/components/ui/data-table-state";
-import { useRouter } from "@/i18n/navigation";
+import { Link } from "@/i18n/navigation";
 import type { ServiceResponse } from "@/lib/schema/service-schema";
 import { serviceColumns } from "./columns";
 
@@ -20,7 +20,6 @@ interface InventoryClientProps {
 
 export default function InventoryClient({ services }: InventoryClientProps) {
   const t = useTranslations("Admin.inventory");
-  const router = useRouter();
 
   const [tableState, setTableState] = useState(createDefaultDataTableState());
 
@@ -55,10 +54,6 @@ export default function InventoryClient({ services }: InventoryClientProps) {
     },
   ];
 
-  const handleAddNew = () => {
-    router.push("/admin/create/service");
-  };
-
   return (
     <div className="mx-auto max-w-7xl px-5 md:px-10 py-8">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
@@ -69,7 +64,7 @@ export default function InventoryClient({ services }: InventoryClientProps) {
           <p className="text-muted-foreground">{t("subtitle")}</p>
         </div>
         <div>
-          <Button onClick={handleAddNew}>
+          <Button render={<Link href="/admin/create/service" />}>
             <RiAddLine className="size-4 mr-2" />
             {t("addNew")}
           </Button>

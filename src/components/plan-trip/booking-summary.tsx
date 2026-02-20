@@ -36,7 +36,7 @@ export function BookingSummary({
   const guide = items.find((i) => i.type === "guide");
 
   return (
-    <div className="bg-muted/30 rounded-xl p-6 space-y-6 sticky top-28">
+    <div className="bg-muted/30 rounded-xl p-6 space-y-6">
       <h3 className="font-display text-lg font-medium text-foreground">
         {t("title")}
       </h3>
@@ -85,22 +85,22 @@ export function BookingSummary({
                   ? (flight.price || 0) * travelers
                   : null
               }
-              status={
-                flight?.id === "requested" ? "pending" : undefined
-              }
+              status={flight?.id === "requested" ? "pending" : undefined}
             />
             <SummaryItem
               label={t("accommodation")}
               isSelected={!!hotel}
               value={
-                hotel && hotel.data?.pricePerNight ? hotel.data.pricePerNight * days : null
+                hotel?.data?.pricePerNight
+                  ? hotel.data.pricePerNight * days
+                  : null
               }
             />
             <SummaryItem
               label={t("vehicle")}
               isSelected={!!car}
               value={
-                car && car.data?.pricePerDay
+                car?.data?.pricePerDay
                   ? car.data.pricePerDay * days +
                     (car.data.withDriver ? driverSurcharge * days : 0)
                   : null

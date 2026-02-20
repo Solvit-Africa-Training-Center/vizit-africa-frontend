@@ -21,6 +21,7 @@
   "Navigation": {
     "flights": "Flights",
     "destinations": "Destinations",
+    "services": "Services",
     "experiences": "Experiences",
     "aboutUs": "About",
     "contact": "Contact"
@@ -266,6 +267,7 @@
     "links": {
       "tripsPackages": "Trips & Packages",
       "customItineraries": "Custom Itineraries",
+      "requestVendorship": "Request Vendorship",
       "gallery": "Gallery",
       "faq": "FAQ",
       "aboutUs": "About Us",
@@ -664,25 +666,51 @@
     "tripDetails": {
       "title": "Trip Details",
       "subtitle": "Tell us where you're coming from and when",
+      "heading": "Describe Your Dream Trip",
+      "subheading": "Tell us where and when, and our AI will curate the perfect itinerary for you.",
+      "whereTo": "Where to?",
+      "wherePlaceholder": "e.g. Kigali, Rwanda",
+      "when": "When?",
+      "selectDates": "Select dates",
+      "whosComing": "Who's coming?",
+      "adults": "Adults",
+      "children": "Children",
+      "kids": "Kids",
+      "tripStyle": "Trip Style",
+      "selectStyle": "Select style",
+      "specialWishes": "Any special wishes? (Optional)",
+      "wishesPlaceholder": "e.g. We love hiking, vegetarian food, and want to see gorillas.",
+      "generate": "Generate Itinerary",
+      "generating": "Crafting Itinerary...",
       "departingFrom": "Departing From",
       "departingPlaceholder": "e.g. New York, London, Dubai",
       "arrival": "Arrival in Rwanda",
       "departure": "Departure from Rwanda",
       "pickDate": "Pick a date",
-      "adults": "Adults",
-      "children": "Children (0-12)",
       "tripPurpose": "Trip Purpose",
       "purposes": {
-        "leisure": "Leisure",
+        "leisure": "Leisure & Relax",
         "business": "Business",
-        "honeymoon": "Honeymoon",
-        "family": "Family",
+        "honeymoon": "Honeymoon / Romantic",
+        "family": "Family Fun",
         "adventure": "Adventure",
+        "cultural": "Cultural",
         "other": "Other"
       },
       "specialRequests": "Special Requests (Optional)",
       "requestsPlaceholder": "Any dietary requirements, accessibility needs, or special occasions...",
       "continue": "Continue to Traveler Details"
+    },
+    "loading": {
+      "title": "Crafting Your Journey",
+      "steps": [
+        "Analyzing your travel preferences...",
+        "Scanning flight routes for best connections...",
+        "Matching you with top-rated local guides...",
+        "Sourcing exclusive luxury accommodations...",
+        "Curating unique cultural experiences...",
+        "Finalizing your personalized itinerary..."
+      ]
     },
     "flight": {
       "title": "Find Your Flight",

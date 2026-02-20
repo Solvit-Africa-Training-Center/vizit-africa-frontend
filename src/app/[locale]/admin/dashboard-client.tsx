@@ -10,6 +10,7 @@ import {
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import type { Booking } from "@/lib/schema/booking-schema";
+import { CompletedRequestsSchedule } from "@/components/schedule";
 
 interface DashboardClientProps {
   requests: Booking[];
@@ -81,6 +82,10 @@ export default function DashboardClient({ requests }: DashboardClientProps) {
             </div>
           </div>
         ))}
+      </div>
+
+      <div className="mb-8">
+        <CompletedRequestsSchedule bookings={requests} />
       </div>
 
       <div className="flex items-center gap-2 mb-6">

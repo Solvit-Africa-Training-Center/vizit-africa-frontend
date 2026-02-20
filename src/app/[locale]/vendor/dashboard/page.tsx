@@ -3,6 +3,7 @@ import { getCurrentUser } from "@/actions/auth";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Link, redirect } from "@/i18n/navigation";
+import { CompletedRequestsSchedule } from "@/components/schedule";
 
 export default async function VendorDashboardPage({
   params,
@@ -103,11 +104,11 @@ export default async function VendorDashboardPage({
         </div>
       </div>
 
-      <div className="mt-10 p-10 text-center border border-dashed rounded-xl">
-        <p className="text-muted-foreground">
-          Recent activity will appear here. Inventory management for vendors is
-          being rolled out.
-        </p>
+      <div className="mt-10">
+        <CompletedRequestsSchedule
+          bookings={[]}
+          emptyMessage="No scheduled services found."
+        />
       </div>
     </div>
   );

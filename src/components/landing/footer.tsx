@@ -32,6 +32,7 @@ export function Footer() {
       { label: t("links.contactUs"), href: "/contact" },
       { label: t("links.privacyPolicy"), href: "/privacy" },
       { label: t("links.termsOfService"), href: "/terms" },
+      { label: t("links.requestVendorship"), href: "/partners/apply" },
     ],
     contact: [
       { label: "Kesly@vizit.africa", href: "mailto:Kesly@vizit.africa" },

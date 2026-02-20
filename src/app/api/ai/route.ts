@@ -34,6 +34,7 @@ const carSchema = z.object({
   fuelType: z.string(),
   features: z.array(z.string()),
   image: z.string().optional(),
+  withDriver: z.boolean().optional(),
 });
 
 const guideSchema = z.object({
@@ -93,7 +94,7 @@ export async function POST(req: Request) {
     const nights = calculateNights(startDate, endDate);
 
     const result = await generateText({
-      model: google("gemini-2.0-flash"),
+      model: google("gemini-3-flash-preview"),
       output: Output.object({
         schema: tripRecommendationsSchema,
       }),
@@ -118,6 +119,24 @@ Requirements:
     return Response.json(result.output);
   } catch (error) {
     console.error("AI trip planning error:", error);
+
+    const err = error as Record<string, unknown>;
+    const isRateLimit =
+      err.statusCode === 429 ||
+      err.status === 429 ||
+      String(err.message).includes("429") ||
+      String(err.message).includes("quota");
+
+    if (isRateLimit) {
+      return Response.json(
+        {
+          error:
+            "Our AI travel planner is currently busy. Please try again in 30 seconds.",
+        },
+        { status: 429 },
+      );
+    }
+
     return Response.json(
       { error: "Failed to generate AI recommendations." },
       { status: 500 },
