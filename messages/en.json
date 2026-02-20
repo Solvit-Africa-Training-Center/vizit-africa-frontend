@@ -20,8 +20,7 @@
   },
   "Navigation": {
     "flights": "Flights",
-    "destinations": "Destinations",
-    "services": "Services",
+    "ourservices": "Our Service",
     "experiences": "Experiences",
     "aboutUs": "About",
     "contact": "Contact"

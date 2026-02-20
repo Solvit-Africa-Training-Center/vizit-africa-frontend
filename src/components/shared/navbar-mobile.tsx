@@ -29,7 +29,7 @@ export function NavbarMobile({ isOpen, onClose }: NavbarMobileProps) {
   const tripItemCount = useTripStore((s) => s.itemCount());
 
   const navLinks = [
-    { href: "/services", label: t("destinations") },
+    { href: "/services", label: t("ourservices") },
     { href: "/experiences", label: t("experiences") },
     { href: "/about", label: t("aboutUs") },
     { href: "/contact", label: t("contact") },
