@@ -1,8 +1,9 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/shared/page-header";
-import { Link } from "@/i18n/navigation";
+import { Button } from "@/components/ui/button";
 import { members as teamMembers } from "@/lib/configs/members";
+import Link from "next/link";
 
 export default async function AboutPage() {
   const t = await getTranslations("About");
@@ -36,49 +37,40 @@ export default async function AboutPage() {
       <PageHeader
         title={t("title")}
         overline={t("established")}
-        className="mb-32 md:mb-48"
+        className="mb-24 md:mb-32"
       />
 
-      <section className="max-w-7xl mx-auto px-5 md:px-10 mb-32 md:mb-48">
-        <div className="">
-          <div className="md:col-span-8 md:col-start-3">
-            <p className="font-display text-2xl md:text-3xl font-medium leading-tight">
-              <span className="text-primary">{t("intro1")}</span> {t("intro2")}
-            </p>
-            <p className="font-display text-2xl md:text-3xl font-medium leading-tight mt-12 text-muted-foreground/60">
-              {t("intro3")}
-            </p>
-          </div>
+      <section className="px-5 md:px-10 max-w-7xl mx-auto mb-32 md:mb-48">
+        <div className="max-w-4xl">
+          <p className="font-display text-2xl md:text-4xl font-medium leading-tight tracking-tighter uppercase">
+            <span className="text-primary">{t("intro1")}</span> {t("intro2")}
+          </p>
+          <p className="text-xl md:text-2xl font-light leading-relaxed mt-12 text-muted-foreground/60">
+            {t("intro3")}
+          </p>
         </div>
       </section>
 
-      <section className="mb-32 md:mb-48 overflow-hidden py-12 max-w-7xl px-5 md:px-10 mx-auto">
-        <div className="mb-12 flex items-end justify-between">
-          <h2 className="font-display text-2xl md:text-4xl font-medium uppercase">
+      <section className="mb-32 md:mb-48 py-12 px-5 md:px-10 max-w-7xl mx-auto">
+        <div className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-8">
+          <h2 className="font-display text-4xl md:text-5xl font-medium uppercase tracking-tighter leading-none">
             {t("guidesTitle")}
           </h2>
-          <p className="text-muted-foreground max-w-xs text-right hidden md:block">
+          <p className="text-muted-foreground max-w-xs text-lg font-light">
             {t("guidesDescription")}
           </p>
         </div>
 
         <div className="">
           <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {teamMembers.map((member, i) => (
+            {teamMembers.map((member) => (
               <div
                 key={member.id}
                 className="relative group flex flex-col gap-2"
               >
                 <div className="relative h-80 w-full">
                   <Image
-                    src={
-                      [
-                        "/images/guide.jpg",
-                        "/images/guide-with-walkie-talkie.jpg",
-                        "/images/woman-smiling-in-window--black-white.jpg",
-                        "/images/florian-kriechbaumer.jpg",
-                      ][i % 4]
-                    }
+                    src={member.image || "/images/guide.jpg"}
                     alt={member.name}
                     fill
                     className="object-cover transition-all duration-700"
@@ -119,16 +111,24 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section className="px-5 md:px-10 max-w-7xl mx-auto text-center">
-        <h2 className="font-display text-4xl md:text-5xl font-medium uppercase tracking-tight mb-8">
-          {t("startJourney")}
-        </h2>
-        <Link href="/contact" className="inline-block relative group">
-          <span className="font-mono text-lg uppercase tracking-widest text-foreground group-hover:text-primary transition-colors duration-300">
+      <section className="px-5 md:px-10 max-w-7xl mx-auto py-24 md:py-32 text-center bg-foreground text-background rounded-3xl relative overflow-hidden">
+        <div className="relative z-10">
+          <h2 className="font-display text-4xl md:text-6xl font-medium uppercase tracking-tighter leading-none mb-12">
+            {t("startJourney")}
+          </h2>
+          <Button
+            size="lg"
+            variant="secondary"
+            className="h-16 px-12 rounded-full font-display uppercase tracking-widest text-sm hover:scale-105 transition-all duration-300"
+            render={<Link href="/contact" />}
+          >
             {tCommon("getInTouch")}
-          </span>
-          <span className="absolute bottom-0 left-0 w-full h-px bg-foreground group-hover:bg-primary transition-colors duration-300 origin-left group-hover:scale-x-100" />
-        </Link>
+          </Button>
+        </div>
+
+        <div className="absolute inset-0 opacity-10 pointer-events-none">
+          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] brightness-100 contrast-150" />
+        </div>
       </section>
     </div>
   );

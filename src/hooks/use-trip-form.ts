@@ -19,12 +19,12 @@ export interface TripFormValues {
   email: string;
   phone: string;
   tripPurpose:
-  | "leisure"
-  | "business"
-  | "honeymoon"
-  | "family"
-  | "adventure"
-  | "other";
+    | "leisure"
+    | "business"
+    | "honeymoon"
+    | "family"
+    | "adventure"
+    | "other";
   specialRequests: string;
 }
 
@@ -48,7 +48,7 @@ export function useTripForm() {
       tripPurpose: tripInfo.tripPurpose,
       specialRequests: tripInfo.specialRequests,
     },
-    onSubmit: async ({ value }) => {
+    onSubmit: async ({ value, formApi }) => {
       const result = await submitTripRequest(value, items);
 
       if (result.success) {
@@ -56,8 +56,19 @@ export function useTripForm() {
         clearTrip();
         router.push("/profile?tab=bookings");
       } else {
-        toast.error(result.error || "Failed to submit trip request");
+        toast.error(result.error || "Failed to submit trip request.");
         console.error("Submission error:", result);
+        if (result.fieldErrors) {
+          Object.entries(result.fieldErrors).forEach(([field, errors]) => {
+            if (Object.keys(value).includes(field)) {
+              // @ts-ignore
+              formApi.setFieldMeta(field, (prev) => ({
+                ...prev,
+                errors: errors,
+              }));
+            }
+          });
+        }
       }
     },
   });

@@ -11,6 +11,12 @@ import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import type { Booking } from "@/lib/schema/booking-schema";
 import { CompletedRequestsSchedule } from "@/components/schedule";
+import {
+  Empty,
+  EmptyDescription,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty";
 
 interface DashboardClientProps {
   requests: Booking[];
@@ -113,9 +119,13 @@ export default function DashboardClient({ requests }: DashboardClientProps) {
         </div>
         <div className="divide-y divide-border">
           {requests.length === 0 ? (
-            <div className="p-10 text-center text-muted-foreground">
-              No recent requests found.
-            </div>
+            <Empty className="border-none">
+              <EmptyMedia variant="icon">
+                <RiFileListLine className="size-6 text-muted-foreground" />
+              </EmptyMedia>
+              <EmptyTitle>No recent requests</EmptyTitle>
+              <EmptyDescription>No recent requests found.</EmptyDescription>
+            </Empty>
           ) : (
             requests.slice(0, 10).map((request) => (
               <div

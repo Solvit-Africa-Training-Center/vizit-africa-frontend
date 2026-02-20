@@ -5,15 +5,15 @@ import type { RequestedItem } from "@/lib/schema/booking-schema";
 export type PackageItem = RequestedItem & {
   isQuoted?: boolean;
   quotePrice?: number;
-  tempId?: string; // For client-side tracking before saving
-  // Generic details
+  tempId?: string;
+  // generic details
   date?: string;
   time?: string;
-  // Backend compatibility
+  // backend compatibility
   start_date?: string;
   start_time?: string;
   unit_price?: number;
-  // Flight specifics
+  // flight specifics
   departure?: string;
   departureTime?: string;
   arrival?: string;
@@ -24,10 +24,10 @@ export type PackageItem = RequestedItem & {
 };
 
 interface PackageState {
-  // Map bookingId to a list of items
+  // map booking id to items
   drafts: Record<string, PackageItem[]>;
 
-  // Actions
+  // actions
   addItem: (bookingId: string, item: PackageItem) => void;
   updateItem: (
     bookingId: string,
@@ -38,7 +38,7 @@ interface PackageState {
   setItems: (bookingId: string, items: PackageItem[]) => void;
   clearDraft: (bookingId: string) => void;
 
-  // Selectors/Helpers
+  // selectors
   getItems: (bookingId: string) => PackageItem[];
 }
 

@@ -45,7 +45,7 @@ export function PageHeader({
         className={cn(
           "font-display font-medium uppercase tracking-tighter leading-[0.85] mb-8",
           isDark ? "text-primary-foreground" : "text-foreground",
-          "text-5xl md:text-7xl"
+          "text-4xl md:text-6xl"
         )}
       >
         {typeof title === "string" ? (

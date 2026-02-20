@@ -102,18 +102,21 @@ export default function ExperiencesClient({
         title={t("title")}
         overline={t("overline")}
         layout="split"
-        className="border-b border-border/40 pb-8"
+        className="mb-16 md:mb-24"
       >
-        <div className="flex flex-wrap gap-4 mb-2">
+        <div className="flex flex-col items-start md:items-end gap-3 mb-2">
+          <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-primary mb-2">
+            Categories
+          </span>
           {experiences.map((cat) => (
             <button
               type="button"
               key={cat.id}
               onClick={() => scrollToCategory(cat.id)}
-              className="text-sm font-medium uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors flex items-center gap-1 group"
+              className="text-lg md:text-xl font-display font-medium uppercase tracking-tight text-muted-foreground/30 hover:text-foreground transition-all duration-300 hover:translate-x-2 md:hover:-translate-x-2 flex items-center gap-2 group"
             >
               {cat.category}
-              <RiArrowDownLine className="size-4 opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all" />
+              <RiArrowDownLine className="size-4 opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500" />
             </button>
           ))}
         </div>
@@ -274,7 +277,7 @@ function ExperienceItem({
         {experience.title}
       </h2>
 
-      <div className="md:hidden w-full h-64 relative mb-8 rounded-2xl overflow-hidden active-image-mobile">
+      <div className="md:hidden w-full h-80 relative mb-12 rounded-2xl overflow-hidden active-image-mobile">
         <NextImage
           src={image}
           alt={experience.title}
@@ -283,34 +286,34 @@ function ExperienceItem({
         />
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-10 border-y border-border/50 py-6">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-8 mb-12 border-y border-border/50 py-10">
         <div className="flex flex-col">
-          <span className="text-muted-foreground text-[10px] uppercase tracking-widest mb-2">
+          <span className="text-muted-foreground text-[10px] font-mono uppercase tracking-[0.2em] mb-3">
             {labels.location}
           </span>
-          <span className="font-medium text-sm md:text-base">{location}</span>
+          <span className="font-display font-medium text-lg uppercase tracking-tight">{location}</span>
         </div>
         <div className="flex flex-col">
-          <span className="text-muted-foreground text-[10px] uppercase tracking-widest mb-2">
+          <span className="text-muted-foreground text-[10px] font-mono uppercase tracking-[0.2em] mb-3">
             {labels.duration}
           </span>
-          <span className="font-medium text-sm md:text-base">{duration}</span>
+          <span className="font-display font-medium text-lg uppercase tracking-tight">{duration}</span>
         </div>
         <div className="flex flex-col md:col-span-1 col-span-2">
-          <span className="text-muted-foreground text-[10px] uppercase tracking-widest mb-2">
+          <span className="text-muted-foreground text-[10px] font-mono uppercase tracking-[0.2em] mb-3">
             {labels.startingFrom}
           </span>
-          <span className="font-display font-medium text-xl text-primary">
+          <span className="font-display font-medium text-3xl text-primary tracking-tighter">
             ${price}
           </span>
         </div>
       </div>
 
-      <p className="text-lg md:text-xl font-light leading-relaxed text-muted-foreground mb-10 max-w-xl">
+      <p className="text-xl md:text-2xl font-light leading-relaxed text-muted-foreground mb-12 max-w-2xl">
         {experience.description}
       </p>
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-6">
         <AddToTripButton
           type="experience"
           item={{
@@ -326,17 +329,17 @@ function ExperienceItem({
           variant="default"
           size="lg"
           className={cn(
-            "rounded-xl px-8 h-14 text-base transition-all duration-300 flex-1",
+            "rounded-full px-10 h-16 text-xs font-display uppercase tracking-widest transition-all duration-500 flex-1 md:flex-none md:min-w-[240px] shadow-lg",
             isActive
-              ? "bg-primary text-primary-foreground"
-              : "bg-muted text-muted-foreground hover:bg-muted-foreground/10",
+              ? "bg-primary text-primary-foreground shadow-primary/20 scale-105"
+              : "bg-muted text-muted-foreground hover:bg-muted-foreground/10 shadow-none",
           )}
         />
         <SaveButton
           type="experience"
           id={String(experience.id)}
           variant="full"
-          className={cn("h-14 rounded-xl px-6", !isActive && "opacity-50")}
+          className={cn("h-16 w-16 rounded-full p-0 flex items-center justify-center", !isActive && "opacity-50")}
         />
       </div>
     </div>

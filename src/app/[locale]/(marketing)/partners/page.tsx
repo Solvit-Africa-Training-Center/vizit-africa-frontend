@@ -1,3 +1,5 @@
+"use client";
+
 import {
   RiArrowRightLine,
   RiCheckboxCircleLine,
@@ -6,160 +8,156 @@ import {
   RiTeamLine,
 } from "@remixicon/react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
+import { PageHeader } from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 
 export default function PartnersPage() {
+  const t = useTranslations("Partners");
+
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Hero Section */}
-      <section className="relative h-[80vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/tourism-guide-vehicle-car.jpg"
-            alt="Partner with Vizit Africa"
-            fill
-            className="object-cover opacity-30"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
-        </div>
-        <div className="container relative z-10 px-4 md:px-6 text-center">
-          <h1 className="text-4xl md:text-6xl font-display font-bold tracking-tight mb-6 animate-fade-in-up">
-            Grow Your Business with{" "}
-            <span className="text-primary">Vizit Africa</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-10 animate-fade-in-up delay-100">
-            Join our exclusive network of premium travel providers and reach
-            high-value travelers looking for authentic African experiences.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up delay-200">
-            <Button
-              size="lg"
-              className="h-12 px-8 text-lg"
-              render={<Link href="/partners/apply" />}
-            >
-              Become a Partner <RiArrowRightLine className="ml-2 h-5 w-5" />
-            </Button>
-            <Button size="lg" variant="outline" className="h-12 px-8 text-lg">
-              Learn More
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Benefits Section */}
-      <section className="py-20 bg-muted/30">
-        <div className="container px-4 md:px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-              Why Partner With Us?
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              We provide the tools and exposure you need to scale your tourism
-              business.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-card p-8 rounded-2xl border border-border/50 hover:border-primary/50 transition-colors">
-              <div className="h-12 w-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
-                <RiGlobalLine className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="text-xl font-bold mb-3">Global Reach</h3>
-              <p className="text-muted-foreground">
-                Access a worldwide audience of travelers specifically interested
-                in premium African tourism.
-              </p>
-            </div>
-            <div className="bg-card p-8 rounded-2xl border border-border/50 hover:border-primary/50 transition-colors">
-              <div className="h-12 w-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
-                <RiTeamLine className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="text-xl font-bold mb-3">Targeted Audience</h3>
-              <p className="text-muted-foreground">
-                Connect with travelers who value quality, sustainability, and
-                authentic experiences.
-              </p>
-            </div>
-            <div className="bg-card p-8 rounded-2xl border border-border/50 hover:border-primary/50 transition-colors">
-              <div className="h-12 w-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
-                <RiLineChartLine className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="text-xl font-bold mb-3">Business Growth</h3>
-              <p className="text-muted-foreground">
-                Utilize our powerful dashboard to manage bookings, track
-                performance, and optimize your offerings.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials/Stats Section (Placeholder for now) */}
-      <section className="py-20">
-        <div className="container px-4 md:px-6">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
-                Designed for Tour Operators, Hotels, and Guides
-              </h2>
-              <ul className="space-y-4">
-                {[
-                  "Easy-to-use booking management system",
-                  "Direct communication with clients",
-                  "Automated invoicing and payments",
-                  "Marketing support and featured listings",
-                  "Analytics and performance insights",
-                ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-3">
-                    <RiCheckboxCircleLine className="h-6 w-6 text-primary shrink-0" />
-                    <span className="text-lg text-muted-foreground">
-                      {item}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              <Button
-                size="lg"
-                className="mt-8"
-                render={<Link href="/partners/apply" />}
-              >
-                Get Started Today
-              </Button>
-            </div>
-            <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-2xl">
-              <Image
-                src="/images/hotel.jpg"
-                alt="Vendor Dashboard Preview"
-                fill
-                className="object-cover"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-24 bg-primary text-primary-foreground relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary to-primary/80" />
-        <div className="container relative z-10 px-4 md:px-6 text-center">
-          <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">
-            Ready to Scale Your Business?
-          </h2>
-          <p className="text-xl text-primary-foreground/80 max-w-2xl mx-auto mb-10">
-            Join thousands of other successful partners on Vizit Africa. Setup
-            takes less than 5 minutes.
-          </p>
+    <div className="min-h-screen bg-background pt-32 pb-24">
+      <PageHeader
+        title={t("title")}
+        overline={t("overline")}
+        description={t("description")}
+        layout="split"
+        className="mb-24 md:mb-32"
+      >
+        <div className="flex flex-col sm:flex-row gap-4">
           <Button
             size="lg"
-            variant="secondary"
-            className="h-14 px-10 text-lg"
+            className="h-14 px-8 rounded-full font-display uppercase tracking-widest text-xs"
             render={<Link href="/partners/apply" />}
           >
-            Apply Now
+            {t("cta.apply")} <RiArrowRightLine className="ml-2 size-4" />
+          </Button>
+          <Button
+            size="lg"
+            variant="outline"
+            className="h-14 px-8 rounded-full font-display uppercase tracking-widest text-xs"
+          >
+            {t("cta.learnMore")}
           </Button>
         </div>
+      </PageHeader>
+
+      <section className="px-5 md:px-10 max-w-7xl mx-auto mb-32 md:mb-48">
+        <div className="grid md:grid-cols-3 gap-8 md:gap-12">
+          <BenefitCard
+            icon={RiGlobalLine}
+            title={t("benefits.items.global.title")}
+            description={t("benefits.items.global.description")}
+            order="01"
+          />
+          <BenefitCard
+            icon={RiTeamLine}
+            title={t("benefits.items.targeted.title")}
+            description={t("benefits.items.targeted.description")}
+            order="02"
+          />
+          <BenefitCard
+            icon={RiLineChartLine}
+            title={t("benefits.items.growth.title")}
+            description={t("benefits.items.growth.description")}
+            order="03"
+          />
+        </div>
       </section>
+
+      <section className="px-5 md:px-10 max-w-7xl mx-auto mb-32 md:mb-48">
+        <div className="grid lg:grid-cols-2 gap-16 md:gap-24 items-center">
+          <div className="relative h-[400px] md:h-[600px] rounded-2xl overflow-hidden group">
+            <Image
+              src="/images/hotel.jpg"
+              alt="Vendor Dashboard"
+              fill
+              className="object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-black/20" />
+          </div>
+
+          <div>
+            <h2 className="font-display text-4xl md:text-5xl font-medium uppercase tracking-tighter leading-none mb-12">
+              {t("features.title")}
+            </h2>
+            <ul className="space-y-6">
+              {(t.raw("features.items") as string[]).map((item, i) => (
+                <li key={i} className="flex items-start gap-4 group">
+                  <div className="size-6 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-1 group-hover:bg-primary transition-colors duration-300">
+                    <RiCheckboxCircleLine className="size-4 text-primary group-hover:text-primary-foreground transition-colors" />
+                  </div>
+                  <span className="text-lg md:text-xl text-muted-foreground font-light group-hover:text-foreground transition-colors">
+                    {item}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <Button
+              size="lg"
+              className="mt-12 h-14 px-8 rounded-full font-display uppercase tracking-widest text-xs"
+              render={<Link href="/partners/apply" />}
+            >
+              {t("cta.getStarted")}
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-5 md:px-10 max-w-7xl mx-auto">
+        <div className="bg-foreground text-background rounded-3xl p-8 md:p-24 text-center relative overflow-hidden">
+          <div className="relative z-10">
+            <h2 className="font-display text-4xl md:text-6xl font-medium uppercase tracking-tighter leading-none mb-8">
+              {t("ctaSection.title")}
+            </h2>
+            <p className="text-xl md:text-2xl text-background/60 font-light max-w-2xl mx-auto mb-12">
+              {t("ctaSection.description")}
+            </p>
+            <Button
+              size="lg"
+              variant="secondary"
+              className="h-16 px-12 rounded-full font-display uppercase tracking-widest text-sm hover:scale-105 transition-all duration-300"
+              render={<Link href="/partners/apply" />}
+            >
+              {t("ctaSection.button")}
+            </Button>
+          </div>
+
+          <div className="absolute inset-0 opacity-10 pointer-events-none">
+            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] brightness-100 contrast-150" />
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function BenefitCard({
+  icon: Icon,
+  title,
+  description,
+  order,
+}: {
+  icon: React.ElementType<{ className?: string }>;
+  title: string;
+  description: string;
+  order: string;
+}) {
+  return (
+    <div className="flex flex-col border-t border-border pt-8 group hover:border-primary transition-colors duration-500">
+      <span className="font-mono text-xs text-muted-foreground mb-6">
+        ({order})
+      </span>
+      <div className="size-12 rounded-xl bg-muted/50 flex items-center justify-center mb-8 group-hover:bg-primary group-hover:scale-110 transition-all duration-500">
+        <Icon className="size-6 text-foreground group-hover:text-primary-foreground transition-colors" />
+      </div>
+      <h3 className="font-display text-3xl font-medium uppercase tracking-tight mb-4 group-hover:text-primary transition-colors">
+        {title}
+      </h3>
+      <p className="text-muted-foreground/80 leading-relaxed text-lg font-light">
+        {description}
+      </p>
     </div>
   );
 }

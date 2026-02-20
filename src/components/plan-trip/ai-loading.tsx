@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { Orb } from "@/components/ui/orb";
@@ -22,33 +22,37 @@ export function AiLoading() {
   }, [messages.length]);
 
   return (
-    <div className="flex flex-col items-center justify-center py-12 space-y-12 min-h-[500px] w-full max-w-2xl mx-auto">
+    <div className="flex flex-col items-center justify-center py-24 space-y-16 min-h-[600px] w-full max-w-4xl mx-auto">
       {/* Orb Animation - Top Center */}
-      <div className="relative w-[280px] h-[280px] flex items-center justify-center">
-        <div className="absolute inset-0 bg-primary/20 blur-3xl rounded-full opacity-20 animate-pulse" />
+      <div className="relative w-[320px] h-[320px] flex items-center justify-center">
+        <div className="absolute inset-0 bg-primary/10 blur-[100px] rounded-full opacity-40 animate-pulse" />
         <Orb
-          colors={["#047857", "#10B981"]}
+          colors={["#10B981", "#059669"]}
           agentState="thinking"
-          className="w-full h-full"
+          className="w-full h-full scale-110"
         />
       </div>
 
-      <div className="relative z-10 flex flex-col items-center space-y-4 w-full px-4">
-        <motion.div
-          key={currentMessageIndex}
-          initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          exit={{ opacity: 0, y: -20, filter: "blur(10px)" }}
-          transition={{ duration: 0.5 }}
-          className="text-center space-y-3 w-full"
-        >
-          <h3 className="text-2xl md:text-3xl font-display font-medium text-foreground tracking-wide">
-            {t("loading.title")}
-          </h3>
-          <p className="text-base text-muted-foreground font-light tracking-wide max-w-md mx-auto h-6">
-            {messages[currentMessageIndex]}
-          </p>
-        </motion.div>
+      <div className="relative z-10 flex flex-col items-center space-y-6 w-full px-4">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentMessageIndex}
+            initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            exit={{ opacity: 0, y: -10, filter: "blur(8px)" }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="text-center space-y-4 w-full"
+          >
+            <h3 className="text-3xl md:text-4xl font-display font-medium text-foreground tracking-tight uppercase">
+              {t("loading.title")}
+            </h3>
+            <div className="h-6">
+              <p className="text-lg text-muted-foreground/60 font-light tracking-wide max-w-md mx-auto italic">
+                {messages[currentMessageIndex]}...
+              </p>
+            </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </div>
   );

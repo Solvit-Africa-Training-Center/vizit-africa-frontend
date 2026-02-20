@@ -1,6 +1,6 @@
 import type { ServiceResponse } from "@/lib/schema/service-schema";
 import { cn } from "@/lib/utils";
-import { RiArrowRightUpLine } from "@remixicon/react";
+import { RiArrowRightUpLine, RiMapPinLine } from "@remixicon/react";
 import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import { AddToTripButton } from "./plan-trip/add-to-trip-button";
@@ -8,6 +8,8 @@ import { Button } from "./ui/button";
 import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { getLocations } from "@/actions/locations";
+import { useQuery } from "@tanstack/react-query";
 
 const TYPE_LABELS: Record<string, string> = {
   hotel: "Hotels",
@@ -18,23 +20,6 @@ const TYPE_LABELS: Record<string, string> = {
   flight: "Flights",
   experience: "Experiences",
 };
-
-function formatPrice(service: ServiceResponse): string {
-  const price =
-    typeof service.base_price === "string"
-      ? Number.parseFloat(service.base_price)
-      : service.base_price;
-
-  const suffix =
-    service.service_type === "hotel" || service.service_type === "bnb"
-      ? " / night"
-      : service.service_type === "car_rental" ||
-          service.service_type === "guide"
-        ? " / day"
-        : "";
-
-  return `$${price.toLocaleString()}${suffix}`;
-}
 
 function getImage(service: ServiceResponse): string {
   const media = service.media;
@@ -76,6 +61,20 @@ export function ServiceItem({
 }) {
   const [withDriver, setWithDriver] = useState(false);
   const category = TYPE_LABELS[service.service_type] || service.service_type;
+
+  const { data: locationsResponse } = useQuery({
+    queryKey: ["locations"],
+    queryFn: async () => {
+      const res = await getLocations();
+      if (!res.success) throw new Error(res.error);
+      return res.data;
+    },
+    enabled: isExpanded && !!service.location,
+  });
+
+  const locationDetails = locationsResponse?.find(
+    (loc) => String(loc.id) === String(service.location),
+  );
 
   const basePrice =
     typeof service.base_price === "string"
@@ -145,26 +144,41 @@ export function ServiceItem({
             exit={{ height: 0, opacity: 0 }}
             className="overflow-hidden"
           >
-            <div className="pb-12 md:pb-16 grid md:grid-cols-12 gap-8 md:gap-12">
-              <div className="md:col-span-4 relative aspect-4/3 rounded-sm overflow-hidden bg-muted">
+            <div className="pb-12 md:pb-16 grid lg:grid-cols-12 gap-8 md:gap-16">
+              <div className="lg:col-span-5 relative aspect-4/3 rounded-2xl overflow-hidden bg-muted group/img">
                 <Image
                   src={image}
                   alt={service.title}
                   fill
-                  className="object-cover"
+                  className="object-cover transition-transform duration-700 group-hover/img:scale-110"
                 />
               </div>
-              <div className="md:col-span-8 flex flex-col justify-between">
+              <div className="lg:col-span-7 flex flex-col justify-between py-2">
                 <div>
-                  <p className="text-xl md:text-2xl font-light leading-relaxed mb-8 text-foreground/90">
+                  <p className="text-xl md:text-2xl font-light leading-relaxed mb-8 text-foreground/80">
                     {service.description}
                   </p>
+
+                  {locationDetails?.latitude && locationDetails?.longitude && (
+                    <a
+                      href={`https://www.google.com/maps/search/?api=1&query=${locationDetails.latitude},${locationDetails.longitude}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-3 text-xs font-mono uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors mb-12 group/location"
+                    >
+                      <RiMapPinLine className="size-4 group-hover/location:-translate-y-0.5 transition-transform" />
+                      <span className="underline underline-offset-8 decoration-border/50 group-hover/location:decoration-primary transition-colors">
+                        {locationDetails.name} • {locationDetails.latitude},{" "}
+                        {locationDetails.longitude}
+                      </span>
+                    </a>
+                  )}
                 </div>
 
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-8">
                   {(service.service_type === "car" ||
                     service.service_type === "car_rental") && (
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-3 bg-muted/30 p-4 rounded-xl w-fit">
                       <Checkbox
                         id={`driver-${service.id}`}
                         checked={withDriver}
@@ -172,7 +186,7 @@ export function ServiceItem({
                       />
                       <Label
                         htmlFor={`driver-${service.id}`}
-                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        className="text-xs font-mono uppercase tracking-widest cursor-pointer"
                       >
                         Add Driver (+${driverSurcharge}/day)
                       </Label>
@@ -184,7 +198,7 @@ export function ServiceItem({
                       <Button
                         size="lg"
                         variant={isSelected ? "destructive" : "default"}
-                        className="px-8 rounded-none h-14 uppercase tracking-widest font-display text-sm"
+                        className="px-10 rounded-full h-14 uppercase tracking-widest font-display text-xs shadow-lg shadow-primary/10"
                         onClick={() => onSelect(service, { withDriver })}
                       >
                         {isSelected ? "Remove" : bookLabel}
@@ -201,8 +215,6 @@ export function ServiceItem({
                               : service.base_price,
                           image,
 
-                          // Explicit mapping for specific types
-                          // Car
                           model: service.title,
                           category: "suv",
                           pricePerDay:
@@ -212,7 +224,6 @@ export function ServiceItem({
                           seats: service.capacity,
                           transmission: "Automatic",
 
-                          // Hotel
                           name: service.title,
                           pricePerNight:
                             typeof service.base_price === "string"
@@ -226,13 +237,12 @@ export function ServiceItem({
                               ? service.location
                               : "Kigali",
 
-                          // Guide
                           type: "Guide",
                           description: service.description,
                         }}
                         label={bookLabel}
                         size="lg"
-                        className="px-8 rounded-none h-14 uppercase tracking-widest font-display text-sm"
+                        className="px-10 rounded-full h-14 uppercase tracking-widest font-display text-xs shadow-lg shadow-primary/10"
                       />
                     )}
                   </div>

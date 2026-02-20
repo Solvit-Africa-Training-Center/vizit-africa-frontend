@@ -9,7 +9,6 @@ import {
   RiWhatsappLine,
 } from "@remixicon/react";
 import { motion } from "motion/react";
-import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -17,145 +16,131 @@ import { PageHeader } from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Magnetic } from "@/components/ui/magnetic";
-import { RevealText } from "@/components/ui/reveal-text";
 import { Textarea } from "@/components/ui/textarea";
+import { siteConfig } from "@/lib/configs";
 
 export default function ContactPage() {
   const t = useTranslations("Contact");
   const tCommon = useTranslations("Common");
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="lg:grid lg:grid-cols-2 min-h-screen">
-        <div className="relative h-[60vh] lg:h-screen w-full bg-black text-primary-foreground lg:sticky lg:top-0 flex flex-col justify-between overflow-hidden">
-          <div className="absolute inset-0 z-0 overflow-hidden">
-            <motion.div
-              initial={{ scale: 1 }}
-              animate={{ scale: 1.1 }}
-              transition={{
-                duration: 20,
-                ease: "linear",
-                repeat: Infinity,
-                repeatType: "reverse",
-              }}
-              className="w-full h-full"
-            >
-              <Image
-                src="https://images.unsplash.com/photo-1516426122078-c23e76319801?q=90&w=2600&auto=format&fit=crop"
-                alt="Contact Background"
-                fill
-                className="object-cover opacity-60"
-                priority
-              />
-            </motion.div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent lg:bg-gradient-to-r lg:from-black/80 lg:via-black/20 lg:to-transparent" />
-          </div>
+    <div className="min-h-screen bg-background pt-32 pb-24">
+      <PageHeader
+        overline={t("openStatus")}
+        title={
+          <>
+            {t("title")}
+            <span className="text-muted-foreground/40 block md:inline md:ml-4">
+              {t("titleSub")}
+            </span>
+          </>
+        }
+        description={t("description")}
+        layout="split"
+        className="mb-24 md:mb-32"
+      />
 
-          <div className="relative z-10 p-8 md:p-12 lg:p-20 flex flex-col h-full justify-between">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="mt-20 lg:mt-0"
-            >
-              <PageHeader
-                theme="dark"
-                className="p-0 mb-0 max-w-none"
-                overline={
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-foreground/10 backdrop-blur-md">
-                    <span className="w-2 h-2 rounded-full bg-accent-success animate-pulse" />
-                    <span className="text-xs font-mono uppercase tracking-widest text-primary-foreground/90">
-                      {t("openStatus")}
-                    </span>
-                  </div>
-                }
-                title={
-                  <>
-                    <RevealText text={t("title")} className="block" />
-                    <span className="text-primary-foreground/50">
-                      {t("titleSub")}
-                    </span>
-                  </>
-                }
-                description={t("description")}
-              />
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-              className="hidden lg:grid gap-8 p-8 bg-primary-foreground/5 backdrop-blur-xl rounded-3xl border border-white/10"
-            >
-              <ContactItem
-                icon={RiMailLine}
-                label={t("emailUs")}
-                value="kesly@vizit.africa"
-                href="mailto:kesly@vizit.africa"
-              />
-              <ContactItem
-                icon={RiWhatsappLine}
-                label={t("whatsapp")}
-                value="+250 780486847"
-                href="https://wa.me/250780486847"
-              />
-              <ContactItem
-                icon={RiMapPinLine}
-                label={t("visitUs")}
-                value={t("address")}
-                sub={t("addressSub")}
-              />
-            </motion.div>
-          </div>
+      <section className="px-5 md:px-10 max-w-7xl mx-auto mb-32">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+          <ContactCard
+            icon={RiMailLine}
+            label={t("emailUs")}
+            value={siteConfig.contact.email}
+            href={`mailto:${siteConfig.contact.email}`}
+          />
+          <ContactCard
+            icon={RiWhatsappLine}
+            label={t("whatsapp")}
+            value={siteConfig.contact.phone}
+            href={`https://wa.me/${siteConfig.contact.phone.replace(/[^0-9]/g, "")}`}
+          />
+          <ContactCard
+            icon={RiMapPinLine}
+            label={t("visitUs")}
+            value={t("address")}
+            sub={t("addressSub")}
+          />
         </div>
+      </section>
 
-        <div className="w-full flex flex-col justify-center p-8 md:p-12 lg:p-20 bg-background lg:min-h-screen">
-          <div className="max-w-xl mx-auto w-full py-12 lg:py-0">
-            <div className="mb-12">
-              <h2 className="font-display text-2xl md:text-3xl font-medium mb-3">
-                {t("formTitle")}
-              </h2>
-              <p className="text-muted-foreground text-base">
-                {t("formDescription")}
-              </p>
-            </div>
+      <section className="px-5 md:px-10 max-w-7xl mx-auto border-t border-border pt-24 md:pt-32">
+        <div className="grid lg:grid-cols-12 gap-16 md:gap-24">
+          <div className="lg:col-span-5">
+            <h2 className="font-display text-4xl md:text-5xl font-medium uppercase tracking-tighter leading-none mb-8">
+              {t("formTitle")}
+            </h2>
+            <p className="text-xl text-muted-foreground font-light leading-relaxed max-w-md">
+              {t("formDescription")}
+            </p>
+          </div>
 
+          <div className="lg:col-span-7">
             <ContactForm t={t} tCommon={tCommon} />
-
-            <div className="mt-20 lg:hidden space-y-8 pt-12 border-t border-border">
-              <h3 className="font-display text-2xl font-medium">
-                {t("contactDetails")}
-              </h3>
-              <div className="space-y-6">
-                <MobileContactItem
-                  icon={RiMailLine}
-                  label={t("emailUs")}
-                  value="kesly@vizit.africa"
-                  href="mailto:kesly@vizit.africa"
-                />
-                <MobileContactItem
-                  icon={RiWhatsappLine}
-                  label={t("whatsapp")}
-                  value="+250 780486847"
-                  href="https://wa.me/250780486847"
-                />
-                <MobileContactItem
-                  icon={RiMapPinLine}
-                  label={t("office")}
-                  value={t("address")}
-                />
-              </div>
-            </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }
 
-type Translate = (key: string) => string;
+function ContactCard({
+  icon: Icon,
+  label,
+  value,
+  href,
+  sub,
+}: {
+  icon: React.ElementType<{ className?: string }>;
+  label: string;
+  value: string;
+  href?: string;
+  sub?: string;
+}) {
+  const Content = () => (
+    <div className="group flex flex-col p-8 rounded-2xl bg-muted/30 border border-border/50 hover:border-primary/50 transition-all duration-500 h-full">
+      <div className="size-12 rounded-xl bg-background border border-border flex items-center justify-center mb-8 group-hover:scale-110 group-hover:bg-primary group-hover:border-primary transition-all duration-500">
+        <Icon className="size-6 text-foreground group-hover:text-primary-foreground transition-colors" />
+      </div>
+      <div className="mt-auto">
+        <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-4">
+          {label}
+        </p>
+        <div className="flex items-center gap-2 mb-2">
+          <h3 className="text-xl md:text-2xl font-display font-medium uppercase tracking-tight group-hover:text-primary transition-colors">
+            {value}
+          </h3>
+          {href && (
+            <RiArrowRightUpLine className="size-5 text-muted-foreground/30 group-hover:text-primary group-hover:-translate-y-1 group-hover:translate-x-1 transition-all" />
+          )}
+        </div>
+        {sub && <p className="text-sm text-muted-foreground/60">{sub}</p>}
+      </div>
+    </div>
+  );
 
-function ContactForm({ t, tCommon }: { t: Translate; tCommon: Translate }) {
+  if (href) {
+    return (
+      <a
+        href={href}
+        target={href.startsWith("http") ? "_blank" : undefined}
+        rel="noreferrer"
+        className="block h-full"
+      >
+        <Content />
+      </a>
+    );
+  }
+
+  return <Content />;
+}
+
+function ContactForm({
+  t,
+  tCommon,
+}: {
+  t: (k: string) => string;
+  tCommon: (k: string) => string;
+}) {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -197,8 +182,8 @@ function ContactForm({ t, tCommon }: { t: Translate; tCommon: Translate }) {
   }
 
   return (
-    <form className="space-y-8" onSubmit={onSubmit}>
-      <div className="grid md:grid-cols-2 gap-x-6 gap-y-8">
+    <form className="space-y-12" onSubmit={onSubmit}>
+      <div className="grid md:grid-cols-2 gap-x-10 gap-y-12">
         <FormGroup
           label={t("firstName")}
           id="firstName"
@@ -235,7 +220,7 @@ function ContactForm({ t, tCommon }: { t: Translate; tCommon: Translate }) {
       <div className="space-y-4 group">
         <label
           htmlFor="message"
-          className="text-sm font-medium uppercase tracking-wider text-muted-foreground group-focus-within:text-primary transition-colors"
+          className="text-xs font-mono uppercase tracking-widest text-muted-foreground group-focus-within:text-primary transition-colors"
         >
           {t("message")}
         </label>
@@ -245,7 +230,7 @@ function ContactForm({ t, tCommon }: { t: Translate; tCommon: Translate }) {
           required
           rows={4}
           placeholder={t("messagePlaceholder")}
-          className="resize-none border-x-0 border-t-0 border-b border-border/50 rounded-none px-0 focus-visible:ring-0 focus-visible:border-primary text-lg transition-all duration-300 bg-transparent shadow-none placeholder:text-muted-foreground/30 min-h-[80px] py-3"
+          className="resize-none border-x-0 border-t-0 border-b border-border/50 rounded-none px-0 focus-visible:ring-0 focus-visible:border-primary text-xl transition-all duration-300 bg-transparent shadow-none placeholder:text-muted-foreground/20 min-h-[100px] py-4"
         />
       </div>
 
@@ -255,9 +240,9 @@ function ContactForm({ t, tCommon }: { t: Translate; tCommon: Translate }) {
             size="lg"
             type="submit"
             disabled={loading || success}
-            className="w-full h-16 rounded-full text-lg group relative overflow-hidden"
+            className="w-full md:w-auto min-w-[240px] h-16 rounded-full text-lg group relative overflow-hidden px-10"
           >
-            <span className="relative z-10 flex items-center justify-center gap-2">
+            <span className="relative z-10 flex items-center justify-center gap-3">
               {loading ? (
                 <RiLoader4Line className="animate-spin" />
               ) : success ? (
@@ -276,113 +261,6 @@ function ContactForm({ t, tCommon }: { t: Translate; tCommon: Translate }) {
   );
 }
 
-interface ContactItemProps {
-  icon: React.ElementType<{ className?: string }>;
-  label: string;
-  value: string;
-  href?: string;
-  sub?: string;
-}
-
-function ContactItem({
-  icon: Icon,
-  label,
-  value,
-  href,
-  sub,
-}: ContactItemProps) {
-  const Content = () => (
-    <div className="flex items-start gap-4 group cursor-pointer">
-      <div className="size-12 rounded-full bg-primary-foreground/10 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-primary-foreground/20 transition-all duration-300">
-        <Icon className="size-5 text-primary-foreground" />
-      </div>
-      <div>
-        <p className="text-xs font-medium text-primary-foreground/40 mb-1 uppercase tracking-widest">
-          {label}
-        </p>
-        <div className="flex items-center gap-2">
-          <p className="text-xl font-display font-medium text-primary-foreground group-hover:text-accent-warm transition-colors">
-            {value}
-          </p>
-          {href && (
-            <RiArrowRightUpLine className="size-4 text-primary-foreground/20 group-hover:text-accent-warm group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all" />
-          )}
-        </div>
-
-        {sub && (
-          <p className="text-sm text-primary-foreground/40 mt-1">{sub}</p>
-        )}
-      </div>
-    </div>
-  );
-
-  if (href) {
-    const isExternal = href.startsWith("http");
-    return (
-      <a
-        href={href}
-        target={isExternal ? "_blank" : undefined}
-        rel="noreferrer"
-      >
-        <Content />
-      </a>
-    );
-  }
-
-  return <Content />;
-}
-
-interface MobileContactItemProps {
-  icon: React.ElementType<{ className?: string }>;
-  label: string;
-  value: string;
-  href?: string;
-}
-
-function MobileContactItem({
-  icon: Icon,
-  label,
-  value,
-  href,
-}: MobileContactItemProps) {
-  const Content = () => (
-    <div className="flex items-center gap-4">
-      <div className="size-10 rounded-full bg-muted flex items-center justify-center shrink-0">
-        <Icon className="size-5 text-foreground" />
-      </div>
-      <div>
-        <p className="text-xs font-medium text-muted-foreground uppercase tracking-widest mb-0.5">
-          {label}
-        </p>
-        <p className="text-lg font-medium text-foreground">{value}</p>
-      </div>
-    </div>
-  );
-
-  if (href) {
-    const isExternal = href.startsWith("http");
-    return (
-      <a
-        href={href}
-        target={isExternal ? "_blank" : undefined}
-        rel="noreferrer"
-      >
-        <Content />
-      </a>
-    );
-  }
-  return <Content />;
-}
-
-interface FormGroupProps {
-  label: string;
-  id: string;
-  type?: string;
-  placeholder?: string;
-  name?: string;
-  required?: boolean;
-}
-
 function FormGroup({
   label,
   id,
@@ -390,15 +268,22 @@ function FormGroup({
   placeholder,
   name,
   required,
-}: FormGroupProps) {
+}: {
+  label: string;
+  id: string;
+  type?: string;
+  placeholder?: string;
+  name?: string;
+  required?: boolean;
+}) {
   return (
     <div className="space-y-4 group">
       <label
         htmlFor={id}
-        className="text-sm font-medium uppercase tracking-wider text-muted-foreground group-focus-within:text-primary transition-colors"
+        className="text-xs font-mono uppercase tracking-widest text-muted-foreground group-focus-within:text-primary transition-colors"
       >
         {label}
-        {required && <span className="text-destructive ml-1">*</span>}
+        {required && <span className="text-primary ml-1">*</span>}
       </label>
       <Input
         id={id}
@@ -406,7 +291,7 @@ function FormGroup({
         required={required}
         type={type}
         placeholder={placeholder}
-        className="border-x-0 border-t-0 border-b border-border/50 rounded-none px-0 focus-visible:ring-0 focus-visible:border-primary text-lg transition-all duration-300 h-10 bg-transparent shadow-none placeholder:text-muted-foreground/30"
+        className="border-x-0 border-t-0 border-b border-border/50 rounded-none px-0 focus-visible:ring-0 focus-visible:border-primary text-xl transition-all duration-300 h-12 bg-transparent shadow-none placeholder:text-muted-foreground/20"
       />
     </div>
   );

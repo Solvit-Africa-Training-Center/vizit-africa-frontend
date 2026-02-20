@@ -91,34 +91,35 @@ export default function ServicesClient({
         title={t("title")}
         overline={t("overline")}
         description={t("description")}
-        className="mb-20"
+        layout="split"
+        className="mb-24 md:mb-32"
       />
 
       <div className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-border/50">
-        <div className="px-5 md:px-10 max-w-7xl mx-auto py-4 flex flex-col md:flex-row gap-6 md:items-center justify-between">
-          <div className="relative w-full md:w-auto md:min-w-[300px]">
+        <div className="px-5 md:px-10 max-w-7xl mx-auto py-6 flex flex-col md:flex-row gap-8 md:items-center justify-between">
+          <div className="relative w-full md:w-auto md:min-w-[400px]">
             <RiSearchLine className="absolute left-0 top-1/2 -translate-y-1/2 text-muted-foreground size-5" />
             <input
               type="text"
               placeholder={t("searchPlaceholder")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-transparent border-none pl-8 py-2 text-lg focus:ring-0 focus:outline-hidden placeholder:text-muted-foreground/50"
+              className="w-full bg-transparent border-none pl-8 py-2 text-xl focus:ring-0 focus:outline-hidden placeholder:text-muted-foreground/30 font-light"
             />
           </div>
 
-          <div className="flex flex-col md:flex-row gap-6 md:items-center w-full md:w-auto overflow-x-auto pb-2 md:pb-0 no-scrollbar">
-            <div className="flex items-center gap-2">
+          <div className="flex flex-col md:flex-row gap-8 md:items-center w-full md:w-auto overflow-x-auto pb-2 md:pb-0 no-scrollbar">
+            <div className="flex items-center gap-3">
               {categories.map((cat) => (
                 <button
                   type="button"
                   key={cat.value}
                   onClick={() => setActiveCategory(cat.value)}
                   className={cn(
-                    "px-4 py-1.5 rounded-full text-xs font-medium uppercase tracking-widest border transition-all whitespace-nowrap",
+                    "px-6 py-2 rounded-full text-[10px] font-mono uppercase tracking-[0.2em] border transition-all whitespace-nowrap",
                     activeCategory === cat.value
                       ? "bg-foreground text-background border-foreground"
-                      : "border-border text-muted-foreground hover:border-foreground/50 hover:text-foreground",
+                      : "border-border/50 text-muted-foreground hover:border-foreground/50 hover:text-foreground",
                   )}
                 >
                   {cat.label}
@@ -126,22 +127,22 @@ export default function ServicesClient({
               ))}
             </div>
 
-            <div className="h-8 w-px bg-border hidden md:block" />
+            <div className="h-8 w-px bg-border/50 hidden md:block" />
 
-            <div className="flex items-center gap-2 shrink-0">
-              <span className="text-xs font-mono uppercase text-muted-foreground hidden md:inline">
+            <div className="flex items-center gap-4 shrink-0">
+              <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-muted-foreground hidden md:inline">
                 {t("sort")}
               </span>
               <Select
                 value={sortBy}
                 onValueChange={(value) => setSortBy(value as SortOption)}
               >
-                <SelectTrigger className="w-[180px] bg-transparent border-none text-sm font-medium uppercase tracking-wider focus:ring-0 text-foreground ring-0 shadow-none px-0 gap-2">
+                <SelectTrigger className="w-[200px] bg-transparent border-none text-xs font-mono uppercase tracking-[0.2em] focus:ring-0 text-foreground ring-0 shadow-none px-0 gap-3">
                   <SelectValue placeholder={t("sort")} />
                 </SelectTrigger>
                 <SelectContent>
                   {sortOptions.map((opt) => (
-                    <SelectItem key={opt.value} value={opt.value}>
+                    <SelectItem key={opt.value} value={opt.value} className="text-xs font-mono uppercase tracking-widest">
                       {opt.label}
                     </SelectItem>
                   ))}

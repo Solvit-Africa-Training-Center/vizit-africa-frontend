@@ -132,7 +132,7 @@ export function ServiceForm({ initialData, onSuccess }: ServiceFormProps) {
     validators: {
       onChange: createServiceInputSchema as any,
     },
-    onSubmit: async ({ value }) => {
+    onSubmit: async ({ value, formApi }) => {
       setSubmitStatus(null);
       const payload: CreateServiceInput = {
         ...value,
@@ -167,16 +167,24 @@ export function ServiceForm({ initialData, onSuccess }: ServiceFormProps) {
         }
         onSuccess?.(result.data);
       } else {
-        toast.error(result.error);
+        toast.error(
+          result.error || "Failed to save service. Please check the fields.",
+        );
         const userError = result.fieldErrors?.user?.[0];
         setSubmitStatus({
           type: "error",
           message: userError || result.error || "Failed to save service.",
         });
         if (result.fieldErrors) {
-          console.error(result.fieldErrors);
-          // @ts-expect-error
-          form.setErrors(result.fieldErrors);
+          Object.entries(result.fieldErrors).forEach(([field, errors]) => {
+            if (Object.keys(value).includes(field)) {
+              // @ts-ignore
+              formApi.setFieldMeta(field, (prev) => ({
+                ...prev,
+                errors: errors,
+              }));
+            }
+          });
         }
       }
     },

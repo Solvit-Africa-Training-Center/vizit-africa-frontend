@@ -45,7 +45,7 @@ export function SectionTitle({
         viewport={{ once: true }}
         transition={{ delay: 0.1, duration: 0.4 }}
         className={cn(
-          "font-display text-3xl md:text-5xl font-medium uppercase leading-tight mb-6 text-balance",
+          "font-display text-2xl md:text-4xl font-medium uppercase leading-tight mb-6 text-balance",
           dark ? "text-background" : "text-foreground",
         )}
       >

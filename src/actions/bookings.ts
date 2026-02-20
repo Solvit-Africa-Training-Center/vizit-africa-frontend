@@ -123,6 +123,7 @@ export async function submitTripRequest(
         category: (item as any)?.data?.category || "",
         title: item.title,
         description: item.description || "",
+        with_driver: item.withDriver,
       })),
     };
 

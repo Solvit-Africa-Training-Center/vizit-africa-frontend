@@ -7,13 +7,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 
-const testimonialAvatars = [
-  "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face",
-  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
-  "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=150&h=150&fit=crop&crop=face",
-  "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
-  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=face",
-];
+import { TESTIMONIAL_AVATARS } from "@/lib/configs";
 
 const testimonialKeys = ["1", "2", "3", "4", "5"] as const;
 
@@ -34,7 +28,7 @@ export function Testimonials() {
     name: t(`items.${key}.name`),
     role: t(`items.${key}.role`),
     country: t(`items.${key}.country`),
-    avatar: testimonialAvatars[index],
+    avatar: TESTIMONIAL_AVATARS[index] || TESTIMONIAL_AVATARS[0],
     content: t(`items.${key}.content`),
   }));
 

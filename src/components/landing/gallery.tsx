@@ -9,33 +9,7 @@ import { useRef } from "react";
 import { ParallaxImage } from "@/components/ui/parallax-image";
 import { SectionTitle } from "./section-title";
 import { useTranslations } from "next-intl";
-
-const galleryImages = [
-  {
-    id: 1,
-    src: "https://images.unsplash.com/photo-1629299342279-aa4b29356913?q=90&w=1600&auto=format&fit=crop",
-  },
-  {
-    id: 2,
-    src: "https://images.unsplash.com/photo-1648708511872-5426c0f29c27?q=90&w=1600&auto=format&fit=crop",
-  },
-  {
-    id: 3,
-    src: "https://images.unsplash.com/photo-1602020277972-99978250c8bd?q=90&w=1600&auto=format&fit=crop",
-  },
-  {
-    id: 4,
-    src: "https://images.unsplash.com/photo-1676102818778-7dedb5cdad46?q=90&w=1600&auto=format&fit=crop",
-  },
-  {
-    id: 5,
-    src: "https://images.unsplash.com/photo-1516465675917-6856496ffa3d?q=90&w=1600&auto=format&fit=crop",
-  },
-  {
-    id: 6,
-    src: "https://images.unsplash.com/photo-1756245995172-3d2d50219fb1?q=90&w=1600&auto=format&fit=crop",
-  },
-];
+import { GALLERY_IMAGES } from "@/lib/configs";
 
 export function Gallery() {
   const t = useTranslations("LandingGallery");
@@ -72,19 +46,19 @@ export function Gallery() {
 
       <div className="container max-w-7xl mx-auto px-5 md:px-10 grid grid-cols-1 md:grid-cols-3 gap-6">
         <motion.div style={{ y: y1 }} className="flex flex-col gap-6 md:mt-12">
-          {galleryImages.slice(0, 2).map((img) => (
+          {GALLERY_IMAGES.slice(0, 2).map((img) => (
             <GalleryCard key={img.id} img={img} className="aspect-square" />
           ))}
         </motion.div>
 
         <motion.div style={{ y: y2 }} className="flex flex-col gap-6">
-          {galleryImages.slice(2, 4).map((img) => (
+          {GALLERY_IMAGES.slice(2, 4).map((img) => (
             <GalleryCard key={img.id} img={img} className="aspect-4/3" />
           ))}
         </motion.div>
 
         <motion.div style={{ y: y3 }} className="flex flex-col gap-6 md:mt-24">
-          {galleryImages.slice(4, 6).map((img) => (
+          {GALLERY_IMAGES.slice(4, 6).map((img) => (
             <GalleryCard key={img.id} img={img} className="aspect-square" />
           ))}
         </motion.div>
@@ -94,7 +68,7 @@ export function Gallery() {
 }
 
 interface GalleryImage {
-  id: number;
+  id: string;
   src: string;
 }
 

@@ -155,9 +155,10 @@ export default function GalleryPage() {
           overline={t("overline")}
           description={t("description")}
           layout="split"
+          className="mb-24 md:mb-32"
         >
             <div className="flex flex-col items-start md:items-end gap-2 min-w-[200px]">
-              <span className="text-xs font-medium uppercase tracking-widest text-primary mb-2">
+              <span className="text-xs font-mono uppercase tracking-widest text-primary mb-2">
                 {t("filterBy")}
               </span>
               {categories.map((cat) => (
@@ -166,10 +167,10 @@ export default function GalleryPage() {
                   key={cat.value}
                   onClick={() => setActiveTab(cat.value)}
                   className={cn(
-                    "text-lg md:text-xl font-display font-medium uppercase tracking-tight transition-all duration-300 hover:translate-x-2 md:hover:-translate-x-2",
+                    "text-xl md:text-2xl font-display font-medium uppercase tracking-tight transition-all duration-300 hover:translate-x-2 md:hover:-translate-x-2",
                     activeTab === cat.value
                       ? "text-foreground"
-                      : "text-muted-foreground/40 hover:text-foreground",
+                      : "text-muted-foreground/30 hover:text-foreground",
                   )}
                 >
                   {cat.label}
@@ -178,27 +179,29 @@ export default function GalleryPage() {
             </div>
         </PageHeader>
 
-        <section className="px-5 md:px-10 max-w-7xl mx-auto mb-32 grid grid-cols-1 md:grid-cols-12 gap-8 items-end">
-          <div className="md:col-span-8 relative aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden rounded-sm">
-            <ParallaxImage
-              src="/images/nyungwe-park.jpg"
-              alt="Feature"
-              fill
-              sizes="(max-width: 768px) 100vw, 66vw"
-              className="object-cover"
-              containerClassName="w-full h-[120%]"
-            />
-          </div>
-          <div className="md:col-span-4 flex flex-col justify-end pb-4">
-            <span className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-4">
-              {t("featured.overline")}
-            </span>
-            <p className="font-display text-3xl md:text-4xl font-medium uppercase leading-none mb-4">
-              {t("featured.title")}
-            </p>
-            <p className="text-muted-foreground leading-relaxed">
-              {t("featured.description")}
-            </p>
+        <section className="px-5 md:px-10 max-w-7xl mx-auto mb-32 md:mb-48">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center">
+            <div className="md:col-span-8 relative aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden rounded-2xl">
+              <ParallaxImage
+                src="/images/nyungwe-park.jpg"
+                alt="Feature"
+                fill
+                sizes="(max-width: 768px) 100vw, 66vw"
+                className="object-cover"
+                containerClassName="w-full h-[120%]"
+              />
+            </div>
+            <div className="md:col-span-4 flex flex-col justify-center">
+              <span className="text-xs font-mono uppercase tracking-widest text-primary mb-6 block">
+                {t("featured.overline")}
+              </span>
+              <h2 className="font-display text-4xl md:text-5xl font-medium uppercase tracking-tighter leading-none mb-8">
+                {t("featured.title")}
+              </h2>
+              <p className="text-xl text-muted-foreground font-light leading-relaxed">
+                {t("featured.description")}
+              </p>
+            </div>
           </div>
         </section>
 
@@ -326,7 +329,7 @@ function GalleryItem({
       }}
       transition={{ duration: 0.4, delay: index * 0.05 }}
       className={cn(
-        "group relative overflow-hidden rounded-none break-inside-avoid cursor-pointer bg-muted",
+        "group relative overflow-hidden rounded-2xl break-inside-avoid cursor-pointer bg-muted",
         img.aspect,
       )}
       onClick={onClick}

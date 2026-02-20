@@ -4,8 +4,13 @@ import { useForm } from "@tanstack/react-form";
 import { toast } from "sonner";
 import { verifyEmail } from "@/actions/auth";
 import { Label } from "../ui/label";
-import { InputGroup, InputGroupInput } from "../ui/input-group";
 import { Button } from "../ui/button";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+  InputOTPSeparator,
+} from "../ui/input-otp";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
@@ -19,7 +24,6 @@ type VerifyEmailFormProps = {
 
 export function VerifyEmailForm({ email }: VerifyEmailFormProps) {
   const t = useTranslations("Auth.verifyEmail");
-  const tCommon = useTranslations("Common");
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
 
@@ -34,6 +38,7 @@ export function VerifyEmailForm({ email }: VerifyEmailFormProps) {
         toast.success("Email verified successfully!");
         router.push("/login");
       } else {
+        toast.error(result.error || "Verification failed. Please try again.");
         setError(result.error);
       }
     },
@@ -56,27 +61,34 @@ export function VerifyEmailForm({ email }: VerifyEmailFormProps) {
         </Alert>
       )}
 
-      <div className="space-y-2">
-        <Label htmlFor="code">{t("codeLabel")}</Label>
+      <div className="space-y-4">
+        <Label htmlFor="code" className="block text-center">
+          {t("codeLabel")}
+        </Label>
         <form.Field name="code">
           {(field) => (
-            <>
-              <InputGroup>
-                <InputGroupInput
-                  id="code"
-                  name="code"
-                  type="text"
-                  placeholder="Enter 6-digit code"
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                  maxLength={6}
-                />
-              </InputGroup>
+            <div className="flex justify-center">
+              <InputOTP
+                maxLength={6}
+                value={field.state.value}
+                onChange={(value) => field.handleChange(value)}
+              >
+                <InputOTPGroup>
+                  <InputOTPSlot index={0} />
+                  <InputOTPSlot index={1} />
+                  <InputOTPSlot index={2} />
+                  <InputOTPSeparator />
+                  <InputOTPSlot index={3} />
+                  <InputOTPSlot index={4} />
+                  <InputOTPSlot index={5} />
+                </InputOTPGroup>
+              </InputOTP>
               {field.state.meta.isTouched && !field.state.meta.isValid && (
-                <FieldError errors={field.state.meta.errors} />
+                <div className="mt-2 text-center w-full">
+                  <FieldError errors={field.state.meta.errors} />
+                </div>
               )}
-            </>
+            </div>
           )}
         </form.Field>
       </div>

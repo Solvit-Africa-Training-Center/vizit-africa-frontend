@@ -107,7 +107,7 @@ export function CarCard({
             >
               <RadioGroup
                 value={withDriver ? "with" : "self"}
-                onValueChange={(v) => onDriverChange(v === "with")}
+                onValueChange={(v: string) => onDriverChange(v === "true")}
                 className="gap-3"
               >
                 <div className="flex items-center justify-between group/option cursor-pointer">

@@ -87,7 +87,7 @@ export function VendorRegistrationForm() {
       // @ts-ignore zod to tanstack adapter issue usually
       onChange: formSchema,
     },
-    onSubmit: async ({ value }) => {
+    onSubmit: async ({ value, formApi }) => {
       setError(null);
 
       // 1. Register User
@@ -103,7 +103,24 @@ export function VendorRegistrationForm() {
       const registerResult = await register(registerData);
 
       if (!registerResult.success) {
+        toast.error(
+          registerResult.error ||
+            "Registration failed. Please check the fields.",
+        );
         setError(registerResult.error || "Registration failed");
+        if (registerResult.fieldErrors) {
+          Object.entries(registerResult.fieldErrors).forEach(
+            ([field, errors]) => {
+              if (Object.keys(value).includes(field)) {
+                // @ts-ignore
+                formApi.setFieldMeta(field, (prev) => ({
+                  ...prev,
+                  errors: errors,
+                }));
+              }
+            },
+          );
+        }
         return;
       }
 
@@ -123,13 +140,24 @@ export function VendorRegistrationForm() {
       const vendorResult = await createVendorProfile(vendorData);
 
       if (!vendorResult.success) {
-        // If vendor profile fails, we might want to warn the user
-        // but they are already registered.
-        // For now, show error.
+        toast.error(vendorResult.error || "Failed to create vendor profile.");
         setError(
           vendorResult.error ||
             "Failed to create vendor profile. Your account was created, please contact support.",
         );
+        if (vendorResult.fieldErrors) {
+          Object.entries(vendorResult.fieldErrors).forEach(
+            ([field, errors]) => {
+              if (Object.keys(value).includes(field)) {
+                // @ts-ignore
+                formApi.setFieldMeta(field, (prev) => ({
+                  ...prev,
+                  errors: errors,
+                }));
+              }
+            },
+          );
+        }
         return;
       }
 

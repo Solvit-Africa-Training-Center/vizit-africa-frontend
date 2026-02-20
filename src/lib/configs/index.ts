@@ -1,12 +1,11 @@
 export const siteConfig = {
   name: "Vizit Africa",
   description:
-    "Experience the heart of Africa with our comprehensive travel services.", // added description
-  url: "https://vizit.africa", // assumed url
+    "Experience the heart of Africa with our comprehensive travel services.",
+  url: "https://vizit.africa",
   ogImage: "https://vizit.africa/og.jpg",
   links: {
     twitter: "https://twitter.com/vizitafrica",
-    github: "https://github.com/vizitafrica", // probably not needed but good for structure
   },
   contact: {
     email: "info@vizitafrica.com",
@@ -178,6 +177,17 @@ export const GALLERY_IMAGES = [
 
 // Re-export specific values for backward compatibility if needed,
 export const { socials, contact: contacts } = siteConfig;
+
+export const TESTIMONIAL_AVATARS = [
+  "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face",
+  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+  "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=150&h=150&fit=crop&crop=face",
+  "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
+  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=face",
+];
+
+export const CONTACT_BACKGROUND =
+  "https://images.unsplash.com/photo-1516426122078-c23e76319801?q=90&w=2600&auto=format&fit=crop";
 
 export const DRIVER_SURCHARGE = 35;
 export const SERVICE_FEE_RATE = 0.05;

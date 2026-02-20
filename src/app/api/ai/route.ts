@@ -1,5 +1,5 @@
 import { google } from "@ai-sdk/google";
-import { generateText, Output } from "ai";
+import { streamText, Output } from "ai";
 import { z } from "zod";
 
 const aiTripRequestSchema = z.object({
@@ -93,8 +93,8 @@ export async function POST(req: Request) {
 
     const nights = calculateNights(startDate, endDate);
 
-    const result = await generateText({
-      model: google("gemini-3-flash-preview"),
+    const result = streamText({
+      model: google("gemini-2.0-flash-exp"),
       output: Output.object({
         schema: tripRecommendationsSchema,
       }),
@@ -116,7 +116,7 @@ Requirements:
 5) Return only valid fields from the schema.`,
     });
 
-    return Response.json(result.output);
+    return result.toTextStreamResponse();
   } catch (error) {
     console.error("AI trip planning error:", error);
 

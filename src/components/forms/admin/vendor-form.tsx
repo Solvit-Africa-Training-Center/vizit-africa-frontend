@@ -47,7 +47,7 @@ export function VendorForm({ onSuccess, initialData }: VendorFormProps) {
     validators: {
       onChange: createVendorInputSchema,
     },
-    onSubmit: async ({ value }) => {
+    onSubmit: async ({ value, formApi }) => {
       try {
         const result = initialData
           ? await updateVendor(initialData.id, value)
@@ -57,10 +57,17 @@ export function VendorForm({ onSuccess, initialData }: VendorFormProps) {
           toast.success(initialData ? "Vendor updated" : "Vendor created");
           onSuccess?.(result.data);
         } else {
-          toast.error(result.error);
+          toast.error(result.error || "Failed to save vendor.");
           if (result.fieldErrors) {
-            // @ts-ignore
-            form.setErrors(result.fieldErrors);
+            Object.entries(result.fieldErrors).forEach(([field, errors]) => {
+              if (Object.keys(value).includes(field)) {
+                // @ts-ignore
+                formApi.setFieldMeta(field, (prev) => ({
+                  ...prev,
+                  errors: errors,
+                }));
+              }
+            });
           }
         }
       } catch (error) {

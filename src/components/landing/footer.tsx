@@ -9,6 +9,7 @@ import {
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Logo } from "../shared";
+import { siteConfig } from "@/lib/configs";
 
 const socialLinks = [
   { icon: RiTwitterXLine, href: "https://twitter.com", label: "Twitter" },
@@ -35,9 +36,18 @@ export function Footer() {
       { label: t("links.requestVendorship"), href: "/partners/apply" },
     ],
     contact: [
-      { label: "Kesly@vizit.africa", href: "mailto:Kesly@vizit.africa" },
-      { label: "+250 780 486847", href: "tel:+250780486847" },
-      { label: "WhatsApp", href: "https://wa.me/250780486847" },
+      {
+        label: siteConfig.contact.email,
+        href: `mailto:${siteConfig.contact.email}`,
+      },
+      {
+        label: siteConfig.contact.phone,
+        href: `tel:${siteConfig.contact.phone.replace(/[^0-9+]/g, "")}`,
+      },
+      {
+        label: "WhatsApp",
+        href: `https://wa.me/${siteConfig.contact.phone.replace(/[^0-9]/g, "")}`,
+      },
     ],
   };
 

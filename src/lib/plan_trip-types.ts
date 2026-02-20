@@ -102,6 +102,7 @@ export interface TripItem {
   // Store original data object for reference if needed
   data?: Flight | Hotel | Car | Guide | Experience | Service | any;
   quantity?: number;
+  withDriver?: boolean;
 }
 
 export interface TripInfo {

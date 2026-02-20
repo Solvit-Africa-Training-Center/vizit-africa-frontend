@@ -5,6 +5,12 @@ import { format, parseISO } from "date-fns";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "@/i18n/navigation";
 import type { Booking } from "@/lib/schema/booking-schema";
+import {
+  Empty,
+  EmptyDescription,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty";
 
 interface CompletedRequestsScheduleProps {
   bookings: Booking[];
@@ -131,9 +137,13 @@ export function CompletedRequestsSchedule({
 
   if (bookings.length === 0) {
     return (
-      <div className="py-20 text-center border border-dashed rounded-sm">
-        <p className="text-muted-foreground">{emptyMessage}</p>
-      </div>
+      <Empty className="rounded-sm p-20 border-dashed">
+        <EmptyMedia variant="icon">
+          <RiCalendarLine className="size-6" />
+        </EmptyMedia>
+        <EmptyTitle>No activity</EmptyTitle>
+        <EmptyDescription>{emptyMessage}</EmptyDescription>
+      </Empty>
     );
   }
 

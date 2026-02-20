@@ -47,13 +47,27 @@ export function SetPasswordForm() {
     validators: {
       onChange: setPasswordInputSchema,
     },
-    onSubmit: async ({ value }) => {
+    onSubmit: async ({ value, formApi }) => {
       const result = await setPassword(value);
       if (result.success) {
         toast.success(t("success"));
         router.push("/profile");
       } else {
+        toast.error(
+          result.error || "Failed to set password. Please check the fields.",
+        );
         setError(result.error);
+        if (result.fieldErrors) {
+          Object.entries(result.fieldErrors).forEach(([field, errors]) => {
+            if (Object.keys(value).includes(field)) {
+              // @ts-ignore
+              formApi.setFieldMeta(field, (prev) => ({
+                ...prev,
+                errors: errors,
+              }));
+            }
+          });
+        }
       }
     },
   });

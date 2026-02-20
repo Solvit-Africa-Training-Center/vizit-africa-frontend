@@ -154,7 +154,6 @@ export function ServicesStep({
     };
 
     if (hotelItem) {
-      // Conflict! Ask user.
       setConflictItem({ newItem, existingItem: hotelItem });
     } else {
       addItem(newItem);

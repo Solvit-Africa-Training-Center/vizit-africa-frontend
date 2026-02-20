@@ -44,11 +44,15 @@ export function LoginForm() {
         toast.success("Logged in successfully");
         router.push("/profile");
       } else {
+        toast.error(
+          result.error || "Login failed. Please check your credentials.",
+        );
         setError(result.error);
 
         if (result.fieldErrors) {
           Object.entries(result.fieldErrors).forEach(([field, errors]) => {
-            if (field === "email" || field === "password") {
+            if (Object.keys(value).includes(field)) {
+              // @ts-ignore
               formApi.setFieldMeta(field, (prev) => ({
                 ...prev,
                 errors: errors,

@@ -1,24 +1,22 @@
 "use client";
 
-import { RiCheckDoubleLine } from "@remixicon/react";
-import { motion } from "motion/react";
-import { useTranslations } from "next-intl";
+import { RiCheckDoubleLine, RiLoader4Line } from "@remixicon/react";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { BookingSummary } from "@/components/plan-trip";
-import { ContactInfoStep } from "@/components/plan-trip/steps/contact-info-step";
+import { ContactInfoStep } from "@/components/plan-trip/contact-info";
 import { ServicesStep } from "@/components/plan-trip/steps/services-step";
 import { Navbar } from "@/components/shared/navbar";
 import { Button } from "@/components/ui/button";
 import { RevealText } from "@/components/ui/reveal-text";
+import { experimental_useObject as useObject } from "@ai-sdk/react";
 import { AiLoading } from "@/components/plan-trip/ai-loading";
 import { TripDetailsInput } from "@/components/plan-trip/trip-details-input";
 import { usePlanTrip } from "@/hooks/use-plan-trip";
 import { useTripForm } from "@/hooks/use-trip-form";
 import { DRIVER_SURCHARGE } from "@/lib/configs";
 import type { Car, Guide, Hotel } from "@/lib/plan_trip-types";
-import { cn } from "@/lib/utils";
-import { useTripStore } from "@/store/trip-store";
+import { z } from "zod";
 
 interface PlanTripClientProps {
   hotels: Hotel[];
@@ -58,22 +56,51 @@ export default function PlanTripClient({
 }: PlanTripClientProps) {
   const [aiRecommendations, setAiRecommendations] =
     useState<AiRecommendations | null>(null);
-  const [isGeneratingAi, setIsGeneratingAi] = useState(false);
   const [aiError, setAiError] = useState<string | null>(null);
+
+  const {
+    object: partialRecommendations,
+    submit,
+    isLoading: isGeneratingAi,
+    error: streamingError,
+  } = useObject({
+    api: "/api/ai",
+    schema: z.object({
+      destination: z.string(),
+      itinerarySummary: z.string(),
+      totalEstimatedBudget: z.number(),
+      hotels: z.array(z.any()),
+      cars: z.array(z.any()),
+      guides: z.array(z.any()),
+    }),
+    onFinish: ({ object }) => {
+      if (object) {
+        setAiRecommendations(object as AiRecommendations);
+        toast.success("Itinerary generated successfully!");
+      }
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to generate AI recommendations.");
+    },
+  });
+
+  // Use partialRecommendations while streaming, or final aiRecommendations
+  const activeRecommendations = (aiRecommendations ||
+    partialRecommendations) as AiRecommendations | null;
 
   // Still merge for the underlying data/store logic if needed,
   // though we are relying heavily on AI results now.
   const mergedHotels = useMemo(
-    () => mergeById(hotels, aiRecommendations?.hotels ?? []),
-    [hotels, aiRecommendations],
+    () => mergeById(hotels, activeRecommendations?.hotels ?? []),
+    [hotels, activeRecommendations],
   );
   const mergedCars = useMemo(
-    () => mergeById(cars, aiRecommendations?.cars ?? []),
-    [cars, aiRecommendations],
+    () => mergeById(cars, activeRecommendations?.cars ?? []),
+    [cars, activeRecommendations],
   );
   const mergedGuides = useMemo(
-    () => mergeById(guides, aiRecommendations?.guides ?? []),
-    [guides, aiRecommendations],
+    () => mergeById(guides, activeRecommendations?.guides ?? []),
+    [guides, activeRecommendations],
   );
 
   const {
@@ -130,11 +157,11 @@ export default function PlanTripClient({
   // Let's use a derived state for the view.
   const viewState = useMemo(() => {
     if (isGeneratingAi) return "loading";
-    if (aiRecommendations) return "results";
+    if (activeRecommendations) return "results";
     return "input";
-  }, [isGeneratingAi, aiRecommendations]);
+  }, [isGeneratingAi, activeRecommendations]);
 
-  const handleGenerateAiRecommendations = async () => {
+  const handleGenerateAiRecommendations = () => {
     const destination = tripInfo.destination?.trim();
     const startDate = tripInfo.departureDate;
     const endDate = tripInfo.returnDate;
@@ -147,52 +174,19 @@ export default function PlanTripClient({
     }
 
     setAiError(null);
-    setIsGeneratingAi(true);
+    setAiRecommendations(null); // Clear previous results
 
-    try {
-      const response = await fetch("/api/ai", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          destination,
-          startDate,
-          endDate,
-          groupSize: Math.max(
-            1,
-            tripInfo.adults + tripInfo.children + tripInfo.infants,
-          ),
-          tripPurpose: tripInfo.tripPurpose,
-          specialRequests: tripInfo.specialRequests || undefined,
-        }),
-      });
-
-      const data = await response.json();
-      console.log(data);
-      if (!response.ok) {
-        throw new Error(
-          data?.error || "Failed to generate AI recommendations.",
-        );
-      }
-
-      setAiRecommendations({
-        destination: data.destination,
-        itinerarySummary: data.itinerarySummary,
-        totalEstimatedBudget: data.totalEstimatedBudget,
-        hotels: Array.isArray(data.hotels) ? data.hotels : [],
-        cars: Array.isArray(data.cars) ? data.cars : [],
-        guides: Array.isArray(data.guides) ? data.guides : [],
-      });
-      toast.success("Itinerary generated successfully!");
-    } catch (error) {
-      const message =
-        error instanceof Error
-          ? error.message
-          : "Failed to generate AI recommendations.";
-      setAiError(message);
-      toast.error(message);
-    } finally {
-      setIsGeneratingAi(false);
-    }
+    submit({
+      destination,
+      startDate,
+      endDate,
+      groupSize: Math.max(
+        1,
+        tripInfo.adults + tripInfo.children + tripInfo.infants,
+      ),
+      tripPurpose: tripInfo.tripPurpose,
+      specialRequests: tripInfo.specialRequests || undefined,
+    });
   };
 
   const handleClearAiRecommendations = () => {
@@ -236,15 +230,15 @@ export default function PlanTripClient({
               />
             )}
 
-            {viewState === "results" && aiRecommendations && (
+            {viewState === "results" && activeRecommendations && (
               <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
                 <div className="flex flex-col md:flex-row gap-6 md:items-center justify-between bg-card border border-border p-6 rounded-xl">
                   <div>
                     <h3 className="text-xl font-display uppercase tracking-wide">
-                      Your Itinerary for {aiRecommendations.destination}
+                      Your Itinerary for {activeRecommendations?.destination}
                     </h3>
                     <p className="text-muted-foreground mt-2 max-w-3xl">
-                      {aiRecommendations.itinerarySummary}
+                      {activeRecommendations?.itinerarySummary}
                     </p>
                   </div>
                   <Button
@@ -295,7 +289,7 @@ export default function PlanTripClient({
                       carPage={carPage}
                       setCarPage={setCarPage}
                       guides={initialGuides}
-                      aiRecommendations={aiRecommendations}
+                      aiRecommendations={activeRecommendations as any}
                       onClearAi={handleClearAiRecommendations}
                     />
 
@@ -326,15 +320,30 @@ export default function PlanTripClient({
                         serviceFee={serviceFee}
                         total={total}
                       />
-                      <Button
-                        onClick={handleSubmit}
-                        disabled={!canSubmit}
-                        size="lg"
-                        className="w-full rounded-sm font-display font-medium uppercase tracking-wider text-sm gap-2 h-14"
+                      <form.Subscribe
+                        selector={(state) => [
+                          state.isSubmitting,
+                          state.canSubmit,
+                        ]}
                       >
-                        <RiCheckDoubleLine className="size-5" />
-                        Submit Request
-                      </Button>
+                        {([isSubmitting, canFormSubmit]) => (
+                          <Button
+                            onClick={handleSubmit}
+                            disabled={
+                              !canSubmit || !canFormSubmit || isSubmitting
+                            }
+                            size="lg"
+                            className="w-full rounded-sm font-display font-medium uppercase tracking-wider text-sm gap-2 h-14"
+                          >
+                            {isSubmitting ? (
+                              <RiLoader4Line className="size-5 animate-spin" />
+                            ) : (
+                              <RiCheckDoubleLine className="size-5" />
+                            )}
+                            {isSubmitting ? "Submitting..." : "Submit Request"}
+                          </Button>
+                        )}
+                      </form.Subscribe>
                       {!canSubmit && (
                         <p className="text-xs text-muted-foreground text-center">
                           Complete your details below to submit
@@ -359,15 +368,25 @@ export default function PlanTripClient({
                     ${total.toFixed(0)}*
                   </p>
                 </div>
-                <Button
-                  onClick={handleSubmit}
-                  disabled={!canSubmit}
-                  size="lg"
-                  className="rounded-sm font-display font-medium uppercase tracking-wider text-sm gap-2"
+                <form.Subscribe
+                  selector={(state) => [state.isSubmitting, state.canSubmit]}
                 >
-                  <RiCheckDoubleLine className="size-5" />
-                  Submit
-                </Button>
+                  {([isSubmitting, canFormSubmit]) => (
+                    <Button
+                      onClick={handleSubmit}
+                      disabled={!canSubmit || !canFormSubmit || isSubmitting}
+                      size="lg"
+                      className="rounded-sm font-display font-medium uppercase tracking-wider text-sm gap-2"
+                    >
+                      {isSubmitting ? (
+                        <RiLoader4Line className="size-5 animate-spin" />
+                      ) : (
+                        <RiCheckDoubleLine className="size-5" />
+                      )}
+                      {isSubmitting ? "Submitting..." : "Submit"}
+                    </Button>
+                  )}
+                </form.Subscribe>
               </div>
             </div>
           )}

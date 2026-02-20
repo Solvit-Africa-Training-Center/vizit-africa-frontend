@@ -18,17 +18,14 @@ export default async function VerifyEmailPage({ searchParams }: Props) {
   let showForm = false;
 
   if (email && token) {
-    // Automatic verification via email link
     const result = await verifyEmail({ email, code: token });
     success = result.success;
     if (!result.success) {
       errorMessage = result.error;
     }
   } else if (email && !token) {
-    // Show manual entry form
     showForm = true;
   } else {
-    // Missing email
     errorMessage = "Missing email address";
   }
 
@@ -44,15 +41,13 @@ export default async function VerifyEmailPage({ searchParams }: Props) {
               {t("title")}
             </h1>
             <p className="text-muted-foreground">
-              We've sent a verification code to <strong>{email}</strong>. Enter it below or click the link in your email.
+              We've sent a verification code to <strong>{email}</strong>. Enter
+              it below or click the link in your email.
             </p>
           </div>
           <VerifyEmailForm email={email!} />
           <div className="text-center text-sm text-muted-foreground">
-            <Link
-              href="/signup"
-              className="underline hover:text-foreground"
-            >
+            <Link href="/signup" className="underline hover:text-foreground">
               Back to Sign Up
             </Link>
           </div>

@@ -47,13 +47,27 @@ export function RegisterForm() {
     validators: {
       onChange: registerObjectSchema,
     },
-    onSubmit: async ({ value }) => {
+    onSubmit: async ({ value, formApi }) => {
       const result = await register(value);
       if (result.success) {
         toast.success("Account created! Check your email to verify.");
         router.push(`/verify-email?email=${encodeURIComponent(value.email)}`);
       } else {
+        toast.error(
+          result.error || "Registration failed. Please check the fields.",
+        );
         setError(result.error);
+        if (result.fieldErrors) {
+          Object.entries(result.fieldErrors).forEach(([field, errors]) => {
+            if (Object.keys(value).includes(field)) {
+              // @ts-ignore
+              formApi.setFieldMeta(field, (prev) => ({
+                ...prev,
+                errors: errors,
+              }));
+            }
+          });
+        }
       }
     },
   });

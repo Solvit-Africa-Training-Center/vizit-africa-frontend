@@ -29,6 +29,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
 import { TripRequestDialog } from "@/components/landing/trip-request-dialog";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface NavbarProps {
   forceSolid?: boolean;
@@ -140,12 +147,12 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
                       textColorClass,
                     )}
                   >
-                    <span className="font-display font-medium uppercase tracking-widest text-[10px]">
-                      {user.full_name.split(" ")[0]}
-                    </span>
-                    <div className="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center backdrop-blur-sm border border-primary-foreground/10">
-                      <RiUserLine className="w-4 h-4" />
-                    </div>
+                    <Avatar>
+                      <AvatarImage src={user.role ?? ""} alt={user.full_name} />
+                      <AvatarFallback className="bg-transparent text-current">
+                        {user.full_name.split(" ")[0].charAt(0).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
                   </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48 p-2">
@@ -191,26 +198,37 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
               </Link>
             )}
 
-            <Button
-              size="sm"
-              variant={showSolid ? "default" : "secondary"}
-              className={cn(
-                "rounded-sm font-display font-medium uppercase tracking-wider text-xs px-6 transition-all duration-300 gap-2",
-                !showSolid &&
-                  "bg-primary-foreground text-primary hover:bg-primary-foreground/90",
-              )}
-              onClick={() => setIsTripDialogOpen(true)}
-            >
-              {hasActiveTrip ? (
-                <>
-                  <RiSuitcaseLine className="size-4" />
-                  {tripItemCount} {tripItemCount === 1 ? "item" : "items"} ·
-                  View Trip
-                </>
-              ) : (
-                tCommon("startPlanning")
-              )}
-            </Button>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger
+                  render={
+                    <Button
+                      size="sm"
+                      variant={showSolid ? "default" : "secondary"}
+                      className={cn(
+                        "rounded-sm font-display font-medium uppercase tracking-wider text-xs px-6 transition-all duration-300 gap-2",
+                        !showSolid &&
+                          "bg-primary-foreground text-primary hover:bg-primary-foreground/90",
+                      )}
+                      onClick={() => setIsTripDialogOpen(true)}
+                    />
+                  }
+                >
+                  {hasActiveTrip ? (
+                    <>
+                      <RiSuitcaseLine className="size-4" />
+                      {tripItemCount} {tripItemCount === 1 ? "item" : "items"} ·
+                      View Trip
+                    </>
+                  ) : (
+                    tCommon("startPlanning")
+                  )}
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Plan your dream trip to Africa</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
 
             <TripRequestDialog
               open={isTripDialogOpen}

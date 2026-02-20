@@ -498,6 +498,69 @@
       }
     }
   },
+  "FlightsPage": {
+    "overline": "Global Connections",
+    "title": "Book Flights",
+    "description": "Find and book the best routes to Rwanda. We partner with leading airlines to ensure a seamless journey.",
+    "labels": {
+      "from": "From",
+      "to": "To",
+      "depart": "Depart",
+      "pax": "Pax",
+      "sortBy": "Sort By",
+      "stops": "Stops",
+      "class": "Class",
+      "maxPrice": "Max Price",
+      "suggestedRoutes": "suggested routes",
+      "estimatesDisclaimer": "* All flight prices are estimates. We manually find the best real-time options for you.",
+      "requestQuote": "Request Quote",
+      "noFlights": "No flights match your filters",
+      "tryAdjusting": "Try adjusting your search criteria"
+    }
+  },
+  "Partners": {
+    "overline": "Partnership",
+    "title": "Grow With Us",
+    "description": "Join our exclusive network of premium travel providers and reach high-value travelers looking for authentic African experiences.",
+    "cta": {
+      "apply": "Become a Partner",
+      "learnMore": "Learn More",
+      "getStarted": "Get Started Today"
+    },
+    "benefits": {
+      "title": "Why Partner With Us?",
+      "description": "We provide the tools and exposure you need to scale your tourism business.",
+      "items": {
+        "global": {
+          "title": "Global Reach",
+          "description": "Access a worldwide audience of travelers specifically interested in premium African tourism."
+        },
+        "targeted": {
+          "title": "Targeted Audience",
+          "description": "Connect with travelers who value quality, sustainability, and authentic experiences."
+        },
+        "growth": {
+          "title": "Business Growth",
+          "description": "Utilize our powerful dashboard to manage bookings, track performance, and optimize your offerings."
+        }
+      }
+    },
+    "features": {
+      "title": "Designed for Tour Operators, Hotels, and Guides",
+      "items": [
+        "Easy-to-use booking management system",
+        "Direct communication with clients",
+        "Automated invoicing and payments",
+        "Marketing support and featured listings",
+        "Analytics and performance insights"
+      ]
+    },
+    "ctaSection": {
+      "title": "Ready to Scale Your Business?",
+      "description": "Join thousands of other successful partners on Vizit Africa. Setup takes less than 5 minutes.",
+      "button": "Apply Now"
+    }
+  },
   "Experiences": {
     "overline": "The Catalog",
     "title": "Curated Experiences",
