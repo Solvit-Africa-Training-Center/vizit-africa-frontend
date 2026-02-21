@@ -1,11 +1,11 @@
 "use client";
 
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image, { type ImageProps } from "next/image";
 import { useRef } from "react";
 import { cn } from "@/lib/utils";
-import Image, { type ImageProps } from "next/image";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 

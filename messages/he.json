@@ -252,7 +252,8 @@
     "signup": "הירשם",
     "startPlanning": "התחל לתכנן",
     "submit": "שלח",
-    "viewAll": "צפה בהכל"
+    "viewAll": "צפה בהכל",
+    "bookFlight": "תכנן טיסה"
   },
   "Contact": {
     "address": "Kigali Heights, קומה 4",
@@ -416,7 +417,8 @@
       "gallery": "גלריה",
       "privacyPolicy": "מדיניות פרטיות",
       "termsOfService": "תנאי שירות",
-      "tripsPackages": "טיולים וחבילות"
+      "tripsPackages": "טיולים וחבילות",
+      "requestVendorship": "בקשת שותפות"
     },
     "privacy": "פרטיות",
     "tagline": "שיתוף הדרך שלך ברואנדה. תכנון מקצועי לחוויות אפריקאיות בלתי נשכחות.",
@@ -642,7 +644,9 @@
     "contact": "צור קשר",
     "experiences": "חוויות",
     "gallery": "גלריה",
-    "services": "שירותים"
+    "services": "שירותים",
+    "flights": "טיסות",
+    "ourservices": "השירותים שלנו"
   },
   "PlanTrip": {
     "confirmation": {
@@ -1041,5 +1045,14 @@
       }
     },
     "title": "ההבדל של Vizit"
+  },
+  "PopularRoutes": {
+    "overline": "מסלולים מובילים",
+    "title": "טיסות פופולריות",
+    "description": "המסלולים המוזמנים ביותר לקיגאלי. תמחור בזמן אמת מחברות תעופה שותפות.",
+    "fromLabel": "מ־",
+    "direct": "ישירה",
+    "oneStop": "עצירה אחת",
+    "searchRoute": "חפש מסלול זה"
   }
 }

@@ -1,6 +1,6 @@
-import { getRequestById } from "@/lib/data-fetching";
-import FulfillClient from "./fulfill-client";
 import { notFound } from "next/navigation";
+import { getRequestById } from "@/lib/simple-data-fetching";
+import FulfillClient from "./fulfill-client";
 
 interface PageProps {
   params: Promise<{ id: string }>;

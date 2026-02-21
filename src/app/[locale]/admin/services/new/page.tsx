@@ -1,5 +1,4 @@
 import { ServiceForm } from "@/components/forms/admin/service-form";
-import { useTranslations } from "next-intl";
 
 export default function CreateServicePage() {
   // const t = useTranslations("Admin.services");

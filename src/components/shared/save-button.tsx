@@ -1,11 +1,11 @@
 "use client";
 
+import { RiHeartFill, RiHeartLine, RiLoader4Line } from "@remixicon/react";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { RiHeartLine, RiHeartFill, RiLoader4Line } from "@remixicon/react";
-import { saveItem, removeItem } from "@/actions/accounts";
-import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { removeItem, saveItem } from "@/actions/accounts";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface SaveButtonProps {
   type: string;
@@ -51,7 +51,7 @@ export function SaveButton({
         toast.success(newState ? "Item saved" : "Item removed");
         onToggle?.(newState);
       }
-    } catch (error) {
+    } catch (_error) {
       setSaved(!saved);
       toast.error("Something went wrong");
     } finally {

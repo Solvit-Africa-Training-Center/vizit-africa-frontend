@@ -1,14 +1,13 @@
-import { Link } from "@/i18n/navigation";
-import { getRequests } from "@/lib/data-fetching";
 import {
-  RiCheckboxCircleLine,
   RiArrowRightLine,
   RiCalendarLine,
+  RiCheckboxCircleLine,
   RiUserLine,
 } from "@remixicon/react";
 import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
+import { getRequests } from "@/lib/simple-data-fetching";
 import { formatDate } from "@/lib/utils";
-import type { Booking } from "@/lib/schema/booking-schema";
 
 export default async function BookingsPage() {
   const t = await getTranslations("Admin.bookings");
@@ -33,19 +32,19 @@ export default async function BookingsPage() {
         {bookings.map((booking) => {
           const hasFlight =
             booking.requestedItems?.some(
-              (i) => i.type === "flight" || i.category === "flight",
+              (i: any) => i.type === "flight" || i.category === "flight",
             ) || booking.needsFlights;
           const hasHotel =
             booking.requestedItems?.some(
-              (i) => i.type === "hotel" || i.category === "hotel",
+              (i: any) => i.type === "hotel" || i.category === "hotel",
             ) || booking.needsHotel;
           const hasCar =
             booking.requestedItems?.some(
-              (i) => i.type === "car" || i.category === "car",
+              (i: any) => i.type === "car" || i.category === "car",
             ) || booking.needsCar;
           const hasGuide =
             booking.requestedItems?.some(
-              (i) => i.type === "guide" || i.category === "guide",
+              (i: any) => i.type === "guide" || i.category === "guide",
             ) || booking.needsGuide;
 
           return (

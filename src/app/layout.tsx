@@ -7,9 +7,9 @@ import {
 } from "next/font/google";
 import "./globals.css";
 import { SmoothScroller } from "@/components/smooth-scroller";
+import { DirectionProvider } from "@/components/ui/direction";
 import { ScrollProgress } from "@/components/ui/scroll-progress";
 import { routing } from "@/i18n/routing";
-import { DirectionProvider } from "@/components/ui/direction";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],

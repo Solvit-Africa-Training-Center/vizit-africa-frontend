@@ -1,12 +1,12 @@
 "use client";
 
 import { RiDashboardLine, RiFileListLine } from "@remixicon/react";
-import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { DataTable, type DataTableState } from "@/components/ui/data-table";
 import { createDefaultDataTableState } from "@/components/ui/data-table-state";
-import type { Booking } from "@/lib/schema/booking-schema";
+import { Link } from "@/i18n/navigation";
+import { bookingSchema, type Booking } from "@/lib/unified-types";
 import { columns } from "./columns";
 
 interface RequestsClientProps {

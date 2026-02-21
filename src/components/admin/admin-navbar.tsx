@@ -1,29 +1,28 @@
 "use client";
 
-import { Link, usePathname } from "@/i18n/navigation";
 import {
-  RiDashboardLine,
-  RiFileListLine,
-  RiStoreLine,
-  RiSettings3Line,
-  RiLogoutBoxRLine,
-  RiGlobalLine,
-  RiCheckboxCircleLine,
   RiAddLine,
   RiArrowDownSLine,
+  RiCheckboxCircleLine,
+  RiDashboardLine,
+  RiFileListLine,
+  RiLogoutBoxRLine,
   RiServiceLine,
+  RiSettings3Line,
+  RiStoreLine,
   RiUserStarLine,
 } from "@remixicon/react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
-import { LanguageSwitcher } from "../shared/language-switcher";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Link, usePathname } from "@/i18n/navigation";
+import { cn } from "@/lib/utils";
+import { LanguageSwitcher } from "../shared/language-switcher";
 
 export function AdminNavbar() {
   const pathname = usePathname();

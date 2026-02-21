@@ -1,25 +1,25 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { RequestedItem } from "@/lib/schema/booking-schema";
+import { bookingSchema, type RequestedItem } from "@/lib/unified-types";
 
 export type PackageItem = RequestedItem & {
   isQuoted?: boolean;
   quotePrice?: number;
   tempId?: string;
   // generic details
-  date?: string;
-  time?: string;
+  date?: string | null;
+  time?: string | null;
   // backend compatibility
-  start_date?: string;
-  start_time?: string;
-  unit_price?: number;
+  startDate?: string | null;
+  startTime?: string | null;
+  unitPrice?: number;
   // flight specifics
-  departure?: string;
-  departureTime?: string;
-  arrival?: string;
-  arrivalTime?: string;
-  returnDate?: string;
-  returnTime?: string;
+  departure?: string | null;
+  departureTime?: string | null;
+  arrival?: string | null;
+  arrivalTime?: string | null;
+  returnDate?: string | null;
+  returnTime?: string | null;
   isRoundTrip?: boolean;
 };
 
@@ -106,7 +106,7 @@ export const usePackageStore = create<PackageState>()(
       getItems: (bookingId) => get().drafts[bookingId] || [],
     }),
     {
-      name: "package-builder-storage",
+      name: "package-builder-storage-v3",
     },
   ),
 );

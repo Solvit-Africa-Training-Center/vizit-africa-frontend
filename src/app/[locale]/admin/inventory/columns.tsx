@@ -7,7 +7,6 @@ import {
   RiSettings3Line,
 } from "@remixicon/react";
 import type { ColumnDef, Row } from "@tanstack/react-table";
-import { Link } from "@/i18n/navigation";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -34,7 +33,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import type { ServiceResponse } from "@/lib/schema/service-schema";
+import { Link } from "@/i18n/navigation";
+import { serviceSchema, type ServiceResponse } from "@/lib/unified-types";
 
 const ActionsCell = ({ row }: { row: Row<ServiceResponse> }) => {
   const router = useRouter();

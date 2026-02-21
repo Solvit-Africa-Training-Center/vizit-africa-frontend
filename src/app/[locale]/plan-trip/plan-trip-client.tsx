@@ -29,11 +29,11 @@ interface AiRecommendations {
   guides: Guide[];
 }
 
-function mergeById<T extends { id: string }>(
+function mergeById<T extends { id: string | number }>(
   primary: T[],
   secondary: T[],
 ): T[] {
-  const merged = new Map<string, T>();
+  const merged = new Map<string | number, T>();
   primary.forEach((item) => {
     merged.set(item.id, item);
   });
@@ -131,9 +131,9 @@ export default function PlanTripClient({
       endDate,
       groupSize: Math.max(
         1,
-        planTrip.tripInfo.adults +
-          planTrip.tripInfo.children +
-          planTrip.tripInfo.infants,
+        (planTrip.tripInfo.adults || 0) +
+          (planTrip.tripInfo.children || 0) +
+          (planTrip.tripInfo.infants || 0),
       ),
       tripPurpose: planTrip.tripInfo.tripPurpose,
       specialRequests: planTrip.tripInfo.specialRequests || undefined,
@@ -150,7 +150,7 @@ export default function PlanTripClient({
       toast.error("Please fill in your name and email before submitting.");
       return;
     }
-    await form.handleSubmit();
+    await form.form.handleSubmit();
   };
 
   return (
@@ -209,7 +209,7 @@ export default function PlanTripClient({
           {viewState === "input" && (
             <TripDetailsInput
               tripInfo={planTrip.tripInfo}
-              setTripInfo={planTrip.setTripInfo}
+              updateTripInfo={planTrip.updateTripInfo}
               onGenerate={handleGenerateAiRecommendations}
               isGenerating={isGeneratingAi}
             />

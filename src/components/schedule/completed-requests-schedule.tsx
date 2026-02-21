@@ -19,7 +19,7 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty";
-import type { Booking } from "@/lib/schema/booking-schema";
+import { bookingSchema, type Booking } from "@/lib/unified-types";
 
 interface CompletedRequestsScheduleProps {
   bookings: Booking[];
@@ -100,20 +100,20 @@ export function CompletedRequestsSchedule({
       return [
         {
           id: `booking-${booking.id}`,
-          bookingId: booking.id,
+          bookingId: String(booking.id),
           title: booking.tripPurpose || "Completed request",
           startDate: toDate(booking.arrivalDate) ?? toDate(booking.createdAt),
           endDate: toDate(booking.departureDate),
           quantity: booking.travelers,
-          amount: booking.total_amount || 0,
+          amount: booking.totalAmount || 0,
           currency: booking.currency || "USD",
         },
       ];
     }
 
     return booking.items.map((item) => {
-      const startDate = toDate(item.start_date);
-      const endDate = toDate(item.end_date);
+      const startDate = toDate(item.startDate);
+      const endDate = toDate(item.endDate);
       const metadataLocation =
         item.metadata &&
         typeof item.metadata === "object" &&
@@ -124,12 +124,12 @@ export function CompletedRequestsSchedule({
 
       return {
         id: `${booking.id}-${item.id}`,
-        bookingId: booking.id,
+        bookingId: String(booking.id),
         title: item.title || booking.tripPurpose || "Completed request item",
         startDate,
         endDate,
         quantity: item.quantity || booking.travelers || 1,
-        amount: item.subtotal || item.unit_price || booking.total_amount || 0,
+        amount: item.subtotal || item.unitPrice || booking.totalAmount || 0,
         currency:
           (item.metadata &&
           typeof item.metadata === "object" &&
@@ -243,7 +243,6 @@ export function CompletedRequestsSchedule({
             Covered Dates Calendar (Read-only)
           </h3>
           <Calendar
-            // mode="unde"
             month={visibleMonth}
             onMonthChange={setVisibleMonth}
             showOutsideDays

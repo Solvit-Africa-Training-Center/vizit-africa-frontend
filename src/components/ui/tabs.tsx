@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { Tabs as TabsPrimitive } from "@base-ui/react/tabs"
-import { cva, type VariantProps } from "class-variance-authority"
+import { Tabs as TabsPrimitive } from "@base-ui/react/tabs";
+import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 function Tabs({
   className,
@@ -16,11 +16,11 @@ function Tabs({
       data-orientation={orientation}
       className={cn(
         "gap-2 group/tabs flex data-horizontal:flex-col",
-        className
+        className,
       )}
       {...props}
     />
-  )
+  );
 }
 
 const tabsListVariants = cva(
@@ -30,14 +30,15 @@ const tabsListVariants = cva(
       variant: {
         default: "bg-muted",
         line: "gap-1 bg-transparent",
-        editorial: "gap-8 bg-transparent border-b border-border/50 rounded-none w-full justify-start px-0",
+        editorial:
+          "gap-8 bg-transparent border-b border-border/50 rounded-none w-full justify-start px-0",
       },
     },
     defaultVariants: {
       variant: "default",
     },
-  }
-)
+  },
+);
 
 function TabsList({
   className,
@@ -51,7 +52,7 @@ function TabsList({
       className={cn(tabsListVariants({ variant }), className)}
       {...props}
     />
-  )
+  );
 }
 
 function TabsTrigger({ className, ...props }: TabsPrimitive.Tab.Props) {
@@ -63,11 +64,11 @@ function TabsTrigger({ className, ...props }: TabsPrimitive.Tab.Props) {
         "group-data-[variant=line]/tabs-list:bg-transparent group-data-[variant=line]/tabs-list:data-active:bg-transparent dark:group-data-[variant=line]/tabs-list:data-active:border-transparent dark:group-data-[variant=line]/tabs-list:data-active:bg-transparent",
         "data-active:bg-background dark:data-active:text-foreground dark:data-active:border-input dark:data-active:bg-input/30 data-active:text-foreground",
         "after:bg-foreground after:absolute after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:bottom-[-5px] group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-end-1 group-data-vertical/tabs:after:w-0.5 group-data-[variant=line]/tabs-list:data-active:after:opacity-100",
-        className
+        className,
       )}
       {...props}
     />
-  )
+  );
 }
 
 function TabsContent({ className, ...props }: TabsPrimitive.Panel.Props) {
@@ -77,7 +78,7 @@ function TabsContent({ className, ...props }: TabsPrimitive.Panel.Props) {
       className={cn("text-sm flex-1 outline-none", className)}
       {...props}
     />
-  )
+  );
 }
 
-export { Tabs, TabsList, TabsTrigger, TabsContent, tabsListVariants }
+export { Tabs, TabsList, TabsTrigger, TabsContent, tabsListVariants };

@@ -1,7 +1,9 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
+import { RiFilterOffLine, RiSearchLine } from "@remixicon/react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -9,9 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { RiSearchLine, RiFilterOffLine } from "@remixicon/react";
 import type { FilterState } from "@/lib/plan_trip-types";
-import { useTranslations } from "next-intl";
 
 interface InlineFiltersProps {
   activeTab: string;

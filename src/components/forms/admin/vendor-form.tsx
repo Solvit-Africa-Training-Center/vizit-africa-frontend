@@ -2,16 +2,11 @@
 
 import { useForm } from "@tanstack/react-form";
 import { toast } from "sonner";
-import {
-  createVendorInputSchema,
-  type CreateVendorInput,
-  type VendorResponse,
-} from "@/lib/schema/vendor-schema";
 import { createVendorProfile, updateVendor } from "@/actions/vendors";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+import { FieldError } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -19,10 +14,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { FieldError } from "@/components/ui/field";
+import { Textarea } from "@/components/ui/textarea";
+import { vendorSchema, type VendorResponse, createVendorInputSchema } from "@/lib/unified-types";
 
 interface VendorFormProps {
-  onSuccess?: (vendor: any) => void;
+  onSuccess?: (vendor: VendorResponse) => void;
   initialData?: VendorResponse;
 }
 
@@ -45,7 +41,7 @@ export function VendorForm({ onSuccess, initialData }: VendorFormProps) {
       website: initialData?.website || "",
     },
     validators: {
-      onChange: createVendorInputSchema,
+      onChange: createVendorInputSchema as any,
     },
     onSubmit: async ({ value, formApi }) => {
       try {
@@ -61,7 +57,7 @@ export function VendorForm({ onSuccess, initialData }: VendorFormProps) {
           if (result.fieldErrors) {
             Object.entries(result.fieldErrors).forEach(([field, errors]) => {
               if (Object.keys(value).includes(field)) {
-                // @ts-ignore
+                // @ts-expect-error
                 formApi.setFieldMeta(field, (prev) => ({
                   ...prev,
                   errors: errors,
@@ -70,7 +66,7 @@ export function VendorForm({ onSuccess, initialData }: VendorFormProps) {
             });
           }
         }
-      } catch (error) {
+      } catch (_error) {
         toast.error("An error occurred");
       }
     },

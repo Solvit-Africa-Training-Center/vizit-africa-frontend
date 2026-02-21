@@ -2,8 +2,8 @@ import { RiArrowLeftLine, RiMapPin2Line } from "@remixicon/react";
 import { notFound, redirect } from "next/navigation";
 import { ServiceForm } from "@/components/forms/admin/service-form";
 import { Link } from "@/i18n/navigation";
-import { getServiceById } from "@/lib/data-fetching";
-import type { ServiceResponse } from "@/lib/schema/service-schema";
+import { getServiceById } from "@/lib/simple-data-fetching";
+import { serviceSchema, type ServiceResponse } from "@/lib/unified-types";
 
 interface PageProps {
   params: Promise<{ id: string }>;

@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "motion/react";
-import { SectionTitle } from "./section-title";
 import { useTranslations } from "next-intl";
+import { SectionTitle } from "./section-title";
 
 const stepKeys = ["1", "2", "3", "4"] as const;
 

@@ -8,7 +8,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { AddToTripButton } from "@/components/plan-trip/add-to-trip-button";
 import { PageHeader } from "@/components/shared/page-header";
 import { SaveButton } from "@/components/shared/save-button";
-import type { ServiceResponse } from "@/lib/schema/service-schema";
+import { serviceSchema, type ServiceResponse } from "@/lib/unified-types";
 import { cn } from "@/lib/utils";
 
 interface ExperiencesClientProps {
@@ -112,7 +112,7 @@ export default function ExperiencesClient({
   const getExperienceImage = (exp: ServiceResponse) => {
     const mediaImages = (exp.media || [])
       .filter((m) => m.media_type === "image" || !m.media_type)
-      .sort((a, b) => a.sort_order - b.sort_order)
+      .sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0))
       .map((m) => m.media_url)
       .filter(Boolean);
 

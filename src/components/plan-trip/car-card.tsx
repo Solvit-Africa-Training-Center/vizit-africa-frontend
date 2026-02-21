@@ -1,15 +1,15 @@
 "use client";
 
-import type { Car } from "../../lib/plan_trip-types";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   RiCarLine,
-  RiUserLine,
-  RiSettings4Line,
   RiCheckLine,
+  RiSettings4Line,
+  RiUserLine,
 } from "@remixicon/react";
 import { useTranslations } from "next-intl";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import type { Car } from "../../lib/plan_trip-types";
 
 interface CarCardProps {
   car: Car;
@@ -30,7 +30,8 @@ export function CarCard({
   onSelect,
   onDriverChange,
 }: CarCardProps) {
-  const baseTotal = car.pricePerDay * days;
+  const price = car.pricePerDay || car.price || 0;
+  const baseTotal = price * days;
   const driverTotal = driverSurcharge * days;
   const total = baseTotal + (isSelected && withDriver ? driverTotal : 0);
 
@@ -63,7 +64,7 @@ export function CarCard({
           </div>
           <div className="absolute top-0 left-0 bg-primary-foreground/90 backdrop-blur-sm px-4 py-2 border-b border-r border-border">
             <span className="text-xs font-mono uppercase tracking-widest">
-              {tTypes(car.category as any)}
+              {tTypes((car.category || "suv") as any)}
             </span>
           </div>
         </div>
@@ -71,26 +72,26 @@ export function CarCard({
         <div className="p-5 flex flex-col flex-1 gap-4">
           <div>
             <h4 className="font-display text-xl font-medium uppercase tracking-tight text-foreground mb-3 group-hover:text-primary transition-colors">
-              {car.model}
+              {car.model || car.title}
             </h4>
 
             <div className="flex items-center gap-4 text-sm text-muted-foreground">
               <span className="flex items-center gap-1.5">
                 <RiUserLine className="size-3.5" />
-                {car.seats}
+                {car.seats || 5}
               </span>
               <span className="w-px h-3 bg-border" />
               <span className="flex items-center gap-1.5">
                 <RiSettings4Line className="size-3.5" />
-                {tAttributes(car.transmission as any)}
+                {tAttributes((car.transmission || "Automatic") as any)}
               </span>
               <span className="w-px h-3 bg-border" />
-              <span>{tAttributes(car.fuelType as any)}</span>
+              <span>{tAttributes((car.fuelType || "Petrol") as any)}</span>
             </div>
           </div>
 
           <div className="flex flex-wrap gap-2">
-            {car.features.slice(0, 3).map((f) => (
+            {(car.features || []).slice(0, 3).map((f) => (
               <span
                 key={f}
                 className="text-[10px] uppercase tracking-wider px-2 py-1 border border-border text-muted-foreground"
@@ -107,7 +108,7 @@ export function CarCard({
             >
               <RadioGroup
                 value={withDriver ? "with" : "self"}
-                onValueChange={(v: string) => onDriverChange(v === "true")}
+                onValueChange={(v: string) => onDriverChange(v === "with")}
                 className="gap-3"
               >
                 <div className="flex items-center justify-between group/option cursor-pointer">
@@ -125,7 +126,7 @@ export function CarCard({
                     </Label>
                   </div>
                   <span className="text-sm font-mono text-muted-foreground">
-                    ${car.pricePerDay}
+                    ${price}
                     <span className="text-xs">{tSummary("perDay")}</span>
                   </span>
                 </div>
@@ -147,7 +148,7 @@ export function CarCard({
                     </Label>
                   </div>
                   <span className="text-sm font-mono text-muted-foreground">
-                    ${car.pricePerDay + driverSurcharge}
+                    ${price + driverSurcharge}
                     <span className="text-xs">{tSummary("perDay")}</span>
                   </span>
                 </div>
@@ -165,7 +166,7 @@ export function CarCard({
               </p>
             </div>
             <p className="text-sm font-medium text-muted-foreground">
-              ${car.pricePerDay}
+              ${price}
               <span className="text-xs font-light">{tSummary("perDay")}</span>
             </p>
           </div>

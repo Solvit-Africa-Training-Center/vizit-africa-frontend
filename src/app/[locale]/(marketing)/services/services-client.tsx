@@ -1,13 +1,11 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { AnimatePresence } from "motion/react";
 import { RiSearchLine } from "@remixicon/react";
-import { cn } from "@/lib/utils";
+import { AnimatePresence } from "motion/react";
 import { useTranslations } from "next-intl";
-import { PageHeader } from "@/components/shared/page-header";
+import { useMemo, useState } from "react";
 import { ServiceItem } from "@/components/service-item";
-import type { ServiceResponse } from "@/lib/schema/service-schema";
+import { PageHeader } from "@/components/shared/page-header";
 import {
   Select,
   SelectContent,
@@ -15,6 +13,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { serviceSchema, type ServiceResponse } from "@/lib/unified-types";
+import { cn } from "@/lib/utils";
 
 type Category = "all" | "hotel" | "bnb" | "car_rental" | "guide";
 type SortOption = "recommended" | "price_asc" | "price_desc" | "az";
@@ -142,7 +142,11 @@ export default function ServicesClient({
                 </SelectTrigger>
                 <SelectContent>
                   {sortOptions.map((opt) => (
-                    <SelectItem key={opt.value} value={opt.value} className="text-xs font-mono uppercase tracking-widest">
+                    <SelectItem
+                      key={opt.value}
+                      value={opt.value}
+                      className="text-xs font-mono uppercase tracking-widest"
+                    >
                       {opt.label}
                     </SelectItem>
                   ))}

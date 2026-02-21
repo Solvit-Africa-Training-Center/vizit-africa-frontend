@@ -1,66 +1,35 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { api } from "@/lib/api/client";
-import type { ActionResult, ApiError } from "@/lib/api/types";
-import {
-  type LoginInput,
-  type LoginResponse,
-  loginInputSchema,
-  loginResponseSchema,
-  type RegisterInput,
-  type RegisterResponse,
-  registerInputSchema,
-  registerResponseSchema,
-  type SetPasswordInput,
-  type SetPasswordResponse,
-  setPasswordInputSchema,
-  setPasswordResponseSchema,
-  type User,
-  userSchema,
-  type VerifyEmailInput,
-  type VerifyEmailResponse,
-  verifyEmailInputSchema,
-  verifyEmailResponseSchema,
-} from "@/lib/schema/auth-schema";
-import {
-  buildValidationErrorMessage,
-  normalizeFieldErrors,
-} from "@/lib/validation/error-message";
+import { api, ApiError } from "@/lib/api/simple-client";
 import { endpoints } from "./endpoints";
+import { userSchema, authResponseSchema } from "@/lib/unified-types";
+import type { User } from "@/lib/unified-types";
 
 const COOKIE_OPTIONS = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
   path: "/",
-  maxAge: 7 * 24 * 60 * 60, // 7 days
+  maxAge: 7 * 24 * 60 * 60,
 };
 
-export async function login(
-  input: LoginInput,
-): Promise<ActionResult<LoginResponse>> {
-  const validation = loginInputSchema.safeParse(input);
-  if (!validation.success) {
-    const flattened = validation.error.flatten();
-    const fieldErrors = normalizeFieldErrors(flattened.fieldErrors);
-    return {
-      success: false,
-      error: buildValidationErrorMessage({
-        fieldErrors,
-        formErrors: flattened.formErrors,
-      }),
-      fieldErrors,
-    };
-  }
+export type ActionResult<T> = 
+  | { success: true; data: T }
+  | { success: false; error: string; fieldErrors?: Record<string, string[]> };
 
+export async function login({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}): Promise<ActionResult<{ access: string; refresh: string; user: User }>> {
   try {
     const data = await api.post(
       endpoints.auth.login,
-      validation.data,
-      loginResponseSchema,
-      {
-        requiresAuth: false,
-      },
+      { email, password },
+      authResponseSchema,
+      { requiresAuth: false },
     );
 
     const cookieStore = await cookies();
@@ -69,84 +38,67 @@ export async function login(
 
     return { success: true, data };
   } catch (error) {
-    const err = error as ApiError;
-    return {
-      success: false,
-      error: err.message,
-      fieldErrors: err.fieldErrors,
-    };
+    if (error instanceof ApiError) {
+      return {
+        success: false,
+        error: error.message,
+        fieldErrors: error.details as Record<string, string[]> | undefined,
+      };
+    }
+    return { success: false, error: "Login failed" };
   }
 }
 
-export async function register(
-  input: RegisterInput,
-): Promise<ActionResult<RegisterResponse>> {
-  const validation = registerInputSchema.safeParse(input);
-  if (!validation.success) {
-    const flattened = validation.error.flatten();
-    const fieldErrors = normalizeFieldErrors(flattened.fieldErrors);
-    return {
-      success: false,
-      error: buildValidationErrorMessage({
-        fieldErrors,
-        formErrors: flattened.formErrors,
-      }),
-      fieldErrors,
-    };
-  }
-
+export async function register({
+  full_name,
+  email,
+  password,
+  phone_number,
+}: {
+  full_name: string;
+  email: string;
+  password: string;
+  phone_number: string;
+}): Promise<ActionResult<User>> {
   try {
     const data = await api.post(
       endpoints.auth.register,
-      validation.data,
-      registerResponseSchema,
-      {
-        requiresAuth: false,
-      },
-    );
-
-    return { success: true, data };
-  } catch (error) {
-    const err = error as ApiError;
-    return {
-      success: false,
-      error: err.message,
-      fieldErrors: err.fieldErrors,
-    };
-  }
-}
-
-export async function verifyEmail(
-  input: VerifyEmailInput,
-): Promise<ActionResult<VerifyEmailResponse>> {
-  const validation = verifyEmailInputSchema.safeParse(input);
-  if (!validation.success) {
-    const flattened = validation.error.flatten();
-    const fieldErrors = normalizeFieldErrors(flattened.fieldErrors);
-    return {
-      success: false,
-      error: buildValidationErrorMessage({
-        fieldErrors,
-        formErrors: flattened.formErrors,
-      }),
-      fieldErrors,
-    };
-  }
-
-  try {
-    const data = await api.post(
-      endpoints.auth.verifyEmail,
-      validation.data,
-      verifyEmailResponseSchema,
+      { full_name, email, password, phone_number },
+      userSchema,
       { requiresAuth: false },
     );
     return { success: true, data };
   } catch (error) {
-    const err = error as ApiError;
+    if (error instanceof ApiError) {
+      return {
+        success: false,
+        error: error.message,
+        fieldErrors: error.details as Record<string, string[]> | undefined,
+      };
+    }
+    return { success: false, error: "Registration failed" };
+  }
+}
+
+export async function verifyEmail({
+  email,
+  code,
+}: {
+  email: string;
+  code: string;
+}): Promise<ActionResult<{ message: string }>> {
+  try {
+    const result = await api.post(
+      endpoints.auth.verifyEmail,
+      { email, code },
+      undefined,
+      { requiresAuth: false },
+    );
+    return { success: true, data: result as { message: string } };
+  } catch (error) {
     return {
       success: false,
-      error: err.message,
-      fieldErrors: err.fieldErrors,
+      error: error instanceof ApiError ? error.message : "Verification failed",
     };
   }
 }
@@ -156,15 +108,12 @@ export async function getCurrentUser(): Promise<ActionResult<User>> {
     const data = await api.get(endpoints.auth.me, userSchema);
     return { success: true, data };
   } catch (error) {
-    const err = error as ApiError;
-    if (err.status === 401) {
-      try {
-        await logout();
-      } catch {}
+    if (error instanceof ApiError && error.status === 401) {
+      await logout();
     }
     return {
       success: false,
-      error: err.message,
+      error: error instanceof ApiError ? error.message : "Failed to fetch user",
     };
   }
 }
@@ -175,42 +124,30 @@ export async function logout(): Promise<void> {
   cookieStore.delete("refreshToken");
 }
 
-export async function setPassword(
-  input: SetPasswordInput,
-): Promise<ActionResult<SetPasswordResponse>> {
-  const validation = setPasswordInputSchema.safeParse(input);
-  if (!validation.success) {
-    const flattened = validation.error.flatten();
-    const fieldErrors = normalizeFieldErrors(flattened.fieldErrors);
-    return {
-      success: false,
-      error: buildValidationErrorMessage({
-        fieldErrors,
-        formErrors: flattened.formErrors,
-      }),
-      fieldErrors,
-    };
-  }
-
+export async function setPassword({
+  uidb64,
+  token,
+  password,
+  re_password,
+}: {
+  uidb64: string;
+  token: string;
+  password: string;
+  re_password: string;
+}): Promise<ActionResult<{ message: string }>> {
   try {
-    const data = await api.post(
-      endpoints.auth.setPassword,
-      validation.data,
-      setPasswordResponseSchema,
-      { requiresAuth: false },
+    if (password !== re_password) {
+      return { success: false, error: "Passwords do not match" };
+    }
+    const result = await api.post(
+      endpoints.auth.setPassword(uidb64, token),
+      { password, password_confirm: re_password },
     );
-
-    const cookieStore = await cookies();
-    cookieStore.set("accessToken", data.access, COOKIE_OPTIONS);
-    cookieStore.set("refreshToken", data.refresh, COOKIE_OPTIONS);
-
-    return { success: true, data };
+    return { success: true, data: result as { message: string } };
   } catch (error) {
-    const err = error as ApiError;
     return {
       success: false,
-      error: err.message,
-      fieldErrors: err.fieldErrors,
+      error: error instanceof ApiError ? error.message : "Failed to set password",
     };
   }
 }

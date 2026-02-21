@@ -1,26 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { RiMagicLine, RiMapPinLine } from "@remixicon/react";
+import { format } from "date-fns";
 import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
-import {
-  RiCalendarLine,
-  RiMapPinLine,
-  RiUserLine,
-  RiMagicLine,
-} from "@remixicon/react";
-import { format } from "date-fns";
-import { DateRange } from "react-day-picker";
+import { useState, useMemo } from "react";
+import type { DateRange } from "react-day-picker";
 
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Calendar } from "@/components/ui/calendar";
+  NumberField,
+  NumberFieldDecrement,
+  NumberFieldGroup,
+  NumberFieldIncrement,
+  NumberFieldInput,
+} from "@/components/ui/number-field";
 import {
   Select,
   SelectContent,
@@ -28,26 +24,27 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
-import { TripInfo } from "@/lib/plan_trip-types";
+import type { TripInfo } from "@/lib/plan_trip-types";
 
 interface TripDetailsInputProps {
   tripInfo: TripInfo;
-  setTripInfo: (info: Partial<TripInfo>) => void;
+  updateTripInfo: (info: Partial<TripInfo>) => void;
   onGenerate: () => void;
   isGenerating: boolean;
 }
 
 export function TripDetailsInput({
   tripInfo,
-  setTripInfo,
+  updateTripInfo,
   onGenerate,
   isGenerating,
 }: TripDetailsInputProps) {
   const t = useTranslations("PlanTrip");
+  const today = new Date().toISOString().split("T")[0];
 
-  const [dateRange, setDateRange] = useState<DateRange | undefined>(
+  const [_dateRange, setDateRange] = useState<DateRange | undefined>(
     tripInfo.departureDate && tripInfo.returnDate
       ? {
           from: new Date(tripInfo.departureDate),
@@ -56,25 +53,21 @@ export function TripDetailsInput({
       : undefined,
   );
 
-  const handleDateSelect = (range: DateRange | undefined) => {
-    setDateRange(range);
-    if (range?.from) {
-      setTripInfo({
-        departureDate: format(range.from, "yyyy-MM-dd"),
-      });
+  const validationFeedback = useMemo(() => {
+    if (!tripInfo.destination) return "Please enter a destination.";
+    if (!tripInfo.arrivalDate) return "Please select an arrival date.";
+    if (!tripInfo.departureDate) return "Please select a departure date.";
+    if (tripInfo.departureDate < tripInfo.arrivalDate)
+      return "Departure must be on or after arrival.";
+    if (tripInfo.isRoundTrip) {
+      if (!tripInfo.returnDate) return "Please select a return date.";
+      if (tripInfo.returnDate < tripInfo.departureDate)
+        return "Return date must be on or after departure.";
     }
-    if (range?.to) {
-      setTripInfo({
-        returnDate: format(range.to, "yyyy-MM-dd"),
-      });
-    }
-  };
+    return null;
+  }, [tripInfo]);
 
-  const isValid = !!(
-    tripInfo.destination &&
-    tripInfo.departureDate &&
-    tripInfo.returnDate
-  );
+  const isValid = !validationFeedback;
 
   return (
     <motion.div
@@ -91,8 +84,7 @@ export function TripDetailsInput({
         </p>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-4">
-        {/* Destination */}
+      <div className="grid md:grid-cols-2 gap-6">
         <div className="space-y-1.5">
           <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
             {t("tripDetails.whereTo")}
@@ -102,96 +94,334 @@ export function TripDetailsInput({
             <Input
               placeholder={t("tripDetails.wherePlaceholder")}
               value={tripInfo.destination || ""}
-              onChange={(e) => setTripInfo({ destination: e.target.value })}
+              onChange={(e) => updateTripInfo({ destination: e.target.value })}
               className="pl-9 h-10 text-sm bg-background/50"
             />
           </div>
         </div>
 
-        {/* Dates */}
         <div className="space-y-1.5">
           <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
-            {t("tripDetails.when")}
+            {t("tripDetails.departingFrom")}
           </Label>
-          <Popover>
-            <PopoverTrigger
-              className={cn(
-                buttonVariants({ variant: "outline" }),
-                "w-full h-10 justify-start items-center text-left font-normal bg-background/50 text-sm",
-                !dateRange && "text-muted-foreground",
-              )}
-            >
-              <RiCalendarLine className="mr-2 size-3.5" />
-              {dateRange?.from ? (
-                dateRange.to ? (
-                  <>
-                    {format(dateRange.from, "LLO dd, y")} -{" "}
-                    {format(dateRange.to, "LLO dd, y")}
-                  </>
-                ) : (
-                  format(dateRange.from, "LLO dd, y")
-                )
-              ) : (
-                <span>{t("tripDetails.selectDates")}</span>
-              )}
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
-              <Calendar
-                initialFocus
-                mode="range"
-                defaultMonth={dateRange?.from}
-                selected={dateRange}
-                onSelect={handleDateSelect}
-                numberOfMonths={2}
-                disabled={(date) => date < new Date()}
-              />
-            </PopoverContent>
-          </Popover>
+          <div className="relative">
+            <RiMapPinLine className="absolute left-3 top-2.5 size-3.5 text-muted-foreground" />
+            <Input
+              placeholder={t("tripDetails.departingPlaceholder")}
+              value={tripInfo.departureCity || ""}
+              onChange={(e) => updateTripInfo({ departureCity: e.target.value })}
+              className="pl-9 h-10 text-sm bg-background/50"
+            />
+          </div>
         </div>
 
-        {/* Travelers */}
-        <div className="space-y-1.5">
+        <div className="md:col-span-2 space-y-4">
+          <div className="flex items-center justify-between">
+            <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+              {t("tripDetails.when")}
+            </Label>
+            <div className="flex items-center gap-2">
+              <Switch
+                id="round-trip"
+                checked={tripInfo.isRoundTrip}
+                onCheckedChange={(val) => updateTripInfo({ isRoundTrip: val })}
+              />
+              <Label htmlFor="round-trip" className="text-xs">
+                Round Trip
+              </Label>
+            </div>
+          </div>
+
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <Label className="text-[10px] text-muted-foreground">
+                {t("tripDetails.arrival")}
+              </Label>
+              <div className="flex gap-2">
+                <Input
+                  type="date"
+                  min={today}
+                  value={tripInfo.arrivalDate || ""}
+                  onChange={(e) => updateTripInfo({ arrivalDate: e.target.value })}
+                  className="h-10 text-xs bg-background/50 flex-1"
+                />
+                <Input
+                  type="time"
+                  value={tripInfo.arrivalTime || ""}
+                  onChange={(e) => updateTripInfo({ arrivalTime: e.target.value })}
+                  className="h-10 text-xs bg-background/50 w-24"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-1.5">
+              <Label className="text-[10px] text-muted-foreground">
+                {t("tripDetails.departure")}
+              </Label>
+              <div className="flex gap-2">
+                <Input
+                  type="date"
+                  min={tripInfo.arrivalDate || today}
+                  value={tripInfo.departureDate || ""}
+                  onChange={(e) =>
+                    updateTripInfo({ departureDate: e.target.value })
+                  }
+                  className="h-10 text-xs bg-background/50 flex-1"
+                />
+                <Input
+                  type="time"
+                  value={tripInfo.departureTime || ""}
+                  onChange={(e) =>
+                    updateTripInfo({ departureTime: e.target.value })
+                  }
+                  className="h-10 text-xs bg-background/50 w-24"
+                />
+              </div>
+            </div>
+
+            {tripInfo.isRoundTrip && (
+              <div className="space-y-1.5 sm:col-start-2">
+                <Label className="text-[10px] text-muted-foreground">
+                  Return to Origin
+                </Label>
+                <div className="flex gap-2">
+                  <Input
+                    type="date"
+                    min={tripInfo.departureDate || today}
+                    value={tripInfo.returnDate || ""}
+                    onChange={(e) => updateTripInfo({ returnDate: e.target.value })}
+                    className="h-10 text-xs bg-background/50 flex-1"
+                  />
+                  <Input
+                    type="time"
+                    value={tripInfo.returnTime || ""}
+                    onChange={(e) =>
+                      updateTripInfo({ returnTime: e.target.value })
+                    }
+                    className="h-10 text-xs bg-background/50 w-24"
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="md:col-span-2 space-y-3">
           <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
             {t("tripDetails.whosComing")}
           </Label>
-          <div className="flex gap-2">
-            <div className="relative flex-1">
-              <RiUserLine className="absolute left-3 top-2.5 size-3.5 text-muted-foreground" />
-              <Input
-                type="number"
+          <div className="grid grid-cols-3 gap-4">
+            <div className="space-y-1">
+              <Label className="text-[10px] text-muted-foreground ml-1">
+                {t("tripDetails.adults")}
+              </Label>
+              <NumberField
                 min={1}
-                placeholder={t("tripDetails.adults")}
-                value={tripInfo.adults}
-                onChange={(e) =>
-                  setTripInfo({ adults: parseInt(e.target.value) || 0 })
+                value={tripInfo.adults ?? null}
+                onValueChange={(val) =>
+                  updateTripInfo({ adults: val ?? undefined })
                 }
-                className="pl-9 h-10 text-sm bg-background/50"
-              />
+              >
+                <NumberFieldGroup className="h-10 bg-background/50">
+                  <NumberFieldDecrement />
+                  <NumberFieldInput className="text-sm" />
+                  <NumberFieldIncrement />
+                </NumberFieldGroup>
+              </NumberField>
             </div>
-            <div className="relative flex-1">
-              <RiUserLine className="absolute left-3 top-2.5 size-3.5 text-muted-foreground" />
-              <Input
-                type="number"
+            <div className="space-y-1">
+              <Label className="text-[10px] text-muted-foreground ml-1">
+                {t("tripDetails.kids")}
+              </Label>
+              <NumberField
                 min={0}
-                placeholder={t("tripDetails.kids")}
-                value={tripInfo.children}
-                onChange={(e) =>
-                  setTripInfo({ children: parseInt(e.target.value) || 0 })
+                value={tripInfo.children ?? null}
+                onValueChange={(val) =>
+                  updateTripInfo({ children: val ?? undefined })
                 }
-                className="pl-9 h-10 text-sm bg-background/50"
-              />
+              >
+                <NumberFieldGroup className="h-10 bg-background/50">
+                  <NumberFieldDecrement />
+                  <NumberFieldInput className="text-sm" />
+                  <NumberFieldIncrement />
+                </NumberFieldGroup>
+              </NumberField>
+            </div>
+            <div className="space-y-1">
+              <Label className="text-[10px] text-muted-foreground ml-1">
+                Infants
+              </Label>
+              <NumberField
+                min={0}
+                value={tripInfo.infants ?? null}
+                onValueChange={(val) =>
+                  updateTripInfo({ infants: val ?? undefined })
+                }
+              >
+                <NumberFieldGroup className="h-10 bg-background/50">
+                  <NumberFieldDecrement />
+                  <NumberFieldInput className="text-sm" />
+                  <NumberFieldIncrement />
+                </NumberFieldGroup>
+              </NumberField>
             </div>
           </div>
         </div>
 
-        {/* Trip Purpose */}
-        <div className="space-y-1.5">
+        <div className="md:col-span-2 space-y-4">
+          <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+            Travel Preferences & Requirements
+          </Label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-muted/20 p-5 rounded-lg border border-border/30">
+            <div className="space-y-3">
+              <div className="flex items-center gap-2">
+                <Switch
+                  id="need-flights"
+                  checked={tripInfo.needsFlights}
+                  onCheckedChange={(v) => updateTripInfo({ needsFlights: v })}
+                />
+                <Label htmlFor="need-flights" className="text-xs font-bold">
+                  Flights
+                </Label>
+              </div>
+              {tripInfo.needsFlights && (
+                <div className="pl-8 space-y-2">
+                  <Label className="text-[10px] text-muted-foreground block">
+                    Preferred Cabin
+                  </Label>
+                  <Select
+                    value={tripInfo.preferredCabinClass || ""}
+                    onValueChange={(v: any) =>
+                      updateTripInfo({ preferredCabinClass: v })
+                    }
+                  >
+                    <SelectTrigger className="h-8 text-xs bg-background/50">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="economy">Economy</SelectItem>
+                      <SelectItem value="premium_economy">
+                        Premium Economy
+                      </SelectItem>
+                      <SelectItem value="business">Business Class</SelectItem>
+                      <SelectItem value="first">First Class</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
+            </div>
+
+            <div className="space-y-3">
+              <div className="flex items-center gap-2">
+                <Switch
+                  id="need-hotel"
+                  checked={tripInfo.needsHotel}
+                  onCheckedChange={(v) => updateTripInfo({ needsHotel: v })}
+                />
+                <Label htmlFor="need-hotel" className="text-xs font-bold">
+                  Accommodation
+                </Label>
+              </div>
+              {tripInfo.needsHotel && (
+                <div className="pl-8 space-y-2">
+                  <Label className="text-[10px] text-muted-foreground block">
+                    Minimum Rating
+                  </Label>
+                  <Select
+                    value={tripInfo.hotelStarRating || ""}
+                    onValueChange={(v) => updateTripInfo({ hotelStarRating: v })}
+                  >
+                    <SelectTrigger className="h-8 text-xs bg-background/50">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="3">3 Stars</SelectItem>
+                      <SelectItem value="4">4 Stars</SelectItem>
+                      <SelectItem value="5">5 Stars</SelectItem>
+                      <SelectItem value="any">Any verified</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
+            </div>
+
+            <div className="space-y-3">
+              <div className="flex items-center gap-2">
+                <Switch
+                  id="need-car"
+                  checked={tripInfo.needsCar}
+                  onCheckedChange={(v) => updateTripInfo({ needsCar: v })}
+                />
+                <Label htmlFor="need-car" className="text-xs font-bold">
+                  Vehicle Rental
+                </Label>
+              </div>
+              {tripInfo.needsCar && (
+                <div className="pl-8 space-y-2">
+                  <Label className="text-[10px] text-muted-foreground block">
+                    Preferred Type
+                  </Label>
+                  <Select
+                    value={tripInfo.carTypePreference || ""}
+                    onValueChange={(v) => updateTripInfo({ carTypePreference: v })}
+                  >
+                    <SelectTrigger className="h-8 text-xs bg-background/50">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="4x4">Safari 4x4 / SUV</SelectItem>
+                      <SelectItem value="sedan">Luxury Sedan</SelectItem>
+                      <SelectItem value="van">Passenger Van</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
+            </div>
+
+            <div className="space-y-3">
+              <div className="flex items-center gap-2">
+                <Switch
+                  id="need-guide"
+                  checked={tripInfo.needsGuide}
+                  onCheckedChange={(v) => updateTripInfo({ needsGuide: v })}
+                />
+                <Label htmlFor="need-guide" className="text-xs font-bold">
+                  Local Guide
+                </Label>
+              </div>
+              {tripInfo.needsGuide && (
+                <div className="pl-8 space-y-2">
+                  <Label className="text-[10px] text-muted-foreground block">
+                    Primary Language
+                  </Label>
+                  <Select
+                    value={tripInfo.guideLanguages?.[0] || "English"}
+                    onValueChange={(v) => updateTripInfo({ guideLanguages: v ? [v] : [] })}
+                  >
+                    <SelectTrigger className="h-8 text-xs bg-background/50">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="English">English</SelectItem>
+                      <SelectItem value="French">French</SelectItem>
+                      <SelectItem value="German">German</SelectItem>
+                      <SelectItem value="Spanish">Spanish</SelectItem>
+                      <SelectItem value="Kinyarwanda">Kinyarwanda</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="md:col-span-2 space-y-1.5">
           <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
             {t("tripDetails.tripStyle")}
           </Label>
           <Select
-            value={tripInfo.tripPurpose}
-            onValueChange={(val: any) => setTripInfo({ tripPurpose: val })}
+            value={tripInfo.tripPurpose || ""}
+            onValueChange={(val: any) => updateTripInfo({ tripPurpose: val })}
           >
             <SelectTrigger className="h-10 text-sm bg-background/50">
               <SelectValue placeholder={t("tripDetails.selectStyle")} />
@@ -222,19 +452,24 @@ export function TripDetailsInput({
           </Select>
         </div>
 
-        {/* Special Requests */}
         <div className="md:col-span-2 space-y-1.5">
           <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
             {t("tripDetails.specialWishes")}
           </Label>
           <Textarea
             placeholder={t("tripDetails.wishesPlaceholder")}
-            value={tripInfo.specialRequests}
-            onChange={(e) => setTripInfo({ specialRequests: e.target.value })}
-            className="min-h-[60px] text-sm bg-background/50 resize-none"
+            value={tripInfo.specialRequests || ""}
+            onChange={(e) => updateTripInfo({ specialRequests: e.target.value })}
+            className="min-h-[80px] text-sm bg-background/50 resize-none"
           />
         </div>
       </div>
+
+      {validationFeedback && (
+        <p className="text-center text-[10px] text-destructive font-medium uppercase tracking-tight animate-in fade-in slide-in-from-top-1">
+          {validationFeedback}
+        </p>
+      )}
 
       <div className="pt-2 flex justify-center">
         <Button
@@ -249,7 +484,6 @@ export function TripDetailsInput({
               ? t("tripDetails.generating")
               : t("tripDetails.generate")}
           </span>
-          {/* Subtle shine effect */}
           <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
         </Button>
       </div>

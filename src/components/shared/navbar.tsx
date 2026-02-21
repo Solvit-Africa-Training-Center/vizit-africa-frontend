@@ -1,25 +1,21 @@
 "use client";
 
-import { useState } from "react";
 import {
-  RiMenuLine,
   RiCloseLine,
-  RiUserLine,
-  RiLogoutBoxRLine,
   RiDashboardLine,
+  RiLogoutBoxRLine,
+  RiMenuLine,
   RiSuitcaseLine,
+  RiUserLine,
 } from "@remixicon/react";
-import { motion, useScroll, useMotionValueEvent } from "motion/react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import Logo from "./logo";
-import { NavbarMobile } from "./navbar-mobile";
+import { motion, useMotionValueEvent, useScroll } from "motion/react";
+import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { Link, usePathname } from "@/i18n/navigation";
-import { LanguageSwitcher } from "./language-switcher";
-import { useUser } from "@/components/user-provider";
+import { useState } from "react";
 import { logout } from "@/actions/auth";
-import { useTripStore } from "@/store/trip-store";
+import { TripRequestDialog } from "@/components/landing/trip-request-dialog";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,15 +23,19 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useRouter } from "next/navigation";
-import { TripRequestDialog } from "@/components/landing/trip-request-dialog";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useUser } from "@/components/user-provider";
+import { Link, usePathname } from "@/i18n/navigation";
+import { cn } from "@/lib/utils";
+import { useTripStore } from "@/store/trip-store";
+import { LanguageSwitcher } from "./language-switcher";
+import Logo from "./logo";
+import { NavbarMobile } from "./navbar-mobile";
 
 interface NavbarProps {
   forceSolid?: boolean;

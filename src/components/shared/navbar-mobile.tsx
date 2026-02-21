@@ -1,19 +1,19 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import {
+  RiDashboardLine,
+  RiLogoutBoxRLine,
+  RiSuitcaseLine,
+  RiUserLine,
+} from "@remixicon/react";
 import { useTranslations } from "next-intl";
+import { logout } from "@/actions/auth";
+import { Button } from "@/components/ui/button";
+import { useUser } from "@/components/user-provider";
 import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
-import { LanguageSwitcher } from "./language-switcher";
-import { useUser } from "@/components/user-provider";
-import { logout } from "@/actions/auth";
-import {
-  RiUserLine,
-  RiLogoutBoxRLine,
-  RiDashboardLine,
-  RiSuitcaseLine,
-} from "@remixicon/react";
 import { useTripStore } from "@/store/trip-store";
+import { LanguageSwitcher } from "./language-switcher";
 
 interface NavbarMobileProps {
   isOpen: boolean;

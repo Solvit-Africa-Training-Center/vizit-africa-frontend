@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "motion/react";
-import { SectionTitle } from "./section-title";
 import { useTranslations } from "next-intl";
+import { SectionTitle } from "./section-title";
 
 export function WhyUs() {
   const t = useTranslations("WhyUs");

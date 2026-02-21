@@ -1,13 +1,13 @@
 "use client";
 
+import { RiArrowRightLine, RiCloseLine } from "@remixicon/react";
+import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { RiCloseLine, RiArrowRightLine } from "@remixicon/react";
-import { motion, AnimatePresence } from "motion/react";
+import { PageHeader } from "@/components/shared/page-header";
 import { ParallaxImage } from "@/components/ui/parallax-image";
 import { cn } from "@/lib/utils";
-import { useTranslations } from "next-intl";
-import { PageHeader } from "@/components/shared/page-header";
 
 export default function GalleryPage() {
   const t = useTranslations("Gallery");
@@ -149,7 +149,6 @@ export default function GalleryPage() {
   return (
     <>
       <div className="min-h-screen bg-background pt-32 pb-24">
-
         <PageHeader
           title={t("title")}
           overline={t("overline")}
@@ -157,26 +156,26 @@ export default function GalleryPage() {
           layout="split"
           className="mb-24 md:mb-32"
         >
-            <div className="flex flex-col items-start md:items-end gap-2 min-w-[200px]">
-              <span className="text-xs font-mono uppercase tracking-widest text-primary mb-2">
-                {t("filterBy")}
-              </span>
-              {categories.map((cat) => (
-                <button
-                  type="button"
-                  key={cat.value}
-                  onClick={() => setActiveTab(cat.value)}
-                  className={cn(
-                    "text-xl md:text-2xl font-display font-medium uppercase tracking-tight transition-all duration-300 hover:translate-x-2 md:hover:-translate-x-2",
-                    activeTab === cat.value
-                      ? "text-foreground"
-                      : "text-muted-foreground/30 hover:text-foreground",
-                  )}
-                >
-                  {cat.label}
-                </button>
-              ))}
-            </div>
+          <div className="flex flex-col items-start md:items-end gap-2 min-w-[200px]">
+            <span className="text-xs font-mono uppercase tracking-widest text-primary mb-2">
+              {t("filterBy")}
+            </span>
+            {categories.map((cat) => (
+              <button
+                type="button"
+                key={cat.value}
+                onClick={() => setActiveTab(cat.value)}
+                className={cn(
+                  "text-xl md:text-2xl font-display font-medium uppercase tracking-tight transition-all duration-300 hover:translate-x-2 md:hover:-translate-x-2",
+                  activeTab === cat.value
+                    ? "text-foreground"
+                    : "text-muted-foreground/30 hover:text-foreground",
+                )}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
         </PageHeader>
 
         <section className="px-5 md:px-10 max-w-7xl mx-auto mb-32 md:mb-48">
@@ -241,7 +240,6 @@ export default function GalleryPage() {
           </motion.div>
         </section>
       </div>
-
 
       <AnimatePresence>
         {selectedImage && (

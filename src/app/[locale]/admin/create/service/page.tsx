@@ -1,8 +1,7 @@
-import React from "react";
-import { getTranslations } from "next-intl/server";
-import { Link } from "@/i18n";
 import { RiArrowLeftLine } from "@remixicon/react";
+import { getTranslations } from "next-intl/server";
 import { ServiceForm } from "@/components/forms/admin/service-form";
+import { Link } from "@/i18n";
 
 const page = async () => {
   const t = await getTranslations("Admin.createService");

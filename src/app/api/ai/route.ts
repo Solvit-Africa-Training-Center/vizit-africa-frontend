@@ -1,5 +1,5 @@
 import { google } from "@ai-sdk/google";
-import { streamText, Output } from "ai";
+import { Output, streamText } from "ai";
 import { z } from "zod";
 
 const aiTripRequestSchema = z.object({

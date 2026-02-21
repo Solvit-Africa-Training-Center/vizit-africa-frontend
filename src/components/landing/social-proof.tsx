@@ -1,8 +1,8 @@
 "use client";
 
-import { PARTNER_LOGOS as partnerLogos } from "@/lib/configs";
 import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
+import { PARTNER_LOGOS as partnerLogos } from "@/lib/configs";
 
 export function SocialProof() {
   const t = useTranslations("SocialProof");

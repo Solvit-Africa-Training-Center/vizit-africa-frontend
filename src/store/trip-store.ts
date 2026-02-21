@@ -1,9 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type {
-  TripInfo,
-  TripItem,
-} from "@/lib/plan_trip-types";
+import type { TripInfo, TripItem } from "@/lib/plan_trip-types";
 
 type EntrySource =
   | "widget"
@@ -17,7 +14,7 @@ type EntrySource =
 interface TripState {
   tripInfo: TripInfo;
   items: TripItem[];
-  
+
   entrySource: EntrySource;
 
   hasActiveTrip: () => boolean;
@@ -36,8 +33,16 @@ interface TripState {
 
 const initialTripInfo: TripInfo = {
   departureCity: "",
-  arrivalDate: "",
-  departureDate: "",
+  startDate: null,
+  endDate: null,
+  arrivalDate: null,
+  departureDate: null,
+  returnDate: null,
+  arrivalTime: null,
+  departureTime: null,
+  returnTime: null,
+  isRoundTrip: false,
+  travelers: 2,
   adults: 2,
   children: 0,
   infants: 0,
@@ -47,6 +52,15 @@ const initialTripInfo: TripInfo = {
   email: "",
   phone: "",
   destination: "",
+  needsFlights: true,
+  needsHotel: true,
+  needsCar: false,
+  needsGuide: false,
+  preferredCabinClass: "economy",
+  hotelStarRating: "4",
+  carTypePreference: "4x4",
+  budgetBracket: "mid-range",
+  guideLanguages: ["English"],
 };
 
 export const useTripStore = create<TripState>()(
@@ -58,7 +72,11 @@ export const useTripStore = create<TripState>()(
 
       hasActiveTrip: () => {
         const { items, tripInfo } = get();
-        return items.length > 0 || !!tripInfo.destination || !!tripInfo.specialRequests;
+        return (
+          items.length > 0 ||
+          !!tripInfo.destination ||
+          !!tripInfo.specialRequests
+        );
       },
 
       itemCount: () => {
@@ -66,7 +84,7 @@ export const useTripStore = create<TripState>()(
       },
 
       getItem: (id) => {
-          return get().items.find(i => i.id === id);
+        return get().items.find((i) => i.id === id);
       },
 
       updateTripInfo: (info) =>
@@ -83,17 +101,13 @@ export const useTripStore = create<TripState>()(
 
       addItem: (item) =>
         set((state) => {
-            // Avoid duplicates if needed, or allow them. 
-            // For now, let's allow multiples unless ID is identical.
-            const exists = state.items.find((i) => i.id === item.id);
-            if (exists) {
-                // If it exists, maybe just update it? or ignore?
-                // Let's replace it to ensure latest data
-                return {
-                    items: state.items.map(i => i.id === item.id ? item : i)
-                };
-            }
-            return { items: [...state.items, item] };
+          const exists = state.items.find((i) => i.id === item.id);
+          if (exists) {
+            return {
+              items: state.items.map((i) => (i.id === item.id ? item : i)),
+            };
+          }
+          return { items: [...state.items, item] };
         }),
 
       removeItem: (id) =>
@@ -103,7 +117,9 @@ export const useTripStore = create<TripState>()(
 
       updateItem: (id, updates) =>
         set((state) => ({
-          items: state.items.map((i) => (i.id === id ? { ...i, ...updates } : i)),
+          items: state.items.map((i) =>
+            i.id === id ? { ...i, ...updates } : i,
+          ),
         })),
 
       clearTrip: () =>
@@ -114,7 +130,7 @@ export const useTripStore = create<TripState>()(
         }),
     }),
     {
-      name: "vizit-trip-storage-v2", // Updated version key to avoid conflicts
+      name: "vizit-trip-storage-v4",
       partialize: (state) => ({
         tripInfo: state.tripInfo,
         items: state.items,

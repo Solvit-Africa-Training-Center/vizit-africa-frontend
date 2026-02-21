@@ -2,7 +2,7 @@ import { RiSettings3Line } from "@remixicon/react";
 import { getTranslations } from "next-intl/server";
 
 export default async function AdminSettingsPage() {
-  const t = await getTranslations("Admin.settings");
+  const _t = await getTranslations("Admin.settings");
 
   return (
     <div className="max-w-4xl mx-auto py-8 px-4">

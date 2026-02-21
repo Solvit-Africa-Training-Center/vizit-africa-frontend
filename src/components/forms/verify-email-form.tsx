@@ -1,22 +1,22 @@
 "use client";
 
+import { RiAlertLine, RiArrowRightLine } from "@remixicon/react";
 import { useForm } from "@tanstack/react-form";
+import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
 import { toast } from "sonner";
 import { verifyEmail } from "@/actions/auth";
-import { Label } from "../ui/label";
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { Button } from "../ui/button";
+import { FieldError } from "../ui/field";
 import {
   InputOTP,
   InputOTPGroup,
-  InputOTPSlot,
   InputOTPSeparator,
+  InputOTPSlot,
 } from "../ui/input-otp";
-import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
-import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
-import { useState } from "react";
-import { RiAlertLine, RiArrowRightLine } from "@remixicon/react";
-import { FieldError } from "../ui/field";
+import { Label } from "../ui/label";
 
 type VerifyEmailFormProps = {
   email: string;

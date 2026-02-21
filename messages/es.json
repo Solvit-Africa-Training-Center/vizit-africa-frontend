@@ -252,7 +252,8 @@
     "signup": "Registrarse",
     "startPlanning": "Comenzar a Planificar",
     "submit": "Enviar",
-    "viewAll": "Ver Todo"
+    "viewAll": "Ver Todo",
+    "bookFlight": "Planificar un vuelo"
   },
   "Contact": {
     "address": "Kigali Heights, 4to Piso",
@@ -416,7 +417,8 @@
       "gallery": "Galería",
       "privacyPolicy": "Política de Privacidad",
       "termsOfService": "Términos de Servicio",
-      "tripsPackages": "Viajes y Paquetes"
+      "tripsPackages": "Viajes y Paquetes",
+      "requestVendorship": "Solicitar colaboración"
     },
     "privacy": "Privacidad",
     "tagline": "Tu socio de confianza en viajes a Ruanda. Planificación profesional para experiencias africanas inolvidables.",
@@ -642,7 +644,9 @@
     "contact": "Contacto",
     "experiences": "Experiencias",
     "gallery": "Galería",
-    "services": "Servicios"
+    "services": "Servicios",
+    "flights": "Vuelos",
+    "ourservices": "Nuestros servicios"
   },
   "PlanTrip": {
     "confirmation": {
@@ -1041,5 +1045,14 @@
       }
     },
     "title": "La Diferencia Vizit"
+  },
+  "PopularRoutes": {
+    "overline": "Rutas destacadas",
+    "title": "Vuelos populares",
+    "description": "Las rutas más reservadas a Kigali. Precios en tiempo real de aerolíneas asociadas.",
+    "fromLabel": "Desde",
+    "direct": "Directo",
+    "oneStop": "1 escala",
+    "searchRoute": "Buscar esta ruta"
   }
 }

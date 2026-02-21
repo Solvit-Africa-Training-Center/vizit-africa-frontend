@@ -1,12 +1,12 @@
 "use client";
 
-import { motion } from "motion/react";
 import { RiCheckDoubleLine } from "@remixicon/react";
-import { Button } from "@/components/ui/button";
-import { ServiceItem } from "@/components/service-item";
+import { motion } from "motion/react";
 import { useState } from "react";
-import type { TripItem, Hotel, Car, Guide } from "@/lib/plan_trip-types";
-import type { ServiceResponse } from "@/lib/schema/service-schema";
+import { ServiceItem } from "@/components/service-item";
+import { Button } from "@/components/ui/button";
+import type { Car, Guide, Hotel, TripInfo, TripItem } from "@/lib/plan_trip-types";
+import { serviceSchema, type ServiceResponse } from "@/lib/unified-types";
 
 interface AiResultsListProps {
   aiRecommendations: {
@@ -23,6 +23,7 @@ interface AiResultsListProps {
   handleSelectHotel: (hotel: Hotel) => void;
   handleSelectCar: (car: Car) => void;
   days: number;
+  tripInfo: TripInfo;
 }
 
 export function AiResultsList({
@@ -34,6 +35,7 @@ export function AiResultsList({
   handleSelectHotel,
   handleSelectCar,
   days,
+  tripInfo,
 }: AiResultsListProps) {
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
@@ -56,16 +58,21 @@ export function AiResultsList({
 
     // Add Guides
     aiRecommendations.guides.forEach((g) => {
-      const exists = items.find((i) => i.id === g.id);
+      const exists = items.find((i) => i.id === String(g.id));
       if (!exists) {
         addItem({
-          id: g.id,
+          id: String(g.id),
           type: "guide",
-          title: g.name,
+          title: g.name || g.title,
           description: g.description,
           price: g.price,
           data: g,
           quantity: 1,
+          startDate: tripInfo.arrivalDate,
+          endDate: tripInfo.departureDate,
+          metadata: {
+            language: tripInfo.guideLanguages?.[0] || "English",
+          },
         });
       }
     });
@@ -73,48 +80,48 @@ export function AiResultsList({
 
   const aiServices: ServiceResponse[] = [
     ...aiRecommendations.hotels.map((h) => ({
-      id: h.id,
-      title: h.name,
-      service_type: "hotel",
-      description: h.location + " · " + h.amenities.slice(0, 3).join(", "),
-      base_price: h.pricePerNight,
+      id: String(h.id),
+      title: h.name || h.title,
+      service_type: "hotel" as const,
+      description: `${h.location} · ${(h.amenities || []).slice(0, 3).join(", ")}`,
+      base_price: h.pricePerNight || h.price,
       currency: "USD",
       capacity: 2,
-      status: "active",
+      status: "active" as const,
       media: h.image
-        ? [{ id: 1, media_url: h.image, media_type: "image", sort_order: 1 }]
+        ? [{ id: 1, media_url: h.image, media_type: "image" as const, sort_order: 1 }]
         : [],
       user: "ai",
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     })),
     ...aiRecommendations.cars.map((c) => ({
-      id: c.id,
-      title: c.model,
-      service_type: "car",
+      id: String(c.id),
+      title: c.model || c.title,
+      service_type: "car" as const,
       description: `${c.category} · ${c.transmission} · ${c.seats} seats`,
-      base_price: c.pricePerDay,
+      base_price: c.pricePerDay || c.price,
       currency: "USD",
-      capacity: c.seats,
-      status: "active",
+      capacity: c.seats || 5,
+      status: "active" as const,
       media: c.image
-        ? [{ id: 1, media_url: c.image, media_type: "image", sort_order: 1 }]
+        ? [{ id: 1, media_url: c.image, media_type: "image" as const, sort_order: 1 }]
         : [],
       user: "ai",
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     })),
     ...aiRecommendations.guides.map((g) => ({
-      id: g.id,
-      title: g.name,
-      service_type: "guide",
+      id: String(g.id),
+      title: g.name || g.title,
+      service_type: "guide" as const,
       description: `${g.type} · ${g.description}`,
       base_price: g.price || 0,
       currency: "USD",
       capacity: 10,
-      status: "active",
+      status: "active" as const,
       media: g.image
-        ? [{ id: 1, media_url: g.image, media_type: "image", sort_order: 1 }]
+        ? [{ id: 1, media_url: g.image, media_type: "image" as const, sort_order: 1 }]
         : [],
       user: "ai",
       created_at: new Date().toISOString(),
@@ -183,8 +190,10 @@ export function AiResultsList({
                   handleSelectHotel({
                     id: String(s.id),
                     name: s.title,
+                    title: s.title,
                     location: typeof s.location === "string" ? s.location : "",
                     pricePerNight: price,
+                    price: price,
                     address: s.description || "",
                     rating: 4.5,
                     image: s.media?.[0]?.media_url || "",
@@ -192,16 +201,17 @@ export function AiResultsList({
                     stars: 4,
                   } as Hotel);
                 } else if (
-                  s.service_type === "car" ||
-                  s.service_type === "car_rental"
+                  s.service_type === "car"
                 ) {
                   handleSelectCar({
                     id: String(s.id),
                     model: s.title,
+                    title: s.title,
                     category: "suv",
                     transmission: "Automatic",
                     seats: s.capacity,
                     pricePerDay: price,
+                    price: price,
                     fuelType: "Petrol",
                     image: s.media?.[0]?.media_url || "",
                     features: [],
@@ -215,6 +225,11 @@ export function AiResultsList({
                     price: price,
                     data: { ...s },
                     quantity: 1,
+                    startDate: tripInfo.arrivalDate,
+                    endDate: tripInfo.departureDate,
+                    metadata: {
+                      language: tripInfo.guideLanguages?.[0] || "English",
+                    },
                   });
                 }
               }}

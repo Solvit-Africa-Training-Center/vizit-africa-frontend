@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Autocomplete as AutocompletePrimitive } from "@base-ui/react/autocomplete"
-import { Combobox as ComboboxPrimitive } from "@base-ui/react"
-import { RiCloseLine, RiCheckLine } from "@remixicon/react"
-import { cn } from "@/lib/utils"
+import { Combobox as ComboboxPrimitive } from "@base-ui/react";
+import { Autocomplete as AutocompletePrimitive } from "@base-ui/react/autocomplete";
+import { RiCheckLine, RiCloseLine } from "@remixicon/react";
+import type * as React from "react";
+import { cn } from "@/lib/utils";
 
-const Autocomplete = AutocompletePrimitive.Root
+const Autocomplete = AutocompletePrimitive.Root;
 
 function AutocompleteTrigger({
   className,
@@ -18,13 +18,13 @@ function AutocompleteTrigger({
       data-slot="autocomplete-trigger"
       className={cn(
         "flex h-9 w-full items-center justify-between rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
-        className
+        className,
       )}
       {...props}
     >
       {children}
     </AutocompletePrimitive.Trigger>
-  )
+  );
 }
 
 function AutocompleteInput({
@@ -36,11 +36,11 @@ function AutocompleteInput({
       data-slot="autocomplete-input"
       className={cn(
         "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
-        className
+        className,
       )}
       {...props}
     />
-  )
+  );
 }
 
 function AutocompleteIcon({
@@ -53,7 +53,7 @@ function AutocompleteIcon({
       className={cn("flex items-center justify-center", className)}
       {...props}
     />
-  )
+  );
 }
 
 function AutocompleteClear({
@@ -63,12 +63,15 @@ function AutocompleteClear({
   return (
     <AutocompletePrimitive.Clear
       data-slot="autocomplete-clear"
-      className={cn("flex items-center justify-center opacity-50 hover:opacity-100", className)}
+      className={cn(
+        "flex items-center justify-center opacity-50 hover:opacity-100",
+        className,
+      )}
       {...props}
     >
       <RiCloseLine className="h-4 w-4" />
     </AutocompletePrimitive.Clear>
-  )
+  );
 }
 
 function AutocompleteValue({
@@ -76,28 +79,26 @@ function AutocompleteValue({
   placeholder,
   ...props
 }: AutocompletePrimitive.Value.Props & {
-  className?: string
-  placeholder?: string
+  className?: string;
+  placeholder?: string;
 }) {
   return (
     <span className={cn("truncate", className)} data-slot="autocomplete-value">
       <AutocompletePrimitive.Value {...props}>
         {(value: string) => {
           if (!value && placeholder) {
-            return (
-              <span className="text-muted-foreground">{placeholder}</span>
-            )
+            return <span className="text-muted-foreground">{placeholder}</span>;
           }
-          return value
+          return value;
         }}
       </AutocompletePrimitive.Value>
     </span>
-  )
+  );
 }
 
-const AutocompletePortal = AutocompletePrimitive.Portal
+const AutocompletePortal = AutocompletePrimitive.Portal;
 
-const AutocompleteBackdrop = AutocompletePrimitive.Backdrop
+const AutocompleteBackdrop = AutocompletePrimitive.Backdrop;
 
 function AutocompletePositioner({
   className,
@@ -117,9 +118,8 @@ function AutocompletePositioner({
       className={cn("z-50", className)}
       {...props}
     />
-  )
+  );
 }
-
 
 function AutocompletePopup({
   className,
@@ -130,14 +130,14 @@ function AutocompletePopup({
       data-slot="autocomplete-popup"
       className={cn(
         "relative z-50 max-h-96 min-w-32 overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
-        className
+        className,
       )}
       {...props}
     />
-  )
+  );
 }
 
-const AutocompleteArrow = AutocompletePrimitive.Arrow
+const AutocompleteArrow = AutocompletePrimitive.Arrow;
 
 function AutocompleteStatus({
   className,
@@ -149,7 +149,7 @@ function AutocompleteStatus({
       className={cn("py-2 px-2 text-sm text-muted-foreground", className)}
       {...props}
     />
-  )
+  );
 }
 
 function AutocompleteEmpty({
@@ -162,7 +162,7 @@ function AutocompleteEmpty({
       className={cn("py-6 text-center text-sm", className)}
       {...props}
     />
-  )
+  );
 }
 
 function AutocompleteList({
@@ -175,20 +175,17 @@ function AutocompleteList({
       className={cn("p-1", className)}
       {...props}
     />
-  )
+  );
 }
 
-function AutocompleteRow({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+function AutocompleteRow({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="autocomplete-row"
       className={cn("flex w-full", className)}
       {...props}
     />
-  )
+  );
 }
 
 function AutocompleteItem({
@@ -201,7 +198,7 @@ function AutocompleteItem({
       data-slot="autocomplete-item"
       className={cn(
         "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50",
-        className
+        className,
       )}
       {...props}
     >
@@ -210,7 +207,7 @@ function AutocompleteItem({
         <RiCheckLine className="h-4 w-4" />
       </ComboboxPrimitive.ItemIndicator>
     </AutocompletePrimitive.Item>
-  )
+  );
 }
 
 function AutocompleteSeparator({
@@ -223,7 +220,7 @@ function AutocompleteSeparator({
       className={cn("-mx-1 my-1 h-px bg-muted", className)}
       {...props}
     />
-  )
+  );
 }
 
 function AutocompleteGroup({
@@ -236,7 +233,7 @@ function AutocompleteGroup({
       className={cn("py-1", className)}
       {...props}
     />
-  )
+  );
 }
 
 function AutocompleteGroupLabel({
@@ -246,16 +243,19 @@ function AutocompleteGroupLabel({
   return (
     <AutocompletePrimitive.GroupLabel
       data-slot="autocomplete-group-label"
-      className={cn("px-2 py-1.5 text-xs font-semibold text-muted-foreground", className)}
+      className={cn(
+        "px-2 py-1.5 text-xs font-semibold text-muted-foreground",
+        className,
+      )}
       {...props}
     />
-  )
+  );
 }
 
 function AutocompleteCollection({
   ...props
 }: AutocompletePrimitive.Collection.Props) {
-  return <AutocompletePrimitive.Collection {...props} />
+  return <AutocompletePrimitive.Collection {...props} />;
 }
 
 export {
@@ -279,4 +279,4 @@ export {
   AutocompleteGroup,
   AutocompleteGroupLabel,
   AutocompleteCollection,
-}
+};

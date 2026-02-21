@@ -1,15 +1,15 @@
 "use client";
 
 import {
-  RiTwitterXLine,
-  RiInstagramLine,
   RiFacebookLine,
+  RiInstagramLine,
   RiLinkedinLine,
+  RiTwitterXLine,
 } from "@remixicon/react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { Logo } from "../shared";
 import { siteConfig } from "@/lib/configs";
+import { Logo } from "../shared";
 
 const socialLinks = [
   { icon: RiTwitterXLine, href: "https://twitter.com", label: "Twitter" },

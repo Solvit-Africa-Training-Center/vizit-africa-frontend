@@ -1,89 +1,110 @@
-export interface Flight {
-  id: string;
-  airline: string;
-  airlineLogo?: string;
-  flightNumber: string;
-  departureCity: string;
-  departureAirport: string;
-  departureTime: string;
-  arrivalCity: string;
-  arrivalAirport: string;
-  arrivalTime: string;
-  duration: string;
-  stops: number;
-  cabinClass: "economy" | "business" | "first";
-  price: number;
-  currency: string;
-  seatsAvailable?: number;
-}
+/**
+ * Plan Trip Types
+ * Specific types for the trip planning flow
+ */
 
 export interface Hotel {
-  id: string;
-  name: string;
-  address: string;
-  stars: number;
-  pricePerNight: number;
-  amenities: string[];
-  rating: number;
-  location: string;
+  id: string | number;
+  title: string;
+  name?: string;
+  description?: string;
+  price: number;
+  pricePerNight?: number;
+  price_per_night?: number;
   image?: string;
+  amenities?: string[];
+  rating?: number;
+  location?: string;
+  address?: string;
+  stars?: number;
 }
 
 export interface Car {
-  id: string;
-  model: string;
-  category: "sedan" | "suv" | "van";
-  pricePerDay: number;
-  seats: number;
-  transmission: string;
-  fuelType: string;
-  features: string[];
+  id: string | number;
+  title: string;
+  model?: string;
+  description?: string;
+  price: number;
+  pricePerDay?: number;
   image?: string;
+  seats?: number;
+  features?: string[];
+  rating?: number;
+  category?: string;
+  transmission?: string;
+  fuelType?: string;
   withDriver?: boolean;
 }
 
 export interface Guide {
-  id: string;
-  name: string;
-  type: string;
-  description: string;
-  price?: number;
+  id: string | number;
+  title: string;
+  name?: string;
+  description?: string;
+  price: number;
   image?: string;
-  // Booking Enhancements
-  startTime?: string; // HH:mm
-  endTime?: string; // HH:mm
+  experience?: string;
+  languages?: string[];
+  rating?: number;
+  type?: string;
+}
+
+export interface TripInfo {
+  name: string;
+  email?: string;
+  phone?: string;
+  destination: string;
+  departureCity?: string;
+  startDate: string | null;
+  endDate: string | null;
+  departureDate?: string | null; // alias for startDate
+  returnDate?: string | null; // alias for endDate
+  arrivalDate?: string | null;
+  arrivalTime?: string | null;
+  departureTime?: string | null;
+  returnTime?: string | null;
   isRoundTrip?: boolean;
-  returnDate?: string; // ISO Date string
-  data?: Record<string, any>;
+  travelers: number;
+  adults?: number;
+  children?: number;
+  infants?: number;
+  budget?: number;
+  budgetBracket?: string;
+  tripPurpose?: string;
+  specialRequests?: string;
+  needsFlights?: boolean;
+  needsHotel?: boolean;
+  needsCar?: boolean;
+  needsGuide?: boolean;
+  preferredCabinClass?: string | null;
+  hotelStarRating?: string | null;
+  carTypePreference?: string | null;
+  guideLanguages?: string[];
 }
 
 export interface Experience {
-  id: string;
+  id: string | number;
   title: string;
   description?: string;
   price: number;
+  image?: string;
   duration?: string;
   location?: string;
-  image?: string;
 }
 
-export interface Service {
-  id: string;
+export interface Flight {
+  id: string | number;
   title: string;
-  description?: string;
-  price: string | number;
-  category: string;
-  image?: string;
+  price: number;
+  departureCity: string;
+  arrivalCity: string;
+  departureDate: string;
+  returnDate?: string;
+  airline?: string;
+  flightNumber?: string;
 }
 
-export type TripItemType =
-  | "flight"
-  | "hotel"
-  | "car"
-  | "guide"
-  | "experience"
-  | "service"
-  | "note";
+export type TripItemType = "flight" | "hotel" | "car" | "guide" | "transport" | "other" | "note" | "experience" | "activity" | "tour";
 
 export interface TripItem {
   id: string;
@@ -91,53 +112,22 @@ export interface TripItem {
   title: string;
   description?: string;
   price?: number;
-  currency?: string;
-  // Dates can be specific to this item
-  startDate?: string;
-  endDate?: string;
-  startTime?: string;
-  endTime?: string;
-  isRoundTrip?: boolean;
-  returnDate?: string;
-  // Store original data object for reference if needed
-  data?: Flight | Hotel | Car | Guide | Experience | Service | any;
-  quantity?: number;
+  date?: string;
+  startDate?: string | null;
+  endDate?: string | null;
+  location?: string;
+  details?: Record<string, any>;
+  data?: any;
   withDriver?: boolean;
+  quantity?: number;
+  metadata?: Record<string, any>;
 }
 
-export interface TripInfo {
-  departureCity: string;
-  arrivalDate: string;
-  departureDate: string;
-  returnDate?: string;
-  adults: number;
-  children: number;
-  infants: number;
-  tripPurpose:
-    | "leisure"
-    | "business"
-    | "honeymoon"
-    | "family"
-    | "adventure"
-    | "other";
-  specialRequests: string;
-  name: string;
-  email: string;
-  phone: string;
-  destination?: string;
-}
-
-export interface Selections {
-  flight: Flight | null;
-  hotel: Hotel | null;
-  car: Car | null;
-  carWithDriver: boolean;
-  guide: Guide | null;
-}
+export type Service = Hotel | Car | Guide | Experience | Flight;
 
 export interface FilterState {
-  search: string;
-  priceRange: "all" | "budget" | "mid" | "luxury";
-  stars: "all" | "3" | "4" | "4+" | "5";
-  category: "all" | "sedan" | "suv" | "van";
+  priceMin?: number;
+  priceMax?: number;
+  rating?: number;
+  [key: string]: any;
 }

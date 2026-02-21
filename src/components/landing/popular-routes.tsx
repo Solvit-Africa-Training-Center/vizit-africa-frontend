@@ -1,11 +1,10 @@
 "use client";
 
-import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
-import { useLocale } from "next-intl";
+import { RiArrowRightLine, RiPlaneLine, RiTimeLine } from "@remixicon/react";
 import { motion } from "motion/react";
+import { useRouter } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
 import { SectionTitle } from "./section-title";
-import { RiPlaneLine, RiTimeLine, RiArrowRightLine } from "@remixicon/react";
 
 const ROUTES = [
   {

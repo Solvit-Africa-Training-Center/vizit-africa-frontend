@@ -238,6 +238,7 @@
   },
   "Common": {
     "back": "رجوع",
+    "bookFlight": "خطط رحلة طيران",
     "bookNow": "احجز الآن",
     "brandName": "Vizit Africa",
     "contactUs": "اتصل بنا",
@@ -415,6 +416,7 @@
       "faq": "الأسئلة الشائعة",
       "gallery": "المعرض",
       "privacyPolicy": "سياسة الخصوصية",
+      "requestVendorship": "طلب شراكة",
       "termsOfService": "شروط الخدمة",
       "tripsPackages": "الرحلات والباقات"
     },
@@ -641,8 +643,18 @@
     "aboutUs": "من نحن",
     "contact": "اتصل بنا",
     "experiences": "تجارب",
+    "flights": "رحلات طيران",
     "gallery": "المعرض",
     "ourservices": "خدماتنا"
+  },
+  "PopularRoutes": {
+    "description": "أكثر الرحلات حجزًا إلى كيغالي. أسعار آنية من شركات الطيران الشريكة.",
+    "direct": "مباشر",
+    "fromLabel": "من",
+    "oneStop": "توقف واحد",
+    "overline": "أفضل المسارات",
+    "searchRoute": "ابحث عن هذا المسار",
+    "title": "رحلات شائعة"
   },
   "PlanTrip": {
     "confirmation": {

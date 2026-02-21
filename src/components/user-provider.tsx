@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext } from "react";
-import type { User } from "@/lib/schema/auth-schema";
+import { userSchema, type User } from "@/lib/unified-types";
 
 type UserContextType = {
   user: User | null;

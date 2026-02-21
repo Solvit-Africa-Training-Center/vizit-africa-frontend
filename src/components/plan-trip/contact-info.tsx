@@ -1,8 +1,8 @@
 "use client";
 
-import { motion } from "motion/react";
 import { RiMailLine, RiPhoneLine } from "@remixicon/react";
-
+import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
 import {
   InputGroup,
   InputGroupAddon,
@@ -11,19 +11,17 @@ import {
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import type { TripInfo } from "@/lib/plan_trip-types";
-import { useTranslations } from "next-intl";
-import type { TripForm, TripFormValues } from "@/hooks/use-trip-form";
 
 interface ContactInfoStepProps {
-  form: TripForm;
+  form: any;
   tripInfo: TripInfo;
-  setTripInfo: (info: Partial<TripInfo>) => void;
+  updateTripInfo: (info: Partial<TripInfo>) => void;
 }
 
 export function ContactInfoStep({
   form,
   tripInfo,
-  setTripInfo,
+  updateTripInfo,
 }: ContactInfoStepProps) {
   const t = useTranslations("PlanTrip.contactInfo");
 
@@ -47,12 +45,17 @@ export function ContactInfoStep({
           <form.Field
             name="name"
             validators={{
-              onBlur: ({ value }) => (!value ? "name is required" : undefined),
+              onBlur: ({ value }: { value: string }) => (!value ? "name is required" : undefined),
             }}
           >
-            {(field) => (
+            {(field: any) => (
               <div className="space-y-1.5">
-                <Label htmlFor="name" className="text-[10px] uppercase tracking-wider text-muted-foreground">{t("fullName")}</Label>
+                <Label
+                  htmlFor="name"
+                  className="text-[10px] uppercase tracking-wider text-muted-foreground"
+                >
+                  {t("fullName")}
+                </Label>
                 <InputGroup>
                   <InputGroupInput
                     id="name"
@@ -61,7 +64,7 @@ export function ContactInfoStep({
                     className="h-10 text-sm"
                     onChange={(e) => {
                       field.handleChange(e.target.value);
-                      setTripInfo({ name: e.target.value });
+                      updateTripInfo({ name: e.target.value });
                     }}
                     onBlur={field.handleBlur}
                   />
@@ -79,7 +82,7 @@ export function ContactInfoStep({
             <form.Field
               name="email"
               validators={{
-                onBlur: ({ value }) => {
+                onBlur: ({ value }: { value: string }) => {
                   if (!value) return "email is required";
                   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
                     return "enter a valid email address";
@@ -87,9 +90,14 @@ export function ContactInfoStep({
                 },
               }}
             >
-              {(field) => (
+              {(field: any) => (
                 <div className="space-y-1.5">
-                  <Label htmlFor="email" className="text-[10px] uppercase tracking-wider text-muted-foreground">{t("email")}</Label>
+                  <Label
+                    htmlFor="email"
+                    className="text-[10px] uppercase tracking-wider text-muted-foreground"
+                  >
+                    {t("email")}
+                  </Label>
                   <InputGroup>
                     <InputGroupInput
                       id="email"
@@ -99,7 +107,7 @@ export function ContactInfoStep({
                       className="h-10 text-sm"
                       onChange={(e) => {
                         field.handleChange(e.target.value);
-                        setTripInfo({ email: e.target.value });
+                        updateTripInfo({ email: e.target.value });
                       }}
                       onBlur={field.handleBlur}
                     />
@@ -117,9 +125,14 @@ export function ContactInfoStep({
             </form.Field>
 
             <form.Field name="phone">
-              {(field) => (
+              {(field: any) => (
                 <div className="space-y-1.5">
-                  <Label htmlFor="phone" className="text-[10px] uppercase tracking-wider text-muted-foreground">{t("phone")}</Label>
+                  <Label
+                    htmlFor="phone"
+                    className="text-[10px] uppercase tracking-wider text-muted-foreground"
+                  >
+                    {t("phone")}
+                  </Label>
                   <InputGroup>
                     <InputGroupInput
                       id="phone"
@@ -129,7 +142,7 @@ export function ContactInfoStep({
                       className="h-10 text-sm"
                       onChange={(e) => {
                         field.handleChange(e.target.value);
-                        setTripInfo({ phone: e.target.value });
+                        updateTripInfo({ phone: e.target.value });
                       }}
                     />
                     <InputGroupAddon>
@@ -142,9 +155,11 @@ export function ContactInfoStep({
           </div>
 
           <form.Field name="tripPurpose">
-            {(field) => (
+            {(field: any) => (
               <div className="space-y-1.5">
-                <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">{t("purpose")}</Label>
+                <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                  {t("purpose")}
+                </Label>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                   {[
                     "leisure",
@@ -158,11 +173,9 @@ export function ContactInfoStep({
                       key={purpose}
                       type="button"
                       onClick={() => {
-                        field.handleChange(
-                          purpose as TripFormValues["tripPurpose"],
-                        );
-                        setTripInfo({
-                          tripPurpose: purpose as TripInfo["tripPurpose"],
+                        field.handleChange(purpose);
+                        updateTripInfo({
+                          tripPurpose: purpose as any,
                         });
                       }}
                       className={`px-3 py-2 rounded-none border text-xs font-medium capitalize transition-all duration-300 ${
@@ -180,16 +193,21 @@ export function ContactInfoStep({
           </form.Field>
 
           <form.Field name="specialRequests">
-            {(field) => (
+            {(field: any) => (
               <div className="space-y-1.5">
-                <Label htmlFor="specialRequests" className="text-[10px] uppercase tracking-wider text-muted-foreground">{t("specialRequests")}</Label>
+                <Label
+                  htmlFor="specialRequests"
+                  className="text-[10px] uppercase tracking-wider text-muted-foreground"
+                >
+                  {t("specialRequests")}
+                </Label>
                 <Textarea
                   id="specialRequests"
                   placeholder="Any specific requirements or interests?"
                   value={field.state.value}
                   onChange={(e) => {
                     field.handleChange(e.target.value);
-                    setTripInfo({ specialRequests: e.target.value });
+                    updateTripInfo({ specialRequests: e.target.value });
                   }}
                   className="min-h-[80px] text-sm bg-primary-foreground"
                 />

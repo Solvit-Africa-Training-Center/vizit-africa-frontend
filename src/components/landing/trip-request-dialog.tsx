@@ -44,8 +44,8 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { useLocationAutocomplete } from "@/hooks/use-location-autocomplete";
-import { useTripStore } from "@/store/trip-store";
 import { Link } from "@/i18n";
+import { useTripStore } from "@/store/trip-store";
 
 interface GuestCount {
   adults: number;
@@ -489,6 +489,7 @@ export function TripRequestDialog({
                       title: "Flight Booking",
                       description: "Round-trip flight arrangement",
                       price: 0,
+                      quantity: 1,
                     });
                   }
                 }}
@@ -516,6 +517,7 @@ export function TripRequestDialog({
                         title: "Flight Booking",
                         description: "Round-trip flight arrangement",
                         price: 0,
+                        quantity: 1,
                       });
                     } else {
                       removeItem("flight-request");

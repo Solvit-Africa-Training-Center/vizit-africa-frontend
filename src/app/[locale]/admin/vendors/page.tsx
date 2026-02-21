@@ -1,4 +1,4 @@
-import { getVendors } from "@/lib/data-fetching";
+import { getVendors } from "@/lib/simple-data-fetching";
 import AdminVendorsClient from "./admin-vendors-client";
 
 export default async function AdminVendorsPage() {

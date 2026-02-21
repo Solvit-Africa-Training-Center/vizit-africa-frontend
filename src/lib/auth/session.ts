@@ -1,8 +1,8 @@
 import "server-only";
-import { cache } from "react";
 import { cookies } from "next/headers";
+import { cache } from "react";
 import { getCurrentUser } from "@/actions/auth";
-import type { User } from "@/lib/schema/auth-schema";
+import { userSchema, type User } from "@/lib/unified-types";
 
 export const getSession = cache(async (): Promise<User | null> => {
   const cookieStore = await cookies();

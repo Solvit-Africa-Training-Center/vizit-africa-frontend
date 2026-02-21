@@ -1,20 +1,20 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import {
-  RiCheckDoubleLine,
-  RiFileListLine,
-  RiPlaneLine,
-  RiHotelLine,
-  RiCarLine,
-  RiMailSendLine,
-  RiDownloadLine,
   RiArrowLeftLine,
+  RiCarLine,
+  RiCheckDoubleLine,
+  RiDownloadLine,
+  RiFileListLine,
+  RiHotelLine,
+  RiMailSendLine,
+  RiPlaneLine,
 } from "@remixicon/react";
-import { Link } from "@/i18n/navigation";
-import { useState } from "react";
 import { useTranslations } from "next-intl";
-import type { Booking, RequestedItem } from "@/lib/schema/booking-schema";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
+import { bookingSchema, type Booking } from "@/lib/unified-types";
 import { formatDate } from "@/lib/utils";
 
 interface FulfillClientProps {
@@ -42,16 +42,16 @@ export default function FulfillClient({ booking }: FulfillClientProps) {
 
   // Helpers to find items
   const flightItem = booking.requestedItems?.find(
-    (i) => i.type === "flight" || i.category === "flight",
+    (i: any) => i.type === "flight" || i.category === "flight",
   );
   const hotelItem = booking.requestedItems?.find(
-    (i) => i.type === "hotel" || i.category === "hotel",
+    (i: any) => i.type === "hotel" || i.category === "hotel",
   );
   const carItem = booking.requestedItems?.find(
-    (i) => i.type === "car" || i.category === "car",
+    (i: any) => i.type === "car" || i.category === "car",
   );
   const guideItem = booking.requestedItems?.find(
-    (i) => i.type === "guide" || i.category === "guide",
+    (i: any) => i.type === "guide" || i.category === "guide",
   );
 
   return (
@@ -74,7 +74,7 @@ export default function FulfillClient({ booking }: FulfillClientProps) {
               </span>
             </h1>
             <p className="text-muted-foreground">
-              Booking #{booking.id.toUpperCase().substring(0, 8)} •{" "}
+              Booking #{String(booking.id).toUpperCase().substring(0, 8)} •{" "}
               {booking.tripPurpose || "Trip"} for {booking.name}
             </p>
           </div>
@@ -245,7 +245,7 @@ export default function FulfillClient({ booking }: FulfillClientProps) {
                 </span>
                 <span className="font-medium">
                   {booking.quote?.currency}{" "}
-                  {booking.quote?.total_amount?.toLocaleString() || "-"}
+                  {booking.quote?.totalAmount?.toLocaleString() || "-"}
                 </span>
               </div>
               <div className="flex justify-between">
@@ -253,7 +253,6 @@ export default function FulfillClient({ booking }: FulfillClientProps) {
                   {t("payment.method")}
                 </span>
                 <span className="font-medium">Credit Card</span>{" "}
-                {/* Hardcoded for now unless in schema */}
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">
@@ -267,7 +266,7 @@ export default function FulfillClient({ booking }: FulfillClientProps) {
                 <span
                   className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium uppercase ${booking.status === "confirmed" ? "text-green-700 bg-green-100" : "text-yellow-700 bg-yellow-100"}`}
                 >
-                  {booking.status}
+                  {status}
                 </span>
               </div>
             </div>

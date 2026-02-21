@@ -1,34 +1,31 @@
 "use client";
 
-import { useForm } from "@tanstack/react-form";
-import { toast } from "sonner";
-import {
-  setPasswordInputSchema,
-  type SetPasswordInput,
-} from "@/lib/schema/auth-schema";
-import { setPassword } from "@/actions/auth";
-import { Label } from "../ui/label";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "../ui/input-group";
 import {
   RiAlertLine,
   RiArrowRightLine,
   RiEyeLine,
   RiLockPasswordLine,
 } from "@remixicon/react";
+import { useForm } from "@tanstack/react-form";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
+import { toast } from "sonner";
+import { setPassword } from "@/actions/auth";
+import { userSchema, setPasswordInputSchema } from "@/lib/unified-types";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { Button } from "../ui/button";
-import { useTranslations } from "next-intl";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
 import { FieldError } from "../ui/field";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "../ui/input-group";
+import { Label } from "../ui/label";
 
 export function SetPasswordForm() {
   const t = useTranslations("Auth.setPassword");
-  const tCommon = useTranslations("Common");
+  const _tCommon = useTranslations("Common");
   const router = useRouter();
   const searchParams = useSearchParams();
   const [showPassword, setShowPassword] = useState(false);
@@ -60,7 +57,7 @@ export function SetPasswordForm() {
         if (result.fieldErrors) {
           Object.entries(result.fieldErrors).forEach(([field, errors]) => {
             if (Object.keys(value).includes(field)) {
-              // @ts-ignore
+              // @ts-expect-error
               formApi.setFieldMeta(field, (prev) => ({
                 ...prev,
                 errors: errors,

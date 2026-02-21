@@ -1,8 +1,8 @@
 "use client";
 
-import type { TripItem, TripInfo } from "../../lib/plan_trip-types";
 import { RiCheckLine } from "@remixicon/react";
 import { useTranslations } from "next-intl";
+import type { TripInfo, TripItem } from "../../lib/plan_trip-types";
 
 interface BookingSummaryProps {
   currentStep: number;
@@ -91,8 +91,8 @@ export function BookingSummary({
               label={t("accommodation")}
               isSelected={!!hotel}
               value={
-                hotel?.data?.pricePerNight
-                  ? hotel.data.pricePerNight * days
+                (hotel?.data as any)?.pricePerNight
+                  ? (hotel?.data as any).pricePerNight * days
                   : null
               }
             />
@@ -100,9 +100,9 @@ export function BookingSummary({
               label={t("vehicle")}
               isSelected={!!car}
               value={
-                car?.data?.pricePerDay
-                  ? car.data.pricePerDay * days +
-                    (car.data.withDriver ? driverSurcharge * days : 0)
+                (car?.data as any)?.pricePerDay
+                  ? (car?.data as any).pricePerDay * days +
+                    ((car?.data as any).withDriver ? driverSurcharge * days : 0)
                   : null
               }
             />
@@ -115,11 +115,11 @@ export function BookingSummary({
           </div>
 
           <div className="space-y-2 pt-4 border-t border-border">
-            <div className="flex justify-between text-sm">
+            <div className="justify-between flex text-sm">
               <span className="text-muted-foreground">{t("subtotal")}</span>
               <span>{formatCurrency(subtotal)}</span>
             </div>
-            <div className="flex justify-between text-sm">
+            <div className="justify-between flex text-sm">
               <span className="text-muted-foreground">{t("serviceFee")}</span>
               <span>{formatCurrency(serviceFee)}</span>
             </div>

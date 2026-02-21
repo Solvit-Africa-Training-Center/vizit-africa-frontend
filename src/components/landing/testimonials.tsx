@@ -1,13 +1,12 @@
 "use client";
 
-import { SectionTitle } from "./section-title";
 import { motion } from "motion/react";
 import Image from "next/image";
-import React from "react";
-import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
-
+import React from "react";
 import { TESTIMONIAL_AVATARS } from "@/lib/configs";
+import { cn } from "@/lib/utils";
+import { SectionTitle } from "./section-title";
 
 const testimonialKeys = ["1", "2", "3", "4", "5"] as const;
 

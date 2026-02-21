@@ -1,4 +1,4 @@
-import { getServices } from "@/lib/data-fetching";
+import { getServices } from "@/lib/simple-data-fetching";
 import InventoryClient from "./inventory-client";
 
 export default async function InventoryPage() {

@@ -1,16 +1,16 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Magnetic } from "@/components/ui/magnetic";
 import {
   RiArrowRightLine,
+  RiArrowRightUpLine,
   RiMailSendLine,
   RiWhatsappLine,
-  RiArrowRightUpLine,
 } from "@remixicon/react";
-import Image from "next/image";
 import { motion } from "motion/react";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
+import { Magnetic } from "@/components/ui/magnetic";
 import { Link } from "@/i18n/navigation";
 import { siteConfig } from "@/lib/configs";
 

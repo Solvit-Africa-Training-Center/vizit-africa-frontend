@@ -1,4 +1,4 @@
-import { getServices } from "@/lib/data-fetching";
+import { getServices } from "@/lib/simple-data-fetching";
 import ServicesClient from "./services-client";
 
 interface PageProps {

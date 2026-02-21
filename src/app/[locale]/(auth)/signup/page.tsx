@@ -1,6 +1,6 @@
+import { getTranslations } from "next-intl/server";
 import { RegisterForm } from "@/components/forms/register-form";
 import { Link } from "@/i18n/navigation";
-import { getTranslations } from "next-intl/server";
 
 export default async function SignupPage() {
   const t = await getTranslations("Auth.signup");

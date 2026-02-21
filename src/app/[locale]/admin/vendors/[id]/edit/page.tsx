@@ -2,7 +2,7 @@ import { RiArrowLeftLine, RiBuilding4Line } from "@remixicon/react";
 import { notFound, redirect } from "next/navigation";
 import { VendorForm } from "@/components/forms/admin/vendor-form";
 import { Link } from "@/i18n/navigation";
-import { getVendorById } from "@/lib/data-fetching";
+import { getVendorById } from "@/lib/simple-data-fetching";
 
 interface PageProps {
   params: Promise<{ id: string }>;

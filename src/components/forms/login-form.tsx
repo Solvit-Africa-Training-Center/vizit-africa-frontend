@@ -1,15 +1,5 @@
 "use client";
 
-import { useForm } from "@tanstack/react-form";
-import { toast } from "sonner";
-import { loginInputSchema, type LoginInput } from "@/lib/schema/auth-schema";
-import { login } from "@/actions/auth";
-import { Label } from "../ui/label";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "../ui/input-group";
 import {
   RiAlertLine,
   RiArrowRightLine,
@@ -17,12 +7,22 @@ import {
   RiLockPasswordLine,
   RiMailLine,
 } from "@remixicon/react";
+import { useForm } from "@tanstack/react-form";
+import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
+import { toast } from "sonner";
+import { login } from "@/actions/auth";
+import { userSchema, loginInputSchema } from "@/lib/unified-types";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { Button } from "../ui/button";
-import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { FieldError } from "../ui/field";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "../ui/input-group";
+import { Label } from "../ui/label";
 
 export function LoginForm() {
   const t = useTranslations("Auth.login");
@@ -52,7 +52,7 @@ export function LoginForm() {
         if (result.fieldErrors) {
           Object.entries(result.fieldErrors).forEach(([field, errors]) => {
             if (Object.keys(value).includes(field)) {
-              // @ts-ignore
+              // @ts-expect-error
               formApi.setFieldMeta(field, (prev) => ({
                 ...prev,
                 errors: errors,

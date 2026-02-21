@@ -1,20 +1,19 @@
 "use client";
 
+import { RiAddCircleLine, RiCheckLine } from "@remixicon/react";
+import type { Column } from "@tanstack/react-table";
 import * as React from "react";
-import { RiCheckLine, RiAddCircleLine } from "@remixicon/react";
-import { Column } from "@tanstack/react-table";
-
-import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import {
   Select,
   SelectContent,
   SelectItem,
+  SelectSeparator,
   SelectTrigger,
   SelectValue,
-  SelectSeparator,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
 
 interface DataTableFacetedFilterProps<TData, TValue> {
   column?: Column<TData, TValue>;
@@ -35,7 +34,7 @@ export function DataTableFacetedFilter<TData, TValue>({
   const selectedValues = React.useMemo(() => {
     const filterValue = column?.getFilterValue();
     return Array.isArray(filterValue) ? filterValue : [];
-  }, [column?.getFilterValue()]);
+  }, [column]);
 
   const renderValue = React.useCallback(
     (values: string[]) => {

@@ -252,7 +252,8 @@
     "signup": "S'inscrire",
     "startPlanning": "Commencer à Planifier",
     "submit": "Soumettre",
-    "viewAll": "Voir Tout"
+    "viewAll": "Voir Tout",
+    "bookFlight": "Planifier un vol"
   },
   "Contact": {
     "address": "Kigali Heights, 4ème Étage",
@@ -416,7 +417,8 @@
       "gallery": "Galerie",
       "privacyPolicy": "Politique de Confidentialité",
       "termsOfService": "Conditions d'Utilisation",
-      "tripsPackages": "Voyages & Forfaits"
+      "tripsPackages": "Voyages & Forfaits",
+      "requestVendorship": "Demander un partenariat"
     },
     "privacy": "Confidentialité",
     "tagline": "Votre partenaire de confiance pour voyager au Rwanda. Une planification professionnelle pour des expériences africaines inoubliables.",
@@ -642,7 +644,9 @@
     "contact": "Contact",
     "experiences": "Expériences",
     "gallery": "Galerie",
-    "services": "Services"
+    "services": "Services",
+    "flights": "Vols",
+    "ourservices": "Nos services"
   },
   "PlanTrip": {
     "confirmation": {
@@ -1041,5 +1045,14 @@
       }
     },
     "title": "La Différence Vizit"
+  },
+  "PopularRoutes": {
+    "overline": "Itinéraires phares",
+    "title": "Vols populaires",
+    "description": "Les itinéraires les plus réservés vers Kigali. Tarification en temps réel de nos compagnies partenaires.",
+    "fromLabel": "Depuis",
+    "direct": "Direct",
+    "oneStop": "1 escale",
+    "searchRoute": "Rechercher cet itinéraire"
   }
 }

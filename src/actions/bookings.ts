@@ -1,35 +1,12 @@
 "use server";
 
-import { api } from "@/lib/api/client";
+import { api, ApiError } from "@/lib/api/simple-client";
 import { endpoints } from "./endpoints";
-import {
-  bookingListSchema,
-  bookingSchema,
-  type Booking,
-  type AdminBooking,
-  type BookingList,
-} from "@/lib/schema/booking-schema";
-import type { ActionResult } from "@/lib/api/types";
-import { ApiError } from "@/lib/api/types";
-import type { TripInfo, TripItem } from "@/lib/plan_trip-types";
+import { bookingSchema } from "@/lib/unified-types";
+import type { Booking, ActionResult } from "@/lib/unified-types";
 
-import { logout } from "./auth";
+export type { ActionResult };
 
-function normalizeRequestedType(item: TripItem): string {
-  if (item.type !== "service") return item.type;
-
-  const data = (item as any)?.data;
-  const category = String(data?.category || "").toLowerCase();
-  if (category.includes("flight")) return "flight";
-  if (category.includes("hotel") || category.includes("bnb")) return "hotel";
-  if (category.includes("car")) return "car";
-  if (category.includes("guide")) return "guide";
-  return "service";
-}
-
-/**
- * Fetch a single booking by ID for the current authenticated user
- */
 export async function getBookingById(
   id: string,
 ): Promise<ActionResult<Booking>> {
@@ -37,174 +14,122 @@ export async function getBookingById(
     const data = await api.get(endpoints.bookings.detail(id), bookingSchema);
     return { success: true, data };
   } catch (error) {
-    const err = error as ApiError;
     return {
       success: false,
-      error: err.message || "Failed to fetch booking",
+      error: error instanceof ApiError ? error.message : "Failed to fetch booking",
     };
   }
 }
 
-export async function getAdminBookings(): Promise<
-  ActionResult<AdminBooking[]>
-> {
+export async function getAdminBookings(): Promise<ActionResult<Booking[]>> {
   try {
-    const data = await api.get<AdminBooking[]>(endpoints.bookings.admin.list);
-    return { success: true, data };
+    const data = await api.get<Booking[]>(endpoints.bookings.admin.list);
+    return { success: true, data: data || [] };
   } catch (error) {
-    const err = error as ApiError;
     return {
       success: false,
-      error: err.message || "Failed to fetch admin bookings",
+      error: error instanceof ApiError ? error.message : "Failed to fetch bookings",
+    };
+  }
+}
+
+export async function submitTrip(
+  tripData: Record<string, any>,
+): Promise<ActionResult<{ id: string }>> {
+  try {
+    const result = await api.post(endpoints.bookings.submitTrip, tripData);
+    return { success: true, data: result as { id: string } };
+  } catch (error) {
+    if (error instanceof ApiError) {
+      return {
+        success: false,
+        error: error.message,
+        fieldErrors: error.details as Record<string, string[]> | undefined,
+      };
+    }
+    return { success: false, error: "Failed to submit trip" };
+  }
+}
+
+export async function confirmBooking(
+  bookingId: string,
+): Promise<ActionResult<Booking>> {
+  try {
+    const data = await api.post(
+      `${endpoints.bookings.confirm}`,
+      { booking_id: bookingId },
+      bookingSchema,
+    );
+    return { success: true, data };
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof ApiError ? error.message : "Failed to confirm booking",
     };
   }
 }
 
 export async function getAdminBookingById(
   id: string,
-): Promise<ActionResult<AdminBooking>> {
+): Promise<ActionResult<Booking>> {
   try {
-    const data = await api.get<AdminBooking>(
-      endpoints.bookings.admin.detail(id),
-    );
+    const data = await api.get(endpoints.bookings.admin.detail(id), bookingSchema);
     return { success: true, data };
   } catch (error) {
-    const err = error as ApiError;
     return {
       success: false,
-      error: err.message || "Failed to fetch admin booking",
+      error: error instanceof ApiError ? error.message : "Failed to fetch booking",
     };
   }
 }
 
-/**
- * Fetch bookings for the current authenticated user
- */
-export async function getUserBookings(): Promise<ActionResult<BookingList>> {
+export async function getUserBookings(): Promise<ActionResult<Booking[]>> {
   try {
-    const data = await api.get(endpoints.bookings.list, bookingListSchema);
-    return { success: true, data };
+    const data = await api.get<Booking[]>(endpoints.bookings.list);
+    return { success: true, data: data || [] };
   } catch (error) {
-    const err = error as ApiError;
-    if (err.status === 401) {
-      try {
-        await logout();
-      } catch {}
-    }
     return {
       success: false,
-      error: err.message || "Failed to fetch bookings",
+      error: error instanceof ApiError ? error.message : "Failed to fetch bookings",
     };
   }
 }
 
-/**
- * Submit a new trip request (Guest or Authenticated)
- */
-export async function submitTripRequest(
-  tripInfo: TripInfo,
-  items: TripItem[],
-): Promise<ActionResult<unknown>> {
+// Aliases for backwards compatibility
+export const submitTripRequest = submitTrip;
+export const acceptQuoteForBooking = confirmBooking;
+
+export async function cancelBooking(
+  bookingId: string,
+): Promise<ActionResult<{ message: string }>> {
   try {
-    const payload = {
-      ...tripInfo,
-      items: items.map((item) => ({
-        id: item.id,
-        service: item.id,
-        quantity: item.quantity || 1,
-        start_date: item.startDate || tripInfo.departureDate,
-        end_date: item.endDate || tripInfo.returnDate,
-        start_time: item.startTime,
-        end_time: item.endTime,
-        is_round_trip: item.isRoundTrip,
-        return_date: item.returnDate,
-        unit_price: item.price || 0,
-        type: normalizeRequestedType(item),
-        category: (item as any)?.data?.category || "",
-        title: item.title,
-        description: item.description || "",
-        with_driver: item.withDriver,
-      })),
-    };
-
-    const data = await api.post(
-      endpoints.bookings.submitTrip,
-      payload,
-      undefined,
+    const result = await api.post(
+      endpoints.bookings.cancel(bookingId),
+      { booking_id: bookingId },
     );
-
-    return { success: true, data };
+    return { success: true, data: result as { message: string } };
   } catch (error) {
-    const err = error as ApiError;
     return {
       success: false,
-      error: err.message || "Failed to submit trip request",
-      fieldErrors: err.fieldErrors,
+      error: error instanceof ApiError ? error.message : "Failed to cancel booking",
     };
   }
 }
 
 export async function sendQuoteForBooking(
   bookingId: string,
-  items: Array<{
-    id?: string;
-    service?: string;
-    type?: string;
-    title?: string;
-    description?: string;
-    quantity?: number;
-    unit_price?: number;
-  }>,
-  notes = "",
-): Promise<ActionResult<unknown>> {
+  amount: number,
+): Promise<ActionResult<{ message: string }>> {
   try {
-    const payload = {
-      items,
-      notes,
-      currency: "USD",
-    };
-
-    const data = await api.post(endpoints.bookings.quote(bookingId), payload);
-
-    return { success: true, data };
+    const result = await api.post(
+      endpoints.bookings.quote(bookingId),
+      { booking_id: bookingId, amount },
+    );
+    return { success: true, data: result as { message: string } };
   } catch (error) {
-    const err = error as ApiError;
     return {
       success: false,
-      error: err.message || "Failed to send quote",
-      fieldErrors: err.fieldErrors,
-    };
-  }
-}
-
-export async function acceptQuoteForBooking(
-  bookingId: string,
-): Promise<ActionResult<unknown>> {
-  try {
-    const data = await api.post(endpoints.bookings.accept(bookingId), {});
-    return { success: true, data };
-  } catch (error) {
-    const err = error as ApiError;
-    return {
-      success: false,
-      error: err.message || "Failed to accept quote",
-      fieldErrors: err.fieldErrors,
-    };
-  }
-}
-
-export async function cancelBooking(
-  bookingId: string,
-): Promise<ActionResult<unknown>> {
-  try {
-    const data = await api.post(endpoints.bookings.cancel(bookingId), {});
-    return { success: true, data };
-  } catch (error) {
-    const err = error as ApiError;
-    return {
-      success: false,
-      error: err.message || "Failed to cancel booking",
-      fieldErrors: err.fieldErrors,
+      error: error instanceof ApiError ? error.message : "Failed to send quote",
     };
   }
 }
@@ -212,26 +137,26 @@ export async function cancelBooking(
 export async function notifyVendor(
   bookingId: string,
   itemId?: string,
-  serviceId?: string,
-  details?: Record<string, unknown>,
-): Promise<ActionResult<unknown>> {
+  serviceId?: string | number,
+  metadata?: Record<string, any>,
+): Promise<ActionResult<{ message: string }>> {
   try {
-    const payload = {
-      item_id: itemId,
-      service_id: serviceId,
-      ...details,
-    };
-    const data = await api.post(
+    const result = await api.post(
       endpoints.bookings.notifyVendor(bookingId),
-      payload,
+      {
+        booking_id: bookingId,
+        item_id: itemId,
+        service_id: serviceId,
+        ...metadata,
+      },
     );
-    return { success: true, data };
+    return { success: true, data: result as { message: string } };
   } catch (error) {
-    const err = error as ApiError;
     return {
       success: false,
-      error: err.message || "Failed to notify vendor",
-      fieldErrors: err.fieldErrors,
+      error:
+        error instanceof ApiError ? error.message : "Failed to notify vendor",
     };
   }
 }
+

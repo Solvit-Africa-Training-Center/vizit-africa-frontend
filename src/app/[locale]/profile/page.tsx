@@ -31,7 +31,7 @@ import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
 import { useUser } from "@/components/user-provider";
 import { Link } from "@/i18n/navigation";
-import type { Booking } from "@/lib/schema/booking-schema";
+import { bookingSchema, type Booking } from "@/lib/unified-types";
 import { cn } from "@/lib/utils";
 
 type Tab = "overview" | "trips" | "saved" | "settings";
@@ -65,7 +65,6 @@ export default function ProfilePage() {
   const stats = useMemo(() => {
     if (!bookingsData) return { trips: 0, days: 0 };
 
-    // Only count confirmed trips
     const confirmedTrips = (bookingsData || []).filter(
       (b: Booking) => b.status === "confirmed",
     );
@@ -73,12 +72,10 @@ export default function ProfilePage() {
 
     let days = 0;
     confirmedTrips.forEach((b: Booking) => {
-      // Only count days for ended or in-progress trips (start date <= now)
-      // Check if trip has started
       const hasStarted = b.items.some((item) => {
-        if (!item.start_date) return false;
+        if (!item.startDate) return false;
         try {
-          return isPast(parseISO(item.start_date));
+          return isPast(parseISO(item.startDate));
         } catch {
           return false;
         }
@@ -86,12 +83,12 @@ export default function ProfilePage() {
 
       if (hasStarted) {
         b.items.forEach((item) => {
-          if (!item.start_date || !item.end_date) return;
+          if (!item.startDate || !item.endDate) return;
           try {
             days +=
               differenceInDays(
-                parseISO(item.end_date),
-                parseISO(item.start_date),
+                parseISO(item.endDate),
+                parseISO(item.startDate),
               ) + 1;
           } catch {
             // ignore date parse errors
@@ -108,8 +105,8 @@ export default function ProfilePage() {
     const confirmed = bookingsData
       .filter((b: Booking) => b.status === "confirmed" && b.items.length > 0)
       .sort((a: Booking, b: Booking) => {
-        const startA = a.items[0]?.start_date;
-        const startB = b.items[0]?.start_date;
+        const startA = a.items[0]?.startDate;
+        const startB = b.items[0]?.startDate;
         if (!startA || !startB) return 0;
         return new Date(startA).getTime() - new Date(startB).getTime();
       })[0];
@@ -232,9 +229,9 @@ export default function ProfilePage() {
                         {nextTrip ? (
                           <div className="text-right">
                             <p className="text-3xl font-display font-medium">
-                              {nextTrip.items[0]?.start_date
+                              {nextTrip.items[0]?.startDate
                                 ? differenceInDays(
-                                    new Date(nextTrip.items[0].start_date),
+                                    new Date(nextTrip.items[0].startDate),
                                     new Date(),
                                   )
                                 : "-"}
@@ -254,16 +251,16 @@ export default function ProfilePage() {
                               : "Request Processing"
                             : "No Trips Planned"}
                         </h2>
-                        {nextTrip?.items[0]?.start_date && (
+                        {nextTrip?.items[0]?.startDate && (
                           <p className="text-lg font-light opacity-90 flex items-center gap-2">
                             <RiCalendarLine className="size-5" />
                             {new Date(
-                              nextTrip.items[0].start_date,
+                              nextTrip.items[0].startDate,
                             ).toLocaleDateString()}{" "}
                             -{" "}
-                            {nextTrip.items[0].end_date
+                            {nextTrip.items[0].endDate
                               ? new Date(
-                                  nextTrip.items[0].end_date,
+                                  nextTrip.items[0].endDate,
                                 ).toLocaleDateString()
                               : ""}
                           </p>
@@ -350,13 +347,13 @@ export default function ProfilePage() {
                                   </span>
                                   {req.items.length} items
                                 </div>
-                                {req.items[0]?.start_date && (
+                                {req.items[0]?.startDate && (
                                   <div>
                                     <span className="block text-xs uppercase opacity-70">
                                       Start Date
                                     </span>
                                     {new Date(
-                                      req.items[0].start_date,
+                                      req.items[0].startDate,
                                     ).toLocaleDateString()}
                                   </div>
                                 )}
@@ -367,7 +364,7 @@ export default function ProfilePage() {
                                   <p className="text-sm font-medium text-primary">
                                     Quote Ready:{" "}
                                     <span className="text-lg">
-                                      {req.quote.total_amount}{" "}
+                                      {req.quote.totalAmount}{" "}
                                       {req.quote.currency || "USD"}
                                     </span>
                                   </p>

@@ -1,199 +1,85 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { api } from "@/lib/api/client";
-import type { ActionResult, ApiError } from "@/lib/api/types";
-import {
-  type AddServiceMediaInput,
-  type AvailabilityResponse,
-  addServiceMediaInputSchema,
-  availabilityResponseSchema,
-  type CreateAvailabilityInput,
-  type CreateDiscountInput,
-  type CreateServiceInput,
-  createAvailabilityInputSchema,
-  createDiscountInputSchema,
-  createServiceInputSchema,
-  type DiscountResponse,
-  discountResponseSchema,
-  type ServiceMediaResponse,
-  type ServiceResponse,
-  serviceMediaResponseSchema,
-  serviceResponseSchema,
-} from "@/lib/schema/service-schema";
-import {
-  buildValidationErrorMessage,
-  normalizeFieldErrors,
-} from "@/lib/validation/error-message";
+import { api, ApiError } from "@/lib/api/simple-client";
 import { endpoints } from "./endpoints";
+import { serviceSchema } from "@/lib/unified-types";
+import type { Service, ActionResult } from "@/lib/unified-types";
+
+export type { ActionResult };
 
 export async function createService(
-  input: CreateServiceInput,
-): Promise<ActionResult<ServiceResponse>> {
-  const validation = createServiceInputSchema.safeParse(input);
-  if (!validation.success) {
-    const flattened = validation.error.flatten();
-    const fieldErrors = normalizeFieldErrors(flattened.fieldErrors);
-    return {
-      success: false,
-      error: buildValidationErrorMessage({
-        fieldErrors,
-        formErrors: flattened.formErrors,
-      }),
-      fieldErrors,
-    };
-  }
-
+  input: Record<string, any>,
+): Promise<ActionResult<Service>> {
   try {
     const data = await api.post(
       endpoints.services.create,
-      validation.data,
-      serviceResponseSchema,
+      input,
+      serviceSchema,
     );
-    revalidatePath("/services");
+    revalidatePath("/admin/services");
     return { success: true, data };
   } catch (error) {
-    const err = error as ApiError;
-    return { success: false, error: err.message, fieldErrors: err.fieldErrors };
+    if (error instanceof ApiError) {
+      return {
+        success: false,
+        error: error.message,
+        fieldErrors: error.details as Record<string, string[]> | undefined,
+      };
+    }
+    return { success: false, error: "Failed to create service" };
+  }
+}
+
+export async function getServiceList(): Promise<ActionResult<Service[]>> {
+  try {
+    const data = await api.get<Service[]>(endpoints.services.list);
+    return { success: true, data: data || [] };
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof ApiError ? error.message : "Failed to fetch services",
+    };
   }
 }
 
 export async function updateService(
-  serviceId: string | number,
-  input: CreateServiceInput,
-): Promise<ActionResult<ServiceResponse>> {
-  const validation = createServiceInputSchema.safeParse(input);
-  if (!validation.success) {
-    const flattened = validation.error.flatten();
-    const fieldErrors = normalizeFieldErrors(flattened.fieldErrors);
-    return {
-      success: false,
-      error: buildValidationErrorMessage({
-        fieldErrors,
-        formErrors: flattened.formErrors,
-      }),
-      fieldErrors,
-    };
-  }
-
+  id: string | number,
+  input: Record<string, any>,
+): Promise<ActionResult<Service>> {
   try {
     const data = await api.put(
-      endpoints.services.details(serviceId),
-      validation.data,
-      serviceResponseSchema,
+      endpoints.services.details(id),
+      input,
+      serviceSchema,
     );
-    revalidatePath("/inventory");
-    revalidatePath(`/admin/services/${serviceId}/edit`);
+    revalidatePath("/admin/services");
+    revalidatePath(`/admin/services/${id}/edit`);
     return { success: true, data };
   } catch (error) {
-    const err = error as ApiError;
-    return { success: false, error: err.message, fieldErrors: err.fieldErrors };
-  }
-}
-
-export async function addServiceMedia(
-  input: AddServiceMediaInput,
-): Promise<ActionResult<ServiceMediaResponse>> {
-  const validation = addServiceMediaInputSchema.safeParse(input);
-  if (!validation.success) {
-    const flattened = validation.error.flatten();
-    const fieldErrors = normalizeFieldErrors(flattened.fieldErrors);
-    return {
-      success: false,
-      error: buildValidationErrorMessage({
-        fieldErrors,
-        formErrors: flattened.formErrors,
-      }),
-      fieldErrors,
-    };
-  }
-
-  try {
-    const data = await api.post(
-      endpoints.services.media,
-      validation.data,
-      serviceMediaResponseSchema,
-    );
-    return { success: true, data };
-  } catch (error) {
-    const err = error as ApiError;
-    return { success: false, error: err.message, fieldErrors: err.fieldErrors };
-  }
-}
-
-export async function createAvailability(
-  input: CreateAvailabilityInput,
-): Promise<ActionResult<AvailabilityResponse>> {
-  const validation = createAvailabilityInputSchema.safeParse(input);
-  if (!validation.success) {
-    const flattened = validation.error.flatten();
-    const fieldErrors = normalizeFieldErrors(flattened.fieldErrors);
-    return {
-      success: false,
-      error: buildValidationErrorMessage({
-        fieldErrors,
-        formErrors: flattened.formErrors,
-      }),
-      fieldErrors,
-    };
-  }
-
-  try {
-    const data = await api.post(
-      endpoints.services.availability,
-      validation.data,
-      availabilityResponseSchema,
-    );
-    return { success: true, data };
-  } catch (error) {
-    const err = error as ApiError;
-    return { success: false, error: err.message, fieldErrors: err.fieldErrors };
-  }
-}
-
-export async function createDiscount(
-  input: CreateDiscountInput,
-): Promise<ActionResult<DiscountResponse>> {
-  const validation = createDiscountInputSchema.safeParse(input);
-  if (!validation.success) {
-    const flattened = validation.error.flatten();
-    const fieldErrors = normalizeFieldErrors(flattened.fieldErrors);
-    return {
-      success: false,
-      error: buildValidationErrorMessage({
-        fieldErrors,
-        formErrors: flattened.formErrors,
-      }),
-      fieldErrors,
-    };
-  }
-
-  try {
-    const data = await api.post(
-      endpoints.services.discounts,
-      validation.data,
-      discountResponseSchema,
-    );
-    return { success: true, data };
-  } catch (error) {
-    const err = error as ApiError;
-    return { success: false, error: err.message, fieldErrors: err.fieldErrors };
+    if (error instanceof ApiError) {
+      return {
+        success: false,
+        error: error.message,
+        fieldErrors: error.details as Record<string, string[]> | undefined,
+      };
+    }
+    return { success: false, error: "Failed to update service" };
   }
 }
 
 export async function deleteService(
-  serviceId: string | number,
-): Promise<ActionResult<{ success: boolean; message: string }>> {
+  id: string | number,
+): Promise<ActionResult<{ message: string }>> {
   try {
-    await api.delete(endpoints.services.details(serviceId));
-    revalidatePath("/inventory");
-    revalidatePath("/services");
-    return {
-      success: true,
-      data: { success: true, message: "Service deleted successfully" },
-    };
+    await api.delete(endpoints.services.details(id));
+    revalidatePath("/admin/services");
+    revalidatePath("/admin/inventory");
+    return { success: true, data: { message: "Service deleted successfully" } };
   } catch (error) {
-    const err = error as ApiError;
-    return { success: false, error: err.message };
+    return {
+      success: false,
+      error: error instanceof ApiError ? error.message : "Failed to delete service",
+    };
   }
 }

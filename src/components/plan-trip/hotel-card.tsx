@@ -1,8 +1,8 @@
 "use client";
 
-import type { Hotel } from "../../lib/plan_trip-types";
-import { RiMapPinLine, RiCheckLine, RiHotelLine } from "@remixicon/react";
+import { RiCheckLine, RiHotelLine, RiMapPinLine } from "@remixicon/react";
 import { useTranslations } from "next-intl";
+import type { Hotel } from "../../lib/plan_trip-types";
 
 interface HotelCardProps {
   hotel: Hotel;
@@ -44,7 +44,7 @@ export function HotelCard({
           </div>
           <div className="absolute bottom-0 left-0 bg-primary-foreground/90 backdrop-blur-sm px-3 py-1 border-t border-r border-border">
             <div className="flex gap-0.5">
-              {Array.from({ length: hotel.stars }).map((_, i) => (
+              {Array.from({ length: hotel.stars || 4 }).map((_, i) => (
                 <span key={i} className="text-primary text-xs">
                   ★
                 </span>
@@ -56,18 +56,18 @@ export function HotelCard({
         <div className="p-5 flex flex-col flex-1 gap-4">
           <div>
             <h4 className="font-display text-xl font-medium uppercase tracking-tight text-foreground line-clamp-1 group-hover:text-primary transition-colors">
-              {hotel.name}
+              {hotel.name || hotel.title}
             </h4>
             <div className="flex items-center gap-2 mt-2 text-muted-foreground">
               <RiMapPinLine className="size-3.5 shrink-0" />
               <span className="text-sm font-light line-clamp-1">
-                {hotel.address}
+                {hotel.address || hotel.location || ""}
               </span>
             </div>
           </div>
 
           <div className="flex flex-wrap gap-2">
-            {hotel.amenities.slice(0, 3).map((a) => (
+            {(hotel.amenities || []).slice(0, 3).map((a) => (
               <span
                 key={a}
                 className="text-[10px] uppercase tracking-wider px-2 py-1 border border-border text-muted-foreground"
@@ -75,9 +75,9 @@ export function HotelCard({
                 {tAmenities(a as any)}
               </span>
             ))}
-            {hotel.amenities.length > 3 && (
+            {(hotel.amenities || []).length > 3 && (
               <span className="text-[10px] uppercase tracking-wider px-2 py-1 border border-border text-muted-foreground">
-                +{hotel.amenities.length - 3}
+                +{(hotel.amenities || []).length - 3}
               </span>
             )}
           </div>
@@ -88,11 +88,11 @@ export function HotelCard({
                 Est. Total ({days} {tSummary("nights")})
               </p>
               <p className="font-display text-xl font-medium text-foreground">
-                ${hotel.pricePerNight * days}*
+                ${(hotel.price_per_night || hotel.pricePerNight || hotel.price) * days}*
               </p>
             </div>
             <p className="text-sm font-medium text-muted-foreground">
-              ${hotel.pricePerNight}
+              ${hotel.price_per_night || hotel.pricePerNight || hotel.price}
               <span className="text-xs font-light">{tSummary("perNight")}</span>
             </p>
           </div>

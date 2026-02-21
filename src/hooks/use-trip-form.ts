@@ -1,79 +1,80 @@
-"use client";
-
 import { useForm } from "@tanstack/react-form";
-import { useTripStore } from "@/store/trip-store";
-import { submitTripRequest } from "@/actions/bookings";
-import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { submitTripRequest } from "@/actions/bookings";
+import { useTripStore } from "@/store/trip-store";
 
 export interface TripFormValues {
+  name: string;
+  email: string;
+  phone: string;
   departureCity: string;
   destination: string;
   arrivalDate: string;
   departureDate: string;
   returnDate: string;
+  arrivalTime: string;
+  departureTime: string;
+  returnTime: string;
+  isRoundTrip: boolean;
   adults: number;
   children: number;
   infants: number;
-  name: string;
-  email: string;
-  phone: string;
-  tripPurpose:
-    | "leisure"
-    | "business"
-    | "honeymoon"
-    | "family"
-    | "adventure"
-    | "other";
+  tripPurpose: string;
   specialRequests: string;
+  needsFlights: boolean;
+  needsHotel: boolean;
+  needsCar: boolean;
+  needsGuide: boolean;
 }
 
 export function useTripForm() {
   const { tripInfo, items, clearTrip } = useTripStore();
+  const t = useTranslations("PlanTrip");
   const router = useRouter();
 
   const form = useForm({
     defaultValues: {
-      departureCity: tripInfo.departureCity,
+      name: tripInfo.name || "",
+      email: tripInfo.email || "",
+      phone: tripInfo.phone || "",
+      departureCity: tripInfo.departureCity || "",
       destination: tripInfo.destination || "",
-      arrivalDate: tripInfo.arrivalDate,
-      departureDate: tripInfo.departureDate,
+      arrivalDate: tripInfo.arrivalDate || "",
+      departureDate: tripInfo.departureDate || "",
       returnDate: tripInfo.returnDate || "",
-      adults: tripInfo.adults,
-      children: tripInfo.children,
-      infants: tripInfo.infants,
-      name: tripInfo.name,
-      email: tripInfo.email,
-      phone: tripInfo.phone,
-      tripPurpose: tripInfo.tripPurpose,
-      specialRequests: tripInfo.specialRequests,
-    },
-    onSubmit: async ({ value, formApi }) => {
-      const result = await submitTripRequest(value, items);
-
-      if (result.success) {
-        toast.success("Trip request submitted successfully!");
-        clearTrip();
-        router.push("/profile?tab=bookings");
-      } else {
-        toast.error(result.error || "Failed to submit trip request.");
-        console.error("Submission error:", result);
-        if (result.fieldErrors) {
-          Object.entries(result.fieldErrors).forEach(([field, errors]) => {
-            if (Object.keys(value).includes(field)) {
-              // @ts-ignore
-              formApi.setFieldMeta(field, (prev) => ({
-                ...prev,
-                errors: errors,
-              }));
-            }
-          });
+      arrivalTime: tripInfo.arrivalTime || "",
+      departureTime: tripInfo.departureTime || "",
+      returnTime: tripInfo.returnTime || "",
+      isRoundTrip: tripInfo.isRoundTrip || false,
+      adults: tripInfo.adults || 2,
+      children: tripInfo.children || 0,
+      infants: tripInfo.infants || 0,
+      tripPurpose: tripInfo.tripPurpose || "leisure",
+      specialRequests: tripInfo.specialRequests || "",
+      needsFlights: tripInfo.needsFlights ?? true,
+      needsHotel: tripInfo.needsHotel ?? true,
+      needsCar: tripInfo.needsCar ?? false,
+      needsGuide: tripInfo.needsGuide ?? false,
+    } as TripFormValues,
+    onSubmit: async ({ value }) => {
+      try {
+        const result = await submitTripRequest({ ...value, items });
+        if (result.success) {
+          toast.success("Trip request submitted successfully!");
+          clearTrip();
+          router.push("/plan-trip/confirmation");
+        } else {
+          toast.error(result.error || "Failed to submit request");
         }
+      } catch (error) {
+        toast.error("An error occurred");
       }
     },
   });
 
-  return form;
+  return { form };
 }
 
-export type TripForm = ReturnType<typeof useTripForm>;
+export type UseTripFormReturn = ReturnType<typeof useTripForm>;

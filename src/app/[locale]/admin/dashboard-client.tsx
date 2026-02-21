@@ -7,16 +7,15 @@ import {
   RiMailLine,
   RiTimeLine,
 } from "@remixicon/react";
-import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
-import type { Booking } from "@/lib/schema/booking-schema";
-import { CompletedRequestsSchedule } from "@/components/schedule";
 import {
   Empty,
   EmptyDescription,
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty";
+import { Link } from "@/i18n/navigation";
+import { bookingSchema, type Booking } from "@/lib/unified-types";
 
 interface DashboardClientProps {
   requests: Booking[];
@@ -89,10 +88,6 @@ export default function DashboardClient({ requests }: DashboardClientProps) {
           </div>
         ))}
       </div>
-
-      {/* <div className="mb-8">
-        <CompletedRequestsSchedule bookings={requests} />
-      </div> */}
 
       <div className="flex items-center gap-2 mb-6">
         <Link

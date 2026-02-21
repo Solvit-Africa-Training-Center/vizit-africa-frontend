@@ -3,10 +3,10 @@
 import { RiArrowRightUpLine } from "@remixicon/react";
 import { motion } from "motion/react";
 import Image from "next/image";
-import { cn } from "@/lib/utils";
-import { SectionTitle } from "./section-title";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { cn } from "@/lib/utils";
+import { SectionTitle } from "./section-title";
 
 const regionData = [
   {

@@ -1,23 +1,23 @@
 "use client";
 
+import { RiCarLine, RiHotelLine, RiUserStarLine } from "@remixicon/react";
 import { motion } from "motion/react";
-import { RiHotelLine, RiCarLine, RiUserStarLine } from "@remixicon/react";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
-  HotelCard,
   CarCard,
   GuideCard,
+  HotelCard,
   InlineFilters,
   Pagination,
 } from "@/components/plan-trip";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DRIVER_SURCHARGE } from "@/lib/configs";
 import type {
-  TripItem,
-  Hotel,
   Car,
-  Guide,
   FilterState,
+  Guide,
+  Hotel,
+  TripItem,
 } from "@/lib/plan_trip-types";
 
 interface ServicesCatalogProps {
@@ -180,7 +180,7 @@ export function ServicesCatalog({
                       days={days}
                       withDriver={
                         carItem?.id === car.id
-                          ? carItem.data?.withDriver
+                          ? !!carItem.withDriver
                           : false
                       }
                       driverSurcharge={DRIVER_SURCHARGE}

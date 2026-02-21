@@ -1,19 +1,5 @@
 "use client";
 
-import { useForm } from "@tanstack/react-form";
-import { toast } from "sonner";
-import {
-  registerInputSchema,
-  registerObjectSchema,
-  type RegisterInput,
-} from "@/lib/schema/auth-schema";
-import { register } from "@/actions/auth";
-import { Label } from "../ui/label";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "../ui/input-group";
 import {
   RiAlertLine,
   RiArrowRightLine,
@@ -22,12 +8,22 @@ import {
   RiPhoneLine,
   RiUserLine,
 } from "@remixicon/react";
-import { Button } from "../ui/button";
-import { useTranslations } from "next-intl";
+import { useForm } from "@tanstack/react-form";
 import { useRouter } from "next/navigation";
-import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { toast } from "sonner";
+import { register } from "@/actions/auth";
+import { userSchema, registerObjectSchema } from "@/lib/unified-types";
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+import { Button } from "../ui/button";
 import { FieldError } from "../ui/field";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "../ui/input-group";
+import { Label } from "../ui/label";
 
 export function RegisterForm() {
   const t = useTranslations("Auth.signup");
@@ -60,7 +56,7 @@ export function RegisterForm() {
         if (result.fieldErrors) {
           Object.entries(result.fieldErrors).forEach(([field, errors]) => {
             if (Object.keys(value).includes(field)) {
-              // @ts-ignore
+              // @ts-expect-error
               formApi.setFieldMeta(field, (prev) => ({
                 ...prev,
                 errors: errors,
@@ -171,7 +167,7 @@ export function RegisterForm() {
               <InputGroupInput
                 id="password"
                 type="password"
-                placeholder={tCommon("createAccount").split(" ")[0] + "..."}
+                placeholder={`${tCommon("createAccount").split(" ")[0]}...`}
                 value={field.state.value}
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}

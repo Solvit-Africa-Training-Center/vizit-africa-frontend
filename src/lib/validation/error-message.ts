@@ -1,5 +1,4 @@
-import type { FieldErrors } from "@/lib/api/types";
-
+type FieldErrors = Record<string, string[] | undefined>;
 type RawFieldErrors = Record<string, string[] | undefined>;
 
 export function normalizeFieldErrors(fieldErrors: RawFieldErrors): FieldErrors {
@@ -21,7 +20,7 @@ function getFirstFieldError(fieldErrors?: FieldErrors): string | null {
   }
 
   for (const errors of Object.values(fieldErrors)) {
-    const firstError = errors?.find((error) => Boolean(error?.trim()));
+    const firstError = (errors ?? []).find((error: any) => Boolean(error?.trim?.()));
     if (firstError) {
       return firstError;
     }

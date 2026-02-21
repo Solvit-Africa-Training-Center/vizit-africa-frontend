@@ -1,9 +1,9 @@
 import Image from "next/image";
+import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
 import { members as teamMembers } from "@/lib/configs/members";
-import Link from "next/link";
 
 export default async function AboutPage() {
   const t = await getTranslations("About");

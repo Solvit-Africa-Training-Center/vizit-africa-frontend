@@ -1,4 +1,4 @@
-import { getRequests } from "@/lib/data-fetching";
+import { getRequests } from "@/lib/simple-data-fetching";
 import RequestsClient from "./requests-client";
 
 export default async function RequestsPage() {

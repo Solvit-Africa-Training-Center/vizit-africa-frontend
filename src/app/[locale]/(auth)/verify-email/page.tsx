@@ -1,8 +1,8 @@
-import { verifyEmail } from "@/actions/auth";
-import { Link } from "@/i18n/navigation";
-import { getTranslations } from "next-intl/server";
 import { RiCheckLine, RiCloseLine, RiMailLine } from "@remixicon/react";
+import { getTranslations } from "next-intl/server";
+import { verifyEmail } from "@/actions/auth";
 import { VerifyEmailForm } from "@/components/forms/verify-email-form";
+import { Link } from "@/i18n/navigation";
 
 type Props = {
   params: Promise<{ locale: string }>;

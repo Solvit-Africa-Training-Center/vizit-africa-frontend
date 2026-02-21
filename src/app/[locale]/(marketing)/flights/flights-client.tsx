@@ -1,22 +1,22 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { useSearchParams } from "next/navigation";
-import { useTranslations } from "next-intl";
-import { motion } from "motion/react";
 import {
-  RiFlightTakeoffLine,
-  RiFlightLandLine,
-  RiSearchLine,
   RiArrowLeftRightLine,
   RiCalendarLine,
-  RiUserLine,
+  RiFlightLandLine,
+  RiFlightTakeoffLine,
   RiPlaneLine,
+  RiSearchLine,
   RiSortAsc,
+  RiUserLine,
 } from "@remixicon/react";
-import { Link } from "@/i18n/navigation";
-import type { ServiceResponse } from "@/lib/schema/service-schema";
+import { motion } from "motion/react";
+import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { useMemo, useState } from "react";
 import { PageHeader } from "@/components/shared/page-header";
+import { Link } from "@/i18n/navigation";
+import { serviceSchema, type ServiceResponse } from "@/lib/unified-types";
 
 const POPULAR_DESTINATIONS = [
   { code: "KGL", city: "Kigali" },
@@ -51,30 +51,39 @@ export default function FlightsClient({ initialFlights }: FlightsClientProps) {
 
     if (from) {
       const fromSearch = from.toLowerCase();
-      result = result.filter(
-        (f) => {
-            const depCity = (f.metadata?.departureCity as string)?.toLowerCase() || "";
-            const depAirport = (f.metadata?.departureAirport as string)?.toLowerCase() || "";
-            return depCity.includes(fromSearch) || depAirport.includes(fromSearch);
-        }
-      );
+      result = result.filter((f) => {
+        const depCity =
+          (f.metadata?.departureCity as string)?.toLowerCase() || "";
+        const depAirport =
+          (f.metadata?.departureAirport as string)?.toLowerCase() || "";
+        return depCity.includes(fromSearch) || depAirport.includes(fromSearch);
+      });
     }
 
     result = result.filter((f) => Number(f.base_price) <= maxPrice);
 
     if (stopsFilter !== null) {
-      result = result.filter((f) => (f.metadata?.stops as number) === stopsFilter);
+      result = result.filter(
+        (f) => (f.metadata?.stops as number) === stopsFilter,
+      );
     }
 
     if (classFilter !== "all") {
-      result = result.filter((f) => (f.metadata?.cabinClass as string) === classFilter);
+      result = result.filter(
+        (f) => (f.metadata?.cabinClass as string) === classFilter,
+      );
     }
 
     result.sort((a, b) => {
-      if (sortBy === "price") return Number(a.base_price) - Number(b.base_price);
+      if (sortBy === "price")
+        return Number(a.base_price) - Number(b.base_price);
       if (sortBy === "departure") {
-        const timeA = new Date(a.metadata?.departureTime as string || 0).getTime();
-        const timeB = new Date(b.metadata?.departureTime as string || 0).getTime();
+        const timeA = new Date(
+          (a.metadata?.departureTime as string) || 0,
+        ).getTime();
+        const timeB = new Date(
+          (b.metadata?.departureTime as string) || 0,
+        ).getTime();
         return timeA - timeB;
       }
       return 0;
@@ -326,17 +335,17 @@ export default function FlightsClient({ initialFlights }: FlightsClientProps) {
 
           {/* results */}
           <div className="lg:col-span-3">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-          <p className="text-sm text-muted-foreground">
-            <span className="font-medium text-foreground">
-              {filteredFlights.length}
-            </span>{" "}
-            {t("labels.suggestedRoutes")}
-          </p>
-          <div className="bg-amber-500/10 border border-amber-500/20 rounded-full px-5 py-2 text-[10px] text-amber-700 font-medium tracking-wide">
-            {t("labels.estimatesDisclaimer")}
-          </div>
-        </div>
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+              <p className="text-sm text-muted-foreground">
+                <span className="font-medium text-foreground">
+                  {filteredFlights.length}
+                </span>{" "}
+                {t("labels.suggestedRoutes")}
+              </p>
+              <div className="bg-amber-500/10 border border-amber-500/20 rounded-full px-5 py-2 text-[10px] text-amber-700 font-medium tracking-wide">
+                {t("labels.estimatesDisclaimer")}
+              </div>
+            </div>
 
             <div className="space-y-6">
               {filteredFlights.map((flight, index) => (
@@ -364,7 +373,9 @@ export default function FlightsClient({ initialFlights }: FlightsClientProps) {
                       <div className="flex items-center gap-6">
                         <div className="text-center min-w-[80px]">
                           <p className="text-2xl md:text-3xl font-display font-medium tracking-tighter leading-none mb-2">
-                            {formatTime(flight.metadata?.departureTime as string)}
+                            {formatTime(
+                              flight.metadata?.departureTime as string,
+                            )}
                           </p>
                           <p className="text-[10px] text-muted-foreground font-mono uppercase tracking-widest">
                             {flight.metadata?.departureAirport as string}

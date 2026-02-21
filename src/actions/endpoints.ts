@@ -6,7 +6,7 @@ export const endpoints = {
     list: "/accounts/users/",
     user: (id: string | number) => `/accounts/users/${id}/`,
     me: "/accounts/users/profile/",
-    setPassword: "/accounts/users/set_password/",
+    setPassword: (uidb64: string, token: string) => `/accounts/users/set_password/${uidb64}/${token}/`,
     refresh: "/accounts/token/refresh/",
     googleLogin: "/accounts/login/google/",
   },
@@ -52,6 +52,7 @@ export const endpoints = {
     create: "/services/",
     media: "/services/media/",
     availability: "/services/availability/",
+    checkAvailability: "/services/check-availability/",
     discounts: "/services/discounts/",
     list: "/services/",
     details: (id: string | number) => `/services/${id}/`,
@@ -61,11 +62,15 @@ export const endpoints = {
     list: "/locations/",
   },
   vendors: {
-    create: "/vendors/",
+    register: "/vendors/register/", // Align with Spec 2.C.1
+    create: "/vendors/", // Admin manual creation
     approve: (id: string | number) => `/vendors/${id}/approve/`,
     list: "/vendors/",
     detail: (id: string | number) => `/vendors/${id}/`,
     details: (id: string | number) => `/vendors/${id}/`,
+    dashboard: "/vendors/dashboard/",
+    requests: "/vendors/requests/",
+    confirmItem: (id: string | number) => `/vendors/requests/${id}/confirm/`,
   },
   payments: {
     cashIn: "/payments/cashin/",

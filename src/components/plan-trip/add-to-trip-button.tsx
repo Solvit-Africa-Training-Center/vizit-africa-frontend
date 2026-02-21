@@ -1,24 +1,24 @@
 "use client";
 
-import { useTripStore } from "@/store/trip-store";
-import { Button } from "@/components/ui/button";
 import { RiCheckLine, RiSuitcaseLine } from "@remixicon/react";
+import { AnimatePresence, motion } from "motion/react";
+import { useRouter } from "next/navigation";
+import { useLocale } from "next-intl";
 import { toast } from "sonner";
-import { cn } from "@/lib/utils";
-import { motion, AnimatePresence } from "motion/react";
+import { v4 as uuidv4 } from "uuid";
+import { Button } from "@/components/ui/button";
 import type {
-  Flight,
-  Hotel,
   Car,
-  Guide,
   Experience,
+  Flight,
+  Guide,
+  Hotel,
   Service,
   TripItem,
   TripItemType,
 } from "@/lib/plan_trip-types";
-import { useRouter } from "next/navigation";
-import { useLocale } from "next-intl";
-import { v4 as uuidv4 } from "uuid";
+import { cn } from "@/lib/utils";
+import { useTripStore } from "@/store/trip-store";
 
 type AddToTripType =
   | "flight"
@@ -76,7 +76,7 @@ export function AddToTripButton({
       return false;
     }
     if (item && "id" in item) {
-      return store.items.some((i) => i.id === item.id);
+      return store.items.some((i) => i.id === String(item.id));
     }
     return false;
   })();
@@ -92,6 +92,7 @@ export function AddToTripButton({
         title: "Special Request / Note",
         description: note,
         data: note,
+        quantity: 1,
       };
       store.addItem(noteItem);
     } else if (item) {
@@ -101,31 +102,31 @@ export function AddToTripButton({
 
       if (type === "flight") {
         const f = item as Flight;
-        title = `${f.airline} - ${f.flightNumber}`;
+        title = `${f.airline || "Unknown"} - ${f.flightNumber || "N/A"}`;
         price = f.price;
         description = `${f.departureCity} to ${f.arrivalCity}`;
       } else if (type === "hotel") {
         const h = item as Hotel;
-        title = h.name;
-        price = h.pricePerNight;
-        description = h.address;
+        title = h.name || h.title;
+        price = h.pricePerNight || h.price;
+        description = h.address || h.location || "";
       } else if (type === "car") {
         const c = item as Car;
-        title = `${c.model} (${c.category})`;
-        price = c.pricePerDay;
+        title = `${c.model || c.title} (${c.category || "Standard"})`;
+        price = c.pricePerDay || c.price;
         description = withDriver ? "With Driver" : "Self Drive";
       } else if (type === "guide") {
         const g = item as Guide;
-        title = `${g.type} Guide`;
+        title = `${g.type || g.title} Guide`;
         price = g.price || 0;
-        description = g.description;
+        description = g.description || "";
       } else if (type === "experience") {
         const e = item as Experience;
         title = e.title;
         price = e.price;
         description = e.description || "";
       } else if (type === "service") {
-        const s = item as Service;
+        const s = item as any;
         title = s.title;
 
         price = typeof s.price === "number" ? s.price : 0;
@@ -133,14 +134,14 @@ export function AddToTripButton({
       }
 
       const newItem: TripItem = {
-        id: item.id,
+        id: String(item.id),
         type: type as TripItemType,
         title,
         description,
         price,
         data: { ...item, withDriver },
         quantity: 1,
-        withDriver,
+        withDriver: withDriver,
       };
 
       store.addItem(newItem);

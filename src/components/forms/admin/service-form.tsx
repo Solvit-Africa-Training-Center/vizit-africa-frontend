@@ -30,6 +30,13 @@ import { FieldError } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
+  NumberField,
+  NumberFieldDecrement,
+  NumberFieldGroup,
+  NumberFieldIncrement,
+  NumberFieldInput,
+} from "@/components/ui/number-field";
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -41,13 +48,7 @@ import {
   type LocationSuggestion,
   useLocationAutocomplete,
 } from "@/hooks/use-location-autocomplete";
-import type { LocationResponse } from "@/lib/schema/location-schema";
-import {
-  type CreateServiceInput,
-  createServiceInputSchema,
-  type ServiceResponse,
-} from "@/lib/schema/service-schema";
-import type { VendorResponse } from "@/lib/schema/vendor-schema";
+import { locationSchema, serviceSchema, vendorSchema, type LocationResponse, type ServiceResponse, type CreateServiceInput, type VendorResponse, createServiceInputSchema } from "@/lib/unified-types";
 import { VendorForm } from "./vendor-form";
 
 interface ServiceFormProps {
@@ -178,7 +179,7 @@ export function ServiceForm({ initialData, onSuccess }: ServiceFormProps) {
         if (result.fieldErrors) {
           Object.entries(result.fieldErrors).forEach(([field, errors]) => {
             if (Object.keys(value).includes(field)) {
-              // @ts-ignore
+              // @ts-expect-error
               formApi.setFieldMeta(field, (prev) => ({
                 ...prev,
                 errors: errors,
@@ -437,15 +438,20 @@ export function ServiceForm({ initialData, onSuccess }: ServiceFormProps) {
           {(field) => (
             <div className="space-y-2">
               <Label htmlFor="base_price">Base Price</Label>
-              <Input
+              <NumberField
                 id="base_price"
-                type="number"
-                min="0"
-                step="0.01"
-                value={field.state.value}
+                min={0}
+                step={0.01}
+                value={field.state.value ?? null}
                 onBlur={field.handleBlur}
-                onChange={(e) => field.handleChange(Number(e.target.value))}
-              />
+                onValueChange={(val) => field.handleChange(val ?? 0)}
+              >
+                <NumberFieldGroup>
+                  <NumberFieldDecrement />
+                  <NumberFieldInput />
+                  <NumberFieldIncrement />
+                </NumberFieldGroup>
+              </NumberField>
               {field.state.meta.isTouched && !field.state.meta.isValid && (
                 <FieldError errors={field.state.meta.errors} />
               )}
@@ -484,14 +490,19 @@ export function ServiceForm({ initialData, onSuccess }: ServiceFormProps) {
           {(field) => (
             <div className="space-y-2">
               <Label htmlFor="capacity">Capacity</Label>
-              <Input
+              <NumberField
                 id="capacity"
-                type="number"
-                min="1"
-                value={field.state.value}
+                min={1}
+                value={field.state.value ?? null}
                 onBlur={field.handleBlur}
-                onChange={(e) => field.handleChange(Number(e.target.value))}
-              />
+                onValueChange={(val) => field.handleChange(val ?? 1)}
+              >
+                <NumberFieldGroup>
+                  <NumberFieldDecrement />
+                  <NumberFieldInput />
+                  <NumberFieldIncrement />
+                </NumberFieldGroup>
+              </NumberField>
               {field.state.meta.isTouched && !field.state.meta.isValid && (
                 <FieldError errors={field.state.meta.errors} />
               )}

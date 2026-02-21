@@ -7,7 +7,6 @@ import {
   RiMore2Line,
 } from "@remixicon/react";
 import type { ColumnDef, Row } from "@tanstack/react-table";
-import { Link } from "@/i18n/navigation";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -33,7 +32,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import type { VendorResponse } from "@/lib/schema/vendor-schema";
+import { Link } from "@/i18n/navigation";
+import { vendorSchema, type VendorResponse } from "@/lib/unified-types";
 import { facetedFilterFn } from "@/lib/utils";
 
 const ActionsCell = ({ row }: { row: Row<VendorResponse> }) => {

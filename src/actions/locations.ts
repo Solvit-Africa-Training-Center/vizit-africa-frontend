@@ -1,59 +1,35 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { api } from "@/lib/api/client";
-import type { ActionResult, ApiError } from "@/lib/api/types";
-import {
-  type CreateLocationInput,
-  createLocationInputSchema,
-  type LocationResponse,
-  locationResponseSchema,
-} from "@/lib/schema/location-schema";
-import {
-  buildValidationErrorMessage,
-  normalizeFieldErrors,
-} from "@/lib/validation/error-message";
+import { api, ApiError } from "@/lib/api/simple-client";
+import { locationSchema } from "@/lib/unified-types";
 import { endpoints } from "./endpoints";
 
-export async function createLocation(
-  input: CreateLocationInput,
-): Promise<ActionResult<LocationResponse>> {
-  const validation = createLocationInputSchema.safeParse(input);
-  if (!validation.success) {
-    const flattened = validation.error.flatten();
-    const fieldErrors = normalizeFieldErrors(flattened.fieldErrors);
-    return {
-      success: false,
-      error: buildValidationErrorMessage({
-        fieldErrors,
-        formErrors: flattened.formErrors,
-      }),
-      fieldErrors,
-    };
-  }
+export type ActionResult<T> =
+  | { success: true; data: T }
+  | { success: false; error: string; fieldErrors?: Record<string, string[]> };
 
+export async function createLocation(input: unknown): Promise<ActionResult<any>> {
   try {
-    const data = await api.post(
-      endpoints.locations.create,
-      validation.data,
-      locationResponseSchema,
-    );
+    const data = await api.post(endpoints.locations.create, input, locationSchema);
     revalidatePath("/locations");
     return { success: true, data };
   } catch (error) {
-    const err = error as ApiError;
-    return { success: false, error: err.message, fieldErrors: err.fieldErrors };
+    if (error instanceof ApiError) {
+      return { success: false, error: error.message };
+    }
+    return { success: false, error: "An error occurred" };
   }
 }
 
-export async function getLocations(): Promise<
-  ActionResult<LocationResponse[]>
-> {
+export async function getLocations(): Promise<ActionResult<any[]>> {
   try {
-    const data = await api.get<LocationResponse[]>(endpoints.locations.list);
-    return { success: true, data };
+    const data = await api.get(endpoints.locations.list);
+    return { success: true, data: (data || []) as any[] };
   } catch (error) {
-    const err = error as ApiError;
-    return { success: false, error: err.message };
+    if (error instanceof ApiError) {
+      return { success: false, error: error.message };
+    }
+    return { success: false, error: "An error occurred" };
   }
 }

@@ -1,21 +1,21 @@
 "use client";
 
 import {
+  RiGlobalLine,
+  RiMailLine,
+  RiMapPinLine,
+  RiUserLine,
+} from "@remixicon/react";
+import { Badge } from "@/components/ui/badge";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import type { VendorResponse } from "@/lib/schema/vendor-schema";
-import {
-  RiMapPinLine,
-  RiGlobalLine,
-  RiMailLine,
-  RiUserLine,
-} from "@remixicon/react";
+import { vendorSchema, type VendorResponse } from "@/lib/unified-types";
 
 interface VendorDetailsSheetProps {
   open: boolean;

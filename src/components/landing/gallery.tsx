@@ -1,15 +1,15 @@
 "use client";
 
 import { RiArrowRightLine } from "@remixicon/react";
-import { AddToTripButton } from "@/components/plan-trip/add-to-trip-button";
-import { Link } from "@/i18n/navigation";
-import { Button } from "@/components/ui/button";
 import { motion, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
-import { ParallaxImage } from "@/components/ui/parallax-image";
-import { SectionTitle } from "./section-title";
 import { useTranslations } from "next-intl";
+import { useRef } from "react";
+import { AddToTripButton } from "@/components/plan-trip/add-to-trip-button";
+import { Button } from "@/components/ui/button";
+import { ParallaxImage } from "@/components/ui/parallax-image";
+import { Link } from "@/i18n/navigation";
 import { GALLERY_IMAGES } from "@/lib/configs";
+import { SectionTitle } from "./section-title";
 
 export function Gallery() {
   const t = useTranslations("LandingGallery");

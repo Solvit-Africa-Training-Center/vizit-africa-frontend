@@ -1,22 +1,21 @@
-import * as React from "react"
-
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { RiArrowLeftSLine, RiArrowRightSLine, RiMoreLine } from "@remixicon/react"
+import {
+  RiArrowLeftSLine,
+  RiArrowRightSLine,
+  RiMoreLine,
+} from "@remixicon/react";
+import type * as React from "react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
   return (
     <nav
-      role="navigation"
       aria-label="pagination"
       data-slot="pagination"
-      className={cn(
-        "mx-auto flex w-full justify-center",
-        className
-      )}
+      className={cn("mx-auto flex w-full justify-center", className)}
       {...props}
     />
-  )
+  );
 }
 
 function PaginationContent({
@@ -29,17 +28,17 @@ function PaginationContent({
       className={cn("gap-1 flex items-center", className)}
       {...props}
     />
-  )
+  );
 }
 
 function PaginationItem({ ...props }: React.ComponentProps<"li">) {
-  return <li data-slot="pagination-item" {...props} />
+  return <li data-slot="pagination-item" {...props} />;
 }
 
 type PaginationLinkProps = {
-  isActive?: boolean
+  isActive?: boolean;
 } & Pick<React.ComponentProps<typeof Button>, "size"> &
-  React.ComponentProps<"a">
+  React.ComponentProps<"a">;
 
 function PaginationLink({
   className,
@@ -61,7 +60,7 @@ function PaginationLink({
         />
       }
     />
-  )
+  );
 }
 
 function PaginationPrevious({
@@ -77,11 +76,9 @@ function PaginationPrevious({
       {...props}
     >
       <RiArrowLeftSLine data-icon="inline-start" className="rtl:rotate-180" />
-      <span className="hidden sm:block">
-        {text}
-      </span>
+      <span className="hidden sm:block">{text}</span>
     </PaginationLink>
-  )
+  );
 }
 
 function PaginationNext({
@@ -99,7 +96,7 @@ function PaginationNext({
       <span className="hidden sm:block">{text}</span>
       <RiArrowRightSLine data-icon="inline-end" className="rtl:rotate-180" />
     </PaginationLink>
-  )
+  );
 }
 
 function PaginationEllipsis({
@@ -112,15 +109,14 @@ function PaginationEllipsis({
       data-slot="pagination-ellipsis"
       className={cn(
         "size-9 [&_svg:not([class*='size-'])]:size-4 flex items-center justify-center",
-        className
+        className,
       )}
       {...props}
     >
-      <RiMoreLine
-      />
+      <RiMoreLine />
       <span className="sr-only">More pages</span>
     </span>
-  )
+  );
 }
 
 export {
@@ -131,4 +127,4 @@ export {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-}
+};

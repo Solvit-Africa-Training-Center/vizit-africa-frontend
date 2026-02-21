@@ -1,8 +1,8 @@
 "use client";
 
-import type { Guide } from "../../lib/plan_trip-types";
-import { RiUserStarLine, RiCheckLine } from "@remixicon/react";
+import { RiCheckLine, RiUserStarLine } from "@remixicon/react";
 import { useTranslations } from "next-intl";
+import type { Guide } from "../../lib/plan_trip-types";
 
 interface GuideCardProps {
   guide: Guide;

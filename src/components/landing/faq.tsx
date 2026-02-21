@@ -1,15 +1,15 @@
 "use client";
 
-import { SectionTitle } from "./section-title";
+import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { motion } from "motion/react";
-import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { SectionTitle } from "./section-title";
 
 const faqKeys = ["1", "2", "3", "4", "5", "6", "7", "8"] as const;
 

@@ -4,7 +4,7 @@ import { RiStoreLine, RiTimeLine } from "@remixicon/react";
 import { useState } from "react";
 import { DataTable, type DataTableState } from "@/components/ui/data-table";
 import { createDefaultDataTableState } from "@/components/ui/data-table-state";
-import type { VendorResponse } from "@/lib/schema/vendor-schema";
+import { vendorSchema, type VendorResponse } from "@/lib/unified-types";
 import { pendingVendorColumns, vendorColumns } from "./columns";
 
 interface AdminVendorsClientProps {

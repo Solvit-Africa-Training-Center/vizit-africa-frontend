@@ -1,22 +1,28 @@
 "use client";
 
 import type { ColumnDef } from "@tanstack/react-table";
-import { Badge } from "@/components/ui/badge";
-import { facetedFilterFn } from "@/lib/utils";
-import { Link } from "@/i18n/navigation";
-import type { Booking } from "@/lib/schema/booking-schema";
 import { useTranslations } from "next-intl";
-
-// We need to wrap column definitions in a function or component to use hooks like useTranslations
-// But standard react-table columns are usually static.
-// A common pattern is to pass translations or use a component for the cell that uses the hook.
+import { Badge } from "@/components/ui/badge";
+import { Link } from "@/i18n/navigation";
+import { bookingSchema, type Booking } from "@/lib/unified-types";
+import { facetedFilterFn } from "@/lib/utils";
 
 const HeaderCell = ({ trKey }: { trKey: string }) => {
   const t = useTranslations("Admin.requests.table");
   return <>{t(trKey)}</>;
 };
 
-const ServiceBadges = ({ flights, hotel, car, guide }: any) => {
+const ServiceBadges = ({
+  flights,
+  hotel,
+  car,
+  guide,
+}: {
+  flights?: boolean;
+  hotel?: boolean;
+  car?: boolean;
+  guide?: boolean;
+}) => {
   const t = useTranslations("Admin.requests.table.badges");
   return (
     <div className="flex flex-wrap gap-1">
@@ -45,6 +51,13 @@ const ServiceBadges = ({ flights, hotel, car, guide }: any) => {
 };
 
 import {
+  RiCloseCircleLine,
+  RiEyeLine,
+  RiFileAddLine,
+  RiMore2Line,
+} from "@remixicon/react";
+import { Button } from "@/components/ui/button";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
@@ -53,15 +66,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import {
-  RiMore2Line,
-  RiEyeLine,
-  RiFileAddLine,
-  RiCloseCircleLine,
-} from "@remixicon/react";
 
-const ActionCell = ({ id, status }: { id: string; status: string }) => {
+const ActionCell = ({ id, status }: { id: string | number; status: string }) => {
   const t = useTranslations("Admin.requests.table");
 
   return (
@@ -76,7 +82,7 @@ const ActionCell = ({ id, status }: { id: string; status: string }) => {
           <DropdownMenuItem
             render={
               <Link
-                href={`/admin/requests/${id}`}
+                href={`/admin/requests/${String(id)}`}
                 className="flex items-center cursor-pointer"
               />
             }
@@ -89,7 +95,7 @@ const ActionCell = ({ id, status }: { id: string; status: string }) => {
             <DropdownMenuItem
               render={
                 <Link
-                  href={`/admin/packages/${id}`}
+                  href={`/admin/packages/${String(id)}`}
                   className="flex items-center cursor-pointer"
                 />
               }
@@ -105,7 +111,7 @@ const ActionCell = ({ id, status }: { id: string; status: string }) => {
             <DropdownMenuItem
               render={
                 <Link
-                  href={`/admin/bookings/${id}/fulfill`}
+                  href={`/admin/bookings/${String(id)}/fulfill`}
                   className="flex items-center cursor-pointer"
                 />
               }

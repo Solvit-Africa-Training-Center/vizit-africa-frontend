@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  RiArrowLeftLine,
   RiCalendarLine,
   RiCheckLine,
   RiDeleteBinLine,
@@ -11,9 +12,11 @@ import {
 import { format } from "date-fns";
 import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
 import { submitTripRequest } from "@/actions/bookings";
+import { ItineraryItem } from "@/components/shared/itinerary-item";
 import { PageHeader } from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,13 +29,17 @@ import { buildValidationErrorMessage } from "@/lib/validation/error-message";
 import { useTripStore } from "@/store/trip-store";
 
 export default function TripReviewPage() {
-  const { tripInfo, items, removeItem, updateTripInfo, clearTrip, updateItem } =
-    useTripStore();
+  const tCommon = useTranslations("Common");
+  const { 
+    tripInfo, 
+    items, 
+    removeItem, 
+    updateTripInfo, 
+    clearTrip, 
+    updateItem 
+  } = useTripStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-
-  // Group items or just list them
-  // Let's just list them for now but maybe sorted by type
 
   const totalPrice = items.reduce((sum, item) => sum + (item.price || 0), 0);
 
@@ -41,7 +48,7 @@ export default function TripReviewPage() {
     setIsSubmitting(true);
 
     try {
-      const result = await submitTripRequest(tripInfo, items);
+      const result = await submitTripRequest({ ...tripInfo, items });
       if (result.success) {
         setSubmitted(true);
         toast.success("Trip request submitted successfully!");
@@ -91,6 +98,15 @@ export default function TripReviewPage() {
 
   return (
     <div className="min-h-screen bg-background pt-32 pb-24">
+      <div className="max-w-7xl mx-auto px-5 md:px-10 mb-8">
+        <Link
+          href="/plan-trip"
+          className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm font-medium"
+        >
+          <RiArrowLeftLine className="size-4" />
+          {tCommon("back")}
+        </Link>
+      </div>
       <PageHeader
         title="Review Your Trip"
         overline="Itinerary"
@@ -131,11 +147,21 @@ export default function TripReviewPage() {
                 </motion.div>
               ) : (
                 items.map((item) => (
-                  <TripItemCard
+                  <ItineraryItem
                     key={item.id}
                     item={item}
+                    defaultValues={{
+                      startDate: tripInfo.arrivalDate || undefined,
+                      endDate: tripInfo.departureDate || undefined,
+                      startTime: tripInfo.arrivalTime || undefined,
+                      endTime: tripInfo.departureTime || undefined,
+                      returnDate: tripInfo.returnDate || undefined,
+                      returnTime: tripInfo.returnTime || undefined,
+                    }}
                     onRemove={() => removeItem(item.id)}
-                    onUpdate={(updates) => updateItem(item.id, updates)}
+                    onUpdate={(updates) =>
+                      updateItem(item.id, updates)
+                    }
                   />
                 ))
               )}
@@ -151,7 +177,7 @@ export default function TripReviewPage() {
             </h3>
 
             <div className="space-y-6 mb-8">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-6">
                 <div className="space-y-1">
                   <Label className="text-xs uppercase text-muted-foreground">
                     Destination
@@ -163,32 +189,178 @@ export default function TripReviewPage() {
                 </div>
                 <div className="space-y-1">
                   <Label className="text-xs uppercase text-muted-foreground">
-                    Dates
+                    Origin / Departing From
                   </Label>
                   <div className="font-medium flex items-center gap-2">
-                    <RiCalendarLine className="size-4 text-primary" />
-                    {tripInfo.departureDate ? (
-                      <span>
-                        {format(new Date(tripInfo.departureDate), "MMM d")} -{" "}
-                        {tripInfo.returnDate
-                          ? format(new Date(tripInfo.returnDate), "MMM d, yyyy")
-                          : "TBD"}
-                      </span>
-                    ) : (
-                      "Not set"
+                    <RiMapPinLine className="size-4 text-muted-foreground" />
+                    {tripInfo.departureCity || "TBD"}
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <Label className="text-xs uppercase text-muted-foreground">
+                    Arrival in Rwanda
+                  </Label>
+                  <div className="font-medium flex flex-col gap-0.5">
+                    <div className="flex items-center gap-2">
+                      <RiCalendarLine className="size-4 text-primary" />
+                      {tripInfo.arrivalDate
+                        ? format(new Date(tripInfo.arrivalDate), "MMM d, yyyy")
+                        : "TBD"}
+                    </div>
+                    {tripInfo.arrivalTime && (
+                      <div className="text-xs text-muted-foreground ml-6">
+                        at {tripInfo.arrivalTime}
+                      </div>
                     )}
                   </div>
                 </div>
+
+                <div className="space-y-1">
+                  <Label className="text-xs uppercase text-muted-foreground">
+                    Departure / Return
+                  </Label>
+                  <div className="font-medium flex flex-col gap-0.5">
+                    <div className="flex items-center gap-2">
+                      <RiCalendarLine className="size-4 text-primary" />
+                      {tripInfo.departureDate
+                        ? format(
+                            new Date(tripInfo.departureDate),
+                            "MMM d, yyyy",
+                          )
+                        : "TBD"}
+                    </div>
+                    {tripInfo.departureTime && (
+                      <div className="text-xs text-muted-foreground ml-6">
+                        at {tripInfo.departureTime}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {tripInfo.isRoundTrip && tripInfo.returnDate && (
+                  <div className="space-y-1 col-span-2 bg-primary/5 p-2 rounded-lg border border-primary/10">
+                    <Label className="text-[10px] uppercase text-primary font-bold">
+                      Round Trip Return
+                    </Label>
+                    <div className="font-medium flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <RiCalendarLine className="size-4 text-primary" />
+                        {format(new Date(tripInfo.returnDate), "MMM d, yyyy")}
+                      </div>
+                      {tripInfo.returnTime && (
+                        <div className="text-xs text-muted-foreground">
+                          at {tripInfo.returnTime}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
-              <div className="space-y-1">
-                <Label className="text-xs uppercase text-muted-foreground">
-                  Travelers
-                </Label>
-                <div className="font-medium flex items-center gap-2">
-                  <RiUserLine className="size-4 text-primary" />
-                  {tripInfo.adults} Adults, {tripInfo.children} Children
+
+              <div className="grid grid-cols-2 gap-4 pt-4 border-t border-border/50">
+                <div className="space-y-1">
+                  <Label className="text-xs uppercase text-muted-foreground">
+                    Travelers
+                  </Label>
+                  <div className="font-medium flex items-center gap-2">
+                    <RiUserLine className="size-4 text-primary" />
+                    {tripInfo.adults} Ad, {tripInfo.children} Ch,{" "}
+                    {tripInfo.infants} Inf
+                  </div>
+                </div>
+                <div className="space-y-1">
+                  <Label className="text-xs uppercase text-muted-foreground">
+                    Purpose
+                  </Label>
+                  <div className="font-medium capitalize">
+                    {tripInfo.tripPurpose}
+                  </div>
                 </div>
               </div>
+
+              <div className="pt-4 border-t border-border/50">
+                <Label className="text-xs uppercase text-muted-foreground mb-2 block">
+                  Assistance Requested For
+                </Label>
+                <div className="flex flex-wrap gap-2">
+                  {tripInfo.needsFlights && (
+                    <span className="px-2 py-1 bg-blue-100 text-blue-700 text-[10px] font-bold rounded uppercase">
+                      Flights
+                    </span>
+                  )}
+                  {tripInfo.needsHotel && (
+                    <span className="px-2 py-1 bg-purple-100 text-purple-700 text-[10px] font-bold rounded uppercase">
+                      Hotels
+                    </span>
+                  )}
+                  {tripInfo.needsCar && (
+                    <span className="px-2 py-1 bg-orange-100 text-orange-700 text-[10px] font-bold rounded uppercase">
+                      Car Rental
+                    </span>
+                  )}
+                  {tripInfo.needsGuide && (
+                    <span className="px-2 py-1 bg-green-100 text-green-700 text-[10px] font-bold rounded uppercase">
+                      Local Guide
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {(tripInfo.preferredCabinClass ||
+                tripInfo.hotelStarRating ||
+                tripInfo.carTypePreference) && (
+                <div className="pt-4 border-t border-border/50">
+                  <Label className="text-xs uppercase text-muted-foreground mb-3 block">
+                    Detailed Preferences
+                  </Label>
+                  <div className="grid grid-cols-2 gap-y-3 gap-x-6 text-sm">
+                    {tripInfo.preferredCabinClass && (
+                      <div className="flex flex-col gap-0.5">
+                        <span className="text-[10px] text-muted-foreground uppercase">
+                          Cabin
+                        </span>
+                        <span className="font-medium capitalize">
+                          {tripInfo.preferredCabinClass.replace("_", " ")}
+                        </span>
+                      </div>
+                    )}
+                    {tripInfo.hotelStarRating && (
+                      <div className="flex flex-col gap-0.5">
+                        <span className="text-[10px] text-muted-foreground uppercase">
+                          Hotel Stars
+                        </span>
+                        <span className="font-medium">
+                          {tripInfo.hotelStarRating === "any"
+                            ? "Any Verified"
+                            : `${tripInfo.hotelStarRating} Stars`}
+                        </span>
+                      </div>
+                    )}
+                    {tripInfo.carTypePreference && (
+                      <div className="flex flex-col gap-0.5">
+                        <span className="text-[10px] text-muted-foreground uppercase">
+                          Vehicle
+                        </span>
+                        <span className="font-medium capitalize">
+                          {tripInfo.carTypePreference}
+                        </span>
+                      </div>
+                    )}
+                    {tripInfo.guideLanguages &&
+                      tripInfo.guideLanguages.length > 0 && (
+                        <div className="flex flex-col gap-0.5">
+                          <span className="text-[10px] text-muted-foreground uppercase">
+                            Languages
+                          </span>
+                          <span className="font-medium">
+                            {tripInfo.guideLanguages.join(", ")}
+                          </span>
+                        </div>
+                      )}
+                  </div>
+                </div>
+              )}
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -264,159 +436,5 @@ export default function TripReviewPage() {
         </div>
       </div>
     </div>
-  );
-}
-
-function TripItemCard({
-  item,
-  onRemove,
-  onUpdate,
-}: {
-  item: TripItem;
-  onRemove: () => void;
-  onUpdate: (updates: Partial<TripItem>) => void;
-}) {
-  const image =
-    item.data?.image ||
-    item.data?.airlineLogo ||
-    "/images/rwanda-landscape.jpg";
-
-  // Toggle editing
-  const [isEditing, setIsEditing] = useState(false);
-
-  return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, height: 0, marginBottom: 0 }}
-      className="flex flex-col gap-4 bg-card border border-border/50 rounded-xl p-4 shadow-sm group hover:border-primary/20 transition-colors"
-    >
-      <div className="flex flex-col sm:flex-row gap-4">
-        <div className="relative w-full sm:w-32 h-32 sm:h-24 rounded-lg overflow-hidden shrink-0 bg-muted">
-          {item.type !== "note" && (
-            <Image src={image} alt={item.title} fill className="object-cover" />
-          )}
-          {item.type === "note" && (
-            <div className="flex items-center justify-center w-full h-full text-muted-foreground">
-              <RiStickyNoteLine className="size-8" />
-            </div>
-          )}
-        </div>
-
-        <div className="flex-1 flex flex-col justify-between">
-          <div>
-            <div className="flex items-start justify-between gap-2">
-              <div>
-                <span className="text-[10px] uppercase tracking-widest text-primary font-medium">
-                  {item.type}
-                </span>
-                <h4 className="font-medium text-lg leading-tight">
-                  {item.title}
-                </h4>
-              </div>
-              {item.price ? (
-                <span className="font-mono text-sm font-medium whitespace-nowrap">
-                  ${item.price}
-                </span>
-              ) : null}
-            </div>
-            {item.description && (
-              <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
-                {item.description}
-              </p>
-            )}
-          </div>
-
-          <div className="flex items-center justify-between mt-3">
-            <div className="text-xs text-muted-foreground flex gap-2">
-              {item.startDate ? (
-                <span>{new Date(item.startDate).toLocaleDateString()}</span>
-              ) : (
-                <span className="italic">Date flexible</span>
-              )}
-              {item.startTime && <span>at {item.startTime}</span>}
-              {item.isRoundTrip && (
-                <span className="text-primary font-medium">(Round Trip)</span>
-              )}
-            </div>
-
-            <Button
-              variant="link"
-              size="sm"
-              className="h-auto p-0 text-primary text-xs"
-              onClick={() => setIsEditing(!isEditing)}
-            >
-              {isEditing ? "Done" : "Edit Details"}
-            </Button>
-          </div>
-        </div>
-
-        <div className="flex flex-row sm:flex-col justify-end gap-2 border-t sm:border-t-0 sm:border-l border-border/50 pt-3 sm:pt-0 sm:pl-3">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-            onClick={onRemove}
-          >
-            <RiDeleteBinLine className="size-4" />
-          </Button>
-        </div>
-      </div>
-
-      {isEditing && (
-        <motion.div
-          initial={{ height: 0, opacity: 0 }}
-          animate={{ height: "auto", opacity: 1 }}
-          className="border-t border-border/50 pt-4 grid grid-cols-1 sm:grid-cols-2 gap-4"
-        >
-          <div className="space-y-1">
-            <Label className="text-xs text-muted-foreground">Date</Label>
-            <Input
-              type="date"
-              value={item.startDate || ""}
-              onChange={(e) => onUpdate({ startDate: e.target.value })}
-            />
-          </div>
-          <div className="space-y-1">
-            <Label className="text-xs text-muted-foreground">Time</Label>
-            <Input
-              type="time"
-              value={item.startTime || ""}
-              onChange={(e) => onUpdate({ startTime: e.target.value })}
-            />
-          </div>
-
-          {(item.type === "flight" ||
-            item.type === "car" ||
-            item.type === "guide") && (
-            <>
-              <div className="sm:col-span-2 flex items-center justify-between py-2">
-                <Label className="text-sm">Two-way / Round Trip</Label>
-                <Switch
-                  checked={item.isRoundTrip || false}
-                  onCheckedChange={(checked) =>
-                    onUpdate({ isRoundTrip: checked })
-                  }
-                />
-              </div>
-
-              {item.isRoundTrip && (
-                <div className="space-y-1">
-                  <Label className="text-xs text-muted-foreground">
-                    Return Date
-                  </Label>
-                  <Input
-                    type="date"
-                    value={item.returnDate || ""}
-                    onChange={(e) => onUpdate({ returnDate: e.target.value })}
-                  />
-                </div>
-              )}
-            </>
-          )}
-        </motion.div>
-      )}
-    </motion.div>
   );
 }

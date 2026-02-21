@@ -1,8 +1,7 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import { RevealText } from "@/components/ui/reveal-text";
-import { motion } from "motion/react";
+import { cn } from "@/lib/utils";
 
 interface PageHeaderProps {
   title: string | React.ReactNode;
@@ -34,7 +33,7 @@ export function PageHeader({
         <div
           className={cn(
             "text-sm font-mono uppercase tracking-widest block mb-4",
-            isDark ? "text-primary-foreground/70" : "text-muted-foreground"
+            isDark ? "text-primary-foreground/70" : "text-muted-foreground",
           )}
         >
           {overline}
@@ -45,11 +44,14 @@ export function PageHeader({
         className={cn(
           "font-display font-medium uppercase tracking-tighter leading-[0.85] mb-8",
           isDark ? "text-primary-foreground" : "text-foreground",
-          "text-4xl md:text-6xl"
+          "text-4xl md:text-6xl",
         )}
       >
         {typeof title === "string" ? (
-          <RevealText text={title} className={cn(isDark && "text-primary-foreground")} />
+          <RevealText
+            text={title}
+            className={cn(isDark && "text-primary-foreground")}
+          />
         ) : (
           title
         )}
@@ -61,7 +63,7 @@ export function PageHeader({
             "text-xl md:text-2xl font-light leading-relaxed",
             isDark ? "text-primary-foreground/80" : "text-muted-foreground",
             align === "center" && "mx-auto",
-            isSplit ? "max-w-lg" : "max-w-2xl"
+            isSplit ? "max-w-lg" : "max-w-2xl",
           )}
         >
           {description}
@@ -75,7 +77,7 @@ export function PageHeader({
       className={cn(
         "px-5 md:px-10 max-w-7xl mx-auto mb-20 md:mb-32",
         align === "center" && !isSplit ? "text-center" : "text-left",
-        className
+        className,
       )}
     >
       {isSplit ? (
@@ -89,10 +91,7 @@ export function PageHeader({
         </div>
       ) : (
         <div
-          className={cn(
-            "flex flex-col",
-            align === "center" && "items-center"
-          )}
+          className={cn("flex flex-col", align === "center" && "items-center")}
         >
           {content}
           {children && (

@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "@remixicon/react";
+import { Button } from "@/components/ui/button";
 
 interface PaginationProps {
   currentPage: number;

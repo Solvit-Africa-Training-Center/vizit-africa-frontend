@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "motion/react";
-import { cn } from "@/lib/utils";
 import { RevealText } from "@/components/ui/reveal-text";
+import { cn } from "@/lib/utils";
 
 interface SectionTitleProps {
   overline?: string;

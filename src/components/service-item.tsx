@@ -1,15 +1,15 @@
-import type { ServiceResponse } from "@/lib/schema/service-schema";
-import { cn } from "@/lib/utils";
 import { RiArrowRightUpLine, RiMapPinLine } from "@remixicon/react";
+import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
-import { AddToTripButton } from "./plan-trip/add-to-trip-button";
-import { Button } from "./ui/button";
 import { useState } from "react";
+import { getLocations } from "@/actions/locations";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { getLocations } from "@/actions/locations";
-import { useQuery } from "@tanstack/react-query";
+import { serviceSchema, type ServiceResponse } from "@/lib/unified-types";
+import { cn } from "@/lib/utils";
+import { AddToTripButton } from "./plan-trip/add-to-trip-button";
+import { Button } from "./ui/button";
 
 const TYPE_LABELS: Record<string, string> = {
   hotel: "Hotels",
@@ -54,12 +54,12 @@ export function ServiceItem({
   bookLabel: string;
   onSelect?: (
     service: ServiceResponse,
-    options?: { withDriver?: boolean },
+    options?: { with_driver?: boolean },
   ) => void;
   isSelected?: boolean;
   driverSurcharge?: number;
 }) {
-  const [withDriver, setWithDriver] = useState(false);
+  const [with_driver, setWithDriver] = useState(false);
   const category = TYPE_LABELS[service.service_type] || service.service_type;
 
   const { data: locationsResponse } = useQuery({
@@ -82,17 +82,17 @@ export function ServiceItem({
       : service.base_price;
 
   const displayPrice =
-    (service.service_type === "car" || service.service_type === "car_rental") &&
-    withDriver
+    (service.service_type === ("car" as any) || service.service_type === ("car_rental" as any)) &&
+    with_driver
       ? basePrice + driverSurcharge
       : basePrice;
 
   const priceFormatted = `$${displayPrice.toLocaleString()}${
-    service.service_type === "hotel" || service.service_type === "bnb"
+    service.service_type === ("hotel" as any) || service.service_type === ("bnb" as any)
       ? " / night"
-      : service.service_type === "car_rental" ||
-          service.service_type === "guide" ||
-          service.service_type === "car"
+      : service.service_type === ("car_rental" as any) ||
+          service.service_type === ("guide" as any) ||
+          service.service_type === ("car" as any)
         ? " / day"
         : ""
   }`;
@@ -176,12 +176,12 @@ export function ServiceItem({
                 </div>
 
                 <div className="flex flex-col gap-8">
-                  {(service.service_type === "car" ||
-                    service.service_type === "car_rental") && (
+                  {(service.service_type === ("car" as any) ||
+                    service.service_type === ("car_rental" as any)) && (
                     <div className="flex items-center space-x-3 bg-muted/30 p-4 rounded-xl w-fit">
                       <Checkbox
                         id={`driver-${service.id}`}
-                        checked={withDriver}
+                        checked={with_driver}
                         onCheckedChange={(c) => setWithDriver(!!c)}
                       />
                       <Label
@@ -199,7 +199,7 @@ export function ServiceItem({
                         size="lg"
                         variant={isSelected ? "destructive" : "default"}
                         className="px-8 rounded-full h-11 uppercase tracking-widest font-display text-[10px] shadow-lg shadow-primary/10"
-                        onClick={() => onSelect(service, { withDriver })}
+                        onClick={() => onSelect(service, { with_driver })}
                       >
                         {isSelected ? "Remove" : bookLabel}
                       </Button>
@@ -217,7 +217,7 @@ export function ServiceItem({
 
                           model: service.title,
                           category: "suv",
-                          pricePerDay:
+                          price_per_day:
                             typeof service.base_price === "string"
                               ? parseFloat(service.base_price)
                               : service.base_price,
@@ -225,7 +225,7 @@ export function ServiceItem({
                           transmission: "Automatic",
 
                           name: service.title,
-                          pricePerNight:
+                          price_per_night:
                             typeof service.base_price === "string"
                               ? parseFloat(service.base_price)
                               : service.base_price,
@@ -237,9 +237,9 @@ export function ServiceItem({
                               ? service.location
                               : "Kigali",
 
-                          type: "Guide",
+                          type: "guide",
                           description: service.description,
-                        }}
+                        } as any}
                         label={bookLabel}
                         size="lg"
                         className="px-8 rounded-full h-11 uppercase tracking-widest font-display text-[10px] shadow-lg shadow-primary/10"

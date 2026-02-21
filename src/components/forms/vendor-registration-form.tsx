@@ -1,38 +1,38 @@
 "use client";
 
-import { useForm } from "@tanstack/react-form";
-import { toast } from "sonner";
-import { z } from "zod";
 import {
-  registerInputSchema,
-  registerObjectSchema,
-  type RegisterInput,
-} from "@/lib/schema/auth-schema";
-import { type CreateVendorInput } from "@/lib/schema/vendor-schema";
-import { register } from "@/actions/auth";
-import { createVendorProfile } from "@/actions/vendors";
-import { Label } from "../ui/label";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "../ui/input-group";
-import {
+  RiAlertLine,
   RiArrowRightLine,
   RiBuildingLine,
   RiGlobalLine,
   RiLockPasswordLine,
   RiMailLine,
+  RiMapPinLine,
   RiPhoneLine,
   RiUserLine,
-  RiMapPinLine,
-  RiAlertLine,
 } from "@remixicon/react";
-import { Button } from "../ui/button";
+import { useForm } from "@tanstack/react-form";
 import { useRouter } from "next/navigation";
-import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { useState } from "react";
+import { toast } from "sonner";
+import { z } from "zod";
+import { register } from "@/actions/auth";
+import { registerVendor } from "@/actions/vendors";
+import { 
+  userSchema, 
+  registerObjectSchema, 
+  type RegisterInput,
+  type CreateVendorInput 
+} from "@/lib/unified-types";
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+import { Button } from "../ui/button";
 import { FieldError } from "../ui/field";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "../ui/input-group";
+import { Label } from "../ui/label";
 import {
   Select,
   SelectContent,
@@ -84,7 +84,7 @@ export function VendorRegistrationForm() {
       bio: "",
     },
     validators: {
-      // @ts-ignore zod to tanstack adapter issue usually
+      // @ts-expect-error zod to tanstack adapter issue usually
       onChange: formSchema,
     },
     onSubmit: async ({ value, formApi }) => {
@@ -112,7 +112,7 @@ export function VendorRegistrationForm() {
           Object.entries(registerResult.fieldErrors).forEach(
             ([field, errors]) => {
               if (Object.keys(value).includes(field)) {
-                // @ts-ignore
+                // @ts-expect-error
                 formApi.setFieldMeta(field, (prev) => ({
                   ...prev,
                   errors: errors,
@@ -137,7 +137,7 @@ export function VendorRegistrationForm() {
         website: value.website || "",
       };
 
-      const vendorResult = await createVendorProfile(vendorData);
+      const vendorResult = await registerVendor(vendorData);
 
       if (!vendorResult.success) {
         toast.error(vendorResult.error || "Failed to create vendor profile.");
@@ -149,7 +149,7 @@ export function VendorRegistrationForm() {
           Object.entries(vendorResult.fieldErrors).forEach(
             ([field, errors]) => {
               if (Object.keys(value).includes(field)) {
-                // @ts-ignore
+                // @ts-expect-error
                 formApi.setFieldMeta(field, (prev) => ({
                   ...prev,
                   errors: errors,

@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/data-table";
 import { createDefaultDataTableState } from "@/components/ui/data-table-state";
 import { Link } from "@/i18n/navigation";
-import type { ServiceResponse } from "@/lib/schema/service-schema";
+import { serviceSchema, type ServiceResponse } from "@/lib/unified-types";
 import { serviceColumns } from "./columns";
 
 interface InventoryClientProps {
