@@ -1,7 +1,6 @@
 "use client";
 
 import { RiAlertLine, RiRefreshLine } from "@remixicon/react";
-import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 
@@ -12,10 +11,6 @@ export default function AdminError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
-  useEffect(() => {
-    // Log the error to an error reporting service
-    console.error(error);
-  }, [error]);
 
   return (
     <div className="flex min-h-[60vh] flex-col items-center justify-center p-5 text-center">

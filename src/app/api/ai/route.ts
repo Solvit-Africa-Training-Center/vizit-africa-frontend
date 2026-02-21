@@ -118,8 +118,6 @@ Requirements:
 
     return result.toTextStreamResponse();
   } catch (error) {
-    console.error("AI trip planning error:", error);
-
     const err = error as Record<string, unknown>;
     const isRateLimit =
       err.statusCode === 429 ||

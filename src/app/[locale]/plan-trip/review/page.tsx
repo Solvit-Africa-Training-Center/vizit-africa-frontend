@@ -62,7 +62,6 @@ export default function TripReviewPage() {
         );
       }
     } catch (error) {
-      console.error("Submission error:", error);
       toast.error("An unexpected error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);

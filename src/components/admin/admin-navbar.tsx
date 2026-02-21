@@ -122,7 +122,7 @@ export function AdminNavbar() {
                 await import("@/actions/auth").then((mod) => mod.logout());
                 window.location.href = "/auth/login";
               } catch (error) {
-                console.error("Logout failed:", error);
+                // Logout error handled
               }
             }}
           >

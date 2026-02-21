@@ -1,7 +1,6 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 
 export default function GlobalError({
@@ -14,9 +13,6 @@ export default function GlobalError({
   const { locale } = useParams();
   const lang = (locale as string) || "en";
   const direction = lang === "ar" ? "rtl" : "ltr";
-  useEffect(() => {
-    console.error(error);
-  }, [error]);
 
   return (
     <html lang={lang} dir={direction}>
