@@ -3,11 +3,7 @@
 import { cookies } from "next/headers";
 import { api, ApiError } from "@/lib/api/simple-client";
 import { endpoints } from "./endpoints";
-import {
-  userSchema,
-  authResponseSchema,
-  type ActionResult,
-} from "@/lib/unified-types";
+import { userSchema, type ActionResult } from "@/lib/unified-types";
 import type { User } from "@/lib/unified-types";
 
 const COOKIE_OPTIONS = {
@@ -151,5 +147,34 @@ export async function setPassword({
       error:
         error instanceof ApiError ? error.message : "Failed to set password",
     };
+  }
+}
+
+export async function googleLogin(
+  token: string,
+): Promise<ActionResult<{ access: string; refresh: string; user: User }>> {
+  try {
+    const data = await api.post<{
+      access: string;
+      refresh: string;
+      user: User;
+    }>(endpoints.auth.googleLogin, { token }, undefined, {
+      requiresAuth: false,
+    });
+
+    const cookieStore = await cookies();
+    cookieStore.set("accessToken", data.access, COOKIE_OPTIONS);
+    cookieStore.set("refreshToken", data.refresh, COOKIE_OPTIONS);
+
+    return { success: true, data };
+  } catch (error) {
+    if (error instanceof ApiError) {
+      return {
+        success: false,
+        error: error.message,
+        fieldErrors: error.details as Record<string, string[]> | undefined,
+      };
+    }
+    return { success: false, error: "Google login failed" };
   }
 }

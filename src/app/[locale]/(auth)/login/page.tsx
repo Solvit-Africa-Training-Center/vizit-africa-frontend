@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { LoginForm } from "@/components/forms/login-form";
 import { Link } from "@/i18n/navigation";
+import { GoogleAuthButton } from "@/components/forms/google-auth-button";
 
 export default async function LoginPage() {
   const t = await getTranslations("Auth.login");
@@ -34,6 +35,8 @@ export default async function LoginPage() {
           </span>
         </div>
       </div>
+
+      <GoogleAuthButton label="Continue with Google" />
 
       <p className="text-center text-sm text-muted-foreground mt-8 font-light">
         {t("noAccount")}{" "}

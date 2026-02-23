@@ -73,9 +73,9 @@ export default function ProfilePage() {
     let days = 0;
     confirmedTrips.forEach((b: Booking) => {
       const hasStarted = b.items.some((item) => {
-        if (!item.startDate) return false;
+        if (!item.start_date) return false;
         try {
-          return isPast(parseISO(item.startDate));
+          return isPast(parseISO(item.start_date));
         } catch {
           return false;
         }
@@ -83,12 +83,12 @@ export default function ProfilePage() {
 
       if (hasStarted) {
         b.items.forEach((item) => {
-          if (!item.startDate || !item.endDate) return;
+          if (!item.start_date || !item.end_date) return;
           try {
             days +=
               differenceInDays(
-                parseISO(item.endDate),
-                parseISO(item.startDate),
+                parseISO(item.end_date),
+                parseISO(item.start_date),
               ) + 1;
           } catch {
             // ignore date parse errors
@@ -105,8 +105,8 @@ export default function ProfilePage() {
     const confirmed = bookingsData
       .filter((b: Booking) => b.status === "confirmed" && b.items.length > 0)
       .sort((a: Booking, b: Booking) => {
-        const startA = a.items[0]?.startDate;
-        const startB = b.items[0]?.startDate;
+        const startA = a.items[0]?.start_date;
+        const startB = b.items[0]?.start_date;
         if (!startA || !startB) return 0;
         return new Date(startA).getTime() - new Date(startB).getTime();
       })[0];
@@ -229,9 +229,9 @@ export default function ProfilePage() {
                         {nextTrip ? (
                           <div className="text-right">
                             <p className="text-3xl font-display font-medium">
-                              {nextTrip.items[0]?.startDate
+                              {nextTrip.items[0]?.start_date
                                 ? differenceInDays(
-                                    new Date(nextTrip.items[0].startDate),
+                                    new Date(nextTrip.items[0].start_date),
                                     new Date(),
                                   )
                                 : "-"}
@@ -251,16 +251,16 @@ export default function ProfilePage() {
                               : "Request Processing"
                             : "No Trips Planned"}
                         </h2>
-                        {nextTrip?.items[0]?.startDate && (
+                        {nextTrip?.items[0]?.start_date && (
                           <p className="text-lg font-light opacity-90 flex items-center gap-2">
                             <RiCalendarLine className="size-5" />
                             {new Date(
-                              nextTrip.items[0].startDate,
+                              nextTrip.items[0].start_date,
                             ).toLocaleDateString()}{" "}
                             -{" "}
-                            {nextTrip.items[0].endDate
+                            {nextTrip.items[0].end_date
                               ? new Date(
-                                  nextTrip.items[0].endDate,
+                                  nextTrip.items[0].end_date,
                                 ).toLocaleDateString()
                               : ""}
                           </p>
@@ -347,13 +347,13 @@ export default function ProfilePage() {
                                   </span>
                                   {req.items.length} items
                                 </div>
-                                {req.items[0]?.startDate && (
+                                {req.items[0]?.start_date && (
                                   <div>
                                     <span className="block text-xs uppercase opacity-70">
                                       Start Date
                                     </span>
                                     {new Date(
-                                      req.items[0].startDate,
+                                      req.items[0].start_date,
                                     ).toLocaleDateString()}
                                   </div>
                                 )}

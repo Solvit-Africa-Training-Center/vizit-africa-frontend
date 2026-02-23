@@ -6,6 +6,7 @@ import { useLocale } from "next-intl";
 import { usePathname as useNextPathname } from "next/navigation";
 import { usePathname as useIntlPathname } from "@/i18n/navigation";
 import { Toaster } from "@/components/ui/sonner";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 function PathLogger({ children }: { children: React.ReactNode }) {
   const nextPathname = useNextPathname();
@@ -40,8 +41,15 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
       <PathLogger>
-        {children}
-        <Toaster />
+        <GoogleOAuthProvider
+          clientId={
+            process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ||
+            "227362966925-jkk00ud4asi7grm1pvofuip8nbkr5nq0.apps.googleusercontent.com"
+          }
+        >
+          {children}
+          <Toaster />
+        </GoogleOAuthProvider>
       </PathLogger>
     </QueryClientProvider>
   );
