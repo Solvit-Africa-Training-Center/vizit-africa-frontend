@@ -35,7 +35,10 @@ export default function proxy(request: NextRequest) {
   }
 
   if (isAuthPage && token) {
-    const profileUrl = new URL(`/${routing.defaultLocale}/profile`, request.url);
+    const profileUrl = new URL(
+      `/${routing.defaultLocale}/profile`,
+      request.url,
+    );
     console.log("[PROXY] Redirect authenticated auth-page:", {
       from: request.nextUrl.pathname,
       to: profileUrl.pathname + profileUrl.search,

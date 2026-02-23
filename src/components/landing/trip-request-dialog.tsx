@@ -536,6 +536,7 @@ export function TripRequestDialog({
                         >
                           <span>{item.title}</span>
                           <button
+                            type="button"
                             onClick={(e) => {
                               e.stopPropagation();
                               removeItem(item.id);
