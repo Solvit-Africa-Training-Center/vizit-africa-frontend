@@ -80,7 +80,7 @@ export function Hero() {
   return (
     <section
       ref={containerRef}
-      className="relative h-[100dvh] min-h-[700px] w-full overflow-hidden bg-[oklch(14%_0_0)]"
+      className="relative h-dvh min-h-[700px] w-full overflow-hidden bg-[oklch(14%_0_0)]"
     >
       <div
         ref={parallaxRef}

@@ -8,43 +8,49 @@ export function SocialProof() {
   const t = useTranslations("SocialProof");
 
   return (
-    <section className="bg-muted/30 py-10 overflow-hidden relative">
-      <div className="container max-w-7xl mx-auto px-5 mb-8 text-center">
-        <p className="text-center text-sm font-normal uppercase tracking-widest text-muted-foreground/60 mb-8">
-          {t("tagline")}
-        </p>
-      </div>
+    <section className="bg-[#0a0a0a] border-y border-white/10 overflow-hidden relative py-3">
+      <div className="absolute left-0 top-0 bottom-0 w-32 bg-linear-to-r from-[#0a0a0a] to-transparent z-10" />
+      <div className="absolute right-0 top-0 bottom-0 w-32 bg-linear-to-l from-[#0a0a0a] to-transparent z-10" />
 
-      <div className="relative flex overflow-hidden group">
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-linear-to-r from-muted/30 to-transparent z-10" />
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-linear-to-l from-muted/30 to-transparent z-10" />
+      <div className="flex items-center w-full">
+        {/* Static Prefix */}
+        <div className="bg-[#0a0a0a] z-20 pl-5 md:pl-10 pr-6 border-r border-white/10 flex items-center gap-2">
+          <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+          <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] text-white/50 whitespace-nowrap">
+            {t("tagline") || "PARTNERED WITH"}
+          </span>
+        </div>
 
-        <motion.div
-          className="flex gap-16 items-center whitespace-nowrap"
-          animate={{ x: [0, -1000] }}
-          transition={{
-            repeat: Infinity,
-            ease: "linear",
-            duration: 60,
-          }}
-          aria-hidden="true"
-        >
-          {[
-            ...partnerLogos,
-            ...partnerLogos,
-            ...partnerLogos,
-            ...partnerLogos,
-          ].map((partner, i) => (
-            <div
-              key={`${partner.name}-${i}`}
-              className="flex items-center gap-4 opacity-50  hover:opacity-100 transition-[filter,opacity] duration-200 cursor-pointer"
-            >
-              <span className="text-xl font-medium font-display text-foreground/80">
-                {partner.name}
-              </span>
-            </div>
-          ))}
-        </motion.div>
+        {/* Ticker Content */}
+        <div className="flex-1 overflow-hidden relative">
+          <motion.div
+            className="flex gap-12 items-center whitespace-nowrap pl-12"
+            animate={{ x: [0, -1000] }}
+            transition={{
+              repeat: Infinity,
+              ease: "linear",
+              duration: 40,
+            }}
+            aria-hidden="true"
+          >
+            {[
+              ...partnerLogos,
+              ...partnerLogos,
+              ...partnerLogos,
+              ...partnerLogos,
+            ].map((partner, i) => (
+              <div
+                key={`${partner.name}-${i}`}
+                className="flex items-center gap-4 text-white/40 hover:text-white transition-colors duration-300 cursor-pointer group"
+              >
+                <span className="text-sm md:text-base font-mono uppercase tracking-widest group-hover:text-shadow-sm group-hover:shadow-white/20">
+                  {partner.name}
+                </span>
+                <span className="text-white/10">/</span>
+              </div>
+            ))}
+          </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -5,12 +5,13 @@ import {
   FAQ,
   Hero,
   HowItWorks,
-  PopularRoutes,
+  FlightSearchWidget,
   Services,
   SocialProof,
   Testimonials,
   WhyUs,
 } from "@/components/landing";
+import { TerminalDivider } from "@/components/landing/terminal-divider";
 
 export const metadata: Metadata = {
   title: "Vizit Africa | Book Flights to Rwanda & Africa",
@@ -64,28 +65,18 @@ export default function Home() {
       />
       <Hero />
       <SocialProof />
+      <FlightSearchWidget />
+      <Destinations />
+      <Services />
 
-      <section className="py-20 md:py-28 bg-background">
-        <div className="container max-w-7xl mx-auto px-5 md:px-10">
-          <PopularRoutes />
-        </div>
-      </section>
-
-      <section className="py-20 md:py-28 bg-background border-t border-border">
-        <div className="container max-w-7xl mx-auto px-5 md:px-10">
-          <Destinations />
-        </div>
-      </section>
-
-      <section className="py-20 md:py-28 bg-background border-t border-border">
-        <div className="container max-w-7xl mx-auto px-5 md:px-10">
-          <Services />
-        </div>
-      </section>
-
+      <TerminalDivider />
       <HowItWorks />
+      <TerminalDivider />
+
       <Testimonials />
       <WhyUs />
+
+      <TerminalDivider />
       <FAQ />
       <CTA />
     </>

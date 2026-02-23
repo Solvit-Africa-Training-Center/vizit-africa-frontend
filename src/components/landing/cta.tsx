@@ -2,7 +2,6 @@
 
 import {
   RiArrowRightLine,
-  RiArrowRightUpLine,
   RiMailSendLine,
   RiWhatsappLine,
 } from "@remixicon/react";
@@ -10,7 +9,6 @@ import { motion } from "motion/react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
-import { Magnetic } from "@/components/ui/magnetic";
 import { Link } from "@/i18n/navigation";
 import { siteConfig } from "@/lib/configs";
 
@@ -83,31 +81,60 @@ export function CTA() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.3 }}
-                className="flex flex-wrap items-center gap-6"
+                className="w-full max-w-2xl bg-[#0a0a0a] rounded-sm border border-white/10 p-2 relative shadow-2xl"
               >
-                <Link href="/plan-trip" className="flex-1 sm:flex-none">
-                  <Magnetic>
-                    <Button className="w-full sm:w-auto h-20 px-10 rounded-sm bg-primary-foreground text-black hover:bg-primary-foreground/95 text-xl font-medium transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white group">
-                      <span className="flex items-center gap-2">
-                        {t("startPlanning")}
-                        <RiArrowRightLine className="w-5 h-5 transition-transform duration-200 group-hover:translate-x-0.5" />
+                {/* Flight Search Console embedded in CTA */}
+                <div className="absolute top-0 left-0 right-0 h-[2px] bg-primary/20 rounded-t-sm" />
+                <div className="absolute top-0 left-0 w-1/4 h-[2px] bg-primary rounded-tl-sm" />
+
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-2">
+                  <div className="md:col-span-4 relative">
+                    <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none text-white/30">
+                      <span className="text-[10px] font-mono uppercase tracking-widest">
+                        From
                       </span>
-                    </Button>
-                  </Magnetic>
-                </Link>
-                <Link href="/contact" className="flex-1 sm:flex-none">
-                  <Magnetic>
-                    <div className="w-full sm:w-auto h-20 px-8 rounded-sm border border-white/20 flex items-center justify-center gap-3 cursor-pointer hover:bg-primary-foreground/5 transition-colors duration-200 group focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
-                      <span className="text-sm font-medium uppercase tracking-wider">
-                        {t("contactTeam")}
-                      </span>
-                      <RiArrowRightUpLine
-                        className="w-5 h-5 text-primary-foreground/50 group-hover:text-primary-foreground transition-colors duration-200"
-                        aria-hidden="true"
-                      />
                     </div>
-                  </Magnetic>
-                </Link>
+                    <input
+                      type="text"
+                      placeholder="Leaving from"
+                      className="w-full h-14 pl-14 pr-4 bg-white/5 border border-transparent hover:border-white/10 focus:border-primary focus:bg-[#0a0a0a] outline-none transition-all rounded-sm text-sm font-medium text-white placeholder:text-white/30"
+                    />
+                  </div>
+                  <div className="md:col-span-4 relative">
+                    <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none text-white/30">
+                      <span className="text-[10px] font-mono uppercase tracking-widest">
+                        To
+                      </span>
+                    </div>
+                    <input
+                      type="text"
+                      value="Kigali (KGL)"
+                      readOnly
+                      className="w-full h-14 pl-12 pr-4 bg-white/[0.02] border border-transparent outline-none rounded-sm text-sm font-bold text-white/50"
+                    />
+                  </div>
+                  <div className="md:col-span-4 relative">
+                    <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none text-white/30">
+                      <span className="text-[10px] font-mono uppercase tracking-widest">
+                        Date
+                      </span>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="When?"
+                      className="w-full h-14 pl-14 pr-4 bg-white/5 border border-transparent hover:border-white/10 focus:border-primary focus:bg-[#0a0a0a] outline-none transition-all rounded-sm text-sm font-medium text-white placeholder:text-white/30 cursor-pointer"
+                      readOnly
+                    />
+                  </div>
+                  <div className="md:col-span-12">
+                    <Link href="/plan-trip" className="block">
+                      <Button className="w-full h-12 font-display uppercase tracking-widest text-xs rounded-sm transition-all hover:bg-primary/90 text-black">
+                        Check-in & Book Flight
+                        <RiArrowRightLine className="w-4 h-4 ml-2" />
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
               </motion.div>
             </div>
 

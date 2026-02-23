@@ -16,7 +16,18 @@ export function WhyUs() {
   const benefits = t.raw("benefits") as string[];
 
   return (
-    <section id="why-us" className="py-24 md:py-32 bg-background">
+    <section
+      id="why-us"
+      className="py-24 md:py-32 bg-muted/30 relative overflow-hidden isolate"
+    >
+      {/* Airport Geometry Background */}
+      <div
+        className="absolute inset-0 opacity-[0.02] pointer-events-none -z-10 bg-black"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40' stroke='currentColor' stroke-width='1' fill='none'/%3E%3C/svg%3E")`,
+        }}
+        aria-hidden="true"
+      />
       <div className="container max-w-7xl mx-auto px-5 md:px-10">
         <div className="grid md:grid-cols-2 gap-16 items-start">
           <motion.div

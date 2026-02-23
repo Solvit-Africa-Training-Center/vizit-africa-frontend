@@ -34,9 +34,10 @@ export function SectionTitle({
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-primary/70 uppercase tracking-widest text-xs font-medium block mb-3"
+          className="text-primary/70 uppercase tracking-widest text-xs font-medium block mb-4"
         >
           {overline}
+          <span className="block w-8 h-px bg-primary/30 mt-3" />
         </motion.span>
       )}
       <motion.h2

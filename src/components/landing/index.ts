@@ -5,7 +5,7 @@ export * from "./footer";
 export * from "./gallery";
 export * from "./hero";
 export * from "./how-it-works";
-export * from "./popular-routes";
+export * from "./flight-search-widget";
 export * from "./section-title";
 export * from "./services";
 export * from "./social-proof";

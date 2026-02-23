@@ -34,7 +34,13 @@ export function HowItWorks() {
           dark
         />
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 border-t border-white/10 pt-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 pt-16 relative">
+          {/* Connecting Flight Path Line (Desktop) */}
+          <div
+            className="hidden lg:block absolute top-[28px] left-[10%] right-[20%] h-px border-t border-dashed border-white/20"
+            aria-hidden="true"
+          />
+
           {processSteps.map((step, index) => {
             return (
               <motion.div
@@ -45,14 +51,19 @@ export function HowItWorks() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="group relative"
               >
-                <div
-                  className="font-display text-8xl md:text-9xl font-medium text-primary-foreground/20 mb-6 leading-none select-none transition-colors duration-500 group-hover:text-primary"
-                  aria-hidden="true"
-                >
-                  {step.step.toString().padStart(2, "0")}
+                {/* Boarding Gate Number */}
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="bg-background text-foreground text-xs font-mono font-bold uppercase tracking-widest py-1.5 px-3 rounded-sm relative z-10 group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
+                    GATE {step.step.toString().padStart(2, "0")}
+                  </div>
+                  {/* Decorative dot on the connecting line */}
+                  <div
+                    className="hidden lg:block w-2.5 h-2.5 rounded-full bg-white/20 relative z-10 group-hover:bg-primary group-hover:scale-150 transition-all duration-300"
+                    aria-hidden="true"
+                  />
                 </div>
 
-                <div className="space-y-4 pr-4">
+                <div className="space-y-4 pr-4 border-l-2 border-white/10 pl-5 ml-2 group-hover:border-primary transition-colors duration-300">
                   <h3 className="text-xl font-display font-medium uppercase tracking-tight text-background group-hover:text-primary transition-colors duration-300">
                     {step.title}
                   </h3>

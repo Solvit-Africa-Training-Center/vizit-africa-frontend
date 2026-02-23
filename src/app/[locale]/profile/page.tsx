@@ -31,7 +31,7 @@ import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
 import { useUser } from "@/components/user-provider";
 import { Link } from "@/i18n/navigation";
-import { bookingSchema, type Booking } from "@/lib/unified-types";
+import { type Booking } from "@/lib/unified-types";
 import { cn } from "@/lib/utils";
 
 type Tab = "overview" | "trips" | "saved" | "settings";

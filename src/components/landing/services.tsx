@@ -62,19 +62,24 @@ export function Services() {
   }));
 
   return (
-    <div ref={containerRef}>
-      <SectionTitle
-        overline={t("overline")}
-        title={t("title")}
-        description={t("description")}
-      />
+    <section className="py-20 md:py-28 bg-background">
+      <div
+        ref={containerRef}
+        className="container max-w-7xl mx-auto px-5 md:px-10"
+      >
+        <SectionTitle
+          overline={t("overline")}
+          title={t("title")}
+          description={t("description")}
+        />
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
-        {services.map((service, i) => (
-          <ServiceCard key={i} service={service} />
-        ))}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-px mt-16 bg-border/40 p-px rounded-sm overflow-hidden">
+          {services.map((service, i) => (
+            <ServiceCard key={i} service={service} />
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -91,7 +96,7 @@ function ServiceCard({
   return (
     <Link
       href={`/plan-trip?service=${service.linkKey}`}
-      className="service-card group relative overflow-hidden rounded-sm aspect-[4/3] block"
+      className="service-card group relative overflow-hidden aspect-4/3 block bg-background"
     >
       <div className="absolute inset-0">
         <Image
@@ -108,7 +113,7 @@ function ServiceCard({
       <div className="absolute inset-0 p-6 flex flex-col justify-end">
         <div className="translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
           <div
-            className="w-10 h-[1px] bg-primary-foreground/60 mb-3"
+            className="w-10 h-px bg-primary-foreground/60 mb-3"
             aria-hidden="true"
           />
           <h3 className="text-2xl font-medium uppercase text-primary-foreground tracking-tight mb-1">
