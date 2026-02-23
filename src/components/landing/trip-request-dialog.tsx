@@ -15,7 +15,7 @@ import {
   RiUserStarLine,
 } from "@remixicon/react";
 import { differenceInDays, format } from "date-fns";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useLocale } from "next-intl";
 import * as React from "react";
 import type { DateRange } from "react-day-picker";
@@ -66,32 +66,55 @@ export function TripRequestDialog({
 }: TripRequestDialogProps) {
   const router = useRouter();
   const locale = useLocale();
-  const { updateTripInfo, tripInfo, items, removeItem, addItem } =
-    useTripStore();
+  const store = useTripStore();
+  const { tripInfo, updateTripInfo, items, addItem, removeItem } = store;
+
+  // Destructure tripInfo for clarity
+  const {
+    departureDate,
+    returnDate,
+    adults = 2,
+    children = 0,
+    infants = 0,
+    name = "",
+    email = "",
+    phone = "",
+    departureCity = "",
+    specialRequests = "",
+  } = tripInfo;
 
   const [dateRange, setDateRange] = React.useState<DateRange | undefined>({
-    from: tripInfo.departureDate ? new Date(tripInfo.departureDate) : undefined,
-    to: tripInfo.returnDate ? new Date(tripInfo.returnDate) : undefined,
+    from: departureDate ? new Date(departureDate) : undefined,
+    to: returnDate ? new Date(returnDate) : undefined,
   });
 
   const [guests, setGuests] = React.useState<GuestCount>({
-    adults: tripInfo.adults || 2,
-    children: tripInfo.children || 0,
-    infants: tripInfo.infants || 0,
+    adults,
+    children,
+    infants,
   });
 
   const [contactInfo, setContactInfo] = React.useState({
-    name: tripInfo.name || "",
-    email: tripInfo.email || "",
-    phone: tripInfo.phone || "",
-    departureCity: tripInfo.departureCity || "",
-    specialRequests: tripInfo.specialRequests || "",
+    name,
+    email,
+    phone,
+    departureCity,
+    specialRequests,
   });
 
-  const updateContact = (updates: Partial<typeof contactInfo>) => {
-    setContactInfo((prev) => ({ ...prev, ...updates }));
-  };
+  // UI skill: updateContact
+  const updateContact = React.useCallback(
+    (updates: Partial<typeof contactInfo>) => {
+      setContactInfo((prev) => ({ ...prev, ...updates }));
+    },
+    [],
+  );
 
+  // UI skill: location autocomplete
+  const locationAutocomplete = useLocationAutocomplete({
+    initialQuery: departureCity,
+    countryCodes: "rw,ke,tz,ug,za,ng,gh",
+  });
   const {
     query: departureQuery,
     setQuery: setDepartureQuery,
@@ -100,24 +123,22 @@ export function TripRequestDialog({
     isLocating: isDepartureLocating,
     error: departureLocationError,
     detectCurrentLocation: detectCurrentDepartureLocation,
-  } = useLocationAutocomplete({
-    initialQuery: tripInfo.departureCity || "",
-    countryCodes: "rw,ke,tz,ug,za,ng,gh",
-  });
+  } = locationAutocomplete;
 
-  const handleDepartureChange = (value: string) => {
-    setDepartureQuery(value);
-    updateContact({ departureCity: value });
-  };
+  // UI skill: handleDepartureChange
+  const handleDepartureChange = React.useCallback(
+    (value: string) => {
+      setDepartureQuery(value);
+      updateContact({ departureCity: value });
+    },
+    [setDepartureQuery, updateContact],
+  );
 
-  const handleUseCurrentDepartureLocation = async () => {
+  // UI skill: handleUseCurrentDepartureLocation
+  const handleUseCurrentDepartureLocation = React.useCallback(async () => {
     const suggestion = await detectCurrentDepartureLocation();
-    if (!suggestion) {
-      return;
-    }
-
-    handleDepartureChange(suggestion.name);
-  };
+    if (suggestion) handleDepartureChange(suggestion.name);
+  }, [detectCurrentDepartureLocation, handleDepartureChange]);
 
   const handleGuestChange = (type: keyof GuestCount, delta: number) => {
     setGuests((prev) => {
@@ -208,6 +229,21 @@ export function TripRequestDialog({
     }
   };
 
+  const toggleItem = React.useCallback(
+    (itemId: string, itemData: any) => {
+      const exists = items.some((i) => i.id === itemId);
+      if (exists) {
+        removeItem(itemId);
+      } else {
+        addItem(itemData);
+      }
+    },
+    [items, addItem, removeItem],
+  );
+
+  const itemsCount = items.length;
+  const selectedItemsDisplay = items.map((item) => item.title).join(", ");
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       {trigger && <DialogTrigger render={trigger} />}
@@ -215,28 +251,40 @@ export function TripRequestDialog({
         className="sm:max-w-7xl h-[90vh] p-0 gap-0 overflow-hidden flex flex-col"
         showCloseButton={true}
       >
-        <div className="px-8 py-6 border-b bg-gradient-to-r from-primary/5 to-transparent shrink-0">
+        <div className="px-8 py-6 border-b bg-linear-to-r from-primary/5 to-transparent shrink-0">
           <div className="flex items-start justify-between gap-4">
-            <div className="space-y-1">
+            <div className="space-y-1 flex-1">
               <DialogTitle className="text-2xl font-bold tracking-tight flex items-center gap-2">
-                Plan Your Journey
+                Quick Trip Request
               </DialogTitle>
               <DialogDescription className="text-sm">
-                Customize your Kigali experience with our premium planning
-                service
+                Fast booking for your Kigali adventure
               </DialogDescription>
             </div>
-            <div className="flex items-center gap-3 mr-5">
-              {nights > 0 && (
-                <Badge variant="secondary" className="font-mono">
-                  {nights} {nights === 1 ? "night" : "nights"}
-                </Badge>
-              )}
-              {totalGuests > 0 && (
-                <Badge variant="outline" className="gap-1">
-                  <RiUser2Line className="size-3" />
-                  {totalGuests} {totalGuests === 1 ? "guest" : "guests"}
-                </Badge>
+            <div className="flex flex-col items-end gap-3">
+              <div className="flex items-center gap-3">
+                {nights > 0 && (
+                  <Badge variant="secondary" className="font-mono">
+                    {nights} {nights === 1 ? "night" : "nights"}
+                  </Badge>
+                )}
+                {totalGuests > 0 && (
+                  <Badge variant="outline" className="gap-1">
+                    <RiUser2Line className="size-3" />
+                    {totalGuests} {totalGuests === 1 ? "guest" : "guests"}
+                  </Badge>
+                )}
+                {itemsCount > 0 && (
+                  <Badge className="gap-1 bg-primary/90">
+                    <RiSuitcaseLine className="size-3" />
+                    {itemsCount} item{itemsCount !== 1 ? "s" : ""}
+                  </Badge>
+                )}
+              </div>
+              {itemsCount > 0 && (
+                <p className="text-xs text-muted-foreground text-right max-w-xs">
+                  {selectedItemsDisplay}
+                </p>
               )}
             </div>
           </div>
@@ -280,6 +328,228 @@ export function TripRequestDialog({
                     }}
                   />
                 </div>
+              </div>
+
+              {/* Quick Services Toggles */}
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-semibold">What do you need?</h3>
+                  {itemsCount > 0 && (
+                    <Badge variant="secondary" className="text-xs">
+                      {itemsCount} selected
+                    </Badge>
+                  )}
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  {/* Flight Toggle */}
+                  <div
+                    onClick={() =>
+                      toggleItem("flight-request", {
+                        id: "flight-request",
+                        type: "flight",
+                        title: "Flight Booking",
+                        description: "Round-trip flight arrangement",
+                        price: 0,
+                        quantity: 1,
+                      })
+                    }
+                    className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                      items.some((i) => i.id === "flight-request")
+                        ? "border-primary bg-primary/5"
+                        : "border-border hover:border-primary/50 hover:bg-accent/30"
+                    }`}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="size-10 rounded-lg bg-blue-100 dark:bg-blue-950 flex items-center justify-center shrink-0">
+                        <RiPlaneLine className="size-5 text-blue-600 dark:text-blue-400" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium">Flights</p>
+                        <p className="text-xs text-muted-foreground">
+                          Round-trip booking
+                        </p>
+                      </div>
+                      <Checkbox
+                        checked={items.some((i) => i.id === "flight-request")}
+                        onCheckedChange={() => {
+                          toggleItem("flight-request", {
+                            id: "flight-request",
+                            type: "flight",
+                            title: "Flight Booking",
+                            description: "Round-trip flight arrangement",
+                            price: 0,
+                            quantity: 1,
+                          });
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Hotel Toggle */}
+                  <div
+                    onClick={() =>
+                      toggleItem("hotel-request", {
+                        id: "hotel-request",
+                        type: "hotel",
+                        title: "Hotel Accommodation",
+                        description: "Quality accommodation",
+                        price: 0,
+                        quantity: 1,
+                      })
+                    }
+                    className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                      items.some((i) => i.id === "hotel-request")
+                        ? "border-primary bg-primary/5"
+                        : "border-border hover:border-primary/50 hover:bg-accent/30"
+                    }`}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="size-10 rounded-lg bg-amber-100 dark:bg-amber-950 flex items-center justify-center shrink-0">
+                        <RiHotelLine className="size-5 text-amber-600 dark:text-amber-400" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium">Accommodation</p>
+                        <p className="text-xs text-muted-foreground">
+                          Hotel stay
+                        </p>
+                      </div>
+                      <Checkbox
+                        checked={items.some((i) => i.id === "hotel-request")}
+                        onCheckedChange={() =>
+                          toggleItem("hotel-request", {
+                            id: "hotel-request",
+                            type: "hotel",
+                            title: "Hotel Accommodation",
+                            description: "Quality accommodation",
+                            price: 0,
+                            quantity: 1,
+                          })
+                        }
+                        onClick={(e) => e.stopPropagation()}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Car Toggle */}
+                  <div
+                    onClick={() =>
+                      toggleItem("car-request", {
+                        id: "car-request",
+                        type: "car",
+                        title: "Car Rental",
+                        description: "Vehicle rental service",
+                        price: 0,
+                        quantity: 1,
+                      })
+                    }
+                    className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                      items.some((i) => i.id === "car-request")
+                        ? "border-primary bg-primary/5"
+                        : "border-border hover:border-primary/50 hover:bg-accent/30"
+                    }`}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="size-10 rounded-lg bg-red-100 dark:bg-red-950 flex items-center justify-center shrink-0">
+                        <RiCarLine className="size-5 text-red-600 dark:text-red-400" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium">Car Rental</p>
+                        <p className="text-xs text-muted-foreground">
+                          Transportation
+                        </p>
+                      </div>
+                      <Checkbox
+                        checked={items.some((i) => i.id === "car-request")}
+                        onCheckedChange={() =>
+                          toggleItem("car-request", {
+                            id: "car-request",
+                            type: "car",
+                            title: "Car Rental",
+                            description: "Vehicle rental service",
+                            price: 0,
+                            quantity: 1,
+                          })
+                        }
+                        onClick={(e) => e.stopPropagation()}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Guide Toggle */}
+                  <div
+                    onClick={() =>
+                      toggleItem("guide-request", {
+                        id: "guide-request",
+                        type: "guide",
+                        title: "Local Guide",
+                        description: "Expert local guide",
+                        price: 0,
+                        quantity: 1,
+                      })
+                    }
+                    className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                      items.some((i) => i.id === "guide-request")
+                        ? "border-primary bg-primary/5"
+                        : "border-border hover:border-primary/50 hover:bg-accent/30"
+                    }`}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="size-10 rounded-lg bg-green-100 dark:bg-green-950 flex items-center justify-center shrink-0">
+                        <RiUserStarLine className="size-5 text-green-600 dark:text-green-400" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium">Local Guide</p>
+                        <p className="text-xs text-muted-foreground">
+                          Expert tours
+                        </p>
+                      </div>
+                      <Checkbox
+                        checked={items.some((i) => i.id === "guide-request")}
+                        onCheckedChange={() =>
+                          toggleItem("guide-request", {
+                            id: "guide-request",
+                            type: "guide",
+                            title: "Local Guide",
+                            description: "Expert local guide",
+                            price: 0,
+                            quantity: 1,
+                          })
+                        }
+                        onClick={(e) => e.stopPropagation()}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Selected Items Preview */}
+                {itemsCount > 0 && (
+                  <div className="mt-4 p-3 rounded-lg bg-muted/40 border border-border/50">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                      Selected Services
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {items.map((item) => (
+                        <div
+                          key={item.id}
+                          className="flex items-center gap-2 bg-background rounded-full pl-3 pr-1 py-1 text-xs font-medium border border-border/50"
+                        >
+                          <span>{item.title}</span>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              removeItem(item.id);
+                            }}
+                            className="ml-1 hover:bg-destructive/20 rounded-full p-1 transition-colors"
+                            title="Remove"
+                          >
+                            <RiCloseLine className="size-3" />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
 
               {hasItems && (
@@ -357,7 +627,7 @@ export function TripRequestDialog({
                       />
                       <AutocompletePortal>
                         <AutocompletePositioner>
-                          <AutocompletePopup className="w-[var(--anchor-width)]">
+                          <AutocompletePopup className="w-(--anchor-width)">
                             <AutocompleteList className="max-h-56 overflow-y-auto">
                               {isDepartureSearching ? (
                                 <div className="px-3 py-2 text-sm text-muted-foreground">
@@ -474,60 +744,6 @@ export function TripRequestDialog({
 
               <Separator />
 
-              <div
-                className="flex items-center justify-between p-4 rounded-xl border bg-card hover:bg-accent/50 transition-colors cursor-pointer"
-                onClick={() => {
-                  const hasFlight = items.some(
-                    (i) => i.id === "flight-request",
-                  );
-                  if (hasFlight) {
-                    removeItem("flight-request");
-                  } else {
-                    addItem({
-                      id: "flight-request",
-                      type: "flight",
-                      title: "Flight Booking",
-                      description: "Round-trip flight arrangement",
-                      price: 0,
-                      quantity: 1,
-                    });
-                  }
-                }}
-              >
-                <div className="flex items-center gap-3">
-                  <div className="size-10 rounded-full bg-primary/10 flex items-center justify-center">
-                    <RiPlaneLine className="size-5 text-primary" />
-                  </div>
-                  <div>
-                    <Label className="text-sm font-medium cursor-pointer">
-                      Include Flight Booking
-                    </Label>
-                    <p className="text-xs text-muted-foreground">
-                      We'll find the best fares for you
-                    </p>
-                  </div>
-                </div>
-                <Checkbox
-                  checked={items.some((i) => i.id === "flight-request")}
-                  onCheckedChange={(checked) => {
-                    if (checked) {
-                      addItem({
-                        id: "flight-request",
-                        type: "flight",
-                        title: "Flight Booking",
-                        description: "Round-trip flight arrangement",
-                        price: 0,
-                        quantity: 1,
-                      });
-                    } else {
-                      removeItem("flight-request");
-                    }
-                  }}
-                />
-              </div>
-
-              <Separator />
-
               {/* Contact Information */}
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
@@ -592,7 +808,7 @@ export function TripRequestDialog({
                       onChange={(e) =>
                         updateContact({ specialRequests: e.target.value })
                       }
-                      className="min-h-[80px] resize-none"
+                      className="min-h-20 resize-none"
                     />
                   </div>
                 </div>
@@ -646,7 +862,7 @@ export function TripRequestDialog({
                 size="lg"
                 onClick={handleRequestQuote}
                 disabled={!canSubmit}
-                className="gap-2 min-w-[180px]"
+                className="gap-2 min-w-45"
               >
                 {canSubmit ? (
                   <>

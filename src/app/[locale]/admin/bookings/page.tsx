@@ -1,13 +1,9 @@
 import {
-  RiArrowRightLine,
-  RiCalendarLine,
   RiCheckboxCircleLine,
-  RiUserLine,
 } from "@remixicon/react";
 import { getTranslations } from "next-intl/server";
-import { Link } from "@/i18n/navigation";
 import { getRequests } from "@/lib/simple-data-fetching";
-import { formatDate } from "@/lib/utils";
+import { AdminBookingCard } from "@/components/admin/AdminBookingCard";
 
 export default async function BookingsPage() {
   const t = await getTranslations("Admin.bookings");
@@ -29,103 +25,13 @@ export default async function BookingsPage() {
       </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {bookings.map((booking) => {
-          const hasFlight =
-            booking.requestedItems?.some(
-              (i: any) => i.type === "flight" || i.category === "flight",
-            ) || booking.needsFlights;
-          const hasHotel =
-            booking.requestedItems?.some(
-              (i: any) => i.type === "hotel" || i.category === "hotel",
-            ) || booking.needsHotel;
-          const hasCar =
-            booking.requestedItems?.some(
-              (i: any) => i.type === "car" || i.category === "car",
-            ) || booking.needsCar;
-          const hasGuide =
-            booking.requestedItems?.some(
-              (i: any) => i.type === "guide" || i.category === "guide",
-            ) || booking.needsGuide;
-
-          return (
-            <div
-              key={booking.id}
-              className="bg-primary-foreground border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-md hover:border-primary/30 transition-all"
-            >
-              <div className="p-5 border-b border-border bg-linear-to-r from-primary/5 to-transparent">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono text-muted-foreground">
-                    #{booking.id.toUpperCase().substring(0, 8)}
-                  </span>
-                  <span
-                    className={`text-xs font-medium uppercase tracking-wider px-2 py-1 rounded ${booking.status === "confirmed" || booking.status === "completed" ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700"}`}
-                  >
-                    {booking.status}
-                  </span>
-                </div>
-                <h3 className="font-display text-lg font-medium text-foreground mt-2">
-                  {booking.tripPurpose || "Trip Request"}
-                </h3>
-              </div>
-
-              <div className="p-5 space-y-4">
-                <div className="flex items-center gap-3 text-sm">
-                  <RiUserLine className="size-4 text-muted-foreground" />
-                  <span className="text-foreground">
-                    {booking.name} • {booking.travelers} {t("card.travelers")}
-                  </span>
-                </div>
-                <div className="flex items-center gap-3 text-sm">
-                  <RiCalendarLine className="size-4 text-muted-foreground" />
-                  <span className="text-foreground">
-                    {booking.arrivalDate
-                      ? formatDate(booking.arrivalDate)
-                      : "N/A"}{" "}
-                    -{" "}
-                    {booking.departureDate
-                      ? formatDate(booking.departureDate)
-                      : "N/A"}
-                  </span>
-                </div>
-                <div className="flex flex-wrap gap-1.5 pt-2">
-                  {hasFlight && (
-                    <span className="text-xs bg-muted px-2 py-0.5 rounded">
-                      {t("card.badges.flight")}
-                    </span>
-                  )}
-                  {hasHotel && (
-                    <span className="text-xs bg-muted px-2 py-0.5 rounded">
-                      {t("card.badges.hotel")}
-                    </span>
-                  )}
-                  {hasCar && (
-                    <span className="text-xs bg-muted px-2 py-0.5 rounded">
-                      {t("card.badges.car")}
-                    </span>
-                  )}
-                  {hasGuide && (
-                    <span className="text-xs bg-muted px-2 py-0.5 rounded">
-                      {t("card.badges.guide")}
-                    </span>
-                  )}
-                </div>
-              </div>
-
-              <div className="p-5 border-t border-border bg-muted/30">
-                <Link
-                  href={`/admin/bookings/${booking.id}/fulfill`}
-                  className="flex items-center justify-between text-sm font-medium text-primary hover:underline"
-                >
-                  <span className="flex items-center gap-2">
-                    <RiCheckboxCircleLine className="size-4" />
-                    {t("card.manageFulfillment")}
-                  </span>
-                  <RiArrowRightLine className="size-4" />
-                </Link>
-              </div>
-            </div>
-          );
-        })}
+        {bookings.map((booking) => (
+          <AdminBookingCard 
+            key={booking.id} 
+            booking={booking} 
+            t={(key: string) => t(key)} 
+          />
+        ))}
       </div>
 
       {bookings.length === 0 && (

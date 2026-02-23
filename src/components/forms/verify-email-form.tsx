@@ -2,7 +2,7 @@
 
 import { RiAlertLine, RiArrowRightLine } from "@remixicon/react";
 import { useForm } from "@tanstack/react-form";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -33,7 +33,7 @@ export function VerifyEmailForm({ email }: VerifyEmailFormProps) {
     },
     onSubmit: async ({ value }) => {
       const result = await verifyEmail({ email, code: value.code });
-
+      console.log(result);
       if (result.success) {
         toast.success("Email verified successfully!");
         router.push("/login");

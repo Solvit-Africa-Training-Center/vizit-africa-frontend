@@ -6,7 +6,8 @@ export const endpoints = {
     list: "/accounts/users/",
     user: (id: string | number) => `/accounts/users/${id}/`,
     me: "/accounts/users/profile/",
-    setPassword: (uidb64: string, token: string) => `/accounts/users/set_password/${uidb64}/${token}/`,
+    setPassword: (uidb64: string, token: string) =>
+      `/accounts/users/set_password/${uidb64}/${token}/`,
     refresh: "/accounts/token/refresh/",
     googleLogin: "/accounts/login/google/",
   },
@@ -31,7 +32,6 @@ export const endpoints = {
     confirm: "/bookings/confirm/",
     submitTrip: "/bookings/submit-trip/",
 
-    // RESTful Quote Management
     quote: (id: string | number) => `/bookings/${id}/quote/`,
     accept: (id: string | number) => `/bookings/${id}/accept/`,
     cancel: (id: string | number) => `/bookings/${id}/cancel/`,
@@ -44,7 +44,6 @@ export const endpoints = {
     },
     commission: (id: string | number) => `/bookings/${id}/commission/`,
     payout: (id: string | number) => `/bookings/${id}/payout/`,
-    refund: (id: string | number) => `/bookings/${id}/refund/`,
     transactions: "/bookings/transactions/",
     vendorPayouts: "/bookings/vendor-payouts/",
   },
@@ -62,18 +61,21 @@ export const endpoints = {
     list: "/locations/",
   },
   vendors: {
-    register: "/vendors/register/", // Align with Spec 2.C.1
-    create: "/vendors/", // Admin manual creation
+    register: "/vendors/register/",
+    create: "/vendors/",
     approve: (id: string | number) => `/vendors/${id}/approve/`,
     list: "/vendors/",
     detail: (id: string | number) => `/vendors/${id}/`,
-    details: (id: string | number) => `/vendors/${id}/`,
     dashboard: "/vendors/dashboard/",
     requests: "/vendors/requests/",
     confirmItem: (id: string | number) => `/vendors/requests/${id}/confirm/`,
   },
   payments: {
-    cashIn: "/payments/cashin/",
-    cashOut: "/payments/cashout/",
+    stripe: {
+      createIntent: "/payments/stripe/create-intent/",
+      confirm: "/payments/stripe/confirm/",
+      refund: "/payments/stripe/refund/",
+      webhook: "/payments/stripe/webhook/",
+    },
   },
 } as const;

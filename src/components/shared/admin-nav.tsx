@@ -6,7 +6,7 @@ import {
   RiFileListLine,
   RiStackLine,
 } from "@remixicon/react";
-import { usePathname } from "next/navigation";
+import { usePathname } from "@/i18n/navigation";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 

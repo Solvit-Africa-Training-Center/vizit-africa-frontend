@@ -7,11 +7,12 @@ import {
   RiLockPasswordLine,
 } from "@remixicon/react";
 import { useForm } from "@tanstack/react-form";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
 import { setPassword } from "@/actions/auth";
+import { useRouter } from "@/i18n/navigation";
 import { userSchema, setPasswordInputSchema } from "@/lib/unified-types";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { Button } from "../ui/button";
@@ -50,21 +51,38 @@ export function SetPasswordForm() {
         toast.success(t("success"));
         router.push("/profile");
       } else {
-        toast.error(
-          result.error || "Failed to set password. Please check the fields.",
-        );
-        setError(result.error);
+        let errorMessage =
+          result.error || "Failed to set password. Please check the fields.";
+
         if (result.fieldErrors) {
+          const firstError = Object.values(
+            result.fieldErrors,
+          ).flat()[0] as string;
+          if (firstError) {
+            errorMessage = firstError;
+          }
+
           Object.entries(result.fieldErrors).forEach(([field, errors]) => {
             if (Object.keys(value).includes(field)) {
-              // @ts-expect-error
-              formApi.setFieldMeta(field, (prev) => ({
-                ...prev,
-                errors: errors,
-              }));
+              formApi.setFieldMeta(
+                field as "uidb64" | "token" | "password" | "re_password",
+                (prev) => ({
+                  ...prev,
+                  errorMap: {
+                    ...prev?.errorMap,
+                    onSubmit: Array.isArray(errors)
+                      ? errors.join(", ")
+                      : errors,
+                  },
+                  errors: Array.isArray(errors) ? errors : [errors],
+                }),
+              );
             }
           });
         }
+
+        toast.error(errorMessage);
+        setError(errorMessage);
       }
     },
   });

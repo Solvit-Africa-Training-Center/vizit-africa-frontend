@@ -8,11 +8,11 @@ import {
   RiMailLine,
 } from "@remixicon/react";
 import { useForm } from "@tanstack/react-form";
-import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
 import { login } from "@/actions/auth";
+import { useRouter } from "@/i18n/navigation";
 import { userSchema, loginInputSchema } from "@/lib/unified-types";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { Button } from "../ui/button";

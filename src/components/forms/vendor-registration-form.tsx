@@ -12,12 +12,12 @@ import {
   RiUserLine,
 } from "@remixicon/react";
 import { useForm } from "@tanstack/react-form";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
 import { register } from "@/actions/auth";
 import { registerVendor } from "@/actions/vendors";
+import { useRouter } from "@/i18n/navigation";
 import { 
   userSchema, 
   registerObjectSchema, 

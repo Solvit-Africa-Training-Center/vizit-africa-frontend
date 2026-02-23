@@ -19,25 +19,8 @@ export type ActionResult<T = any> =
 
 /**
  * Standard API Response Wrapper
- * All backend responses follow this structure
+ * Used for typed error handling
  */
-export const apiResponseSchema = <T extends z.ZodTypeAny = z.ZodTypeAny>(
-  dataSchema?: T,
-) =>
-  z.object({
-    success: z.boolean(),
-    data: dataSchema ? dataSchema.nullable().optional() : z.unknown().optional(),
-    error: z
-      .object({
-        code: z.string(),
-        message: z.string(),
-        details: z.record(z.string(), z.unknown()).optional(),
-      })
-      .nullable()
-      .optional(),
-    message: z.string().optional(),
-  });
-
 export type ApiResponse<T = any> = {
   success: boolean;
   data?: T | null;
@@ -48,24 +31,6 @@ export type ApiResponse<T = any> = {
   } | null;
   message?: string;
 };
-
-/**
- * Paginated Response
- */
-export const paginatedResponseSchema = <T extends z.ZodTypeAny>(
-  dataSchema: T,
-) =>
-  z.object({
-    success: z.boolean(),
-    data: z.object({
-      results: z.array(dataSchema),
-      count: z.number(),
-      next: z.string().nullable(),
-      previous: z.string().nullable(),
-    }),
-    error: z.null().optional(),
-    message: z.string().optional(),
-  });
 
 export type PaginatedData<T> = {
   results: T[];
@@ -85,7 +50,7 @@ export const userSchema = z.object({
   email: z.string().email(),
   full_name: z.string(),
   phone_number: z.string().optional(),
-  bio: z.string().optional(),
+  bio: z.string().nullable().optional(),
   role: z.enum(["CLIENT", "ADMIN", "VENDOR"]),
   preferred_currency: z.string().optional(),
   is_active: z.boolean().optional(),
@@ -119,9 +84,8 @@ export const locationSchema = z.object({
   country: z.string().optional(),
   region: z.string().optional(),
   description: z.string().optional(),
-  latitude: z.number().optional(),
-  longitude: z.number().optional(),
-  image_url: z.string().optional(),
+  latitude: z.number().nullable().optional(),
+  longitude: z.number().nullable().optional(),
   created_at: z.string().optional(),
 });
 
@@ -161,7 +125,6 @@ export const serviceSchema = z.object({
   id: z.string().or(z.number()),
   title: z.string(),
   service_type: z.enum([
-    "flight",
     "hotel",
     "car",
     "activity",
@@ -177,11 +140,10 @@ export const serviceSchema = z.object({
   location: z.string().or(z.number()).nullable().optional(),
   user: z.string().or(z.number()).nullable().optional(),
   created_at: z.string().optional(),
-  updated_at: z.string().optional(),
   external_id: z.string().nullable().optional(),
   metadata: z.record(z.string(), z.unknown()).optional(),
   media: z.array(serviceMediaSchema).optional(),
-  vendor: vendorSchema.optional(),
+  vendor: vendorSchema.optional().nullable(),
 });
 
 export type Service = z.infer<typeof serviceSchema>;
@@ -192,23 +154,23 @@ export type Service = z.infer<typeof serviceSchema>;
 
 export const bookingItemSchema = z.object({
   id: z.string().or(z.number()),
-  service: z.string().or(z.number()).optional(),
-  type: z.string(),
+  service: z.string().or(z.number()).optional().nullable(),
+  item_type: z.string(),
   title: z.string().optional(),
   description: z.string().optional(),
-  startDate: z.string().optional(),
-  endDate: z.string().optional(),
-  startTime: z.string().optional(),
-  endTime: z.string().optional(),
-  isRoundTrip: z.boolean().optional(),
-  returnDate: z.string().optional(),
-  returnTime: z.string().optional(),
+  start_date: z.string().nullable().optional(),
+  end_date: z.string().nullable().optional(),
+  start_time: z.string().nullable().optional(),
+  end_time: z.string().nullable().optional(),
+  is_round_trip: z.boolean().optional(),
+  return_date: z.string().nullable().optional(),
+  return_time: z.string().nullable().optional(),
   quantity: z.number(),
-  unitPrice: z.number().or(z.string()).transform(Number),
+  unit_price: z.number().or(z.string()).transform(Number),
   subtotal: z.number().or(z.string()).transform(Number),
   status: z.string().optional(),
   metadata: z.record(z.string(), z.unknown()).optional(),
-  createdAt: z.string().optional(),
+  created_at: z.string().optional(),
 });
 
 export type BookingItem = z.infer<typeof bookingItemSchema>;
@@ -255,9 +217,21 @@ export const bookingSchema = z.object({
   carTypePreference: z.string().optional(),
   budgetBracket: z.string().optional(),
   guideLanguages: z.array(z.string()).optional(),
-  status: z.enum(["pending", "quoted", "confirmed", "cancelled", "completed"]),
+  status: z.enum([
+    "pending",
+    "quoted",
+    "accepted",
+    "confirmed",
+    "cancelled",
+    "completed",
+    "paid",
+  ]),
+  payment_status: z
+    .enum(["pending", "processing", "succeeded", "failed"])
+    .optional(),
+  payment_intent_id: z.string().nullable().optional(),
   currency: z.string(),
-  totalAmount: z.number().or(z.string()).transform(Number).optional(),
+  total_amount: z.number().or(z.string()).transform(Number).optional(),
   specialRequests: z.string().optional(),
   tripPurpose: z.string().optional(),
   items: z.array(bookingItemSchema),
@@ -276,14 +250,12 @@ export type Booking = z.infer<typeof bookingSchema>;
 export const transactionSchema = z.object({
   id: z.string().or(z.number()),
   booking: z.string().or(z.number()),
+  user: z.string().or(z.number()).optional(),
   amount: z.number().or(z.string()).transform(Number),
   currency: z.string(),
-  status: z.enum(["pending", "completed", "failed", "refunded"]),
-  payment_method: z.string(),
-  transaction_type: z.string(),
+  status: z.enum(["pending", "completed", "failed"]),
+  transaction_type: z.enum(["commission", "payout", "refund"]),
   created_at: z.string(),
-  updated_at: z.string().optional(),
-  reference: z.string().optional(),
 });
 
 export type Transaction = z.infer<typeof transactionSchema>;
@@ -314,7 +286,6 @@ export type SavedItem = z.infer<typeof savedItemSchema>;
 export type ServiceResponse = Service;
 export type VendorResponse = Vendor;
 export type LocationResponse = Location;
-export type BaseItem = any; // Trip item type
 
 export interface VendorRequest {
   id: string | number;
@@ -328,9 +299,6 @@ export interface VendorRequest {
   customer_email?: string;
 }
 
-export type RequestedItem = any;
-
-
 // ============================================================================
 // FORM INPUT SCHEMAS
 // ============================================================================
@@ -342,29 +310,33 @@ export const loginInputSchema = z.object({
 
 export type LoginInput = z.infer<typeof loginInputSchema>;
 
-export const registerObjectSchema = z.object({
-  full_name: z.string().min(2, "Name is required"),
-  email: z.string().email("Invalid email"),
-  phone_number: z.string().min(6, "Phone is required"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-  re_password: z.string(),
-  role: z.enum(["CLIENT", "ADMIN", "VENDOR"]),
-}).refine((data) => data.password === data.re_password, {
-  message: "Passwords don't match",
-  path: ["re_password"],
-});
+export const registerObjectSchema = z
+  .object({
+    full_name: z.string().min(2, "Name is required"),
+    email: z.string().email("Invalid email"),
+    phone_number: z.string().min(6, "Phone is required"),
+    password: z.string().min(8, "Password must be at least 8 characters"),
+    re_password: z.string(),
+    role: z.enum(["CLIENT", "ADMIN", "VENDOR"]),
+  })
+  .refine((data) => data.password === data.re_password, {
+    message: "Passwords don't match",
+    path: ["re_password"],
+  });
 
 export type RegisterInput = z.infer<typeof registerObjectSchema>;
 
-export const setPasswordInputSchema = z.object({
-  uidb64: z.string(),
-  token: z.string(),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-  re_password: z.string(),
-}).refine((data) => data.password === data.re_password, {
-  message: "Passwords don't match",
-  path: ["re_password"],
-});
+export const setPasswordInputSchema = z
+  .object({
+    uidb64: z.string(),
+    token: z.string(),
+    password: z.string().min(8, "Password must be at least 8 characters"),
+    re_password: z.string(),
+  })
+  .refine((data) => data.password === data.re_password, {
+    message: "Passwords don't match",
+    path: ["re_password"],
+  });
 
 export type SetPasswordInput = z.infer<typeof setPasswordInputSchema>;
 
@@ -385,10 +357,16 @@ export const createVendorInputSchema = z.object({
   phone_number: z.string(),
   bio: z.string().optional().or(z.literal("")),
   business_name: z.string().min(2, "Business name is required"),
-  vendor_type: z.enum(["hotel", "car_rental", "guide", "experience", "transport", "other"]),
+  vendor_type: z.enum([
+    "hotel",
+    "car_rental",
+    "guide",
+    "experience",
+    "transport",
+    "other",
+  ]),
   address: z.string().min(1, "Address is required"),
   website: z.string().url().optional().or(z.literal("")).or(z.null()),
 });
 
 export type CreateVendorInput = z.infer<typeof createVendorInputSchema>;
-

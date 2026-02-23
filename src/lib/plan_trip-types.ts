@@ -104,7 +104,17 @@ export interface Flight {
   flightNumber?: string;
 }
 
-export type TripItemType = "flight" | "hotel" | "car" | "guide" | "transport" | "other" | "note" | "experience" | "activity" | "tour";
+export type TripItemType =
+  | "flight"
+  | "hotel"
+  | "car"
+  | "guide"
+  | "transport"
+  | "other"
+  | "note"
+  | "experience"
+  | "activity"
+  | "tour";
 
 export interface TripItem {
   id: string;

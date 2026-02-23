@@ -1,6 +1,6 @@
 import { useForm } from "@tanstack/react-form";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { toast } from "sonner";
 import { submitTripRequest } from "@/actions/bookings";
 import { useTripStore } from "@/store/trip-store";

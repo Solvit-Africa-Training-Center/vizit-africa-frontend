@@ -5,8 +5,6 @@ import { endpoints } from "./endpoints";
 import { bookingSchema } from "@/lib/unified-types";
 import type { Booking, ActionResult } from "@/lib/unified-types";
 
-export type { ActionResult };
-
 export async function getBookingById(
   id: string,
 ): Promise<ActionResult<Booking>> {
@@ -16,7 +14,8 @@ export async function getBookingById(
   } catch (error) {
     return {
       success: false,
-      error: error instanceof ApiError ? error.message : "Failed to fetch booking",
+      error:
+        error instanceof ApiError ? error.message : "Failed to fetch booking",
     };
   }
 }
@@ -28,7 +27,8 @@ export async function getAdminBookings(): Promise<ActionResult<Booking[]>> {
   } catch (error) {
     return {
       success: false,
-      error: error instanceof ApiError ? error.message : "Failed to fetch bookings",
+      error:
+        error instanceof ApiError ? error.message : "Failed to fetch bookings",
     };
   }
 }
@@ -64,7 +64,8 @@ export async function confirmBooking(
   } catch (error) {
     return {
       success: false,
-      error: error instanceof ApiError ? error.message : "Failed to confirm booking",
+      error:
+        error instanceof ApiError ? error.message : "Failed to confirm booking",
     };
   }
 }
@@ -73,12 +74,16 @@ export async function getAdminBookingById(
   id: string,
 ): Promise<ActionResult<Booking>> {
   try {
-    const data = await api.get(endpoints.bookings.admin.detail(id), bookingSchema);
+    const data = await api.get(
+      endpoints.bookings.admin.detail(id),
+      bookingSchema,
+    );
     return { success: true, data };
   } catch (error) {
     return {
       success: false,
-      error: error instanceof ApiError ? error.message : "Failed to fetch booking",
+      error:
+        error instanceof ApiError ? error.message : "Failed to fetch booking",
     };
   }
 }
@@ -90,7 +95,8 @@ export async function getUserBookings(): Promise<ActionResult<Booking[]>> {
   } catch (error) {
     return {
       success: false,
-      error: error instanceof ApiError ? error.message : "Failed to fetch bookings",
+      error:
+        error instanceof ApiError ? error.message : "Failed to fetch bookings",
     };
   }
 }
@@ -103,15 +109,15 @@ export async function cancelBooking(
   bookingId: string,
 ): Promise<ActionResult<{ message: string }>> {
   try {
-    const result = await api.post(
-      endpoints.bookings.cancel(bookingId),
-      { booking_id: bookingId },
-    );
+    const result = await api.post(endpoints.bookings.cancel(bookingId), {
+      booking_id: bookingId,
+    });
     return { success: true, data: result as { message: string } };
   } catch (error) {
     return {
       success: false,
-      error: error instanceof ApiError ? error.message : "Failed to cancel booking",
+      error:
+        error instanceof ApiError ? error.message : "Failed to cancel booking",
     };
   }
 }
@@ -121,10 +127,10 @@ export async function sendQuoteForBooking(
   amount: number,
 ): Promise<ActionResult<{ message: string }>> {
   try {
-    const result = await api.post(
-      endpoints.bookings.quote(bookingId),
-      { booking_id: bookingId, amount },
-    );
+    const result = await api.post(endpoints.bookings.quote(bookingId), {
+      booking_id: bookingId,
+      amount,
+    });
     return { success: true, data: result as { message: string } };
   } catch (error) {
     return {
@@ -141,15 +147,12 @@ export async function notifyVendor(
   metadata?: Record<string, any>,
 ): Promise<ActionResult<{ message: string }>> {
   try {
-    const result = await api.post(
-      endpoints.bookings.notifyVendor(bookingId),
-      {
-        booking_id: bookingId,
-        item_id: itemId,
-        service_id: serviceId,
-        ...metadata,
-      },
-    );
+    const result = await api.post(endpoints.bookings.notifyVendor(bookingId), {
+      booking_id: bookingId,
+      item_id: itemId,
+      service_id: serviceId,
+      ...metadata,
+    });
     return { success: true, data: result as { message: string } };
   } catch (error) {
     return {
@@ -159,4 +162,3 @@ export async function notifyVendor(
     };
   }
 }
-

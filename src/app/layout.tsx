@@ -5,11 +5,11 @@ import {
   JetBrains_Mono,
   Noto_Sans_Arabic,
 } from "next/font/google";
+import { getLocale } from "next-intl/server";
 import "./globals.css";
 import { SmoothScroller } from "@/components/smooth-scroller";
 import { DirectionProvider } from "@/components/ui/direction";
 import { ScrollProgress } from "@/components/ui/scroll-progress";
-import { routing } from "@/i18n/routing";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -56,18 +56,12 @@ export const metadata: Metadata = {
   },
 };
 
-type Props = {
+export default async function RootLayout({
+  children,
+}: {
   children: React.ReactNode;
-  params: Promise<{ locale?: string }>;
-};
-
-export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
-}
-
-export default async function RootLayout({ children, params }: Props) {
-  const { locale } = await params;
-  const lang = locale || routing.defaultLocale;
+}) {
+  const lang = await getLocale();
   const direction = lang === "ar" ? "rtl" : "ltr";
 
   return (

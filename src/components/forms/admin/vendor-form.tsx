@@ -15,7 +15,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { vendorSchema, type VendorResponse, createVendorInputSchema } from "@/lib/unified-types";
+import {
+  vendorSchema,
+  type VendorResponse,
+  createVendorInputSchema,
+} from "@/lib/unified-types";
 
 interface VendorFormProps {
   onSuccess?: (vendor: VendorResponse) => void;
@@ -53,18 +57,34 @@ export function VendorForm({ onSuccess, initialData }: VendorFormProps) {
           toast.success(initialData ? "Vendor updated" : "Vendor created");
           onSuccess?.(result.data);
         } else {
-          toast.error(result.error || "Failed to save vendor.");
+          let errorMessage = result.error || "Failed to save vendor.";
+
           if (result.fieldErrors) {
+            const firstError = Object.values(
+              result.fieldErrors,
+            ).flat()[0] as string;
+            if (firstError) {
+              errorMessage = firstError;
+            }
+
             Object.entries(result.fieldErrors).forEach(([field, errors]) => {
               if (Object.keys(value).includes(field)) {
                 // @ts-expect-error
                 formApi.setFieldMeta(field, (prev) => ({
                   ...prev,
-                  errors: errors,
+                  errorMap: {
+                    ...prev?.errorMap,
+                    onSubmit: Array.isArray(errors)
+                      ? errors.join(", ")
+                      : errors,
+                  },
+                  errors: Array.isArray(errors) ? errors : [errors],
                 }));
               }
             });
           }
+
+          toast.error(errorMessage);
         }
       } catch (_error) {
         toast.error("An error occurred");

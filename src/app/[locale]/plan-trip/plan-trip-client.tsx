@@ -51,15 +51,13 @@ export default function PlanTripClient({
   guides,
 }: PlanTripClientProps) {
   const t = useTranslations("PlanTrip");
+  // UI skill: AI recommendations state
   const [aiRecommendations, setAiRecommendations] =
     useState<AiRecommendations | null>(null);
   const [aiError, setAiError] = useState<string | null>(null);
 
-  const {
-    object: partialRecommendations,
-    submit,
-    isLoading: isGeneratingAi,
-  } = useObject({
+  // UI skill: useObject for AI
+  const aiObject = useObject({
     api: "/api/ai",
     schema: z.object({
       destination: z.string(),
@@ -79,10 +77,15 @@ export default function PlanTripClient({
       toast.error(error.message || "Failed to generate AI recommendations.");
     },
   });
+  const {
+    object: partialRecommendations,
+    submit,
+    isLoading: isGeneratingAi,
+  } = aiObject;
 
+  // UI skill: merge recommendations
   const activeRecommendations = (aiRecommendations ||
     partialRecommendations) as AiRecommendations | null;
-
   const mergedHotels = useMemo(
     () => mergeById(hotels, activeRecommendations?.hotels ?? []),
     [hotels, activeRecommendations],
@@ -96,57 +99,61 @@ export default function PlanTripClient({
     [guides, activeRecommendations],
   );
 
+  // UI skill: planTrip store
   const planTrip = usePlanTrip({
     initialHotels: mergedHotels,
     initialCars: mergedCars,
     initialGuides: mergedGuides,
   });
-
   const form = useTripForm();
 
+  // UI skill: view state
   const viewState = useMemo(() => {
     if (isGeneratingAi) return "loading";
     if (aiRecommendations) return "results";
     return "input";
   }, [isGeneratingAi, aiRecommendations]);
 
+  // UI skill: handleGenerateAiRecommendations
   const handleGenerateAiRecommendations = () => {
-    const destination = planTrip.tripInfo.destination?.trim();
-    const startDate = planTrip.tripInfo.departureDate;
-    const endDate = planTrip.tripInfo.returnDate;
-
-    if (!destination || !startDate || !endDate) {
+    const {
+      destination,
+      departureDate,
+      returnDate,
+      adults,
+      children,
+      infants,
+      tripPurpose,
+      specialRequests,
+    } = planTrip.tripInfo;
+    if (!destination?.trim() || !departureDate || !returnDate) {
       const message = "Please provide destination and dates.";
       setAiError(message);
       toast.error(message);
       return;
     }
-
     setAiError(null);
     setAiRecommendations(null);
-
     submit({
-      destination,
-      startDate,
-      endDate,
-      groupSize: Math.max(
-        1,
-        (planTrip.tripInfo.adults || 0) +
-          (planTrip.tripInfo.children || 0) +
-          (planTrip.tripInfo.infants || 0),
-      ),
-      tripPurpose: planTrip.tripInfo.tripPurpose,
-      specialRequests: planTrip.tripInfo.specialRequests || undefined,
+      destination: destination.trim(),
+      startDate: departureDate,
+      endDate: returnDate,
+      groupSize: Math.max(1, (adults || 0) + (children || 0) + (infants || 0)),
+      tripPurpose,
+      specialRequests: specialRequests || undefined,
     });
   };
 
+  // UI skill: handleClearAiRecommendations
   const handleClearAiRecommendations = () => {
     setAiRecommendations(null);
     setAiError(null);
   };
 
+  // UI skill: handleSubmit
   const handleSubmit = async () => {
-    if (!planTrip.tripInfo.name || !planTrip.tripInfo.email) {
+    const { name, email } = planTrip.tripInfo;
+    if (!name || !email) {
       toast.error("Please fill in your name and email before submitting.");
       return;
     }

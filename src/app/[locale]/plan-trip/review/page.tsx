@@ -30,14 +30,8 @@ import { useTripStore } from "@/store/trip-store";
 
 export default function TripReviewPage() {
   const tCommon = useTranslations("Common");
-  const { 
-    tripInfo, 
-    items, 
-    removeItem, 
-    updateTripInfo, 
-    clearTrip, 
-    updateItem 
-  } = useTripStore();
+  const { tripInfo, items, removeItem, updateTripInfo, clearTrip, updateItem } =
+    useTripStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
@@ -148,7 +142,7 @@ export default function TripReviewPage() {
                 items.map((item) => (
                   <ItineraryItem
                     key={item.id}
-                    item={item}
+                    item={item as unknown as Record<string, unknown>}
                     defaultValues={{
                       startDate: tripInfo.arrivalDate || undefined,
                       endDate: tripInfo.departureDate || undefined,
@@ -159,7 +153,7 @@ export default function TripReviewPage() {
                     }}
                     onRemove={() => removeItem(item.id)}
                     onUpdate={(updates) =>
-                      updateItem(item.id, updates)
+                      updateItem(item.id, updates as Partial<TripItem>)
                     }
                   />
                 ))

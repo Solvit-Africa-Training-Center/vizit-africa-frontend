@@ -6,8 +6,6 @@ import { endpoints } from "./endpoints";
 import { serviceSchema } from "@/lib/unified-types";
 import type { Service, ActionResult } from "@/lib/unified-types";
 
-export type { ActionResult };
-
 export async function createService(
   input: Record<string, any>,
 ): Promise<ActionResult<Service>> {
@@ -38,7 +36,8 @@ export async function getServiceList(): Promise<ActionResult<Service[]>> {
   } catch (error) {
     return {
       success: false,
-      error: error instanceof ApiError ? error.message : "Failed to fetch services",
+      error:
+        error instanceof ApiError ? error.message : "Failed to fetch services",
     };
   }
 }
@@ -79,7 +78,8 @@ export async function deleteService(
   } catch (error) {
     return {
       success: false,
-      error: error instanceof ApiError ? error.message : "Failed to delete service",
+      error:
+        error instanceof ApiError ? error.message : "Failed to delete service",
     };
   }
 }

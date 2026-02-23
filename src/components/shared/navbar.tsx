@@ -9,7 +9,6 @@ import {
   RiUserLine,
 } from "@remixicon/react";
 import { motion, useMotionValueEvent, useScroll } from "motion/react";
-import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { logout } from "@/actions/auth";
@@ -30,7 +29,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useUser } from "@/components/user-provider";
-import { Link, usePathname } from "@/i18n/navigation";
+import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { useTripStore } from "@/store/trip-store";
 import { LanguageSwitcher } from "./language-switcher";
@@ -149,7 +148,10 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
                     )}
                   >
                     <Avatar>
-                      <AvatarImage src={user.role ?? ""} alt={user.full_name} />
+                      <AvatarImage
+                        src={(user as any).image || undefined}
+                        alt={user.full_name}
+                      />
                       <AvatarFallback className="bg-transparent text-current">
                         {user.full_name.split(" ")[0].charAt(0).toUpperCase()}
                       </AvatarFallback>

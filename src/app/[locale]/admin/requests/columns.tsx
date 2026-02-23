@@ -67,7 +67,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-const ActionCell = ({ id, status }: { id: string | number; status: string }) => {
+const ActionCell = ({
+  id,
+  status,
+}: {
+  id: string | number;
+  status: string;
+}) => {
   const t = useTranslations("Admin.requests.table");
 
   return (

@@ -105,15 +105,15 @@ export function CompletedRequestsSchedule({
           startDate: toDate(booking.arrivalDate) ?? toDate(booking.createdAt),
           endDate: toDate(booking.departureDate),
           quantity: booking.travelers,
-          amount: booking.totalAmount || 0,
+          amount: booking.total_amount || 0,
           currency: booking.currency || "USD",
         },
       ];
     }
 
     return booking.items.map((item) => {
-      const startDate = toDate(item.startDate);
-      const endDate = toDate(item.endDate);
+      const startDate = toDate(item.start_date);
+      const endDate = toDate(item.end_date);
       const metadataLocation =
         item.metadata &&
         typeof item.metadata === "object" &&
@@ -129,7 +129,7 @@ export function CompletedRequestsSchedule({
         startDate,
         endDate,
         quantity: item.quantity || booking.travelers || 1,
-        amount: item.subtotal || item.unitPrice || booking.totalAmount || 0,
+        amount: item.subtotal || item.unit_price || booking.total_amount || 0,
         currency:
           (item.metadata &&
           typeof item.metadata === "object" &&

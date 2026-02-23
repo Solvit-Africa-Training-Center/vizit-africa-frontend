@@ -10,7 +10,11 @@ import { Badge } from "@/components/ui/badge";
 import { ItineraryItem } from "@/components/shared/itinerary-item";
 import { vendorSchema, type VendorRequest } from "@/lib/unified-types";
 
-export function VendorRequestsList({ requests }: { requests: VendorRequest[] }) {
+export function VendorRequestsList({
+  requests,
+}: {
+  requests: VendorRequest[];
+}) {
   const [checkingId, setCheckingId] = useState<string | null>(null);
   const [confirmingId, setConfirmingId] = useState<string | null>(null);
 
@@ -61,7 +65,9 @@ export function VendorRequestsList({ requests }: { requests: VendorRequest[] }) 
   if (requests.length === 0) {
     return (
       <div className="text-center py-12 border border-dashed rounded-xl bg-muted/20">
-        <p className="text-muted-foreground">No pending requests for your services.</p>
+        <p className="text-muted-foreground">
+          No pending requests for your services.
+        </p>
       </div>
     );
   }
@@ -71,16 +77,20 @@ export function VendorRequestsList({ requests }: { requests: VendorRequest[] }) 
       {requests.map((req) => (
         <ItineraryItem
           key={String(req.id)}
-          item={{
-            ...req,
-            title: req.service_name,
-            type: "service",
-            startDate: req.start_date,
-            endDate: req.end_date,
-          } as any}
+          item={
+            {
+              ...req,
+              title: req.service_name,
+              type: "service",
+              startDate: req.start_date,
+              endDate: req.end_date,
+            } as any
+          }
           mode="vendor"
           onAction={() => handleConfirm(req)}
-          actionLabel={req.status === "confirmed" ? "Confirmed" : "Confirm Booking"}
+          actionLabel={
+            req.status === "confirmed" ? "Confirmed" : "Confirm Booking"
+          }
           isActionLoading={confirmingId === String(req.id)}
         />
       ))}

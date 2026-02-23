@@ -101,18 +101,15 @@ async function fetchPaginated<T>(
 // ============================================================================
 
 export async function getBookings(): Promise<any[]> {
-  return fetchList(
-    endpoints.bookings.admin.list,
-    bookingSchema,
-    { requiresAuth: true, revalidate: 60, tag: "requests" },
-  );
+  return fetchList(endpoints.bookings.admin.list, bookingSchema, {
+    requiresAuth: true,
+    revalidate: 60,
+    tag: "requests",
+  });
 }
 
 export async function getBookingById(id: string | number): Promise<any | null> {
-  return fetchOne(
-    endpoints.bookings.admin.detail(id),
-    bookingSchema,
-  );
+  return fetchOne(endpoints.bookings.admin.detail(id), bookingSchema);
 }
 
 export async function getRequests(): Promise<any[]> {
@@ -128,18 +125,15 @@ export async function getRequestById(id: string | number): Promise<any | null> {
 // ============================================================================
 
 export async function getUsers(): Promise<any[]> {
-  return fetchList(
-    endpoints.auth.list,
-    userSchema,
-    { requiresAuth: true, revalidate: 3600, tag: "users" },
-  );
+  return fetchList(endpoints.auth.list, userSchema, {
+    requiresAuth: true,
+    revalidate: 3600,
+    tag: "users",
+  });
 }
 
 export async function getUserProfile(): Promise<any | null> {
-  return fetchOne(
-    endpoints.auth.me,
-    userSchema,
-  );
+  return fetchOne(endpoints.auth.me, userSchema);
 }
 
 // ============================================================================
@@ -159,10 +153,7 @@ export async function getServices(category?: string): Promise<any[]> {
 }
 
 export async function getServiceById(id: string | number): Promise<any | null> {
-  return fetchOne(
-    endpoints.services.details(id),
-    serviceSchema,
-  );
+  return fetchOne(endpoints.services.details(id), serviceSchema);
 }
 
 // ============================================================================
@@ -170,18 +161,15 @@ export async function getServiceById(id: string | number): Promise<any | null> {
 // ============================================================================
 
 export async function getVendors(): Promise<any[]> {
-  return fetchList(
-    endpoints.vendors.list,
-    vendorSchema,
-    { requiresAuth: false, revalidate: 3600, tag: "vendors" },
-  );
+  return fetchList(endpoints.vendors.list, vendorSchema, {
+    requiresAuth: false,
+    revalidate: 3600,
+    tag: "vendors",
+  });
 }
 
 export async function getVendorById(id: string | number): Promise<any | null> {
-  return fetchOne(
-    endpoints.vendors.details(id),
-    vendorSchema,
-  );
+  return fetchOne(endpoints.vendors.detail(id), vendorSchema);
 }
 
 // ============================================================================
@@ -189,14 +177,16 @@ export async function getVendorById(id: string | number): Promise<any | null> {
 // ============================================================================
 
 export async function getLocations(): Promise<any[]> {
-  return fetchList(
-    endpoints.locations.list,
-    locationSchema,
-    { requiresAuth: false, revalidate: 3600, tag: "locations" },
-  );
+  return fetchList(endpoints.locations.list, locationSchema, {
+    requiresAuth: false,
+    revalidate: 3600,
+    tag: "locations",
+  });
 }
 
-export async function getLocationById(id: string | number): Promise<any | null> {
+export async function getLocationById(
+  id: string | number,
+): Promise<any | null> {
   // Locations endpoint doesn't support individual detail fetching
   // Return null for now
   return null;
@@ -207,11 +197,11 @@ export async function getLocationById(id: string | number): Promise<any | null> 
 // ============================================================================
 
 export async function getSavedItems(): Promise<any[]> {
-  return fetchList(
-    endpoints.accounts.savedItems.list,
-    savedItemSchema,
-    { requiresAuth: true, revalidate: 300, tag: "saved-items" },
-  );
+  return fetchList(endpoints.accounts.savedItems.list, savedItemSchema, {
+    requiresAuth: true,
+    revalidate: 300,
+    tag: "saved-items",
+  });
 }
 
 // ============================================================================
@@ -219,17 +209,17 @@ export async function getSavedItems(): Promise<any[]> {
 // ============================================================================
 
 export async function getTransactions(): Promise<any[]> {
-  return fetchList(
-    endpoints.bookings.transactions,
-    transactionSchema,
-    { requiresAuth: true, revalidate: 300, tag: "transactions" },
-  );
+  return fetchList(endpoints.bookings.transactions, transactionSchema, {
+    requiresAuth: true,
+    revalidate: 300,
+    tag: "transactions",
+  });
 }
 
 export async function getVendorPayouts(): Promise<any[]> {
-  return fetchList(
-    endpoints.bookings.vendorPayouts,
-    transactionSchema,
-    { requiresAuth: true, revalidate: 300, tag: "vendor-payouts" },
-  );
+  return fetchList(endpoints.bookings.vendorPayouts, transactionSchema, {
+    requiresAuth: true,
+    revalidate: 300,
+    tag: "vendor-payouts",
+  });
 }

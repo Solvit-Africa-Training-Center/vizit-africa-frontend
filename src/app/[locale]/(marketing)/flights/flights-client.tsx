@@ -9,6 +9,13 @@ import {
   RiSearchLine,
   RiSortAsc,
   RiUserLine,
+  RiLuggageCartLine,
+  RiTeamLine,
+  RiVipCrownLine,
+  RiCheckLine,
+  RiCloseLine,
+  RiAddLine,
+  RiSubtractLine,
 } from "@remixicon/react";
 import { motion } from "motion/react";
 import { useSearchParams } from "next/navigation";
@@ -31,6 +38,19 @@ const POPULAR_DESTINATIONS = [
 
 type SortOption = "price" | "duration" | "departure";
 
+interface FlightPreferences {
+  seatClass: "economy" | "premium" | "business" | "first";
+  mealPreference: "standard" | "vegetarian" | "vegan" | "halal";
+  baggageAllowance: number;
+  seatPreference: "aisle" | "window" | "middle" | "any";
+  specialRequests: string[];
+  passengers: {
+    adults: number;
+    children: number;
+    infants: number;
+  };
+}
+
 interface FlightsClientProps {
   initialFlights: ServiceResponse[];
 }
@@ -45,6 +65,20 @@ export default function FlightsClient({ initialFlights }: FlightsClientProps) {
   const [maxPrice, setMaxPrice] = useState(2000);
   const [stopsFilter, setStopsFilter] = useState<number | null>(null);
   const [classFilter, setClassFilter] = useState<string>("all");
+
+  const [showPreferences, setShowPreferences] = useState(false);
+  const [preferences, setPreferences] = useState<FlightPreferences>({
+    seatClass: "economy",
+    mealPreference: "standard",
+    baggageAllowance: 23,
+    seatPreference: "any",
+    specialRequests: [],
+    passengers: {
+      adults: 1,
+      children: 0,
+      infants: 0,
+    },
+  });
 
   const filteredFlights = useMemo(() => {
     let result = [...initialFlights];
@@ -100,6 +134,11 @@ export default function FlightsClient({ initialFlights }: FlightsClientProps) {
       hour12: false,
     });
   };
+
+  const totalPassengers =
+    preferences.passengers.adults +
+    preferences.passengers.children +
+    preferences.passengers.infants;
 
   return (
     <main className="min-h-screen bg-background pt-32 pb-20">
@@ -240,6 +279,214 @@ export default function FlightsClient({ initialFlights }: FlightsClientProps) {
             transition={{ delay: 0.1 }}
             className="lg:col-span-1 space-y-10"
           >
+            {/* Flight Preferences Accordion */}
+            <div className="border border-border/50 rounded-xl overflow-hidden">
+              <button
+                type="button"
+                onClick={() => setShowPreferences(!showPreferences)}
+                className="w-full px-5 py-4 flex items-center justify-between bg-muted/40 hover:bg-muted/60 transition-colors"
+              >
+                <h3 className="text-xs font-mono uppercase tracking-widest text-muted-foreground font-semibold">
+                  Flight Preferences
+                </h3>
+                <motion.div
+                  animate={{ rotate: showPreferences ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <RiArrowLeftRightLine className="size-4" />
+                </motion.div>
+              </button>
+
+              <motion.div
+                initial={false}
+                animate={{
+                  height: showPreferences ? "auto" : 0,
+                  opacity: showPreferences ? 1 : 0,
+                }}
+                transition={{ duration: 0.3 }}
+                className="overflow-hidden"
+              >
+                <div className="p-5 space-y-5 border-t border-border/50">
+                  {/* Seat Class */}
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+                      Cabin Class
+                    </p>
+                    <div className="grid grid-cols-2 gap-2">
+                      {(
+                        [
+                          { val: "economy", icon: "✈️", label: "Economy" },
+                          { val: "premium", icon: "💎", label: "Premium" },
+                          { val: "business", icon: "🏢", label: "Business" },
+                          { val: "first", icon: "👑", label: "First" },
+                        ] as const
+                      ).map((cls) => (
+                        <button
+                          key={cls.val}
+                          type="button"
+                          onClick={() =>
+                            setPreferences({
+                              ...preferences,
+                              seatClass: cls.val,
+                            })
+                          }
+                          className={`p-3 rounded-lg text-xs font-semibold transition-all text-center ${
+                            preferences.seatClass === cls.val
+                              ? "bg-primary text-primary-foreground ring-2 ring-primary/50"
+                              : "bg-muted text-muted-foreground hover:bg-muted/80"
+                          }`}
+                        >
+                          <span className="text-lg block mb-1">{cls.icon}</span>
+                          {cls.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Seat Preference */}
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+                      Seat Position
+                    </p>
+                    <div className="flex gap-2">
+                      {(
+                        [
+                          { val: "window", label: "Window" },
+                          { val: "aisle", label: "Aisle" },
+                          { val: "any", label: "Any" },
+                        ] as const
+                      ).map((seat) => (
+                        <button
+                          key={seat.val}
+                          type="button"
+                          onClick={() =>
+                            setPreferences({
+                              ...preferences,
+                              seatPreference: seat.val,
+                            })
+                          }
+                          className={`flex-1 px-3 py-2 rounded text-xs font-medium transition-all ${
+                            preferences.seatPreference === seat.val
+                              ? "bg-primary text-primary-foreground"
+                              : "bg-muted text-muted-foreground hover:bg-muted/80"
+                          }`}
+                        >
+                          {seat.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Meal Preference */}
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+                      Meal Preference
+                    </p>
+                    <select
+                      value={preferences.mealPreference}
+                      onChange={(e) =>
+                        setPreferences({
+                          ...preferences,
+                          mealPreference: e.target.value as any,
+                        })
+                      }
+                      className="w-full px-3 py-2 rounded-lg text-xs border border-border/50 bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+                    >
+                      <option value="standard">Standard Meal</option>
+                      <option value="vegetarian">Vegetarian</option>
+                      <option value="vegan">Vegan</option>
+                      <option value="halal">Halal</option>
+                    </select>
+                  </div>
+
+                  {/* Baggage Allowance */}
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+                      Baggage: {preferences.baggageAllowance}kg
+                    </p>
+                    <input
+                      type="range"
+                      min={0}
+                      max={50}
+                      step={1}
+                      value={preferences.baggageAllowance}
+                      onChange={(e) =>
+                        setPreferences({
+                          ...preferences,
+                          baggageAllowance: Number(e.target.value),
+                        })
+                      }
+                      className="w-full accent-primary"
+                    />
+                  </div>
+
+                  {/* Passengers */}
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+                      Passengers ({totalPassengers})
+                    </p>
+                    <div className="space-y-2">
+                      {[
+                        { key: "adults", label: "Adults" },
+                        { key: "children", label: "Children" },
+                        { key: "infants", label: "Infants" },
+                      ].map(({ key, label }) => (
+                        <div key={key} className="flex items-center gap-2">
+                          <span className="text-xs text-muted-foreground flex-1">
+                            {label}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setPreferences({
+                                ...preferences,
+                                passengers: {
+                                  ...preferences.passengers,
+                                  [key]: Math.max(
+                                    0,
+                                    preferences.passengers[
+                                      key as keyof typeof preferences.passengers
+                                    ] - 1,
+                                  ),
+                                },
+                              })
+                            }
+                            className="p-1 hover:bg-muted rounded"
+                          >
+                            <RiSubtractLine className="size-3" />
+                          </button>
+                          <span className="w-6 text-center text-xs font-semibold">
+                            {
+                              preferences.passengers[
+                                key as keyof typeof preferences.passengers
+                              ]
+                            }
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setPreferences({
+                                ...preferences,
+                                passengers: {
+                                  ...preferences.passengers,
+                                  [key]:
+                                    preferences.passengers[
+                                      key as keyof typeof preferences.passengers
+                                    ] + 1,
+                                },
+                              })
+                            }
+                            className="p-1 hover:bg-muted rounded"
+                          >
+                            <RiAddLine className="size-3" />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
             <div>
               <h3 className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-6">
                 {t("labels.sortBy")}
@@ -371,7 +618,7 @@ export default function FlightsClient({ initialFlights }: FlightsClientProps) {
                       </div>
 
                       <div className="flex items-center gap-6">
-                        <div className="text-center min-w-[80px]">
+                        <div className="text-center min-w-20">
                           <p className="text-2xl md:text-3xl font-display font-medium tracking-tighter leading-none mb-2">
                             {formatTime(
                               flight.metadata?.departureTime as string,
@@ -398,7 +645,7 @@ export default function FlightsClient({ initialFlights }: FlightsClientProps) {
                           </p>
                         </div>
 
-                        <div className="text-center min-w-[80px]">
+                        <div className="text-center min-w-20">
                           <p className="text-2xl md:text-3xl font-display font-medium tracking-tighter leading-none mb-2">
                             {formatTime(flight.metadata?.arrivalTime as string)}
                           </p>
@@ -409,7 +656,7 @@ export default function FlightsClient({ initialFlights }: FlightsClientProps) {
                       </div>
                     </div>
 
-                    <div className="flex md:flex-col items-center md:items-end gap-6 md:gap-4 md:min-w-[180px] border-t md:border-t-0 md:border-l border-border/50 pt-6 md:pt-0 md:pl-8">
+                    <div className="flex md:flex-col items-center md:items-end gap-6 md:gap-4 md:min-w-45 border-t md:border-t-0 md:border-l border-border/50 pt-6 md:pt-0 md:pl-8">
                       <div className="text-right">
                         <p className="text-[10px] text-muted-foreground font-mono uppercase tracking-widest mb-1">
                           Est. Price

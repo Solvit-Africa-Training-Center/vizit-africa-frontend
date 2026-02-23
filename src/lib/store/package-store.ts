@@ -1,18 +1,28 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { bookingSchema, type RequestedItem } from "@/lib/unified-types";
 
-export type PackageItem = RequestedItem & {
-  isQuoted?: boolean;
-  quotePrice?: number;
+// flexible item shape used by the package builder — not the strict backend BookingItem
+export interface PackageItem {
+  id?: string | number;
   tempId?: string;
-  // generic details
+  service?: string | number;
+  title?: string;
+  description?: string;
+  type?: string;
+  quantity?: number;
+  price?: number;
+  quotePrice?: number;
+  unitPrice?: number;
+  isQuoted?: boolean;
+  withDriver?: boolean;
+  // generic timing
   date?: string | null;
   time?: string | null;
-  // backend compatibility
+  endDate?: string | null;
+  endTime?: string | null;
+  // backend-compatible naming
   startDate?: string | null;
   startTime?: string | null;
-  unitPrice?: number;
   // flight specifics
   departure?: string | null;
   departureTime?: string | null;
@@ -21,7 +31,10 @@ export type PackageItem = RequestedItem & {
   returnDate?: string | null;
   returnTime?: string | null;
   isRoundTrip?: boolean;
-};
+  // arbitrary extra fields from the builder UI
+  metadata?: Record<string, unknown>;
+  [key: string]: unknown;
+}
 
 interface PackageState {
   // map booking id to items

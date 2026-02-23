@@ -2,7 +2,7 @@
 
 import { RiCheckLine, RiSuitcaseLine } from "@remixicon/react";
 import { AnimatePresence, motion } from "motion/react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useLocale } from "next-intl";
 import { toast } from "sonner";
 import { v4 as uuidv4 } from "uuid";

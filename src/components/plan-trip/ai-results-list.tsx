@@ -5,7 +5,13 @@ import { motion } from "motion/react";
 import { useState } from "react";
 import { ServiceItem } from "@/components/service-item";
 import { Button } from "@/components/ui/button";
-import type { Car, Guide, Hotel, TripInfo, TripItem } from "@/lib/plan_trip-types";
+import type {
+  Car,
+  Guide,
+  Hotel,
+  TripInfo,
+  TripItem,
+} from "@/lib/plan_trip-types";
 import { serviceSchema, type ServiceResponse } from "@/lib/unified-types";
 
 interface AiResultsListProps {
@@ -89,7 +95,14 @@ export function AiResultsList({
       capacity: 2,
       status: "active" as const,
       media: h.image
-        ? [{ id: 1, media_url: h.image, media_type: "image" as const, sort_order: 1 }]
+        ? [
+            {
+              id: 1,
+              media_url: h.image,
+              media_type: "image" as const,
+              sort_order: 1,
+            },
+          ]
         : [],
       user: "ai",
       created_at: new Date().toISOString(),
@@ -105,7 +118,14 @@ export function AiResultsList({
       capacity: c.seats || 5,
       status: "active" as const,
       media: c.image
-        ? [{ id: 1, media_url: c.image, media_type: "image" as const, sort_order: 1 }]
+        ? [
+            {
+              id: 1,
+              media_url: c.image,
+              media_type: "image" as const,
+              sort_order: 1,
+            },
+          ]
         : [],
       user: "ai",
       created_at: new Date().toISOString(),
@@ -121,7 +141,14 @@ export function AiResultsList({
       capacity: 10,
       status: "active" as const,
       media: g.image
-        ? [{ id: 1, media_url: g.image, media_type: "image" as const, sort_order: 1 }]
+        ? [
+            {
+              id: 1,
+              media_url: g.image,
+              media_type: "image" as const,
+              sort_order: 1,
+            },
+          ]
         : [],
       user: "ai",
       created_at: new Date().toISOString(),
@@ -200,9 +227,7 @@ export function AiResultsList({
                     amenities: [],
                     stars: 4,
                   } as Hotel);
-                } else if (
-                  s.service_type === "car"
-                ) {
+                } else if (s.service_type === "car") {
                   handleSelectCar({
                     id: String(s.id),
                     model: s.title,

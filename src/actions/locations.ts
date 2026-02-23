@@ -2,16 +2,18 @@
 
 import { revalidatePath } from "next/cache";
 import { api, ApiError } from "@/lib/api/simple-client";
-import { locationSchema } from "@/lib/unified-types";
+import { locationSchema, type ActionResult } from "@/lib/unified-types";
 import { endpoints } from "./endpoints";
 
-export type ActionResult<T> =
-  | { success: true; data: T }
-  | { success: false; error: string; fieldErrors?: Record<string, string[]> };
-
-export async function createLocation(input: unknown): Promise<ActionResult<any>> {
+export async function createLocation(
+  input: unknown,
+): Promise<ActionResult<any>> {
   try {
-    const data = await api.post(endpoints.locations.create, input, locationSchema);
+    const data = await api.post(
+      endpoints.locations.create,
+      input,
+      locationSchema,
+    );
     revalidatePath("/locations");
     return { success: true, data };
   } catch (error) {

@@ -7,7 +7,7 @@ import {
   RiMore2Line,
 } from "@remixicon/react";
 import type { ColumnDef, Row } from "@tanstack/react-table";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { approveVendor, deleteVendor } from "@/actions/vendors";

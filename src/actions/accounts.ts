@@ -3,10 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { api, ApiError } from "@/lib/api/simple-client";
 import { endpoints } from "./endpoints";
-
-export type ActionResult<T> =
-  | { success: true; data: T }
-  | { success: false; error: string };
+import type { ActionResult } from "@/lib/unified-types";
 
 export async function getSavedItems() {
   try {
@@ -22,7 +19,10 @@ export async function getSavedItems() {
 
 export async function saveItem(type: string, id: string) {
   try {
-    const data = await api.post(endpoints.accounts.savedItems.create, { type, id });
+    const data = await api.post(endpoints.accounts.savedItems.create, {
+      type,
+      id,
+    });
     revalidatePath("/profile");
     return { success: true, data };
   } catch (error) {
@@ -35,7 +35,10 @@ export async function saveItem(type: string, id: string) {
 
 export async function removeItem(type: string, id: string) {
   try {
-    const data = await api.post(endpoints.accounts.savedItems.remove, { type, id });
+    const data = await api.post(endpoints.accounts.savedItems.remove, {
+      type,
+      id,
+    });
     revalidatePath("/profile");
     return { success: true, data };
   } catch (error) {

@@ -48,7 +48,16 @@ import {
   type LocationSuggestion,
   useLocationAutocomplete,
 } from "@/hooks/use-location-autocomplete";
-import { locationSchema, serviceSchema, vendorSchema, type LocationResponse, type ServiceResponse, type CreateServiceInput, type VendorResponse, createServiceInputSchema } from "@/lib/unified-types";
+import {
+  locationSchema,
+  serviceSchema,
+  vendorSchema,
+  type LocationResponse,
+  type ServiceResponse,
+  type CreateServiceInput,
+  type VendorResponse,
+  createServiceInputSchema,
+} from "@/lib/unified-types";
 import { VendorForm } from "./vendor-form";
 
 interface ServiceFormProps {
@@ -168,25 +177,38 @@ export function ServiceForm({ initialData, onSuccess }: ServiceFormProps) {
         }
         onSuccess?.(result.data);
       } else {
-        toast.error(
-          result.error || "Failed to save service. Please check the fields.",
-        );
-        const userError = result.fieldErrors?.user?.[0];
-        setSubmitStatus({
-          type: "error",
-          message: userError || result.error || "Failed to save service.",
-        });
+        let errorMessage =
+          result.error || "Failed to save service. Please check the fields.";
+
         if (result.fieldErrors) {
+          const firstError = Object.values(
+            result.fieldErrors,
+          ).flat()[0] as string;
+          if (firstError) {
+            errorMessage = firstError;
+          }
+
           Object.entries(result.fieldErrors).forEach(([field, errors]) => {
             if (Object.keys(value).includes(field)) {
               // @ts-expect-error
               formApi.setFieldMeta(field, (prev) => ({
                 ...prev,
-                errors: errors,
+                errorMap: {
+                  ...prev?.errorMap,
+                  onSubmit: Array.isArray(errors) ? errors.join(", ") : errors,
+                },
+                errors: Array.isArray(errors) ? errors : [errors],
               }));
             }
           });
         }
+
+        toast.error(errorMessage);
+        const userError = result.fieldErrors?.user?.[0];
+        setSubmitStatus({
+          type: "error",
+          message: userError || errorMessage,
+        });
       }
     },
   });

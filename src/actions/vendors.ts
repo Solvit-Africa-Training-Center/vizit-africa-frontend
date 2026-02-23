@@ -2,14 +2,12 @@
 
 import { revalidatePath } from "next/cache";
 import { api, ApiError } from "@/lib/api/simple-client";
-import { vendorSchema } from "@/lib/unified-types";
+import { vendorSchema, type ActionResult } from "@/lib/unified-types";
 import { endpoints } from "./endpoints";
 
-export type ActionResult<T> =
-  | { success: true; data: T }
-  | { success: false; error: string; fieldErrors?: Record<string, string[]> };
-
-export async function createVendorProfile(input: unknown): Promise<ActionResult<any>> {
+export async function createVendorProfile(
+  input: unknown,
+): Promise<ActionResult<any>> {
   try {
     const data = await api.post(endpoints.vendors.create, input, vendorSchema);
     return { success: true, data };
@@ -21,9 +19,15 @@ export async function createVendorProfile(input: unknown): Promise<ActionResult<
   }
 }
 
-export async function registerVendor(input: unknown): Promise<ActionResult<any>> {
+export async function registerVendor(
+  input: unknown,
+): Promise<ActionResult<any>> {
   try {
-    const data = await api.post(endpoints.vendors.register, input, vendorSchema);
+    const data = await api.post(
+      endpoints.vendors.register,
+      input,
+      vendorSchema,
+    );
     return { success: true, data };
   } catch (error) {
     if (error instanceof ApiError) {
@@ -39,7 +43,7 @@ export async function updateVendor(
 ): Promise<ActionResult<any>> {
   try {
     const data = await api.put(
-      endpoints.vendors.details(vendorId),
+      endpoints.vendors.detail(vendorId),
       input,
       vendorSchema,
     );
@@ -54,7 +58,9 @@ export async function updateVendor(
   }
 }
 
-export async function approveVendor(vendorId: string | number): Promise<ActionResult<any>> {
+export async function approveVendor(
+  vendorId: string | number,
+): Promise<ActionResult<any>> {
   try {
     const data = await api.post(endpoints.vendors.approve(vendorId), {});
     revalidatePath("/admin/vendors");
@@ -79,12 +85,17 @@ export async function getVendors(): Promise<ActionResult<any[]>> {
   }
 }
 
-export async function deleteVendor(vendorId: string | number): Promise<ActionResult<any>> {
+export async function deleteVendor(
+  vendorId: string | number,
+): Promise<ActionResult<any>> {
   try {
-    await api.delete(endpoints.vendors.details(vendorId));
+    await api.delete(endpoints.vendors.detail(vendorId));
     revalidatePath("/admin/vendors");
     revalidatePath("/inventory");
-    return { success: true, data: { success: true, message: "Vendor deleted successfully" } };
+    return {
+      success: true,
+      data: { success: true, message: "Vendor deleted successfully" },
+    };
   } catch (error) {
     if (error instanceof ApiError) {
       return { success: false, error: error.message };

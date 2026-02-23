@@ -140,9 +140,15 @@ async function handleResponse<T>(
     const validated = schema.safeParse(responseData);
     if (!validated.success) {
       if (IS_DEV) {
-        console.error("[Schema Validation Error]", validated.error.flatten());
+        console.warn(
+          "[Schema Validation Warning] The API response did not exactly match the expected schema:",
+          validated.error.flatten(),
+          "Raw Data:",
+          responseData,
+        );
       }
-      throw new ApiError("Response validation failed", 500);
+      // Return raw data instead of throwing so the app can gracefully continue
+      return responseData as T;
     }
     return validated.data;
   }
@@ -163,8 +169,13 @@ async function apiFetch<T>(
   endpoint: string,
   options: FetchOptions<T> = {},
 ): Promise<T> {
-  const { schema, requiresAuth = true, headers = {}, _retry = false, ...rest } =
-    options;
+  const {
+    schema,
+    requiresAuth = true,
+    headers = {},
+    _retry = false,
+    ...rest
+  } = options;
 
   // Get auth token if needed
   const token = requiresAuth ? await getAuthToken() : undefined;

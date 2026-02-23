@@ -18,19 +18,20 @@ import {
   RiTimeLine,
   RiUser3Line,
 } from "@remixicon/react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { use, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { acceptQuoteForBooking, getBookingById } from "@/actions/bookings";
 import { Footer } from "@/components/landing";
 import { Navbar } from "@/components/shared";
+import { PaymentModal } from "@/components/shared/payment";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ItineraryItem } from "@/components/shared/itinerary-item";
 import { Link } from "@/i18n/navigation";
-import { bookingSchema, type Booking, type BaseItem } from "@/lib/unified-types";
+import { bookingSchema, type Booking } from "@/lib/unified-types";
 
 import { formatDate } from "@/lib/utils";
 
@@ -51,6 +52,7 @@ export default function BookingDetailPage({ params }: PageProps) {
   const [booking, setBooking] = useState<Booking | null>(null);
   const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
   const _t = useTranslations("Profile");
   const _tCommon = useTranslations("Common");
   const _router = useRouter();
@@ -91,6 +93,13 @@ export default function BookingDetailPage({ params }: PageProps) {
       toast.error("An error occurred while accepting the quote");
     } finally {
       setProcessing(false);
+    }
+  };
+
+  const handlePaymentSuccess = async () => {
+    const refresh = await getBookingById(id);
+    if (refresh.success) {
+      setBooking(refresh.data);
     }
   };
 
@@ -146,7 +155,7 @@ export default function BookingDetailPage({ params }: PageProps) {
   const totalAmount =
     isConfirmed || isCompleted
       ? booking.items.reduce((sum, item) => sum + (item.subtotal || 0), 0)
-      : quote?.totalAmount || booking.totalAmount || 0;
+      : quote?.totalAmount || booking.total_amount || 0;
 
   const currency = (
     isConfirmed || isCompleted
@@ -272,11 +281,21 @@ export default function BookingDetailPage({ params }: PageProps) {
                     <RiCheckDoubleLine className="size-5" />
                     Booking Confirmed
                   </h3>
-                  <p className="text-sm text-emerald-900/80 leading-relaxed">
-                    Your trip is officially booked and confirmed! You can now
-                    access your itinerary and travel documents. We'll be in
-                    touch with further details closer to your departure date.
+                  <p className="text-sm text-emerald-900/80 leading-relaxed mb-4">
+                    Your trip is officially booked and confirmed!
+                    {booking.payment_status === "succeeded"
+                      ? " Your payment has been received."
+                      : " Please complete the payment to finalize your adventure."}
                   </p>
+                  {booking.payment_status !== "succeeded" && (
+                    <Button
+                      onClick={() => setShowPaymentModal(true)}
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white"
+                    >
+                      <RiCheckboxCircleLine className="size-5 mr-2" />
+                      Pay Now
+                    </Button>
+                  )}
                 </div>
               )}
 
@@ -293,7 +312,7 @@ export default function BookingDetailPage({ params }: PageProps) {
 
                 <div className="space-y-4">
                   {displayItems.length > 0 ? (
-                    displayItems.map((item: BaseItem, index: number) => (
+                    displayItems.map((item, index: number) => (
                       <ItineraryItem
                         key={item.id || index}
                         item={item}
@@ -473,6 +492,18 @@ export default function BookingDetailPage({ params }: PageProps) {
         </div>
       </main>
       <Footer />
+      {booking && (
+        <PaymentModal
+          isOpen={showPaymentModal}
+          onClose={() => setShowPaymentModal(false)}
+          amount={totalAmount}
+          currency={currency}
+          bookingId={String(booking.id)}
+          clientEmail={booking.email}
+          travelerName={booking.name}
+          onPaymentSuccess={handlePaymentSuccess}
+        />
+      )}
     </div>
   );
 }

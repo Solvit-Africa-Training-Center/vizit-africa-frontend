@@ -9,10 +9,12 @@ import {
   RiHotelLine,
   RiMailSendLine,
   RiPlaneLine,
+  RiRefundLine,
 } from "@remixicon/react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { RefundModal } from "@/components/shared/payment";
 import { Link } from "@/i18n/navigation";
 import { bookingSchema, type Booking } from "@/lib/unified-types";
 import { formatDate } from "@/lib/utils";
@@ -23,6 +25,7 @@ interface FulfillClientProps {
 
 export default function FulfillClient({ booking }: FulfillClientProps) {
   const t = useTranslations("Admin.bookings.fulfill");
+  const [showRefundModal, setShowRefundModal] = useState(false);
   const [checklist, setChecklist] = useState({
     flightTickets: false,
     hotelConfirmation: false,
@@ -82,6 +85,16 @@ export default function FulfillClient({ booking }: FulfillClientProps) {
             <Button variant="outline">
               <RiDownloadLine /> {t("downloadInvoice")}
             </Button>
+            {(booking.status === "confirmed" ||
+              booking.status === "completed") && (
+              <Button
+                variant="destructive"
+                onClick={() => setShowRefundModal(true)}
+              >
+                <RiRefundLine className="size-4 mr-2" />
+                Refund Booking
+              </Button>
+            )}
           </div>
         </div>
       </div>
@@ -273,6 +286,19 @@ export default function FulfillClient({ booking }: FulfillClientProps) {
           </div>
         </div>
       </div>
+
+      <RefundModal
+        isOpen={showRefundModal}
+        onClose={() => setShowRefundModal(false)}
+        bookingId={String(booking.id)}
+        amount={booking.total_amount || 0}
+        currency={booking.currency || "USD"}
+        guestName={booking.name}
+        onRefundSuccess={() => {
+          // Optionally reload or update booking
+          window.location.reload();
+        }}
+      />
     </div>
   );
 }

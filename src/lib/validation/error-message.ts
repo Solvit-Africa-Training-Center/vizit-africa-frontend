@@ -20,7 +20,9 @@ function getFirstFieldError(fieldErrors?: FieldErrors): string | null {
   }
 
   for (const errors of Object.values(fieldErrors)) {
-    const firstError = (errors ?? []).find((error: any) => Boolean(error?.trim?.()));
+    const firstError = (errors ?? []).find((error: any) =>
+      Boolean(error?.trim?.()),
+    );
     if (firstError) {
       return firstError;
     }

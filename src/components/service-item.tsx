@@ -82,13 +82,15 @@ export function ServiceItem({
       : service.base_price;
 
   const displayPrice =
-    (service.service_type === ("car" as any) || service.service_type === ("car_rental" as any)) &&
+    (service.service_type === ("car" as any) ||
+      service.service_type === ("car_rental" as any)) &&
     with_driver
       ? basePrice + driverSurcharge
       : basePrice;
 
   const priceFormatted = `$${displayPrice.toLocaleString()}${
-    service.service_type === ("hotel" as any) || service.service_type === ("bnb" as any)
+    service.service_type === ("hotel" as any) ||
+    service.service_type === ("bnb" as any)
       ? " / night"
       : service.service_type === ("car_rental" as any) ||
           service.service_type === ("guide" as any) ||
@@ -206,40 +208,42 @@ export function ServiceItem({
                     ) : (
                       <AddToTripButton
                         type={mapServiceTypeToTripType(service.service_type)}
-                        item={{
-                          id: String(service.id),
-                          title: service.title,
-                          price:
-                            typeof service.base_price === "string"
-                              ? Number.parseFloat(service.base_price)
-                              : service.base_price,
-                          image,
+                        item={
+                          {
+                            id: String(service.id),
+                            title: service.title,
+                            price:
+                              typeof service.base_price === "string"
+                                ? Number.parseFloat(service.base_price)
+                                : service.base_price,
+                            image,
 
-                          model: service.title,
-                          category: "suv",
-                          price_per_day:
-                            typeof service.base_price === "string"
-                              ? parseFloat(service.base_price)
-                              : service.base_price,
-                          seats: service.capacity,
-                          transmission: "Automatic",
+                            model: service.title,
+                            category: "suv",
+                            price_per_day:
+                              typeof service.base_price === "string"
+                                ? parseFloat(service.base_price)
+                                : service.base_price,
+                            seats: service.capacity,
+                            transmission: "Automatic",
 
-                          name: service.title,
-                          price_per_night:
-                            typeof service.base_price === "string"
-                              ? parseFloat(service.base_price)
-                              : service.base_price,
-                          address: service.description,
-                          amenities: [],
-                          stars: 4,
-                          location:
-                            typeof service.location === "string"
-                              ? service.location
-                              : "Kigali",
+                            name: service.title,
+                            price_per_night:
+                              typeof service.base_price === "string"
+                                ? parseFloat(service.base_price)
+                                : service.base_price,
+                            address: service.description,
+                            amenities: [],
+                            stars: 4,
+                            location:
+                              typeof service.location === "string"
+                                ? service.location
+                                : "Kigali",
 
-                          type: "guide",
-                          description: service.description,
-                        } as any}
+                            type: "guide",
+                            description: service.description,
+                          } as any
+                        }
                         label={bookLabel}
                         size="lg"
                         className="px-8 rounded-full h-11 uppercase tracking-widest font-display text-[10px] shadow-lg shadow-primary/10"

@@ -8,11 +8,12 @@ const protectedPaths = ["/admin", "/profile"];
 const authPaths = ["/login", "/signup", "/verify-email"];
 
 function getPathWithoutLocale(pathname: string): string {
-  const localePattern = new RegExp(`^/(${routing.locales.join("|")})`);
+  const localePattern = new RegExp(`^/(${routing.locales.join("|")})(?=/|$)`);
   return pathname.replace(localePattern, "") || "/";
 }
 
 export default function proxy(request: NextRequest) {
+  console.log("[PROXY] Intercepting request for:", request.nextUrl.pathname);
   const token = request.cookies.get("accessToken")?.value;
   const path = getPathWithoutLocale(request.nextUrl.pathname);
 
@@ -26,18 +27,38 @@ export default function proxy(request: NextRequest) {
   if (isProtected && !token) {
     const loginUrl = new URL(`/${routing.defaultLocale}/login`, request.url);
     loginUrl.searchParams.set("callbackUrl", request.nextUrl.pathname);
+    console.log("[PROXY] Redirect unauthenticated:", {
+      from: request.nextUrl.pathname,
+      to: loginUrl.pathname + loginUrl.search,
+    });
     return NextResponse.redirect(loginUrl);
   }
 
   if (isAuthPage && token) {
-    return NextResponse.redirect(
-      new URL(`/${routing.defaultLocale}/profile`, request.url),
-    );
+    const profileUrl = new URL(`/${routing.defaultLocale}/profile`, request.url);
+    console.log("[PROXY] Redirect authenticated auth-page:", {
+      from: request.nextUrl.pathname,
+      to: profileUrl.pathname + profileUrl.search,
+    });
+    return NextResponse.redirect(profileUrl);
   }
 
-  return intlMiddleware(request);
+  const response = intlMiddleware(request);
+  const rewrite = response.headers.get("x-middleware-rewrite");
+  const location = response.headers.get("location");
+  if (rewrite || location) {
+    console.log("[PROXY] intlMiddleware output:", {
+      request: request.nextUrl.pathname,
+      rewrite,
+      location,
+    });
+  }
+  return response;
 }
 
 export const config = {
-  matcher: ["/", "/(en|fr)/:path*", "/((?!api|_next|_vercel|.*\\..*).*)"],
+  // Match all pathnames except for
+  // - … if they start with `/api`, `/trpc`, `/_next` or `/_vercel`
+  // - … the ones containing a dot (e.g. `favicon.ico`)
+  matcher: "/((?!api|trpc|_next|_vercel|.*\\..*).*)",
 };

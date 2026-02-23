@@ -38,8 +38,35 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { bookingSchema, type BaseItem } from "@/lib/unified-types";
-import { cn, formatDate, formatPrice, formatTime, normalizeServiceType } from "@/lib/utils";
+import { bookingSchema } from "@/lib/unified-types";
+
+// local flexible item type for the trip builder (has camelCase fields by design)
+type BaseItem = Record<string, unknown> & {
+  id?: string | number;
+  title?: string;
+  type?: string;
+  itemType?: string;
+  quantity?: number;
+  unitPrice?: number | string;
+  price?: number | string;
+  startDate?: string | null;
+  endDate?: string | null;
+  startTime?: string | null;
+  endTime?: string | null;
+  returnDate?: string | null;
+  returnTime?: string | null;
+  isRoundTrip?: boolean;
+  withDriver?: boolean;
+  description?: string;
+  metadata?: Record<string, unknown>;
+};
+import {
+  cn,
+  formatDate,
+  formatPrice,
+  formatTime,
+  normalizeServiceType,
+} from "@/lib/utils";
 
 interface ItineraryItemProps {
   item: BaseItem;
@@ -72,7 +99,10 @@ export function ItineraryItem({
   const [isEditing, setIsEditing] = useState(false);
   const type = normalizeServiceType(item.type || item.itemType);
 
-  const image = (item as any).data?.image || (item as any).data?.airlineLogo || "/images/rwanda-landscape.jpg";
+  const image =
+    (item as any).data?.image ||
+    (item as any).data?.airlineLogo ||
+    "/images/rwanda-landscape.jpg";
 
   const handleUpdate = (updates: Partial<BaseItem>) => {
     if (onUpdate) {
@@ -80,7 +110,9 @@ export function ItineraryItem({
     }
   };
 
-  const getLabel = (field: "startDate" | "endDate" | "startTime" | "endTime") => {
+  const getLabel = (
+    field: "startDate" | "endDate" | "startTime" | "endTime",
+  ) => {
     if (type === "hotel") {
       if (field === "startDate") return "Check-in Date";
       if (field === "endDate") return "Check-out Date";
@@ -125,7 +157,12 @@ export function ItineraryItem({
               <RiStickyNoteLine className="size-8" />
             </div>
           ) : (
-            <Image src={image} alt={item.title} fill className="object-cover" />
+            <Image
+              src={image}
+              alt={item.title ?? ""}
+              fill
+              className="object-cover"
+            />
           )}
           <div className="absolute top-1 left-1">
             <div className="size-6 rounded-lg bg-background/90 backdrop-blur-xs flex items-center justify-center text-primary shadow-xs">
@@ -202,20 +239,25 @@ export function ItineraryItem({
               <div className="flex items-center gap-1.5 text-[11px] font-medium text-foreground/80">
                 <RiCalendarLine className="size-3.5 text-primary" />
                 {formatDate(currentStartDate)}
-                {currentEndDate && type !== "flight" && ` — ${formatDate(currentEndDate)}`}
+                {currentEndDate &&
+                  type !== "flight" &&
+                  ` — ${formatDate(currentEndDate)}`}
               </div>
             )}
             {(currentStartTime || currentEndTime) && (
               <div className="flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground">
                 <RiTimeLine className="size-3.5" />
                 {formatTime(currentStartTime)}
-                {currentEndTime && type !== "flight" && ` — ${formatTime(currentEndTime)}`}
+                {currentEndTime &&
+                  type !== "flight" &&
+                  ` — ${formatTime(currentEndTime)}`}
               </div>
             )}
             {item.isRoundTrip && item.returnDate && (
               <div className="flex items-center gap-1.5 text-[11px] font-medium text-blue-600 bg-blue-50/50 px-2 py-0.5 rounded">
                 <RiCheckDoubleLine className="size-3.5" />
-                Return {formatDate(item.returnDate)} {item.returnTime && `at ${formatTime(item.returnTime)}`}
+                Return {formatDate(item.returnDate)}{" "}
+                {item.returnTime && `at ${formatTime(item.returnTime)}`}
               </div>
             )}
           </div>
@@ -271,17 +313,24 @@ export function ItineraryItem({
                   {getLabel("startDate")}
                 </Label>
                 <Popover>
-                  <PopoverTrigger render={<Button
-                    variant="outline"
-                    className={cn(
-                      "h-9 w-full text-xs justify-start text-left font-normal",
-                      !(item.startDate || defaultValues?.startDate) && "text-muted-foreground"
-                    )}
-                  />}
+                  <PopoverTrigger
+                    render={
+                      <Button
+                        variant="outline"
+                        className={cn(
+                          "h-9 w-full text-xs justify-start text-left font-normal",
+                          !(item.startDate || defaultValues?.startDate) &&
+                            "text-muted-foreground",
+                        )}
+                      />
+                    }
                   >
                     <RiCalendarLine className="mr-2 size-3.5" />
-                    {(item.startDate || defaultValues?.startDate) ? (
-                      format(new Date(item.startDate || defaultValues!.startDate!), "PPP")
+                    {item.startDate || defaultValues?.startDate ? (
+                      format(
+                        new Date(item.startDate || defaultValues!.startDate!),
+                        "PPP",
+                      )
                     ) : (
                       <span>Pick a date</span>
                     )}
@@ -289,9 +338,19 @@ export function ItineraryItem({
                   <PopoverContent className="w-auto p-0" align="start">
                     <Calendar
                       mode="single"
-                      selected={(item.startDate || defaultValues?.startDate) ? new Date(item.startDate || defaultValues!.startDate!) : undefined}
-                      onSelect={(date) => 
-                        handleUpdate({ startDate: date ? format(date, "yyyy-MM-dd") : undefined })
+                      selected={
+                        item.startDate || defaultValues?.startDate
+                          ? new Date(
+                              item.startDate || defaultValues!.startDate!,
+                            )
+                          : undefined
+                      }
+                      onSelect={(date) =>
+                        handleUpdate({
+                          startDate: date
+                            ? format(date, "yyyy-MM-dd")
+                            : undefined,
+                        })
                       }
                       initialFocus
                     />
@@ -305,17 +364,24 @@ export function ItineraryItem({
                     {getLabel("endDate")}
                   </Label>
                   <Popover>
-                    <PopoverTrigger render={<Button
-                      variant="outline"
-                      className={cn(
-                        "h-9 w-full text-xs justify-start text-left font-normal",
-                        !(item.endDate || defaultValues?.endDate) && "text-muted-foreground"
-                      )}
-                    />}
+                    <PopoverTrigger
+                      render={
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "h-9 w-full text-xs justify-start text-left font-normal",
+                            !(item.endDate || defaultValues?.endDate) &&
+                              "text-muted-foreground",
+                          )}
+                        />
+                      }
                     >
                       <RiCalendarLine className="mr-2 size-3.5" />
-                      {(item.endDate || defaultValues?.endDate) ? (
-                        format(new Date(item.endDate || defaultValues!.endDate!), "PPP")
+                      {item.endDate || defaultValues?.endDate ? (
+                        format(
+                          new Date(item.endDate || defaultValues!.endDate!),
+                          "PPP",
+                        )
                       ) : (
                         <span>Pick a date</span>
                       )}
@@ -323,9 +389,17 @@ export function ItineraryItem({
                     <PopoverContent className="w-auto p-0" align="start">
                       <Calendar
                         mode="single"
-                        selected={(item.endDate || defaultValues?.endDate) ? new Date(item.endDate || defaultValues!.endDate!) : undefined}
-                        onSelect={(date) => 
-                          handleUpdate({ endDate: date ? format(date, "yyyy-MM-dd") : undefined })
+                        selected={
+                          item.endDate || defaultValues?.endDate
+                            ? new Date(item.endDate || defaultValues!.endDate!)
+                            : undefined
+                        }
+                        onSelect={(date) =>
+                          handleUpdate({
+                            endDate: date
+                              ? format(date, "yyyy-MM-dd")
+                              : undefined,
+                          })
                         }
                         initialFocus
                       />
@@ -360,7 +434,9 @@ export function ItineraryItem({
                 </div>
               )}
 
-              {(type === "flight" || type === "car" || type === ("transport" as any)) && (
+              {(type === "flight" ||
+                type === "car" ||
+                type === ("transport" as any)) && (
                 <div className="sm:col-span-2 flex items-center justify-between p-3 bg-muted/30 rounded-xl border border-border/50">
                   <div className="space-y-0.5">
                     <Label
@@ -444,17 +520,26 @@ export function ItineraryItem({
                       Return Date
                     </Label>
                     <Popover>
-                      <PopoverTrigger render={<Button
-                        variant="outline"
-                        className={cn(
-                          "h-9 w-full text-xs justify-start text-left font-normal border-blue-100",
-                          !(item.returnDate || defaultValues?.returnDate) && "text-muted-foreground"
-                        )}
-                      />}
+                      <PopoverTrigger
+                        render={
+                          <Button
+                            variant="outline"
+                            className={cn(
+                              "h-9 w-full text-xs justify-start text-left font-normal border-blue-100",
+                              !(item.returnDate || defaultValues?.returnDate) &&
+                                "text-muted-foreground",
+                            )}
+                          />
+                        }
                       >
                         <RiCalendarLine className="mr-2 size-3.5 text-blue-600" />
-                        {(item.returnDate || defaultValues?.returnDate) ? (
-                          format(new Date(item.returnDate || defaultValues!.returnDate!), "PPP")
+                        {item.returnDate || defaultValues?.returnDate ? (
+                          format(
+                            new Date(
+                              item.returnDate || defaultValues!.returnDate!,
+                            ),
+                            "PPP",
+                          )
                         ) : (
                           <span>Pick a date</span>
                         )}
@@ -462,9 +547,19 @@ export function ItineraryItem({
                       <PopoverContent className="w-auto p-0" align="start">
                         <Calendar
                           mode="single"
-                          selected={(item.returnDate || defaultValues?.returnDate) ? new Date(item.returnDate || defaultValues!.returnDate!) : undefined}
-                          onSelect={(date) => 
-                            handleUpdate({ returnDate: date ? format(date, "yyyy-MM-dd") : undefined })
+                          selected={
+                            item.returnDate || defaultValues?.returnDate
+                              ? new Date(
+                                  item.returnDate || defaultValues!.returnDate!,
+                                )
+                              : undefined
+                          }
+                          onSelect={(date) =>
+                            handleUpdate({
+                              returnDate: date
+                                ? format(date, "yyyy-MM-dd")
+                                : undefined,
+                            })
                           }
                           initialFocus
                         />

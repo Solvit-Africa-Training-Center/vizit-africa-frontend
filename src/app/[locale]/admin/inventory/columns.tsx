@@ -7,7 +7,7 @@ import {
   RiSettings3Line,
 } from "@remixicon/react";
 import type { ColumnDef, Row } from "@tanstack/react-table";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";

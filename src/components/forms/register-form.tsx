@@ -3,18 +3,19 @@
 import {
   RiAlertLine,
   RiArrowRightLine,
+  RiEyeLine,
   RiLockPasswordLine,
   RiMailLine,
   RiPhoneLine,
   RiUserLine,
 } from "@remixicon/react";
 import { useForm } from "@tanstack/react-form";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
 import { register } from "@/actions/auth";
-import { userSchema, registerObjectSchema } from "@/lib/unified-types";
+import { registerObjectSchema } from "@/lib/unified-types";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { Button } from "../ui/button";
 import { FieldError } from "../ui/field";
@@ -28,6 +29,8 @@ import { Label } from "../ui/label";
 export function RegisterForm() {
   const t = useTranslations("Auth.signup");
   const tCommon = useTranslations("Common");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showRePassword, setShowRePassword] = useState(false);
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
 
@@ -45,25 +48,39 @@ export function RegisterForm() {
     },
     onSubmit: async ({ value, formApi }) => {
       const result = await register(value);
+      console.log(result);
       if (result.success) {
         toast.success("Account created! Check your email to verify.");
         router.push(`/verify-email?email=${encodeURIComponent(value.email)}`);
       } else {
-        toast.error(
-          result.error || "Registration failed. Please check the fields.",
-        );
-        setError(result.error);
+        let errorMessage =
+          result.error || "Registration failed. Please check the fields.";
+
         if (result.fieldErrors) {
+          const firstError = Object.values(
+            result.fieldErrors,
+          ).flat()[0] as string;
+          if (firstError) {
+            errorMessage = firstError;
+          }
+
           Object.entries(result.fieldErrors).forEach(([field, errors]) => {
             if (Object.keys(value).includes(field)) {
-              // @ts-expect-error
+              // @ts-expect-error - Form API internal typing
               formApi.setFieldMeta(field, (prev) => ({
                 ...prev,
-                errors: errors,
+                errorMap: {
+                  ...prev?.errorMap,
+                  onSubmit: Array.isArray(errors) ? errors.join(", ") : errors,
+                },
+                errors: Array.isArray(errors) ? errors : [errors],
               }));
             }
           });
         }
+
+        toast.error(errorMessage);
+        setError(errorMessage);
       }
     },
   });
@@ -166,7 +183,7 @@ export function RegisterForm() {
             <InputGroup>
               <InputGroupInput
                 id="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder={`${tCommon("createAccount").split(" ")[0]}...`}
                 value={field.state.value}
                 onBlur={field.handleBlur}
@@ -174,6 +191,12 @@ export function RegisterForm() {
               />
               <InputGroupAddon>
                 <RiLockPasswordLine />
+              </InputGroupAddon>
+              <InputGroupAddon
+                align={"inline-end"}
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                <RiEyeLine />
               </InputGroupAddon>
             </InputGroup>
             {field.state.meta.isTouched && !field.state.meta.isValid && (
@@ -191,7 +214,7 @@ export function RegisterForm() {
               <InputGroupInput
                 id="re_password"
                 name="re_password"
-                type="password"
+                type={showRePassword ? "text" : "password"}
                 placeholder={t("confirmPassword")}
                 value={field.state.value}
                 onBlur={field.handleBlur}
@@ -199,6 +222,12 @@ export function RegisterForm() {
               />
               <InputGroupAddon>
                 <RiLockPasswordLine />
+              </InputGroupAddon>
+              <InputGroupAddon
+                align={"inline-end"}
+                onClick={() => setShowRePassword(!showRePassword)}
+              >
+                <RiEyeLine />
               </InputGroupAddon>
             </InputGroup>
             {field.state.meta.isTouched && !field.state.meta.isValid && (

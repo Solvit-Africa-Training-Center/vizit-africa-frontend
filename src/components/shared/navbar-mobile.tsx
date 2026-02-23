@@ -13,6 +13,7 @@ import { useUser } from "@/components/user-provider";
 import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { useTripStore } from "@/store/trip-store";
+import { useIsMounted } from "@/hooks/use-is-mounted";
 import { LanguageSwitcher } from "./language-switcher";
 
 interface NavbarMobileProps {
@@ -27,6 +28,7 @@ export function NavbarMobile({ isOpen, onClose }: NavbarMobileProps) {
   const pathname = usePathname();
   const hasActiveTrip = useTripStore((s) => s.hasActiveTrip());
   const tripItemCount = useTripStore((s) => s.itemCount());
+  const isMounted = useIsMounted();
 
   const navLinks = [
     { href: "/services", label: t("ourservices") },
@@ -116,14 +118,18 @@ export function NavbarMobile({ isOpen, onClose }: NavbarMobileProps) {
                   size="lg"
                   className="w-full rounded-sm font-display font-medium uppercase tracking-wider text-xs gap-2"
                 >
-                  {hasActiveTrip ? (
-                    <>
-                      <RiSuitcaseLine className="size-4" />
-                      {tripItemCount} {tripItemCount === 1 ? "item" : "items"} ·
-                      View Trip
-                    </>
+                  {isMounted ? (
+                    hasActiveTrip ? (
+                      <>
+                        <RiSuitcaseLine className="size-4" />
+                        {tripItemCount} {tripItemCount === 1 ? "item" : "items"}{" "}
+                        · View Trip
+                      </>
+                    ) : (
+                      tCommon("startPlanning")
+                    )
                   ) : (
-                    tCommon("startPlanning")
+                    tCommon("startPlanning") // Default SSR state
                   )}
                 </Button>
               </Link>
