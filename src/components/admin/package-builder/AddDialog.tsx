@@ -216,30 +216,12 @@ export function AddDialog({
               </div>
             )}
 
-            {/* Quantity */}
-            <div>
-              <Label htmlFor="quantity" className="text-sm">
-                Quantity
-              </Label>
-              <Input
-                id="quantity"
-                type="number"
-                min="1"
-                value={toNumber(newItem.quantity) || 1}
-                onChange={(e) =>
-                  setNewItem((prev) => ({
-                    ...prev,
-                    quantity: toNumber(e.target.value) || 1,
-                  }))
-                }
-                className="mt-1"
-              />
-            </div>
+            {/* Removed Quantity field */}
 
             {/* Price */}
             <div>
               <Label htmlFor="price" className="text-sm">
-                Unit Price ($)
+                Final Price ($)
               </Label>
               <Input
                 id="price"
@@ -257,27 +239,223 @@ export function AddDialog({
               />
             </div>
 
-            {/* Date */}
-            <div>
-              <Label htmlFor="date" className="text-sm">
-                Date
-              </Label>
-              <div className="relative mt-1">
-                <RiCalendarLine className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
-                <Input
-                  id="date"
-                  type="date"
-                  value={(newItem.date as string) || ""}
-                  onChange={(e) =>
-                    setNewItem((prev) => ({
-                      ...prev,
-                      date: e.target.value,
-                    }))
-                  }
-                  className="pl-9"
-                />
+            {/* Date Fields */}
+            {activeGroup === "hotel" ? (
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="startDate" className="text-sm">
+                    Check-in Date
+                  </Label>
+                  <div className="relative mt-1">
+                    <RiCalendarLine className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+                    <Input
+                      id="startDate"
+                      type="date"
+                      value={(newItem.date as string) || ""}
+                      onChange={(e) =>
+                        setNewItem((prev) => ({
+                          ...prev,
+                          date: e.target.value,
+                        }))
+                      }
+                      className="pl-9"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <Label htmlFor="endDate" className="text-sm">
+                    Check-out Date
+                  </Label>
+                  <div className="relative mt-1">
+                    <RiCalendarLine className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+                    <Input
+                      id="endDate"
+                      type="date"
+                      value={(newItem.endDate as string) || ""}
+                      onChange={(e) =>
+                        setNewItem((prev) => ({
+                          ...prev,
+                          endDate: e.target.value,
+                        }))
+                      }
+                      className="pl-9"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <Label htmlFor="startTime" className="text-sm">
+                    Check-in Time
+                  </Label>
+                  <Input
+                    id="startTime"
+                    type="time"
+                    value={(newItem.time as string) || ""}
+                    onChange={(e) =>
+                      setNewItem((prev) => ({
+                        ...prev,
+                        time: e.target.value,
+                      }))
+                    }
+                    className="mt-1"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="endTime" className="text-sm">
+                    Check-out Time
+                  </Label>
+                  <Input
+                    id="endTime"
+                    type="time"
+                    value={(newItem.endTime as string) || ""}
+                    onChange={(e) =>
+                      setNewItem((prev) => ({
+                        ...prev,
+                        endTime: e.target.value,
+                      }))
+                    }
+                    className="mt-1"
+                  />
+                </div>
               </div>
-            </div>
+            ) : activeGroup === "flight" ? (
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="startDate" className="text-sm">
+                    Departure Date
+                  </Label>
+                  <div className="relative mt-1">
+                    <RiCalendarLine className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+                    <Input
+                      id="startDate"
+                      type="date"
+                      value={(newItem.date as string) || ""}
+                      onChange={(e) =>
+                        setNewItem((prev) => ({
+                          ...prev,
+                          date: e.target.value,
+                        }))
+                      }
+                      className="pl-9"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <Label htmlFor="time" className="text-sm">
+                    Departure Time
+                  </Label>
+                  <Input
+                    id="time"
+                    type="time"
+                    value={(newItem.time as string) || ""}
+                    onChange={(e) =>
+                      setNewItem((prev) => ({
+                        ...prev,
+                        time: e.target.value,
+                      }))
+                    }
+                    className="mt-1"
+                  />
+                </div>
+              </div>
+            ) : activeGroup === "car" || activeGroup === "transport" ? (
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="startDate" className="text-sm">
+                    Pickup Date
+                  </Label>
+                  <div className="relative mt-1">
+                    <RiCalendarLine className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+                    <Input
+                      id="startDate"
+                      type="date"
+                      value={(newItem.date as string) || ""}
+                      onChange={(e) =>
+                        setNewItem((prev) => ({
+                          ...prev,
+                          date: e.target.value,
+                        }))
+                      }
+                      className="pl-9"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <Label htmlFor="endDate" className="text-sm">
+                    Return Date
+                  </Label>
+                  <div className="relative mt-1">
+                    <RiCalendarLine className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+                    <Input
+                      id="endDate"
+                      type="date"
+                      value={(newItem.endDate as string) || ""}
+                      onChange={(e) =>
+                        setNewItem((prev) => ({
+                          ...prev,
+                          endDate: e.target.value,
+                        }))
+                      }
+                      className="pl-9"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <Label htmlFor="startTime" className="text-sm">
+                    Pickup Time
+                  </Label>
+                  <Input
+                    id="startTime"
+                    type="time"
+                    value={(newItem.time as string) || ""}
+                    onChange={(e) =>
+                      setNewItem((prev) => ({
+                        ...prev,
+                        time: e.target.value,
+                      }))
+                    }
+                    className="mt-1"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="endTime" className="text-sm">
+                    Return Time
+                  </Label>
+                  <Input
+                    id="endTime"
+                    type="time"
+                    value={(newItem.endTime as string) || ""}
+                    onChange={(e) =>
+                      setNewItem((prev) => ({
+                        ...prev,
+                        endTime: e.target.value,
+                      }))
+                    }
+                    className="mt-1"
+                  />
+                </div>
+              </div>
+            ) : (
+              <div>
+                <Label htmlFor="date" className="text-sm">
+                  Date
+                </Label>
+                <div className="relative mt-1">
+                  <RiCalendarLine className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+                  <Input
+                    id="date"
+                    type="date"
+                    value={(newItem.date as string) || ""}
+                    onChange={(e) =>
+                      setNewItem((prev) => ({
+                        ...prev,
+                        date: e.target.value,
+                      }))
+                    }
+                    className="pl-9"
+                  />
+                </div>
+              </div>
+            )}
 
             {/* Description */}
             <div>
@@ -335,7 +513,7 @@ export function AddDialog({
                     placeholder="e.g., Kigali (KGL)"
                   />
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 mt-2 col-span-2">
                   <Checkbox
                     id="roundTrip"
                     checked={newItem.isRoundTrip || false}
@@ -350,6 +528,47 @@ export function AddDialog({
                     Round trip
                   </Label>
                 </div>
+                {newItem.isRoundTrip && (
+                  <div className="col-span-2 grid grid-cols-2 gap-4 bg-muted/30 p-3 rounded mt-2">
+                    <div>
+                      <Label htmlFor="returnDate" className="text-sm text-blue-600">
+                        Return Date
+                      </Label>
+                      <div className="relative mt-1">
+                        <RiCalendarLine className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+                        <Input
+                          id="returnDate"
+                          type="date"
+                          value={(newItem.returnDate as string) || ""}
+                          onChange={(e) =>
+                            setNewItem((prev) => ({
+                              ...prev,
+                              returnDate: e.target.value,
+                            }))
+                          }
+                          className="pl-9"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <Label htmlFor="returnTime" className="text-sm text-blue-600">
+                        Return Time
+                      </Label>
+                      <Input
+                        id="returnTime"
+                        type="time"
+                        value={(newItem.returnTime as string) || ""}
+                        onChange={(e) =>
+                          setNewItem((prev) => ({
+                            ...prev,
+                            returnTime: e.target.value,
+                          }))
+                        }
+                        className="mt-1"
+                      />
+                    </div>
+                  </div>
+                )}
               </>
             )}
 

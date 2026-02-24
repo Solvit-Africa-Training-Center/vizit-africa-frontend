@@ -12,11 +12,10 @@ const toNumber = (v: any) => Number(v) || 0;
 
 export function calculateQuoteTotal(items: PackageItem[]): number {
   return items.reduce((sum, item) => {
-    const qty = toNumber(item.quantity || 1);
     const price = toNumber(
       item.quotePrice ?? item.unitPrice ?? item.price ?? 0,
     );
-    return sum + qty * price;
+    return sum + price;
   }, 0);
 }
 
@@ -29,11 +28,10 @@ export function calculateQuoteBreakdown(
 
   items.forEach((item) => {
     const type = item.type as string;
-    const qty = toNumber(item.quantity || 1);
     const price = toNumber(
       item.quotePrice ?? item.unitPrice ?? item.price ?? 0,
     );
-    const itemTotal = qty * price;
+    const itemTotal = price;
 
     if (!itemsByType[type]) {
       itemsByType[type] = { count: 0, subtotal: 0 };

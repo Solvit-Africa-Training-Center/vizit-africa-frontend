@@ -14,6 +14,7 @@ interface GroupedItemsProps {
   updateItem: (id: string, updates: Partial<PackageItem>) => void;
   handleNotifyVendor: (item: PackageItem) => void;
   notifying: string | null;
+  requestDefaults?: { startDate?: string; endDate?: string };
 }
 
 const toNumber = (v: any) => Number(v) || 0;
@@ -54,6 +55,7 @@ export function GroupedItems({
   updateItem,
   handleNotifyVendor,
   notifying,
+  requestDefaults,
 }: GroupedItemsProps) {
   const [expandedGroups, setExpandedGroups] = useState<Set<ServiceGroupKey>>(
     new Set(GROUPS.filter((g) => grouped[g]?.length > 0)),
@@ -79,9 +81,8 @@ export function GroupedItems({
 
         // Calculate group summary
         const groupTotal = items.reduce((sum, item) => {
-          const qty = toNumber(item.quantity || 1);
           const price = toNumber(item.quotePrice ?? item.price ?? 0);
-          return sum + qty * price;
+          return sum + price;
         }, 0);
 
         const validation = useMemo(() => {
@@ -182,6 +183,7 @@ export function GroupedItems({
                         )}
                         <ItineraryItem
                           item={item}
+                          defaultValues={requestDefaults}
                           onRemove={() =>
                             removeItem(String(item.id ?? item.tempId))
                           }

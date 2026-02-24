@@ -184,7 +184,7 @@ export function QuoteSummaryPanel({
               : ""
           }
         >
-          {isLoading ? "Processing..." : "Review & Send Quote"}
+          {isLoading ? "Sending..." : "Review & Send Quote"}
         </Button>
       </div>
     </div>

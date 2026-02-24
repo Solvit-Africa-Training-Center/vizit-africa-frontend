@@ -15,7 +15,7 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty";
 import { Link } from "@/i18n/navigation";
-import { bookingSchema, type Booking } from "@/lib/unified-types";
+import type { Booking } from "@/lib/unified-types";
 
 interface DashboardClientProps {
   requests: Booking[];

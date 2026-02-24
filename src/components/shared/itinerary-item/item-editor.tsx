@@ -181,6 +181,26 @@ export function ItemEditor({
           </div>
         )}
 
+        <div className="space-y-1.5">
+          <Label className="text-[10px] uppercase font-bold text-muted-foreground ml-1">
+            Final Price
+          </Label>
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-xs">$</span>
+            <Input
+              type="number"
+              min="0"
+              step="0.01"
+              className="h-9 text-xs pl-6"
+              value={(item.quotePrice as number) ?? (item.price as number) ?? (item.unitPrice as number) ?? ""}
+              onChange={(e) => {
+                const val = e.target.value ? Number(e.target.value) : 0;
+                onUpdate({ price: val, quotePrice: val, unitPrice: val });
+              }}
+            />
+          </div>
+        </div>
+
         {(type === "flight" || type === "car" || type === ("transport" as any)) && (
           <div className="sm:col-span-2 flex items-center justify-between p-3 bg-muted/30 rounded-xl border border-border/50">
             <div className="space-y-0.5">

@@ -39,6 +39,7 @@ console.log({tripInfo, items})
 
     try {
       const result = await submitTripRequest({ ...tripInfo, items });
+      console.log({tripInfo, items, result})
       if (result.success) {
         setSubmitted(true);
         toast.success("Trip request submitted successfully!");

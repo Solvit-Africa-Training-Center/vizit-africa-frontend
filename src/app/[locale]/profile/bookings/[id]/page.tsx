@@ -22,18 +22,18 @@ import { useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { use, useEffect, useState } from "react";
 import { toast } from "sonner";
-import { acceptQuoteForBooking, getBookingById } from "@/actions/bookings";
-import { Footer } from "@/components/landing";
-import { Navbar } from "@/components/shared";
-import { PaymentModal } from "@/components/shared/payment";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { ItineraryItem } from "@/components/shared/itinerary-item";
-import { Link } from "@/i18n/navigation";
-import { bookingSchema, type Booking } from "@/lib/unified-types";
-
-import { formatDate } from "@/lib/utils";
+import { acceptQuoteForBooking, getBookingById } from '@/actions/bookings';
+import { Footer } from '@/components/landing';
+import { Navbar } from '@/components/shared';
+import { PaymentModal } from '@/components/shared/payment';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { ItineraryItem } from '@/components/shared/itinerary-item';
+import { Link } from '@/i18n/navigation';
+import type { Booking } from '@/lib/unified-types';
+import { formatDate } from '@/lib/utils';
+import { formatCurrency } from "@/lib/utils/quote-calculator";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -51,7 +51,6 @@ export default function BookingDetailPage({ params }: PageProps) {
   const { id } = use(params);
   const [booking, setBooking] = useState<Booking | null>(null);
   const [loading, setLoading] = useState(true);
-  const [processing, setProcessing] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const _t = useTranslations("Profile");
   const _tCommon = useTranslations("Common");
@@ -75,28 +74,19 @@ export default function BookingDetailPage({ params }: PageProps) {
     loadBooking();
   }, [id]);
 
-  const handleAcceptQuote = async () => {
+  const handlePaymentSuccess = async () => {
     if (!booking) return;
-    setProcessing(true);
+    // After Stripe payment succeeds, confirm the booking
     try {
       const result = await acceptQuoteForBooking(String(booking.id));
       if (result.success) {
-        toast.success("Quote accepted successfully! Your trip is confirmed.");
-        const refresh = await getBookingById(id);
-        if (refresh.success) {
-          setBooking(refresh.data);
-        }
+        toast.success("Payment received! Your booking is now confirmed.");
       } else {
-        toast.error(result.error || "Failed to accept quote");
+        toast.error(result.error || "Payment processed but booking confirmation failed. Contact support.");
       }
     } catch (_error) {
-      toast.error("An error occurred while accepting the quote");
-    } finally {
-      setProcessing(false);
+      toast.error("Payment succeeded but confirmation failed. Contact support.");
     }
-  };
-
-  const handlePaymentSuccess = async () => {
     const refresh = await getBookingById(id);
     if (refresh.success) {
       setBooking(refresh.data);
@@ -207,26 +197,17 @@ export default function BookingDetailPage({ params }: PageProps) {
                   <Button
                     variant="outline"
                     className="flex-1 md:flex-none"
-                    disabled={processing}
                   >
                     Decline Quote
                   </Button>
                   <Button
-                    onClick={handleAcceptQuote}
+                    onClick={() => setShowPaymentModal(true)}
                     className="flex-1 md:flex-none shadow-lg shadow-primary/20"
-                    disabled={processing}
                   >
-                    {processing ? (
-                      <span className="flex items-center gap-2">
-                        <div className="size-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin"></div>
-                        Processing...
-                      </span>
-                    ) : (
-                      <span className="flex items-center gap-2">
-                        <RiCheckboxCircleLine className="size-5" />
-                        Accept & Confirm
-                      </span>
-                    )}
+                    <span className="flex items-center gap-2">
+                      <RiCheckboxCircleLine className="size-5" />
+                      Accept & Pay
+                    </span>
                   </Button>
                 </div>
               )}
@@ -293,7 +274,7 @@ export default function BookingDetailPage({ params }: PageProps) {
                       className="bg-emerald-600 hover:bg-emerald-700 text-white"
                     >
                       <RiCheckboxCircleLine className="size-5 mr-2" />
-                      Pay Now
+                      Complete Payment
                     </Button>
                   )}
                 </div>
@@ -459,7 +440,7 @@ export default function BookingDetailPage({ params }: PageProps) {
                   <div className="flex justify-between text-sm opacity-70">
                     <span>Base Amount</span>
                     <span>
-                      {currency} {totalAmount.toLocaleString()}
+                      {formatCurrency(totalAmount, currency)}
                     </span>
                   </div>
                   <div className="flex justify-between text-sm opacity-70">
@@ -470,7 +451,7 @@ export default function BookingDetailPage({ params }: PageProps) {
                   <div className="flex justify-between items-center">
                     <span className="font-medium">Total Price</span>
                     <span className="font-display text-2xl font-bold">
-                      {currency} {totalAmount.toLocaleString()}
+                      {formatCurrency(totalAmount, currency)}
                     </span>
                   </div>
                 </div>

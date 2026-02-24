@@ -6,7 +6,7 @@ import {
   CollapsibleContent,
 } from "@/components/ui/collapsible";
 import { normalizeServiceType } from "@/lib/utils";
-import type { ItineraryItemProps } from "./types";
+import type { BaseItem, ItineraryItemProps } from "./types";
 import { ItemIcon } from "./item-icon";
 import { ItemHeader } from "./item-header";
 import { ItemSummary } from "./item-summary";
@@ -28,6 +28,21 @@ export function ItineraryItem({
   const [isEditing, setIsEditing] = useState(false);
   const type = normalizeServiceType(item.type || item.itemType);
 
+  // Normalize item keys to support both frontend camelCase and backend snake_case
+  const normalizedItem: BaseItem = {
+    ...item,
+    startDate: (item.startDate || item.start_date) as string | null,
+    endDate: (item.endDate || item.end_date) as string | null,
+    startTime: (item.startTime || item.start_time) as string | null,
+    endTime: (item.endTime || item.end_time) as string | null,
+    returnDate: (item.returnDate || item.return_date) as string | null,
+    returnTime: (item.returnTime || item.return_time) as string | null,
+    isRoundTrip: (item.isRoundTrip ?? item.is_round_trip) as boolean | undefined,
+    withDriver: (item.withDriver ?? item.with_driver) as boolean | undefined,
+    itemType: (item.itemType || item.item_type || item.type) as string | undefined,
+    unitPrice: (item.unitPrice ?? item.unit_price ?? item.price) as string | number | undefined,
+  };
+
   return (
     <Collapsible
       open={isEditing}
@@ -35,11 +50,11 @@ export function ItineraryItem({
       className="group relative flex flex-col gap-4 bg-card border border-border/50 rounded-2xl p-5 shadow-sm hover:border-primary/20 transition-all"
     >
       <div className="flex flex-col sm:flex-row gap-5">
-        <ItemIcon item={item} type={type} />
+        <ItemIcon item={normalizedItem} type={type} />
         
         <div className="flex-1 min-w-0 flex flex-col justify-between">
-          <ItemHeader item={item} type={type} />
-          <ItemSummary item={item} type={type} defaultValues={defaultValues} />
+          <ItemHeader item={normalizedItem} type={type} />
+          <ItemSummary item={normalizedItem} type={type} defaultValues={defaultValues} />
         </div>
 
         <ItemActions
@@ -56,7 +71,7 @@ export function ItineraryItem({
         <CollapsibleContent data-slot="collapsible-content">
           <div className="overflow-hidden border-t border-border/50 pt-4">
             <ItemEditor
-              item={item}
+              item={normalizedItem}
               type={type}
               defaultValues={defaultValues}
               onUpdate={onUpdate}

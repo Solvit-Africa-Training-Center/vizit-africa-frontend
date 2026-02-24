@@ -10,7 +10,7 @@ import {
   RiSettings3Line,
   RiSuitcaseLine,
 } from "@remixicon/react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { differenceInDays, isPast, parseISO } from "date-fns";
 import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
@@ -25,6 +25,7 @@ import {
 import { Footer } from "@/components/landing";
 import { CompletedRequestsSchedule } from "@/components/schedule";
 import { Navbar } from "@/components/shared";
+import { PaymentModal } from "@/components/shared/payment";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -33,6 +34,7 @@ import { useUser } from "@/components/user-provider";
 import { Link } from "@/i18n/navigation";
 import { type Booking } from "@/lib/unified-types";
 import { cn } from "@/lib/utils";
+import { formatCurrency } from "@/lib/utils/quote-calculator";
 
 type Tab = "overview" | "trips" | "saved" | "settings";
 type Translator = (key: string) => string;
@@ -50,6 +52,7 @@ export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState<Tab>("overview");
   const { user } = useUser();
   const t = useTranslations("Profile");
+  const queryClient = useQueryClient();
 
   const { data: bookingsData, isLoading } = useQuery({
     queryKey: ["user-bookings"],
@@ -61,6 +64,13 @@ export default function ProfilePage() {
   });
   const [acceptingId, setAcceptingId] = useState<string | null>(null);
   const [cancellingId, setCancellingId] = useState<string | null>(null);
+  const [payingBooking, setPayingBooking] = useState<{
+    id: string;
+    amount: number;
+    currency: string;
+    email: string;
+    name: string;
+  } | null>(null);
 
   const stats = useMemo(() => {
     if (!bookingsData) return { trips: 0, days: 0 };
@@ -364,40 +374,29 @@ export default function ProfilePage() {
                                   <p className="text-sm font-medium text-primary">
                                     Quote Ready:{" "}
                                     <span className="text-lg">
-                                      {req.quote.totalAmount}{" "}
-                                      {req.quote.currency || "USD"}
+                                      {formatCurrency(
+                                        req.quote.totalAmount,
+                                        req.quote.currency || "USD",
+                                      )}
                                     </span>
                                   </p>
                                   <Button
                                     size="sm"
-                                    onClick={async () => {
-                                      setAcceptingId(String(req.id));
-                                      const result =
-                                        await acceptQuoteForBooking(
-                                          String(req.id),
-                                        );
-                                      setAcceptingId(null);
-                                      if (result.success) {
-                                        toast.success(
-                                          "Quote accepted. Your trip is now confirmed.",
-                                        );
-                                        window.location.reload();
-                                      } else {
-                                        toast.error(
-                                          result.error ||
-                                            "Failed to accept quote",
-                                        );
-                                      }
+                                    onClick={() => {
+                                      setPayingBooking({
+                                        id: String(req.id),
+                                        amount: req.quote?.totalAmount || 0,
+                                        currency: req.quote?.currency || "USD",
+                                        email: req.email || "",
+                                        name: req.name || "Traveler",
+                                      });
                                     }}
                                     disabled={
                                       acceptingId === String(req.id) ||
                                       cancellingId === String(req.id)
                                     }
                                   >
-                                    {acceptingId === String(req.id) ? (
-                                      <Spinner className="size-4 mr-2" />
-                                    ) : null}
-                                    Accept Quote
+                                    Accept & Pay
                                   </Button>
                                 </div>
                               )}
@@ -601,6 +600,31 @@ export default function ProfilePage() {
         </div>
       </main>
       <Footer />
+      {payingBooking && (
+        <PaymentModal
+          isOpen={!!payingBooking}
+          onClose={() => setPayingBooking(null)}
+          amount={payingBooking.amount}
+          currency={payingBooking.currency}
+          bookingId={payingBooking.id}
+          clientEmail={payingBooking.email}
+          travelerName={payingBooking.name}
+          onPaymentSuccess={async () => {
+            setAcceptingId(payingBooking.id);
+            const result = await acceptQuoteForBooking(payingBooking.id);
+            if (result.success) {
+              toast.success("Payment received! Your booking is now confirmed.");
+              queryClient.invalidateQueries({ queryKey: ["user-bookings"] });
+            } else {
+              toast.error(
+                result.error || "Payment processed but confirmation failed.",
+              );
+            }
+            setAcceptingId(null);
+            setPayingBooking(null);
+          }}
+        />
+      )}
     </>
   );
 }

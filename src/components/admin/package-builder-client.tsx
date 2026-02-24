@@ -94,14 +94,18 @@ export function PackageBuilderClient({ request }: PackageBuilderClientProps) {
           type: type as any,
           tempId: key,
           quantity: toNumber(item.quantity || 1),
-          date: (item.start_date || (item as any).date) as string,
-          time: (item.start_time || (item as any).time) as string,
-          startDate: item.start_date as string,
-          endDate: item.end_date as string,
-          startTime: item.start_time as string,
-          endTime: item.end_time as string,
-          isRoundTrip: item.is_round_trip,
-          returnDate: item.return_date as string,
+          date: (item.metadata?.startDate || item.start_date || (item as any).date) as string,
+          time: (item.metadata?.startTime || item.start_time || (item as any).time) as string,
+          startDate: (item.metadata?.startDate || item.start_date) as string,
+          endDate: (item.metadata?.endDate || item.end_date) as string,
+          startTime: (item.metadata?.startTime || item.start_time) as string,
+          endTime: (item.metadata?.endTime || item.end_time) as string,
+          isRoundTrip: !!(item.metadata?.isRoundTrip ?? item.is_round_trip ?? false),
+          returnDate: (item.metadata?.returnDate || item.return_date) as string,
+          returnTime: (item.metadata?.returnTime || item.return_time) as string,
+          withDriver: !!(item.metadata?.withDriver ?? false),
+          quotePrice: toNumber(item.metadata?.price || item.unit_price || 0),
+          price: toNumber(item.metadata?.price || item.unit_price || 0),
         } as PackageItem);
       });
 
@@ -114,9 +118,9 @@ export function PackageBuilderClient({ request }: PackageBuilderClientProps) {
           id: key,
           tempId: key,
           isQuoted: true,
-          quotePrice: item.unitPrice,
-          price: item.unitPrice || existing?.price,
-          quantity: toNumber(item.quantity || existing?.quantity || 1),
+          quotePrice: item.unit_price,
+          price: item.unit_price || existing?.price,
+          quantity: 1, // Store default 1 but don't compute with it
           type: (normalizeType(item.type) === "other" && item.title
             ? normalizeType(item.title)
             : normalizeType(item.type)) as any,
@@ -130,9 +134,9 @@ export function PackageBuilderClient({ request }: PackageBuilderClientProps) {
           returnDate: (item.returnDate || existing?.returnDate) as string,
           returnTime: (item.returnTime || existing?.returnTime) as string,
           withDriver:
-            item.metadata?.withDriver ??
+            !!(item.metadata?.withDriver ??
             item.withDriver ??
-            existing?.withDriver,
+            existing?.withDriver),
           metadata: {
             ...existing?.metadata,
             ...item.metadata,
@@ -170,11 +174,10 @@ export function PackageBuilderClient({ request }: PackageBuilderClientProps) {
   }, [displayItems]);
 
   const total = displayItems.reduce((sum, item) => {
-    const qty = toNumber(item.quantity || 1);
     const price = toNumber(
       item.quotePrice ?? item.unitPrice ?? item.price ?? 0,
     );
-    return sum + qty * price;
+    return sum + price;
   }, 0);
 
   const handleAddItem = () => {
@@ -185,7 +188,7 @@ export function PackageBuilderClient({ request }: PackageBuilderClientProps) {
       type: (activeGroup === "other" ? "custom" : activeGroup) as any,
       title: newItem.title || "New Item",
       description: newItem.description || "",
-      quantity: toNumber(newItem.quantity || 1),
+      quantity: 1, // Store default 1 but don't compute with it
       price: toNumber(newItem.quotePrice || 0),
       quotePrice: toNumber(newItem.quotePrice || 0),
       date: newItem.date,
@@ -236,7 +239,7 @@ export function PackageBuilderClient({ request }: PackageBuilderClientProps) {
         title: service.title,
         description: service.description,
         quotePrice: toNumber(service.base_price),
-        quantity: 1,
+        quantity: 1, // Keep standard default
       }));
     }
   };
@@ -268,11 +271,6 @@ export function PackageBuilderClient({ request }: PackageBuilderClientProps) {
     }
 
     flightItems.forEach((flight) => {
-      if (toNumber(flight.quantity) !== request.travelers) {
-        warnings.push(
-          `Flight "${flight.title}" quantity (${flight.quantity}) does not match the total number of travelers (${request.travelers}).`,
-        );
-      }
       if (!flight.date || !flight.departure || !flight.arrival) {
         warnings.push(
           `Flight "${flight.title}" is missing essential details like date, departure, or arrival city.`,
@@ -304,11 +302,10 @@ export function PackageBuilderClient({ request }: PackageBuilderClientProps) {
     try {
       // Calculate total from all items
       const total = displayItems.reduce((sum, item) => {
-        const qty = toNumber(item.quantity || 1);
         const price = toNumber(
           item.quotePrice ?? item.unitPrice ?? item.price ?? 0,
         );
-        return sum + qty * price;
+        return sum + price;
       }, 0);
 
       // Call the API with the correct signature
@@ -380,7 +377,7 @@ export function PackageBuilderClient({ request }: PackageBuilderClientProps) {
 
   return (
     <div className="mx-auto max-w-9xl px-5 md:px-10 py-8 min-h-screen pb-24">
-      {/* Header */}
+      {/* header */}
       <div className="sticky top-0 z-20 bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 pb-4 pt-4 mb-6 border-b border-border">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex-1">
@@ -437,7 +434,6 @@ export function PackageBuilderClient({ request }: PackageBuilderClientProps) {
           <RequestDetails request={request} />
         </div>
 
-        {/* Center: Grouped Items */}
         <div className="lg:col-span-2 space-y-8 order-2">
           <GroupedItems
             grouped={grouped}
@@ -447,6 +443,10 @@ export function PackageBuilderClient({ request }: PackageBuilderClientProps) {
             updateItem={(id, updates) => updateItem(bookingId, id, updates)}
             handleNotifyVendor={handleNotifyVendor}
             notifying={notifying}
+            requestDefaults={{
+              startDate: request.arrivalDate || undefined,
+              endDate: request.departureDate || undefined,
+            }}
           />
         </div>
 
@@ -489,7 +489,6 @@ export function PackageBuilderClient({ request }: PackageBuilderClientProps) {
         breakdown={quoteBreakdown}
         travelerName={request.name}
         clientEmail={request.email}
-        bookingId={bookingId}
         warnings={validation.warnings}
         isLoading={isSending}
       />

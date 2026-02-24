@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   RiCheckLine,
   RiCloseLine,
@@ -18,7 +18,6 @@ import { type PackageItem } from "@/lib/store/package-store";
 import { type QuoteBreakdown } from "@/lib/utils/quote-calculator";
 import { formatCurrency } from "@/lib/utils/quote-calculator";
 import { format } from "date-fns";
-import { PaymentModal } from "@/components/shared/payment";
 
 interface QuotePreviewModalProps {
   isOpen: boolean;
@@ -29,7 +28,6 @@ interface QuotePreviewModalProps {
   breakdown: QuoteBreakdown;
   travelerName: string;
   clientEmail: string;
-  bookingId: string;
   warnings?: string[];
 }
 
@@ -42,11 +40,8 @@ export function QuotePreviewModal({
   breakdown,
   travelerName,
   clientEmail,
-  bookingId,
   warnings = [],
 }: QuotePreviewModalProps) {
-  const [showPayment, setShowPayment] = useState(false);
-  
   const expiresDate = new Date();
   expiresDate.setDate(expiresDate.getDate() + 7);
 
@@ -186,43 +181,23 @@ export function QuotePreviewModal({
             </div>
           </div>
 
-          {/* Action Buttons */}
           <div className="flex justify-end gap-3 pt-4 border-t border-border">
-            <Button variant="outline" onClick={onClose} disabled={isLoading || showPayment}>
+            <Button variant="outline" onClick={onClose} disabled={isLoading}>
               <RiCloseLine className="size-4 mr-2" />
               Go Back
             </Button>
             <Button
               variant="outline"
               onClick={() => window.print()}
-              disabled={isLoading || showPayment}
+              disabled={isLoading}
             >
               <RiPrinterLine className="size-4 mr-2" />
               Print
             </Button>
-            <Button 
-              onClick={() => setShowPayment(true)} 
-              disabled={isLoading} 
-              size="lg"
-            >
+            <Button onClick={onConfirm} disabled={isLoading} size="lg">
               {isLoading ? "Sending..." : "Send Quote to Client"}
             </Button>
           </div>
-
-          {/* Payment Modal */}
-          <PaymentModal
-            isOpen={showPayment}
-            onClose={() => setShowPayment(false)}
-            bookingId={bookingId}
-            amount={breakdown.total}
-            currency="USD"
-            clientEmail={clientEmail}
-            travelerName={travelerName}
-            onPaymentSuccess={() => {
-              setShowPayment(false);
-              onConfirm();
-            }}
-          />
         </div>
       </DialogContent>
     </Dialog>

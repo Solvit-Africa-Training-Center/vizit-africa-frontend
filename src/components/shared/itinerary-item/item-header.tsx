@@ -37,11 +37,6 @@ export function ItemHeader({ item, type }: { item: BaseItem; type: string }) {
           <p className="font-mono font-bold text-sm">
             {formatPrice(Number(item.unitPrice ?? item.price ?? 0))}
           </p>
-          {Number(item.quantity) > 1 && (
-            <p className="text-[10px] text-muted-foreground font-medium uppercase">
-              Qty: {item.quantity}
-            </p>
-          )}
         </div>
       </div>
       <div className="flex flex-col gap-1">
