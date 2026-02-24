@@ -25,12 +25,28 @@ import { type ZodSchema } from "zod";
 async function fetchOne<T>(
   endpoint: string,
   schema: ZodSchema<T>,
+  options?: {
+    requiresAuth?: boolean;
+    cache?: RequestCache;
+    revalidate?: number;
+    tag?: string;
+  },
 ): Promise<T | null> {
   try {
-    const data = await api.get<T>(endpoint, schema, {
-      requiresAuth: false,
-      cache: "no-store",
-    });
+    const fetchOptions: any = {
+      requiresAuth: options?.requiresAuth ?? false,
+    };
+
+    if (options?.tag || options?.revalidate !== undefined) {
+      fetchOptions.next = {
+        revalidate: options?.revalidate,
+        tags: options?.tag ? [options.tag] : undefined,
+      };
+    } else {
+      fetchOptions.cache = options?.cache ?? "no-store";
+    }
+
+    const data = await api.get<T>(endpoint, schema, fetchOptions);
     return data;
   } catch (error) {
     if (process.env.NODE_ENV !== "production") {
@@ -109,7 +125,9 @@ export async function getBookings(): Promise<any[]> {
 }
 
 export async function getBookingById(id: string | number): Promise<any | null> {
-  return fetchOne(endpoints.bookings.admin.detail(id), bookingSchema);
+  return fetchOne(endpoints.bookings.admin.detail(id), bookingSchema, {
+    requiresAuth: true,
+  });
 }
 
 export async function getRequests(): Promise<any[]> {
@@ -133,7 +151,9 @@ export async function getUsers(): Promise<any[]> {
 }
 
 export async function getUserProfile(): Promise<any | null> {
-  return fetchOne(endpoints.auth.me, userSchema);
+  return fetchOne(endpoints.auth.me, userSchema, {
+    requiresAuth: true,
+  });
 }
 
 // ============================================================================

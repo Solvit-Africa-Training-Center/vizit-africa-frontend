@@ -55,7 +55,7 @@ export default function InventoryClient({ services }: InventoryClientProps) {
   ];
 
   return (
-    <div className="mx-auto max-w-7xl px-5 md:px-10 py-8">
+    <div className="mx-auto max-w-9xl px-5 md:px-10 py-8">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
         <div>
           <h1 className="font-display text-2xl md:text-3xl font-medium text-foreground">

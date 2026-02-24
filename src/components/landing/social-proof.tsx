@@ -41,7 +41,7 @@ export function SocialProof() {
             ].map((partner, i) => (
               <div
                 key={`${partner.name}-${i}`}
-                className="flex items-center gap-4 text-white/40 hover:text-white transition-colors duration-300 cursor-pointer group"
+                className="flex items-center gap-4 text-white/50 hover:text-white transition-colors duration-300 cursor-pointer group"
               >
                 <span className="text-sm md:text-base font-mono uppercase tracking-widest group-hover:text-shadow-sm group-hover:shadow-white/20">
                   {partner.name}

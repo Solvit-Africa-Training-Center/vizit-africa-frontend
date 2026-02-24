@@ -6,7 +6,7 @@ import { Link } from "@/i18n";
 const page = async () => {
   const t = await getTranslations("Admin.createVendor");
   return (
-    <div className="mx-auto max-w-7xl px-5 md:px-10 py-8">
+    <div className="mx-auto max-w-9xl px-5 md:px-10 py-8">
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="font-display text-2xl md:text-3xl font-medium text-foreground">

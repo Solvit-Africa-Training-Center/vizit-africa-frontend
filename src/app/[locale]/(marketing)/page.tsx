@@ -5,7 +5,7 @@ import {
   FAQ,
   Hero,
   HowItWorks,
-  FlightSearchWidget,
+  Gallery,
   Services,
   SocialProof,
   Testimonials,
@@ -65,7 +65,7 @@ export default function Home() {
       />
       <Hero />
       <SocialProof />
-      <FlightSearchWidget />
+      <Gallery />
       <Destinations />
       <Services />
 

@@ -1,6 +1,6 @@
 import { getServices } from "@/lib/simple-data-fetching";
-import { serviceSchema, type ServiceResponse } from "@/lib/unified-types";
-import { type Hotel, type Car, type Guide } from "@/lib/plan_trip-types";
+import type { ServiceResponse } from "@/lib/unified-types";
+import type { Hotel, Car, Guide } from "@/lib/plan_trip-types";
 import PlanTripClient from "./plan-trip-client";
 
 export default async function PlanTripPage() {

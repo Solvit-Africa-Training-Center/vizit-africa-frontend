@@ -18,16 +18,9 @@ export function WhyUs() {
   return (
     <section
       id="why-us"
-      className="py-24 md:py-32 bg-muted/30 relative overflow-hidden isolate"
+      className="py-24 md:py-32 bg-foreground text-background relative overflow-hidden isolate"
     >
-      {/* Airport Geometry Background */}
-      <div
-        className="absolute inset-0 opacity-[0.02] pointer-events-none -z-10 bg-black"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40' stroke='currentColor' stroke-width='1' fill='none'/%3E%3C/svg%3E")`,
-        }}
-        aria-hidden="true"
-      />
+   
       <div className="container max-w-7xl mx-auto px-5 md:px-10">
         <div className="grid md:grid-cols-2 gap-16 items-start">
           <motion.div
@@ -41,6 +34,7 @@ export function WhyUs() {
               title={t("title")}
               description={t("description")}
               className="mb-12"
+              dark
             />
 
             <div className="grid grid-cols-3 gap-8">
@@ -52,7 +46,7 @@ export function WhyUs() {
                   <div className="font-display text-6xl font-medium text-primary mb-2 tabular-nums tracking-tighter">
                     {stat.value}
                   </div>
-                  <div className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
+                  <div className="text-xs font-medium uppercase tracking-widest text-background/60">
                     {stat.label}
                   </div>
                 </div>
@@ -71,12 +65,12 @@ export function WhyUs() {
               {benefits.map((benefit, i) => (
                 <li
                   key={i}
-                  className="group flex items-start gap-6 pb-6 border-b border-border/40 last:border-0 hover:border-primary/50 transition-colors duration-300"
+                  className="group flex items-start gap-6 pb-6 border-b border-white/10 last:border-0 hover:border-primary/50 transition-colors duration-300"
                 >
-                  <span className="font-mono text-sm text-primary/40 pt-1.5 group-hover:text-primary transition-colors">
+                  <span className="font-mono text-sm text-primary/60 pt-1.5 group-hover:text-primary transition-colors">
                     {(i + 1).toString().padStart(2, "0")}
                   </span>
-                  <h3 className="text-xl md:text-2xl font-light text-foreground group-hover:pl-4 transition-all duration-300">
+                  <h3 className="text-xl md:text-2xl font-light text-background group-hover:pl-4 transition-all duration-300">
                     {benefit}
                   </h3>
                 </li>

@@ -16,7 +16,6 @@ import {
 } from "@remixicon/react";
 import { differenceInDays, format } from "date-fns";
 import { useRouter } from "@/i18n/navigation";
-import { useLocale } from "next-intl";
 import * as React from "react";
 import type { DateRange } from "react-day-picker";
 import {
@@ -65,11 +64,9 @@ export function TripRequestDialog({
   onOpenChange,
 }: TripRequestDialogProps) {
   const router = useRouter();
-  const locale = useLocale();
   const store = useTripStore();
   const { tripInfo, updateTripInfo, items, addItem, removeItem } = store;
 
-  // Destructure tripInfo for clarity
   const {
     departureDate,
     returnDate,
@@ -102,7 +99,6 @@ export function TripRequestDialog({
     specialRequests,
   });
 
-  // UI skill: updateContact
   const updateContact = React.useCallback(
     (updates: Partial<typeof contactInfo>) => {
       setContactInfo((prev) => ({ ...prev, ...updates }));
@@ -110,10 +106,8 @@ export function TripRequestDialog({
     [],
   );
 
-  // UI skill: location autocomplete
   const locationAutocomplete = useLocationAutocomplete({
-    initialQuery: departureCity,
-    countryCodes: "rw,ke,tz,ug,za,ng,gh",
+    initialQuery: departureCity
   });
   const {
     query: departureQuery,
@@ -125,7 +119,6 @@ export function TripRequestDialog({
     detectCurrentLocation: detectCurrentDepartureLocation,
   } = locationAutocomplete;
 
-  // UI skill: handleDepartureChange
   const handleDepartureChange = React.useCallback(
     (value: string) => {
       setDepartureQuery(value);
@@ -134,7 +127,6 @@ export function TripRequestDialog({
     [setDepartureQuery, updateContact],
   );
 
-  // UI skill: handleUseCurrentDepartureLocation
   const handleUseCurrentDepartureLocation = React.useCallback(async () => {
     const suggestion = await detectCurrentDepartureLocation();
     if (suggestion) handleDepartureChange(suggestion.name);
@@ -158,7 +150,7 @@ export function TripRequestDialog({
       ? differenceInDays(dateRange.to, dateRange.from)
       : 0;
 
-  // Calculate items total
+  // calculate items total
   const itemsTotal = items.reduce((acc, item) => {
     if (item.type === "guide") {
       return acc + (item.price || 0) * (nights || 1);
@@ -198,19 +190,19 @@ export function TripRequestDialog({
       email: contactInfo.email,
       phone: contactInfo.phone,
       specialRequests: contactInfo.specialRequests,
-      destination: "Kigali",
+      destination: "Kigali, Rwanda",
     });
   };
 
   const handleRequestQuote = () => {
     saveToStore();
-    router.push(`/${locale}/plan-trip/review`);
+    router.push(`/plan-trip/review`);
     onOpenChange?.(false);
   };
 
   const handleAddAddons = () => {
     saveToStore();
-    router.push(`/${locale}/services`);
+    router.push(`/services`);
     onOpenChange?.(false);
   };
 
@@ -261,7 +253,7 @@ export function TripRequestDialog({
                 Fast booking for your Kigali adventure
               </DialogDescription>
             </div>
-            <div className="flex flex-col items-end gap-3">
+            <div className="flex flex-col items-end gap-3 mr-5">
               <div className="flex items-center gap-3">
                 {nights > 0 && (
                   <Badge variant="secondary" className="font-mono">
@@ -282,7 +274,7 @@ export function TripRequestDialog({
                 )}
               </div>
               {itemsCount > 0 && (
-                <p className="text-xs text-muted-foreground text-right max-w-xs">
+                <p className="text-xs text-muted-foreground text-right max-w-sm">
                   {selectedItemsDisplay}
                 </p>
               )}
@@ -330,7 +322,7 @@ export function TripRequestDialog({
                 </div>
               </div>
 
-              {/* Quick Services Toggles */}
+              {/* quick services toggles */}
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <h3 className="text-lg font-semibold">What do you need?</h3>
@@ -341,7 +333,6 @@ export function TripRequestDialog({
                   )}
                 </div>
                 <div className="grid grid-cols-2 gap-3">
-                  {/* Flight Toggle */}
                   <div
                     onClick={() =>
                       toggleItem("flight-request", {
@@ -386,7 +377,6 @@ export function TripRequestDialog({
                     </div>
                   </div>
 
-                  {/* Hotel Toggle */}
                   <div
                     onClick={() =>
                       toggleItem("hotel-request", {
@@ -431,7 +421,6 @@ export function TripRequestDialog({
                     </div>
                   </div>
 
-                  {/* Car Toggle */}
                   <div
                     onClick={() =>
                       toggleItem("car-request", {
@@ -476,7 +465,6 @@ export function TripRequestDialog({
                     </div>
                   </div>
 
-                  {/* Guide Toggle */}
                   <div
                     onClick={() =>
                       toggleItem("guide-request", {
@@ -522,7 +510,6 @@ export function TripRequestDialog({
                   </div>
                 </div>
 
-                {/* Selected Items Preview */}
                 {itemsCount > 0 && (
                   <div className="mt-4 p-3 rounded-lg bg-muted/40 border border-border/50">
                     <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
@@ -745,7 +732,7 @@ export function TripRequestDialog({
 
               <Separator />
 
-              {/* Contact Information */}
+              {/* contact information */}
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
                   <h3 className="text-lg font-semibold">Contact Information</h3>
@@ -818,10 +805,8 @@ export function TripRequestDialog({
           </div>
         </div>
 
-        {/* Fixed Footer */}
         <div className="border-t bg-background px-8 py-6 shrink-0">
           <div className="flex items-center justify-between gap-6">
-            {/* Price Summary */}
             <div className="space-y-1">
               <p className="text-xs text-muted-foreground uppercase tracking-wider">
                 {hasItems ? "Total Estimate" : "Estimated Total"}
@@ -838,7 +823,6 @@ export function TripRequestDialog({
               </div>
             </div>
 
-            {/* Action Buttons */}
             <div className="flex items-center gap-3">
               <Button
                 variant="outline"

@@ -379,7 +379,7 @@ export function PackageBuilderClient({ request }: PackageBuilderClientProps) {
   );
 
   return (
-    <div className="mx-auto max-w-7xl px-5 md:px-10 py-8 min-h-screen pb-24">
+    <div className="mx-auto max-w-9xl px-5 md:px-10 py-8 min-h-screen pb-24">
       {/* Header */}
       <div className="sticky top-0 z-20 bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 pb-4 pt-4 mb-6 border-b border-border">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">

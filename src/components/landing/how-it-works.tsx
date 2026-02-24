@@ -37,7 +37,7 @@ export function HowItWorks() {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 pt-16 relative">
           {/* Connecting Flight Path Line (Desktop) */}
           <div
-            className="hidden lg:block absolute top-[28px] left-[10%] right-[20%] h-px border-t border-dashed border-white/20"
+            className="hidden lg:block absolute top-[77px] z-10 left-[10%] right-[20%] h-px border-t border-dashed border-white/20"
             aria-hidden="true"
           />
 
@@ -51,12 +51,10 @@ export function HowItWorks() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="group relative"
               >
-                {/* Boarding Gate Number */}
                 <div className="flex items-center gap-4 mb-8">
                   <div className="bg-background text-foreground text-xs font-mono font-bold uppercase tracking-widest py-1.5 px-3 rounded-sm relative z-10 group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
                     GATE {step.step.toString().padStart(2, "0")}
                   </div>
-                  {/* Decorative dot on the connecting line */}
                   <div
                     className="hidden lg:block w-2.5 h-2.5 rounded-full bg-white/20 relative z-10 group-hover:bg-primary group-hover:scale-150 transition-all duration-300"
                     aria-hidden="true"

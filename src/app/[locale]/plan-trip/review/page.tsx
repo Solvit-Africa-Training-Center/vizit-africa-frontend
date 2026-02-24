@@ -4,14 +4,11 @@ import {
   RiArrowLeftLine,
   RiCalendarLine,
   RiCheckLine,
-  RiDeleteBinLine,
   RiMapPinLine,
-  RiStickyNoteLine,
   RiUserLine,
 } from "@remixicon/react";
 import { format } from "date-fns";
 import { AnimatePresence, motion } from "motion/react";
-import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -21,7 +18,6 @@ import { PageHeader } from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { Link } from "@/i18n/navigation";
 import type { TripItem } from "@/lib/plan_trip-types";
@@ -34,7 +30,7 @@ export default function TripReviewPage() {
     useTripStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-
+console.log({tripInfo, items})
   const totalPrice = items.reduce((sum, item) => sum + (item.price || 0), 0);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -108,7 +104,7 @@ export default function TripReviewPage() {
       />
 
       <div className="max-w-7xl mx-auto px-5 md:px-10 grid lg:grid-cols-12 gap-12">
-        {/* Left: Itinerary Items */}
+        {/* left - itinerary items */}
         <div className="lg:col-span-7 space-y-8">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-display font-medium">
@@ -162,7 +158,7 @@ export default function TripReviewPage() {
           </div>
         </div>
 
-        {/* Right: Trip Details & Contact Form */}
+        {/* right - trip details and contact form */}
         <div className="lg:col-span-5 space-y-8">
           <div className="bg-muted/30 border border-border/50 rounded-2xl p-6 md:p-8 sticky top-24">
             <h3 className="font-display font-medium text-lg mb-6 uppercase tracking-wider text-muted-foreground">

@@ -63,7 +63,7 @@ export function FlightSearchWidget() {
                 type="text"
                 value="Kigali (KGL)"
                 readOnly
-                className="w-full h-14 pl-12 pr-4 bg-muted/10 border border-transparent outline-none rounded-sm text-sm font-bold text-foreground"
+                className="w-full h-14 pl-12 pr-14 bg-muted/10 border border-transparent outline-none rounded-sm text-sm font-bold text-foreground"
               />
               <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] uppercase tracking-widest text-muted-foreground/50 font-mono">
                 Dest

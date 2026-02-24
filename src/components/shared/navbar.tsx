@@ -112,14 +112,14 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    "relative group font-display font-medium uppercase tracking-[0.2em] text-[11px] transition-colors duration-300",
+                    "relative group font-display font-medium uppercase tracking-[0.2em] text-xs transition-colors duration-300 drop-shadow-sm",
                     isActive
                       ? showSolid
                         ? "text-primary"
                         : "text-primary-foreground"
                       : showSolid
                         ? "text-foreground hover:text-primary"
-                        : "text-primary-foreground/70 hover:text-primary-foreground",
+                        : "text-primary-foreground hover:text-primary-foreground",
                   )}
                 >
                   {link.label}
@@ -201,37 +201,39 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
               </Link>
             )}
 
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger
-                  render={
-                    <Button
-                      size="sm"
-                      variant={showSolid ? "default" : "secondary"}
-                      className={cn(
-                        "rounded-sm font-display font-medium uppercase tracking-wider text-xs px-6 transition-all duration-300 gap-2",
-                        !showSolid &&
-                          "bg-primary-foreground text-primary hover:bg-primary-foreground/90",
-                      )}
-                      onClick={() => setIsTripDialogOpen(true)}
-                    />
-                  }
-                >
-                  {hasActiveTrip ? (
-                    <>
-                      <RiSuitcaseLine className="size-4" />
-                      {tripItemCount} {tripItemCount === 1 ? "item" : "items"} ·
-                      View Trip
-                    </>
-                  ) : (
-                    tCommon("startPlanning")
-                  )}
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Plan your dream trip to Africa</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+    
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger
+                    render={
+                      <Button
+                        size="sm"
+                        variant={showSolid ? "default" : "secondary"}
+                        className={cn(
+                          "rounded-sm font-display font-medium uppercase tracking-wider text-xs px-6 transition-all duration-300 gap-2",
+                          !showSolid &&
+                            "bg-primary-foreground text-primary hover:bg-primary-foreground/90",
+                        )}
+                        onClick={() => setIsTripDialogOpen(true)}
+                      />
+                    }
+                  >
+                    {hasActiveTrip ? (
+                      <>
+                        <RiSuitcaseLine className="size-4" />
+                        {tripItemCount} {tripItemCount === 1 ? "item" : "items"} ·
+                        View Trip
+                      </>
+                    ) : (
+                      tCommon("startPlanning")
+                    )}
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Plan your dream trip to Africa</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            
 
             <TripRequestDialog
               open={isTripDialogOpen}

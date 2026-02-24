@@ -69,7 +69,7 @@ export function RequestDetails({ request }: RequestDetailsProps) {
   ];
 
   return (
-    <div className="bg-card border border-border rounded-lg p-5 sticky top-36 shadow-sm max-h-[calc(100vh-200px)] overflow-y-auto">
+    <div className="bg-card border border-border rounded-lg p-5 sticky top-36 shadow-sm overflow-y-auto">
       <h2 className="font-semibold text-foreground mb-4 border-b border-border pb-2 text-sm uppercase tracking-wider">
         Request Details
       </h2>
@@ -213,10 +213,10 @@ export function RequestDetails({ request }: RequestDetailsProps) {
           </div>
         )}
 
-        {/* Special Requests */}
         {request.specialRequests && (
           <div>
             <button
+            type="button"
               onClick={() => setExpandNotes(!expandNotes)}
               className="w-full font-medium text-foreground mb-2 flex items-center justify-between text-sm hover:text-primary transition-colors"
             >

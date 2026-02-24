@@ -9,7 +9,7 @@ interface PackageBuilderProps {
 export default async function PackageBuilder({ params }: PackageBuilderProps) {
   const { id } = await params;
   const request = await getRequestById(id);
-
+console.log(request)
   if (!request) {
     notFound();
   }
