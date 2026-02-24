@@ -163,6 +163,7 @@ export const bookingItemSchema = z.object({
   start_time: z.string().nullable().optional(),
   end_time: z.string().nullable().optional(),
   is_round_trip: z.boolean().optional(),
+  with_driver: z.boolean().optional(),
   return_date: z.string().nullable().optional(),
   return_time: z.string().nullable().optional(),
   quantity: z.number(),

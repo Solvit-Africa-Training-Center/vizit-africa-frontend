@@ -8,6 +8,7 @@ import { type ZodSchema } from "zod";
 import { endpoints } from "@/actions/endpoints";
 import type { ApiResponse } from "@/lib/unified-types";
 import { ApiError } from "@/lib/api/error";
+import { logger } from "@/lib/utils/logger";
 
 export { ApiError } from "@/lib/api/error";
 
@@ -124,7 +125,7 @@ async function handleResponse<T>(
     }
 
     if (IS_DEV) {
-      console.error(`[API Error] ${code}: ${message}`, details);
+      logger.error(`[API Error] ${code}: ${message}`, { details });
     }
 
     throw new ApiError(message, response.status, details);
@@ -140,11 +141,9 @@ async function handleResponse<T>(
     const validated = schema.safeParse(responseData);
     if (!validated.success) {
       if (IS_DEV) {
-        console.warn(
+        logger.warn(
           "[Schema Validation Warning] The API response did not exactly match the expected schema:",
-          validated.error.flatten(),
-          "Raw Data:",
-          responseData,
+          { errors: validated.error.flatten(), rawData: responseData }
         );
       }
       // Return raw data instead of throwing so the app can gracefully continue

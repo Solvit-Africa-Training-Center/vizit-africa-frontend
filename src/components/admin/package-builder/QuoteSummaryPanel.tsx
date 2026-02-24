@@ -1,8 +1,5 @@
-import React, { useState } from "react";
-import { RiEditLine, RiSaveLine, RiCloseLine } from "@remixicon/react";
+import React from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { type QuoteBreakdown } from "@/lib/utils/quote-calculator";
 import { formatCurrency } from "@/lib/utils/quote-calculator";
 
@@ -21,20 +18,6 @@ export function QuoteSummaryPanel({
   isLoading = false,
   isDisabled = false,
 }: QuoteSummaryPanelProps) {
-  const [showMetadata, setShowMetadata] = useState(false);
-  const [metadata, setMetadata] = useState({
-    notes: "",
-    currency: "USD",
-    expiresIn: 7,
-  });
-
-  const handleMetadataChange = (key: string, value: any) => {
-    setMetadata((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
-  };
-
   const serviceTypes = Object.entries(breakdown.itemsByType);
 
   return (
@@ -103,74 +86,6 @@ export function QuoteSummaryPanel({
             </span>
           </div>
         </div>
-
-        {/* Metadata Toggle */}
-        <button
-          onClick={() => setShowMetadata(!showMetadata)}
-          className="w-full flex items-center justify-between p-2 rounded bg-muted/30 hover:bg-muted/50 transition-colors text-sm font-medium"
-        >
-          <span className="flex items-center gap-2">
-            <RiEditLine className="size-4" />
-            Quote Settings
-          </span>
-          <span className="text-xs text-muted-foreground">
-            {showMetadata ? "Hide" : "Show"}
-          </span>
-        </button>
-
-        {/* Metadata Editor */}
-        {showMetadata && (
-          <div className="space-y-3 p-3 bg-muted/20 rounded border border-border">
-            <div>
-              <Label htmlFor="currency" className="text-xs">
-                Currency
-              </Label>
-              <select
-                id="currency"
-                value={metadata.currency}
-                onChange={(e) =>
-                  handleMetadataChange("currency", e.target.value)
-                }
-                className="w-full mt-1 px-2 py-1 text-xs rounded border border-input bg-background"
-              >
-                <option value="USD">USD ($)</option>
-                <option value="EUR">EUR (€)</option>
-                <option value="GBP">GBP (£)</option>
-                <option value="RWF">RWF (₣)</option>
-              </select>
-            </div>
-
-            <div>
-              <Label htmlFor="expiresIn" className="text-xs">
-                Quote Expires In (days)
-              </Label>
-              <Input
-                id="expiresIn"
-                type="number"
-                min="1"
-                max="365"
-                value={metadata.expiresIn}
-                onChange={(e) =>
-                  handleMetadataChange("expiresIn", parseInt(e.target.value))
-                }
-                className="mt-1 text-xs h-8"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="notes" className="text-xs">
-                Internal Notes
-              </Label>
-              <textarea
-                id="notes"
-                value={metadata.notes}
-                onChange={(e) => handleMetadataChange("notes", e.target.value)}
-                className="w-full mt-1 px-2 py-1 text-xs rounded border border-input bg-background min-h-16"
-                placeholder="Add notes for this quote..."
-              />
-            </div>
-          </div>
-        )}
 
         {/* Preview Button */}
         <Button

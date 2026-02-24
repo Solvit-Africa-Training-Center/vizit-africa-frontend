@@ -9,17 +9,23 @@ export interface PackageItem {
   title?: string;
   description?: string;
   type?: string;
+  item_type?: string; // Align with backend
   quantity?: number;
   price?: number;
   quotePrice?: number;
-  unitPrice?: number;
+  unit_price?: number; // Align with backend
   isQuoted?: boolean;
   withDriver?: boolean;
+  with_driver?: boolean; // Align with backend
   // generic timing
   date?: string | null;
   time?: string | null;
   endDate?: string | null;
   endTime?: string | null;
+  start_date?: string | null; // Align with backend
+  end_date?: string | null; // Align with backend
+  start_time?: string | null; // Align with backend
+  end_time?: string | null; // Align with backend
   // backend-compatible naming
   startDate?: string | null;
   startTime?: string | null;
@@ -30,7 +36,10 @@ export interface PackageItem {
   arrivalTime?: string | null;
   returnDate?: string | null;
   returnTime?: string | null;
+  return_date?: string | null; // Align with backend
+  return_time?: string | null; // Align with backend
   isRoundTrip?: boolean;
+  is_round_trip?: boolean; // Align with backend
   // arbitrary extra fields from the builder UI
   metadata?: Record<string, unknown>;
   [key: string]: unknown;

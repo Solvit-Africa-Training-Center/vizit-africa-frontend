@@ -4,6 +4,7 @@ import { api, ApiError } from "@/lib/api/simple-client";
 import { endpoints } from "./endpoints";
 import { bookingSchema } from "@/lib/unified-types";
 import type { Booking, ActionResult } from "@/lib/unified-types";
+import { logger } from "@/lib/utils/logger";
 
 export async function getBookingById(
   id: string,
@@ -126,13 +127,16 @@ export async function sendQuoteForBooking(
   bookingId: string,
   amount: number,
 ): Promise<ActionResult<{ message: string }>> {
+  logger.info(`Sending quote for booking ${bookingId}`, { amount });
   try {
     const result = await api.post(endpoints.bookings.quote(bookingId), {
       booking_id: bookingId,
       amount,
     });
+    logger.info(`Successfully sent quote for booking ${bookingId}`);
     return { success: true, data: result as { message: string } };
   } catch (error) {
+    logger.error(`Failed to send quote for booking ${bookingId}`, { error });
     return {
       success: false,
       error: error instanceof ApiError ? error.message : "Failed to send quote",
@@ -146,6 +150,7 @@ export async function notifyVendor(
   serviceId?: string | number,
   metadata?: Record<string, any>,
 ): Promise<ActionResult<{ message: string }>> {
+  logger.info(`Notifying vendor for booking ${bookingId}`, { itemId, serviceId });
   try {
     const result = await api.post(endpoints.bookings.notifyVendor(bookingId), {
       booking_id: bookingId,
@@ -153,8 +158,10 @@ export async function notifyVendor(
       service_id: serviceId,
       ...metadata,
     });
+    logger.info(`Successfully notified vendor for booking ${bookingId}`);
     return { success: true, data: result as { message: string } };
   } catch (error) {
+    logger.error(`Failed to notify vendor for booking ${bookingId}`, { error });
     return {
       success: false,
       error:

@@ -20,14 +20,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { type PackageItem } from "@/lib/store/package-store";
 import { type ServiceGroupKey } from "@/lib/utils";
-
-interface Service {
-  id: number | string;
-  title: string;
-  description?: string;
-  base_price?: number;
-  category?: string;
-}
+import { type Service } from "@/lib/unified-types";
 
 interface AddDialogProps {
   isAddDialogOpen: boolean;
