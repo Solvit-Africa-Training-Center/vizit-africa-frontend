@@ -126,7 +126,7 @@ export function AdminBookingCard({ booking, t }: AdminBookingCardProps) {
         >
           <span className="flex items-center gap-2">
             <RiCheckboxCircleLine className="size-4" />
-            Manage Booking
+            {t("card.manageBooking")}
           </span>
           <RiArrowRightLine className="size-4" />
         </Link>
@@ -139,7 +139,7 @@ export function AdminBookingCard({ booking, t }: AdminBookingCardProps) {
             onClick={() => setShowRefundModal(true)}
           >
             <RiRefund2Line className="size-4 mr-2" />
-            Refund & Cancel
+            {t("card.refundCancel")}
           </Button>
         )}
       </div>

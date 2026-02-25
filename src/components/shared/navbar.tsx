@@ -177,7 +177,7 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
                       className="flex items-center cursor-pointer w-full"
                     >
                       <RiUserLine className="w-4 h-4 mr-2" />
-                      Profile
+                      {t("userMenu.profile")}
                     </Link>
                   </DropdownMenuItem>
                   {user.role === "ADMIN" && (
@@ -187,7 +187,7 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
                         className="flex items-center cursor-pointer w-full"
                       >
                         <RiDashboardLine className="w-4 h-4 mr-2" />
-                        Dashboard
+                        {t("userMenu.dashboard")}
                       </Link>
                     </DropdownMenuItem>
                   )}
@@ -197,7 +197,7 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
                     className="text-destructive focus:text-destructive cursor-pointer"
                   >
                     <RiLogoutBoxRLine className="w-4 h-4 mr-2" />
-                    Logout
+                    {t("userMenu.logout")}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -233,8 +233,11 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
                     hasActiveTrip ? (
                       <>
                         <RiSuitcaseLine className="size-4" />
-                        {tripItemCount} {tripItemCount === 1 ? "item" : "items"}{" "}
-                        · View Trip
+                        {tripItemCount}{" "}
+                        {tripItemCount === 1
+                          ? t("trip.item")
+                          : t("trip.items")}{" "}
+                        · {t("trip.view")}
                       </>
                     ) : (
                       tCommon("startPlanning")
@@ -244,7 +247,7 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
                   )}
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Plan your dream trip to Africa</p>
+                  <p>{t("trip.tooltip")}</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>

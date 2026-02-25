@@ -8,7 +8,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { AddToTripButton } from "@/components/plan-trip/add-to-trip-button";
 import { PageHeader } from "@/components/shared/page-header";
 import { SaveButton } from "@/components/shared/save-button";
-import { serviceSchema, type ServiceResponse } from "@/lib/unified-types";
+import { type ServiceResponse } from "@/lib/unified-types";
 import { cn } from "@/lib/utils";
 
 interface ExperiencesClientProps {

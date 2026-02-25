@@ -38,43 +38,47 @@ export function SettingsTab({ user }: SettingsTabProps) {
         </div>
 
         <div className="grid gap-2">
-          <Label className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
-            Phone Number
+          <Label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60 ml-1">
+            {t("settings.phone")}
           </Label>
-          <div className="border-b border-border py-2 text-lg">
+          <div className="border-b border-border/50 py-3 text-lg font-light">
             {user.phone_number || "-"}
           </div>
         </div>
 
         <div className="grid gap-2">
-          <Label className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
-            Bio
+          <Label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60 ml-1">
+            {t("settings.bio")}
           </Label>
-          <div className="border-b border-border py-2 text-lg">
-            {user.bio || "Travel enthusiast"}
+          <div className="border-b border-border/50 py-3 text-lg font-light">
+            {user.bio || t("settings.bioPlaceholder")}
           </div>
         </div>
 
         <div className="grid gap-2">
-          <Label className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
-            Preferred Currency
+          <Label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60 ml-1">
+            {t("settings.currency")}
           </Label>
-          <div className="border-b border-border py-2 text-lg">
+          <div className="border-b border-border/50 py-3 text-lg font-light">
             {user.preferred_currency || "USD"}
           </div>
         </div>
 
         <div className="grid gap-2">
-          <Label className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
-            Role
+          <Label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60 ml-1">
+            {t("settings.role")}
           </Label>
-          <div className="border-b border-border py-2 text-lg flex items-center gap-2">
-            <Badge variant="outline">{user.role}</Badge>
+          <div className="border-b border-border/50 py-3 text-lg flex items-center gap-2">
+            <Badge variant="outline" className="rounded-full px-3 font-mono text-[10px] font-bold tracking-widest uppercase">
+              {user.role}
+            </Badge>
           </div>
         </div>
 
         <div className="pt-8">
-          <Button>{t("settings.save")}</Button>
+          <Button className="rounded-full px-10 h-12 font-display uppercase tracking-widest text-[10px] font-bold shadow-lg shadow-primary/10 transition-all duration-500 hover:scale-105">
+            {t("settings.save")}
+          </Button>
         </div>
       </div>
     </div>

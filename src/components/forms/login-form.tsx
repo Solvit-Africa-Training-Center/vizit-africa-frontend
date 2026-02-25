@@ -41,13 +41,13 @@ export function LoginForm() {
     onSubmit: async ({ value, formApi }) => {
       const result = await login(value);
       if (result.success) {
-        toast.success("Logged in successfully");
+        toast.success(t("messages.success"));
         router.push("/profile");
       } else {
         toast.error(
-          result.error || "Login failed. Please check your credentials.",
+          result.error || t("messages.error"),
         );
-        setError(result.error);
+        setError(result.error || t("messages.error"));
 
         if (result.fieldErrors) {
           Object.entries(result.fieldErrors).forEach(([field, errors]) => {
@@ -89,7 +89,7 @@ export function LoginForm() {
                 id="email"
                 name="email"
                 type="email"
-                placeholder="name@example.com"
+                placeholder={t("emailPlaceholder")}
                 value={field.state.value}
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
@@ -113,7 +113,7 @@ export function LoginForm() {
               <InputGroupInput
                 id="password"
                 type={showPassword ? "text" : "password"}
-                placeholder="Enter your password"
+                placeholder={t("passwordPlaceholder")}
                 value={field.state.value}
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value as string)}
@@ -141,7 +141,7 @@ export function LoginForm() {
           className="w-full h-14 rounded-sm gap-2 text-base font-medium uppercase tracking-wide"
           loading={form.state.isSubmitting}
         >
-          {form.state.isSubmitting ? "Logging in..." : tCommon("login")}
+          {form.state.isSubmitting ? t("loggingIn") : tCommon("login")}
           {!form.state.isSubmitting && <RiArrowRightLine className="size-5" />}
         </Button>
       </div>

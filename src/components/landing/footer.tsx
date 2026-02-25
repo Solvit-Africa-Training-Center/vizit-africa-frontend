@@ -57,7 +57,7 @@ export function Footer() {
         href: `tel:${siteConfig.contact.phone.replace(/[^0-9+]/g, "")}`,
       },
       {
-        label: "WhatsApp",
+        label: t("links.whatsapp"),
         href: `https://wa.me/${siteConfig.contact.phone.replace(/[^0-9]/g, "")}`,
       },
     ],

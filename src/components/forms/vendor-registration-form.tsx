@@ -12,6 +12,7 @@ import {
   RiUserLine,
 } from "@remixicon/react";
 import { useForm } from "@tanstack/react-form";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -67,6 +68,7 @@ const formSchema = registerObjectSchema.omit({ role: true }).extend({
 type FormValues = z.infer<typeof formSchema>;
 
 export function VendorRegistrationForm() {
+  const t = useTranslations("Partners.apply");
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
 
@@ -78,7 +80,7 @@ export function VendorRegistrationForm() {
       password: "",
       re_password: "",
       business_name: "",
-      vendor_type: "hotel",
+      vendor_type: "hotel" as "hotel" | "car_rental" | "guide" | "experience" | "transport" | "other",
       address: "",
       website: "",
       bio: "",
@@ -104,10 +106,9 @@ export function VendorRegistrationForm() {
 
       if (!registerResult.success) {
         toast.error(
-          registerResult.error ||
-            "Registration failed. Please check the fields.",
+          registerResult.error || t("messages.error"),
         );
-        setError(registerResult.error || "Registration failed");
+        setError(registerResult.error || t("messages.error"));
         if (registerResult.fieldErrors) {
           Object.entries(registerResult.fieldErrors).forEach(
             ([field, errors]) => {
@@ -140,10 +141,9 @@ export function VendorRegistrationForm() {
       const vendorResult = await registerVendor(vendorData);
 
       if (!vendorResult.success) {
-        toast.error(vendorResult.error || "Failed to create vendor profile.");
+        toast.error(vendorResult.error || t("messages.profileError"));
         setError(
-          vendorResult.error ||
-            "Failed to create vendor profile. Your account was created, please contact support.",
+          vendorResult.error || t("messages.accountCreatedContactSupport"),
         );
         if (vendorResult.fieldErrors) {
           Object.entries(vendorResult.fieldErrors).forEach(
@@ -161,7 +161,7 @@ export function VendorRegistrationForm() {
         return;
       }
 
-      toast.success("Application submitted successfully!");
+      toast.success(t("messages.success"));
       router.push("/vendor/dashboard"); // Or a specific success page
     },
   });
@@ -184,18 +184,18 @@ export function VendorRegistrationForm() {
       )}
 
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold border-b pb-2">Account Details</h3>
+        <h3 className="text-lg font-semibold border-b pb-2 uppercase tracking-tight">{t("accountDetails")}</h3>
 
         <form.Field name="full_name">
           {(field) => (
             <div className="space-y-2">
-              <Label htmlFor="full_name">Contact Person Full Name</Label>
+              <Label htmlFor="full_name">{t("labels.contactName")}</Label>
               <InputGroup>
                 <InputGroupInput
                   id="full_name"
                   name="full_name"
                   type="text"
-                  placeholder="John Doe"
+                  placeholder={t("placeholders.contactName")}
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
@@ -214,13 +214,13 @@ export function VendorRegistrationForm() {
         <form.Field name="email">
           {(field) => (
             <div className="space-y-2">
-              <Label htmlFor="email">Email Address</Label>
+              <Label htmlFor="email">{t("labels.email")}</Label>
               <InputGroup>
                 <InputGroupInput
                   id="email"
                   name="email"
                   type="email"
-                  placeholder="name@example.com"
+                  placeholder={t("placeholders.email")}
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
@@ -239,13 +239,13 @@ export function VendorRegistrationForm() {
         <form.Field name="phone_number">
           {(field) => (
             <div className="space-y-2">
-              <Label htmlFor="phone_number">Phone Number</Label>
+              <Label htmlFor="phone_number">{t("labels.phone")}</Label>
               <InputGroup>
                 <InputGroupInput
                   id="phone_number"
                   name="phone_number"
                   type="tel"
-                  placeholder="+250..."
+                  placeholder={t("placeholders.phone")}
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
@@ -265,12 +265,12 @@ export function VendorRegistrationForm() {
           <form.Field name="password">
             {(field) => (
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">{t("labels.password")}</Label>
                 <InputGroup>
                   <InputGroupInput
                     id="password"
                     type="password"
-                    placeholder="Create a password"
+                    placeholder={t("placeholders.password")}
                     value={field.state.value}
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
@@ -289,13 +289,13 @@ export function VendorRegistrationForm() {
           <form.Field name="re_password">
             {(field) => (
               <div className="space-y-2">
-                <Label htmlFor="re_password">Confirm Password</Label>
+                <Label htmlFor="re_password">{t("labels.confirmPassword")}</Label>
                 <InputGroup>
                   <InputGroupInput
                     id="re_password"
                     name="re_password"
                     type="password"
-                    placeholder="Confirm password"
+                    placeholder={t("placeholders.confirmPassword")}
                     value={field.state.value}
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
@@ -314,19 +314,19 @@ export function VendorRegistrationForm() {
       </div>
 
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold border-b pb-2">
-          Business Details
+        <h3 className="text-lg font-semibold border-b pb-2 uppercase tracking-tight">
+          {t("businessDetails")}
         </h3>
 
         <form.Field name="business_name">
           {(field) => (
             <div className="space-y-2">
-              <Label htmlFor="business_name">Business Name</Label>
+              <Label htmlFor="business_name">{t("labels.businessName")}</Label>
               <InputGroup>
                 <InputGroupInput
                   id="business_name"
                   name="business_name"
-                  placeholder="e.g. Serengeti Safaris Ltd."
+                  placeholder={t("placeholders.businessName")}
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
@@ -346,23 +346,21 @@ export function VendorRegistrationForm() {
           <form.Field name="vendor_type">
             {(field) => (
               <div className="space-y-2">
-                <Label htmlFor="vendor_type">Business Type</Label>
+                <Label htmlFor="vendor_type">{t("labels.businessType")}</Label>
                 <Select
                   value={field.state.value}
-                  onValueChange={(val) => field.handleChange(val || "")}
+                  onValueChange={(val) => field.handleChange(val as any)}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select type" />
+                    <SelectValue placeholder={t("placeholders.businessType")} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="hotel">Hotel / Accommodation</SelectItem>
-                    <SelectItem value="car_rental">Car Rental</SelectItem>
-                    <SelectItem value="guide">Tour Guide</SelectItem>
-                    <SelectItem value="experience">
-                      Experience Provider
-                    </SelectItem>
-                    <SelectItem value="transport">Transport Company</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
+                    <SelectItem value="hotel">{t("types.hotel")}</SelectItem>
+                    <SelectItem value="car_rental">{t("types.car_rental")}</SelectItem>
+                    <SelectItem value="guide">{t("types.guide")}</SelectItem>
+                    <SelectItem value="experience">{t("types.experience")}</SelectItem>
+                    <SelectItem value="transport">{t("types.transport")}</SelectItem>
+                    <SelectItem value="other">{t("types.other")}</SelectItem>
                   </SelectContent>
                 </Select>
                 {field.state.meta.isTouched && !field.state.meta.isValid && (
@@ -375,12 +373,12 @@ export function VendorRegistrationForm() {
           <form.Field name="website">
             {(field) => (
               <div className="space-y-2">
-                <Label htmlFor="website">Website (Optional)</Label>
+                <Label htmlFor="website">{t("labels.website")}</Label>
                 <InputGroup>
                   <InputGroupInput
                     id="website"
                     name="website"
-                    placeholder="https://..."
+                    placeholder={t("placeholders.website")}
                     value={field.state.value}
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
@@ -400,12 +398,12 @@ export function VendorRegistrationForm() {
         <form.Field name="address">
           {(field) => (
             <div className="space-y-2">
-              <Label htmlFor="address">Business Address</Label>
+              <Label htmlFor="address">{t("labels.address")}</Label>
               <InputGroup>
                 <InputGroupInput
                   id="address"
                   name="address"
-                  placeholder="City, Country"
+                  placeholder={t("placeholders.address")}
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
@@ -429,8 +427,8 @@ export function VendorRegistrationForm() {
           loading={form.state.isSubmitting}
         >
           {form.state.isSubmitting
-            ? "Submitting Application..."
-            : "Submit Application"}
+            ? t("submitting")
+            : t("submit")}
           {!form.state.isSubmitting && <RiArrowRightLine className="size-5" />}
         </Button>
       </div>

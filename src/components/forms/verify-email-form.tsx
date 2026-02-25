@@ -35,11 +35,11 @@ export function VerifyEmailForm({ email }: VerifyEmailFormProps) {
       const result = await verifyEmail({ email, code: value.code });
       console.log(result);
       if (result.success) {
-        toast.success("Email verified successfully!");
+        toast.success(t("success"));
         router.push("/login");
       } else {
-        toast.error(result.error || "Verification failed. Please try again.");
-        setError(result.error);
+        toast.error(result.error || t("failed"));
+        setError(result.error || t("failed"));
       }
     },
   });
@@ -99,7 +99,7 @@ export function VerifyEmailForm({ email }: VerifyEmailFormProps) {
           className="w-full h-14 rounded-sm gap-2 text-base font-medium uppercase tracking-wide"
           disabled={form.state.isSubmitting}
         >
-          {form.state.isSubmitting ? "Verifying..." : t("verifyButton")}
+          {form.state.isSubmitting ? t("verifying") : t("verifyButton")}
           <RiArrowRightLine className="size-5" />
         </Button>
       </div>

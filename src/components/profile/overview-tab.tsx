@@ -69,12 +69,12 @@ export function OverviewTab({
 
           <div className="space-y-6">
             <div>
-              <h2 className="font-display text-4xl md:text-6xl font-medium text-primary-foreground mb-3 leading-tight">
+              <h2 className="font-display text-4xl md:text-6xl font-medium text-primary-foreground mb-3 leading-tight text-pretty">
                 {nextTrip
                   ? nextTrip.status === "paid" || nextTrip.status === "confirmed"
-                    ? "Your African Journey Awaits"
-                    : "Journey in Preparation"
-                  : "Start Your Story"}
+                    ? t("overview.nextTrip.confirmed")
+                    : t("overview.nextTrip.preparing")
+                  : t("overview.nextTrip.start")}
               </h2>
               {nextTrip?.items[0]?.start_date && (
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-sm text-sm font-light border border-white/10">
@@ -100,8 +100,8 @@ export function OverviewTab({
                     ? nextTrip.status === "paid" ||
                       nextTrip.status === "confirmed"
                       ? t("overview.nextTrip.paid")
-                      : "Refining Itinerary"
-                    : "Dreaming"}
+                      : t("overview.nextTrip.refining")
+                    : t("overview.nextTrip.dreaming")}
                 </p>
               </div>
               <div>
@@ -110,8 +110,8 @@ export function OverviewTab({
                 </p>
                 <p className="font-medium tracking-tight">
                   {nextTrip
-                    ? `${nextTrip.travelers} Adventurers`
-                    : "Join us"}
+                    ? t("overview.nextTrip.adventurers", { count: nextTrip.travelers })
+                    : t("overview.nextTrip.joinUs")}
                 </p>
               </div>
             </div>
@@ -121,35 +121,36 @@ export function OverviewTab({
 
       <div className="space-y-12">
         <div>
-          <h3 className="font-display text-2xl font-medium mb-2">
-            My Trips & Requests
+          <h3 className="font-display text-2xl font-medium mb-2 uppercase tracking-tight">
+            {t("overview.tripsAndRequests.title")}
           </h3>
-          <p className="text-xs text-muted-foreground mb-6">
-            Track your upcoming adventures and active planning requests in one place.
+          <p className="text-xs text-muted-foreground mb-6 font-light">
+            {t("overview.tripsAndRequests.description")}
           </p>
           <div className="space-y-4">
             {isLoading ? (
-              <p>Loading...</p>
+              <p>{t("overview.tripsAndRequests.loading")}</p>
             ) : pendingRequests.length > 0 ? (
               pendingRequests.map((req: Booking) => (
                 <div
                   key={req.id}
-                  className={`border p-6 rounded-sm transition-colors group bg-card ${req.status === "paid" ? "border-emerald-500/30 bg-emerald-500/[0.02]" : "border-border hover:border-primary"}`}
+                  className={`border p-6 rounded-2xl transition-all duration-500 group bg-card shadow-sm ${req.status === "paid" ? "border-emerald-500/30 bg-emerald-500/[0.02]" : "border-border/50 hover:border-primary/30 shadow-card"}`}
                 >
-                  <div className="flex justify-between items-start mb-4">
+                  <div className="flex justify-between items-start mb-6">
                     <div>
-                      <h4 className="font-medium text-lg mb-1 hover:text-primary transition-colors">
+                      <h4 className="font-display text-lg font-medium mb-1 hover:text-primary transition-colors uppercase tracking-tight">
                         <Link href={`/profile/bookings/${req.id}`}>
-                          {req.status === "paid" ? "Trip #" : "Trip Request #"}
-                          {req.id.toString().slice(0, 8)}
+                          {req.status === "paid" 
+                            ? t("overview.tripsAndRequests.tripId", { id: req.id.toString().slice(0, 8) }) 
+                            : t("overview.tripsAndRequests.requestId", { id: req.id.toString().slice(0, 8) })}
                         </Link>
                       </h4>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
                         {new Date(req.createdAt).toLocaleDateString()}
                       </p>
                     </div>
                     <span
-                      className={`text-xs font-medium uppercase tracking-wider border px-2 py-1 rounded-full ${
+                      className={`text-[10px] font-bold uppercase tracking-widest border px-3 py-1 rounded-full ${
                         req.status === "paid"
                           ? "bg-emerald-100 text-emerald-700 border-emerald-200"
                           : req.status === "accepted"
@@ -163,62 +164,62 @@ export function OverviewTab({
                     </span>
                   </div>
 
-                  <div className="mb-4 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-muted-foreground">
+                  <div className="mb-6 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                     <div>
-                      <span className="block text-xs uppercase opacity-70">
-                        {req.status === "paid" ? "Status" : "Created"}
+                      <span className="block text-[9px] font-bold uppercase tracking-widest text-muted-foreground/60 mb-1">
+                        {req.status === "paid" ? t("overview.tripsAndRequests.status") : t("overview.tripsAndRequests.created")}
                       </span>
-                      {req.status === "paid"
-                        ? "Confirmed"
-                        : new Date(req.createdAt).toLocaleDateString()}
+                      <span className="font-medium">
+                        {req.status === "paid"
+                          ? "Confirmed"
+                          : new Date(req.createdAt).toLocaleDateString()}
+                      </span>
                     </div>
                     <div>
-                      <span className="block text-xs uppercase opacity-70">
-                        Items
+                      <span className="block text-[9px] font-bold uppercase tracking-widest text-muted-foreground/60 mb-1">
+                        {t("overview.tripsAndRequests.items")}
                       </span>
-                      {req.items.length} items
+                      <span className="font-medium">{t("overview.tripsAndRequests.itemsCount", { count: req.items.length })}</span>
                     </div>
                     {req.items[0]?.start_date && (
-                      <div>
-                        <span className="block text-xs uppercase opacity-70">
-                          Start Date
+                      <div className="col-span-2">
+                        <span className="block text-[9px] font-bold uppercase tracking-widest text-muted-foreground/60 mb-1">
+                          {t("overview.tripsAndRequests.startDate")}
                         </span>
-                        {new Date(req.items[0].start_date).toLocaleDateString()}
+                        <span className="font-medium">{new Date(req.items[0].start_date).toLocaleDateString(undefined, { dateStyle: 'long' })}</span>
                       </div>
                     )}
                   </div>
 
                   {req.quote?.status === "quoted" && req.status !== "paid" && (
-                    <div className="mb-3 flex items-center justify-between gap-3 bg-muted/30 p-3 rounded-md border border-border/50">
-                      <p className="text-sm font-medium text-primary">
-                        Quote Ready:{" "}
-                        <span className="text-lg">
-                          {formatCurrency(
-                            req.quote.totalAmount || 0,
-                            req.quote.currency || "USD",
-                          )}
-                        </span>
+                    <div className="mb-6 flex items-center justify-between gap-3 bg-primary/5 p-4 rounded-xl border border-primary/10">
+                      <p className="text-xs font-bold uppercase tracking-widest text-primary">
+                        {t("overview.tripsAndRequests.quoteReady", { 
+                          amount: formatCurrency(req.quote.totalAmount || 0, req.quote.currency || "USD") 
+                        })}
                       </p>
                       <Button
                         size="sm"
+                        className="h-10 rounded-lg font-display uppercase tracking-widest text-[10px] font-bold"
                         onClick={() => onPay(req)}
                         disabled={
                           acceptingId === String(req.id) ||
                           cancellingId === String(req.id)
                         }
                       >
-                        Accept & Pay
+                        {t("overview.tripsAndRequests.acceptPay")}
                       </Button>
                     </div>
                   )}
 
-                  <div className="flex items-center justify-between mt-4 pt-4 border-t border-border/50">
+                  <div className="flex items-center justify-between pt-6 border-t border-border/50">
                     <Link href={`/profile/bookings/${req.id}`}>
                       <Button
                         variant={req.status === "paid" ? "default" : "outline"}
                         size="sm"
+                        className="h-10 rounded-lg font-display uppercase tracking-widest text-[10px] font-bold"
                       >
-                        {req.status === "paid" ? "Manage Trip" : "View Details"}
+                        {req.status === "paid" ? t("overview.tripsAndRequests.manageTrip") : t("overview.tripsAndRequests.viewDetails")}
                       </Button>
                     </Link>
 
@@ -226,16 +227,14 @@ export function OverviewTab({
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                        className="text-destructive hover:text-destructive hover:bg-destructive/10 h-10 rounded-lg font-display uppercase tracking-widest text-[10px] font-bold"
                         disabled={
                           cancellingId === String(req.id) ||
                           acceptingId === String(req.id)
                         }
                         onClick={async () => {
                           if (
-                            !confirm(
-                              "Are you sure you want to cancel this request? This action cannot be undone.",
-                            )
+                            !confirm(t("overview.tripsAndRequests.cancelConfirm"))
                           )
                             return;
 
@@ -260,17 +259,17 @@ export function OverviewTab({
                         ) : (
                           <RiInformationLine className="size-4 mr-2" />
                         )}
-                        Cancel Request
+                        {t("overview.tripsAndRequests.cancelRequest")}
                       </Button>
                     )}
                   </div>
                 </div>
               ))
             ) : (
-              <div className="text-center py-10 border border-dashed rounded-sm">
-                <RiInformationLine className="size-8 mx-auto mb-2 text-muted-foreground" />
-                <p className="text-sm text-muted-foreground">
-                  No active trips or requests
+              <div className="text-center py-20 border-2 border-dashed rounded-[2rem] bg-muted/10 border-border/50">
+                <RiInformationLine className="size-10 mx-auto mb-4 text-muted-foreground/30" />
+                <p className="text-sm text-muted-foreground font-light italic">
+                  {t("overview.tripsAndRequests.noTrips")}
                 </p>
               </div>
             )}

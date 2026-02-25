@@ -21,7 +21,7 @@ export default async function VendorDashboardPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const t = await getTranslations("Admin.bookings");
+  const t = await getTranslations("Vendor.dashboard");
   const userResult = await getCurrentUser();
 
   const user = userResult.success ? userResult.data : null;
@@ -42,14 +42,13 @@ export default async function VendorDashboardPage({
     return (
       <div className="marketing-container py-20">
         <Alert>
-          <AlertTitle>Incomplete Profile</AlertTitle>
+          <AlertTitle>{t("incomplete.title")}</AlertTitle>
           <AlertDescription>
-            It seems you are registered as a vendor but haven't completed your
-            business profile.
+            {t("incomplete.description")}
           </AlertDescription>
         </Alert>
         <Link href="/partners/apply" className={cn(buttonVariants(), "mt-4 rounded-full font-display uppercase tracking-widest text-[10px] font-bold h-12 px-8")}>
-          Complete Profile
+          {t("incomplete.cta")}
         </Link>
       </div>
     );
@@ -63,25 +62,25 @@ export default async function VendorDashboardPage({
             <RiTimeLine className="size-10" />
           </div>
           <h1 className="text-3xl font-display font-medium uppercase tracking-tight mb-4">
-            Application Under Review
+            {t("review.title")}
           </h1>
-          <p className="text-muted-foreground mb-10 font-light leading-relaxed">
-            Thank you for applying to become a partner with Vizit Africa. Your
-            application for{" "}
-            <span className="font-semibold text-foreground">
-              {vendorProfile.business_name}
-            </span>{" "}
-            is currently being reviewed by our team.
+          <p className="text-muted-foreground mb-10 font-light leading-relaxed text-pretty">
+            {t.rich("review.description", {
+              businessName: () => (
+                <span className="font-semibold text-foreground">
+                  {vendorProfile.business_name}
+                </span>
+              ),
+            })}
           </p>
           <div className="bg-muted/30 p-6 rounded-2xl text-sm text-muted-foreground border border-border/50 italic">
-            We typically review applications within 24-48 hours. You will
-            receive an email once your account is approved.
+            {t("review.notice")}
           </div>
           <Link
             href="/"
             className={cn(buttonVariants({ variant: "outline" }), "mt-10 rounded-full font-display uppercase tracking-widest text-[10px] font-bold h-12 px-8")}
           >
-            Back to Home
+            {t("review.backHome")}
           </Link>
         </div>
       </div>
@@ -112,13 +111,13 @@ export default async function VendorDashboardPage({
         <header className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-border/50 pb-12">
           <div>
             <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-primary font-bold mb-4 block">
-              Partner Hub
+              {t("overline")}
             </span>
             <h1 className="text-4xl md:text-6xl font-display font-medium uppercase tracking-tighter leading-[0.9]">
-              Dashboard
+              {t("title")}
             </h1>
             <p className="text-muted-foreground mt-6 text-lg font-light text-pretty">
-              Welcome back, <span className="text-foreground font-medium">{vendorProfile.business_name}</span>
+              {t("welcome", { businessName: vendorProfile.business_name })}
             </p>
           </div>
           <div className="flex items-center gap-4">
@@ -128,7 +127,7 @@ export default async function VendorDashboardPage({
                 "h-12 px-6 rounded-full border border-border/50 flex items-center justify-center text-[10px] font-mono uppercase tracking-[0.2em] font-bold hover:bg-muted transition-all duration-300"
               )}
             >
-              Public Site
+              {t("actions.publicSite")}
             </Link>
             <Link
               href="/profile"
@@ -136,7 +135,7 @@ export default async function VendorDashboardPage({
                 "h-12 px-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-[10px] font-mono uppercase tracking-[0.2em] font-bold shadow-lg shadow-primary/20 hover:scale-105 transition-all duration-500"
               )}
             >
-              My Profile
+              {t("actions.myProfile")}
             </Link>
           </div>
         </header>
@@ -145,19 +144,19 @@ export default async function VendorDashboardPage({
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <StatCard 
             icon={RiInboxLine} 
-            label="Pending Requests" 
+            label={t("stats.pendingRequests")} 
             value={stats.active_requests} 
             color="amber"
           />
           <StatCard 
             icon={RiCalendarCheckLine} 
-            label="Upcoming Bookings" 
+            label={t("stats.upcomingBookings")} 
             value={stats.upcoming_bookings} 
             color="emerald"
           />
           <StatCard 
             icon={RiMoneyDollarCircleLine} 
-            label="Total Revenue" 
+            label={t("stats.totalRevenue")} 
             value={`$${stats.total_revenue.toLocaleString()}`} 
             color="primary"
           />
@@ -168,10 +167,10 @@ export default async function VendorDashboardPage({
           <div className="lg:col-span-8 space-y-8">
             <div className="flex items-center justify-between border-b border-border/50 pb-6">
               <h2 className="text-2xl font-display font-medium uppercase tracking-tight">
-                New Opportunities
+                {t("opportunities.title")}
               </h2>
               <Badge variant="outline" className="rounded-full px-3 py-1 font-mono text-[10px] uppercase font-bold tracking-widest">
-                {requests.length} Total
+                {t("opportunities.total", { count: requests.length })}
               </Badge>
             </div>
             <VendorRequestsList requests={requests} />
@@ -180,13 +179,13 @@ export default async function VendorDashboardPage({
           <div className="lg:col-span-4 space-y-8">
             <div className="border-b border-border/50 pb-6">
               <h2 className="text-2xl font-display font-medium uppercase tracking-tight text-muted-foreground/40">
-                Schedule
+                {t("schedule.title")}
               </h2>
             </div>
             <div className="bg-muted/30 rounded-3xl p-8 border border-border/50 min-h-[400px]">
               <CompletedRequestsSchedule
                 bookings={[]}
-                emptyMessage="No upcoming services scheduled yet."
+                emptyMessage={t("schedule.empty")}
               />
             </div>
           </div>

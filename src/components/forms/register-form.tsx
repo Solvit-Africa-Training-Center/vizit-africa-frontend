@@ -50,11 +50,11 @@ export function RegisterForm() {
       const result = await register(value);
       console.log(result);
       if (result.success) {
-        toast.success("Account created! Check your email to verify.");
+        toast.success(t("messages.success"));
         router.push(`/verify-email?email=${encodeURIComponent(value.email)}`);
       } else {
         let errorMessage =
-          result.error || "Registration failed. Please check the fields.";
+          result.error || t("messages.error");
 
         if (result.fieldErrors) {
           const firstError = Object.values(
@@ -110,7 +110,7 @@ export function RegisterForm() {
                 id="full_name"
                 name="full_name"
                 type="text"
-                placeholder="John Doe"
+                placeholder={t("fullNamePlaceholder")}
                 value={field.state.value}
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
@@ -135,7 +135,7 @@ export function RegisterForm() {
                 id="email"
                 name="email"
                 type="email"
-                placeholder="name@example.com"
+                placeholder={t("emailPlaceholder")}
                 value={field.state.value}
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
@@ -160,7 +160,7 @@ export function RegisterForm() {
                 id="phone_number"
                 name="phone_number"
                 type="tel"
-                placeholder="+251 912 345 678"
+                placeholder={t("phoneNumberPlaceholder")}
                 value={field.state.value}
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
@@ -243,7 +243,7 @@ export function RegisterForm() {
           className="w-full h-14 rounded-sm gap-2 text-base font-medium uppercase tracking-wide"
           loading={form.state.isSubmitting}
         >
-          {form.state.isSubmitting ? "Creating..." : tCommon("createAccount")}
+          {form.state.isSubmitting ? t("creating") : tCommon("createAccount")}
           {!form.state.isSubmitting && <RiArrowRightLine className="size-5" />}
         </Button>
       </div>

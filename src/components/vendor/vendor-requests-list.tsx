@@ -11,12 +11,14 @@ import { ItineraryItem } from "@/components/shared/itinerary-item";
 import { type VendorRequest } from "@/lib/unified-types";
 import { Button } from "@/components/ui/button";
 import { RiCalendarCheckLine, RiCheckDoubleLine, RiLoader4Line } from "@remixicon/react";
+import { useTranslations } from "next-intl";
 
 export function VendorRequestsList({
   requests,
 }: {
   requests: VendorRequest[];
 }) {
+  const t = useTranslations("Vendor.requests");
   const [checkingId, setCheckingId] = useState<string | null>(null);
   const [confirmingId, setConfirmingId] = useState<string | null>(null);
 
@@ -32,17 +34,19 @@ export function VendorRequestsList({
 
       if (result.success) {
         if (result.data.available) {
-          toast.success("Service is available for these dates!");
+          toast.success(t("messages.available"));
         } else {
           toast.error(
-            `Unavailable: ${(result.data.reasons as string[])?.join(", ") || "Capacity full"}`,
+            t("messages.unavailable", { 
+              reason: (result.data.reasons as string[])?.join(", ") || "Capacity full" 
+            }),
           );
         }
       } else {
-        toast.error(result.error || "Failed to check availability");
+        toast.error(result.error || t("messages.checkError"));
       }
     } catch (error) {
-      toast.error("An unexpected error occurred");
+      toast.error(t("messages.unexpectedError"));
     } finally {
       setCheckingId(null);
     }
@@ -53,12 +57,12 @@ export function VendorRequestsList({
     try {
       const result = await confirmVendorRequest(req.id);
       if (result.success) {
-        toast.success("Booking confirmed successfully!");
+        toast.success(t("messages.confirmSuccess"));
       } else {
-        toast.error(result.error || "Failed to confirm booking");
+        toast.error(result.error || t("messages.confirmError"));
       }
     } catch (error) {
-      toast.error("An unexpected error occurred");
+      toast.error(t("messages.unexpectedError"));
     } finally {
       setConfirmingId(null);
     }
@@ -70,9 +74,9 @@ export function VendorRequestsList({
         <div className="size-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
           <RiCalendarCheckLine className="size-8 text-muted-foreground/40" />
         </div>
-        <h3 className="font-display text-xl font-medium uppercase tracking-tight">No Requests</h3>
+        <h3 className="font-display text-xl font-medium uppercase tracking-tight">{t("empty.title")}</h3>
         <p className="text-muted-foreground mt-2 font-light">
-          Your opportunities will appear here.
+          {t("empty.description")}
         </p>
       </div>
     );
@@ -114,7 +118,7 @@ export function VendorRequestsList({
                 ) : (
                   <RiCalendarCheckLine className="size-3.5 mr-2" />
                 )}
-                Verify Dates
+                {checkingId === String(req.id) ? t("actions.verifying") : t("actions.verify")}
               </Button>
               
               <Button
@@ -130,7 +134,7 @@ export function VendorRequestsList({
                 ) : (
                   <RiCheckDoubleLine className="size-3.5 mr-2" />
                 )}
-                {req.status === "confirmed" ? "Confirmed" : "Confirm"}
+                {req.status === "confirmed" ? t("actions.confirmed") : t("actions.confirm")}
               </Button>
             </div>
           </div>

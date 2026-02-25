@@ -28,11 +28,11 @@ export function TripsTab({ completedRequests, isLoading }: TripsTabProps) {
     <div className="space-y-10">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
-          <h2 className="font-display text-4xl font-medium tracking-tight">
+          <h2 className="font-display text-4xl font-medium tracking-tight uppercase">
             {t("trips.title")}
           </h2>
-          <p className="text-muted-foreground mt-2 max-w-lg">
-            A curated record of your confirmed journeys and upcoming adventures across Africa.
+          <p className="text-muted-foreground mt-2 max-w-lg font-light">
+            {t("trips.description")}
           </p>
         </div>
         
@@ -40,22 +40,22 @@ export function TripsTab({ completedRequests, isLoading }: TripsTabProps) {
           <button
             onClick={() => setView("cards")}
             className={cn(
-              "flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium uppercase tracking-widest transition-all",
+              "flex items-center gap-2 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all",
               view === "cards" ? "bg-card text-primary shadow-xs" : "text-muted-foreground hover:text-foreground"
             )}
           >
             <RiLayoutGridLine className="size-3.5" />
-            Cards
+            {t("trips.views.cards")}
           </button>
           <button
             onClick={() => setView("timeline")}
             className={cn(
-              "flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium uppercase tracking-widest transition-all",
+              "flex items-center gap-2 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all",
               view === "timeline" ? "bg-card text-primary shadow-xs" : "text-muted-foreground hover:text-foreground"
             )}
           >
             <RiListCheck2 className="size-3.5" />
-            Timeline
+            {t("trips.views.timeline")}
           </button>
         </div>
       </div>
@@ -71,12 +71,12 @@ export function TripsTab({ completedRequests, isLoading }: TripsTabProps) {
           <div className="size-20 bg-muted rounded-full flex items-center justify-center mx-auto mb-6">
             <RiPlaneLine className="size-10 text-muted-foreground/40" />
           </div>
-          <h3 className="text-xl font-medium text-foreground mb-2">No confirmed trips yet</h3>
-          <p className="text-muted-foreground max-w-sm mx-auto mb-8">
-            Your confirmed itineraries will appear here as soon as they're finalized and paid.
+          <h3 className="text-xl font-medium text-foreground mb-2">{t("trips.empty.title")}</h3>
+          <p className="text-muted-foreground max-w-sm mx-auto mb-8 font-light italic">
+            {t("trips.empty.description")}
           </p>
-          <Button size="lg" className="rounded-full shadow-lg shadow-primary/20">
-            Start Planning a Trip
+          <Button size="lg" className="rounded-full shadow-lg shadow-primary/20 font-display uppercase tracking-widest text-[10px] font-bold h-12 px-8">
+            {t("trips.empty.cta")}
           </Button>
         </div>
       ) : (
@@ -110,8 +110,8 @@ export function TripsTab({ completedRequests, isLoading }: TripsTabProps) {
             >
               {/* Trip Selector Side */}
               <div className="lg:col-span-4 space-y-4">
-                <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-6">
-                  Select Journey
+                <h3 className="text-[10px] font-bold uppercase tracking-widest text-primary mb-6">
+                  {t("trips.timeline.selectJourney")}
                 </h3>
                 <div className="space-y-3">
                   {completedRequests.map(trip => (
@@ -119,16 +119,16 @@ export function TripsTab({ completedRequests, isLoading }: TripsTabProps) {
                       key={trip.id}
                       onClick={() => setSelectedId(String(trip.id))}
                       className={cn(
-                        "w-full text-left p-4 rounded-2xl border transition-all duration-300",
+                        "w-full text-left p-5 rounded-2xl border transition-all duration-500",
                         selectedTripId === String(trip.id)
-                          ? "border-primary/30 bg-primary/[0.03] shadow-md shadow-primary/5"
+                          ? "border-primary/30 bg-primary/[0.03] shadow-lg shadow-primary/5"
                           : "border-border/50 bg-card hover:border-primary/20"
                       )}
                     >
-                      <p className="text-[10px] uppercase font-bold tracking-tighter text-primary/60 mb-1">
+                      <p className="text-[9px] uppercase font-bold tracking-tighter text-muted-foreground/60 mb-1">
                         {trip.arrivalDate}
                       </p>
-                      <h4 className="font-medium text-sm truncate">{trip.tripPurpose || "African Adventure"}</h4>
+                      <h4 className="font-display font-medium text-lg truncate uppercase tracking-tight">{trip.tripPurpose || "African Adventure"}</h4>
                     </button>
                   ))}
                 </div>
@@ -138,17 +138,17 @@ export function TripsTab({ completedRequests, isLoading }: TripsTabProps) {
               <div className="lg:col-span-8">
                 {selectedTrip ? (
                   <div className="space-y-10">
-                    <div className="pb-8 border-b border-border">
-                      <h3 className="font-display text-3xl font-medium mb-2">{selectedTrip.tripPurpose}</h3>
-                      <p className="text-muted-foreground text-sm flex items-center gap-2">
-                        {selectedTrip.arrivalDate} — {selectedTrip.departureDate} • {selectedTrip.travelers} Travelers
+                    <div className="pb-8 border-b border-border/50">
+                      <h3 className="font-display text-3xl font-medium mb-4 uppercase tracking-tight">{selectedTrip.tripPurpose}</h3>
+                      <p className="text-muted-foreground text-sm font-light flex items-center gap-2">
+                        {selectedTrip.arrivalDate} — {selectedTrip.departureDate} • {t("trips.timeline.travelers", { count: selectedTrip.travelers })}
                       </p>
                     </div>
                     <TripTimeline booking={selectedTrip} />
                   </div>
                 ) : (
-                  <div className="h-64 flex items-center justify-center border border-dashed rounded-3xl text-muted-foreground">
-                    Select a trip to view detailed timeline
+                  <div className="h-64 flex items-center justify-center border-2 border-dashed border-border/50 rounded-[2rem] text-muted-foreground font-light italic bg-muted/10">
+                    {t("trips.timeline.empty")}
                   </div>
                 )}
               </div>

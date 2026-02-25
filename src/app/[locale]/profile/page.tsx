@@ -142,7 +142,7 @@ export default function ProfilePage() {
   if (!user) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <p>Loading session...</p>
+        <p>{t("overview.loading")}</p>
       </div>
     );
   }
@@ -168,7 +168,7 @@ export default function ProfilePage() {
                 {t("header.title")}
               </span>
               <h1 className="font-display text-5xl md:text-7xl font-medium text-foreground">
-                {user.full_name}'s Profile
+                {t("header.subtitle", { name: user.full_name.split(" ")[0] })}
               </h1>
             </div>
 

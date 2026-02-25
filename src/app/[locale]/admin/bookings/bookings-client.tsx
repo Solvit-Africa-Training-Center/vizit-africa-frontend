@@ -52,14 +52,14 @@ export default function BookingsClient({
   const tabs = [
     {
       id: "all",
-      label: "All Bookings",
+      label: t("tabs.all"),
       icon: RiLayoutGridLine,
       count: stats.all,
     },
-    { id: "paid", label: "Paid", icon: RiBankCardLine, count: stats.paid },
+    { id: "paid", label: t("tabs.paid"), icon: RiBankCardLine, count: stats.paid },
     {
       id: "completed",
-      label: "Completed",
+      label: t("tabs.completed"),
       icon: RiHistoryLine,
       count: stats.completed,
     },
@@ -79,7 +79,7 @@ export default function BookingsClient({
         <div className="relative w-full md:w-80">
           <RiSearchLine className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
           <Input
-            placeholder="Search by name or ID..."
+            placeholder={t("searchPlaceholder")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-9 bg-background"
@@ -123,12 +123,10 @@ export default function BookingsClient({
             <RiCheckboxCircleLine className="size-8 text-muted-foreground/40" />
           </div>
           <h3 className="font-medium text-foreground text-lg">
-            {searchQuery ? "No results found" : t("empty.title")}
+            {t("empty.title")}
           </h3>
           <p className="text-sm text-muted-foreground max-w-xs mx-auto mt-1">
-            {searchQuery
-              ? `We couldn't find any bookings matching "${searchQuery}"`
-              : t("empty.description")}
+            {t("empty.description")}
           </p>
           {searchQuery && (
             <Button
@@ -136,7 +134,7 @@ export default function BookingsClient({
               onClick={() => setSearchQuery("")}
               className="mt-4"
             >
-              Clear Search
+              {t("empty.clearSearch")}
             </Button>
           )}
         </div>

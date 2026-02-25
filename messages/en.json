@@ -1,4 +1,50 @@
 {
+  "Partners": {
+    "apply": {
+      "title": "Become a Partner",
+      "subtitle": "Join our network of premium African travel providers and start receiving curated booking requests.",
+      "accountDetails": "Account Details",
+      "businessDetails": "Business Details",
+      "labels": {
+        "contactName": "Contact Person Full Name",
+        "email": "Email Address",
+        "phone": "Phone Number",
+        "password": "Password",
+        "confirmPassword": "Confirm Password",
+        "businessName": "Business Name",
+        "businessType": "Business Type",
+        "website": "Website (Optional)",
+        "address": "Business Address"
+      },
+      "placeholders": {
+        "contactName": "John Doe",
+        "email": "name@example.com",
+        "phone": "+250...",
+        "password": "Create a password",
+        "confirmPassword": "Confirm password",
+        "businessName": "e.g. Serengeti Safaris Ltd.",
+        "businessType": "Select type",
+        "website": "https://...",
+        "address": "City, Country"
+      },
+      "types": {
+        "hotel": "Hotel / Accommodation",
+        "car_rental": "Car Rental",
+        "guide": "Tour Guide",
+        "experience": "Experience Provider",
+        "transport": "Transport Company",
+        "other": "Other"
+      },
+      "submit": "Submit Application",
+      "submitting": "Submitting Application...",
+      "messages": {
+        "success": "Application submitted successfully!",
+        "error": "Registration failed. Please check the fields.",
+        "profileError": "Failed to create vendor profile.",
+        "accountCreatedContactSupport": "Failed to create vendor profile. Your account was created, please contact support."
+      }
+    }
+  },
   "Common": {
     "brandName": "Vizit Africa",
     "startPlanning": "Start Journey",
@@ -16,7 +62,9 @@
     "localTime": "Local Time",
     "back": "Back",
     "continue": "Continue",
-    "submit": "Request Quote"
+    "submit": "Request Quote",
+    "error": "Error",
+    "success": "Success"
   },
   "Navigation": {
     "flights": "Flights",
@@ -24,7 +72,18 @@
     "experiences": "Experiences",
     "gallery": "Gallery",
     "aboutUs": "About",
-    "contact": "Contact"
+    "contact": "Contact",
+    "userMenu": {
+      "profile": "Profile",
+      "dashboard": "Dashboard",
+      "logout": "Logout"
+    },
+    "trip": {
+      "view": "View Trip",
+      "item": "item",
+      "items": "items",
+      "tooltip": "Plan your dream trip to Africa"
+    }
   },
   "Hero": {
     "slides": {
@@ -261,7 +320,8 @@
       "aboutUs": "About Us",
       "contactUs": "Contact",
       "privacyPolicy": "Privacy Policy",
-      "termsOfService": "Terms of Service"
+      "termsOfService": "Terms of Service",
+      "whatsapp": "WhatsApp"
     },
     "copyright": "© 2025 Vizit Africa. All rights reserved.",
     "privacy": "Privacy",
@@ -321,30 +381,51 @@
       "title": "Welcome Back",
       "subtitle": "Sign in to access your curated itinerary.",
       "emailLabel": "Email Address",
+      "emailPlaceholder": "name@example.com",
       "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter your password",
       "forgot": "Forgot?",
       "orContinue": "Or continue with",
       "adminAccess": "Admin Access",
       "noAccount": "New to Vizit Africa?",
-      "createAccount": "Create an account"
+      "createAccount": "Create an account",
+      "loggingIn": "Logging in...",
+      "messages": {
+        "success": "Logged in successfully",
+        "error": "Login failed. Please check your credentials.",
+        "genericError": "An error occurred during login",
+        "googleSuccess": "Successfully logged in with Google",
+        "googleError": "Google login failed",
+        "googleUnexpected": "An unexpected error occurred during Google login"
+      }
     },
     "signup": {
       "title": "Start Your Journey",
       "subtitle": "Create an account to begin planning your legacy trip.",
       "fullName": "Full Name",
+      "fullNamePlaceholder": "John Doe",
       "phoneNumber": "Phone Number",
+      "phoneNumberPlaceholder": "+250 ...",
       "emailLabel": "Email Address",
+      "emailPlaceholder": "name@example.com",
       "passwordLabel": "Password",
       "confirmPassword": "Confirm Password",
       "haveAccount": "Already have an account?",
-      "signIn": "Sign in"
+      "signIn": "Sign in",
+      "creating": "Creating...",
+      "messages": {
+        "success": "Account created! Check your email to verify.",
+        "error": "Registration failed. Please check the fields."
+      }
     },
     "verifyEmail": {
       "title": "Verify Email",
       "codeLabel": "Verification Code",
       "verifyButton": "Verify Email",
+      "verifying": "Verifying...",
       "success": "Email verified successfully",
       "error": "Invalid verification code",
+      "failed": "Verification failed. Please try again.",
       "backToLogin": "Back to Login",
       "goToProfile": "Go to Profile"
     },
@@ -960,6 +1041,62 @@
       "homeButton": "Return Home"
     }
   },
+  "Vendor": {
+    "dashboard": {
+      "overline": "Partner Hub",
+      "title": "Dashboard",
+      "welcome": "Welcome back, {businessName}",
+      "actions": {
+        "publicSite": "Public Site",
+        "myProfile": "My Profile"
+      },
+      "stats": {
+        "pendingRequests": "Pending Requests",
+        "upcomingBookings": "Upcoming Bookings",
+        "totalRevenue": "Total Revenue"
+      },
+      "review": {
+        "title": "Application Under Review",
+        "description": "Thank you for applying to become a partner with Vizit Africa. Your application for {businessName} is currently being reviewed by our team.",
+        "notice": "We typically review applications within 24-48 hours. You will receive an email once your account is approved.",
+        "backHome": "Back to Home"
+      },
+      "incomplete": {
+        "title": "Incomplete Profile",
+        "description": "It seems you are registered as a vendor but haven't completed your business profile.",
+        "cta": "Complete Profile"
+      },
+      "opportunities": {
+        "title": "New Opportunities",
+        "total": "{count} Total"
+      },
+      "schedule": {
+        "title": "Schedule",
+        "empty": "No upcoming services scheduled yet."
+      }
+    },
+    "requests": {
+      "empty": {
+        "title": "No Requests",
+        "description": "Your opportunities will appear here."
+      },
+      "actions": {
+        "verify": "Verify Dates",
+        "confirm": "Confirm",
+        "confirmed": "Confirmed",
+        "verifying": "Verifying...",
+        "confirming": "Confirming..."
+      },
+      "messages": {
+        "available": "Service is available for these dates!",
+        "unavailable": "Unavailable: {reason}",
+        "checkError": "Failed to check availability",
+        "confirmSuccess": "Booking confirmed successfully!",
+        "confirmError": "Failed to confirm booking",
+        "unexpectedError": "An unexpected error occurred"
+      }
+    }
+  },
   "Admin": {
     "nav": {
       "brand": "Vizit Admin",
@@ -1017,6 +1154,12 @@
     "bookings": {
       "title": "Paid Bookings",
       "subtitle": "Manage and fulfill paid travel bookings",
+      "searchPlaceholder": "Search by name or ID...",
+      "tabs": {
+        "all": "All Bookings",
+        "paid": "Paid",
+        "completed": "Completed"
+      },
       "card": {
         "paid": "Paid",
         "travelers": "travelers",
@@ -1026,11 +1169,13 @@
           "car": "Car",
           "guide": "Guide"
         },
-        "manageFulfillment": "Manage Booking"
+        "manageBooking": "Manage Booking",
+        "refundCancel": "Refund & Cancel"
       },
       "empty": {
-        "title": "No paid bookings yet",
-        "description": "Bookings will appear here once customers complete payment successfully."
+        "title": "No bookings found",
+        "description": "Bookings will appear here once customers complete payment successfully.",
+        "clearSearch": "Clear Search"
       },
       "fulfill": {
         "back": "Back to Bookings",
@@ -1148,7 +1293,7 @@
   "Profile": {
     "header": {
       "title": "Traveler Profile",
-      "subtitle": "Sarah's Journey",
+      "subtitle": "{name}'s Profile",
       "signOut": "Sign Out"
     },
     "tabs": {
@@ -1158,6 +1303,7 @@
       "settings": "Settings"
     },
     "overview": {
+      "loading": "Loading session...",
       "nextTrip": {
         "label": "Up Next",
         "imageAlt": "Next Trip",
@@ -1165,10 +1311,33 @@
         "status": "Status",
         "paid": "Paid",
         "travelers": "Travelers",
-        "adults": "Adults"
+        "adults": "Adults",
+        "confirmed": "Your African Journey Awaits",
+        "preparing": "Journey in Preparation",
+        "start": "Start Your Story",
+        "refining": "Refining Itinerary",
+        "dreaming": "Dreaming",
+        "adventurers": "{count} Adventurers",
+        "joinUs": "Join us"
       },
-      "pendingRequests": {
-        "title": "Pending Requests"
+      "tripsAndRequests": {
+        "title": "My Trips & Requests",
+        "description": "Track your upcoming adventures and active planning requests in one place.",
+        "loading": "Loading...",
+        "noTrips": "No active trips or requests",
+        "tripId": "Trip #{id}",
+        "requestId": "Trip Request #{id}",
+        "status": "Status",
+        "created": "Created",
+        "items": "Items",
+        "itemsCount": "{count} items",
+        "startDate": "Start Date",
+        "quoteReady": "Quote Ready: {amount}",
+        "acceptPay": "Accept & Pay",
+        "manageTrip": "Manage Trip",
+        "viewDetails": "View Details",
+        "cancelRequest": "Cancel Request",
+        "cancelConfirm": "Are you sure you want to cancel this request? This action cannot be undone."
       },
       "stats": {
         "title": "Your Stats",
@@ -1179,9 +1348,24 @@
     },
     "trips": {
       "title": "Trip History",
+      "description": "A curated record of your confirmed journeys and upcoming adventures across Africa.",
       "planNew": "Plan New Trip",
       "upcoming": "Upcoming",
-      "viewDetails": "View Details"
+      "viewDetails": "View Details",
+      "views": {
+        "cards": "Cards",
+        "timeline": "Timeline"
+      },
+      "empty": {
+        "title": "No confirmed trips yet",
+        "description": "Your confirmed itineraries will appear here as soon as they're finalized and paid.",
+        "cta": "Start Planning a Trip"
+      },
+      "timeline": {
+        "selectJourney": "Select Journey",
+        "empty": "Select a trip to view detailed timeline",
+        "travelers": "{count} Travelers"
+      }
     },
     "saved": {
       "emptyTitle": "No Saved Items",
@@ -1191,6 +1375,11 @@
       "title": "Account Settings",
       "fullName": "Full Name",
       "email": "Email Address",
+      "phone": "Phone Number",
+      "bio": "Bio",
+      "bioPlaceholder": "Travel enthusiast",
+      "currency": "Preferred Currency",
+      "role": "Account Role",
       "save": "Save Changes"
     }
   },
