@@ -60,6 +60,6 @@ describe('Payment Actions', () => {
     const result = await createPaymentIntent('booking-456');
 
     expect(result.success).toBe(false);
-    expect(result.error).toBe('Failed to create payment intent');
+    expect((result as any).error).toBe('Failed to create payment intent');
   });
 });

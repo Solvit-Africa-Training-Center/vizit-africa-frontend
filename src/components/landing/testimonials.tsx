@@ -37,8 +37,8 @@ export function Testimonials() {
   const col3 = allTestimonials.slice(10, 15);
 
   return (
-    <section className="relative py-24 md:py-32 bg-muted/30 overflow-hidden">
-      <div className="container max-w-7xl mx-auto px-5 md:px-10">
+    <section className="marketing-section bg-muted/30 overflow-hidden relative isolate">
+      <div className="marketing-container">
         <div className="flex flex-col items-center justify-center text-center mb-16">
           <SectionTitle
             overline={t("overline")}
@@ -49,7 +49,10 @@ export function Testimonials() {
           />
         </div>
 
-        <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 h-[800px] overflow-hidden mask-[linear-gradient(to_bottom,transparent,black_20%,black_80%,transparent)]">
+        <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 h-[800px] overflow-hidden">
+          <div className="absolute inset-x-0 top-0 h-32 bg-linear-to-b from-muted/30 to-transparent z-10 pointer-events-none" />
+          <div className="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-muted/30 to-transparent z-10 pointer-events-none" />
+          
           <TestimonialsColumn testimonials={col1} duration={45} />
           <TestimonialsColumn
             testimonials={col2}
@@ -96,29 +99,29 @@ function TestimonialsColumn({
               <figure
                 key={`${testimonial.id}-${i}-${index}`}
                 className={cn(
-                  "relative w-full rounded-3xl border bg-card p-8 shadow-xs",
-                  "cursor-pointer transition-all duration-300 hover:shadow-md hover:border-primary/20",
+                  "relative w-full rounded-2xl border border-border/50 bg-card p-8 shadow-card",
+                  "cursor-pointer transition-all duration-500 hover:border-primary/30",
                 )}
               >
-                <blockquote className="text-sm leading-relaxed text-muted-foreground mb-6">
+                <blockquote className="text-sm leading-relaxed text-muted-foreground mb-8 font-light italic">
                   &ldquo;{testimonial.content}&rdquo;
                 </blockquote>
 
                 <div className="flex items-center gap-4">
-                  <div className="relative size-10 rounded-xl overflow-hidden bg-muted">
+                  <div className="relative size-12 rounded-2xl overflow-hidden bg-muted">
                     <Image
                       src={testimonial.avatar}
                       alt={testimonial.name}
                       fill
-                      sizes="40px"
+                      sizes="48px"
                       className="object-cover"
                     />
                   </div>
-                  <div className="flex flex-col">
-                    <figcaption className="text-sm font-medium text-foreground">
+                  <div className="flex flex-col gap-0.5">
+                    <figcaption className="text-sm font-medium text-foreground uppercase tracking-tight">
                       {testimonial.name}
                     </figcaption>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-[10px] font-mono uppercase tracking-widest text-primary font-bold">
                       {testimonial.role}
                     </p>
                   </div>

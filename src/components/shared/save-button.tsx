@@ -44,7 +44,7 @@ export function SaveButton({
         : await removeItem(type, id);
 
       if (!result.success) {
-        // Revert on failure
+        // revert on failure
         setSaved(!newState);
         toast.error(result.error || "Failed to update saved item");
       } else {

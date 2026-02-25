@@ -14,7 +14,10 @@ export function SocialProof() {
 
       <div className="flex items-center w-full">
         {/* Static Prefix */}
-        <div className="bg-[#0a0a0a] z-20 pl-5 md:pl-10 pr-6 border-r border-white/10 flex items-center gap-2">
+        <div 
+          className="bg-[#0a0a0a] z-20 border-r border-white/10 flex items-center gap-2"
+          style={{ paddingLeft: 'var(--container-px)', paddingRight: '1.5rem' }}
+        >
           <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
           <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] text-white/50 whitespace-nowrap">
             {t("tagline") || "PARTNERED WITH"}

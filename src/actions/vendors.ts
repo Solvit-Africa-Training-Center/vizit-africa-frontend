@@ -2,12 +2,12 @@
 
 import { revalidatePath } from "next/cache";
 import { api, ApiError } from "@/lib/api/simple-client";
-import { vendorSchema, type ActionResult } from "@/lib/unified-types";
+import { vendorSchema, type ActionResult, type Vendor, type CreateVendorInput, type VendorRequest } from "@/lib/unified-types";
 import { endpoints } from "./endpoints";
 
 export async function createVendorProfile(
-  input: unknown,
-): Promise<ActionResult<any>> {
+  input: CreateVendorInput,
+): Promise<ActionResult<Vendor>> {
   try {
     const data = await api.post(endpoints.vendors.create, input, vendorSchema);
     return { success: true, data };
@@ -20,8 +20,8 @@ export async function createVendorProfile(
 }
 
 export async function registerVendor(
-  input: unknown,
-): Promise<ActionResult<any>> {
+  input: CreateVendorInput,
+): Promise<ActionResult<Vendor>> {
   try {
     const data = await api.post(
       endpoints.vendors.register,
@@ -39,8 +39,8 @@ export async function registerVendor(
 
 export async function updateVendor(
   vendorId: string | number,
-  input: unknown,
-): Promise<ActionResult<any>> {
+  input: Partial<CreateVendorInput>,
+): Promise<ActionResult<Vendor>> {
   try {
     const data = await api.put(
       endpoints.vendors.detail(vendorId),
@@ -60,9 +60,9 @@ export async function updateVendor(
 
 export async function approveVendor(
   vendorId: string | number,
-): Promise<ActionResult<any>> {
+): Promise<ActionResult<Vendor>> {
   try {
-    const data = await api.post(endpoints.vendors.approve(vendorId), {});
+    const data = await api.post(endpoints.vendors.approve(vendorId), {}, vendorSchema);
     revalidatePath("/admin/vendors");
     return { success: true, data };
   } catch (error) {
@@ -73,10 +73,10 @@ export async function approveVendor(
   }
 }
 
-export async function getVendors(): Promise<ActionResult<any[]>> {
+export async function getVendors(): Promise<ActionResult<Vendor[]>> {
   try {
-    const data = await api.get(endpoints.vendors.list);
-    return { success: true, data: (data || []) as any[] };
+    const data = await api.get<Vendor[]>(endpoints.vendors.list);
+    return { success: true, data: data || [] };
   } catch (error) {
     if (error instanceof ApiError) {
       return { success: false, error: error.message };
@@ -87,7 +87,7 @@ export async function getVendors(): Promise<ActionResult<any[]>> {
 
 export async function deleteVendor(
   vendorId: string | number,
-): Promise<ActionResult<any>> {
+): Promise<ActionResult<{ success: boolean; message: string }>> {
   try {
     await api.delete(endpoints.vendors.detail(vendorId));
     revalidatePath("/admin/vendors");
@@ -104,9 +104,9 @@ export async function deleteVendor(
   }
 }
 
-export async function getVendorDashboardStats(): Promise<ActionResult<any>> {
+export async function getVendorDashboardStats(): Promise<ActionResult<Record<string, unknown>>> {
   try {
-    const data = await api.get(endpoints.vendors.dashboard);
+    const data = await api.get<Record<string, unknown>>(endpoints.vendors.dashboard);
     return { success: true, data };
   } catch (error) {
     if (error instanceof ApiError) {
@@ -116,10 +116,10 @@ export async function getVendorDashboardStats(): Promise<ActionResult<any>> {
   }
 }
 
-export async function getVendorRequests(): Promise<ActionResult<any[]>> {
+export async function getVendorRequests(): Promise<ActionResult<VendorRequest[]>> {
   try {
-    const data = await api.get(endpoints.vendors.requests);
-    return { success: true, data: (data || []) as any[] };
+    const data = await api.get<VendorRequest[]>(endpoints.vendors.requests);
+    return { success: true, data: data || [] };
   } catch (error) {
     if (error instanceof ApiError) {
       return { success: false, error: error.message };
@@ -133,9 +133,9 @@ export async function checkVendorServiceAvailability(
   startDate: string,
   endDate: string,
   quantity: number,
-): Promise<ActionResult<any>> {
+): Promise<ActionResult<Record<string, unknown>>> {
   try {
-    const data = await api.post(endpoints.services.checkAvailability, {
+    const data = await api.post<Record<string, unknown>>(endpoints.services.checkAvailability, {
       service_id: serviceId,
       start_date: startDate,
       end_date: endDate,
@@ -152,9 +152,9 @@ export async function checkVendorServiceAvailability(
 
 export async function confirmVendorRequest(
   requestId: string | number,
-): Promise<ActionResult<any>> {
+): Promise<ActionResult<Record<string, unknown>>> {
   try {
-    const data = await api.post(endpoints.vendors.confirmItem(requestId), {});
+    const data = await api.post<Record<string, unknown>>(endpoints.vendors.confirmItem(requestId), {});
     revalidatePath("/vendor/dashboard");
     return { success: true, data };
   } catch (error) {

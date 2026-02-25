@@ -12,10 +12,22 @@ import { siteConfig } from "@/lib/configs";
 import { Logo } from "../shared";
 
 const socialLinks = [
-  { icon: RiTwitterXLine, href: "https://twitter.com", label: "Twitter" },
-  { icon: RiInstagramLine, href: "https://instagram.com", label: "Instagram" },
-  { icon: RiFacebookLine, href: "https://facebook.com", label: "Facebook" },
-  { icon: RiLinkedinLine, href: "https://linkedin.com", label: "LinkedIn" },
+  { icon: RiTwitterXLine, href: siteConfig.socials.twitter, label: "Twitter" },
+  {
+    icon: RiInstagramLine,
+    href: siteConfig.socials.instagram,
+    label: "Instagram",
+  },
+  {
+    icon: RiFacebookLine,
+    href: siteConfig.socials.facebook,
+    label: "Facebook",
+  },
+  {
+    icon: RiLinkedinLine,
+    href: siteConfig.socials.linkedin,
+    label: "LinkedIn",
+  },
 ];
 
 export function Footer() {
@@ -54,13 +66,13 @@ export function Footer() {
   return (
     <footer
       id="main-footer"
-      className="bg-black text-primary-foreground py-32 border-t border-white/5"
+      className="bg-black text-primary-foreground py-24 md:py-32 border-t border-white/5"
     >
-      <div className="mx-auto max-w-7xl px-5 md:px-10">
+      <div className="marketing-container">
         <div className="grid md:grid-cols-12 gap-12 lg:gap-24 mb-24">
           <div className="md:col-span-4 lg:col-span-3 space-y-8">
             <Logo variant="light" />
-            <p className="text-base text-primary-foreground/40 leading-relaxed max-w-xs font-light">
+            <p className="text-sm text-white/40 leading-relaxed max-w-xs font-light text-pretty">
               {t("tagline")}
             </p>
             <div className="flex items-center gap-2">
@@ -69,7 +81,7 @@ export function Footer() {
                   key={social.label}
                   href={social.href}
                   aria-label={social.label}
-                  className="size-10 flex items-center justify-center rounded-full border border-white/10 text-primary-foreground/70 hover:bg-primary-foreground hover:text-black hover:border-white transition-all duration-300 group"
+                  className="size-10 flex items-center justify-center rounded-full border border-white/10 text-white/50 hover:bg-primary hover:text-white hover:border-primary transition-all duration-500 group"
                 >
                   <social.icon
                     className="size-4 group-hover:scale-110 transition-transform"
@@ -82,7 +94,7 @@ export function Footer() {
 
           <div className="md:col-span-8 lg:col-span-9 grid grid-cols-2 md:grid-cols-3 gap-12 lg:gap-20">
             <div>
-              <h4 className="font-mono text-xs uppercase tracking-widest text-primary-foreground/60 mb-8">
+              <h4 className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary font-bold mb-8">
                 {t("explore")}
               </h4>
               <ul className="space-y-4">
@@ -90,7 +102,7 @@ export function Footer() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-sm text-primary-foreground/70 hover:text-primary-foreground transition-all hover:translate-x-1 inline-block"
+                      className="text-xs uppercase tracking-widest text-white/60 hover:text-primary transition-all hover:translate-x-1 inline-block"
                     >
                       {link.label}
                     </Link>
@@ -100,7 +112,7 @@ export function Footer() {
             </div>
 
             <div>
-              <h4 className="font-mono text-xs uppercase tracking-widest text-primary-foreground/60 mb-8">
+              <h4 className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary font-bold mb-8">
                 {t("company")}
               </h4>
               <ul className="space-y-4">
@@ -108,7 +120,7 @@ export function Footer() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-sm text-primary-foreground/70 hover:text-primary-foreground transition-all hover:translate-x-1 inline-block"
+                      className="text-xs uppercase tracking-widest text-white/60 hover:text-primary transition-all hover:translate-x-1 inline-block"
                     >
                       {link.label}
                     </Link>
@@ -118,7 +130,7 @@ export function Footer() {
             </div>
 
             <div className="col-span-2 md:col-span-1">
-              <h4 className="font-mono text-xs uppercase tracking-widest text-primary-foreground/60 mb-8">
+              <h4 className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary font-bold mb-8">
                 {t("contact")}
               </h4>
               <ul className="space-y-4">
@@ -126,7 +138,7 @@ export function Footer() {
                   <li key={link.label}>
                     <a
                       href={link.href}
-                      className="text-sm text-primary-foreground/70 hover:text-primary-foreground transition-colors block"
+                      className="text-xs uppercase tracking-widest text-white/60 hover:text-primary transition-all inline-block truncate max-w-full"
                     >
                       {link.label}
                     </a>
@@ -138,19 +150,19 @@ export function Footer() {
         </div>
 
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6">
-          <p className="text-xs text-primary-foreground/30 uppercase tracking-wider font-mono">
+          <p className="text-[10px] text-white/20 uppercase tracking-[0.2em] font-mono">
             {t("copyright")}
           </p>
           <div className="flex gap-8">
             <Link
               href="/privacy"
-              className="text-xs text-primary-foreground/30 hover:text-primary-foreground uppercase tracking-wider transition-colors font-mono"
+              className="text-[10px] text-white/20 hover:text-white uppercase tracking-[0.2em] transition-colors font-mono"
             >
               {t("privacy")}
             </Link>
             <Link
               href="/terms"
-              className="text-xs text-primary-foreground/30 hover:text-primary-foreground uppercase tracking-wider transition-colors font-mono"
+              className="text-[10px] text-white/20 hover:text-white uppercase tracking-[0.2em] transition-colors font-mono"
             >
               {t("terms")}
             </Link>

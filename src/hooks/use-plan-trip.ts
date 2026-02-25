@@ -9,6 +9,7 @@ import {
   type Guide,
 } from "@/lib/plan_trip-types";
 import { useTripStore } from "@/store/trip-store";
+import { SERVICE_FEE_RATE } from "@/lib/configs";
 
 interface UsePlanTripProps {
   initialHotels?: Hotel[];
@@ -84,7 +85,7 @@ export function usePlanTrip(props?: UsePlanTripProps) {
   const travelers = (tripInfo.adults || 0) + (tripInfo.children || 0);
   
   const subtotal = items.reduce((acc, item) => acc + (item.price || 0), 0);
-  const serviceFee = subtotal * 0.1;
+  const serviceFee = subtotal * SERVICE_FEE_RATE;
   const total = subtotal + serviceFee;
 
   // Filters

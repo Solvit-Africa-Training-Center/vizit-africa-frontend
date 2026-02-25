@@ -32,6 +32,7 @@ import { useUser } from "@/components/user-provider";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { useTripStore } from "@/store/trip-store";
+import { useIsMounted } from "@/hooks/use-is-mounted";
 import { LanguageSwitcher } from "./language-switcher";
 import Logo from "./logo";
 import { NavbarMobile } from "./navbar-mobile";
@@ -48,6 +49,7 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
   const { user } = useUser();
   const hasActiveTrip = useTripStore((s) => s.hasActiveTrip());
   const tripItemCount = useTripStore((s) => s.itemCount());
+  const isMounted = useIsMounted();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isTripDialogOpen, setIsTripDialogOpen] = useState(false);
@@ -93,11 +95,17 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       >
-        <nav className="mx-auto max-w-[1400px] px-6 md:px-12 flex items-center justify-between">
+        <nav
+          role="navigation"
+          aria-label="Main Navigation"
+          className="mx-auto max-w-[1400px] px-6 md:px-12 flex items-center justify-between"
+        >
           <div className="shrink-0 w-[140px]">
-            <div className="scale-90 origin-left transition-transform duration-500">
-              <Logo variant={logoVariant} />
-            </div>
+            <Link href="/" aria-label="Vizit Africa Home">
+              <div className="scale-90 origin-left transition-transform duration-500">
+                <Logo variant={logoVariant} />
+              </div>
+            </Link>
           </div>
 
           <div className="hidden md:flex items-center gap-10 absolute left-1/2 -translate-x-1/2">
@@ -111,6 +119,7 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
                 <Link
                   key={link.href}
                   href={link.href}
+                  aria-current={isActive ? "page" : undefined}
                   className={cn(
                     "relative group font-display font-medium uppercase tracking-[0.2em] text-xs transition-colors duration-300 drop-shadow-sm",
                     isActive
@@ -140,7 +149,10 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
 
             {user ? (
               <DropdownMenu>
-                <DropdownMenuTrigger className="outline-none">
+                <DropdownMenuTrigger
+                  className="outline-none"
+                  aria-label="User menu"
+                >
                   <div
                     className={cn(
                       "flex items-center gap-2 cursor-pointer transition-opacity hover:opacity-70",
@@ -201,39 +213,41 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
               </Link>
             )}
 
-    
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger
-                    render={
-                      <Button
-                        size="sm"
-                        variant={showSolid ? "default" : "secondary"}
-                        className={cn(
-                          "rounded-sm font-display font-medium uppercase tracking-wider text-xs px-6 transition-all duration-300 gap-2",
-                          !showSolid &&
-                            "bg-primary-foreground text-primary hover:bg-primary-foreground/90",
-                        )}
-                        onClick={() => setIsTripDialogOpen(true)}
-                      />
-                    }
-                  >
-                    {hasActiveTrip ? (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger
+                  render={
+                    <Button
+                      size="sm"
+                      variant={showSolid ? "default" : "secondary"}
+                      className={cn(
+                        "rounded-sm font-display font-medium uppercase tracking-wider text-xs px-6 transition-all duration-300 gap-2",
+                        !showSolid &&
+                          "bg-primary-foreground text-primary hover:bg-primary-foreground/90",
+                      )}
+                      onClick={() => setIsTripDialogOpen(true)}
+                    />
+                  }
+                >
+                  {isMounted ? (
+                    hasActiveTrip ? (
                       <>
                         <RiSuitcaseLine className="size-4" />
-                        {tripItemCount} {tripItemCount === 1 ? "item" : "items"} ·
-                        View Trip
+                        {tripItemCount} {tripItemCount === 1 ? "item" : "items"}{" "}
+                        · View Trip
                       </>
                     ) : (
                       tCommon("startPlanning")
-                    )}
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Plan your dream trip to Africa</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            
+                    )
+                  ) : (
+                    tCommon("startPlanning")
+                  )}
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Plan your dream trip to Africa</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
 
             <TripRequestDialog
               open={isTripDialogOpen}

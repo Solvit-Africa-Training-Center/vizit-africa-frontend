@@ -148,16 +148,16 @@ export default function GalleryPage() {
 
   return (
     <>
-      <div className="min-h-screen bg-background pt-32 pb-24">
+      <div className="min-h-screen bg-background">
         <PageHeader
           title={t("title")}
           overline={t("overline")}
           description={t("description")}
           layout="split"
-          className="mb-24 md:mb-32"
+          className="pt-24 md:pt-32"
         >
           <div className="flex flex-col items-start md:items-end gap-2 min-w-[200px]">
-            <span className="text-xs font-mono uppercase tracking-widest text-primary mb-2">
+            <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-primary mb-2">
               {t("filterBy")}
             </span>
             {categories.map((cat) => (
@@ -178,66 +178,52 @@ export default function GalleryPage() {
           </div>
         </PageHeader>
 
-        <section className="px-5 md:px-10 max-w-7xl mx-auto mb-32 md:mb-48">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center">
-            <div className="md:col-span-8 relative aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden rounded-2xl">
-              <ParallaxImage
-                src="/images/nyungwe-park.jpg"
-                alt="Feature"
-                fill
-                sizes="(max-width: 768px) 100vw, 66vw"
-                className="object-cover"
-                containerClassName="w-full h-[120%]"
-              />
-            </div>
-            <div className="md:col-span-4 flex flex-col justify-center">
-              <span className="text-xs font-mono uppercase tracking-widest text-primary mb-6 block">
-                {t("featured.overline")}
-              </span>
-              <h2 className="font-display text-4xl md:text-5xl font-medium uppercase tracking-tighter leading-none mb-8">
-                {t("featured.title")}
-              </h2>
-              <p className="text-xl text-muted-foreground font-light leading-relaxed">
-                {t("featured.description")}
-              </p>
+        <section className="marketing-section pt-0">
+          <div className="marketing-container">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center">
+              <div className="md:col-span-8 relative aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden rounded-2xl">
+                <ParallaxImage
+                  src="/images/nyungwe-park.jpg"
+                  alt="Feature"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 66vw"
+                  className="object-cover"
+                  containerClassName="w-full h-[120%]"
+                />
+              </div>
+              <div className="md:col-span-4 flex flex-col justify-center">
+                <span className="text-xs font-mono uppercase tracking-widest text-primary mb-6 block font-bold">
+                  {t("featured.overline")}
+                </span>
+                <h2 className="font-display text-4xl md:text-5xl font-medium uppercase tracking-tighter leading-[0.9] mb-8">
+                  {t("featured.title")}
+                </h2>
+                <p className="text-lg text-muted-foreground font-light leading-relaxed text-pretty">
+                  {t("featured.description")}
+                </p>
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="px-5 md:px-10 max-w-7xl mx-auto mb-32">
-          <motion.div
-            layout
-            className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6"
-          >
-            <AnimatePresence mode="popLayout">
-              {filteredImages.slice(0, 6).map((img, index) => (
-                <GalleryItem
-                  key={img.id}
-                  img={img}
-                  index={index}
-                  onClick={() => setSelectedImage(img)}
-                />
-              ))}
-            </AnimatePresence>
-          </motion.div>
-        </section>
-
-        <section className="px-5 md:px-10 max-w-7xl mx-auto">
-          <motion.div
-            layout
-            className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6"
-          >
-            <AnimatePresence mode="popLayout">
-              {filteredImages.slice(6).map((img, index) => (
-                <GalleryItem
-                  key={img.id}
-                  img={img}
-                  index={index}
-                  onClick={() => setSelectedImage(img)}
-                />
-              ))}
-            </AnimatePresence>
-          </motion.div>
+        <section className="marketing-section pt-0">
+          <div className="marketing-container">
+            <motion.div
+              layout
+              className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6"
+            >
+              <AnimatePresence mode="popLayout">
+                {filteredImages.map((img, index) => (
+                  <GalleryItem
+                    key={img.id}
+                    img={img}
+                    index={index}
+                    onClick={() => setSelectedImage(img)}
+                  />
+                ))}
+              </AnimatePresence>
+            </motion.div>
+          </div>
         </section>
       </div>
 
@@ -327,7 +313,7 @@ function GalleryItem({
       }}
       transition={{ duration: 0.4, delay: index * 0.05 }}
       className={cn(
-        "group relative overflow-hidden rounded-2xl break-inside-avoid cursor-pointer bg-muted",
+        "group relative overflow-hidden rounded-xl break-inside-avoid cursor-pointer bg-muted",
         img.aspect,
       )}
       onClick={onClick}

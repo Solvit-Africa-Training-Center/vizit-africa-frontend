@@ -62,10 +62,10 @@ export function Services() {
   }));
 
   return (
-    <section className="py-20 md:py-28 bg-background">
+    <section className="marketing-section bg-background">
       <div
         ref={containerRef}
-        className="container max-w-7xl mx-auto px-5 md:px-10"
+        className="marketing-container"
       >
         <SectionTitle
           overline={t("overline")}
@@ -73,7 +73,7 @@ export function Services() {
           description={t("description")}
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-px mt-16 bg-border/40 p-px rounded-sm overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
           {services.map((service, i) => (
             <ServiceCard key={i} service={service} />
           ))}
@@ -96,7 +96,7 @@ function ServiceCard({
   return (
     <Link
       href={`/plan-trip?service=${service.linkKey}`}
-      className="service-card group relative overflow-hidden aspect-4/3 block bg-background"
+      className="service-card group relative overflow-hidden aspect-[4/5] block bg-muted rounded-2xl border border-border/50 shadow-card"
     >
       <div className="absolute inset-0">
         <Image
@@ -105,21 +105,21 @@ function ServiceCard({
           fill
           sizes="(max-width: 768px) 100vw, 33vw"
           loading="lazy"
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
         />
-        <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-300" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent transition-colors duration-300" />
       </div>
 
-      <div className="absolute inset-0 p-6 flex flex-col justify-end">
-        <div className="translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+      <div className="absolute inset-0 p-8 flex flex-col justify-end">
+        <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
           <div
-            className="w-10 h-px bg-primary-foreground/60 mb-3"
+            className="w-8 h-px bg-primary mb-4"
             aria-hidden="true"
           />
-          <h3 className="text-2xl font-medium uppercase text-primary-foreground tracking-tight mb-1">
+          <h3 className="text-2xl font-display font-medium uppercase text-white tracking-tight mb-2">
             {service.title}
           </h3>
-          <p className="text-primary-foreground/80 font-light text-sm">
+          <p className="text-white/70 font-light text-sm leading-relaxed text-pretty">
             {service.description}
           </p>
         </div>

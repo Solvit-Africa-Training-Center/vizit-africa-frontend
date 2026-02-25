@@ -42,10 +42,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <QueryClientProvider client={queryClient}>
       <PathLogger>
         <GoogleOAuthProvider
-          clientId={
-            process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ||
-            "227362966925-jkk00ud4asi7grm1pvofuip8nbkr5nq0.apps.googleusercontent.com"
-          }
+          clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""}
         >
           {children}
           <Toaster />

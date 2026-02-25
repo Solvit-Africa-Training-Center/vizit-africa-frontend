@@ -50,23 +50,44 @@
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
   --color-surface-elevated: var(--surface-elevated);
+  --color-surface-elevated: var(--surface-elevated);
   --color-border-subtle: var(--border-subtle);
-  --radius: 0rem;
-  --radius-sm: calc(var(--radius) * 0.75);
-  --radius-md: calc(var(--radius) * 1);
-  --radius-lg: calc(var(--radius) * 1.5);
-  --radius-xl: calc(var(--radius) * 2);
-  --radius-2xl: calc(var(--radius) * 3);
-  --radius-3xl: calc(var(--radius) * 4);
-  --radius-4xl: calc(var(--radius) * 5);
-  --radius-full: calc(var(--radius) * 9999);
+  
+  /* Core Radius Tokens - Base unit for all rounded corners */
+  --radius: 1rem; 
+  --radius-card: 2rem;
+  --radius-button: 9999px;
+  --radius-input: 0.75rem;
+
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: calc(var(--radius) * 0.75);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.5);
+  --radius-2xl: var(--radius-card);
+  --radius-3xl: calc(var(--radius-card) * 1.5);
+  --radius-full: 9999px;
+
+  /* Semantic Shadow Tokens - Controlled centrally */
   --shadow-sm: 0 1px 2px oklch(0% 0 0 / 0.05);
-  --shadow-md: 0 4px 6px oklch(0% 0 0 / 0.05), 0 2px 4px oklch(0% 0 0 / 0.03);
-  --shadow-lg: 0 10px 15px oklch(0% 0 0 / 0.08), 0 4px 6px oklch(0% 0 0 / 0.03);
-  --shadow-xl: 0 20px 25px oklch(0% 0 0 / 0.1), 0 8px 10px oklch(0% 0 0 / 0.04);
+  --shadow-md: 0 4px 6px oklch(0% 0 0 / 0.05);
+  --shadow-lg: 0 10px 15px oklch(0% 0 0 / 0.05);
+  --shadow-xl: 0 20px 25px oklch(0% 0 0 / 0.05);
+  
+  --shadow-card: var(--shadow-xl);
+  --shadow-button: 0 10px 15px -3px oklch(var(--primary) / 0.1);
+
+  /* Layout Tokens */
+  --section-py: 6rem;
+  --section-py-lg: 8rem;
+  --container-px: 1.25rem;
+  --container-px-md: 2.5rem;
 }
 
 :root {
+  --primary: 42% 0.06 245; /* Store as raw OKLCH values for opacity modifiers if needed */
+  /* Re-defining with oklch() for standard use */
+  --color-primary: oklch(42% 0.06 245);
+  
   --primary: oklch(42% 0.06 245);
   --primary-light: oklch(52% 0.06 245);
   --primary-dark: oklch(32% 0.06 245);
@@ -106,8 +127,6 @@
   --success: oklch(62% 0.18 145);
   --success-foreground: oklch(100% 0 0);
 
-  --radius: 0rem;
-
   --sidebar: oklch(98% 0 0);
   --sidebar-foreground: oklch(20% 0 0);
   --sidebar-primary: oklch(42% 0.06 245);
@@ -116,6 +135,12 @@
   --sidebar-accent-foreground: oklch(20% 0 0);
   --sidebar-border: oklch(90% 0 0);
   --sidebar-ring: oklch(42% 0.06 245);
+
+  /* Layout Variables */
+  --section-py: 6rem;
+  --section-py-lg: 10rem;
+  --container-px: 1.25rem;
+  --container-px-md: 2.5rem;
 }
 
 @layer base {
@@ -129,7 +154,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-background text-foreground font-sans pt-20;
   }
 
   h1,
@@ -164,4 +189,44 @@
   .focus-ring {
     @apply focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary;
   }
+
+  .marketing-section {
+    padding-top: var(--section-py);
+    padding-bottom: var(--section-py);
+  }
+
+  @media (min-width: 768px) {
+    .marketing-section {
+      padding-top: var(--section-py-lg);
+      padding-bottom: var(--section-py-lg);
+    }
+  }
+
+  .marketing-container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 80rem; /* 1280px */
+    padding-left: var(--container-px);
+    padding-right: var(--container-px);
+  }
+
+  @media (min-width: 768px) {
+    .marketing-container {
+      padding-left: var(--container-px-md);
+      padding-right: var(--container-px-md);
+    }
+  }
+
+  /* Centralized Card Style */
+  .marketing-card {
+    @apply bg-card border border-border/50 rounded-2xl shadow-xl shadow-black/5 transition-all duration-500 hover:border-primary/30;
+  }
+
+  /* Centralized Interactive Elements */
+  .marketing-button-primary {
+    @apply rounded-full font-display uppercase tracking-widest text-[10px] font-bold shadow-lg shadow-primary/10 transition-all duration-500 hover:scale-105 active:scale-95;
+  }
 }
+
+

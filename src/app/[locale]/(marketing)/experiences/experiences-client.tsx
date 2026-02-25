@@ -149,15 +149,15 @@ export default function ExperiencesClient({
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground pt-24 md:pt-32">
+    <div className="min-h-screen bg-background text-foreground">
       <PageHeader
         title={t("title")}
         overline={t("overline")}
         layout="split"
-        className="mb-16 md:mb-24"
+        className="pt-24 md:pt-32 mb-0"
       >
         <div className="flex flex-col items-start md:items-end gap-3 mb-2">
-          <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-primary mb-2">
+          <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-primary mb-2 font-bold">
             Categories
           </span>
           {experiences.map((cat) => (
@@ -175,7 +175,7 @@ export default function ExperiencesClient({
       </PageHeader>
 
       <div className="relative flex flex-col md:flex-row">
-        <div className="w-full md:w-1/2 px-5 md:px-10 py-12 md:py-24 space-y-32 md:space-y-48">
+        <div className="w-full md:w-1/2 px-5 md:px-10 lg:pl-32 py-12 md:py-24 space-y-32 md:space-y-48">
           {experiences.map((category) => (
             <div key={category.id} id={category.id} className="scroll-mt-32">
               <div className="flex items-center gap-4 mb-16 md:mb-24">

@@ -86,17 +86,17 @@ export default function ServicesClient({
   }, [searchQuery, activeCategory, sortBy, initialServices]);
 
   return (
-    <div className="min-h-screen bg-background pt-32 pb-24">
+    <div className="min-h-screen bg-background">
       <PageHeader
         title={t("title")}
         overline={t("overline")}
         description={t("description")}
         layout="split"
-        className="mb-24 md:mb-32"
+        className="pt-24 md:pt-32"
       />
 
       <div className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-border/50">
-        <div className="px-5 md:px-10 max-w-7xl mx-auto py-6 flex flex-col md:flex-row gap-8 md:items-center justify-between">
+        <div className="marketing-container py-6 flex flex-col md:flex-row gap-8 md:items-center justify-between">
           <div className="relative w-full md:w-auto md:min-w-[400px]">
             <RiSearchLine className="absolute left-0 top-1/2 -translate-y-1/2 text-muted-foreground size-5" />
             <input
@@ -130,7 +130,7 @@ export default function ServicesClient({
             <div className="h-8 w-px bg-border/50 hidden md:block" />
 
             <div className="flex items-center gap-4 shrink-0">
-              <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-muted-foreground hidden md:inline">
+              <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-muted-foreground hidden md:inline font-bold">
                 {t("sort")}
               </span>
               <Select
@@ -157,31 +157,33 @@ export default function ServicesClient({
         </div>
       </div>
 
-      <section className="px-5 md:px-10 max-w-7xl mx-auto py-12 min-h-[50vh]">
-        <div className="flex flex-col">
-          <AnimatePresence mode="popLayout">
-            {filteredServices.length > 0 ? (
-              filteredServices.map((service) => (
-                <ServiceItem
-                  key={String(service.id)}
-                  service={service}
-                  isExpanded={expandedId === String(service.id)}
-                  onToggle={() =>
-                    setExpandedId(
-                      expandedId === String(service.id)
-                        ? null
-                        : String(service.id),
-                    )
-                  }
-                  bookLabel={t("bookService")}
-                />
-              ))
-            ) : (
-              <div className="py-24 text-center text-muted-foreground text-lg">
-                {t("noResults")}
-              </div>
-            )}
-          </AnimatePresence>
+      <section className="marketing-section">
+        <div className="marketing-container">
+          <div className="flex flex-col min-h-[50vh]">
+            <AnimatePresence mode="popLayout">
+              {filteredServices.length > 0 ? (
+                filteredServices.map((service) => (
+                  <ServiceItem
+                    key={String(service.id)}
+                    service={service}
+                    isExpanded={expandedId === String(service.id)}
+                    onToggle={() =>
+                      setExpandedId(
+                        expandedId === String(service.id)
+                          ? null
+                          : String(service.id),
+                      )
+                    }
+                    bookLabel={t("bookService")}
+                  />
+                ))
+              ) : (
+                <div className="py-24 text-center text-muted-foreground text-lg italic">
+                  {t("noResults")}
+                </div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
       </section>
     </div>

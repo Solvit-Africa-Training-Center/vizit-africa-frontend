@@ -3,8 +3,9 @@
 import { api, ApiError } from "@/lib/api/simple-client";
 import { endpoints } from "./endpoints";
 import { bookingSchema } from "@/lib/unified-types";
-import type { Booking, ActionResult } from "@/lib/unified-types";
+import type { Booking, ActionResult, BookingItem } from "@/lib/unified-types";
 import { logger } from "@/lib/utils/logger";
+import { getSession } from "@/lib/auth/session";
 
 export async function getBookingById(
   id: string,
@@ -22,6 +23,11 @@ export async function getBookingById(
 }
 
 export async function getAdminBookings(): Promise<ActionResult<Booking[]>> {
+  const session = await getSession();
+  if (session?.role !== "ADMIN") {
+    return { success: false, error: "Unauthorized: Admin access required" };
+  }
+
   try {
     const data = await api.get<Booking[]>(endpoints.bookings.admin.list);
     return { success: true, data: data || [] };
@@ -35,7 +41,7 @@ export async function getAdminBookings(): Promise<ActionResult<Booking[]>> {
 }
 
 export async function submitTrip(
-  tripData: Record<string, any>,
+  tripData: Partial<Booking>,
 ): Promise<ActionResult<{ id: string }>> {
   try {
     const result = await api.post(endpoints.bookings.submitTrip, tripData);
@@ -74,6 +80,11 @@ export async function confirmBooking(
 export async function getAdminBookingById(
   id: string,
 ): Promise<ActionResult<Booking>> {
+  const session = await getSession();
+  if (session?.role !== "ADMIN") {
+    return { success: false, error: "Unauthorized: Admin access required" };
+  }
+
   try {
     const data = await api.get(
       endpoints.bookings.admin.detail(id),
@@ -102,9 +113,34 @@ export async function getUserBookings(): Promise<ActionResult<Booking[]>> {
   }
 }
 
+export async function acceptQuoteForBooking(
+  bookingId: string,
+): Promise<ActionResult<Booking>> {
+  logger.info(`Accepting quote for booking ${bookingId}`);
+  try {
+    const data = await api.post(
+      endpoints.bookings.accept(bookingId),
+      { booking_id: bookingId },
+      bookingSchema,
+    );
+    logger.info(`Successfully accepted quote for booking ${bookingId}`);
+    return { success: true, data };
+  } catch (error) {
+    const errorMsg =
+      error instanceof ApiError ? error.message : "Failed to accept quote";
+    logger.error(`Failed to accept quote for booking ${bookingId}: ${errorMsg}`, {
+      bookingId,
+      error,
+    });
+    return {
+      success: false,
+      error: errorMsg,
+    };
+  }
+}
+
 // Aliases for backwards compatibility
 export const submitTripRequest = submitTrip;
-export const acceptQuoteForBooking = confirmBooking;
 
 export async function cancelBooking(
   bookingId: string,
@@ -126,21 +162,60 @@ export async function cancelBooking(
 export async function sendQuoteForBooking(
   bookingId: string,
   amount: number,
+  items: Partial<BookingItem>[] = [],
 ): Promise<ActionResult<{ message: string }>> {
-  logger.info(`Sending quote for booking ${bookingId}`, { amount });
+  const session = await getSession();
+  if (session?.role !== "ADMIN") {
+    return { success: false, error: "Unauthorized: Admin access required" };
+  }
+
+  logger.info(`Sending quote for booking ${bookingId}`, { amount, itemCount: items.length });
   try {
     const result = await api.post(endpoints.bookings.quote(bookingId), {
       booking_id: bookingId,
       amount,
+      total_amount: amount, // Send both just in case
+      items,
     });
     logger.info(`Successfully sent quote for booking ${bookingId}`);
     return { success: true, data: result as { message: string } };
   } catch (error) {
-    logger.error(`Failed to send quote for booking ${bookingId}`, { error });
+    const errorMsg = error instanceof ApiError ? error.message : "Failed to send quote";
+    logger.error(`Failed to send quote for booking ${bookingId}: ${errorMsg}`, { 
+      bookingId,
+      amount,
+      itemCount: items.length,
+      error 
+    });
     return {
       success: false,
-      error: error instanceof ApiError ? error.message : "Failed to send quote",
+      error: errorMsg,
     };
+  }
+}
+
+export async function updateBooking(
+  id: string,
+  data: Partial<Booking>,
+): Promise<ActionResult<Booking>> {
+  const session = await getSession();
+  if (session?.role !== "ADMIN") {
+    return { success: false, error: "Unauthorized: Admin access required" };
+  }
+
+  logger.info(`Updating booking ${id}`, { data });
+  try {
+    const result = await api.patch(
+      endpoints.bookings.detail(id),
+      data,
+      bookingSchema,
+    );
+    return { success: true, data: result };
+  } catch (error) {
+    const errorMsg =
+      error instanceof ApiError ? error.message : "Failed to update booking";
+    logger.error(`Failed to update booking ${id}: ${errorMsg}`, { id, error });
+    return { success: false, error: errorMsg };
   }
 }
 
@@ -148,8 +223,13 @@ export async function notifyVendor(
   bookingId: string,
   itemId?: string,
   serviceId?: string | number,
-  metadata?: Record<string, any>,
+  metadata?: Record<string, unknown>,
 ): Promise<ActionResult<{ message: string }>> {
+  const session = await getSession();
+  if (session?.role !== "ADMIN") {
+    return { success: false, error: "Unauthorized: Admin access required" };
+  }
+
   logger.info(`Notifying vendor for booking ${bookingId}`, { itemId, serviceId });
   try {
     const result = await api.post(endpoints.bookings.notifyVendor(bookingId), {

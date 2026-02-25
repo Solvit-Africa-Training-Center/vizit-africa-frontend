@@ -18,6 +18,7 @@ export default async function PlanTripPage() {
     price: Number(h.base_price),
     amenities: (h.metadata?.amenities as string[]) || [],
     rating: (h.metadata?.rating as number) || 0,
+    image: h.media?.[0]?.media_url || "/images/hotel.jpg",
   }));
 
   const cars: Car[] = carsData.map((c: ServiceResponse) => ({
@@ -28,6 +29,7 @@ export default async function PlanTripPage() {
     seats: (c.metadata?.capacity as number) || 4,
     features: (c.metadata?.features as string[]) || [],
     rating: (c.metadata?.rating as number) || 0,
+    image: c.media?.[0]?.media_url || "/images/car.jpg",
   }));
 
   const guides: Guide[] = guidesData.map((g: ServiceResponse) => ({
@@ -37,6 +39,7 @@ export default async function PlanTripPage() {
     price: Number(g.base_price),
     languages: (g.metadata?.languages as string[]) || [],
     rating: (g.metadata?.rating as number) || 0,
+    image: g.media?.[0]?.media_url || "/images/guide.jpg",
   }));
 
   return <PlanTripClient hotels={hotels} cars={cars} guides={guides} />;

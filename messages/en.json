@@ -29,58 +29,46 @@
   "Hero": {
     "slides": {
       "1": {
-        "subheading": "Seamless Travel",
-        "heading1": "Plan",
+        "subheading": "Best Price Guaranteed",
+        "heading1": "Secure",
         "heading2": "Flights",
-        "description": "Tell us your origin and dates. We'll manually source the best routes and fares to Rwanda for you."
+        "description": "We specialize in finding the most competitive fares to Rwanda. Secure your tickets with confidence through our manual sourcing experts."
       },
       "2": {
-        "subheading": "Premium Stays",
-        "heading1": "Request",
-        "heading2": "Hotels",
-        "description": "Curated accommodations verified for quality and comfort. We'll secure your room at the best available rate."
+        "subheading": "Unbeatable Value",
+        "heading1": "Trip",
+        "heading2": "Add-Ons",
+        "description": "Premium hotels, rugged transport, and local guides—all at negotiated rates that beat the market. Complete your journey without the premium price tag."
       },
       "3": {
-        "subheading": "Explore Freely",
-        "heading1": "Hire",
-        "heading2": "Vehicles",
-        "description": "Rugged 4x4s or luxury sedans. Choose your preference and we'll arrange the perfect ride with or without a driver."
-      },
-      "4": {
-        "subheading": "Expert Guidance",
-        "heading1": "Source",
-        "heading2": "Guides",
-        "description": "Connect with local experts who know every trail and hidden gem. We'll match you with the right specialist."
-      },
-      "5": {
-        "subheading": "Complete Packages",
-        "heading1": "Your",
-        "heading2": "Itinerary",
-        "description": "Bundle flights, hotels, and experiences. Receive a comprehensive quote and itinerary within 48 hours."
+        "subheading": "Travel with Confidence",
+        "heading1": "Secure",
+        "heading2": "Bookings",
+        "description": "No hidden fees, no automated risks. Every booking is manually verified and secured by our team for your peace of mind."
       }
     },
     "location": "Kigali Int. Airport",
     "coordinates": "1°58'S, 30°08'E"
   },
   "SocialProof": {
-    "tagline": "Partnered with leading airlines"
+    "tagline": "Securing the best fares from"
   },
   "Services": {
-    "overline": "Complete Your Trip",
-    "title": "Add-Ons",
-    "description": "Enhance your flight with premium accommodation, reliable transport, and expert local guides.",
+    "overline": "All-In-One Ease",
+    "title": "The Full Package",
+    "description": "While we specialize in securing unbeatable flight fares, we handle everything else to ensure your journey is seamless and budget-friendly.",
     "items": {
       "hotels": {
-        "title": "Book Stays",
-        "description": "Hotels, lodges & BnBs."
+        "title": "Sourced Flights",
+        "description": "Best-in-market fares to Rwanda and Africa, manually verified."
       },
       "experiences": {
-        "title": "Rent Vehicles",
-        "description": "Self-drive or chauffeur options."
+        "title": "Full Packages",
+        "description": "We bundle hotels, cars, and guides into one simple offer."
       },
       "transfers": {
-        "title": "Hire Guides",
-        "description": "Certified local experts."
+        "title": "Budget Friendly",
+        "description": "Negotiated local rates that beat automated search engines."
       }
     }
   },
@@ -121,25 +109,25 @@
     }
   },
   "HowItWorks": {
-    "overline": "Expert Logistics",
-    "title": "Plan Quote Confirm Go",
-    "description": "Our streamlined process for custom African travel.",
+    "overline": "The Simple Path",
+    "title": "Share Sourcing Offer Fly",
+    "description": "We believe luxury is simplicity. You tell us your vision, and our experts handle the technical complexity of sourcing the best rates across the continent.",
     "steps": {
       "1": {
         "title": "Share Your Plan",
-        "description": "Tell us your travel dates, origin, and preferences through our interactive planner."
+        "description": "Provide your dates and group size. Whether it's just flights or a full package, we start with your vision."
       },
       "2": {
         "title": "Expert Sourcing",
-        "description": "Our specialists manually find the best real-time fares and service availability for you."
+        "description": "Our specialists manually source the best flight routes and negotiated rates for hotels and transport."
       },
       "3": {
-        "title": "Receive Quote",
-        "description": "Within 48 hours, you'll receive a detailed itinerary with finalized prices for approval."
+        "title": "Receive Your Offer",
+        "description": "Within 48 hours, you receive a finalized, budget-friendly package quote for your entire journey."
       },
       "4": {
-        "title": "Secure Booking",
-        "description": "Confirm your plan with a single payment. We handle all ground logistics and tickets."
+        "title": "Confirm & Fly",
+        "description": "Once you approve, we handle every booking and detail. You just pack your bags and enjoy the ride."
       }
     }
   },
@@ -181,54 +169,54 @@
     }
   },
   "WhyUs": {
-    "overline": "Why Choose Us",
-    "title": "The Vizit Difference",
-    "description": "We don't just book trips; we craft personal legacies. Here is what sets our journeys apart from the rest.",
+    "overline": "The Vizit Edge",
+    "title": "Unbeatable Value",
+    "description": "We combine human expertise with secure technology to deliver the best prices and absolute security.",
     "stats": {
       "travelers": {
-        "value": "200+",
-        "label": "Happy Travelers"
+        "value": "Best Price",
+        "label": "Guaranteed"
       },
       "countries": {
-        "value": "15+",
-        "label": "Countries Served"
+        "value": "100%",
+        "label": "Secure Booking"
       },
       "rating": {
-        "value": "4.9",
-        "label": "Average Rating"
+        "value": "24/7",
+        "label": "Concierge Care"
       }
     },
     "benefits": [
-      "Real-time pricing from verified partners",
-      "Local experts with deep Rwanda knowledge",
-      "24/7 support during your trip",
-      "Flexible booking and cancellation",
-      "Transparent costs with no hidden fees"
+      "Access to private, unlisted flight fares",
+      "Manual sourcing by African travel experts",
+      "Negotiated local rates for stays & cars",
+      "Full package curation tailored to your budget",
+      "Absolute security through manual verification"
     ]
   },
   "FAQ": {
-    "overline": "Got Questions?",
+    "overline": "Clarifying the Journey",
     "title": "We Have Answers",
-    "description": "Everything you need to know about booking flights and traveling to Rwanda.",
+    "description": "Everything you need to know about our secure booking and best-price sourcing.",
     "cantFindAnswer": "Can't find your answer?",
     "cantFindMobile": "Can't find what you're looking for?",
     "contactTeam": "Contact our team",
     "items": {
       "1": {
-        "question": "What airlines fly to Rwanda?",
-        "answer": "RwandAir, KLM, Qatar Airways, Turkish Airlines, Ethiopian Airlines, Kenya Airways, and Brussels Airlines all serve Kigali International Airport with regular connections from major global hubs."
+        "question": "How do you get better prices than online sites?",
+        "answer": "Our specialists have access to consolidated private fares and local market rates that automated search engines simply cannot access."
       },
       "2": {
-        "question": "How far in advance should I book my flight?",
-        "answer": "For the best fares, book 6-8 weeks ahead. Peak season (June-September, December-February) fills up fast — book 2-3 months early. Last-minute deals are occasionally available."
+        "question": "Is my flight booking secure?",
+        "answer": "Absolutely. We manually verify every ticket issued and use secure Stripe-powered payments for every transaction."
       },
       "3": {
-        "question": "Do I need a visa to visit Rwanda?",
-        "answer": "Most nationalities can obtain a visa on arrival or e-visa. African Union passport holders and citizens of some countries enter visa-free. We'll help you understand your specific requirements."
+        "question": "Can I add hotels and cars later?",
+        "answer": "Yes. While bundling offers the best value, you can request and secure add-ons at any stage of your planning process."
       },
       "4": {
-        "question": "Can I add a hotel or car to my flight booking?",
-        "answer": "Yes! After selecting your flight, you can add hotels, car rentals, and local guides as optional add-ons — all in one booking flow."
+        "question": "What if I find a cheaper price elsewhere?",
+        "answer": "Tell us. If a lower publicly available fare exists, we'll beat it while still providing the added security of our concierge verification."
       },
       "5": {
         "question": "What's the baggage allowance?",
@@ -249,15 +237,15 @@
     }
   },
   "CTA": {
-    "overline": "Ready to explore?",
-    "title": "Start Your",
-    "titleHighlight": "Journey",
-    "description": "Receive a personalized itinerary and final quote within 48 hours. Expertly crafted for your perfect stay.",
-    "startPlanning": "Start Planning",
-    "contactTeam": "Contact Support",
-    "concierge": "Group Bookings",
-    "emailUs": "Email Support",
-    "whatsapp": "Chat with Agent"
+    "overline": "Secure Your Fare",
+    "title": "Ready to",
+    "titleHighlight": "Secure Your Flight?",
+    "description": "Tell us where you're starting from. Our experts will source the best price and secure your journey today.",
+    "startPlanning": "Check Best Price",
+    "contactTeam": "Secure Support",
+    "concierge": "Secure Concierge",
+    "emailUs": "Request Best Price",
+    "whatsapp": "Instant Secure Chat"
   },
   "Footer": {
     "tagline": "Your trusted Rwanda travel partner. Professional planning for unforgettable African experiences.",
@@ -716,6 +704,58 @@
     }
   },
   "PlanTrip": {
+    "detailedPlanner": {
+      "overline": "Detailed Journey Planner",
+      "title": "Craft Your {narrative}",
+      "narrative": "Narrative",
+      "buildWithAi": "Build with AI",
+      "sections": {
+        "foundation": {
+          "step": "01",
+          "title": "The Foundation",
+          "destination": "Destination",
+          "destinationPlaceholder": "e.g., Volcanoes National Park",
+          "origin": "Origin",
+          "originPlaceholder": "Departing from...",
+          "arrival": "Arrival",
+          "departure": "Departure"
+        },
+        "curation": {
+          "step": "02",
+          "title": "Personalized Curation",
+          "flights": "Flights",
+          "accommodation": "Accommodation",
+          "transport": "Transport",
+          "localGuide": "Local Guide",
+          "cabinClassPlaceholder": "Select Cabin Class",
+          "starRatingPlaceholder": "Min. Star Rating",
+          "preferredVehiclePlaceholder": "Preferred Vehicle",
+          "primaryLanguagePlaceholder": "Primary Language"
+        },
+        "purpose": {
+          "step": "03",
+          "title": "Party & Purpose",
+          "travelers": "Travelers",
+          "tripStyle": "Trip Style",
+          "vibePlaceholder": "What's the vibe?"
+        },
+        "identity": {
+          "title": "The Identity",
+          "fullName": "Full Name",
+          "fullNamePlaceholder": "Sarah Johnson",
+          "email": "Email Address",
+          "emailPlaceholder": "sarah@example.com",
+          "budget": "Budget Alignment",
+          "budgetPlaceholder": "Select budget bracket",
+          "specialNarrative": "Special Narrative (Optional)",
+          "specialNarrativePlaceholder": "Dietary needs, preferred sights, or a specific occasion...",
+          "estimatedValue": "Estimated Value",
+          "servicesSelected": "{count} services selected",
+          "disclaimer": "Our concierge specialists will manually verify real-time availability and flight fares before providing your finalized narrative quote within 48 hours.",
+          "submit": "Review Your Narrative"
+        }
+      }
+    },
     "header": {
       "title": "Plan Your Trip",
       "description": "Customize your perfect African adventure. We'll handle the details while you focus on the journey."
@@ -902,21 +942,21 @@
       }
     },
     "confirmation": {
-      "title": "Quote Request Received!",
-      "subtitle": "We've received your trip plan and our team is already sourcing the best flight and service options for you.",
-      "referenceNumber": "Reference Number",
+      "title": "Your Narrative is Being Sourced!",
+      "subtitle": "We've received your trip plan. Our expert team is already manually sourcing the best flight fares and package options for your journey.",
+      "referenceNumber": "Narrative Reference",
       "whatNext": "What happens next?",
       "steps": {
         "1": {
-          "title": "Manual Sourcing (48hrs)",
-          "description": "Our travel specialists will manually find the best real-time flight fares and service availability based on your preferences."
+          "title": "Expert Package Sourcing",
+          "description": "Our travel specialists manually find the best real-time flight fares and bundle them with negotiated rates for hotels and transport."
         },
         "2": {
-          "title": "Receive Your Quote",
-          "description": "You'll receive a detailed itinerary with finalized pricing and a payment link via email within 2 business days."
+          "title": "Receive Your Offer",
+          "description": "You'll receive a finalized, budget-friendly package quote with a full itinerary and secure payment link within 48 hours."
         }
       },
-      "dashboardButton": "Go to Dashboard",
+      "dashboardButton": "Go to My Narrative",
       "homeButton": "Return Home"
     }
   },
@@ -939,7 +979,7 @@
       "stats": {
         "pending": "Pending Requests",
         "quoted": "Quoted",
-        "confirmed": "Confirmed"
+        "paid": "Paid"
       },
       "overview": "Overview",
       "requests": "Requests",
@@ -975,8 +1015,8 @@
       }
     },
     "bookings": {
-      "title": "Confirmed Bookings",
-      "subtitle": "Manage and fulfill confirmed travel bookings",
+      "title": "Paid Bookings",
+      "subtitle": "Manage and fulfill paid travel bookings",
       "card": {
         "paid": "Paid",
         "travelers": "travelers",
@@ -986,15 +1026,15 @@
           "car": "Car",
           "guide": "Guide"
         },
-        "manageFulfillment": "Manage Fulfillment"
+        "manageFulfillment": "Manage Booking"
       },
       "empty": {
-        "title": "No confirmed bookings yet",
-        "description": "Bookings will appear here once customers complete payment."
+        "title": "No paid bookings yet",
+        "description": "Bookings will appear here once customers complete payment successfully."
       },
       "fulfill": {
         "back": "Back to Bookings",
-        "title": "Booking Fulfillment",
+        "title": "Paid Booking Fulfillment",
         "paid": "Paid",
         "downloadInvoice": "Download Invoice",
         "progress": {
@@ -1123,7 +1163,7 @@
         "imageAlt": "Next Trip",
         "daysLeft": "Days Left",
         "status": "Status",
-        "confirmed": "Confirmed",
+        "paid": "Paid",
         "travelers": "Travelers",
         "adults": "Adults"
       },
@@ -1154,35 +1194,45 @@
       "save": "Save Changes"
     }
   },
+  "ServiceHighlights": {
+    "overline": "Our Advantage",
+    "title": "Unbeatable Fares {br} Full Package Ease",
+    "description": "We specialize in the manual sourcing of flight fares that automated systems miss, then we bundle them with local negotiated rates for a complete, budget-friendly journey.",
+    "items": {
+      "flights": {
+        "title": "Best-Price Sourcing",
+        "description": "Our experts manually scan private and public flight fares to secure the absolute lowest price for your route to Africa."
+      },
+      "packages": {
+        "title": "Full Package Curation",
+        "description": "We don't just book flights. We bundle your stay, car rental, and local guides into one simple, itemized offer."
+      },
+      "concierge": {
+        "title": "Human Concierge",
+        "description": "No bots, no algorithms. Real African travel specialists manage every detail of your narrative from request to return."
+      }
+    },
+    "cta": "Start Your Narrative"
+  },
   "LandingExperiences": {
-    "overline": "Curated Experiences",
-    "title": "Journey Through\nThe Landscape",
-    "cta": "Explore",
+    "overline": "The Value Narrative",
+    "title": "Unbeatable\nFlight Deals",
+    "cta": "See All Offers",
     "items": {
       "1": {
-        "title": "Mountain Gorillas",
-        "location": "Volcanoes National Park",
-        "description": "Face-to-face encounters with gentle giants."
+        "title": "Secure Global Access",
+        "location": "Worldwide to Kigali",
+        "description": "We source exclusive fares from London, Dubai, and beyond, ensuring you get the best price on the market."
       },
       "2": {
-        "title": "Chimpanzee Trekking",
-        "location": "Nyungwe Forest",
-        "description": "Ancient rainforests teeming with primates."
+        "title": "Complete Itinerary Value",
+        "location": "Seamless Add-Ons",
+        "description": "Bundle your secure flight with hand-picked hotels and transport at prices you won't find anywhere else."
       },
       "3": {
-        "title": "Game Drive Safari",
-        "location": "Akagera National Park",
-        "description": "Lions, rhinos, and elephants in the savannah."
-      },
-      "4": {
-        "title": "Lake Kivu Relaxation",
-        "location": "Western Province",
-        "description": "Unwind on the shores of Rwanda's largest lake."
-      },
-      "5": {
-        "title": "Kigali Cultural Tour",
-        "location": "Kigali City",
-        "description": "Vibrant markets, art galleries, and history."
+        "title": "Verified Local Experts",
+        "location": "Reliable Guidance",
+        "description": "Our guides and transport partners are vetted for security and value, giving you a worry-free African experience."
       }
     }
   },

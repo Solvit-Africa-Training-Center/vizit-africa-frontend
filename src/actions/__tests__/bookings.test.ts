@@ -24,13 +24,14 @@ describe('Booking Actions', () => {
     const mockResponse = { success: true, message: 'Quote sent' };
     vi.mocked(api.post).mockResolvedValue(mockResponse);
 
-    const result = await sendQuoteForBooking('booking-123', 1500);
+    const result = await sendQuoteForBooking('booking-123', 1500, [{ id: 1, title: 'Test' }]);
 
     expect(api.post).toHaveBeenCalledWith(
       '/bookings/booking-123/quote/',
       expect.objectContaining({
         booking_id: 'booking-123',
-        amount: 1500
+        amount: 1500,
+        items: expect.arrayContaining([expect.objectContaining({ title: 'Test' })])
       })
     );
     expect(result.success).toBe(true);
@@ -39,10 +40,10 @@ describe('Booking Actions', () => {
   it('should return error if API call fails', async () => {
     vi.mocked(api.post).mockRejectedValue(new Error('API failure'));
 
-    const result = await sendQuoteForBooking('booking-123', 1500);
+    const result = await sendQuoteForBooking('booking-123', 1500, []);
 
     expect(result.success).toBe(false);
-    expect(result.error).toBe('Failed to send quote');
+    expect((result as any).error).toBe('Failed to send quote');
   });
 
   it('should call notifyVendor with correct payload', async () => {

@@ -111,8 +111,7 @@ const ActionCell = ({
             </DropdownMenuItem>
           )}
 
-          {(status === "confirmed" ||
-            status === "paid" ||
+          {(status === "paid" ||
             status === "completed") && (
             <DropdownMenuItem
               render={
@@ -123,7 +122,7 @@ const ActionCell = ({
               }
             >
               <RiFileAddLine className="mr-2 h-4 w-4" />
-              Manage Fulfillment
+              Manage Booking
             </DropdownMenuItem>
           )}
 
@@ -198,7 +197,9 @@ export const columns: ColumnDef<Booking>[] = [
                 ? "bg-yellow-500/15 text-yellow-700 border-yellow-200 dark:bg-yellow-500/10 dark:text-yellow-400 dark:border-yellow-500/30"
                 : status === "quoted"
                   ? "bg-blue-500/15 text-blue-700 border-blue-200 dark:bg-blue-500/10 dark:text-blue-400 dark:border-blue-500/30"
-                  : "bg-green-500/15 text-green-700 border-green-200 dark:bg-green-500/10 dark:text-green-400 dark:border-green-500/30"
+                  : status === "cancelled"
+                    ? "bg-red-500/15 text-red-700 border-red-200 dark:bg-red-500/10 dark:text-red-400 dark:border-red-500/30"
+                    : "bg-green-500/15 text-green-700 border-green-200 dark:bg-green-500/10 dark:text-green-400 dark:border-green-500/30"
             } border`}
         >
           {status}

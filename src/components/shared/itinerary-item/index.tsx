@@ -76,6 +76,7 @@ export function ItineraryItem({
               defaultValues={defaultValues}
               onUpdate={onUpdate}
               onClose={() => setIsEditing(false)}
+              mode={mode}
             />
           </div>
         </CollapsibleContent>

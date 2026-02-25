@@ -23,7 +23,7 @@ export default function ContactPage() {
   const tCommon = useTranslations("Common");
 
   return (
-    <div className="min-h-screen bg-background pt-32 pb-24">
+    <div className="min-h-screen bg-background">
       <PageHeader
         overline={t("openStatus")}
         title={
@@ -36,45 +36,49 @@ export default function ContactPage() {
         }
         description={t("description")}
         layout="split"
-        className="mb-24 md:mb-32"
+        className="pt-24 md:pt-32"
       />
 
-      <section className="px-5 md:px-10 max-w-7xl mx-auto mb-32">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-          <ContactCard
-            icon={RiMailLine}
-            label={t("emailUs")}
-            value={siteConfig.contact.email}
-            href={`mailto:${siteConfig.contact.email}`}
-          />
-          <ContactCard
-            icon={RiWhatsappLine}
-            label={t("whatsapp")}
-            value={siteConfig.contact.phone}
-            href={`https://wa.me/${siteConfig.contact.phone.replace(/[^0-9]/g, "")}`}
-          />
-          <ContactCard
-            icon={RiMapPinLine}
-            label={t("visitUs")}
-            value={t("address")}
-            sub={t("addressSub")}
-          />
+      <section className="marketing-section pt-0">
+        <div className="marketing-container">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+            <ContactCard
+              icon={RiMailLine}
+              label={t("emailUs")}
+              value={siteConfig.contact.email}
+              href={`mailto:${siteConfig.contact.email}`}
+            />
+            <ContactCard
+              icon={RiWhatsappLine}
+              label={t("whatsapp")}
+              value={siteConfig.contact.phone}
+              href={`https://wa.me/${siteConfig.contact.phone.replace(/[^0-9]/g, "")}`}
+            />
+            <ContactCard
+              icon={RiMapPinLine}
+              label={t("visitUs")}
+              value={t("address")}
+              sub={t("addressSub")}
+            />
+          </div>
         </div>
       </section>
 
-      <section className="px-5 md:px-10 max-w-7xl mx-auto border-t border-border pt-24 md:pt-32">
-        <div className="grid lg:grid-cols-12 gap-16 md:gap-24">
-          <div className="lg:col-span-5">
-            <h2 className="font-display text-4xl md:text-5xl font-medium uppercase tracking-tighter leading-none mb-8">
-              {t("formTitle")}
-            </h2>
-            <p className="text-xl text-muted-foreground font-light leading-relaxed max-w-md">
-              {t("formDescription")}
-            </p>
-          </div>
+      <section className="marketing-section bg-muted/30 border-t border-border/50">
+        <div className="marketing-container">
+          <div className="grid lg:grid-cols-12 gap-16 md:gap-24">
+            <div className="lg:col-span-5">
+              <h2 className="font-display text-4xl md:text-5xl font-medium uppercase tracking-tighter leading-[0.9] mb-8">
+                {t("formTitle")}
+              </h2>
+              <p className="text-xl text-muted-foreground font-light leading-relaxed max-w-md text-pretty">
+                {t("formDescription")}
+              </p>
+            </div>
 
-          <div className="lg:col-span-7">
-            <ContactForm t={t} tCommon={tCommon} />
+            <div className="lg:col-span-7">
+              <ContactForm t={t} tCommon={tCommon} />
+            </div>
           </div>
         </div>
       </section>

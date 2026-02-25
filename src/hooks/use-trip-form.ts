@@ -1,8 +1,5 @@
 import { useForm } from "@tanstack/react-form";
-import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
-import { toast } from "sonner";
-import { submitTripRequest } from "@/actions/bookings";
 import { useTripStore } from "@/store/trip-store";
 
 export interface TripFormValues {
@@ -30,8 +27,7 @@ export interface TripFormValues {
 }
 
 export function useTripForm() {
-  const { tripInfo, items, clearTrip } = useTripStore();
-  const t = useTranslations("PlanTrip");
+  const { tripInfo } = useTripStore();
   const router = useRouter();
 
   const form = useForm({
@@ -59,18 +55,9 @@ export function useTripForm() {
       needsGuide: tripInfo.needsGuide ?? false,
     } as TripFormValues,
     onSubmit: async ({ value }) => {
-      try {
-        const result = await submitTripRequest({ ...value, items });
-        if (result.success) {
-          toast.success("Trip request submitted successfully!");
-          clearTrip();
-          router.push("/plan-trip/confirmation");
-        } else {
-          toast.error(result.error || "Failed to submit request");
-        }
-      } catch (error) {
-        toast.error("An error occurred");
-      }
+      useTripStore.getState().updateTripInfo(value);
+
+      router.push("/plan-trip/review");
     },
   });
 

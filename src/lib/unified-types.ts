@@ -179,14 +179,20 @@ export type BookingItem = z.infer<typeof bookingItemSchema>;
 export const quoteSchema = z.object({
   status: z.enum(["quoted", "accepted", "expired"]),
   sentAt: z.string().optional(),
+  sent_at: z.string().optional(), // snake_case from backend
   sentBy: z.string().optional(),
+  sent_by: z.string().optional(), // snake_case from backend
   currency: z.string(),
-  totalAmount: z.number().or(z.string()).transform(Number),
+  totalAmount: z.number().or(z.string()).transform(Number).optional(),
+  total_amount: z.number().or(z.string()).transform(Number).optional(), // snake_case from backend
   notes: z.string().optional(),
   items: z.array(bookingItemSchema),
   expiresAt: z.string().optional(),
+  expires_at: z.string().optional(), // snake_case from backend
   acceptedAt: z.string().optional(),
+  accepted_at: z.string().optional(), // snake_case from backend
   acceptedBy: z.string().optional(),
+  accepted_by: z.string().optional(), // snake_case from backend
 });
 
 export type Quote = z.infer<typeof quoteSchema>;
@@ -222,15 +228,16 @@ export const bookingSchema = z.object({
     "pending",
     "quoted",
     "accepted",
+    "paid",
     "confirmed",
     "cancelled",
     "completed",
-    "paid",
   ]),
   payment_status: z
     .enum(["pending", "processing", "succeeded", "failed"])
     .optional(),
   payment_intent_id: z.string().nullable().optional(),
+  payment_completed_at: z.string().nullable().optional(),
   currency: z.string(),
   total_amount: z.number().or(z.string()).transform(Number).optional(),
   specialRequests: z.string().optional(),

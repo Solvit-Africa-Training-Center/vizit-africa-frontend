@@ -8,6 +8,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { useLocationAutocomplete } from "@/hooks/use-location-autocomplete";
 import { useTripStore } from "@/store/trip-store";
+import { SERVICE_FEE_RATE } from "@/lib/configs";
 import type { TripItem } from "@/lib/plan_trip-types";
 
 import type { GuestCount, TripRequestDialogProps } from "./types";
@@ -126,9 +127,8 @@ export function TripRequestDialog({
   const estimatedPerNight = 150;
   const basePrice = hasItems ? itemsTotal : (nights || 1) * estimatedPerNight;
 
-  const serviceFee = Math.round(basePrice * 0.12);
-  const taxFee = Math.round(basePrice * 0.08);
-  const totalPrice = basePrice + serviceFee + taxFee;
+  const serviceFee = Math.round(basePrice * SERVICE_FEE_RATE);
+  const totalPrice = basePrice + serviceFee;
 
   const totalGuests = guests.adults + guests.children + guests.infants;
 
@@ -148,9 +148,13 @@ export function TripRequestDialog({
         ? format(dateRange.from, "yyyy-MM-dd")
         : "",
       returnDate: dateRange?.to ? format(dateRange.to, "yyyy-MM-dd") : "",
+      startDate: dateRange?.from ? format(dateRange.from, "yyyy-MM-dd") : "",
+      endDate: dateRange?.to ? format(dateRange.to, "yyyy-MM-dd") : "",
+      arrivalDate: dateRange?.from ? format(dateRange.from, "yyyy-MM-dd") : "",
       adults: guests.adults,
       children: guests.children,
       infants: guests.infants,
+      travelers: totalGuests,
       name: contactInfo.name,
       email: contactInfo.email,
       phone: contactInfo.phone,
@@ -161,14 +165,14 @@ export function TripRequestDialog({
 
   const handleRequestQuote = () => {
     saveToStore();
-    router.push(`/plan-trip/review`);
     onOpenChange?.(false);
+    router.push(`/plan-trip/review`);
   };
 
   const handleAddAddons = () => {
     saveToStore();
-    router.push(`/services`);
     onOpenChange?.(false);
+    router.push(`/plan-trip`);
   };
 
   const toggleItem = React.useCallback(

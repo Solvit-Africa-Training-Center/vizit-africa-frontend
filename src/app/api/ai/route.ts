@@ -1,6 +1,7 @@
 import { google } from "@ai-sdk/google";
 import { Output, streamText } from "ai";
 import { z } from "zod";
+import { getSession } from "@/lib/auth/session";
 
 const aiTripRequestSchema = z.object({
   destination: z.string().min(1),
@@ -66,6 +67,14 @@ function calculateNights(startDate: string, endDate: string): number {
 
 export async function POST(req: Request) {
   try {
+    const session = await getSession();
+    if (!session) {
+      return Response.json(
+        { error: "Unauthorized: Please log in to use the AI planner." },
+        { status: 401 },
+      );
+    }
+
     const body = await req.json();
     const parsed = aiTripRequestSchema.safeParse(body);
 

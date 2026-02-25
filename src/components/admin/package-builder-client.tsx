@@ -1,15 +1,18 @@
 "use client";
 
-import { RequestDetails } from "./package-builder/RequestDetails";
-import { GroupedItems } from "./package-builder/GroupedItems";
-import { AddDialog } from "./package-builder/AddDialog";
-import { ValidationAlertBanner } from "./package-builder/ValidationAlertBanner";
-import { QuoteSummaryPanel } from "./package-builder/QuoteSummaryPanel";
-import { QuotePreviewModal } from "./package-builder/QuotePreviewModal";
-import { BuilderHeader } from "./package-builder/BuilderHeader";
+import { RequestDetails } from "./package-builder/request-details";
+import { GroupedItems } from "./package-builder/grouped-items";
+import { AddDialog } from "./package-builder/add-dialog";
+import { ValidationAlertBanner } from "./package-builder/validation-alert-banner";
+import { QuoteSummaryPanel } from "./package-builder/quote-summary-panel";
+import { QuotePreviewModal } from "./package-builder/quote=preview-modal";
+import { BuilderHeader } from "./package-builder/builder-header";
 import { type Booking } from "@/lib/unified-types";
 import { usePackageBuilder } from "@/hooks/use-package-builder";
-import { SERVICE_GROUPS as GROUPS, type ServiceGroupKey as GroupKey } from "@/lib/utils";
+import {
+  SERVICE_GROUPS as GROUPS,
+  type ServiceGroupKey as GroupKey,
+} from "@/lib/utils";
 
 const MUTABLE_GROUPS = [...GROUPS] as const;
 

@@ -30,7 +30,8 @@ export default function RequestsClient({ requests }: RequestsClientProps) {
       options: [
         { label: "Pending", value: "pending" },
         { label: "Quoted", value: "quoted" },
-        { label: "Confirmed", value: "confirmed" },
+        { label: "Accepted", value: "accepted" },
+        { label: "Paid", value: "paid" },
         { label: "Cancelled", value: "cancelled" },
         { label: "Completed", value: "completed" },
       ],

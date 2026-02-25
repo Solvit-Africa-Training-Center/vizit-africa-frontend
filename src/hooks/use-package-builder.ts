@@ -18,7 +18,7 @@ const toNumber = (v: any) => Number(v) || 0;
 const EMPTY_ARRAY: any[] = [];
 
 export function usePackageBuilder(request: Booking) {
-  const bookingId = String(request.id);
+  const bookingId = String(request.id || "");
   const [isSending, setIsSending] = useState(false);
   const [notifying, setNotifying] = useState<string | null>(null);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
@@ -58,42 +58,47 @@ export function usePackageBuilder(request: Booking) {
   const services = servicesData || [];
 
   useEffect(() => {
+    if (!bookingId) {
+      logger.error("usePackageBuilder initialized with missing booking ID", { request });
+      return;
+    }
     const currentDraft = usePackageStore.getState().drafts[bookingId];
     if (!currentDraft || currentDraft.length === 0) {
       const requested = (request.requestedItems || []) as BookingItem[];
       const quoted = (request.quote?.items || []) as any[];
       const map = new Map<string, PackageItem>();
 
-      requested.forEach((item) => {
+      requested.forEach((item: any) => {
         const key = String(item.id || `req-${Math.random()}`);
         const type =
-          normalizeType(item.item_type) === "other" && item.title
+          normalizeType(item.item_type || item.type) === "other" && item.title
             ? normalizeType(item.title)
-            : normalizeType(item.item_type);
+            : normalizeType(item.item_type || item.type);
 
-        const price = toNumber(item.metadata?.price || item.unit_price || 0);
+        const price = toNumber(item.metadata?.price || item.unit_price || item.price || 0);
 
         map.set(key, {
           ...item,
           type: type as any,
           tempId: key,
           quantity: toNumber(item.quantity || 1),
-          date: (item.metadata?.startDate || item.start_date || (item as any).date) as string,
-          time: (item.metadata?.startTime || item.start_time || (item as any).time) as string,
-          startDate: (item.metadata?.startDate || item.start_date) as string,
-          endDate: (item.metadata?.endDate || item.end_date) as string,
-          startTime: (item.metadata?.startTime || item.start_time) as string,
-          endTime: (item.metadata?.endTime || item.end_time) as string,
-          isRoundTrip: !!(item.metadata?.isRoundTrip ?? item.is_round_trip ?? false),
-          returnDate: (item.metadata?.returnDate || item.return_date) as string,
-          returnTime: (item.metadata?.returnTime || item.return_time) as string,
-          withDriver: !!(item.metadata?.withDriver ?? item.with_driver ?? false),
+          // support both snake_case (backend standard) and camelCase (some widgets)
+          date: (item.start_date || item.startDate || item.metadata?.startDate || (item as any).date) as string,
+          time: (item.start_time || item.startTime || item.metadata?.startTime || (item as any).time) as string,
+          startDate: (item.start_date || item.startDate || item.metadata?.startDate) as string,
+          endDate: (item.end_date || item.endDate || item.metadata?.endDate) as string,
+          startTime: (item.start_time || item.startTime || item.metadata?.startTime) as string,
+          endTime: (item.end_time || item.endTime || item.metadata?.endTime) as string,
+          isRoundTrip: !!(item.is_round_trip ?? item.isRoundTrip ?? item.metadata?.isRoundTrip ?? false),
+          returnDate: (item.return_date || item.returnDate || item.metadata?.returnDate) as string,
+          returnTime: (item.return_time || item.returnTime || item.metadata?.returnTime) as string,
+          withDriver: !!(item.with_driver ?? item.withDriver ?? item.metadata?.withDriver ?? false),
           quotePrice: price,
           price: price,
         } as PackageItem);
       });
 
-      quoted.forEach((item) => {
+      quoted.forEach((item: any) => {
         const key = item.id || item.service || `quote-${Math.random()}`;
         const existing = map.get(key);
         const unit_price = toNumber(item.unit_price || item.unitPrice || 0);
@@ -107,20 +112,20 @@ export function usePackageBuilder(request: Booking) {
           unit_price,
           quotePrice: unit_price,
           price: unit_price || existing?.price,
-          quantity: 1,
-          type: (normalizeType(item.type) === "other" && item.title
+          quantity: toNumber(item.quantity || 1),
+          type: (normalizeType(item.item_type || item.type) === "other" && item.title
             ? normalizeType(item.title)
-            : normalizeType(item.type)) as any,
-          date: (item.startDate || existing?.date) as string,
-          time: (item.startTime || existing?.time) as string,
-          startDate: (item.startDate || existing?.startDate) as string,
-          endDate: (item.endDate || existing?.endDate) as string,
-          startTime: (item.startTime || existing?.startTime) as string,
-          endTime: (item.endTime || existing?.endTime) as string,
-          isRoundTrip: item.isRoundTrip ?? item.is_round_trip ?? existing?.isRoundTrip,
-          returnDate: (item.returnDate || item.return_date || existing?.returnDate) as string,
-          returnTime: (item.returnTime || item.return_time || existing?.returnTime) as string,
-          withDriver: !!(item.metadata?.withDriver ?? item.withDriver ?? item.with_driver ?? existing?.withDriver),
+            : normalizeType(item.item_type || item.type)) as any,
+          date: (item.start_date || item.startDate || existing?.date) as string,
+          time: (item.start_time || item.startTime || existing?.time) as string,
+          startDate: (item.start_date || item.startDate || existing?.startDate) as string,
+          endDate: (item.end_date || item.endDate || existing?.endDate) as string,
+          startTime: (item.start_time || item.startTime || existing?.startTime) as string,
+          endTime: (item.end_time || item.endTime || existing?.endTime) as string,
+          isRoundTrip: item.is_round_trip ?? item.isRoundTrip ?? existing?.isRoundTrip,
+          returnDate: (item.return_date || item.returnDate || existing?.returnDate) as string,
+          returnTime: (item.return_time || item.returnTime || existing?.returnTime) as string,
+          withDriver: !!(item.with_driver ?? item.withDriver ?? item.metadata?.withDriver ?? existing?.withDriver),
           metadata: {
             ...existing?.metadata,
             ...item.metadata,
@@ -232,12 +237,39 @@ export function usePackageBuilder(request: Booking) {
   };
 
   const validation = useMemo(() => {
-    // ... validation logic ...
+    const errors: string[] = [];
+    const warnings: string[] = [];
+
+    if (displayItems.length === 0) {
+      warnings.push("No items added to the quote yet.");
+    }
+
+    displayItems.forEach((item, index) => {
+      const itemLabel = item.title || `Item ${index + 1}`;
+      if (!item.title) {
+        errors.push(`Item ${index + 1} is missing a title.`);
+      }
+
+      const price = toNumber(item.quotePrice ?? item.unitPrice ?? item.price ?? 0);
+      if (price <= 0) {
+        errors.push(`"${itemLabel}" has no price set.`);
+      }
+
+      if (!item.service && !String(item.id).startsWith("new-")) {
+        warnings.push(`"${itemLabel}" is a custom item and not linked to a registered service.`);
+      }
+    });
+
     return { errors, warnings };
   }, [displayItems, request]);
 
   const handleSendQuote = async () => {
-    logger.info("Initiating send quote", { bookingId, totalItems: displayItems.length });
+    logger.info("Initiating send quote", { 
+      bookingId, 
+      totalItems: displayItems.length,
+      amount: quoteBreakdown.total 
+    });
+
     if (validation.errors.length > 0) {
       logger.warn("Validation errors blocked quote send", { errors: validation.errors });
       toast.error("Please fix all errors before sending the quote.");
@@ -250,26 +282,51 @@ export function usePackageBuilder(request: Booking) {
     setIsSending(true);
 
     try {
-      const total = displayItems.reduce((sum, item) => {
-        const price = toNumber(
+      // Map items to backend format
+      const items = displayItems.map((item) => {
+        const unitPrice = toNumber(
           item.quotePrice ?? item.unitPrice ?? item.price ?? 0,
         );
-        return sum + price;
-      }, 0);
+        const quantity = toNumber(item.quantity || 1);
+        
+        return {
+          id: String(item.id).startsWith("new-") ? undefined : item.id,
+          service: item.service,
+          item_type: normalizeType(item.type as string),
+          title: item.title,
+          description: item.description,
+          start_date: item.startDate || item.date || null,
+          end_date: item.endDate || null,
+          start_time: item.startTime || item.time || null,
+          end_time: item.endTime || null,
+          is_round_trip: !!item.isRoundTrip,
+          with_driver: !!item.withDriver,
+          return_date: item.returnDate || null,
+          return_time: item.returnTime || null,
+          quantity: quantity,
+          unit_price: unitPrice,
+          subtotal: unitPrice * quantity,
+          metadata: item.metadata || {},
+        };
+      });
 
-      const result = await sendQuoteForBooking(String(request.id), total);
+      const result = await sendQuoteForBooking(bookingId, quoteBreakdown.total, items);
 
       if (result.success) {
-        logger.info("Quote sent successfully", { bookingId, total });
+        logger.info("Quote sent successfully", { bookingId, total: quoteBreakdown.total });
         toast.success("Quote sent to client successfully!");
         clearDraft(bookingId);
         setTimeout(() => {
           window.location.href = "/admin/bookings";
         }, 1500);
       } else {
-        logger.error("Failed to send quote", { bookingId, error: result.error });
+        const errorMsg = result.error || "Failed to send quote. Please try again.";
+        logger.error(`Failed to send quote for booking ${bookingId}: ${errorMsg}`, { 
+          bookingId, 
+          error: result.error 
+        });
         setIsSending(false);
-        toast.error(result.error || "Failed to send quote. Please try again.");
+        toast.error(errorMsg);
       }
     } catch (error) {
       logger.error("Unexpected error in handleSendQuote", { bookingId, error });
@@ -293,7 +350,7 @@ export function usePackageBuilder(request: Booking) {
 
     setNotifying(String(itemId) || "unknown");
     const result = await notifyVendor(
-      String(request.id),
+      bookingId,
       String(itemId),
       serviceId ? String(serviceId) : undefined,
       {

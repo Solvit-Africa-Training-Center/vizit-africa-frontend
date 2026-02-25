@@ -13,6 +13,7 @@ export function TerminalDivider({ className }: TerminalDividerProps) {
         "w-full h-10 relative flex items-center justify-between pointer-events-none opacity-20",
         className,
       )}
+      style={{ paddingLeft: 'var(--container-px)', paddingRight: 'var(--container-px)' }}
       aria-hidden="true"
     >
       <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-px bg-foreground" />

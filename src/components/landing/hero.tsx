@@ -226,6 +226,7 @@ export function Hero() {
                 <HoverCardTrigger
                   type="button"
                   onClick={() => handleSlideChange(index)}
+                  aria-label={`Switch to slide ${index + 1}: ${hoverContent.heading1} ${hoverContent.heading2}`}
                   className={`group flex items-center justify-end gap-3 transition-colors duration-300 ${
                     isActive
                       ? "text-primary-foreground"

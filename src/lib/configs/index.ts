@@ -1,15 +1,26 @@
 export const siteConfig = {
   name: "Vizit Africa",
   description:
-    "Experience the heart of Africa with our comprehensive travel services.",
+    "Your premium gateway to Rwanda and Africa. We provide manual sourcing for the best flight fares, handpicked hotels, rugged car rentals, and expert local guides for an authentic African narrative.",
   url: "https://vizit.africa",
-  ogImage: "https://vizit.africa/og.jpg",
+  ogImage: "https://vizit.africa/images/rwanda-landscape.jpg",
+  keywords: [
+    "Visit Rwanda",
+    "Africa Travel",
+    "Book Flights to Rwanda",
+    "Kigali Hotels",
+    "Rwanda Car Rental",
+    "Gorilla Trekking",
+    "African Safari",
+    "Travel Agency Rwanda",
+  ],
   links: {
     twitter: "https://twitter.com/vizitafrica",
   },
+  twitterHandle: "@vizitafrica",
   contact: {
-    email: "info@vizitafrica.com",
-    phone: "+250788888888",
+    email: "kesly@vizit.africa",
+    phone: "+250780486847",
     address: "Kigali, Rwanda",
   },
   socials: {

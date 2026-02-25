@@ -6,7 +6,6 @@
 import { cookies as getCookies } from "next/headers";
 import { type ZodSchema } from "zod";
 import { endpoints } from "@/actions/endpoints";
-import type { ApiResponse } from "@/lib/unified-types";
 import { ApiError } from "@/lib/api/error";
 import { logger } from "@/lib/utils/logger";
 
@@ -79,7 +78,6 @@ async function handleResponse<T>(
   const responseText = await response.text();
   let responseData: any = null;
 
-  // Parse JSON if possible
   if (responseText) {
     try {
       responseData = JSON.parse(responseText);
@@ -88,27 +86,22 @@ async function handleResponse<T>(
     }
   }
 
-  // Handle non-OK responses
   if (!response.ok) {
     let message = "Request failed";
     let code = `ERROR_${response.status}`;
     let details: Record<string, unknown> | undefined;
 
     if (responseData) {
-      // New unified format
       if ("error" in responseData && responseData.error) {
         message = responseData.error.message || message;
         code = responseData.error.code || code;
         details = responseData.error.details;
-      }
-      // Legacy formats
-      else if (responseData.message) {
+      } else if (responseData.message) {
         message = responseData.message;
       } else if (responseData.detail) {
         message = responseData.detail;
       }
 
-      // Extract validation errors from legacy format
       if (!details && typeof responseData === "object") {
         const possibleErrors = Object.fromEntries(
           Object.entries(responseData).filter(
@@ -125,28 +118,32 @@ async function handleResponse<T>(
     }
 
     if (IS_DEV) {
-      logger.error(`[API Error] ${code}: ${message}`, { details });
+      logger.error(`[API Error] ${code} (${response.status}): ${message}`, {
+        details,
+        endpoint: response.url,
+        method: response.status,
+      });
+      if (responseData) {
+        console.dir(responseData, { depth: null });
+      }
     }
 
     throw new ApiError(message, response.status, details);
   }
 
-  // Handle 204 No Content
   if (response.status === 204 || !responseText) {
     return {} as T;
   }
 
-  // Validate with schema if provided
   if (schema && responseData) {
     const validated = schema.safeParse(responseData);
     if (!validated.success) {
       if (IS_DEV) {
         logger.warn(
           "[Schema Validation Warning] The API response did not exactly match the expected schema:",
-          { errors: validated.error.flatten(), rawData: responseData }
+          { errors: validated.error.flatten(), rawData: responseData },
         );
       }
-      // Return raw data instead of throwing so the app can gracefully continue
       return responseData as T;
     }
     return validated.data;
@@ -176,16 +173,13 @@ async function apiFetch<T>(
     ...rest
   } = options;
 
-  // Get auth token if needed
   const token = requiresAuth ? await getAuthToken() : undefined;
 
-  // Build headers
   const headersMap = new Headers(headers);
   if (token) {
     headersMap.set("Authorization", `Bearer ${token}`);
   }
 
-  // Set content type if not FormData
   if (
     rest.body &&
     !(rest.body instanceof FormData) &&
@@ -202,7 +196,6 @@ async function apiFetch<T>(
 
     return await handleResponse<T>(response, schema);
   } catch (error) {
-    // Auto-retry on 401 with token refresh
     if (
       error instanceof ApiError &&
       error.status === 401 &&

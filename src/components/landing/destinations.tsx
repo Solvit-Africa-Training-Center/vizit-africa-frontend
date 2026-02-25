@@ -51,8 +51,8 @@ export function Destinations() {
   }));
 
   return (
-    <section className="py-24 bg-muted/30 relative overflow-hidden isolate">
-      <div className="container max-w-7xl mx-auto px-5 relative z-10">
+    <section className="marketing-section bg-muted/30 relative overflow-hidden isolate">
+      <div className="marketing-container relative z-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
           <SectionTitle
             overline={t("overline")}
@@ -66,23 +66,21 @@ export function Destinations() {
           />
           <motion.div
             initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
             className="mb-2"
           >
-            <p className="max-w-xs text-muted-foreground text-lg leading-relaxed">
+            <p className="max-w-xs text-muted-foreground text-lg leading-relaxed text-pretty">
               {t("description")}
             </p>
           </motion.div>
         </div>
-      </div>
 
-      <div className="container max-w-7xl mx-auto px-5">
         <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 min-h-[600px] md:aspect-2/1">
           {regions.map((region, i) => (
             <Link
-              href={`/plan-trip?destination=${region.name}`}
+              href={`/plan-trip?destination=${encodeURIComponent(region.name)}&source=destinations`}
               key={region.id}
               className="contents"
             >
@@ -92,7 +90,7 @@ export function Destinations() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1, duration: 0.4 }}
                 className={cn(
-                  "group relative overflow-hidden rounded-3xl cursor-pointer focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2",
+                  "group relative overflow-hidden rounded-2xl cursor-pointer focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2",
                   region.className,
                 )}
               >
@@ -101,11 +99,11 @@ export function Destinations() {
                   alt={region.name}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                  className="object-cover transition-transform duration-700 group-hover:scale-[1.05]"
                 />
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-300" />
 
-                <div className="absolute inset-0 p-6 flex flex-col justify-between">
+                <div className="absolute inset-0 p-8 flex flex-col justify-between">
                   <div className="flex justify-end">
                     <div className="bg-primary-foreground/10 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                       <RiArrowRightUpLine
@@ -116,10 +114,10 @@ export function Destinations() {
                   </div>
 
                   <div>
-                    <span className="text-xs font-mono uppercase tracking-widest text-primary-foreground/80 block mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                    <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-primary-foreground/80 block mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
                       {region.subtitle}
                     </span>
-                    <h3 className="text-2xl md:text-3xl font-display font-medium text-primary-foreground uppercase leading-none">
+                    <h3 className="text-2xl md:text-3xl font-display font-medium text-primary-foreground uppercase leading-none tracking-tight">
                       {region.name}
                     </h3>
                   </div>

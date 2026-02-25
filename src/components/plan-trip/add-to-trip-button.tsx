@@ -85,7 +85,6 @@ export function AddToTripButton({
     if (type === "destination" && destination) {
       store.setDestination(destination);
     } else if (type === "note" && note) {
-      // Create a note item
       const noteItem: TripItem = {
         id: uuidv4(),
         type: "note",

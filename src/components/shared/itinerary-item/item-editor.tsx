@@ -27,12 +27,14 @@ export function ItemEditor({
   defaultValues,
   onUpdate,
   onClose,
+  mode = "view",
 }: {
   item: BaseItem;
   type: string;
   defaultValues?: ItineraryItemProps["defaultValues"];
   onUpdate: (updates: Partial<BaseItem>) => void;
   onClose: () => void;
+  mode?: ItineraryItemProps["mode"];
 }) {
   const getLabel = (field: "startDate" | "endDate" | "startTime" | "endTime") => {
     if (type === "hotel") {
@@ -183,7 +185,7 @@ export function ItemEditor({
 
         <div className="space-y-1.5">
           <Label className="text-[10px] uppercase font-bold text-muted-foreground ml-1">
-            Final Price
+            {mode === "admin" || mode === "vendor" ? "Final Price" : "Budget Hint"}
           </Label>
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-xs">$</span>

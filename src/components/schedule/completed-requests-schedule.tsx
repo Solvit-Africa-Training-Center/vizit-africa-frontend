@@ -89,7 +89,7 @@ export function CompletedRequestsSchedule({
   emptyMessage = "You don't have completed requests yet.",
 }: CompletedRequestsScheduleProps) {
   const completedBookings = bookings.filter(
-    (booking) => booking.status === "completed",
+    (booking) => booking.status === "paid" || booking.status === "completed",
   );
   const [visibleMonth, setVisibleMonth] = useState<Date>(() =>
     startOfMonth(new Date()),
@@ -101,7 +101,7 @@ export function CompletedRequestsSchedule({
         {
           id: `booking-${booking.id}`,
           bookingId: String(booking.id),
-          title: booking.tripPurpose || "Completed request",
+          title: booking.tripPurpose || "Paid trip",
           startDate: toDate(booking.arrivalDate) ?? toDate(booking.createdAt),
           endDate: toDate(booking.departureDate),
           quantity: booking.travelers,
@@ -125,11 +125,11 @@ export function CompletedRequestsSchedule({
       return {
         id: `${booking.id}-${item.id}`,
         bookingId: String(booking.id),
-        title: item.title || booking.tripPurpose || "Completed request item",
+        title: item.title || booking.tripPurpose || "Trip item",
         startDate,
         endDate,
         quantity: item.quantity || booking.travelers || 1,
-        amount: item.subtotal || item.unit_price || booking.total_amount || 0,
+        amount: Number(item.subtotal || item.unit_price || 0) || booking.total_amount || 0,
         currency:
           (item.metadata &&
           typeof item.metadata === "object" &&
@@ -214,7 +214,7 @@ export function CompletedRequestsSchedule({
       <div className="grid gap-4 md:grid-cols-3">
         <div className="rounded-sm border border-border p-4 bg-card">
           <p className="text-xs uppercase tracking-wider text-muted-foreground">
-            Completed Requests
+            Confirmed Trips
           </p>
           <p className="mt-2 text-2xl font-medium">
             {completedBookings.length}
@@ -232,7 +232,7 @@ export function CompletedRequestsSchedule({
           </p>
           <Badge className="mt-2" variant="success-outline">
             <RiCheckLine className="size-3 mr-1" />
-            Completed
+            Paid & Active
           </Badge>
         </div>
       </div>
@@ -261,7 +261,7 @@ export function CompletedRequestsSchedule({
           </h3>
           {monthBuckets.length === 0 ? (
             <p className="text-sm text-muted-foreground">
-              No completed request coverage in this month.
+              No trip coverage in this month.
             </p>
           ) : (
             <div className="space-y-4">
@@ -300,7 +300,7 @@ export function CompletedRequestsSchedule({
                               {entry.quantity} unit(s)
                             </p>
                             <p className="text-sm font-medium">
-                              {entry.currency} {entry.amount.toLocaleString()}
+                              {entry.currency} {Number(entry.amount).toLocaleString()}
                             </p>
                           </div>
                         </div>
@@ -317,7 +317,7 @@ export function CompletedRequestsSchedule({
       {unscheduledEntries.length > 0 ? (
         <section className="rounded-sm border border-border bg-card p-4">
           <h3 className="text-sm uppercase tracking-wider text-muted-foreground mb-3">
-            Completed Requests Without Fixed Dates
+            Trips Without Fixed Dates
           </h3>
           <div className="space-y-2">
             {unscheduledEntries.map((entry) => (
@@ -328,7 +328,7 @@ export function CompletedRequestsSchedule({
                 <p className="font-medium text-sm">{entry.title}</p>
                 <p className="text-xs text-muted-foreground mt-1">
                   {entry.quantity} unit(s) • {entry.currency}{" "}
-                  {entry.amount.toLocaleString()}
+                  {Number(entry.amount).toLocaleString()}
                 </p>
               </div>
             ))}

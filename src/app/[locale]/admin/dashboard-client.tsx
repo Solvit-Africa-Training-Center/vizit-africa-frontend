@@ -30,8 +30,8 @@ export default function DashboardClient({ requests }: DashboardClientProps) {
   const quotedCount = requests.filter(
     (request) => request.status === "quoted",
   ).length;
-  const confirmedCount = requests.filter(
-    (request) => request.status === "confirmed",
+  const paidCount = requests.filter(
+    (request) => request.status === "paid",
   ).length;
 
   const stats = [
@@ -48,8 +48,8 @@ export default function DashboardClient({ requests }: DashboardClientProps) {
       color: "text-primary",
     },
     {
-      label: t("stats.confirmed"),
-      value: confirmedCount,
+      label: t("stats.paid"),
+      value: paidCount,
       icon: RiCheckLine,
       color: "text-accent-success",
     },
@@ -155,7 +155,11 @@ export default function DashboardClient({ requests }: DashboardClientProps) {
                         ? "bg-amber-100 text-amber-700"
                         : request.status === "quoted"
                           ? "bg-blue-100 text-blue-700"
-                          : "bg-emerald-100 text-emerald-700"
+                          : request.status === "accepted"
+                            ? "bg-indigo-100 text-indigo-700"
+                            : request.status === "cancelled"
+                              ? "bg-red-100 text-red-700"
+                              : "bg-emerald-100 text-emerald-700"
                     }`}
                   >
                     {request.status}

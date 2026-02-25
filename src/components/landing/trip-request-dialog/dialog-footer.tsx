@@ -47,7 +47,7 @@ export function DialogFooter({
             variant="outline"
             size="lg"
             className="gap-2"
-            render={<Link href={"/plan-trip"} />}
+            render={<Link href={"/plan-trip/ai"} />}
           >
             <RiSparkling2Line className="size-4" />
             Use AI Assistant

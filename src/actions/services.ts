@@ -4,10 +4,10 @@ import { revalidatePath } from "next/cache";
 import { api, ApiError } from "@/lib/api/simple-client";
 import { endpoints } from "./endpoints";
 import { serviceSchema } from "@/lib/unified-types";
-import type { Service, ActionResult } from "@/lib/unified-types";
+import type { Service, ActionResult, CreateServiceInput } from "@/lib/unified-types";
 
 export async function createService(
-  input: Record<string, any>,
+  input: CreateServiceInput,
 ): Promise<ActionResult<Service>> {
   try {
     const data = await api.post(
@@ -44,7 +44,7 @@ export async function getServiceList(): Promise<ActionResult<Service[]>> {
 
 export async function updateService(
   id: string | number,
-  input: Record<string, any>,
+  input: Partial<CreateServiceInput>,
 ): Promise<ActionResult<Service>> {
   try {
     const data = await api.put(
