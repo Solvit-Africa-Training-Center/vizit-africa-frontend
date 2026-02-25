@@ -1,50 +1,4 @@
 {
-  "Partners": {
-    "apply": {
-      "title": "Become a Partner",
-      "subtitle": "Join our network of premium African travel providers and start receiving curated booking requests.",
-      "accountDetails": "Account Details",
-      "businessDetails": "Business Details",
-      "labels": {
-        "contactName": "Contact Person Full Name",
-        "email": "Email Address",
-        "phone": "Phone Number",
-        "password": "Password",
-        "confirmPassword": "Confirm Password",
-        "businessName": "Business Name",
-        "businessType": "Business Type",
-        "website": "Website (Optional)",
-        "address": "Business Address"
-      },
-      "placeholders": {
-        "contactName": "John Doe",
-        "email": "name@example.com",
-        "phone": "+250...",
-        "password": "Create a password",
-        "confirmPassword": "Confirm password",
-        "businessName": "e.g. Serengeti Safaris Ltd.",
-        "businessType": "Select type",
-        "website": "https://...",
-        "address": "City, Country"
-      },
-      "types": {
-        "hotel": "Hotel / Accommodation",
-        "car_rental": "Car Rental",
-        "guide": "Tour Guide",
-        "experience": "Experience Provider",
-        "transport": "Transport Company",
-        "other": "Other"
-      },
-      "submit": "Submit Application",
-      "submitting": "Submitting Application...",
-      "messages": {
-        "success": "Application submitted successfully!",
-        "error": "Registration failed. Please check the fields.",
-        "profileError": "Failed to create vendor profile.",
-        "accountCreatedContactSupport": "Failed to create vendor profile. Your account was created, please contact support."
-      }
-    }
-  },
   "Common": {
     "brandName": "Vizit Africa",
     "startPlanning": "Start Journey",
@@ -104,6 +58,18 @@
         "heading1": "Secure",
         "heading2": "Bookings",
         "description": "No hidden fees, no automated risks. Every booking is manually verified and secured by our team for your peace of mind."
+      },
+      "4": {
+        "subheading": "The Real Africa",
+        "heading1": "Pristine",
+        "heading2": "Wilderness",
+        "description": "Step into ecosystems untouched by time. Discover why Rwanda's conservation efforts are celebrated globally."
+      },
+      "5": {
+        "subheading": "Exclusive Access",
+        "heading1": "Premium",
+        "heading2": "Lodges",
+        "description": "Awake to misty volcanoes and serene lakes. We hold the keys to East Africa's most sought-after properties."
       }
     },
     "location": "Kigali Int. Airport",
@@ -589,6 +555,50 @@
     }
   },
   "Partners": {
+    "apply": {
+      "title": "Become a Partner",
+      "subtitle": "Join our network of premium African travel providers and start receiving curated booking requests.",
+      "accountDetails": "Account Details",
+      "businessDetails": "Business Details",
+      "labels": {
+        "contactName": "Contact Person Full Name",
+        "email": "Email Address",
+        "phone": "Phone Number",
+        "password": "Password",
+        "confirmPassword": "Confirm Password",
+        "businessName": "Business Name",
+        "businessType": "Business Type",
+        "website": "Website (Optional)",
+        "address": "Business Address"
+      },
+      "placeholders": {
+        "contactName": "John Doe",
+        "email": "name@example.com",
+        "phone": "+250...",
+        "password": "Create a password",
+        "confirmPassword": "Confirm password",
+        "businessName": "e.g. Serengeti Safaris Ltd.",
+        "businessType": "Select type",
+        "website": "https://...",
+        "address": "City, Country"
+      },
+      "types": {
+        "hotel": "Hotel / Accommodation",
+        "car_rental": "Car Rental",
+        "guide": "Tour Guide",
+        "experience": "Experience Provider",
+        "transport": "Transport Company",
+        "other": "Other"
+      },
+      "submit": "Submit Application",
+      "submitting": "Submitting Application...",
+      "messages": {
+        "success": "Application submitted successfully!",
+        "error": "Registration failed. Please check the fields.",
+        "profileError": "Failed to create vendor profile.",
+        "accountCreatedContactSupport": "Failed to create vendor profile. Your account was created, please contact support."
+      }
+    },
     "overline": "Partnership",
     "title": "Grow With Us",
     "description": "Join our exclusive network of premium travel providers and reach high-value travelers looking for authentic African experiences.",

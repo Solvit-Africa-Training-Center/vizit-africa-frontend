@@ -270,7 +270,7 @@ export default function GalleryPage() {
                     <span className="text-primary-foreground/60 font-mono uppercase tracking-widest text-sm mb-2 block">
                       {selectedImage.category} • {selectedImage.caption}
                     </span>
-                    <h2 className="text-primary-foreground font-display text-4xl md:text-5xl font-medium uppercase">
+                    <h2 className="text-primary-light font-display text-4xl md:text-5xl font-medium uppercase">
                       {selectedImage.alt}
                     </h2>
                   </motion.div>
@@ -309,11 +309,9 @@ function GalleryItem({
       exit={{
         opacity: 0,
         scale: 0.9,
-        transition: { duration: 0.2 },
       }}
-      transition={{ duration: 0.4, delay: index * 0.05 }}
       className={cn(
-        "group relative overflow-hidden rounded-xl break-inside-avoid cursor-pointer bg-muted",
+        "group relative overflow-hidden rounded-xl break-inside-avoid cursor-pointer bg-muted border border-border/40 hover:border-primary-light/30 transition-colors",
         img.aspect,
       )}
       onClick={onClick}
@@ -337,7 +335,7 @@ function GalleryItem({
           {img.category}
         </span>
         <div className="flex items-center justify-between">
-          <h3 className="text-primary-foreground font-display text-2xl font-medium uppercase leading-none">
+          <h3 className="text-primary-light font-display text-2xl font-medium uppercase leading-none">
             {img.alt}
           </h3>
           <div className="bg-primary-foreground/20 backdrop-blur-md p-2 rounded-full">

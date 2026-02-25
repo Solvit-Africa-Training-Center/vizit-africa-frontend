@@ -106,26 +106,49 @@ export default function PartnersPage() {
       </section>
 
       <section className="px-5 md:px-10 max-w-7xl mx-auto">
-        <div className="bg-foreground text-background rounded-3xl p-8 md:p-24 text-center relative overflow-hidden">
-          <div className="relative z-10">
-            <h2 className="font-display text-4xl md:text-6xl font-medium uppercase tracking-tighter leading-none mb-8">
+        <div className="bg-surface-ink text-primary-foreground rounded-3xl p-8 md:p-24 text-center relative overflow-hidden isolate shadow-2xl border border-primary/10">
+          {/* Radial Gradient Background (Blue tint) */}
+          <div
+            className="absolute inset-0 z-0 pointer-events-none"
+            style={{
+              background:
+                "radial-gradient(circle at top center, oklch(65% 0.06 245 / 0.25) 0%, transparent 60%)",
+            }}
+          />
+
+          {/* Grain Texture */}
+          <div
+            className="absolute inset-0 opacity-[0.03] pointer-events-none z-10 mix-blend-overlay"
+            aria-hidden="true"
+          >
+            <svg className="w-full h-full">
+              <title>Noise overlay</title>
+              <filter id="noise-partners">
+                <feTurbulence
+                  type="fractalNoise"
+                  baseFrequency="0.60"
+                  numOctaves="3"
+                  stitchTiles="stitch"
+                />
+              </filter>
+              <rect width="100%" height="100%" filter="url(#noise-partners)" />
+            </svg>
+          </div>
+
+          <div className="relative z-20">
+            <h2 className="font-display text-4xl md:text-6xl font-medium uppercase tracking-tighter leading-[0.9] mb-4 text-white">
               {t("ctaSection.title")}
             </h2>
-            <p className="text-xl md:text-2xl text-background/60 font-light max-w-2xl mx-auto mb-12">
+            <p className="text-xl md:text-2xl text-white/60 font-light max-w-2xl mx-auto mb-12">
               {t("ctaSection.description")}
             </p>
             <Button
               size="lg"
-              variant="secondary"
-              className="h-16 px-12 rounded-full font-display uppercase tracking-widest text-sm hover:scale-105 transition-all duration-300"
+              className="h-16 px-12 rounded-full font-sans font-semibold uppercase tracking-[0.12em] text-xs transition-colors shadow-lg shadow-primary/20 hover:scale-105 duration-300 bg-primary hover:bg-primary/90 text-white border-0"
               render={<Link href="/partners/apply" />}
             >
               {t("ctaSection.button")}
             </Button>
-          </div>
-
-          <div className="absolute inset-0 opacity-10 pointer-events-none">
-            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] brightness-100 contrast-150" />
           </div>
         </div>
       </section>

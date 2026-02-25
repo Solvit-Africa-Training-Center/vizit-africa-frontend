@@ -58,7 +58,7 @@ export default async function VendorDashboardPage({
     return (
       <div className="marketing-container max-w-2xl py-20">
         <div className="bg-card border border-border/50 rounded-[2rem] p-12 text-center shadow-card">
-          <div className="mx-auto bg-amber-500/10 text-amber-600 h-20 w-20 rounded-2xl flex items-center justify-center mb-8 border border-amber-500/20">
+          <div className="mx-auto bg-primary-500/10 text-primary-600 h-20 w-20 rounded-2xl flex items-center justify-center mb-8 border border-primary-500/20">
             <RiTimeLine className="size-10" />
           </div>
           <h1 className="text-3xl font-display font-medium uppercase tracking-tight mb-4">
@@ -207,7 +207,7 @@ function StatCard({
   color: "amber" | "emerald" | "primary" 
 }) {
   const colors = {
-    amber: "bg-amber-500/10 text-amber-600 border-amber-500/20",
+    amber: "bg-primary-500/10 text-primary-600 border-primary-500/20",
     emerald: "bg-emerald-500/10 text-emerald-600 border-emerald-500/20",
     primary: "bg-primary/5 text-primary border-primary/10",
   };

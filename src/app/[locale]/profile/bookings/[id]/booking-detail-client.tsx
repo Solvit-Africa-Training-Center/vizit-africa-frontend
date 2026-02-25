@@ -115,10 +115,7 @@ export default function BookingDetailClient({
           (sum, item) => sum + (Number(item.subtotal) || 0),
           0,
         )
-      : quote?.totalAmount ||
-          quote?.total_amount ||
-          booking.total_amount ||
-          0,
+      : quote?.totalAmount || quote?.total_amount || booking.total_amount || 0,
   );
 
   const currency = (
@@ -193,23 +190,23 @@ export default function BookingDetailClient({
           <div className="grid lg:grid-cols-12 gap-10">
             <div className="lg:col-span-8 space-y-8">
               {isQuoted && (
-                <div className="bg-amber-500/10 border border-amber-500/20 rounded-2xl p-6 relative overflow-hidden">
+                <div className="bg-primary-500/10 border border-primary-500/20 rounded-2xl p-6 relative overflow-hidden">
                   <div className="absolute top-0 right-0 p-4 opacity-10">
                     <RiInformationLine className="size-24" />
                   </div>
                   <div className="relative z-10">
-                    <h3 className="text-lg font-display font-medium text-amber-600 mb-2 flex items-center gap-2">
+                    <h3 className="text-lg font-display font-medium text-primary-600 mb-2 flex items-center gap-2">
                       <RiInformationLine className="size-5" />
                       Custom Quote Prepared
                     </h3>
-                    <p className="text-sm text-amber-900/80 leading-relaxed max-w-2xl">
+                    <p className="text-sm text-primary-900/80 leading-relaxed max-w-2xl">
                       Our travel specialists have manually sourced the best
                       fares and availability for your request. Please review the
                       itinerary and finalized pricing below. Accept to secure
                       your booking.
                     </p>
                     {(quote?.expiresAt || quote?.expires_at) && (
-                      <div className="mt-4 flex items-center gap-2 text-xs font-medium text-amber-700 uppercase tracking-wider">
+                      <div className="mt-4 flex items-center gap-2 text-xs font-medium text-primary-700 uppercase tracking-wider">
                         <RiTimeLine className="size-3.5" />
                         Expires:{" "}
                         {formatDate((quote?.expiresAt || quote?.expires_at)!)}
@@ -307,21 +304,22 @@ export default function BookingDetailClient({
             </div>
 
             <div className="lg:col-span-4 space-y-6">
-              <div className="bg-card border border-border/50 rounded-2xl p-6 shadow-sm overflow-hidden relative">
-                <div className="absolute top-0 right-0 size-24 bg-primary/5 rounded-full -mr-12 -mt-12"></div>
-                <h3 className="font-display text-lg font-medium mb-6 relative z-10">
+              <div className="bg-surface-ink text-white border border-primary/10 rounded-[2rem] p-6 shadow-2xl overflow-hidden relative isolate">
+                <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_top_right,oklch(65%_0.06_245/0.15)_0%,transparent_70%)] pointer-events-none" />
+                <div className="absolute top-0 right-0 size-24 bg-primary-light/10 rounded-full -mr-12 -mt-12 z-0"></div>
+                <h3 className="font-display text-lg font-medium mb-6 relative z-10 text-white">
                   Trip Overview
                 </h3>
                 <div className="space-y-5 relative z-10">
                   <div className="flex items-start gap-4">
-                    <div className="size-9 rounded-lg bg-muted flex items-center justify-center shrink-0">
-                      <RiMapPin2Line className="size-5 text-muted-foreground" />
+                    <div className="size-9 rounded-lg bg-white/10 flex items-center justify-center shrink-0 border border-white/5">
+                      <RiMapPin2Line className="size-5 text-primary-light" />
                     </div>
                     <div>
-                      <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-bold">
+                      <p className="text-[10px] uppercase tracking-wider text-primary-light/80 font-bold">
                         Destination
                       </p>
-                      <p className="font-medium">
+                      <p className="font-medium text-white/90">
                         {booking.requestedItems?.[0]?.title ||
                           booking.tripPurpose ||
                           "Rwanda"}
@@ -330,14 +328,14 @@ export default function BookingDetailClient({
                   </div>
 
                   <div className="flex items-start gap-4">
-                    <div className="size-9 rounded-lg bg-muted flex items-center justify-center shrink-0">
-                      <RiCalendarEventLine className="size-5 text-muted-foreground" />
+                    <div className="size-9 rounded-lg bg-white/10 flex items-center justify-center shrink-0 border border-white/5">
+                      <RiCalendarEventLine className="size-5 text-primary-light" />
                     </div>
                     <div>
-                      <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-bold">
+                      <p className="text-[10px] uppercase tracking-wider text-primary-light/80 font-bold">
                         Dates
                       </p>
-                      <p className="font-medium">
+                      <p className="font-medium text-white/90">
                         {booking.arrivalDate
                           ? formatDate(booking.arrivalDate)
                           : "TBD"}
@@ -348,14 +346,14 @@ export default function BookingDetailClient({
                   </div>
 
                   <div className="flex items-start gap-4">
-                    <div className="size-9 rounded-lg bg-muted flex items-center justify-center shrink-0">
-                      <RiGroupLine className="size-5 text-muted-foreground" />
+                    <div className="size-9 rounded-lg bg-white/10 flex items-center justify-center shrink-0 border border-white/5">
+                      <RiGroupLine className="size-5 text-primary-light" />
                     </div>
                     <div>
-                      <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-bold">
+                      <p className="text-[10px] uppercase tracking-wider text-primary-light/80 font-bold">
                         Travelers
                       </p>
-                      <p className="font-medium">
+                      <p className="font-medium text-white/90">
                         {booking.adults} Adults
                         {booking.children > 0 &&
                           `, ${booking.children} Children`}
@@ -411,36 +409,37 @@ export default function BookingDetailClient({
                 </div>
               </div>
 
-              <div className="bg-foreground text-background rounded-2xl p-6 shadow-xl shadow-foreground/10 relative overflow-hidden">
-                <div className="absolute bottom-0 right-0 p-4 opacity-5 pointer-events-none">
+              <div className="bg-surface-ink text-white rounded-[2rem] border border-primary/10 p-6 shadow-2xl relative overflow-hidden isolate">
+                <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_top_right,oklch(65%_0.06_245/0.15)_0%,transparent_70%)] pointer-events-none" />
+                <div className="absolute bottom-0 right-0 p-4 opacity-10 pointer-events-none z-10 text-primary-light">
                   <RiCheckDoubleLine className="size-32" />
                 </div>
-                <h3 className="font-display text-lg font-medium mb-6 relative z-10">
+                <h3 className="font-display text-lg font-medium mb-6 relative z-20 text-white">
                   Pricing Summary
                 </h3>
-                <div className="space-y-3 relative z-10">
-                  <div className="flex justify-between text-sm opacity-70">
+                <div className="space-y-3 relative z-20">
+                  <div className="flex justify-between text-sm text-white/70">
                     <span>Base Amount</span>
                     <span>{formatCurrency(totalAmount, currency)}</span>
                   </div>
-                  <div className="flex justify-between text-sm opacity-70">
+                  <div className="flex justify-between text-sm text-white/70">
                     <span>Taxes & Fees</span>
                     <span>Included</span>
                   </div>
-                  <Separator className="bg-background/20 my-4" />
-                  <div className="flex justify-between items-center">
+                  <Separator className="bg-white/10 my-4" />
+                  <div className="flex justify-between items-center text-white">
                     <span className="font-medium">Total Price</span>
-                    <span className="font-display text-2xl font-bold">
+                    <span className="font-display text-2xl font-bold text-primary-light">
                       {formatCurrency(totalAmount, currency)}
                     </span>
                   </div>
                 </div>
 
                 {isPaid && (
-                  <div className="mt-8 pt-6 border-t border-background/20 relative z-10">
+                  <div className="mt-8 pt-6 border-t border-white/10 relative z-20">
                     <Button
                       variant="outline"
-                      className="w-full justify-center gap-2 bg-transparent border-background/40 hover:bg-background/10 text-background"
+                      className="w-full justify-center gap-2 bg-transparent border-white/20 hover:bg-white/10 text-white transition-all"
                     >
                       <RiDownloadLine className="size-4" />
                       Download Itinerary

@@ -51,7 +51,7 @@ export function Destinations() {
   }));
 
   return (
-    <section className="marketing-section bg-muted/30 relative overflow-hidden isolate">
+    <section className="marketing-section bg-surface-ink text-white relative overflow-hidden isolate">
       <div className="marketing-container relative z-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
           <SectionTitle
@@ -62,7 +62,8 @@ export function Destinations() {
                 {t("title").split(" ").slice(1).join(" ")}
               </>
             }
-            className="mb-0 max-w-2xl"
+            className="mb-0 max-w-2xl text-white"
+            dark={true}
           />
           <motion.div
             initial={{ opacity: 0, x: 20 }}
@@ -71,7 +72,7 @@ export function Destinations() {
             transition={{ delay: 0.2 }}
             className="mb-2"
           >
-            <p className="max-w-xs text-muted-foreground text-lg leading-relaxed text-pretty">
+            <p className="max-w-xs text-white/70 text-lg leading-relaxed text-pretty">
               {t("description")}
             </p>
           </motion.div>
@@ -105,19 +106,19 @@ export function Destinations() {
 
                 <div className="absolute inset-0 p-8 flex flex-col justify-between">
                   <div className="flex justify-end">
-                    <div className="bg-primary-foreground/10 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    <div className="bg-white/10 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                       <RiArrowRightUpLine
-                        className="text-primary-foreground w-5 h-5"
+                        className="text-white group-hover:text-primary-light w-5 h-5 transition-colors"
                         aria-hidden="true"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-primary-foreground/80 block mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                    <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/80 group-hover:text-primary-light block mb-2 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100">
                       {region.subtitle}
                     </span>
-                    <h3 className="text-2xl md:text-3xl font-display font-medium text-primary-foreground uppercase leading-none tracking-tight">
+                    <h3 className="text-2xl md:text-3xl font-display font-medium text-white uppercase leading-none tracking-tight">
                       {region.name}
                     </h3>
                   </div>

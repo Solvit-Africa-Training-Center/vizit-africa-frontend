@@ -22,7 +22,10 @@ export function FAQ() {
   }));
 
   return (
-    <section id="faq" className="marketing-section bg-background relative isolate">
+    <section
+      id="faq"
+      className="marketing-section bg-surface-canvas relative isolate"
+    >
       <div className="marketing-container">
         <div className="grid md:grid-cols-2 gap-16 md:gap-24 items-start">
           <motion.div

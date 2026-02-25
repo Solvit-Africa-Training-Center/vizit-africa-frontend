@@ -36,12 +36,12 @@ export function Services() {
 
       gsap.fromTo(
         cards,
-        { opacity: 0, y: 50 },
+        { opacity: 0, y: 30 },
         {
           opacity: 1,
           y: 0,
           duration: 0.8,
-          stagger: 0.1,
+          stagger: 0.15,
           ease: "power2.out",
           scrollTrigger: {
             trigger: containerRef.current,
@@ -59,21 +59,19 @@ export function Services() {
     description: t(`items.${key}.description`),
     image: serviceImages[index],
     linkKey: linkKeyMap[key] || "hotels",
+    number: `0${index + 1}`,
   }));
 
   return (
-    <section className="marketing-section bg-background">
-      <div
-        ref={containerRef}
-        className="marketing-container"
-      >
+    <section className="marketing-section bg-surface-canvas overflow-hidden">
+      <div ref={containerRef} className="marketing-container">
         <SectionTitle
           overline={t("overline")}
           title={t("title")}
           description={t("description")}
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
+        <div className="flex flex-col md:flex-row mt-16 lg:mt-24 border-y border-border-warm divide-y md:divide-y-0 md:divide-x divide-border-warm bg-border-warm gap-px">
           {services.map((service, i) => (
             <ServiceCard key={i} service={service} />
           ))}
@@ -91,38 +89,56 @@ function ServiceCard({
     description: string;
     image: string;
     linkKey: string;
+    number: string;
   };
 }) {
   return (
     <Link
       href={`/plan-trip?service=${service.linkKey}`}
-      className="service-card group relative overflow-hidden aspect-[4/5] block bg-muted rounded-2xl border border-border/50 shadow-card"
+      className="service-card group w-full md:w-1/3 flex flex-col relative bg-surface-cream hover:bg-white transition-colors duration-500 min-h-[400px]"
     >
-      <div className="absolute inset-0">
-        <Image
-          src={service.image}
-          alt={service.title}
-          fill
-          sizes="(max-width: 768px) 100vw, 33vw"
-          loading="lazy"
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
-        />
-        <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent transition-colors duration-300" />
-      </div>
+      <div className="absolute top-0 left-0 w-full h-[2px] bg-primary transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out z-10" />
 
-      <div className="absolute inset-0 p-8 flex flex-col justify-end">
-        <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-          <div
-            className="w-8 h-px bg-primary mb-4"
-            aria-hidden="true"
-          />
-          <h3 className="text-2xl font-display font-medium uppercase text-white tracking-tight mb-2">
+      <div className="p-8 md:p-10 flex flex-col grow relative z-10">
+        <div className="font-mono text-xs text-surface-ink/40 mb-12 flex items-center justify-between">
+          <span>{service.number}</span>
+          <div className="w-8 h-8 rounded-full border border-surface-ink/10 flex items-center justify-center group-hover:bg-primary group-hover:border-primary group-hover:text-white transition-all duration-300">
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="transform -rotate-45 group-hover:rotate-0 transition-transform duration-300"
+            >
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+        </div>
+
+        <div className="mt-auto">
+          <h3 className="text-3xl lg:text-4xl font-display font-medium text-surface-ink mb-4 group-hover:text-primary transition-colors duration-300">
             {service.title}
           </h3>
-          <p className="text-white/70 font-light text-sm leading-relaxed text-pretty">
+          <p className="font-sans text-surface-ink/60 font-light text-sm leading-relaxed max-w-[280px]">
             {service.description}
           </p>
         </div>
+      </div>
+
+      {/* Decorative background image that fades in on hover */}
+      <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-10 transition-opacity duration-700 pointer-events-none overflow-hidden">
+        <Image
+          src={service.image}
+          alt={`Background image for ${service.title}`}
+          fill
+          sizes="33vw"
+          className="object-cover scale-110 group-hover:scale-100 transition-transform duration-1000 ease-out grayscale mix-blend-multiply"
+        />
       </div>
     </Link>
   );

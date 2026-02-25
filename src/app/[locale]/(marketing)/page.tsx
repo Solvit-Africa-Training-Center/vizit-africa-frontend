@@ -6,16 +6,19 @@ import { FAQ } from "@/components/landing/faq";
 // import { Hero } from "@/components/landing/hero";
 import { HowItWorks } from "@/components/landing/how-it-works";
 import { Services } from "@/components/landing/services";
-import { ServiceHighlights } from "@/components/landing/service-highlights";
 import { SocialProof } from "@/components/landing/social-proof";
 import { Testimonials } from "@/components/landing/testimonials";
 import { WhyUs } from "@/components/landing/why-us";
-import { TerminalDivider } from "@/components/landing/terminal-divider";
 
-const Hero = dynamic(() => import("@/components/landing/hero").then(m => m.Hero), {
-  ssr: true, // Keep SSR true for LCP but allow dynamic chunking
-  loading: () => <div className="h-[100dvh] w-full bg-[oklch(14%_0_0)] animate-pulse" />
-});
+const Hero = dynamic(
+  () => import("@/components/landing/hero").then((m) => m.Hero),
+  {
+    ssr: true, // Keep SSR true for LCP but allow dynamic chunking
+    loading: () => (
+      <div className="h-[100dvh] w-full bg-[oklch(14%_0_0)] animate-pulse" />
+    ),
+  },
+);
 
 import { siteConfig } from "@/lib/configs";
 
@@ -55,51 +58,54 @@ export const metadata: Metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "TravelAgency",
-  "name": siteConfig.name,
-  "description": siteConfig.description,
-  "url": siteConfig.url,
-  "logo": "https://vizit.africa/logo.png",
-  "image": "https://vizit.africa/images/rwanda-landscape.jpg",
-  "telephone": siteConfig.contact.phone,
-  "email": siteConfig.contact.email,
-  "address": {
+  name: siteConfig.name,
+  description: siteConfig.description,
+  url: siteConfig.url,
+  logo: "https://vizit.africa/logo.png",
+  image: "https://vizit.africa/images/rwanda-landscape.jpg",
+  telephone: siteConfig.contact.phone,
+  email: siteConfig.contact.email,
+  address: {
     "@type": "PostalAddress",
-    "streetAddress": "KN 3 Ave",
-    "addressLocality": "Kigali",
-    "addressCountry": "RW"
+    streetAddress: "KN 3 Ave",
+    addressLocality: "Kigali",
+    addressCountry: "RW",
   },
-  "geo": {
+  geo: {
     "@type": "GeoCoordinates",
-    "latitude": "-1.9441",
-    "longitude": "30.0619"
+    latitude: "-1.9441",
+    longitude: "30.0619",
   },
-  "sameAs": [
+  sameAs: [
     siteConfig.socials.facebook,
     siteConfig.socials.instagram,
     siteConfig.socials.linkedin,
-    siteConfig.links.twitter
+    siteConfig.links.twitter,
   ],
-  "priceRange": "$$$",
-  "areaServed": {
+  priceRange: "$$$",
+  areaServed: {
     "@type": "Country",
-    "name": "Rwanda"
+    name: "Rwanda",
   },
-  "offers": {
+  offers: {
     "@type": "Offer",
-    "itemOffered": [
+    itemOffered: [
       {
         "@type": "Service",
-        "name": "Flight Sourcing",
-        "description": "Manual sourcing for best flight fares to Rwanda."
+        name: "Flight Sourcing",
+        description: "Manual sourcing for best flight fares to Rwanda.",
       },
       {
         "@type": "Service",
-        "name": "Luxury Accommodation",
-        "description": "Handpicked premium hotels across Rwanda."
-      }
-    ]
-  }
+        name: "Luxury Accommodation",
+        description: "Handpicked premium hotels across Rwanda.",
+      },
+    ],
+  },
 };
+
+import { FeaturedExperience } from "@/components/landing/featured-experience";
+import { StatsBar } from "@/components/landing/stats-bar";
 
 export default function Home() {
   return (
@@ -110,19 +116,14 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Hero />
+      <StatsBar />
       <SocialProof />
-      <ServiceHighlights />
-      <Destinations />
       <Services />
-
-      <TerminalDivider />
+      <Destinations />
+      <FeaturedExperience />
       <HowItWorks />
-      <TerminalDivider />
-
       <Testimonials />
       <WhyUs />
-
-      <TerminalDivider />
       <FAQ />
       <CTA />
     </>

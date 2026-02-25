@@ -61,9 +61,7 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
 
   const headerClass = cn(
     "fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
-    showSolid
-      ? "py-4 bg-primary-foreground/60 backdrop-blur-xl border-b border-black/5"
-      : "py-6 bg-transparent",
+    showSolid ? "py-4 pointer-events-none" : "py-6 pointer-events-none",
   );
 
   const textColorClass = showSolid ? "text-primary" : "text-primary-foreground";
@@ -71,10 +69,9 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
   const logoVariant = showSolid ? "default" : "light";
 
   const navLinks = [
-    { href: "/services", label: t("ourservices") },
     { href: "/experiences", label: t("experiences") },
+    { href: "/services", label: t("ourservices") },
     { href: "/about", label: t("aboutUs") },
-    { href: "/gallery", label: t("gallery") },
     { href: "/contact", label: t("contact") },
   ];
 
@@ -96,9 +93,13 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       >
         <nav
-          role="navigation"
           aria-label="Main Navigation"
-          className="mx-auto max-w-[1400px] px-6 md:px-12 flex items-center justify-between"
+          className={cn(
+            "mx-auto flex items-center justify-between transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] pointer-events-auto",
+            showSolid
+              ? "max-w-[840px] bg-surface-cream/95 backdrop-blur-xl shadow-lg border border-black/5 rounded-full px-4 md:px-6 py-2 md:py-3"
+              : "max-w-[1400px] px-6 md:px-12 py-0",
+          )}
         >
           <div className="shrink-0 w-[140px]">
             <Link href="/" aria-label="Vizit Africa Home">
@@ -121,14 +122,15 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
                   href={link.href}
                   aria-current={isActive ? "page" : undefined}
                   className={cn(
-                    "relative group font-display font-medium uppercase tracking-[0.2em] text-xs transition-colors duration-300 drop-shadow-sm",
+                    "relative group font-mono font-medium uppercase tracking-[0.18em] transition-colors duration-300 drop-shadow-sm",
+                    showSolid ? "text-[10px]" : "text-[11px]",
                     isActive
                       ? showSolid
                         ? "text-primary"
                         : "text-primary-foreground"
                       : showSolid
-                        ? "text-foreground hover:text-primary"
-                        : "text-primary-foreground hover:text-primary-foreground",
+                        ? "text-primary/60 hover:text-primary"
+                        : "text-primary-foreground/75 hover:text-primary-foreground",
                   )}
                 >
                   {link.label}
@@ -161,7 +163,7 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
                   >
                     <Avatar>
                       <AvatarImage
-                        src={(user as any).image || undefined}
+                        src={(user as any)?.image || undefined}
                         alt={user.full_name}
                       />
                       <AvatarFallback className="bg-transparent text-current">
@@ -205,8 +207,10 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
               <Link
                 href="/login"
                 className={cn(
-                  "font-display font-medium uppercase text-[11px] transition-opacity hover:opacity-70",
-                  textColorClass,
+                  "font-mono font-medium uppercase tracking-[0.15em] text-[11px] transition-opacity hover:opacity-100",
+                  showSolid
+                    ? "text-primary/60 hover:text-primary"
+                    : "text-primary-foreground/60 hover:text-primary-foreground",
                 )}
               >
                 {tCommon("login")}
@@ -219,12 +223,7 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
                   render={
                     <Button
                       size="sm"
-                      variant={showSolid ? "default" : "secondary"}
-                      className={cn(
-                        "rounded-sm font-display font-medium uppercase tracking-wider text-xs px-6 transition-all duration-300 gap-2",
-                        !showSolid &&
-                          "bg-primary-foreground text-primary hover:bg-primary-foreground/90",
-                      )}
+                      className="rounded-full font-sans uppercase tracking-[0.15em] text-[10px] font-semibold px-5 transition-all duration-300 gap-1.5 bg-primary hover:bg-primary/90 text-white hover:scale-105"
                       onClick={() => setIsTripDialogOpen(true)}
                     />
                   }
@@ -234,9 +233,7 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
                       <>
                         <RiSuitcaseLine className="size-4" />
                         {tripItemCount}{" "}
-                        {tripItemCount === 1
-                          ? t("trip.item")
-                          : t("trip.items")}{" "}
+                        {tripItemCount === 1 ? t("trip.item") : t("trip.items")}{" "}
                         · {t("trip.view")}
                       </>
                     ) : (

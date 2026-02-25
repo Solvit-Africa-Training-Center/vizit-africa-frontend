@@ -37,9 +37,9 @@ export function Testimonials() {
   const col3 = allTestimonials.slice(10, 15);
 
   return (
-    <section className="marketing-section bg-muted/30 overflow-hidden relative isolate">
-      <div className="marketing-container">
-        <div className="flex flex-col items-center justify-center text-center mb-16">
+    <section className="marketing-section bg-surface-cream overflow-hidden relative isolate">
+      <div className="marketing-container relative z-10">
+        <div className="flex flex-col items-center justify-center text-center mb-16 lg:mb-24">
           <SectionTitle
             overline={t("overline")}
             title={t("title")}
@@ -49,10 +49,10 @@ export function Testimonials() {
           />
         </div>
 
-        <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 h-[800px] overflow-hidden">
-          <div className="absolute inset-x-0 top-0 h-32 bg-linear-to-b from-muted/30 to-transparent z-10 pointer-events-none" />
-          <div className="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-muted/30 to-transparent z-10 pointer-events-none" />
-          
+        <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 h-[800px] overflow-hidden">
+          <div className="absolute inset-x-0 top-0 h-40 bg-linear-to-b from-surface-cream via-surface-cream/80 to-transparent z-10 pointer-events-none" />
+          <div className="absolute inset-x-0 bottom-0 h-40 bg-linear-to-t from-surface-cream via-surface-cream/80 to-transparent z-10 pointer-events-none" />
+
           <TestimonialsColumn testimonials={col1} duration={45} />
           <TestimonialsColumn
             testimonials={col2}
@@ -91,7 +91,7 @@ function TestimonialsColumn({
           ease: "linear",
           repeatType: "loop",
         }}
-        className="flex flex-col gap-6 pb-6"
+        className="flex flex-col gap-6 lg:gap-8 pb-6 lg:pb-8"
       >
         {[...new Array(2)].map((_, i) => (
           <React.Fragment key={i}>
@@ -99,30 +99,34 @@ function TestimonialsColumn({
               <figure
                 key={`${testimonial.id}-${i}-${index}`}
                 className={cn(
-                  "relative w-full rounded-2xl border border-border/50 bg-card p-8 shadow-card",
-                  "cursor-pointer transition-all duration-500 hover:border-primary/30",
+                  "relative w-full rounded-2xl border border-border bg-white p-8 md:p-10 shadow-sm",
+                  "transition-all duration-500 hover:shadow-md hover:border-primary/30 group",
                 )}
               >
-                <blockquote className="text-sm leading-relaxed text-muted-foreground mb-8 font-light italic">
-                  &ldquo;{testimonial.content}&rdquo;
+                <div className="text-[160px] leading-none text-primary/10 absolute -top-12 -left-4 font-display pointer-events-none select-none group-hover:text-primary/20 transition-colors duration-500">
+                  &ldquo;
+                </div>
+
+                <blockquote className="font-display text-xl md:text-2xl leading-snug text-surface-ink mb-10 font-normal italic relative z-10 text-pretty">
+                  "{testimonial.content}"
                 </blockquote>
 
-                <div className="flex items-center gap-4">
-                  <div className="relative size-12 rounded-2xl overflow-hidden bg-muted">
+                <div className="flex items-center gap-4 border-t border-border-warm pt-6">
+                  <div className="relative size-12 rounded-full overflow-hidden bg-surface-bone">
                     <Image
                       src={testimonial.avatar}
                       alt={testimonial.name}
                       fill
                       sizes="48px"
-                      className="object-cover"
+                      className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
                     />
                   </div>
-                  <div className="flex flex-col gap-0.5">
-                    <figcaption className="text-sm font-medium text-foreground uppercase tracking-tight">
+                  <div className="flex flex-col gap-1">
+                    <figcaption className="text-sm font-sans font-medium text-surface-ink tracking-tight">
                       {testimonial.name}
                     </figcaption>
-                    <p className="text-[10px] font-mono uppercase tracking-widest text-primary font-bold">
-                      {testimonial.role}
+                    <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-surface-ink/50">
+                      {testimonial.role} · {testimonial.country}
                     </p>
                   </div>
                 </div>

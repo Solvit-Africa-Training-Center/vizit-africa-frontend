@@ -18,7 +18,7 @@ export function WhyUs() {
   return (
     <section
       id="why-us"
-      className="marketing-section bg-foreground text-background relative overflow-hidden isolate"
+      className="marketing-section bg-surface-dark text-white relative overflow-hidden isolate"
     >
       <div className="marketing-container">
         <div className="grid md:grid-cols-2 gap-16 md:gap-24 items-start">
@@ -69,7 +69,7 @@ export function WhyUs() {
                   <span className="font-mono text-xs text-primary font-bold pt-1.5 group-hover:scale-110 transition-transform">
                     {(i + 1).toString().padStart(2, "0")}
                   </span>
-                  <h3 className="text-xl md:text-2xl font-light text-background/90 group-hover:text-white transition-colors text-pretty leading-relaxed">
+                  <h3 className="text-xl md:text-2xl font-light text-white/90 group-hover:text-white transition-colors text-pretty leading-relaxed">
                     {benefit}
                   </h3>
                 </li>

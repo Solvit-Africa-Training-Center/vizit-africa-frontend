@@ -117,23 +117,53 @@ export default async function AboutPage() {
 
       <section className="marketing-section pb-24 md:pb-32">
         <div className="marketing-container">
-          <div className="py-24 md:py-32 text-center bg-foreground text-background rounded-[2.5rem] relative overflow-hidden">
-            <div className="relative z-10 px-6">
-              <h2 className="font-display text-4xl md:text-6xl font-medium uppercase tracking-tighter leading-[0.9] mb-12 max-w-2xl mx-auto">
-                {t("startJourney")}
+          <div className="py-24 md:py-32 text-center bg-surface-ink text-primary-foreground rounded-[2.5rem] relative overflow-hidden isolate shadow-2xl border border-primary/10">
+            {/* Radial Gradient Background (Blue tint) */}
+            <div
+              className="absolute inset-0 z-0 pointer-events-none"
+              style={{
+                background:
+                  "radial-gradient(circle at top center, oklch(65% 0.06 245 / 0.25) 0%, transparent 60%)",
+              }}
+            />
+
+            {/* Grain Texture */}
+            <div
+              className="absolute inset-0 opacity-[0.03] pointer-events-none z-10 mix-blend-overlay"
+              aria-hidden="true"
+            >
+              <svg className="w-full h-full">
+                <title>Noise overlay</title>
+                <filter id="noise-about">
+                  <feTurbulence
+                    type="fractalNoise"
+                    baseFrequency="0.60"
+                    numOctaves="3"
+                    stitchTiles="stitch"
+                  />
+                </filter>
+                <rect width="100%" height="100%" filter="url(#noise-about)" />
+              </svg>
+            </div>
+
+            <div className="relative z-20 px-6">
+              <h2 className="font-display text-4xl md:text-6xl font-medium uppercase tracking-tighter leading-[0.9] mb-4 max-w-2xl mx-auto text-white">
+                {t("startJourney").split(" ").slice(0, -1).join(" ")}{" "}
+                <span className="text-primary-light italic block mt-2">
+                  {t("startJourney").split(" ").slice(-1)}
+                </span>
               </h2>
+              <p className="text-white/60 font-light mb-12 mt-6 max-w-md mx-auto">
+                Discover the untamed beauty of East Africa with our expert
+                guides.
+              </p>
               <Button
                 size="lg"
-                variant="secondary"
-                className="h-16 px-12 rounded-full font-display uppercase tracking-widest text-xs hover:scale-105 transition-all duration-500"
+                className="h-14 px-10 rounded-full font-sans font-semibold uppercase tracking-[0.12em] text-xs transition-colors shadow-lg shadow-primary/20 hover:scale-105 duration-300 bg-primary hover:bg-primary/90 text-white border-0"
                 render={<Link href="/contact" />}
               >
                 {tCommon("getInTouch")}
               </Button>
-            </div>
-
-            <div className="absolute inset-0 opacity-10 pointer-events-none">
-              <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] brightness-100 contrast-150" />
             </div>
           </div>
         </div>

@@ -36,23 +36,24 @@ export function OverviewTab({
 
   return (
     <div className="grid lg:grid-cols-2 gap-12 items-start">
-      <div className="group relative aspect-4/5 md:aspect-video lg:aspect-square overflow-hidden rounded-3xl bg-muted shadow-2xl shadow-black/20">
+      <div className="group relative aspect-4/5 md:aspect-video lg:aspect-square overflow-hidden rounded-[2.5rem] bg-surface-ink border border-primary/10 shadow-2xl isolate">
         <Image
           src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2600&auto=format&fit=crop"
           alt={t("overview.nextTrip.imageAlt")}
           fill
-          className="object-cover transition-transform duration-1000 group-hover:scale-110"
+          className="object-cover transition-transform duration-1000 group-hover:scale-110 opacity-40 mix-blend-overlay"
         />
-        <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/30 to-transparent opacity-80" />
+        <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_top_right,oklch(65%_0.06_245/0.15)_0%,transparent_70%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent z-10" />
 
-        <div className="absolute inset-0 p-8 md:p-12 flex flex-col justify-between text-primary-foreground">
+        <div className="absolute inset-0 z-20 p-8 md:p-12 flex flex-col justify-between text-white">
           <div className="flex justify-between items-start">
-            <Badge className="bg-primary border-none text-primary-foreground px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] rounded-full">
+            <Badge className="bg-primary-light/10 text-primary-light border border-primary-light/20 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] rounded-full">
               {t("overview.nextTrip.label")}
             </Badge>
             {nextTrip ? (
-              <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 text-center min-w-24">
-                <p className="text-4xl font-display font-bold leading-none">
+              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 text-center min-w-24">
+                <p className="text-4xl font-display font-bold leading-none text-primary-light">
                   {nextTrip.items[0]?.start_date
                     ? differenceInDays(
                         new Date(nextTrip.items[0].start_date),
@@ -60,7 +61,7 @@ export function OverviewTab({
                       )
                     : "-"}
                 </p>
-                <p className="text-[9px] font-bold uppercase tracking-widest mt-1 opacity-70">
+                <p className="text-[9px] font-bold uppercase tracking-widest mt-1 opacity-70 text-white/80">
                   {t("overview.nextTrip.daysLeft")}
                 </p>
               </div>
@@ -69,20 +70,24 @@ export function OverviewTab({
 
           <div className="space-y-6">
             <div>
-              <h2 className="font-display text-4xl md:text-6xl font-medium text-primary-foreground mb-3 leading-tight text-pretty">
+              <h2 className="font-display text-4xl md:text-6xl font-medium text-white mb-3 leading-tight text-pretty">
                 {nextTrip
-                  ? nextTrip.status === "paid" || nextTrip.status === "confirmed"
+                  ? nextTrip.status === "paid" ||
+                    nextTrip.status === "confirmed"
                     ? t("overview.nextTrip.confirmed")
                     : t("overview.nextTrip.preparing")
                   : t("overview.nextTrip.start")}
               </h2>
               {nextTrip?.items[0]?.start_date && (
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-sm text-sm font-light border border-white/10">
-                  <RiCalendarLine className="size-4 text-primary" />
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 backdrop-blur-sm text-sm font-light border border-white/10 text-white/90">
+                  <RiCalendarLine className="size-4 text-primary-light" />
                   <span>
                     {format(parseISO(nextTrip.items[0].start_date), "MMM d")} -{" "}
                     {nextTrip.items[0].end_date
-                      ? format(parseISO(nextTrip.items[0].end_date), "MMM d, yyyy")
+                      ? format(
+                          parseISO(nextTrip.items[0].end_date),
+                          "MMM d, yyyy",
+                        )
                       : ""}
                   </span>
                 </div>
@@ -95,7 +100,9 @@ export function OverviewTab({
                   {t("overview.nextTrip.status")}
                 </p>
                 <p className="font-medium flex items-center gap-2">
-                  <span className={`inline-block size-2 rounded-full ${nextTrip?.status === "paid" ? "bg-emerald-400" : "bg-primary animate-pulse"}`} />
+                  <span
+                    className={`inline-block size-2 rounded-full ${nextTrip?.status === "paid" ? "bg-emerald-400" : "bg-primary animate-pulse"}`}
+                  />
                   {nextTrip
                     ? nextTrip.status === "paid" ||
                       nextTrip.status === "confirmed"
@@ -110,7 +117,9 @@ export function OverviewTab({
                 </p>
                 <p className="font-medium tracking-tight">
                   {nextTrip
-                    ? t("overview.nextTrip.adventurers", { count: nextTrip.travelers })
+                    ? t("overview.nextTrip.adventurers", {
+                        count: nextTrip.travelers,
+                      })
                     : t("overview.nextTrip.joinUs")}
                 </p>
               </div>
@@ -140,9 +149,13 @@ export function OverviewTab({
                     <div>
                       <h4 className="font-display text-lg font-medium mb-1 hover:text-primary transition-colors uppercase tracking-tight">
                         <Link href={`/profile/bookings/${req.id}`}>
-                          {req.status === "paid" 
-                            ? t("overview.tripsAndRequests.tripId", { id: req.id.toString().slice(0, 8) }) 
-                            : t("overview.tripsAndRequests.requestId", { id: req.id.toString().slice(0, 8) })}
+                          {req.status === "paid"
+                            ? t("overview.tripsAndRequests.tripId", {
+                                id: req.id.toString().slice(0, 8),
+                              })
+                            : t("overview.tripsAndRequests.requestId", {
+                                id: req.id.toString().slice(0, 8),
+                              })}
                         </Link>
                       </h4>
                       <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
@@ -167,7 +180,9 @@ export function OverviewTab({
                   <div className="mb-6 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                     <div>
                       <span className="block text-[9px] font-bold uppercase tracking-widest text-muted-foreground/60 mb-1">
-                        {req.status === "paid" ? t("overview.tripsAndRequests.status") : t("overview.tripsAndRequests.created")}
+                        {req.status === "paid"
+                          ? t("overview.tripsAndRequests.status")
+                          : t("overview.tripsAndRequests.created")}
                       </span>
                       <span className="font-medium">
                         {req.status === "paid"
@@ -179,14 +194,23 @@ export function OverviewTab({
                       <span className="block text-[9px] font-bold uppercase tracking-widest text-muted-foreground/60 mb-1">
                         {t("overview.tripsAndRequests.items")}
                       </span>
-                      <span className="font-medium">{t("overview.tripsAndRequests.itemsCount", { count: req.items.length })}</span>
+                      <span className="font-medium">
+                        {t("overview.tripsAndRequests.itemsCount", {
+                          count: req.items.length,
+                        })}
+                      </span>
                     </div>
                     {req.items[0]?.start_date && (
                       <div className="col-span-2">
                         <span className="block text-[9px] font-bold uppercase tracking-widest text-muted-foreground/60 mb-1">
                           {t("overview.tripsAndRequests.startDate")}
                         </span>
-                        <span className="font-medium">{new Date(req.items[0].start_date).toLocaleDateString(undefined, { dateStyle: 'long' })}</span>
+                        <span className="font-medium">
+                          {new Date(req.items[0].start_date).toLocaleDateString(
+                            undefined,
+                            { dateStyle: "long" },
+                          )}
+                        </span>
                       </div>
                     )}
                   </div>
@@ -194,8 +218,11 @@ export function OverviewTab({
                   {req.quote?.status === "quoted" && req.status !== "paid" && (
                     <div className="mb-6 flex items-center justify-between gap-3 bg-primary/5 p-4 rounded-xl border border-primary/10">
                       <p className="text-xs font-bold uppercase tracking-widest text-primary">
-                        {t("overview.tripsAndRequests.quoteReady", { 
-                          amount: formatCurrency(req.quote.totalAmount || 0, req.quote.currency || "USD") 
+                        {t("overview.tripsAndRequests.quoteReady", {
+                          amount: formatCurrency(
+                            req.quote.totalAmount || 0,
+                            req.quote.currency || "USD",
+                          ),
                         })}
                       </p>
                       <Button
@@ -219,7 +246,9 @@ export function OverviewTab({
                         size="sm"
                         className="h-10 rounded-lg font-display uppercase tracking-widest text-[10px] font-bold"
                       >
-                        {req.status === "paid" ? t("overview.tripsAndRequests.manageTrip") : t("overview.tripsAndRequests.viewDetails")}
+                        {req.status === "paid"
+                          ? t("overview.tripsAndRequests.manageTrip")
+                          : t("overview.tripsAndRequests.viewDetails")}
                       </Button>
                     </Link>
 
@@ -234,7 +263,9 @@ export function OverviewTab({
                         }
                         onClick={async () => {
                           if (
-                            !confirm(t("overview.tripsAndRequests.cancelConfirm"))
+                            !confirm(
+                              t("overview.tripsAndRequests.cancelConfirm"),
+                            )
                           )
                             return;
 
@@ -276,32 +307,32 @@ export function OverviewTab({
           </div>
         </div>
 
-        <div className="border-t border-border pt-12">
-          <h3 className="font-display text-2xl font-medium mb-6">
+        <div className="border-t border-border/50 pt-12">
+          <h3 className="font-display text-2xl font-medium mb-6 uppercase tracking-tight">
             {t("overview.stats.title")}
           </h3>
           <div className="grid grid-cols-3 gap-8">
             <div>
-              <p className="text-4xl font-display font-light text-primary">
+              <p className="text-4xl font-display font-medium text-primary">
                 {stats.trips < 10 ? `0${stats.trips}` : stats.trips}
               </p>
-              <p className="text-xs font-mono uppercase text-muted-foreground mt-2">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mt-2">
                 {t("overview.stats.trips")}
               </p>
             </div>
             <div>
-              <p className="text-4xl font-display font-light text-primary">
+              <p className="text-4xl font-display font-medium text-primary">
                 {stats.days < 10 ? `0${stats.days}` : stats.days}
               </p>
-              <p className="text-xs font-mono uppercase text-muted-foreground mt-2">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mt-2">
                 {t("overview.stats.days")}
               </p>
             </div>
             <div>
-              <p className="text-4xl font-display font-light text-primary">
+              <p className="text-4xl font-display font-medium text-primary">
                 00
               </p>
-              <p className="text-xs font-mono uppercase text-muted-foreground mt-2">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mt-2">
                 {t("overview.stats.reviews")}
               </p>
             </div>

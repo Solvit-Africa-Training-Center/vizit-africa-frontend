@@ -39,7 +39,7 @@ export default function DashboardClient({ requests }: DashboardClientProps) {
       label: t("stats.pending"),
       value: pendingCount,
       icon: RiTimeLine,
-      color: "text-accent-warm",
+      color: "text-primary",
     },
     {
       label: t("stats.quoted"),
@@ -152,7 +152,7 @@ export default function DashboardClient({ requests }: DashboardClientProps) {
                   <span
                     className={`text-xs font-medium px-2 py-1 rounded-full capitalize ${
                       request.status === "pending"
-                        ? "bg-amber-100 text-amber-700"
+                        ? "bg-primary-100 text-primary-700"
                         : request.status === "quoted"
                           ? "bg-blue-100 text-blue-700"
                           : request.status === "accepted"

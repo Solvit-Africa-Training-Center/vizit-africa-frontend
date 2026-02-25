@@ -53,7 +53,7 @@ export function PreferencesSection({
           <div className="p-5 rounded-2xl border border-border/50 bg-muted/10 space-y-4 transition-all hover:border-primary/20">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <RiPlaneLine className="size-5 text-blue-500" />
+                <RiPlaneLine className="size-5 text-primary" />
                 <Label className="text-xs font-bold uppercase tracking-wider">
                   {tCuration("flights")}
                 </Label>
@@ -85,7 +85,7 @@ export function PreferencesSection({
           <div className="p-5 rounded-2xl border border-border/50 bg-muted/10 space-y-4 transition-all hover:border-primary/20">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <RiHotelLine className="size-5 text-amber-500" />
+                <RiHotelLine className="size-5 text-primary" />
                 <Label className="text-xs font-bold uppercase tracking-wider">
                   {tCuration("accommodation")}
                 </Label>
@@ -115,7 +115,7 @@ export function PreferencesSection({
           <div className="p-5 rounded-2xl border border-border/50 bg-muted/10 space-y-4 transition-all hover:border-primary/20">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <RiCarLine className="size-5 text-red-500" />
+                <RiCarLine className="size-5 text-primary" />
                 <Label className="text-xs font-bold uppercase tracking-wider">
                   {tCuration("transport")}
                 </Label>
@@ -145,7 +145,7 @@ export function PreferencesSection({
           <div className="p-5 rounded-2xl border border-border/50 bg-muted/10 space-y-4 transition-all hover:border-primary/20">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <RiUserStarLine className="size-5 text-emerald-500" />
+                <RiUserStarLine className="size-5 text-primary" />
                 <Label className="text-xs font-bold uppercase tracking-wider">
                   {tCuration("localGuide")}
                 </Label>

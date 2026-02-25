@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import {
+  Cormorant_Garamond,
+  DM_Mono,
   DM_Sans,
   Inter,
-  JetBrains_Mono,
   Noto_Sans_Arabic,
 } from "next/font/google";
 import { getLocale } from "next-intl/server";
@@ -11,20 +12,29 @@ import { SmoothScroller } from "@/components/smooth-scroller";
 import { DirectionProvider } from "@/components/ui/direction";
 import { ScrollProgress } from "@/components/ui/scroll-progress";
 
-const dmSans = DM_Sans({
+const cormorantGaramond = Cormorant_Garamond({
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
   variable: "--font-display",
   display: "swap",
 });
 
-const inter = Inter({
+const dmSans = DM_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
+const inter = Inter({
   subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const dmMono = DM_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
   variable: "--font-mono",
   display: "swap",
 });
@@ -67,7 +77,7 @@ export default async function RootLayout({
   return (
     <html lang={lang} dir={direction} suppressHydrationWarning>
       <body
-        className={`${dmSans.variable} ${inter.variable} ${jetbrainsMono.variable} ${notoSansArabic.variable} font-sans antialiased`}
+        className={`${cormorantGaramond.variable} ${dmSans.variable} ${dmMono.variable} ${inter.variable} ${notoSansArabic.variable} font-sans antialiased`}
       >
         <DirectionProvider direction={direction}>
           <SmoothScroller>

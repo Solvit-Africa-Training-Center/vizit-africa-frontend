@@ -17,11 +17,11 @@ export default function AuthLayout({
         />
         <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-black/20" />
 
-        <div className="absolute bottom-12 left-12 right-12 text-primary-foreground">
+        <div className="absolute bottom-12 left-12 right-12 text-white">
           <blockquote className="font-display text-4xl font-medium leading-tight mb-4">
             "The journey of a thousand miles begins with a single step."
           </blockquote>
-          <p className="text-primary-foreground/60 font-mono text-sm uppercase tracking-widest">
+          <p className="text-primary-light/80 font-mono text-sm uppercase tracking-widest">
             Vizit Africa — Concierge Travel
           </p>
         </div>

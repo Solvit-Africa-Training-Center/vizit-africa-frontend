@@ -131,7 +131,10 @@ export default function TripReviewPage() {
             <RiArrowLeftLine className="size-4 transition-transform group-hover:-translate-x-1" />
             Back to Builder
           </Link>
-          <Badge variant="outline" className="font-mono text-[10px] py-1 border-primary/20 text-primary">
+          <Badge
+            variant="outline"
+            className="font-mono text-[10px] py-1 border-primary/20 text-primary"
+          >
             Step 3: Final Narrative Review
           </Badge>
         </div>
@@ -141,10 +144,12 @@ export default function TripReviewPage() {
           <div className="lg:col-span-7 space-y-12">
             <div className="space-y-4">
               <h1 className="font-display text-4xl md:text-6xl font-medium tracking-tight leading-none">
-                Review Your <br /><span className="text-primary">Narrative</span>
+                Review Your <br />
+                <span className="text-primary">Narrative</span>
               </h1>
               <p className="text-muted-foreground text-lg font-light max-w-xl">
-                Fine-tune your selections before our concierge team begins crafting your personalized African journey.
+                Fine-tune your selections before our concierge team begins
+                crafting your personalized African journey.
               </p>
             </div>
 
@@ -158,7 +163,11 @@ export default function TripReviewPage() {
                   </span>
                 </h2>
                 <Link href="/plan-trip">
-                  <Button variant="ghost" size="sm" className="text-xs font-bold uppercase tracking-widest hover:bg-primary/5 hover:text-primary">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-xs font-bold uppercase tracking-widest hover:bg-primary/5 hover:text-primary"
+                  >
                     + Add Extras
                   </Button>
                 </Link>
@@ -174,11 +183,17 @@ export default function TripReviewPage() {
                     >
                       <RiSuitcaseLine className="size-12 mx-auto text-muted-foreground/20" />
                       <div className="space-y-2">
-                        <p className="text-lg font-medium">Your itinerary is empty</p>
-                        <p className="text-sm text-muted-foreground">Add some magic to your trip to get started.</p>
+                        <p className="text-lg font-medium">
+                          Your itinerary is empty
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          Add some magic to your trip to get started.
+                        </p>
                       </div>
                       <Link href="/plan-trip">
-                        <Button className="rounded-full px-8 h-12">Explore Services</Button>
+                        <Button className="rounded-full px-8 h-12">
+                          Explore Services
+                        </Button>
                       </Link>
                     </motion.div>
                   ) : (
@@ -214,94 +229,137 @@ export default function TripReviewPage() {
 
           {/* Right: Final Details & Confirm */}
           <div className="lg:col-span-5 space-y-8 sticky top-32">
-            <div className="bg-card border border-border rounded-[2.5rem] p-8 md:p-10 shadow-2xl shadow-primary/5 space-y-10">
-              <div className="space-y-8">
+            <div className="bg-surface-ink text-white border border-primary/10 rounded-[2.5rem] p-8 md:p-10 shadow-2xl relative overflow-hidden isolate space-y-10">
+              <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_top_right,oklch(65%_0.06_245/0.15)_0%,transparent_70%)] pointer-events-none" />
+
+              <div className="relative z-10 space-y-8">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-display text-2xl font-medium">The Summary</h3>
-                  <RiInformationLine className="size-6 text-primary/40" />
+                  <h3 className="font-display text-2xl font-medium text-white">
+                    The Summary
+                  </h3>
+                  <RiInformationLine className="size-6 text-primary-light/40" />
                 </div>
 
                 {/* Condensed Logistics Info */}
-                <div className="grid grid-cols-2 gap-x-6 gap-y-4 bg-muted/30 p-6 rounded-2xl border border-border/50">
+                <div className="grid grid-cols-2 gap-x-6 gap-y-4 bg-white/5 p-6 rounded-2xl border border-white/10">
                   <div className="space-y-1">
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60">Destination</p>
-                    <p className="font-medium text-sm flex items-center gap-2 truncate">
-                      <RiMapPinLine className="size-3.5 text-primary" />
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-primary-light/80">
+                      Destination
+                    </p>
+                    <p className="font-medium text-sm flex items-center gap-2 truncate text-white">
+                      <RiMapPinLine className="size-3.5 text-primary-light" />
                       {tripInfo.destination || "Kigali, Rwanda"}
                     </p>
                   </div>
                   <div className="space-y-1">
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60">Travelers</p>
-                    <p className="font-medium text-sm flex items-center gap-2">
-                      <RiUserLine className="size-3.5 text-primary" />
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-primary-light/80">
+                      Travelers
+                    </p>
+                    <p className="font-medium text-sm flex items-center gap-2 text-white">
+                      <RiUserLine className="size-3.5 text-primary-light" />
                       {tripInfo.travelers} Adventurers
                     </p>
                   </div>
                   <div className="space-y-1">
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60">Budget Level</p>
-                    <p className="font-medium text-sm capitalize">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-primary-light/80">
+                      Budget Level
+                    </p>
+                    <p className="font-medium text-sm capitalize text-white">
                       {tripInfo.budgetBracket?.replace("-", " ") || "Mid Range"}
                     </p>
                   </div>
                   <div className="space-y-1">
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60">Trip Style</p>
-                    <p className="font-medium text-sm capitalize">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-primary-light/80">
+                      Trip Style
+                    </p>
+                    <p className="font-medium text-sm capitalize text-white">
                       {tripInfo.tripPurpose || "Leisure"}
                     </p>
                   </div>
-                  <div className="space-y-1 col-span-2 pt-2 border-t border-border/30">
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60">Journey Timeline</p>
-                    <p className="font-medium text-sm flex items-center gap-2">
-                      <RiCalendarLine className="size-3.5 text-primary" />
-                      {tripInfo.arrivalDate ? format(parseISO(tripInfo.arrivalDate), "MMM d") : "TBD"} — {tripInfo.departureDate ? format(parseISO(tripInfo.departureDate), "MMM d, yyyy") : "TBD"}
+                  <div className="space-y-1 col-span-2 pt-2 border-t border-white/10">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-primary-light/80">
+                      Journey Timeline
+                    </p>
+                    <p className="font-medium text-sm flex items-center gap-2 text-white">
+                      <RiCalendarLine className="size-3.5 text-primary-light" />
+                      {tripInfo.arrivalDate
+                        ? format(parseISO(tripInfo.arrivalDate), "MMM d")
+                        : "TBD"}{" "}
+                      —{" "}
+                      {tripInfo.departureDate
+                        ? format(
+                            parseISO(tripInfo.departureDate),
+                            "MMM d, yyyy",
+                          )
+                        : "TBD"}
                     </p>
                   </div>
                 </div>
 
                 {/* Final Contact Identity */}
-                <form className="space-y-5" id="final-review-form" onSubmit={handleManualTrigger}>
+                <form
+                  className="space-y-5"
+                  id="final-review-form"
+                  onSubmit={handleManualTrigger}
+                >
                   <div className="space-y-4">
                     <div className="space-y-2">
-                      <Label className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground/60 ml-1">Full Name</Label>
+                      <Label className="text-[10px] uppercase font-bold tracking-widest text-primary-light/80 ml-1">
+                        Full Name
+                      </Label>
                       <Input
                         value={tripInfo.name}
-                        onChange={(e) => updateTripInfo({ name: e.target.value })}
+                        onChange={(e) =>
+                          updateTripInfo({ name: e.target.value })
+                        }
                         required
-                        className="bg-muted/20 border-border/40 h-12 text-base rounded-xl"
+                        className="bg-white/5 border-white/10 text-white placeholder:text-white/30 h-12 text-base rounded-xl focus-visible:ring-primary-light/50 focus-visible:border-primary-light/50"
                         placeholder="Sarah Johnson"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground/60 ml-1">Email Address</Label>
+                      <Label className="text-[10px] uppercase font-bold tracking-widest text-primary-light/80 ml-1">
+                        Email Address
+                      </Label>
                       <Input
                         type="email"
                         value={tripInfo.email}
-                        onChange={(e) => updateTripInfo({ email: e.target.value })}
+                        onChange={(e) =>
+                          updateTripInfo({ email: e.target.value })
+                        }
                         required
-                        className="bg-muted/20 border-border/40 h-12 text-base rounded-xl"
+                        className="bg-white/5 border-white/10 text-white placeholder:text-white/30 h-12 text-base rounded-xl focus-visible:ring-primary-light/50 focus-visible:border-primary-light/50"
                         placeholder="sarah@example.com"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground/60 ml-1">Special Narrative (Optional)</Label>
+                      <Label className="text-[10px] uppercase font-bold tracking-widest text-primary-light/80 ml-1">
+                        Special Narrative (Optional)
+                      </Label>
                       <Textarea
                         value={tripInfo.specialRequests}
-                        onChange={(e) => updateTripInfo({ specialRequests: e.target.value })}
-                        className="bg-muted/20 border-border/40 min-h-[100px] text-sm rounded-2xl resize-none p-4 font-light"
+                        onChange={(e) =>
+                          updateTripInfo({ specialRequests: e.target.value })
+                        }
+                        className="bg-white/5 border-white/10 text-white placeholder:text-white/30 min-h-[100px] text-sm rounded-2xl resize-none p-4 font-light focus-visible:ring-primary-light/50 focus-visible:border-primary-light/50"
                         placeholder="Dietary needs, preferred guides, or a specific occasion..."
                       />
                     </div>
                   </div>
 
-                  <Separator className="opacity-50" />
+                  <Separator className="opacity-20 bg-white" />
 
                   <div className="space-y-6">
                     <div className="flex justify-between items-end">
                       <div className="space-y-1">
-                        <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Estimated Total</p>
-                        <p className="font-display text-4xl font-medium text-primary">${totalPrice.toLocaleString()}</p>
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-white/60">
+                          Estimated Total
+                        </p>
+                        <p className="font-display text-4xl font-medium text-primary-light">
+                          ${totalPrice.toLocaleString()}
+                        </p>
                       </div>
-                      <p className="text-[10px] text-muted-foreground italic text-right max-w-32 leading-tight">
+                      <p className="text-[10px] text-primary-light/80 italic text-right max-w-32 leading-tight">
                         Subject to concierge verification
                       </p>
                     </div>
@@ -309,7 +367,7 @@ export default function TripReviewPage() {
                     <Button
                       type="submit"
                       size="lg"
-                      className="w-full rounded-full h-16 text-lg font-bold shadow-xl shadow-primary/20 group"
+                      className="w-full rounded-full h-16 text-xs uppercase tracking-widest font-sans font-semibold bg-primary hover:bg-primary/90 text-white border-0 shadow-xl shadow-primary/20 transition-all duration-300 hover:scale-105 group"
                       disabled={isSubmitting || items.length === 0}
                     >
                       {isSubmitting ? (
@@ -337,9 +395,13 @@ export default function TripReviewPage() {
               <RiPlaneLine className="size-8" />
             </div>
             <div className="text-center space-y-2">
-              <AlertDialogTitle className="font-display text-3xl font-medium">Ready to embark?</AlertDialogTitle>
+              <AlertDialogTitle className="font-display text-3xl font-medium">
+                Ready to embark?
+              </AlertDialogTitle>
               <AlertDialogDescription className="text-base text-muted-foreground leading-relaxed">
-                By submitting, our concierge team will begin manually sourcing the best available fares and exclusive stays for your journey. You will receive a finalized detailed quote within 48 hours.
+                By submitting, our concierge team will begin manually sourcing
+                the best available fares and exclusive stays for your journey.
+                You will receive a finalized detailed quote within 48 hours.
               </AlertDialogDescription>
             </div>
           </AlertDialogHeader>
@@ -347,7 +409,7 @@ export default function TripReviewPage() {
             <AlertDialogCancel className="rounded-full px-8 h-12 border-border/50 hover:bg-muted font-bold text-xs uppercase tracking-widest">
               Review More
             </AlertDialogCancel>
-            <AlertDialogAction 
+            <AlertDialogAction
               onClick={handleFinalSubmit}
               className="rounded-full px-8 h-12 font-bold text-xs uppercase tracking-widest shadow-lg shadow-primary/20"
             >

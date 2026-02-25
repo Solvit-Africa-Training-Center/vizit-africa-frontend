@@ -18,11 +18,6 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -34,8 +29,6 @@
   --color-success-foreground: var(--success-foreground);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
-  --color-accent-warm: var(--accent-warm);
-  --color-accent-success: var(--accent-success);
   --color-muted-foreground: var(--muted-foreground);
   --color-muted: var(--muted);
   --color-secondary-foreground: var(--secondary-foreground);
@@ -44,20 +37,26 @@
   --color-primary: var(--primary);
   --color-primary-light: var(--primary-light);
   --color-primary-dark: var(--primary-dark);
-  --color-primary-subtle: var(--primary-subtle);
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --color-surface-elevated: var(--surface-elevated);
-  --color-surface-elevated: var(--surface-elevated);
-  --color-border-subtle: var(--border-subtle);
-  
-  /* Core Radius Tokens - Base unit for all rounded corners */
-  --radius: 1rem; 
+
+  /* surface palette — alternating section backgrounds */
+  --color-surface-canvas: var(--surface-canvas);
+  --color-surface-cream: var(--surface-cream);
+  --color-surface-bone: var(--surface-bone);
+  --color-surface-dark: var(--surface-dark);
+  --color-surface-ink: var(--surface-ink);
+  --color-surface-muted: var(--surface-muted);
+
+  /* warm border for cards */
+  --color-border-warm: var(--border-warm);
+
+  /* Core Radius Tokens */
+  --radius: 1rem;
   --radius-card: 2rem;
   --radius-button: 9999px;
-  --radius-input: 0.75rem;
 
   --radius-sm: calc(var(--radius) * 0.5);
   --radius-md: calc(var(--radius) * 0.75);
@@ -67,12 +66,12 @@
   --radius-3xl: calc(var(--radius-card) * 1.5);
   --radius-full: 9999px;
 
-  /* Semantic Shadow Tokens - Controlled centrally */
+  /* Shadow Tokens */
   --shadow-sm: 0 1px 2px oklch(0% 0 0 / 0.05);
   --shadow-md: 0 4px 6px oklch(0% 0 0 / 0.05);
   --shadow-lg: 0 10px 15px oklch(0% 0 0 / 0.05);
   --shadow-xl: 0 20px 25px oklch(0% 0 0 / 0.05);
-  
+
   --shadow-card: var(--shadow-xl);
   --shadow-button: 0 10px 15px -3px oklch(var(--primary) / 0.1);
 
@@ -84,22 +83,18 @@
 }
 
 :root {
-  --primary: 42% 0.06 245; /* Store as raw OKLCH values for opacity modifiers if needed */
-  /* Re-defining with oklch() for standard use */
-  --color-primary: oklch(42% 0.06 245);
-  
+  /* brand primary — client identity */
   --primary: oklch(42% 0.06 245);
-  --primary-light: oklch(52% 0.06 245);
-  --primary-dark: oklch(32% 0.06 245);
-  --primary-subtle: oklch(95% 0.02 245);
   --primary-foreground: oklch(100% 0 0);
+  /* creative variants for depth and dark-mode contrast */
+  --primary-light: oklch(65% 0.06 245);
+  --primary-dark: oklch(25% 0.06 245);
 
-  --accent-warm: oklch(65% 0.15 45);
-  --accent-success: oklch(60% 0.12 150);
+  /* shadcn semantic tokens */
   --accent: oklch(97% 0 0);
   --accent-foreground: oklch(20% 0 0);
 
-  --background: oklch(98% 0 0);
+  --background: oklch(98.5% 0.004 75);
   --foreground: oklch(20% 0 0);
   --muted: oklch(96% 0 0);
   --muted-foreground: oklch(40% 0 0);
@@ -108,13 +103,11 @@
   --card-foreground: oklch(20% 0 0);
   --popover: oklch(100% 0 0);
   --popover-foreground: oklch(20% 0 0);
-  --surface-elevated: oklch(100% 0 0);
 
   --secondary: oklch(96% 0.005 245);
   --secondary-foreground: oklch(25% 0.02 245);
 
   --border: oklch(90% 0 0);
-  --border-subtle: oklch(92% 0.005 245);
   --input: oklch(90% 0 0);
   --ring: oklch(42% 0.06 245);
 
@@ -127,14 +120,14 @@
   --success: oklch(62% 0.18 145);
   --success-foreground: oklch(100% 0 0);
 
-  --sidebar: oklch(98% 0 0);
-  --sidebar-foreground: oklch(20% 0 0);
-  --sidebar-primary: oklch(42% 0.06 245);
-  --sidebar-primary-foreground: oklch(100% 0 0);
-  --sidebar-accent: oklch(95% 0.02 245);
-  --sidebar-accent-foreground: oklch(20% 0 0);
-  --sidebar-border: oklch(90% 0 0);
-  --sidebar-ring: oklch(42% 0.06 245);
+  /* editorial surface palette */
+  --surface-canvas: #fafaf9;
+  --surface-cream: oklch(96% 0.008 75);
+  --surface-bone: oklch(93% 0.012 75);
+  --surface-dark: oklch(14% 0.025 245);
+  --surface-ink: #1a1a1a;
+  --surface-muted: #0a0a0d;
+  --border-warm: #e2ddd6;
 
   /* Layout Variables */
   --section-py: 6rem;
@@ -206,7 +199,7 @@
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    max-width: 80rem; /* 1280px */
+    max-width: 80rem;
     padding-left: var(--container-px);
     padding-right: var(--container-px);
   }
@@ -218,15 +211,11 @@
     }
   }
 
-  /* Centralized Card Style */
   .marketing-card {
     @apply bg-card border border-border/50 rounded-2xl shadow-xl shadow-black/5 transition-all duration-500 hover:border-primary/30;
   }
 
-  /* Centralized Interactive Elements */
   .marketing-button-primary {
     @apply rounded-full font-display uppercase tracking-widest text-[10px] font-bold shadow-lg shadow-primary/10 transition-all duration-500 hover:scale-105 active:scale-95;
   }
 }
-
-

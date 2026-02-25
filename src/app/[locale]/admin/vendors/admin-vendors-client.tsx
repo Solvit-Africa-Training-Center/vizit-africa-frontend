@@ -93,7 +93,7 @@ export default function AdminVendorsClient({
           <RiTimeLine className="size-4" />
           Pending Requests
           {pendingVendors.length > 0 && (
-            <span className="ml-1 text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full border border-amber-200">
+            <span className="ml-1 text-xs bg-primary-100 text-primary-700 px-2 py-0.5 rounded-full border border-primary-200">
               {pendingVendors.length}
             </span>
           )}

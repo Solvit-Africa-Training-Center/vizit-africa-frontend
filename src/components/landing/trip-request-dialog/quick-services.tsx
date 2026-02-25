@@ -87,8 +87,8 @@ export function QuickServices({
           }`}
         >
           <div className="flex items-start gap-3">
-            <div className="size-10 rounded-lg bg-amber-100 dark:bg-amber-950 flex items-center justify-center shrink-0">
-              <RiHotelLine className="size-5 text-amber-600 dark:text-amber-400" />
+            <div className="size-10 rounded-lg bg-primary-100 dark:bg-primary-950 flex items-center justify-center shrink-0">
+              <RiHotelLine className="size-5 text-primary-600 dark:text-primary-400" />
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium">Accommodation</p>

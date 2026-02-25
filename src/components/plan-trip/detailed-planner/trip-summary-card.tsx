@@ -38,48 +38,55 @@ export function TripSummaryCard({
   const totalPrice = items.reduce((acc, i) => acc + (i.price || 0), 0);
 
   return (
-    <div className="bg-card border border-border rounded-3xl p-8 shadow-2xl shadow-primary/5 space-y-10">
-      <div className="space-y-6">
+    <div className="bg-surface-ink text-white border border-primary/10 rounded-3xl p-8 shadow-2xl relative overflow-hidden isolate space-y-10">
+      {/* Glow Effect */}
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_top_right,oklch(65%_0.06_245/0.15)_0%,transparent_70%)] pointer-events-none" />
+
+      <div className="relative z-10 space-y-6">
         <div className="flex items-center justify-between">
-          <h3 className="font-display text-2xl font-medium">{t("title")}</h3>
-          <div className="size-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+          <h3 className="font-display text-2xl font-medium text-white">
+            {t("title")}
+          </h3>
+          <div className="size-10 rounded-xl bg-primary-light/10 flex items-center justify-center text-primary-light">
             <RiUser3Line className="size-5" />
           </div>
         </div>
 
         <div className="space-y-5">
           <div className="space-y-2">
-            <Label className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground/60 ml-1">
+            <Label className="text-[10px] uppercase font-bold tracking-widest text-primary-light/80 ml-1">
               {t("fullName")}
             </Label>
             <Input
               value={tripInfo.name}
               onChange={(e) => updateTripInfo({ name: e.target.value })}
-              className="bg-muted/20 border-border/40 h-12 text-base rounded-xl"
+              className="bg-white/5 border-white/10 text-white placeholder:text-white/30 h-12 text-base rounded-xl focus-visible:ring-primary-light/50 focus-visible:border-primary-light/50"
               placeholder={t("fullNamePlaceholder")}
             />
           </div>
           <div className="space-y-2">
-            <Label className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground/60 ml-1">
+            <Label className="text-[10px] uppercase font-bold tracking-widest text-primary-light/80 ml-1">
               {t("email")}
             </Label>
             <Input
               type="email"
               value={tripInfo.email || ""}
               onChange={(e) => updateTripInfo({ email: e.target.value })}
-              className="bg-muted/20 border-border/40 h-12 text-base rounded-xl"
+              className="bg-white/5 border-white/10 text-white placeholder:text-white/30 h-12 text-base rounded-xl focus-visible:ring-primary-light/50 focus-visible:border-primary-light/50"
               placeholder={t("emailPlaceholder")}
             />
           </div>
           <div className="space-y-2">
-            <Label className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground/60 ml-1">
+            <Label className="text-[10px] uppercase font-bold tracking-widest text-primary-light/80 ml-1">
               {t("budget")}
             </Label>
             <Select
               value={tripInfo.budgetBracket || "mid-range"}
-              onValueChange={(v) => updateTripInfo({ budgetBracket: v ?? undefined })}
+              onValueChange={(v) =>
+                updateTripInfo({ budgetBracket: v ?? undefined })
+              }
             >
-              <SelectTrigger className="bg-muted/20 border-border/40 h-12 rounded-xl text-sm">
+              <SelectTrigger className="bg-white/5 border-white/10 text-white h-12 rounded-xl text-sm focus:ring-primary-light/50">
                 <SelectValue placeholder={t("budgetPlaceholder")} />
               </SelectTrigger>
               <SelectContent>
@@ -87,7 +94,9 @@ export function TripSummaryCard({
                 <SelectItem value="mid-range">
                   Mid-Range (Quality & Comfort)
                 </SelectItem>
-                <SelectItem value="luxury">Luxury (High-end Excellence)</SelectItem>
+                <SelectItem value="luxury">
+                  Luxury (High-end Excellence)
+                </SelectItem>
                 <SelectItem value="ultra-luxe">
                   Ultra-Luxury (The Finest Only)
                 </SelectItem>
@@ -95,7 +104,7 @@ export function TripSummaryCard({
             </Select>
           </div>
           <div className="space-y-2">
-            <Label className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground/60 ml-1">
+            <Label className="text-[10px] uppercase font-bold tracking-widest text-primary-light/80 ml-1">
               {t("specialNarrative")}
             </Label>
             <Textarea
@@ -105,31 +114,34 @@ export function TripSummaryCard({
                   specialRequests: e.target.value,
                 })
               }
-              className="bg-muted/20 border-border/40 min-h-[120px] text-sm rounded-2xl resize-none p-4 font-light leading-relaxed"
+              className="bg-white/5 border-white/10 text-white placeholder:text-white/30 min-h-[120px] text-sm rounded-2xl resize-none p-4 font-light leading-relaxed focus-visible:ring-primary-light/50 focus-visible:border-primary-light/50"
               placeholder={t("specialNarrativePlaceholder")}
             />
           </div>
         </div>
 
-        <Separator className="opacity-50" />
+        <Separator className="opacity-20 bg-white" />
 
         <div className="space-y-4">
           <div className="flex justify-between items-end">
             <div className="space-y-1">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-white/60">
                 {t("estimatedValue")}
               </p>
-              <p className="font-display text-3xl font-medium text-primary">
+              <p className="font-display text-3xl font-medium text-primary-light">
                 ${totalPrice.toLocaleString()}
               </p>
             </div>
-            <Badge variant="secondary" className="font-mono py-1 px-3">
+            <Badge
+              variant="secondary"
+              className="font-mono py-1 px-3 bg-white/10 text-white hover:bg-white/20 border-0"
+            >
               {t("servicesSelected", { count: items.length })}
             </Badge>
           </div>
-          <div className="p-4 rounded-2xl bg-primary/5 border border-primary/10 flex gap-3">
-            <RiInformationLine className="size-4 text-primary shrink-0 mt-0.5" />
-            <p className="text-[10px] text-muted-foreground leading-normal italic">
+          <div className="p-4 rounded-2xl bg-primary-light/10 border border-primary-light/20 flex gap-3">
+            <RiInformationLine className="size-4 text-primary-light shrink-0 mt-0.5" />
+            <p className="text-[10px] text-primary-light/80 leading-normal italic">
               {t("disclaimer")}
             </p>
           </div>
@@ -138,7 +150,7 @@ export function TripSummaryCard({
         <Button
           size="lg"
           onClick={onSubmit}
-          className="w-full rounded-full h-16 text-lg font-bold shadow-xl shadow-primary/20 group relative overflow-hidden"
+          className="w-full rounded-full h-16 text-xs uppercase tracking-widest font-sans font-semibold bg-primary hover:bg-primary/90 text-white border-0 shadow-xl shadow-primary/20 group relative overflow-hidden transition-all duration-300 hover:scale-105"
         >
           <span className="relative z-10 flex items-center justify-center gap-2">
             {t("submit")}

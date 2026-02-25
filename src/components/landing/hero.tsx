@@ -9,11 +9,6 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
 import { HERO_SLIDES } from "@/lib/configs";
 import { TripRequestDialog } from "./trip-request-dialog";
 
@@ -34,10 +29,6 @@ export function Hero() {
     }, 8000);
     return () => clearTimeout(timer);
   }, [currentSlide]);
-
-  const handleSlideChange = (index: number) => {
-    setCurrentSlide(index);
-  };
 
   const slide = HERO_SLIDES[currentSlide];
   const slideContent = {
@@ -80,212 +71,188 @@ export function Hero() {
   return (
     <section
       ref={containerRef}
-      className="relative h-[100dvh] min-h-[700px] w-full overflow-hidden bg-[oklch(14%_0_0)]"
+      className="relative min-h-dvh w-full bg-surface-cream pt-24 lg:pt-0 isolate overflow-hidden"
     >
-      <div
-        ref={parallaxRef}
-        className="absolute inset-0 w-full h-[120%] -top-[10%] z-0 will-change-transform"
-      >
-        <AnimatePresence mode="popLayout">
-          <motion.div
-            key={slide.id}
-            initial={{ opacity: 0, scale: 1.1 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.6, ease: "easeOut" }}
-            className="absolute inset-0 w-full h-full"
-          >
-            <Image
-              src={slide.image}
-              fill
-              alt={`${slideContent.heading1} ${slideContent.heading2}`}
-              className="w-full h-full object-cover"
-              priority
-            />
-          </motion.div>
-        </AnimatePresence>
-
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="absolute inset-0 bg-linear-to-t from-black via-black/40 to-transparent" />
-      </div>
-
-      <div className="absolute inset-0 z-20 pointer-events-none opacity-20 mix-blend-overlay">
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.03] mix-blend-multiply">
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] brightness-100 contrast-150" />
       </div>
 
-      <div
-        ref={contentRef}
-        className="relative z-30 container mx-auto px-5 md:px-10 h-full flex flex-col justify-end pb-8 md:pb-12"
-      >
-        <div className="max-w-[1400px] w-full pointer-events-none">
+      <div className="marketing-container h-[100dvh] min-h-[700px] flex flex-col lg:grid lg:grid-cols-2 lg:gap-12 pb-24 lg:pb-0">
+        {/* Left Panel: Typography */}
+        <div className="flex flex-col justify-center h-full relative z-20 order-2 lg:order-1 pt-8 lg:pt-0 max-w-xl">
           <AnimatePresence mode="wait">
             <motion.div
               key={`content-${slide.id}`}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.4 }}
             >
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="flex items-center gap-4 mb-6"
-              >
-                <div className="w-12 h-px bg-primary-foreground/60" />
-                <span className="text-primary-foreground/80 uppercase tracking-widest text-xs font-medium">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-1.5 h-1.5 rounded-full bg-primary shrink-0 relative">
+                  <div className="absolute inset-0 bg-primary rounded-full animate-ping opacity-50"></div>
+                </div>
+                <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.2em] text-surface-ink/60 font-medium">
+                  Rwanda · East Africa · Est. 2023
+                </span>
+              </div>
+
+              <h1 className="font-display text-5xl sm:text-6xl lg:text-[5.5rem] font-medium leading-[0.9] tracking-tighter text-surface-ink uppercase mb-6 drop-shadow-sm flex flex-col items-start text-balance">
+                <span className="block">{slideContent.heading1}</span>
+                <span className="block text-primary italic pr-2">
+                  {slideContent.heading2}
+                </span>
+                <span
+                  className="block text-transparent italic"
+                  style={{ WebkitTextStroke: "1px var(--surface-ink)" }}
+                >
                   {slideContent.subheading}
                 </span>
-              </motion.div>
+              </h1>
 
-              <div className="overflow-hidden mb-2">
-                <motion.h1
-                  initial={{ y: "100%" }}
-                  animate={{ y: 0 }}
-                  transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-                  className="text-4xl md:text-6xl lg:text-7xl font-medium font-display text-primary-foreground uppercase leading-[0.9] tracking-tighter"
-                >
-                  {slideContent.heading1}
-                </motion.h1>
-              </div>
-
-              <div className="flex flex-col md:flex-row md:items-end gap-6 md:gap-12">
-                <div className="overflow-hidden">
-                  <motion.h1
-                    initial={{ y: "100%" }}
-                    animate={{ y: 0 }}
-                    transition={{
-                      duration: 1.4,
-                      delay: 0.1,
-                      ease: [0.16, 1, 0.3, 1],
-                    }}
-                    className="text-4xl md:text-6xl lg:text-7xl font-medium font-display text-transparent bg-clip-text bg-linear-to-r from-primary-light to-white uppercase leading-[0.9] tracking-tighter"
-                  >
-                    {slideContent.heading2}
-                  </motion.h1>
-                </div>
-
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 1, delay: 0.6 }}
-                  className="text-base md:text-lg text-primary-foreground/80 max-w-md font-light leading-relaxed mb-4 md:mb-2"
-                >
-                  {slideContent.description}
-                </motion.p>
-              </div>
+              <p className="font-sans text-base sm:text-lg text-surface-ink/70 font-light leading-relaxed max-w-md text-pretty mb-8 lg:mb-12">
+                {slideContent.description}
+              </p>
             </motion.div>
           </AnimatePresence>
-        </div>
 
-        <div className="relative z-40 mt-12 pointer-events-auto">
-          <TripRequestDialog
-            open={isDialogOpen}
-            onOpenChange={setIsDialogOpen}
-            trigger={
-              <Button
-                size="lg"
-                className="font-display uppercase tracking-widest text-sm h-14 px-8 rounded-full shadow-lg hover:shadow-primary/20 hover:scale-105 transition-all duration-300"
-              >
-                <RiPlaneLine className="mr-2 size-5" />
-                {tCommon("startPlanning")}
-              </Button>
-            }
-          />
-        </div>
-
-        <div className="lg:hidden flex items-center gap-4 mt-6">
-          {HERO_SLIDES.map((_, index) => (
-            <button
-              key={index}
-              type="button"
-              onClick={() => handleSlideChange(index)}
-              className={`h-0.5 transition-all duration-500 ${
-                index === currentSlide
-                  ? "w-12 bg-primary-foreground"
-                  : "w-4 bg-primary-foreground/40 hover:bg-primary-foreground/60"
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
+          <div className="flex flex-wrap items-center gap-4">
+            <TripRequestDialog
+              open={isDialogOpen}
+              onOpenChange={setIsDialogOpen}
+              trigger={
+                <Button
+                  size="lg"
+                  className="rounded-full font-sans font-semibold uppercase tracking-[0.12em] text-xs h-12 px-8 shadow-lg hover:shadow-primary/20 hover:scale-105 transition-all duration-300 bg-primary hover:bg-primary/90 text-white shrink-0"
+                >
+                  <RiPlaneLine className="mr-2 size-4" />
+                  {tCommon("startPlanning")}
+                </Button>
+              }
             />
-          ))}
+          </div>
+
+          <div className="hidden lg:grid grid-cols-3 gap-8 mt-16 pt-8 border-t border-border-warm max-w-lg">
+            <div>
+              <div className="font-display text-2xl text-surface-ink">
+                1.2K+
+              </div>
+              <div className="font-mono text-[9px] uppercase tracking-widest text-surface-ink/50 mt-1">
+                Travelers
+              </div>
+            </div>
+            <div>
+              <div className="font-display text-2xl text-surface-ink">18</div>
+              <div className="font-mono text-[9px] uppercase tracking-widest text-surface-ink/50 mt-1">
+                Nationalities
+              </div>
+            </div>
+            <div>
+              <div className="font-display text-2xl text-primary flex items-baseline gap-1">
+                4.9 <span className="text-sm">★</span>
+              </div>
+              <div className="font-mono text-[9px] uppercase tracking-widest text-surface-ink/50 mt-1">
+                Rating
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Panel: Img */}
+        <div className="h-[40vh] min-h-[300px] lg:h-full relative z-10 order-1 lg:order-2 flex flex-col justify-center lg:py-16">
+          <div className="relative w-full h-full lg:max-h-[75vh] rounded-2xl overflow-hidden shadow-2xl bg-surface-bone p-2 lg:p-4">
+            <div className="relative w-full h-full rounded-xl overflow-hidden border border-black/5">
+              <div
+                ref={parallaxRef}
+                className="absolute inset-0 w-full h-[120%] -top-[10%] will-change-transform"
+              >
+                <AnimatePresence mode="popLayout">
+                  <motion.div
+                    key={`img-${slide.id}`}
+                    initial={{ opacity: 0, scale: 1.05 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 1.2, ease: "easeInOut" }}
+                    className="absolute inset-0 w-full h-full"
+                  >
+                    <Image
+                      src={slide.image}
+                      fill
+                      alt={`${slideContent.heading1} ${slideContent.heading2}`}
+                      className="w-full h-full object-cover"
+                      priority
+                    />
+                    <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent mix-blend-overlay" />
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </div>
+
+            <div className="absolute -bottom-4 lg:bottom-12 -left-4 lg:-left-12 bg-surface-cream px-6 py-4 rounded-xl shadow-xl border border-border flex items-center gap-4 z-20">
+              <div className="w-10 h-10 rounded-full bg-surface-bone flex items-center justify-center shrink-0">
+                <RiPlaneLine className="w-4 h-4 text-surface-ink" />
+              </div>
+              <div>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={`tag-${slide.id}`}
+                    initial={{ opacity: 0, y: 5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -5 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <div className="font-display text-lg text-surface-ink leading-none mb-1">
+                      {slide.title}
+                    </div>
+                    <div className="font-mono text-[9px] uppercase tracking-widest text-surface-ink/50">
+                      Destination
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </div>
+
+            <div className="absolute top-1/2 -translate-y-1/2 right-2 lg:right-6 mix-blend-difference hidden sm:block pointer-events-none">
+              <div
+                className="writing-vertical-rl rotate-180 font-mono text-[10px] tracking-[0.3em] text-white/50 uppercase whitespace-nowrap"
+                style={{ writingMode: "vertical-rl" }}
+              >
+                1°56′S 30°3′E
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* desktop slide navigation */}
-      <div className="hidden lg:flex absolute right-10 bottom-10 z-30 flex-col items-end gap-12">
-        <div className="flex flex-col gap-4 text-right">
-          {HERO_SLIDES.map((s, index) => {
-            const isActive = index === currentSlide;
-            const hoverContent = {
-              subheading: t(`slides.${s.key}.subheading`),
-              heading1: t(`slides.${s.key}.heading1`),
-              heading2: t(`slides.${s.key}.heading2`),
-            };
-            return (
-              <HoverCard key={index}>
-                <HoverCardTrigger
-                  type="button"
-                  onClick={() => handleSlideChange(index)}
-                  aria-label={`Switch to slide ${index + 1}: ${hoverContent.heading1} ${hoverContent.heading2}`}
-                  className={`group flex items-center justify-end gap-3 transition-colors duration-300 ${
-                    isActive
-                      ? "text-primary-foreground"
-                      : "text-primary-foreground/40 hover:text-primary-foreground/80"
-                  }`}
-                >
-                  <span className="text-[10px] font-mono uppercase tracking-[0.2em]">
-                    0{index + 1}
-                  </span>
-
-                  <span
-                    className={`h-px bg-current transition-all duration-500 ${
-                      isActive ? "w-8 bg-primary" : "w-4 group-hover:w-6"
-                    }`}
-                  />
-                </HoverCardTrigger>
-                <HoverCardContent
-                  side="left"
-                  align="center"
-                  sideOffset={20}
-                  className="w-[280px] p-0 bg-black/80 backdrop-blur-md border-white/10 overflow-hidden rounded-sm"
-                >
-                  <div className="relative h-32 w-full">
-                    <Image
-                      src={s.image}
-                      alt={hoverContent.heading1}
-                      fill
-                      sizes="280px"
-                      className="object-cover opacity-80"
-                    />
-                    <div className="absolute inset-0 bg-linear-to-t from-black via-black/20 to-transparent" />
-                    <div className="absolute bottom-3 left-4 right-4">
-                      <p className="text-[10px] uppercase tracking-[0.2em] text-primary-foreground/70 mb-1">
-                        {hoverContent.subheading}
-                      </p>
-                      <h3 className="text-xl font-display font-medium text-primary-foreground uppercase leading-tight">
-                        {hoverContent.heading1} {hoverContent.heading2}
-                      </h3>
-                    </div>
-                  </div>
-                </HoverCardContent>
-              </HoverCard>
-            );
-          })}
-        </div>
-
-        <div className="flex flex-col gap-6 text-right text-primary-foreground/50 font-mono text-[10px] uppercase tracking-[0.2em] border-r border-white/20 pr-6">
-          <div className="group cursor-default">
-            <span className="block text-primary-foreground mb-1 group-hover:text-primary transition-colors">
-              {t("location")}
-            </span>
-            {t("coordinates")}
-          </div>
-          <div>
-            <span className="block text-primary-foreground mb-1">
-              {tCommon("localTime")}
-            </span>
-            <span className="tabular-nums">GMT+2 (CAT)</span>
-          </div>
+      {/* Bottom Departure Strip */}
+      <div className="absolute bottom-0 left-0 w-full bg-surface-muted border-t border-primary/20 z-30 overflow-x-auto no-scrollbar">
+        <div className="flex items-center min-w-max px-6 h-12">
+          {HERO_SLIDES.map((s, idx) => (
+            <button
+              type="button"
+              key={s.id}
+              onClick={() => setCurrentSlide(idx)}
+              className={`flex items-center gap-4 px-8 border-r border-white/5 last:border-0 cursor-pointer hover:bg-white/5 transition-colors h-full ${currentSlide === idx ? "bg-white/5" : ""}`}
+            >
+              <span className="font-mono text-[10px] text-white/40">
+                {s.code}
+              </span>
+              <span
+                className={`font-display uppercase text-xs tracking-widest ${currentSlide === idx ? "text-white" : "text-white/60"}`}
+              >
+                {s.title}
+              </span>
+              {currentSlide === idx ? (
+                <span className="px-2 py-0.5 rounded-full bg-primary-light/10 text-primary-light font-mono text-[8px] tracking-wider uppercase border border-primary-light/30 shadow-[0_0_8px_rgba(var(--primary-light),0.3)]">
+                  Boarding
+                </span>
+              ) : (
+                <span className="px-2 py-0.5 rounded-full bg-white/5 text-white/40 font-mono text-[8px] tracking-wider uppercase border border-white/10">
+                  Available
+                </span>
+              )}
+            </button>
+          ))}
         </div>
       </div>
     </section>

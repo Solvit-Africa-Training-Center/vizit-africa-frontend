@@ -66,22 +66,31 @@ export function Footer() {
   return (
     <footer
       id="main-footer"
-      className="bg-black text-primary-foreground py-24 md:py-32 border-t border-white/5"
+      className="bg-surface-ink text-primary-foreground pt-24 pb-12 overflow-hidden relative isolate"
     >
-      <div className="marketing-container">
-        <div className="grid md:grid-cols-12 gap-12 lg:gap-24 mb-24">
+      <div className="marketing-container relative z-20">
+        <div className="grid md:grid-cols-12 gap-12 lg:gap-24 mb-32">
+          {/* Brand Column */}
           <div className="md:col-span-4 lg:col-span-3 space-y-8">
             <Logo variant="light" />
-            <p className="text-sm text-white/40 leading-relaxed max-w-xs font-light text-pretty">
+            <p className="font-sans text-sm text-white/40 leading-relaxed max-w-[240px] font-light text-pretty">
               {t("tagline")}
             </p>
-            <div className="flex items-center gap-2">
+            <div className="space-y-1">
+              <p className="font-mono text-[10px] text-white/30 tracking-widest uppercase">
+                Coordinates
+              </p>
+              <p className="font-mono text-xs text-primary">
+                1°56'24.0"S 30°03'36.0"E
+              </p>
+            </div>
+            <div className="flex items-center gap-3 pt-4">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
                   aria-label={social.label}
-                  className="size-10 flex items-center justify-center rounded-full border border-white/10 text-white/50 hover:bg-primary hover:text-white hover:border-primary transition-all duration-500 group"
+                  className="size-10 flex items-center justify-center rounded-full border border-white/10 text-white/50 hover:bg-primary hover:text-white hover:border-primary transition-all duration-300 group"
                 >
                   <social.icon
                     className="size-4 group-hover:scale-110 transition-transform"
@@ -94,7 +103,7 @@ export function Footer() {
 
           <div className="md:col-span-8 lg:col-span-9 grid grid-cols-2 md:grid-cols-3 gap-12 lg:gap-20">
             <div>
-              <h4 className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary font-bold mb-8">
+              <h4 className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary font-bold mb-8">
                 {t("explore")}
               </h4>
               <ul className="space-y-4">
@@ -102,7 +111,7 @@ export function Footer() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-xs uppercase tracking-widest text-white/60 hover:text-primary transition-all hover:translate-x-1 inline-block"
+                      className="font-sans text-sm font-light text-white/40 hover:text-surface-cream transition-colors duration-300 inline-block"
                     >
                       {link.label}
                     </Link>
@@ -112,7 +121,7 @@ export function Footer() {
             </div>
 
             <div>
-              <h4 className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary font-bold mb-8">
+              <h4 className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary font-bold mb-8">
                 {t("company")}
               </h4>
               <ul className="space-y-4">
@@ -120,7 +129,7 @@ export function Footer() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-xs uppercase tracking-widest text-white/60 hover:text-primary transition-all hover:translate-x-1 inline-block"
+                      className="font-sans text-sm font-light text-white/40 hover:text-surface-cream transition-colors duration-300 inline-block"
                     >
                       {link.label}
                     </Link>
@@ -130,7 +139,7 @@ export function Footer() {
             </div>
 
             <div className="col-span-2 md:col-span-1">
-              <h4 className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary font-bold mb-8">
+              <h4 className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary font-bold mb-8">
                 {t("contact")}
               </h4>
               <ul className="space-y-4">
@@ -138,7 +147,7 @@ export function Footer() {
                   <li key={link.label}>
                     <a
                       href={link.href}
-                      className="text-xs uppercase tracking-widest text-white/60 hover:text-primary transition-all inline-block truncate max-w-full"
+                      className="font-sans text-sm font-light text-white/40 hover:text-surface-cream transition-colors duration-300 inline-block truncate max-w-full"
                     >
                       {link.label}
                     </a>
@@ -149,25 +158,35 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6">
-          <p className="text-[10px] text-white/20 uppercase tracking-[0.2em] font-mono">
-            {t("copyright")}
+        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6 relative z-20">
+          <p className="font-mono text-[10px] text-white/30 uppercase tracking-[0.2em]">
+            &copy; {new Date().getFullYear()} VIZIT AFRICA. ALL RIGHTS RESERVED.
           </p>
+          <div className="font-mono text-[10px] text-white/30 tracking-[0.2em] uppercase">
+            MADE WITH CARE IN KIGALI <span className="text-primary">✦</span>
+          </div>
           <div className="flex gap-8">
             <Link
               href="/privacy"
-              className="text-[10px] text-white/20 hover:text-white uppercase tracking-[0.2em] transition-colors font-mono"
+              className="font-mono text-[10px] text-white/30 hover:text-white uppercase tracking-[0.2em] transition-colors"
             >
               {t("privacy")}
             </Link>
             <Link
               href="/terms"
-              className="text-[10px] text-white/20 hover:text-white uppercase tracking-[0.2em] transition-colors font-mono"
+              className="font-mono text-[10px] text-white/30 hover:text-white uppercase tracking-[0.2em] transition-colors"
             >
               {t("terms")}
             </Link>
           </div>
         </div>
+      </div>
+
+      {/* Ghost Wordmark */}
+      <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none pointer-events-none z-10 select-none flex justify-center opacity-[0.02]">
+        <span className="font-display font-bold text-[12vw] text-white whitespace-nowrap translate-y-1/4">
+          VIZIT AFRICA
+        </span>
       </div>
     </footer>
   );

@@ -44,7 +44,7 @@ export function ServiceHighlights() {
 
   return (
     <section
-      className="py-24 md:py-40 bg-background overflow-hidden"
+      className="py-24 md:py-40 bg-surface-canvas overflow-hidden"
       ref={containerRef}
     >
       <div className="container max-w-7xl mx-auto px-5 md:px-10">
@@ -107,7 +107,7 @@ export function ServiceHighlights() {
                 fill
                 className="object-cover transition-transform duration-1000 group-hover:scale-[1.03]"
               />
-              <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/35 to-transparent" />
               <div className="absolute inset-0 p-8 md:p-12 flex flex-col justify-end">
                 <span className="text-[10px] font-mono text-primary uppercase tracking-[0.4em] mb-4 block">
                   02 / All-In-One
@@ -129,7 +129,7 @@ export function ServiceHighlights() {
                 fill
                 className="object-cover transition-transform duration-1000 group-hover:scale-[1.03]"
               />
-              <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/35 to-transparent" />
               <div className="absolute inset-0 p-8 md:p-12 flex flex-col justify-end">
                 <span className="text-[10px] font-mono text-primary uppercase tracking-[0.4em] mb-4 block">
                   03 / Human Touch

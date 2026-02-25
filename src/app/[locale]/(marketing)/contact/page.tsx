@@ -100,23 +100,30 @@ function ContactCard({
   sub?: string;
 }) {
   const Content = () => (
-    <div className="group flex flex-col p-8 rounded-2xl bg-muted/30 border border-border/50 hover:border-primary/50 transition-all duration-500 h-full">
-      <div className="size-12 rounded-xl bg-background border border-border flex items-center justify-center mb-8 group-hover:scale-110 group-hover:bg-primary group-hover:border-primary transition-all duration-500">
+    <div className="group flex flex-col p-8 rounded-2xl bg-muted/30 border border-border/50 hover:border-primary/50 hover:bg-surface-ink transition-all duration-500 h-full relative overflow-hidden isolate">
+      {/* Hover glow effect */}
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_top_right,oklch(65%_0.06_245/0.2)_0%,transparent_50%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+      <div className="relative z-10 size-12 rounded-xl bg-background border border-border flex items-center justify-center mb-8 group-hover:scale-110 group-hover:bg-primary group-hover:border-primary transition-all duration-500">
         <Icon className="size-6 text-foreground group-hover:text-primary-foreground transition-colors" />
       </div>
-      <div className="mt-auto">
-        <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-4">
+      <div className="relative z-10 mt-auto">
+        <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground group-hover:text-primary-light/80 transition-colors duration-500 mb-4">
           {label}
         </p>
         <div className="flex items-center gap-2 mb-2">
-          <h3 className="text-xl md:text-2xl font-display font-medium uppercase tracking-tight group-hover:text-primary transition-colors">
+          <h3 className="text-xl md:text-2xl font-display font-medium uppercase tracking-tight group-hover:text-white transition-colors duration-500">
             {value}
           </h3>
           {href && (
-            <RiArrowRightUpLine className="size-5 text-muted-foreground/30 group-hover:text-primary group-hover:-translate-y-1 group-hover:translate-x-1 transition-all" />
+            <RiArrowRightUpLine className="size-5 text-muted-foreground/30 group-hover:text-primary-light group-hover:-translate-y-1 group-hover:translate-x-1 transition-all duration-500" />
           )}
         </div>
-        {sub && <p className="text-sm text-muted-foreground/60">{sub}</p>}
+        {sub && (
+          <p className="text-sm text-muted-foreground/60 group-hover:text-white/60 transition-colors duration-500">
+            {sub}
+          </p>
+        )}
       </div>
     </div>
   );

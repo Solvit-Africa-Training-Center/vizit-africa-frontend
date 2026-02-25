@@ -167,7 +167,7 @@ export default function FulfillClient({ booking: initialBooking }: FulfillClient
                 >
                   <div className="size-12 rounded-xl bg-muted flex items-center justify-center shrink-0">
                     {item.item_type === "flight" ? <RiPlaneLine className="size-6 text-blue-500" /> :
-                     item.item_type === "hotel" ? <RiHotelLine className="size-6 text-amber-500" /> :
+                     item.item_type === "hotel" ? <RiHotelLine className="size-6 text-primary-500" /> :
                      item.item_type === "car" ? <RiCarLine className="size-6 text-red-500" /> :
                      <RiFileListLine className="size-6 text-primary" />}
                   </div>

@@ -36,7 +36,7 @@ export default async function SignupPage() {
         {t("haveAccount")}{" "}
         <Link
           href="/login"
-          className="text-foreground font-medium underline underline-offset-4 hover:text-primary transition-colors"
+          className="text-foreground font-medium underline underline-offset-4 hover:text-primary-light transition-colors"
         >
           {t("signIn")}
         </Link>
