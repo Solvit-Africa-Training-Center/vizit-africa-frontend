@@ -112,7 +112,7 @@ export function RefundModal({
                     Refunding will cancel the booking for{" "}
                     <strong>{guestName}</strong> and return{" "}
                     <strong>
-                      {currency} {amount.toFixed(2)}
+                      {currency} {Number(amount).toFixed(2)}
                     </strong>{" "}
                     to their payment method.
                   </p>
@@ -182,7 +182,7 @@ export function RefundModal({
                 <div className="text-sm text-success-foreground">
                   <p className="font-medium mb-1">Refund Processed</p>
                   <p>
-                    {currency} {amount.toFixed(2)} has been refunded to the
+                    {currency} {Number(amount).toFixed(2)} has been refunded to the
                     original payment method. It may take 5-10 business days to
                     appear.
                   </p>

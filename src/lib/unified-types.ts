@@ -342,17 +342,17 @@ export type LoginInput = z.infer<typeof loginInputSchema>;
 
 export const registerObjectSchema = z
   .object({
-    fullName: z.string().min(2, "Name is required"),
-    email: z.string().email("Invalid email"),
-    phoneNumber: z.string().min(6, "Phone is required"),
-    password: z.string().min(8, "Password must be at least 8 characters"),
-    rePassword: z.string(),
-    role: z.enum(["CLIENT", "ADMIN", "VENDOR"]),
+  fullName: z.string().min(2, "Name is required"),
+  email: z.string().email("Invalid email"),
+  phoneNumber: z.string().min(6, "Phone is required"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
+  rePassword: z.string(),
+  role: z.enum(["CLIENT", "ADMIN", "VENDOR"]),
   })
   .refine((data) => data.password === data.rePassword, {
     message: "Passwords don't match",
     path: ["rePassword"],
-  });
+});
 
 export type RegisterInput = z.infer<typeof registerObjectSchema>;
 

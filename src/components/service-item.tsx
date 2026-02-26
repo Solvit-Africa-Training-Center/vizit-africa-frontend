@@ -7,7 +7,7 @@ import { getLocations } from "@/actions/locations";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { serviceSchema, type ServiceResponse } from "@/lib/unified-types";
-import { cn } from "@/lib/utils";
+import { cn, IMAGE_PLACEHOLDER } from "@/lib/utils";
 import { AddToTripButton } from "./plan-trip/add-to-trip-button";
 import { Button } from "./ui/button";
 
@@ -25,8 +25,20 @@ const TYPE_LABELS: Record<string, string> = {
 
 function getImage(service: ServiceResponse): string {
   const media = service.media;
-  if (media && media.length > 0) return media[0].media_url;
-  return "/images/rwanda-landscape.jpg";
+  if (media && media.length > 0) {
+    const firstMedia = media[0];
+    if (typeof firstMedia === "string" && firstMedia) return firstMedia;
+    if (
+      typeof firstMedia === "object" &&
+      firstMedia !== null &&
+      "media_url" in firstMedia &&
+      typeof firstMedia.media_url === "string" &&
+      firstMedia.media_url
+    ) {
+      return firstMedia.media_url;
+    }
+  }
+  return IMAGE_PLACEHOLDER;
 }
 
 const mapServiceTypeToTripType = (

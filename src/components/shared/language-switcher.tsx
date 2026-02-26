@@ -38,16 +38,18 @@ export function LanguageSwitcher({
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger
-        render={
-          <Button
-            variant={"ghost"}
-            className={cn(variant === "light" && "text-primary-foreground")}
-          />
-        }
-      >
-        <RiTranslate2 />
-        <span className="sr-only">Switch Language</span>
+      <DropdownMenuTrigger render={<Button
+          variant="ghost"
+          size="icon"
+          className={cn(
+            "rounded-full size-9",
+            variant === "light" && "text-white/70 hover:text-white hover:bg-white/10",
+          )}
+          aria-label="Switch language"
+        >
+          <RiTranslate2 className="size-4" />
+        </Button>}>
+   
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[150px]">
         {languages.map((lang) => (

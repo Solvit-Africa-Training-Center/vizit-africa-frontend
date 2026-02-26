@@ -12,11 +12,12 @@ const Logo = ({ variant = "default", className }: LogoProps) => {
     <Link href="/" className={cn("block relative", className)}>
       <Image
         src="/logo.svg"
-        alt="Vizit Africa Logo"
+         aria-label="Vizit Africa Home"
+            alt="Vizit Africa Logo"
         width={100}
         height={100}
         className={cn(
-          "w-auto h-8 md:h-10 transition-all duration-300",
+          "w-auto h-8 shrink-0 hover:opacity-75 active:opacity-60 md:h-10 transition-all duration-300",
           variant === "light" && "brightness-0 invert",
         )}
       />

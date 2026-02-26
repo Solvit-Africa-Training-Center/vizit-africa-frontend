@@ -2,6 +2,10 @@ import type { FilterFn } from "@tanstack/react-table";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
+export const IMAGE_PLACEHOLDER = `data:image/svg+xml;base64,${btoa(
+  '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600"><rect width="100%" height="100%" fill="#f3f4f6"/><text x="50%" y="50%" font-family="sans-serif" font-size="24" fill="#9ca3af" text-anchor="middle" dominant-baseline="middle">Vizit Africa</text></svg>',
+)}`;
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }

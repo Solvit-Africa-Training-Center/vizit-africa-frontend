@@ -22,10 +22,10 @@
   },
   "Navigation": {
     "flights": "Flights",
-    "ourservices": "Our Service",
+    "services": "Services",
     "experiences": "Experiences",
     "gallery": "Gallery",
-    "aboutUs": "About",
+    "aboutUs": "About Us",
     "contact": "Contact",
     "planTrip": "Plan Trip",
     "userMenu": {
@@ -325,7 +325,7 @@
     },
     "coordinates": "Coordinates",
     "allRightsReserved": "All rights reserved.",
-    "madeWithCare": "Made with care in Kigali",
+    "sponsoredBySolvit": "Sponsored by Solvit Africa",
     "copyright": "© 2025 Vizit Africa. All rights reserved.",
     "privacy": "Privacy",
     "terms": "Terms"
@@ -394,8 +394,8 @@
     "office": "Office"
   },
   "Experiences": {
-    "title": "Experiences",
-    "overline": "The Collection",
+    "overline": "The Catalog",
+    "title": "Curated Experiences",
     "categoriesTitle": "Categories",
     "categories": {
       "wildlifeNature": "Wildlife & Nature",
@@ -408,10 +408,54 @@
       "startingFrom": "Starting From",
       "requestQuote": "Request Quote"
     },
+    "filters": {
+      "location": "Location",
+      "priceRange": "Price Range",
+      "duration": "Duration",
+      "difficulty": "Difficulty"
+    },
     "fallbacks": {
       "location": "Rwanda",
       "tag": "Experience",
       "duration": "Full Day"
+    },
+    "items": {
+      "gorilla-trekking": {
+        "title": "Gorilla Trekking",
+        "description": "A once-in-a-lifetime encounter with the majestic mountain gorillas in their natural habitat. Trek through the misty forests of the Virunga volcanoes.",
+        "location": "Volcanoes National Park",
+        "duration": "1 Packaged Day"
+      },
+      "akagera-safari": {
+        "title": "Akagera Game Drive",
+        "description": "Spot the Big Five (Lions, Leopards, Rhinos, Elephants, Buffalos) in Rwanda's only savannah park. Enjoy boat trips on Lake Ihema.",
+        "location": "Akagera National Park",
+        "duration": "2 Days / 1 Night"
+      },
+      "nyungwe-canopy": {
+        "title": "Canopy Walk & Chimps",
+        "description": "Walk 60 meters above the forest floor on the famous canopy walkway and track chimpanzees in one of Africa's oldest rainforests.",
+        "location": "Nyungwe Forest",
+        "duration": "2 Days"
+      },
+      "kigali-city-tour": {
+        "title": "Kigali Cultural Tour",
+        "description": "Explore the vibrant heart of Rwanda. Visit the Kigali Genocide Memorial, Kimironko Market, and art galleries to understand the country's past and present.",
+        "location": "Kigali City",
+        "duration": "Full Day"
+      },
+      "lake-kivu-relax": {
+        "title": "Lake Kivu Retreat",
+        "description": "Unwind on the sandy shores of Lake Kivu. Enjoy boat rides, coffee tours, and stunning sunsets at this beautiful rift valley lake.",
+        "location": "Rubavu / Karongi",
+        "duration": "3 Days"
+      },
+      "bisoke-hike": {
+        "title": "Mount Bisoke Hike",
+        "description": "Challenging but rewarding hike to the summit of Mount Bisoke, featuring a beautiful crater lake at the top.",
+        "location": "Musanze",
+        "duration": "1 Day"
+      }
     }
   },
   "Auth": {
@@ -686,7 +730,21 @@
         "error": "Registration failed. Please check the fields.",
         "profileError": "Failed to create vendor profile.",
         "accountCreatedContactSupport": "Failed to create vendor profile. Your account was created, please contact support."
-      }
+      },
+      "stepAccount": "Account Details",
+      "stepAccountDesc": "Personal and login information",
+      "stepBusiness": "Business Details",
+      "stepBusinessDesc": "Tell us about your company",
+      "stepReview": "Review",
+      "stepReviewDesc": "Confirm your details",
+      "back": "Back",
+      "continue": "Continue",
+      "reviewSubmission": "Review Application",
+      "reviewDesc": "Please review your details before submitting.",
+      "accountSummary": "Account Summary",
+      "businessSummary": "Business Summary",
+      "notProvided": "Not provided",
+      "confirmAccuracy": "I confirm that all provided information is accurate."
     },
     "overline": "Partnership",
     "title": "Grow With Us",
@@ -728,65 +786,6 @@
       "title": "Ready to Scale Your Business?",
       "description": "Join thousands of other successful partners on Vizit Africa. Setup takes less than 5 minutes.",
       "button": "Apply Now"
-    }
-  },
-  "Experiences": {
-    "overline": "The Catalog",
-    "title": "Curated Experiences",
-    "categories": {
-      "wildlifeNature": "Wildlife & Nature",
-      "cultureLeisure": "Culture & Leisure",
-      "adventure": "Adventure"
-    },
-    "labels": {
-      "location": "Location",
-      "duration": "Duration",
-      "startingFrom": "Starting From",
-      "requestQuote": "Request Quote"
-    },
-    "filters": {
-      "location": "Location",
-      "priceRange": "Price Range",
-      "duration": "Duration",
-      "difficulty": "Difficulty"
-    },
-    "items": {
-      "gorilla-trekking": {
-        "title": "Gorilla Trekking",
-        "description": "A once-in-a-lifetime encounter with the majestic mountain gorillas in their natural habitat. Trek through the misty forests of the Virunga volcanoes.",
-        "location": "Volcanoes National Park",
-        "duration": "1 Packaged Day"
-      },
-      "akagera-safari": {
-        "title": "Akagera Game Drive",
-        "description": "Spot the Big Five (Lions, Leopards, Rhinos, Elephants, Buffalos) in Rwanda's only savannah park. Enjoy boat trips on Lake Ihema.",
-        "location": "Akagera National Park",
-        "duration": "2 Days / 1 Night"
-      },
-      "nyungwe-canopy": {
-        "title": "Canopy Walk & Chimps",
-        "description": "Walk 60 meters above the forest floor on the famous canopy walkway and track chimpanzees in one of Africa's oldest rainforests.",
-        "location": "Nyungwe Forest",
-        "duration": "2 Days"
-      },
-      "kigali-city-tour": {
-        "title": "Kigali Cultural Tour",
-        "description": "Explore the vibrant heart of Rwanda. Visit the Kigali Genocide Memorial, Kimironko Market, and art galleries to understand the country's past and present.",
-        "location": "Kigali City",
-        "duration": "Full Day"
-      },
-      "lake-kivu-relax": {
-        "title": "Lake Kivu Retreat",
-        "description": "Unwind on the sandy shores of Lake Kivu. Enjoy boat rides, coffee tours, and stunning sunsets at this beautiful rift valley lake.",
-        "location": "Rubavu / Karongi",
-        "duration": "3 Days"
-      },
-      "bisoke-hike": {
-        "title": "Mount Bisoke Hike",
-        "description": "Challenging but rewarding hike to the summit of Mount Bisoke, featuring a beautiful crater lake at the top.",
-        "location": "Musanze",
-        "duration": "1 Day"
-      }
     }
   },
   "Gallery": {

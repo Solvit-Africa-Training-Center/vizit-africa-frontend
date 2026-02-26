@@ -66,17 +66,15 @@ export function Footer() {
   return (
     <footer
       id="main-footer"
-      className="bg-surface-ink text-primary-foreground pt-24 pb-12 overflow-hidden relative isolate"
+      className="bg-surface-ink text-primary-foreground pt-24 pb-48 overflow-hidden relative isolate"
     >
       <div className="marketing-container relative z-20">
         <div className="grid md:grid-cols-12 gap-12 lg:gap-24 mb-28">
-          {/* ── Brand column ─────────────────────────────────────── */}
           <div className="md:col-span-4 lg:col-span-3 space-y-8">
             <Logo variant="light" />
             <p className="font-sans text-sm text-white/35 leading-relaxed max-w-[240px] font-light text-pretty">
               {t("tagline")}
             </p>
-            {/* Coordinates block — data feel */}
             <div className="space-y-1.5">
               <p className="font-mono text-[9px] text-primary uppercase tracking-[0.2em]">
                 {t("coordinates")}
@@ -88,7 +86,6 @@ export function Footer() {
                 GMT+2 · CAT · Kigali, RW
               </p>
             </div>
-            {/* Social icons */}
             <div className="flex items-center gap-2.5 pt-2">
               {socialLinks.map((social) => (
                 <a
@@ -111,11 +108,8 @@ export function Footer() {
             </div>
           </div>
 
-          {/* ── Link columns ─────────────────────────────────────── */}
           <div className="md:col-span-8 lg:col-span-9 grid grid-cols-2 md:grid-cols-3 gap-12 lg:gap-20">
-            {/* Explore */}
             <div>
-              {/* ✦ Column title in primary per design guide */}
               <h4 className="font-mono text-[9px] uppercase tracking-[0.22em] text-primary font-medium mb-7">
                 {t("explore")}
               </h4>
@@ -133,7 +127,6 @@ export function Footer() {
               </ul>
             </div>
 
-            {/* Company */}
             <div>
               <h4 className="font-mono text-[9px] uppercase tracking-[0.22em] text-primary font-medium mb-7">
                 {t("company")}
@@ -152,7 +145,6 @@ export function Footer() {
               </ul>
             </div>
 
-            {/* Contact */}
             <div className="col-span-2 md:col-span-1">
               <h4 className="font-mono text-[9px] uppercase tracking-[0.22em] text-primary font-medium mb-7">
                 {t("contact")}
@@ -173,13 +165,12 @@ export function Footer() {
           </div>
         </div>
 
-        {/* ── Bottom bar ─────────────────────────────────────────── */}
         <div className="pt-7 border-t border-white/[0.07] flex flex-col md:flex-row items-center justify-between gap-5 relative z-20">
           <p className="font-mono text-[9.5px] text-white/20 uppercase tracking-[0.2em]">
             &copy; {new Date().getFullYear()} Vizit Africa. {t("allRightsReserved")}
           </p>
           <div className="font-mono text-[9.5px] text-white/20 tracking-[0.15em] uppercase">
-            {t("madeWithCare")}&nbsp;
+            {t("sponsoredBySolvit")}&nbsp;
             <span className="text-primary">✦</span>
           </div>
           <div className="flex gap-7">
@@ -199,7 +190,6 @@ export function Footer() {
         </div>
       </div>
 
-      {/* ── Ghost wordmark — barely visible, editorial depth ──────── */}
       <div
         className="absolute bottom-0 left-0 w-full overflow-hidden leading-none pointer-events-none z-10 select-none flex justify-center"
         aria-hidden="true"

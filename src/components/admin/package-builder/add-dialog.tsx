@@ -151,7 +151,7 @@ export function AddDialog({
                         )}
                         {service.basePrice && (
                           <p className="text-xs font-mono text-primary mt-1">
-                            ${service.basePrice.toFixed(2)}
+                            ${Number(service.basePrice).toFixed(2)}
                           </p>
                         )}
                       </div>

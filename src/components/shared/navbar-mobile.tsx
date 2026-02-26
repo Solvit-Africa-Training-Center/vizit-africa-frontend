@@ -27,7 +27,7 @@ export function NavbarMobile({ isOpen, onClose }: NavbarMobileProps) {
   const isMounted = useIsMounted();
 
   const navLinks = [
-    { href: "/services", label: t("ourservices") },
+    { href: "/services", label: t("services") },
     { href: "/experiences", label: t("experiences") },
     { href: "/about", label: t("aboutUs") },
     { href: "/contact", label: t("contact") },

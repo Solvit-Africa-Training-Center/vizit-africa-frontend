@@ -1,5 +1,9 @@
 {
   "About": {
+    "cta": {
+      "description": "Professional sourcing and total logistics management for the modern traveler.",
+      "overline": "Expert Execution"
+    },
     "established": "تأسست عام 2018",
     "guidesDescription": "سكان محليون. رواة قصص. خبراء. قابل الأشخاص الذين يعرفون رواندا بشكل أفضل.",
     "guidesTitle": "المرشدون",
@@ -45,11 +49,13 @@
           "guide": "مرشد",
           "hotel": "فندق"
         },
-        "manageFulfillment": "إدارة التنفيذ",
+        "manageBooking": "Manage Booking",
         "paid": "مدفوع",
+        "refundCancel": "Refund & Cancel",
         "travelers": "مسافرين"
       },
       "empty": {
+        "clearSearch": "Clear Search",
         "description": "ستظهر الحجوزات هنا بمجرد إتمام العملاء للدفع.",
         "title": "لا توجد حجوزات مؤكدة بعد"
       },
@@ -84,8 +90,24 @@
         },
         "title": "تنفيذ الحجز"
       },
+      "searchPlaceholder": "Search by name or ID...",
       "subtitle": "إدارة وتنفيذ حجوزات السفر المؤكدة",
+      "tabs": {
+        "all": "All Bookings",
+        "completed": "Completed",
+        "paid": "Paid"
+      },
       "title": "الحجوزات المؤكدة"
+    },
+    "createService": {
+      "back": "Back to Services",
+      "subtitle": "Create a new service",
+      "title": "Create Service"
+    },
+    "createVendor": {
+      "back": "Back to Vendors",
+      "subtitle": "Create a new vendor",
+      "title": "Create Vendor"
     },
     "dashboard": {
       "overview": "نظرة عامة",
@@ -98,7 +120,7 @@
       },
       "requests": "الطلبات",
       "stats": {
-        "confirmed": "مؤكدة",
+        "paid": "Paid",
         "pending": "طلبات معلقة",
         "quoted": "مسعرة"
       },
@@ -138,13 +160,14 @@
     "nav": {
       "bookings": "الحجوزات",
       "brand": "إدارة فيزيت",
+      "create": "إنشاء",
       "inventory": "المخزون",
       "logout": "خروج",
       "overview": "نظرة عامة",
-      "create": "إنشاء",
       "publicSite": "الموقع العام",
       "requests": "الطلبات",
-      "settings": "الإعدادات"
+      "settings": "الإعدادات",
+      "vendors": "Vendors"
     },
     "packages": {
       "actions": {
@@ -206,23 +229,69 @@
       "adminAccess": "دخول المسؤول",
       "createAccount": "إنشاء حساب",
       "emailLabel": "البريد الإلكتروني",
+      "emailPlaceholder": "name@example.com",
       "forgot": "نسيت؟",
+      "googleContinue": "Continue with Google",
+      "loggingIn": "Logging in...",
+      "messages": {
+        "error": "Login failed. Please check your credentials.",
+        "genericError": "An error occurred during login",
+        "googleError": "Google login failed",
+        "googleSuccess": "Successfully logged in with Google",
+        "googleUnexpected": "An unexpected error occurred during Google login",
+        "success": "Logged in successfully"
+      },
       "noAccount": "جديد في فيزيت أفريكا؟",
       "orContinue": "أو تابع مع",
       "passwordLabel": "كلمة المرور",
+      "passwordPlaceholder": "Enter your password",
       "subtitle": "سجل الدخول للوصول إلى مسار رحلتك المنسق.",
       "title": "مرحبًا بعودتك"
     },
+    "setPassword": {
+      "confirmPassword": "Confirm New Password",
+      "confirmPlaceholder": "Confirm your password",
+      "invalidLink": "Invalid Link",
+      "invalidLinkDesc": "This password reset link is invalid or has expired.",
+      "newPassword": "New Password",
+      "placeholder": "Enter new password",
+      "remembered": "Remember your password?",
+      "submit": "Set Password",
+      "subtitle": "Set a secure password for your new account to access your itinerary and bookings.",
+      "success": "Password set successfully! You are now logged in.",
+      "title": "Set Account Password"
+    },
     "signup": {
       "confirmPassword": "تأكيد كلمة المرور",
+      "creating": "Creating...",
       "emailLabel": "البريد الإلكتروني",
+      "emailPlaceholder": "name@example.com",
       "fullName": "الاسم الكامل",
-      "phoneNumber": "رقم الهاتف",
+      "fullNamePlaceholder": "John Doe",
+      "googleSignup": "Sign up with Google",
       "haveAccount": "لديك حساب بالفعل؟",
+      "messages": {
+        "error": "Registration failed. Please check the fields.",
+        "success": "Account created! Check your email to verify."
+      },
+      "orContinue": "OR CONTINUE WITH",
       "passwordLabel": "كلمة المرور",
+      "phoneNumber": "رقم الهاتف",
+      "phoneNumberPlaceholder": "+250 ...",
       "signIn": "سجل الدخول",
       "subtitle": "أنشئ حسابًا لبدء التخطيط لرحلة إرثك.",
       "title": "ابدأ رحلتك"
+    },
+    "verifyEmail": {
+      "backToLogin": "Back to Login",
+      "codeLabel": "Verification Code",
+      "error": "Invalid verification code",
+      "failed": "Verification failed. Please try again.",
+      "goToProfile": "Go to Profile",
+      "success": "Email verified successfully",
+      "title": "Verify Email",
+      "verifyButton": "Verify Email",
+      "verifying": "Verifying..."
     }
   },
   "CTA": {
@@ -244,6 +313,7 @@
     "contactUs": "اتصل بنا",
     "continue": "متابعة",
     "createAccount": "سجل الآن",
+    "error": "Error",
     "getInTouch": "تواصل معنا",
     "learnMore": "اعرف المزيد",
     "localTime": "التوقيت المحلي",
@@ -253,6 +323,7 @@
     "signup": "إنشاء حساب",
     "startPlanning": "إبدأ التخطيط",
     "submit": "إرسال",
+    "success": "Success",
     "viewAll": "عرض الكل"
   },
   "Contact": {
@@ -261,16 +332,26 @@
     "contactDetails": "بيانات الاتصال",
     "description": "هل لديك أسئلة حول جولاتنا أو تحتاج إلى مسار مخصص؟ نحن هنا لمساعدتك في التخطيط للتجربة المثالية.",
     "emailAddress": "البريد الإلكتروني",
+    "emailPlaceholder": "jane@example.com",
     "emailUs": "راسلنا",
     "firstName": "الاسم الأول",
+    "firstNamePlaceholder": "Jane",
     "formDescription": "املأ النموذج أدناه وسيقوم فريقنا بالرد عليك خلال 24 ساعة.",
+    "formOverline": "Send a Message",
     "formTitle": "أرسل لنا رسالة",
     "lastName": "اسم العائلة",
+    "lastNamePlaceholder": "Doe",
     "message": "رسالة",
     "messagePlaceholder": "أخبرنا عن خطط سفرك...",
+    "messages": {
+      "error": "Failed to send. Please try again.",
+      "genericError": "An error occurred.",
+      "success": "Message Sent ✓"
+    },
     "office": "المكتب",
     "openStatus": "مفتوح لمغامرات جديدة",
     "phoneNumber": "رقم الهاتف",
+    "phonePlaceholder": "+1 (555) 000-0000",
     "title": "دعنا نخطط لرحلة",
     "titleSub": "إرثك.",
     "visitUs": "زرنا",
@@ -308,6 +389,12 @@
       "adventure": "مغامرة",
       "cultureLeisure": "الثقافة والترفيه",
       "wildlifeNature": "الحياة البرية والطبيعة"
+    },
+    "categoriesTitle": "Categories",
+    "fallbacks": {
+      "duration": "Full Day",
+      "location": "Rwanda",
+      "tag": "Experience"
     },
     "filters": {
       "difficulty": "صعوبة",
@@ -404,9 +491,46 @@
     "overline": "لديك أسئلة؟",
     "title": "لدينا الإجابات"
   },
+  "FeaturedExperience": {
+    "badge": "Featured Package",
+    "description": "Comprehensive sourcing and logistics management for executive travel, ensuring complete security and zero friction.",
+    "durationLabel": "Execution",
+    "durationValue": "End-to-End",
+    "groupSizeLabel": "Capacity",
+    "groupSizeValue": "Scalable",
+    "itineraryButton": "View Details",
+    "locationLabel": "Primary Hub",
+    "locationValue": "Kigali, Rwanda",
+    "requestButton": "Request Sourcing",
+    "startingFromLabel": "Sourcing Fee",
+    "startingFromValue": "From ${price}",
+    "title": "Executive Travel Sourcing"
+  },
+  "FlightsPage": {
+    "description": "Find and book the best routes to Rwanda. We partner with leading airlines to ensure a seamless journey.",
+    "labels": {
+      "class": "Class",
+      "depart": "Depart",
+      "estimatesDisclaimer": "* All flight prices are estimates. We manually find the best real-time options for you.",
+      "from": "From",
+      "maxPrice": "Max Price",
+      "noFlights": "No flights match your filters",
+      "pax": "Pax",
+      "requestQuote": "Request Quote",
+      "sortBy": "Sort By",
+      "stops": "Stops",
+      "suggestedRoutes": "suggested routes",
+      "to": "To",
+      "tryAdjusting": "Try adjusting your search criteria"
+    },
+    "overline": "Global Connections",
+    "title": "Book Flights"
+  },
   "Footer": {
+    "allRightsReserved": "All rights reserved.",
     "company": "الشركة",
     "contact": "اتصل بنا",
+    "coordinates": "Coordinates",
     "copyright": "© 2025 فيزيت أفريكا. جميع الحقوق محفوظة.",
     "explore": "اكتشف",
     "links": {
@@ -418,8 +542,10 @@
       "privacyPolicy": "سياسة الخصوصية",
       "requestVendorship": "طلب شراكة",
       "termsOfService": "شروط الخدمة",
-      "tripsPackages": "الرحلات والباقات"
+      "tripsPackages": "الرحلات والباقات",
+      "whatsapp": "WhatsApp"
     },
+    "sponsoredBySolvit": "Sponsored by Solvit Africa",
     "privacy": "الخصوصية",
     "tagline": "شريكك الموثوق في السفر إلى رواندا. تخطيط احترافي لتجارب أفريقية لا تُنسى.",
     "terms": "الشروط"
@@ -429,8 +555,10 @@
       "adventure": "مغامرة",
       "all": "الكل",
       "culture": "ثقافة",
+      "fleet": "Fleet",
       "nature": "طبيعة",
       "relax": "استرخاء",
+      "stays": "Stays",
       "urban": "حضري",
       "wildlife": "الحياة البرية"
     },
@@ -501,36 +629,47 @@
   "Hero": {
     "coordinates": "1°28'S, 29°32'E",
     "location": "حديقة البراكين الوطنية",
+    "planJourney": "Check Best Price",
     "slides": {
       "1": {
+        "code": "BPR",
         "description": "اكتشف القصص غير المروية في قلب إفريقيا. حيث يلتقي الضباب بالجبل، والصمت يتحدث.",
         "heading1": "أفق",
         "heading2": "مهيب",
-        "subheading": "زوروا رواندا 2026"
+        "subheading": "زوروا رواندا 2026",
+        "title": "Sourcing"
       },
       "2": {
+        "code": "ADD",
         "description": "جرب نبض الغابة والجمال الهادئ لمرتفعاتنا المحمية.",
         "heading1": "قلب",
         "heading2": "جامح",
-        "subheading": "محمية الحياة البرية"
+        "subheading": "محمية الحياة البرية",
+        "title": "Curation"
       },
       "3": {
+        "code": "MGT",
         "description": "واجه العمالقة اللطيفين في موطنهم الطبيعي. صلة عميقة بأندر كنوز الطبيعة.",
         "heading1": "وادي",
         "heading2": "الضباب",
-        "subheading": "مرتفعات الغوريلا"
+        "subheading": "مرتفعات الغوريلا",
+        "title": "Logistics"
       },
       "4": {
+        "code": "VFD",
         "description": "استرخِ بجانب المياه الزمردية لبحيرة كيفو. جنة للاسترخاء والمغامرة والتأمل.",
         "heading1": "شواطئ",
         "heading2": "هادئة",
-        "subheading": "بحيرة كيفو"
+        "subheading": "بحيرة كيفو",
+        "title": "Security"
       },
       "5": {
+        "code": "VZT",
         "description": "اشعر بطاقة كيغالي. مدينة الابتكار والفن وحسن الضيافة الصاعدة من التلال.",
         "heading1": "إيقاع",
         "heading2": "حضري",
-        "subheading": "ثقافة نابضة بالحياة"
+        "subheading": "ثقافة نابضة بالحياة",
+        "title": "Vizit"
       }
     }
   },
@@ -574,16 +713,6 @@
         "description": "الأسود ووحيد القرن والفيلة في السافانا.",
         "location": "حديقة أكاجيرا الوطنية",
         "title": "سفاري"
-      },
-      "4": {
-        "description": "استرخ على ضفاف أكبر بحيرة في رواندا.",
-        "location": "المنطقة الغربية",
-        "title": "الاسترخاء في بحيرة كيفو"
-      },
-      "5": {
-        "description": "أسواق نابضة بالحياة ومعارض فنية وتاريخ.",
-        "location": "مدينة كيغالي",
-        "title": "جولة كيغالي الثقافية"
       }
     },
     "overline": "تجارب مختارة",
@@ -645,18 +774,138 @@
     "experiences": "تجارب",
     "flights": "رحلات طيران",
     "gallery": "المعرض",
-    "ourservices": "خدماتنا"
+    "services": "خدماتنا",
+    "planTrip": "Plan Trip",
+    "signIn": "Sign In",
+    "trip": {
+      "item": "item",
+      "items": "items",
+      "tooltip": "Plan your dream trip to Africa",
+      "view": "View Trip"
+    },
+    "userMenu": {
+      "dashboard": "Dashboard",
+      "logout": "Logout",
+      "profile": "Profile"
+    }
   },
-  "PopularRoutes": {
-    "description": "أكثر الرحلات حجزًا إلى كيغالي. أسعار آنية من شركات الطيران الشريكة.",
-    "direct": "مباشر",
-    "fromLabel": "من",
-    "oneStop": "توقف واحد",
-    "overline": "أفضل المسارات",
-    "searchRoute": "ابحث عن هذا المسار",
-    "title": "رحلات شائعة"
+  "NotFound": {
+    "description": "The page you're looking for seems to have wandered off the beaten path.",
+    "returnHome": "Return to Basecamp",
+    "startJourney": "Start a New Journey",
+    "title": "Lost in the wild."
+  },
+  "Partners": {
+    "apply": {
+      "accountDetails": "Account Details",
+      "businessDetails": "Business Details",
+      "labels": {
+        "address": "Business Address",
+        "businessName": "Business Name",
+        "businessType": "Business Type",
+        "confirmPassword": "Confirm Password",
+        "contactName": "Contact Person Full Name",
+        "email": "Email Address",
+        "password": "Password",
+        "phone": "Phone Number",
+        "website": "Website (Optional)"
+      },
+      "messages": {
+        "accountCreatedContactSupport": "Failed to create vendor profile. Your account was created, please contact support.",
+        "error": "Registration failed. Please check the fields.",
+        "profileError": "Failed to create vendor profile.",
+        "success": "Application submitted successfully!"
+      },
+      "placeholders": {
+        "address": "City, Country",
+        "businessName": "e.g. Serengeti Safaris Ltd.",
+        "businessType": "Select type",
+        "confirmPassword": "Confirm password",
+        "contactName": "John Doe",
+        "email": "name@example.com",
+        "password": "Create a password",
+        "phone": "+250...",
+        "website": "https://..."
+      },
+      "submit": "Submit Application",
+      "submitting": "Submitting Application...",
+      "subtitle": "Join our network of premium African travel providers and start receiving curated booking requests.",
+      "title": "Become a Partner",
+      "types": {
+        "car_rental": "Car Rental",
+        "experience": "Experience Provider",
+        "guide": "Tour Guide",
+        "hotel": "Hotel / Accommodation",
+        "other": "Other",
+        "transport": "Transport Company"
+      }
+    },
+    "benefits": {
+      "description": "We provide the tools and exposure you need to scale your tourism business.",
+      "items": {
+        "global": {
+          "description": "Access a worldwide audience of travelers specifically interested in premium African tourism.",
+          "title": "Global Reach"
+        },
+        "growth": {
+          "description": "Utilize our powerful dashboard to manage bookings, track performance, and optimize your offerings.",
+          "title": "Business Growth"
+        },
+        "targeted": {
+          "description": "Connect with travelers who value quality, sustainability, and authentic experiences.",
+          "title": "Targeted Audience"
+        }
+      },
+      "title": "Why Partner With Us?"
+    },
+    "cta": {
+      "apply": "Become a Partner",
+      "getStarted": "Get Started Today",
+      "learnMore": "Learn More"
+    },
+    "ctaSection": {
+      "button": "Apply Now",
+      "description": "Join thousands of other successful partners on Vizit Africa. Setup takes less than 5 minutes.",
+      "title": "Ready to Scale Your Business?"
+    },
+    "description": "Join our exclusive network of premium travel providers and reach high-value travelers looking for authentic African experiences.",
+    "features": {
+      "items": [
+        "Easy-to-use booking management system",
+        "Direct communication with clients",
+        "Automated invoicing and payments",
+        "Marketing support and featured listings",
+        "Analytics and performance insights"
+      ],
+      "title": "Designed for Tour Operators, Hotels, and Guides"
+    },
+    "overline": "Partnership",
+    "title": "Grow With Us"
   },
   "PlanTrip": {
+    "addOns": {
+      "filters": {
+        "all": "All",
+        "budget": "Budget (<$150)",
+        "category": "Category",
+        "luxury": "Luxury (>$200)",
+        "mid": "Mid ($150-$200)",
+        "price": "Price",
+        "search": "Search",
+        "stars": "Stars",
+        "stars4plus": "4 Stars & Up",
+        "stars5": "5 Stars"
+      },
+      "guidesAlert": "Guides are optional but highly recommended for first-time visitors!",
+      "noCars": "No vehicles match your filters",
+      "noHotels": "No hotels match your filters",
+      "reviewBooking": "Review Booking",
+      "tabs": {
+        "cars": "Cars",
+        "guides": "Guides",
+        "hotels": "Hotels"
+      }
+    },
     "confirmation": {
       "dashboardButton": "انتقل إلى لوحة القيادة",
       "homeButton": "العودة للرئيسية",
@@ -674,17 +923,6 @@
       "subtitle": "تلقينا خطة رحلتك وفريقنا يقوم بمراجعتها بالفعل.",
       "title": "تم استلام الطلب!",
       "whatNext": "ماذا يحدث بعد ذلك؟"
-    },
-    "contactInfo": {
-      "continue": "متابعة للخدمات",
-      "email": "البريد الإلكتروني",
-      "emailPlaceholder": "you@example.com",
-      "fullName": "الاسم الكامل",
-      "namePlaceholder": "أحمد علي",
-      "phone": "الهاتف (اختياري)",
-      "phonePlaceholder": "+1 234 567 8900",
-      "subtitle": "كيف يمكننا الاتصال بك بخصوص حجزك؟",
-      "title": "معلومات الاتصال"
     },
     "data": {
       "amenities": {
@@ -732,54 +970,157 @@
         "s1": "أخصائي سفاري"
       }
     },
+    "detailedPlanner": {
+      "buildWithAi": "Build with AI",
+      "messages": {
+        "fillNameEmail": "Please fill in your name and email before submitting.",
+        "personalizing": "Personalizing your journey..."
+      },
+      "narrative": "Narrative",
+      "overline": "Detailed Journey Planner",
+      "sections": {
+        "curation": {
+          "accommodation": "Accommodation",
+          "cabinClassOptions": {
+            "business": "Business",
+            "economy": "Economy",
+            "first": "First Class"
+          },
+          "cabinClassPlaceholder": "Select Cabin Class",
+          "flights": "Flights",
+          "languageOptions": {
+            "English": "English",
+            "French": "French",
+            "German": "German",
+            "Spanish": "Spanish"
+          },
+          "localGuide": "Local Guide",
+          "preferredVehiclePlaceholder": "Preferred Vehicle",
+          "primaryLanguagePlaceholder": "Primary Language",
+          "starRatingOptions": {
+            "3": "3 Stars & Above",
+            "4": "4 Stars & Above",
+            "5": "Luxury 5 Stars"
+          },
+          "starRatingPlaceholder": "Min. Star Rating",
+          "step": "02",
+          "title": "Personalized Curation",
+          "transport": "Transport",
+          "vehicleOptions": {
+            "4x4": "Safari 4x4 SUV",
+            "sedan": "Executive Sedan",
+            "van": "Passenger Van"
+          }
+        },
+        "foundation": {
+          "arrival": "Arrival",
+          "departure": "Departure",
+          "destination": "Destination",
+          "destinationPlaceholder": "e.g., Volcanoes National Park",
+          "origin": "Origin",
+          "originPlaceholder": "Departing from...",
+          "step": "01",
+          "title": "The Foundation"
+        },
+        "identity": {
+          "budget": "Budget Orientation",
+          "budgetOptions": {
+            "luxury": "Luxury (High-end Excellence)",
+            "midRange": "Mid-Range (Quality & Comfort)",
+            "ultraLuxe": "Ultra-Luxury (The Finest Only)",
+            "value": "Value (Budget Conscious)"
+          },
+          "budgetPlaceholder": "Select target budget",
+          "disclaimer": "This is an estimate. Final pricing is manually sourced and confirmed within 48 hours.",
+          "email": "Email Address",
+          "emailPlaceholder": "john@example.com",
+          "estimatedValue": "Estimated Value",
+          "fullName": "Full Name",
+          "fullNamePlaceholder": "John Doe",
+          "phone": "Phone Number",
+          "phonePlaceholder": "+250...",
+          "servicesSelected": "{count} Services Selected",
+          "specialNarrative": "Special Requests",
+          "specialNarrativePlaceholder": "Any specific requirements or dreams for this journey?",
+          "submit": "Request Package Quote",
+          "title": "Traveler Identity"
+        },
+        "purpose": {
+          "step": "03",
+          "title": "Party & Purpose",
+          "travelers": "Travelers",
+          "tripStyle": "Trip Style",
+          "tripStyleOptions": {
+            "adventure": "Pure Adventure",
+            "business": "Business Focus",
+            "cultural": "Cultural Immersion",
+            "honeymoon": "Romantic Honeymoon",
+            "leisure": "Leisure & Relax"
+          },
+          "vibePlaceholder": "What's the vibe?"
+        }
+      },
+      "title": "Craft Your {narrative}"
+    },
+    "flight": {
+      "departure": "Departure",
+      "findFlights": "Find Flights",
+      "flightsFound": "Flights Found",
+      "from": "From",
+      "noFlights": "No flights found",
+      "perPerson": "Prices per person",
+      "search": "Search Flights",
+      "searching": "Searching...",
+      "select": "Select",
+      "selected": "Selected",
+      "skip": "Skip flights",
+      "skipForNow": "Skip for now",
+      "subtitle": "Start your journey with the best flight options to Rwanda.",
+      "title": "Find Your Flight",
+      "to": "To",
+      "travelers": "Travelers",
+      "tryAgain": "Try changing your search criteria"
+    },
     "header": {
       "description": "صمم مغامرتك الأفريقية المثالية. سنتولى التفاصيل بينما تركز أنت على الرحلة.",
       "title": "خطط لرحلتك"
+    },
+    "loading": {
+      "steps": [
+        "Analyzing your travel preferences...",
+        "Scanning flight routes for best connections...",
+        "Matching you with top-rated local guides...",
+        "Sourcing exclusive luxury accommodations...",
+        "Curating unique cultural experiences...",
+        "Finalizing your personalized itinerary..."
+      ],
+      "title": "Crafting Your Journey"
     },
     "review": {
       "alert": "بعد الإرسال، سنراجع طلبك ونرسل لك رابط الدفع في غضون 24 ساعة.",
       "submit": "إرسال طلب الحجز",
       "subtitle": "يرجى مراجعة التفاصيل الخاصة بك قبل التأكيد",
-      "success": "تم إرسال الحجز! سنتصل بك في غضون 24 ساعة.",
       "title": "راجع رحلتك"
     },
-    "services": {
-      "filters": {
-        "all": "الكل",
-        "budget": "اقتصادي (<$150)",
-        "category": "الفئة",
-        "luxury": "فاخر (>$200)",
-        "mid": "متوسط ($150-$200)",
-        "price": "السعر",
-        "search": "بحث",
-        "stars": "النجوم",
-        "stars4plus": "4 نجوم وأكثر",
-        "stars5": "5 نجوم"
-      },
-      "guidesAlert": "المرشدون اختياريون ولكن ينصح بهم بشدة للزوار لأول مرة!",
-      "noCars": "لا توجد سيارات تطابق معاييرك",
-      "noHotels": "لا توجد فنادق تطابق معاييرك",
-      "reviewBooking": "مراجعة الحجز",
-      "tabs": {
-        "cars": "سيارات",
-        "guides": "مرشدون",
-        "hotels": "فنادق"
-      }
-    },
     "steps": {
-      "contact": "اتصال",
+      "addOns": "Add-Ons",
+      "flight": "Flight",
       "review": "مراجعة",
-      "services": "خدمات",
-      "tripDetails": "تفاصيل الرحلة"
+      "travelerDetails": "Traveler Details"
     },
     "summary": {
       "accommodation": "الإقامة",
       "dates": "التواريخ",
       "days": "أيام",
+      "destination": "Destination",
       "guide": "المرشد",
+      "infant": "infant",
+      "infants": "infants",
       "nights": "ليالي",
+      "oneWay": "One Way",
       "perDay": "/ يوم",
       "perNight": "/ ليلة",
+      "roundTrip": "Round Trip",
       "serviceFee": "رسوم الخدمة (5%)",
       "subtotal": "المجموع الفرعي",
       "title": "رحلتك",
@@ -787,6 +1128,17 @@
       "travelers": "المسافرون",
       "vehicle": "المركبة",
       "withDriver": "مع سائق"
+    },
+    "travelerDetails": {
+      "continue": "Continue to Add-Ons",
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "fullName": "Full Name",
+      "namePlaceholder": "John Doe",
+      "phone": "Phone (Optional)",
+      "phonePlaceholder": "+1 234 567 8900",
+      "subtitle": "How can we reach you about your booking?",
+      "title": "Traveler Details"
     },
     "tripDetails": {
       "adults": "بالغون",
@@ -796,21 +1148,45 @@
       "departingFrom": "المغادرة من",
       "departingPlaceholder": "مثلا: نيويورك، لندن، دبي",
       "departure": "المغادرة من رواندا",
+      "generate": "Generate Itinerary",
+      "generating": "Crafting Itinerary...",
+      "heading": "Describe Your Dream Trip",
+      "kids": "Kids",
       "pickDate": "اختر تاريخًا",
       "purposes": {
         "adventure": "مغامرة",
         "business": "عمل",
+        "cultural": "Cultural",
         "family": "عائلة",
         "honeymoon": "شهر عسل",
         "leisure": "ترفيه",
         "other": "آخر"
       },
       "requestsPlaceholder": "أي متطلبات غذائية، احتياجات وصول، أو مناسبات خاصة...",
+      "selectDates": "Select dates",
+      "selectStyle": "Select style",
       "specialRequests": "طلبات خاصة (اختياري)",
+      "specialWishes": "Any special wishes? (Optional)",
+      "subheading": "Tell us where and when, and our AI will curate the perfect itinerary for you.",
       "subtitle": "أخبرنا من أين أنت قادم ومتى",
       "title": "تفاصيل الرحلة",
-      "tripPurpose": "الغرض من الرحلة"
+      "tripPurpose": "الغرض من الرحلة",
+      "tripStyle": "Trip Style",
+      "when": "When?",
+      "wherePlaceholder": "e.g. Kigali, Rwanda",
+      "whereTo": "Where to?",
+      "whosComing": "Who's coming?",
+      "wishesPlaceholder": "e.g. We love hiking, vegetarian food, and want to see gorillas."
     }
+  },
+  "PopularRoutes": {
+    "description": "أكثر الرحلات حجزًا إلى كيغالي. أسعار آنية من شركات الطيران الشريكة.",
+    "direct": "مباشر",
+    "fromLabel": "من",
+    "oneStop": "توقف واحد",
+    "overline": "أفضل المسارات",
+    "searchRoute": "ابحث عن هذا المسار",
+    "title": "رحلات شائعة"
   },
   "Profile": {
     "header": {
@@ -818,33 +1194,75 @@
       "subtitle": "رحلة سارة",
       "title": "ملف المسافر"
     },
+    "messages": {
+      "cancelError": "Failed to cancel booking",
+      "cancelSuccess": "Booking request cancelled successfully.",
+      "confirmCancel": "Are you sure you want to cancel this booking request?",
+      "fallbacks": {
+        "name": "Traveler"
+      },
+      "paymentConfirmationFailed": "Payment processed but confirmation failed.",
+      "paymentSuccess": "Payment received! Your booking is now paid."
+    },
     "overview": {
+      "loading": "Loading session...",
       "nextTrip": {
         "adults": "بالغون",
+        "adventurers": "{count} Adventurers",
         "confirmed": "مؤكد",
         "daysLeft": "أيام متبقية",
+        "dreaming": "Dreaming",
         "imageAlt": "الرحلة القادمة",
+        "joinUs": "Join us",
         "label": "القادمة",
+        "paid": "Paid",
+        "preparing": "Journey in Preparation",
+        "refining": "Refining Itinerary",
+        "start": "Start Your Story",
         "status": "الحالة",
         "travelers": "مسافرون"
-      },
-      "pendingRequests": {
-        "title": "طلبات معلقة"
       },
       "stats": {
         "days": "أيام سفر",
         "reviews": "مراجعات",
         "title": "إحصائياتك",
         "trips": "رحلات قمت بها"
+      },
+      "tripsAndRequests": {
+        "acceptPay": "Accept & Pay",
+        "cancelConfirm": "Are you sure you want to cancel this request? This action cannot be undone.",
+        "cancelRequest": "Cancel Request",
+        "created": "Created",
+        "description": "Track your upcoming adventures and active planning requests in one place.",
+        "items": "Items",
+        "itemsCount": "{count} items",
+        "loading": "Loading...",
+        "manageTrip": "Manage Trip",
+        "noTrips": "No active trips or requests",
+        "quoteReady": "Quote Ready: {amount}",
+        "requestId": "Trip Request #{id}",
+        "startDate": "Start Date",
+        "status": "Status",
+        "title": "My Trips & Requests",
+        "tripId": "Trip #{id}",
+        "viewDetails": "View Details"
       }
     },
     "saved": {
+      "curateDescription": "Your personal collection of dream destinations and experiences. Explore the landscape and bookmark what inspires you to start building your journey.",
+      "curateTitle": "Curate Your Adventure",
       "emptyDescription": "العناصر التي تحفظها ستظهر هنا.",
-      "emptyTitle": "لا توجد عناصر محفوظة"
+      "emptyTitle": "لا توجد عناصر محفوظة",
+      "explore": "Explore Rwanda"
     },
     "settings": {
+      "bio": "Bio",
+      "bioPlaceholder": "Travel enthusiast",
+      "currency": "Preferred Currency",
       "email": "البريد الإلكتروني",
       "fullName": "الاسم الكامل",
+      "phone": "Phone Number",
+      "role": "Account Role",
       "save": "حفظ التغييرات",
       "title": "إعدادات الحساب"
     },
@@ -855,11 +1273,46 @@
       "trips": "رحلاتي"
     },
     "trips": {
-      "planNew": "تخطيط رحلة جديدة",
+      "description": "Every journey you've embarked on, and those yet to begin.",
+      "empty": {
+        "cta": "Start Planning a Trip",
+        "description": "Your confirmed itineraries will appear here as soon as they're finalized and paid.",
+        "title": "No confirmed trips yet"
+      },
+      "fallbacks": {
+        "purpose": "African Adventure"
+      },
+      "timeline": {
+        "empty": "Select a trip to view detailed timeline",
+        "selectJourney": "Select Journey",
+        "travelers": "{count} Travelers"
+      },
       "title": "سجل الرحلات",
-      "upcoming": "قادمة",
-      "viewDetails": "عرض التفاصيل"
+      "views": {
+        "cards": "Cards",
+        "timeline": "Timeline"
+      }
     }
+  },
+  "ServiceHighlights": {
+    "cta": "Start Your Journey",
+    "description": "We find the prices automated sites miss, then we bundle them with curated hotels and managed transport for a worry-free journey.",
+    "items": {
+      "concierge": {
+        "description": "We handle the logistics, the confirmations, and the local details, so you can simply enjoy the ride.",
+        "title": "Total Management"
+      },
+      "flights": {
+        "description": "Our specialists manually scan private and public fares to secure the absolute lowest price for your route to Africa.",
+        "title": "Expert Sourcing"
+      },
+      "packages": {
+        "description": "We pair your flight with hand-picked hotels, BnBs, and cars that we've personally vetted for value.",
+        "title": "Curated Add-Ons"
+      }
+    },
+    "overline": "The Vizit Advantage",
+    "title": "Best-Price Fares {br} Complete Trip Ease"
   },
   "Services": {
     "description": "نتعامل مع كل شيء من لحظة مغادرتك منزلك حتى عودتك، متغيرًا للأبد.",
@@ -867,10 +1320,6 @@
       "experiences": {
         "description": "رحلات الغوريلا، مزارع الشاي، والمزيد.",
         "title": "تجارب حصرية"
-      },
-      "flights": {
-        "description": "طائرات خاصة ودخول للدرجة الممتازة.",
-        "title": "رحلات فاخرة"
       },
       "hotels": {
         "description": "من نزل البوتيك إلى منتجعات الخمس نجوم.",
@@ -890,6 +1339,7 @@
       "all": "الكل",
       "bnbs": "بيوت ضيافة",
       "carRentals": "تأجير سيارات",
+      "flights": "Flights",
       "guides": "مرشدون",
       "hotels": "فنادق"
     },
@@ -924,6 +1374,16 @@
           "على مسافة قريبة من حانات الحليب."
         ],
         "title": "بيت ضيافة كيغالي سول"
+      },
+      "klm-royal": {
+        "description": "Reliable connections via Amsterdam Schiphol.",
+        "details": [
+          "Daily flights.",
+          "World Class Service.",
+          "Sustainability focus.",
+          "SkyTeam Alliance Member."
+        ],
+        "title": "KLM Royal Dutch"
       },
       "land-cruiser-v8": {
         "description": "سيارة السفاري المثالية لأي تضاريس.",
@@ -965,6 +1425,16 @@
         ],
         "title": "تويوتا RAV4 (موديل جديد)"
       },
+      "rwandair-direct": {
+        "description": "Daily direct flights from London, Brussels, and Dubai.",
+        "details": [
+          "Dreamliner Business Class.",
+          "Generous baggage allowance.",
+          "Winne of 'Best Airline Staff'.",
+          "Seamless connections."
+        ],
+        "title": "RwandAir Direct"
+      },
       "the-retreat": {
         "description": "فندق البوتيك الفاخر الأول في كيغالي مع مسابح مدفأة بالطاقة الشمسية.",
         "details": [
@@ -975,6 +1445,14 @@
         ],
         "title": "ذا ريتريت باي هيفن"
       }
+    },
+    "labels": {
+      "addDriver": "Add Driver (+${price}/day)",
+      "day": " / day",
+      "fallbackLocation": "Kigali",
+      "fallbackTransmission": "Automatic",
+      "night": " / night",
+      "remove": "Remove"
     },
     "noResults": "لم يتم العثور على خدمات تطابق معاييرك.",
     "overline": "الفهرس",
@@ -990,6 +1468,12 @@
   },
   "SocialProof": {
     "tagline": "موثوق به من قبل مسافرين وشركاء عالميين"
+  },
+  "Stats": {
+    "nationalities": "Nationalities",
+    "rating": "Rating",
+    "satisfaction": "Satisfaction",
+    "travelers": "Travelers"
   },
   "Testimonials": {
     "description": "قصص حقيقية من رحلات حقيقية. شاهد لماذا يختار الآلاف من المغامرين فيزيت أفريكا.",
@@ -1027,6 +1511,62 @@
     },
     "overline": "ماذا يقولون",
     "title": "قصص المسافرين"
+  },
+  "Vendor": {
+    "dashboard": {
+      "actions": {
+        "myProfile": "My Profile",
+        "publicSite": "Public Site"
+      },
+      "incomplete": {
+        "cta": "Complete Profile",
+        "description": "It seems you are registered as a vendor but haven't completed your business profile.",
+        "title": "Incomplete Profile"
+      },
+      "opportunities": {
+        "title": "New Opportunities",
+        "total": "{count} Total"
+      },
+      "overline": "Partner Hub",
+      "review": {
+        "backHome": "Back to Home",
+        "description": "Thank you for applying to become a partner with Vizit Africa. Your application for {businessName} is currently being reviewed by our team.",
+        "notice": "We typically review applications within 24-48 hours. You will receive an email once your account is approved.",
+        "title": "Application Under Review"
+      },
+      "schedule": {
+        "empty": "No upcoming services scheduled yet.",
+        "title": "Schedule"
+      },
+      "stats": {
+        "pendingRequests": "Pending Requests",
+        "totalRevenue": "Total Revenue",
+        "upcomingBookings": "Upcoming Bookings"
+      },
+      "title": "Dashboard",
+      "welcome": "Welcome back, {businessName}"
+    },
+    "requests": {
+      "actions": {
+        "confirm": "Confirm",
+        "confirmed": "Confirmed",
+        "confirming": "Confirming...",
+        "verify": "Verify Dates",
+        "verifying": "Verifying..."
+      },
+      "empty": {
+        "description": "Your opportunities will appear here.",
+        "title": "No Requests"
+      },
+      "messages": {
+        "available": "Service is available for these dates!",
+        "checkError": "Failed to check availability",
+        "confirmError": "Failed to confirm booking",
+        "confirmSuccess": "Booking confirmed successfully!",
+        "unavailable": "Unavailable: {reason}",
+        "unexpectedError": "An unexpected error occurred"
+      }
+    }
   },
   "WhyUs": {
     "benefits": [

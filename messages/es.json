@@ -1,5 +1,9 @@
 {
   "About": {
+    "cta": {
+      "description": "Professional sourcing and total logistics management for the modern traveler.",
+      "overline": "Expert Execution"
+    },
     "established": "Establecido 2018",
     "guidesDescription": "Locales. Narradores. Expertos. Conoce a las personas que mejor conocen Ruanda.",
     "guidesTitle": "Los Guías",
@@ -45,11 +49,13 @@
           "guide": "Guía",
           "hotel": "Hotel"
         },
-        "manageFulfillment": "Gestionar Cumplimiento",
+        "manageBooking": "Manage Booking",
         "paid": "Pagado",
+        "refundCancel": "Refund & Cancel",
         "travelers": "viajeros"
       },
       "empty": {
+        "clearSearch": "Clear Search",
         "description": "Las reservas aparecerán aquí una vez que los clientes completen el pago.",
         "title": "Aún no hay reservas confirmadas"
       },
@@ -84,8 +90,24 @@
         },
         "title": "Gestión de Reserva"
       },
+      "searchPlaceholder": "Search by name or ID...",
       "subtitle": "Gestionar y cumplir reservas de viaje confirmadas",
+      "tabs": {
+        "all": "All Bookings",
+        "completed": "Completed",
+        "paid": "Paid"
+      },
       "title": "Reservas Confirmadas"
+    },
+    "createService": {
+      "back": "Back to Services",
+      "subtitle": "Create a new service",
+      "title": "Create Service"
+    },
+    "createVendor": {
+      "back": "Back to Vendors",
+      "subtitle": "Create a new vendor",
+      "title": "Create Vendor"
     },
     "dashboard": {
       "overview": "Visión General",
@@ -98,7 +120,7 @@
       },
       "requests": "Solicitudes",
       "stats": {
-        "confirmed": "Confirmado",
+        "paid": "Paid",
         "pending": "Solicitudes Pendientes",
         "quoted": "Cotizado"
       },
@@ -138,13 +160,14 @@
     "nav": {
       "bookings": "Reservas",
       "brand": "Admin Vizit",
+      "create": "Crear",
       "inventory": "Inventario",
       "logout": "Cerrar Sesión",
       "overview": "Visión General",
-      "create": "Crear",
       "publicSite": "Sitio Público",
       "requests": "Solicitudes",
-      "settings": "Ajustes"
+      "settings": "Ajustes",
+      "vendors": "Vendors"
     },
     "packages": {
       "actions": {
@@ -206,23 +229,69 @@
       "adminAccess": "Acceso de Administrador",
       "createAccount": "Crear una cuenta",
       "emailLabel": "Dirección de Correo",
+      "emailPlaceholder": "name@example.com",
       "forgot": "¿Olvidaste?",
+      "googleContinue": "Continue with Google",
+      "loggingIn": "Logging in...",
+      "messages": {
+        "error": "Login failed. Please check your credentials.",
+        "genericError": "An error occurred during login",
+        "googleError": "Google login failed",
+        "googleSuccess": "Successfully logged in with Google",
+        "googleUnexpected": "An unexpected error occurred during Google login",
+        "success": "Logged in successfully"
+      },
       "noAccount": "¿Nuevo en Vizit Africa?",
       "orContinue": "O continuar con",
       "passwordLabel": "Contraseña",
+      "passwordPlaceholder": "Enter your password",
       "subtitle": "Inicia sesión para acceder a tu itinerario curado.",
       "title": "Bienvenido de Nuevo"
     },
+    "setPassword": {
+      "confirmPassword": "Confirm New Password",
+      "confirmPlaceholder": "Confirm your password",
+      "invalidLink": "Invalid Link",
+      "invalidLinkDesc": "This password reset link is invalid or has expired.",
+      "newPassword": "New Password",
+      "placeholder": "Enter new password",
+      "remembered": "Remember your password?",
+      "submit": "Set Password",
+      "subtitle": "Set a secure password for your new account to access your itinerary and bookings.",
+      "success": "Password set successfully! You are now logged in.",
+      "title": "Set Account Password"
+    },
     "signup": {
       "confirmPassword": "Confirmar Contraseña",
+      "creating": "Creating...",
       "emailLabel": "Dirección de Correo",
+      "emailPlaceholder": "name@example.com",
       "fullName": "Nombre Completo",
-      "phoneNumber": "Número de Teléfono",
+      "fullNamePlaceholder": "John Doe",
+      "googleSignup": "Sign up with Google",
       "haveAccount": "¿Ya tienes una cuenta?",
+      "messages": {
+        "error": "Registration failed. Please check the fields.",
+        "success": "Account created! Check your email to verify."
+      },
+      "orContinue": "OR CONTINUE WITH",
       "passwordLabel": "Contraseña",
+      "phoneNumber": "Número de Teléfono",
+      "phoneNumberPlaceholder": "+250 ...",
       "signIn": "Iniciar sesión",
       "subtitle": "Crea una cuenta para comenzar a planificar tu viaje legado.",
       "title": "Comienza Tu Viaje"
+    },
+    "verifyEmail": {
+      "backToLogin": "Back to Login",
+      "codeLabel": "Verification Code",
+      "error": "Invalid verification code",
+      "failed": "Verification failed. Please try again.",
+      "goToProfile": "Go to Profile",
+      "success": "Email verified successfully",
+      "title": "Verify Email",
+      "verifyButton": "Verify Email",
+      "verifying": "Verifying..."
     }
   },
   "CTA": {
@@ -238,11 +307,13 @@
   },
   "Common": {
     "back": "Atrás",
+    "bookFlight": "Planificar un vuelo",
     "bookNow": "Reservar Ahora",
     "brandName": "Vizit Africa",
     "contactUs": "Contáctenos",
     "continue": "Continuar",
     "createAccount": "Crear Cuenta",
+    "error": "Error",
     "getInTouch": "Ponte en Contacto",
     "learnMore": "Saber Más",
     "localTime": "Hora Local",
@@ -252,8 +323,8 @@
     "signup": "Registrarse",
     "startPlanning": "Comenzar a Planificar",
     "submit": "Enviar",
-    "viewAll": "Ver Todo",
-    "bookFlight": "Planificar un vuelo"
+    "success": "Success",
+    "viewAll": "Ver Todo"
   },
   "Contact": {
     "address": "Kigali Heights, 4to Piso",
@@ -261,16 +332,26 @@
     "contactDetails": "Detalles de Contacto",
     "description": "¿Tienes preguntas sobre nuestros tours o necesitas un itinerario personalizado? Estamos aquí para ayudarte a planificar la experiencia perfecta.",
     "emailAddress": "Dirección de Correo",
+    "emailPlaceholder": "jane@example.com",
     "emailUs": "Envíenos un Email",
     "firstName": "Nombre",
+    "firstNamePlaceholder": "Jane",
     "formDescription": "Completa el formulario a continuación y nuestro equipo te responderá en 24 horas.",
+    "formOverline": "Send a Message",
     "formTitle": "Envíanos un mensaje",
     "lastName": "Apellido",
+    "lastNamePlaceholder": "Doe",
     "message": "Mensaje",
     "messagePlaceholder": "Cuéntanos sobre tus planes de viaje...",
+    "messages": {
+      "error": "Failed to send. Please try again.",
+      "genericError": "An error occurred.",
+      "success": "Message Sent ✓"
+    },
     "office": "Oficina",
     "openStatus": "Abierto para Nuevas Aventuras",
     "phoneNumber": "Número de Teléfono",
+    "phonePlaceholder": "+1 (555) 000-0000",
     "title": "Planifiquemos tu",
     "titleSub": "viaje legado.",
     "visitUs": "Visítanos",
@@ -308,6 +389,12 @@
       "adventure": "Aventura",
       "cultureLeisure": "Cultura y Ocio",
       "wildlifeNature": "Vida Silvestre y Naturaleza"
+    },
+    "categoriesTitle": "Categories",
+    "fallbacks": {
+      "duration": "Full Day",
+      "location": "Rwanda",
+      "tag": "Experience"
     },
     "filters": {
       "difficulty": "Dificultad",
@@ -404,9 +491,46 @@
     "overline": "¿Tienes Preguntas?",
     "title": "Tenemos Respuestas"
   },
+  "FeaturedExperience": {
+    "badge": "Featured Package",
+    "description": "Comprehensive sourcing and logistics management for executive travel, ensuring complete security and zero friction.",
+    "durationLabel": "Execution",
+    "durationValue": "End-to-End",
+    "groupSizeLabel": "Capacity",
+    "groupSizeValue": "Scalable",
+    "itineraryButton": "View Details",
+    "locationLabel": "Primary Hub",
+    "locationValue": "Kigali, Rwanda",
+    "requestButton": "Request Sourcing",
+    "startingFromLabel": "Sourcing Fee",
+    "startingFromValue": "From ${price}",
+    "title": "Executive Travel Sourcing"
+  },
+  "FlightsPage": {
+    "description": "Find and book the best routes to Rwanda. We partner with leading airlines to ensure a seamless journey.",
+    "labels": {
+      "class": "Class",
+      "depart": "Depart",
+      "estimatesDisclaimer": "* All flight prices are estimates. We manually find the best real-time options for you.",
+      "from": "From",
+      "maxPrice": "Max Price",
+      "noFlights": "No flights match your filters",
+      "pax": "Pax",
+      "requestQuote": "Request Quote",
+      "sortBy": "Sort By",
+      "stops": "Stops",
+      "suggestedRoutes": "suggested routes",
+      "to": "To",
+      "tryAdjusting": "Try adjusting your search criteria"
+    },
+    "overline": "Global Connections",
+    "title": "Book Flights"
+  },
   "Footer": {
+    "allRightsReserved": "All rights reserved.",
     "company": "Compañía",
     "contact": "Contacto",
+    "coordinates": "Coordinates",
     "copyright": "© 2025 Vizit Africa. Todos los derechos reservados.",
     "explore": "Explorar",
     "links": {
@@ -416,10 +540,12 @@
       "faq": "Preguntas Frecuentes",
       "gallery": "Galería",
       "privacyPolicy": "Política de Privacidad",
+      "requestVendorship": "Solicitar colaboración",
       "termsOfService": "Términos de Servicio",
       "tripsPackages": "Viajes y Paquetes",
-      "requestVendorship": "Solicitar colaboración"
+      "whatsapp": "WhatsApp"
     },
+    "sponsoredBySolvit": "Sponsored by Solvit Africa",
     "privacy": "Privacidad",
     "tagline": "Tu socio de confianza en viajes a Ruanda. Planificación profesional para experiencias africanas inolvidables.",
     "terms": "Términos"
@@ -429,8 +555,10 @@
       "adventure": "aventura",
       "all": "todo",
       "culture": "cultura",
+      "fleet": "Fleet",
       "nature": "naturaleza",
       "relax": "relajación",
+      "stays": "Stays",
       "urban": "urbano",
       "wildlife": "vida silvestre"
     },
@@ -501,36 +629,47 @@
   "Hero": {
     "coordinates": "1°28'S, 29°32'E",
     "location": "P.N. Volcanes",
+    "planJourney": "Check Best Price",
     "slides": {
       "1": {
+        "code": "BPR",
         "description": "Descubre las historias no contadas del corazón de África. Donde la niebla se encuentra con la montaña y el silencio dice mucho.",
         "heading1": "Majestuoso",
         "heading2": "Horizonte",
-        "subheading": "Visita Ruanda 2026"
+        "subheading": "Visita Ruanda 2026",
+        "title": "Sourcing"
       },
       "2": {
+        "code": "ADD",
         "description": "Experimenta el pulso de la selva y la serena belleza de nuestras tierras altas protegidas.",
         "heading1": "Corazón",
         "heading2": "Salvaje",
-        "subheading": "Santuario de Vida Silvestre"
+        "subheading": "Santuario de Vida Silvestre",
+        "title": "Curation"
       },
       "3": {
+        "code": "MGT",
         "description": "Encuentra gentiles gigantes en su hábitat natural. Una conexión profunda con los tesoros más raros de la naturaleza.",
         "heading1": "Valle de",
         "heading2": "Niebla",
-        "subheading": "Tierras Altas de Gorilas"
+        "subheading": "Tierras Altas de Gorilas",
+        "title": "Logistics"
       },
       "4": {
+        "code": "VFD",
         "description": "Relájate junto a las aguas esmeralda del lago Kivu. Un paraíso para la relajación, la aventura y la reflexión.",
         "heading1": "Costas",
         "heading2": "Serenas",
-        "subheading": "Lago Kivu"
+        "subheading": "Lago Kivu",
+        "title": "Security"
       },
       "5": {
+        "code": "VZT",
         "description": "Siente la energía de Kigali. Una ciudad de innovación, arte y cálida hospitalidad que surge de las colinas.",
         "heading1": "Ritmo",
         "heading2": "Urbano",
-        "subheading": "Cultura Vibrante"
+        "subheading": "Cultura Vibrante",
+        "title": "Vizit"
       }
     }
   },
@@ -574,16 +713,6 @@
         "description": "Leones, rinocerontes y elefantes en la sabana.",
         "location": "Parque Nacional Akagera",
         "title": "Safari"
-      },
-      "4": {
-        "description": "Relájate en las orillas del lago más grande de Ruanda.",
-        "location": "Provincia Occidental",
-        "title": "Relax en Lago Kivu"
-      },
-      "5": {
-        "description": "Mercados vibrantes, galerías de arte e historia.",
-        "location": "Ciudad de Kigali",
-        "title": "Tour Cultural de Kigali"
       }
     },
     "overline": "Experiencias Únicas",
@@ -643,12 +772,140 @@
     "aboutUs": "Sobre Nosotros",
     "contact": "Contacto",
     "experiences": "Experiencias",
-    "gallery": "Galería",
-    "services": "Servicios",
     "flights": "Vuelos",
-    "ourservices": "Nuestros servicios"
+    "gallery": "Galería",
+    "services": "Nuestros servicios",
+    "planTrip": "Plan Trip",
+    "signIn": "Sign In",
+    "trip": {
+      "item": "item",
+      "items": "items",
+      "tooltip": "Plan your dream trip to Africa",
+      "view": "View Trip"
+    },
+    "userMenu": {
+      "dashboard": "Dashboard",
+      "logout": "Logout",
+      "profile": "Profile"
+    }
+  },
+  "NotFound": {
+    "description": "The page you're looking for seems to have wandered off the beaten path.",
+    "returnHome": "Return to Basecamp",
+    "startJourney": "Start a New Journey",
+    "title": "Lost in the wild."
+  },
+  "Partners": {
+    "apply": {
+      "accountDetails": "Account Details",
+      "businessDetails": "Business Details",
+      "labels": {
+        "address": "Business Address",
+        "businessName": "Business Name",
+        "businessType": "Business Type",
+        "confirmPassword": "Confirm Password",
+        "contactName": "Contact Person Full Name",
+        "email": "Email Address",
+        "password": "Password",
+        "phone": "Phone Number",
+        "website": "Website (Optional)"
+      },
+      "messages": {
+        "accountCreatedContactSupport": "Failed to create vendor profile. Your account was created, please contact support.",
+        "error": "Registration failed. Please check the fields.",
+        "profileError": "Failed to create vendor profile.",
+        "success": "Application submitted successfully!"
+      },
+      "placeholders": {
+        "address": "City, Country",
+        "businessName": "e.g. Serengeti Safaris Ltd.",
+        "businessType": "Select type",
+        "confirmPassword": "Confirm password",
+        "contactName": "John Doe",
+        "email": "name@example.com",
+        "password": "Create a password",
+        "phone": "+250...",
+        "website": "https://..."
+      },
+      "submit": "Submit Application",
+      "submitting": "Submitting Application...",
+      "subtitle": "Join our network of premium African travel providers and start receiving curated booking requests.",
+      "title": "Become a Partner",
+      "types": {
+        "car_rental": "Car Rental",
+        "experience": "Experience Provider",
+        "guide": "Tour Guide",
+        "hotel": "Hotel / Accommodation",
+        "other": "Other",
+        "transport": "Transport Company"
+      }
+    },
+    "benefits": {
+      "description": "We provide the tools and exposure you need to scale your tourism business.",
+      "items": {
+        "global": {
+          "description": "Access a worldwide audience of travelers specifically interested in premium African tourism.",
+          "title": "Global Reach"
+        },
+        "growth": {
+          "description": "Utilize our powerful dashboard to manage bookings, track performance, and optimize your offerings.",
+          "title": "Business Growth"
+        },
+        "targeted": {
+          "description": "Connect with travelers who value quality, sustainability, and authentic experiences.",
+          "title": "Targeted Audience"
+        }
+      },
+      "title": "Why Partner With Us?"
+    },
+    "cta": {
+      "apply": "Become a Partner",
+      "getStarted": "Get Started Today",
+      "learnMore": "Learn More"
+    },
+    "ctaSection": {
+      "button": "Apply Now",
+      "description": "Join thousands of other successful partners on Vizit Africa. Setup takes less than 5 minutes.",
+      "title": "Ready to Scale Your Business?"
+    },
+    "description": "Join our exclusive network of premium travel providers and reach high-value travelers looking for authentic African experiences.",
+    "features": {
+      "items": [
+        "Easy-to-use booking management system",
+        "Direct communication with clients",
+        "Automated invoicing and payments",
+        "Marketing support and featured listings",
+        "Analytics and performance insights"
+      ],
+      "title": "Designed for Tour Operators, Hotels, and Guides"
+    },
+    "overline": "Partnership",
+    "title": "Grow With Us"
   },
   "PlanTrip": {
+    "addOns": {
+      "filters": {
+        "all": "All",
+        "budget": "Budget (<$150)",
+        "category": "Category",
+        "luxury": "Luxury (>$200)",
+        "mid": "Mid ($150-$200)",
+        "price": "Price",
+        "search": "Search",
+        "stars": "Stars",
+        "stars4plus": "4 Stars & Up",
+        "stars5": "5 Stars"
+      },
+      "guidesAlert": "Guides are optional but highly recommended for first-time visitors!",
+      "noCars": "No vehicles match your filters",
+      "noHotels": "No hotels match your filters",
+      "reviewBooking": "Review Booking",
+      "tabs": {
+        "cars": "Cars",
+        "guides": "Guides",
+        "hotels": "Hotels"
+      }
+    },
     "confirmation": {
       "dashboardButton": "Ir al Panel",
       "homeButton": "Volver a Inicio",
@@ -666,17 +923,6 @@
       "subtitle": "Hemos recibido tu plan de viaje y nuestro equipo ya lo está revisando.",
       "title": "¡Solicitud Recibida!",
       "whatNext": "¿Qué pasa después?"
-    },
-    "contactInfo": {
-      "continue": "Continuar a Servicios",
-      "email": "Correo Electrónico",
-      "emailPlaceholder": "tu@ejemplo.com",
-      "fullName": "Nombre Completo",
-      "namePlaceholder": "Juan Pérez",
-      "phone": "Teléfono (Opcional)",
-      "phonePlaceholder": "+1 234 567 8900",
-      "subtitle": "¿Cómo podemos contactarte sobre tu reserva?",
-      "title": "Información de Contacto"
     },
     "data": {
       "amenities": {
@@ -724,54 +970,157 @@
         "s1": "Especialista en Safari"
       }
     },
+    "detailedPlanner": {
+      "buildWithAi": "Build with AI",
+      "messages": {
+        "fillNameEmail": "Please fill in your name and email before submitting.",
+        "personalizing": "Personalizing your journey..."
+      },
+      "narrative": "Narrative",
+      "overline": "Detailed Journey Planner",
+      "sections": {
+        "curation": {
+          "accommodation": "Accommodation",
+          "cabinClassOptions": {
+            "business": "Business",
+            "economy": "Economy",
+            "first": "First Class"
+          },
+          "cabinClassPlaceholder": "Select Cabin Class",
+          "flights": "Flights",
+          "languageOptions": {
+            "English": "English",
+            "French": "French",
+            "German": "German",
+            "Spanish": "Spanish"
+          },
+          "localGuide": "Local Guide",
+          "preferredVehiclePlaceholder": "Preferred Vehicle",
+          "primaryLanguagePlaceholder": "Primary Language",
+          "starRatingOptions": {
+            "3": "3 Stars & Above",
+            "4": "4 Stars & Above",
+            "5": "Luxury 5 Stars"
+          },
+          "starRatingPlaceholder": "Min. Star Rating",
+          "step": "02",
+          "title": "Personalized Curation",
+          "transport": "Transport",
+          "vehicleOptions": {
+            "4x4": "Safari 4x4 SUV",
+            "sedan": "Executive Sedan",
+            "van": "Passenger Van"
+          }
+        },
+        "foundation": {
+          "arrival": "Arrival",
+          "departure": "Departure",
+          "destination": "Destination",
+          "destinationPlaceholder": "e.g., Volcanoes National Park",
+          "origin": "Origin",
+          "originPlaceholder": "Departing from...",
+          "step": "01",
+          "title": "The Foundation"
+        },
+        "identity": {
+          "budget": "Budget Orientation",
+          "budgetOptions": {
+            "luxury": "Luxury (High-end Excellence)",
+            "midRange": "Mid-Range (Quality & Comfort)",
+            "ultraLuxe": "Ultra-Luxury (The Finest Only)",
+            "value": "Value (Budget Conscious)"
+          },
+          "budgetPlaceholder": "Select target budget",
+          "disclaimer": "This is an estimate. Final pricing is manually sourced and confirmed within 48 hours.",
+          "email": "Email Address",
+          "emailPlaceholder": "john@example.com",
+          "estimatedValue": "Estimated Value",
+          "fullName": "Full Name",
+          "fullNamePlaceholder": "John Doe",
+          "phone": "Phone Number",
+          "phonePlaceholder": "+250...",
+          "servicesSelected": "{count} Services Selected",
+          "specialNarrative": "Special Requests",
+          "specialNarrativePlaceholder": "Any specific requirements or dreams for this journey?",
+          "submit": "Request Package Quote",
+          "title": "Traveler Identity"
+        },
+        "purpose": {
+          "step": "03",
+          "title": "Party & Purpose",
+          "travelers": "Travelers",
+          "tripStyle": "Trip Style",
+          "tripStyleOptions": {
+            "adventure": "Pure Adventure",
+            "business": "Business Focus",
+            "cultural": "Cultural Immersion",
+            "honeymoon": "Romantic Honeymoon",
+            "leisure": "Leisure & Relax"
+          },
+          "vibePlaceholder": "What's the vibe?"
+        }
+      },
+      "title": "Craft Your {narrative}"
+    },
+    "flight": {
+      "departure": "Departure",
+      "findFlights": "Find Flights",
+      "flightsFound": "Flights Found",
+      "from": "From",
+      "noFlights": "No flights found",
+      "perPerson": "Prices per person",
+      "search": "Search Flights",
+      "searching": "Searching...",
+      "select": "Select",
+      "selected": "Selected",
+      "skip": "Skip flights",
+      "skipForNow": "Skip for now",
+      "subtitle": "Start your journey with the best flight options to Rwanda.",
+      "title": "Find Your Flight",
+      "to": "To",
+      "travelers": "Travelers",
+      "tryAgain": "Try changing your search criteria"
+    },
     "header": {
       "description": "Personaliza tu aventura africana perfecta. Nos encargaremos de los detalles mientras te concentras en el viaje.",
       "title": "Planifica Tu Viaje"
+    },
+    "loading": {
+      "steps": [
+        "Analyzing your travel preferences...",
+        "Scanning flight routes for best connections...",
+        "Matching you with top-rated local guides...",
+        "Sourcing exclusive luxury accommodations...",
+        "Curating unique cultural experiences...",
+        "Finalizing your personalized itinerary..."
+      ],
+      "title": "Crafting Your Journey"
     },
     "review": {
       "alert": "Después de enviar, revisaremos tu solicitud y te enviaremos un enlace de pago dentro de las 24 horas.",
       "submit": "Enviar Solicitud de Reserva",
       "subtitle": "Por favor revisa tus detalles antes de confirmar",
-      "success": "¡Reserva enviada! Te contactaremos dentro de las 24 horas.",
       "title": "Revisa Tu Viaje"
     },
-    "services": {
-      "filters": {
-        "all": "Todos",
-        "budget": "Económico (<$150)",
-        "category": "Categoría",
-        "luxury": "Lujo (>$200)",
-        "mid": "Medio ($150-$200)",
-        "price": "Precio",
-        "search": "Buscar",
-        "stars": "Estrellas",
-        "stars4plus": "4 Estrellas y Más",
-        "stars5": "5 Estrellas"
-      },
-      "guidesAlert": "¡Los guías son opcionales pero muy recomendados para los visitantes primerizos!",
-      "noCars": "No hay vehículos que coincidan con tus filtros",
-      "noHotels": "No hay hoteles que coincidan con tus filtros",
-      "reviewBooking": "Revisar Reserva",
-      "tabs": {
-        "cars": "Coches",
-        "guides": "Guías",
-        "hotels": "Hoteles"
-      }
-    },
     "steps": {
-      "contact": "Contacto",
+      "addOns": "Add-Ons",
+      "flight": "Flight",
       "review": "Revisar",
-      "services": "Servicios",
-      "tripDetails": "Detalles del Viaje"
+      "travelerDetails": "Traveler Details"
     },
     "summary": {
       "accommodation": "Alojamiento",
       "dates": "Fechas",
       "days": "días",
+      "destination": "Destination",
       "guide": "Guía",
+      "infant": "infant",
+      "infants": "infants",
       "nights": "noches",
+      "oneWay": "One Way",
       "perDay": "/ día",
       "perNight": "/ noche",
+      "roundTrip": "Round Trip",
       "serviceFee": "Tarifa de Servicio (5%)",
       "subtotal": "Subtotal",
       "title": "Tu Viaje",
@@ -779,6 +1128,17 @@
       "travelers": "Viajeros",
       "vehicle": "Vehículo",
       "withDriver": "con Conductor"
+    },
+    "travelerDetails": {
+      "continue": "Continue to Add-Ons",
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "fullName": "Full Name",
+      "namePlaceholder": "John Doe",
+      "phone": "Phone (Optional)",
+      "phonePlaceholder": "+1 234 567 8900",
+      "subtitle": "How can we reach you about your booking?",
+      "title": "Traveler Details"
     },
     "tripDetails": {
       "adults": "Adultos",
@@ -788,21 +1148,45 @@
       "departingFrom": "Saliendo Desde",
       "departingPlaceholder": "ej. Nueva York, Londres, Dubái",
       "departure": "Salida de Ruanda",
+      "generate": "Generate Itinerary",
+      "generating": "Crafting Itinerary...",
+      "heading": "Describe Your Dream Trip",
+      "kids": "Kids",
       "pickDate": "Elige una fecha",
       "purposes": {
         "adventure": "Aventura",
         "business": "Negocios",
+        "cultural": "Cultural",
         "family": "Familia",
         "honeymoon": "Luna de Miel",
         "leisure": "Ocio",
         "other": "Otro"
       },
       "requestsPlaceholder": "Cualquier requisito dietético, necesidades de accesibilidad u ocasiones especiales...",
+      "selectDates": "Select dates",
+      "selectStyle": "Select style",
       "specialRequests": "Solicitudes Especiales (Opcional)",
+      "specialWishes": "Any special wishes? (Optional)",
+      "subheading": "Tell us where and when, and our AI will curate the perfect itinerary for you.",
       "subtitle": "Cuéntanos de dónde vienes y cuándo",
       "title": "Detalles del Viaje",
-      "tripPurpose": "Propósito del Viaje"
+      "tripPurpose": "Propósito del Viaje",
+      "tripStyle": "Trip Style",
+      "when": "When?",
+      "wherePlaceholder": "e.g. Kigali, Rwanda",
+      "whereTo": "Where to?",
+      "whosComing": "Who's coming?",
+      "wishesPlaceholder": "e.g. We love hiking, vegetarian food, and want to see gorillas."
     }
+  },
+  "PopularRoutes": {
+    "description": "Las rutas más reservadas a Kigali. Precios en tiempo real de aerolíneas asociadas.",
+    "direct": "Directo",
+    "fromLabel": "Desde",
+    "oneStop": "1 escala",
+    "overline": "Rutas destacadas",
+    "searchRoute": "Buscar esta ruta",
+    "title": "Vuelos populares"
   },
   "Profile": {
     "header": {
@@ -810,33 +1194,75 @@
       "subtitle": "El Viaje de Sarah",
       "title": "Perfil del Viajero"
     },
+    "messages": {
+      "cancelError": "Failed to cancel booking",
+      "cancelSuccess": "Booking request cancelled successfully.",
+      "confirmCancel": "Are you sure you want to cancel this booking request?",
+      "fallbacks": {
+        "name": "Traveler"
+      },
+      "paymentConfirmationFailed": "Payment processed but confirmation failed.",
+      "paymentSuccess": "Payment received! Your booking is now paid."
+    },
     "overview": {
+      "loading": "Loading session...",
       "nextTrip": {
         "adults": "Adultos",
+        "adventurers": "{count} Adventurers",
         "confirmed": "Confirmado",
         "daysLeft": "Días Restantes",
+        "dreaming": "Dreaming",
         "imageAlt": "Próximo Viaje",
+        "joinUs": "Join us",
         "label": "Próximo",
+        "paid": "Paid",
+        "preparing": "Journey in Preparation",
+        "refining": "Refining Itinerary",
+        "start": "Start Your Story",
         "status": "Estado",
         "travelers": "Viajeros"
-      },
-      "pendingRequests": {
-        "title": "Solicitudes Pendientes"
       },
       "stats": {
         "days": "Días Viajados",
         "reviews": "Reseñas",
         "title": "Tus Estadísticas",
         "trips": "Viajes Realizados"
+      },
+      "tripsAndRequests": {
+        "acceptPay": "Accept & Pay",
+        "cancelConfirm": "Are you sure you want to cancel this request? This action cannot be undone.",
+        "cancelRequest": "Cancel Request",
+        "created": "Created",
+        "description": "Track your upcoming adventures and active planning requests in one place.",
+        "items": "Items",
+        "itemsCount": "{count} items",
+        "loading": "Loading...",
+        "manageTrip": "Manage Trip",
+        "noTrips": "No active trips or requests",
+        "quoteReady": "Quote Ready: {amount}",
+        "requestId": "Trip Request #{id}",
+        "startDate": "Start Date",
+        "status": "Status",
+        "title": "My Trips & Requests",
+        "tripId": "Trip #{id}",
+        "viewDetails": "View Details"
       }
     },
     "saved": {
+      "curateDescription": "Your personal collection of dream destinations and experiences. Explore the landscape and bookmark what inspires you to start building your journey.",
+      "curateTitle": "Curate Your Adventure",
       "emptyDescription": "Los artículos que guardes aparecerán aquí.",
-      "emptyTitle": "Sin Artículos Guardados"
+      "emptyTitle": "Sin Artículos Guardados",
+      "explore": "Explore Rwanda"
     },
     "settings": {
+      "bio": "Bio",
+      "bioPlaceholder": "Travel enthusiast",
+      "currency": "Preferred Currency",
       "email": "Dirección de Correo",
       "fullName": "Nombre Completo",
+      "phone": "Phone Number",
+      "role": "Account Role",
       "save": "Guardar Cambios",
       "title": "Configuración de la Cuenta"
     },
@@ -847,11 +1273,46 @@
       "trips": "Mis Viajes"
     },
     "trips": {
-      "planNew": "Planificar Nuevo Viaje",
+      "description": "Every journey you've embarked on, and those yet to begin.",
+      "empty": {
+        "cta": "Start Planning a Trip",
+        "description": "Your confirmed itineraries will appear here as soon as they're finalized and paid.",
+        "title": "No confirmed trips yet"
+      },
+      "fallbacks": {
+        "purpose": "African Adventure"
+      },
+      "timeline": {
+        "empty": "Select a trip to view detailed timeline",
+        "selectJourney": "Select Journey",
+        "travelers": "{count} Travelers"
+      },
       "title": "Historial de Viajes",
-      "upcoming": "Próximos",
-      "viewDetails": "Ver Detalles"
+      "views": {
+        "cards": "Cards",
+        "timeline": "Timeline"
+      }
     }
+  },
+  "ServiceHighlights": {
+    "cta": "Start Your Journey",
+    "description": "We find the prices automated sites miss, then we bundle them with curated hotels and managed transport for a worry-free journey.",
+    "items": {
+      "concierge": {
+        "description": "We handle the logistics, the confirmations, and the local details, so you can simply enjoy the ride.",
+        "title": "Total Management"
+      },
+      "flights": {
+        "description": "Our specialists manually scan private and public fares to secure the absolute lowest price for your route to Africa.",
+        "title": "Expert Sourcing"
+      },
+      "packages": {
+        "description": "We pair your flight with hand-picked hotels, BnBs, and cars that we've personally vetted for value.",
+        "title": "Curated Add-Ons"
+      }
+    },
+    "overline": "The Vizit Advantage",
+    "title": "Best-Price Fares {br} Complete Trip Ease"
   },
   "Services": {
     "description": "Nos encargamos de todo desde el momento en que sales de tu puerta hasta que regresas, cambiado para siempre.",
@@ -859,10 +1320,6 @@
       "experiences": {
         "description": "Trekking con gorilas, plantaciones de té y más.",
         "title": "Experiencias Exclusivas"
-      },
-      "flights": {
-        "description": "Vuelos privados y acceso a clase premium.",
-        "title": "Vuelos de Lujo"
       },
       "hotels": {
         "description": "Desde lodges boutique hasta resorts de 5 estrellas.",
@@ -882,6 +1339,7 @@
       "all": "Todos",
       "bnbs": "BnBs",
       "carRentals": "Alquiler de Coches",
+      "flights": "Flights",
       "guides": "Guías",
       "hotels": "Hoteles"
     },
@@ -916,6 +1374,16 @@
           "A poca distancia de bares de leche."
         ],
         "title": "Kigali Soul Guesthouse"
+      },
+      "klm-royal": {
+        "description": "Reliable connections via Amsterdam Schiphol.",
+        "details": [
+          "Daily flights.",
+          "World Class Service.",
+          "Sustainability focus.",
+          "SkyTeam Alliance Member."
+        ],
+        "title": "KLM Royal Dutch"
       },
       "land-cruiser-v8": {
         "description": "El vehículo de safari definitivo para cualquier terreno.",
@@ -957,6 +1425,16 @@
         ],
         "title": "Toyota RAV4 (Nuevo Modelo)"
       },
+      "rwandair-direct": {
+        "description": "Daily direct flights from London, Brussels, and Dubai.",
+        "details": [
+          "Dreamliner Business Class.",
+          "Generous baggage allowance.",
+          "Winne of 'Best Airline Staff'.",
+          "Seamless connections."
+        ],
+        "title": "RwandAir Direct"
+      },
       "the-retreat": {
         "description": "El principal hotel boutique de lujo de Kigali con piscinas climatizadas con energía solar.",
         "details": [
@@ -967,6 +1445,14 @@
         ],
         "title": "The Retreat by Heaven"
       }
+    },
+    "labels": {
+      "addDriver": "Add Driver (+${price}/day)",
+      "day": " / day",
+      "fallbackLocation": "Kigali",
+      "fallbackTransmission": "Automatic",
+      "night": " / night",
+      "remove": "Remove"
     },
     "noResults": "No se encontraron servicios que coincidan con tus criterios.",
     "overline": "El Índice",
@@ -982,6 +1468,12 @@
   },
   "SocialProof": {
     "tagline": "Con la confianza de viajeros y socios globales"
+  },
+  "Stats": {
+    "nationalities": "Nationalities",
+    "rating": "Rating",
+    "satisfaction": "Satisfaction",
+    "travelers": "Travelers"
   },
   "Testimonials": {
     "description": "Historias reales de viajes reales. Mira por qué miles de aventureros elijen Vizit Africa.",
@@ -1020,6 +1512,62 @@
     "overline": "Lo Que Dicen",
     "title": "Historias de Viajeros"
   },
+  "Vendor": {
+    "dashboard": {
+      "actions": {
+        "myProfile": "My Profile",
+        "publicSite": "Public Site"
+      },
+      "incomplete": {
+        "cta": "Complete Profile",
+        "description": "It seems you are registered as a vendor but haven't completed your business profile.",
+        "title": "Incomplete Profile"
+      },
+      "opportunities": {
+        "title": "New Opportunities",
+        "total": "{count} Total"
+      },
+      "overline": "Partner Hub",
+      "review": {
+        "backHome": "Back to Home",
+        "description": "Thank you for applying to become a partner with Vizit Africa. Your application for {businessName} is currently being reviewed by our team.",
+        "notice": "We typically review applications within 24-48 hours. You will receive an email once your account is approved.",
+        "title": "Application Under Review"
+      },
+      "schedule": {
+        "empty": "No upcoming services scheduled yet.",
+        "title": "Schedule"
+      },
+      "stats": {
+        "pendingRequests": "Pending Requests",
+        "totalRevenue": "Total Revenue",
+        "upcomingBookings": "Upcoming Bookings"
+      },
+      "title": "Dashboard",
+      "welcome": "Welcome back, {businessName}"
+    },
+    "requests": {
+      "actions": {
+        "confirm": "Confirm",
+        "confirmed": "Confirmed",
+        "confirming": "Confirming...",
+        "verify": "Verify Dates",
+        "verifying": "Verifying..."
+      },
+      "empty": {
+        "description": "Your opportunities will appear here.",
+        "title": "No Requests"
+      },
+      "messages": {
+        "available": "Service is available for these dates!",
+        "checkError": "Failed to check availability",
+        "confirmError": "Failed to confirm booking",
+        "confirmSuccess": "Booking confirmed successfully!",
+        "unavailable": "Unavailable: {reason}",
+        "unexpectedError": "An unexpected error occurred"
+      }
+    }
+  },
   "WhyUs": {
     "benefits": [
       "Precios en tiempo real de socios verificados",
@@ -1045,14 +1593,5 @@
       }
     },
     "title": "La Diferencia Vizit"
-  },
-  "PopularRoutes": {
-    "overline": "Rutas destacadas",
-    "title": "Vuelos populares",
-    "description": "Las rutas más reservadas a Kigali. Precios en tiempo real de aerolíneas asociadas.",
-    "fromLabel": "Desde",
-    "direct": "Directo",
-    "oneStop": "1 escala",
-    "searchRoute": "Buscar esta ruta"
   }
 }

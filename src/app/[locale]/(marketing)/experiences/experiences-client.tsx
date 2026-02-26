@@ -9,7 +9,7 @@ import { AddToTripButton } from "@/components/plan-trip/add-to-trip-button";
 import { PageHeader } from "@/components/shared/page-header";
 import { SaveButton } from "@/components/shared/save-button";
 import { type ServiceResponse } from "@/lib/unified-types";
-import { cn } from "@/lib/utils";
+import { cn, IMAGE_PLACEHOLDER } from "@/lib/utils";
 
 interface ExperiencesClientProps {
   initialExperiences: ServiceResponse[];
@@ -103,10 +103,13 @@ export default function ExperiencesClient({
 
   const getExperienceImage = (exp: ServiceResponse) => {
     const mediaImages = (exp.media || [])
-      .filter((m) => m.media_type === "image" || !m.media_type)
-      .sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0))
-      .map((m) => m.media_url)
-      .filter(Boolean);
+      .map((m: any) => {
+        if (typeof m === "string") return m;
+        if (typeof m === "object" && m !== null && m.media_url)
+          return m.media_url;
+        return null;
+      })
+      .filter((url): url is string => typeof url === "string" && !!url);
 
     if (mediaImages.length > 0)
       return mediaImages[hashString(String(exp.id)) % mediaImages.length];
@@ -120,6 +123,9 @@ export default function ExperiencesClient({
     const groupKey = CATEGORY_MAPPING[metaCategory] || "adventure";
     const pool =
       CATEGORY_FALLBACK_IMAGES[groupKey] || CATEGORY_FALLBACK_IMAGES.adventure;
+
+    if (!pool || pool.length === 0) return IMAGE_PLACEHOLDER;
+
     return pool[hashString(`${exp.id}-${exp.title}`) % pool.length];
   };
 

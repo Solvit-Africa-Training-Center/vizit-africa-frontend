@@ -132,7 +132,7 @@ export function GroupedItems({
                       <>
                         <span>•</span>
                         <span className="font-mono font-semibold text-foreground">
-                          ${groupTotal.toFixed(2)}
+                          ${Number(groupTotal).toFixed(2)}
                         </span>
                       </>
                     )}

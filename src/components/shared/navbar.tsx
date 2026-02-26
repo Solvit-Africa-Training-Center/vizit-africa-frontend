@@ -1,8 +1,8 @@
 "use client";
 
 import {
-  RiAddLine,
   RiLogoutBoxRLine,
+  RiMapPinLine,
   RiSuitcaseLine,
   RiUser3Line,
 } from "@remixicon/react";
@@ -10,12 +10,6 @@ import { motion, useMotionValueEvent, useScroll } from "motion/react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { TripRequestDialog } from "@/components/landing/trip-request-dialog";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -34,6 +28,7 @@ import { useUser } from "@/components/user-provider";
 import { logout } from "@/actions/auth";
 import Logo from "./logo";
 import { NavbarMobile } from "./navbar-mobile";
+import { LanguageSwitcher } from "./language-switcher";
 
 function HamburgerIcon({
   isOpen,
@@ -109,8 +104,8 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
   };
 
   const navLinks = [
+    { href: "/services", label: t("services") },
     { href: "/experiences", label: t("experiences") },
-    { href: "/services", label: t("ourservices") },
     { href: "/about", label: t("aboutUs") },
     { href: "/contact", label: t("contact") },
   ];
@@ -154,18 +149,12 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
           )}
         >
           <div className="grid grid-cols-2 lg:grid-cols-[1fr_auto_1fr] items-center gap-4">
-            {/* ── Logo ─────────────────────────────────────────────── */}
             <div className="flex justify-start">
-              <Link
-                href="/"
-                aria-label="Vizit Africa Home"
-                className="shrink-0 transition-opacity duration-300 hover:opacity-75 active:opacity-60"
-              >
+         
                 <Logo variant={showSolid ? "default" : "light"} />
-              </Link>
+            
             </div>
 
-            {/* ── Desktop nav links — centered ─────────────────────── */}
             <div className="hidden lg:flex items-center gap-9">
               {navLinks.map((link) => {
                 const isActive =
@@ -191,13 +180,11 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
                     )}
                   >
                     {link.label}
-                    {/* Active / hover underline */}
                     <span
                       className={cn(
                         "absolute -bottom-1 left-0 h-px transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
                         isActive ? "w-full" : "w-0 group-hover:w-full",
-                        // Amber underline on hero transparent state, primary when solid
-                        isLight ? "bg-primary" : "bg-primary",
+                        "bg-primary",
                       )}
                     />
                   </Link>
@@ -205,83 +192,76 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
               })}
             </div>
 
-            <div className="flex items-center gap-3 justify-end">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger
-                    render={
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className={cn(
-                          "rounded-full size-9 relative transition-all duration-300",
-                          isLight
-                            ? "text-white/60 hover:text-white hover:bg-white/10"
-                            : "text-muted-foreground hover:text-foreground hover:bg-muted",
-                        )}
-                        onClick={() => setIsTripDialogOpen(true)}
-                      >
-                        <RiSuitcaseLine className="size-[18px]" />
-                        {isMounted && hasActiveTrip && tripItemCount > 0 && (
-                          <span className="absolute top-1.5 right-1.5 flex size-3 items-center justify-center rounded-full bg-primary text-[7px] font-bold text-white ring-1 ring-white/20">
-                            {tripItemCount}
-                          </span>
-                        )}
-                        <span className="sr-only">View Trip</span>
-                      </Button>
-                    }
-                  />
-                  <TooltipContent
-                    sideOffset={12}
-                    className="bg-surface-ink text-white border-none rounded-xl px-4 py-2 text-[11px] font-mono shadow-2xl"
-                  >
-                    <p>{t("trip.tooltip")}</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+            <div className="flex items-center gap-5 justify-end">
 
-              <Separator
-                orientation="vertical"
-                className={cn(
-                  "hidden lg:block h-4 transition-colors duration-300",
-                  isLight ? "bg-white/15" : "bg-border",
-                )}
-              />
+              <div className="hidden lg:block">
+                <LanguageSwitcher variant={isLight ? "light" : "default"} />
+              </div>
 
               <Button
                 type="button"
                 onClick={() => setIsTripDialogOpen(true)}
                 variant={showSolid ? "default" : "ghost"}
-                size={"sm"}
+                size="sm"
                 className={cn(
-                  showSolid ? "" : "text-white hover:bg-primary/60",
+                  "relative gap-1.5",
+                  !showSolid && "text-white hover:bg-white/10",
                 )}
               >
-                <RiAddLine className="size-3.5" />
+                <RiSuitcaseLine className="size-3.5" />
                 {t("planTrip") ?? "Plan Trip"}
+                {isMounted && hasActiveTrip && tripItemCount > 0 && (
+                  <span className="absolute -top-1.5 -right-1.5 flex size-4 items-center justify-center rounded-full bg-primary text-[8px] font-bold text-white ring-2 ring-background shadow-sm">
+                    {tripItemCount}
+                  </span>
+                )}
               </Button>
+
+             
 
               <div className="hidden lg:block">
                 {isMounted && user ? (
                   <DropdownMenu>
                     <DropdownMenuTrigger
                       render={
-                       
+                        <button
+                          type="button"
+                          className={cn(
+                            "flex items-center justify-center rounded-full size-8 ring-2 transition-all duration-200",
+                            "focus-visible:outline-none focus-visible:ring-primary/60",
+                            isLight
+                              ? "ring-white/20 hover:ring-white/50"
+                              : "ring-border hover:ring-primary/40",
+                          )}
+                          aria-label="Open user menu"
+                        >
                           <Avatar className="h-full w-full">
-                            <AvatarFallback className="bg-primary/10 text-primary text-[10px] font-bold">
+                            <AvatarFallback
+                              className={cn(
+                                "text-[10px] font-bold",
+                                isLight
+                                  ? "bg-white/15 text-white"
+                                  : "bg-primary/10 text-primary",
+                              )}
+                            >
                               {userInitials}
                             </AvatarFallback>
                           </Avatar>
-                   
+                        </button>
                       }
                     />
                     <DropdownMenuContent align="end" className="w-56 mt-2">
-                      <div className="flex items-center justify-start gap-2 p-2">
-                        <div className="flex flex-col space-y-0.5">
-                          <p className="text-xs font-medium leading-none">
+                      <div className="flex items-center gap-2.5 p-2.5">
+                        <Avatar className="size-8 shrink-0">
+                          <AvatarFallback className="bg-primary/10 text-primary text-[10px] font-bold">
+                            {userInitials}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div className="flex flex-col space-y-0.5 min-w-0">
+                          <p className="text-xs font-medium leading-none truncate">
                             {user.fullName}
                           </p>
-                          <p className="text-[10px] leading-none text-muted-foreground">
+                          <p className="text-[10px] leading-none text-muted-foreground truncate">
                             {user.email}
                           </p>
                         </div>
@@ -293,6 +273,18 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
                           <span>{t("userMenu.profile")}</span>
                         </DropdownMenuItem>
                       </Link>
+                      <DropdownMenuItem
+                        className="cursor-pointer"
+                        onClick={() => setIsTripDialogOpen(true)}
+                      >
+                        <RiMapPinLine className="mr-2 size-4" />
+                        <span>{t("planTrip") ?? "Plan Trip"}</span>
+                        {isMounted && hasActiveTrip && tripItemCount > 0 && (
+                          <span className="ml-auto flex size-4 items-center justify-center rounded-full bg-primary text-[8px] font-bold text-white">
+                            {tripItemCount}
+                          </span>
+                        )}
+                      </DropdownMenuItem>
                       {user.role === "ADMIN" && (
                         <Link href="/admin">
                           <DropdownMenuItem className="cursor-pointer">
