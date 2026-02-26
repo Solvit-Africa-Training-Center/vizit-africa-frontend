@@ -120,7 +120,7 @@ export default function Home() {
       <SocialProof />
       <Services />
       <Destinations />
-      <FeaturedExperience />
+      {/* <FeaturedExperience /> */}
       <HowItWorks />
       <Testimonials />
       <WhyUs />
