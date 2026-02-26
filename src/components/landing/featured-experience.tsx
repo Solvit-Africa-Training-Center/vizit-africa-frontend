@@ -1,14 +1,13 @@
 import { RiArrowRightLine, RiPlaneLine } from "@remixicon/react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-export function FeaturedExperience() {
-  const t = useTranslations("FeaturedExperience");
+export async function FeaturedExperience() {
+  const t = await getTranslations("FeaturedExperience");
 
   return (
     <section className="w-full bg-surface-cream relative overflow-hidden isolate py-24 md:py-32">
-      {/* Subtle Blue Grain and Glow */}
       <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,oklch(65%_0.06_245/0.1)_0%,transparent_70%)] pointer-events-none" />
       <div className="absolute inset-0 opacity-[0.03] mix-blend-multiply pointer-events-none z-0">
         <svg className="w-full h-full">
@@ -28,7 +27,7 @@ export function FeaturedExperience() {
       <div className="marketing-container relative z-10">
         <div className="bg-surface-ink rounded-3xl overflow-hidden shadow-2xl relative isolate border border-border-warm/20">
           <div className="grid grid-cols-1 lg:grid-cols-2">
-            {/* Left Content */}
+
             <div className="p-8 md:p-12 lg:p-16 flex flex-col justify-center relative z-20 order-2 lg:order-1">
               <div className="flex items-center gap-3 mb-8">
                 <div className="px-3 py-1 rounded-full border border-primary-light/30 bg-primary-light/10">
@@ -39,9 +38,7 @@ export function FeaturedExperience() {
               </div>
 
               <h2 className="font-display text-4xl md:text-5xl font-medium text-white leading-tight mb-4">
-                {t.rich("title", {
-                  br: () => <br className="hidden md:block" />,
-                })}
+                {t("title")}
               </h2>
 
               <p className="font-sans text-white/60 text-lg font-light mb-8 max-w-md">

@@ -3,24 +3,25 @@ import dynamic from "next/dynamic";
 import { CTA } from "@/components/landing/cta";
 import { Destinations } from "@/components/landing/destinations";
 import { FAQ } from "@/components/landing/faq";
-// import { Hero } from "@/components/landing/hero";
+import { FeaturedExperience } from "@/components/landing/featured-experience";
+import { StatsBar } from "@/components/landing/stats-bar";
 import { HowItWorks } from "@/components/landing/how-it-works";
 import { Services } from "@/components/landing/services";
 import { SocialProof } from "@/components/landing/social-proof";
 import { Testimonials } from "@/components/landing/testimonials";
 import { WhyUs } from "@/components/landing/why-us";
+import { siteConfig } from "@/lib/configs";
 
 const Hero = dynamic(
   () => import("@/components/landing/hero").then((m) => m.Hero),
   {
-    ssr: true, // Keep SSR true for LCP but allow dynamic chunking
+    ssr: true,
     loading: () => (
-      <div className="h-[100dvh] w-full bg-[oklch(14%_0_0)] animate-pulse" />
+      <div className="h-dvh w-full bg-[oklch(14%_0_0)] animate-pulse" />
     ),
   },
 );
 
-import { siteConfig } from "@/lib/configs";
 
 export const metadata: Metadata = {
   title: siteConfig.name + " | Premium Travel to Rwanda & Africa",
@@ -104,8 +105,7 @@ const jsonLd = {
   },
 };
 
-import { FeaturedExperience } from "@/components/landing/featured-experience";
-import { StatsBar } from "@/components/landing/stats-bar";
+
 
 export default function Home() {
   return (
@@ -120,7 +120,7 @@ export default function Home() {
       <SocialProof />
       <Services />
       <Destinations />
-      {/* <FeaturedExperience /> */}
+      <FeaturedExperience />
       <HowItWorks />
       <Testimonials />
       <WhyUs />

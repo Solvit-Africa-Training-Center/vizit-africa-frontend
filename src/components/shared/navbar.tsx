@@ -35,9 +35,6 @@ import { logout } from "@/actions/auth";
 import Logo from "./logo";
 import { NavbarMobile } from "./navbar-mobile";
 
-// ────────────────────────────────────────────────────────────────
-// Mobile hamburger — plain icon, no "Menu" text label
-// ────────────────────────────────────────────────────────────────
 function HamburgerIcon({
   isOpen,
   isLight,
@@ -99,7 +96,6 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
   const hasHero = heroRoutes.includes(pathname);
   const showSolid = forceSolid || !hasHero || isScrolled;
 
-  // On the hero, nav links are white. In pill/solid, they're dark.
   const isLight = !showSolid;
 
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -144,7 +140,6 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
         <nav
           aria-label="Main Navigation"
           className={cn(
-            // ── Pill when scrolled ──────────────────────────────────
             "transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]",
             "w-full mx-auto",
             showSolid
@@ -210,9 +205,7 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
               })}
             </div>
 
-            {/* ── Right: Trip icon + Plan Trip CTA ─────────────────── */}
             <div className="flex items-center gap-3 justify-end">
-              {/* Trip suitcase icon — with count badge */}
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger
@@ -247,7 +240,6 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
                 </Tooltip>
               </TooltipProvider>
 
-              {/* Separator — desktop only */}
               <Separator
                 orientation="vertical"
                 className={cn(
@@ -269,22 +261,18 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
                 {t("planTrip") ?? "Plan Trip"}
               </Button>
 
-              {/* User Avatar / Auth CTA */}
               <div className="hidden lg:block">
                 {isMounted && user ? (
                   <DropdownMenu>
                     <DropdownMenuTrigger
                       render={
-                        <Button
-                          variant="ghost"
-                          className="relative h-9 w-9 rounded-full p-0 overflow-hidden border border-border/50 hover:border-primary/50 transition-colors"
-                        >
+                       
                           <Avatar className="h-full w-full">
                             <AvatarFallback className="bg-primary/10 text-primary text-[10px] font-bold">
                               {userInitials}
                             </AvatarFallback>
                           </Avatar>
-                        </Button>
+                   
                       }
                     />
                     <DropdownMenuContent align="end" className="w-56 mt-2">
@@ -330,7 +318,7 @@ export function Navbar({ forceSolid = false }: NavbarProps) {
                       className={cn(
                         "text-[10px] font-mono font-medium uppercase tracking-widest transition-colors",
                         isLight
-                          ? "text-white/70 hover:text-white"
+                          ? "text-background/70 hover:text-background"
                           : "text-muted-foreground hover:text-primary",
                       )}
                     >
