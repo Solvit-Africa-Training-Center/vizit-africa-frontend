@@ -107,7 +107,7 @@ export function RequestDetails({ request }: RequestDetailsProps) {
               </span>
               <div className="flex items-center gap-2">
                 <RiPhoneLine className="size-3 text-muted-foreground" />
-                <span className="text-xs">{request.phone || "—"}</span>
+                <span className="text-xs">{request.phoneNumber || "—"}</span>
               </div>
             </div>
           </div>
@@ -198,6 +198,50 @@ export function RequestDetails({ request }: RequestDetailsProps) {
           </div>
         </div>
 
+        {/* Specific Selections */}
+        {request.items && request.items.length > 0 && (
+          <div>
+            <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+              <RiArrowDownSLine className="size-4 text-muted-foreground" />
+              Specific Selections
+            </h3>
+            <div className="space-y-3 ml-6">
+              {request.items.map((item, idx) => {
+                const isRoundTrip = !!item.isRoundTrip;
+                const withDriver = !!item.withDriver;
+
+                if (!isRoundTrip && !withDriver) return null;
+
+                return (
+                  <div key={idx} className="space-y-1">
+                    <p className="text-[10px] font-bold uppercase text-muted-foreground tracking-tight">
+                      {item.title || item.itemType}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {isRoundTrip && (
+                        <Badge
+                          variant="outline"
+                          className="text-[9px] bg-blue-50 text-blue-700 border-blue-200 py-0 h-4"
+                        >
+                          Round Trip
+                        </Badge>
+                      )}
+                      {withDriver && (
+                        <Badge
+                          variant="outline"
+                          className="text-[9px] bg-green-50 text-green-700 border-green-200 py-0 h-4"
+                        >
+                          Private Driver
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         {/* Trip Purpose */}
         {request.tripPurpose && (
           <div>
@@ -216,7 +260,7 @@ export function RequestDetails({ request }: RequestDetailsProps) {
         {request.specialRequests && (
           <div>
             <button
-            type="button"
+              type="button"
               onClick={() => setExpandNotes(!expandNotes)}
               className="w-full font-medium text-foreground mb-2 flex items-center justify-between text-sm hover:text-primary transition-colors"
             >

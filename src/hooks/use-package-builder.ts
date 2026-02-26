@@ -63,77 +63,37 @@ export function usePackageBuilder(request: Booking) {
       return;
     }
     const currentDraft = usePackageStore.getState().drafts[bookingId];
+    
+    // Only initialize if we don't have a draft already
     if (!currentDraft || currentDraft.length === 0) {
-      const requested = (request.requestedItems || []) as BookingItem[];
-      const quoted = (request.quote?.items || []) as any[];
-      const map = new Map<string, PackageItem>();
+      const bookingItems = (request.items || []) as BookingItem[];
+      
+      const mappedItems = bookingItems.map((item: BookingItem) => {
+        const key = String(item.id);
+        const type = normalizeType(item.itemType);
 
-      requested.forEach((item: any) => {
-        const key = String(item.id || `req-${Math.random()}`);
-        const type =
-          normalizeType(item.item_type || item.type) === "other" && item.title
-            ? normalizeType(item.title)
-            : normalizeType(item.item_type || item.type);
-
-        const price = toNumber(item.metadata?.price || item.unit_price || item.price || 0);
-
-        map.set(key, {
+        return {
           ...item,
           type: type as any,
+          serviceId: item.serviceId,
+          service: item.serviceId, // Alias for legacy components
           tempId: key,
-          quantity: toNumber(item.quantity || 1),
-          // support both snake_case (backend standard) and camelCase (some widgets)
-          date: (item.start_date || item.startDate || item.metadata?.startDate || (item as any).date) as string,
-          time: (item.start_time || item.startTime || item.metadata?.startTime || (item as any).time) as string,
-          startDate: (item.start_date || item.startDate || item.metadata?.startDate) as string,
-          endDate: (item.end_date || item.endDate || item.metadata?.endDate) as string,
-          startTime: (item.start_time || item.startTime || item.metadata?.startTime) as string,
-          endTime: (item.end_time || item.endTime || item.metadata?.endTime) as string,
-          isRoundTrip: !!(item.is_round_trip ?? item.isRoundTrip ?? item.metadata?.isRoundTrip ?? false),
-          returnDate: (item.return_date || item.returnDate || item.metadata?.returnDate) as string,
-          returnTime: (item.return_time || item.returnTime || item.metadata?.returnTime) as string,
-          withDriver: !!(item.with_driver ?? item.withDriver ?? item.metadata?.withDriver ?? false),
-          quotePrice: price,
-          price: price,
-        } as PackageItem);
+          quantity: item.quantity || 1,
+          startDate: item.startDate,
+          endDate: item.endDate,
+          startTime: item.startTime,
+          endTime: item.endTime,
+          isRoundTrip: !!item.isRoundTrip,
+          withDriver: !!item.withDriver,
+          returnDate: item.returnDate,
+          returnTime: item.returnTime,
+          quotePrice: item.unitPrice,
+          price: item.unitPrice,
+          isQuoted: request.status !== 'pending'
+        } as PackageItem;
       });
 
-      quoted.forEach((item: any) => {
-        const key = item.id || item.service || `quote-${Math.random()}`;
-        const existing = map.get(key);
-        const unit_price = toNumber(item.unit_price || item.unitPrice || 0);
-
-        map.set(key, {
-          ...existing,
-          ...item,
-          id: key,
-          tempId: key,
-          isQuoted: true,
-          unit_price,
-          quotePrice: unit_price,
-          price: unit_price || existing?.price,
-          quantity: toNumber(item.quantity || 1),
-          type: (normalizeType(item.item_type || item.type) === "other" && item.title
-            ? normalizeType(item.title)
-            : normalizeType(item.item_type || item.type)) as any,
-          date: (item.start_date || item.startDate || existing?.date) as string,
-          time: (item.start_time || item.startTime || existing?.time) as string,
-          startDate: (item.start_date || item.startDate || existing?.startDate) as string,
-          endDate: (item.end_date || item.endDate || existing?.endDate) as string,
-          startTime: (item.start_time || item.startTime || existing?.startTime) as string,
-          endTime: (item.end_time || item.endTime || existing?.endTime) as string,
-          isRoundTrip: item.is_round_trip ?? item.isRoundTrip ?? existing?.isRoundTrip,
-          returnDate: (item.return_date || item.returnDate || existing?.returnDate) as string,
-          returnTime: (item.return_time || item.returnTime || existing?.returnTime) as string,
-          withDriver: !!(item.with_driver ?? item.withDriver ?? item.metadata?.withDriver ?? existing?.withDriver),
-          metadata: {
-            ...existing?.metadata,
-            ...item.metadata,
-          },
-        });
-      });
-
-      setItems(bookingId, Array.from(map.values()));
+      setItems(bookingId, mappedItems);
     }
   }, [bookingId, request, setItems]);
 
@@ -182,10 +142,10 @@ export function usePackageBuilder(request: Booking) {
       quotePrice: toNumber(newItem.quotePrice || 0),
       date: newItem.date,
       time: newItem.time,
-      startDate: newItem.date,
-      startTime: newItem.time,
-      endDate: newItem.endDate,
-      endTime: newItem.endTime,
+      startDate: newItem.date as string,
+      startTime: newItem.time as string,
+      endDate: newItem.endDate as string,
+      endTime: newItem.endTime as string,
       withDriver: newItem.withDriver,
       metadata: {
         ...newItem.metadata,
@@ -215,7 +175,7 @@ export function usePackageBuilder(request: Booking) {
       type: group as any,
       quantity: 1,
       quotePrice: 0,
-      isRoundTrip: group === "flight" ? false : undefined,
+      isRoundTrip: (group === "flight" || group === "car") ? false : undefined,
     });
     setIsAddDialogOpen(true);
   };
@@ -227,10 +187,11 @@ export function usePackageBuilder(request: Booking) {
       logger.debug("Selected service", { service });
       setNewItem((prev) => ({
         ...prev,
+        serviceId: String(service.id),
         service: String(service.id),
         title: service.title,
         description: service.description,
-        quotePrice: toNumber(service.base_price),
+        quotePrice: toNumber(service.basePrice),
         quantity: 1,
       }));
     }
@@ -282,7 +243,7 @@ export function usePackageBuilder(request: Booking) {
     setIsSending(true);
 
     try {
-      // Map items to backend format
+      // Map items to clean backend-ready format (camelCase is fine, client will snake_case it)
       const items = displayItems.map((item) => {
         const unitPrice = toNumber(
           item.quotePrice ?? item.unitPrice ?? item.price ?? 0,
@@ -291,20 +252,20 @@ export function usePackageBuilder(request: Booking) {
         
         return {
           id: String(item.id).startsWith("new-") ? undefined : item.id,
-          service: item.service,
-          item_type: normalizeType(item.type as string),
+          serviceId: item.serviceId || item.service,
+          itemType: normalizeType(item.type as string),
           title: item.title,
           description: item.description,
-          start_date: item.startDate || item.date || null,
-          end_date: item.endDate || null,
-          start_time: item.startTime || item.time || null,
-          end_time: item.endTime || null,
-          is_round_trip: !!item.isRoundTrip,
-          with_driver: !!item.withDriver,
-          return_date: item.returnDate || null,
-          return_time: item.returnTime || null,
+          startDate: (item.startDate || item.date) as string | undefined,
+          endDate: item.endDate as string | undefined,
+          startTime: (item.startTime || item.time) as string | undefined,
+          endTime: item.endTime as string | undefined,
+          isRoundTrip: !!item.isRoundTrip,
+          withDriver: !!item.withDriver,
+          returnDate: item.returnDate as string | undefined,
+          returnTime: item.returnTime as string | undefined,
           quantity: quantity,
-          unit_price: unitPrice,
+          unitPrice: unitPrice,
           subtotal: unitPrice * quantity,
           metadata: item.metadata || {},
         };

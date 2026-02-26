@@ -39,9 +39,9 @@ const SORT_LABELS: Record<SortOption, string> = {
 };
 
 function getPrice(s: ServiceResponse): number {
-  return typeof s.base_price === "string"
-    ? Number.parseFloat(s.base_price)
-    : s.base_price;
+  return typeof s.basePrice === "string"
+    ? Number.parseFloat(s.basePrice)
+    : s.basePrice;
 }
 
 export default function ServicesClient({
@@ -67,7 +67,7 @@ export default function ServicesClient({
   const filteredServices = useMemo(() => {
     const result = initialServices.filter((service) => {
       const matchesCategory =
-        activeCategory === "all" || service.service_type === activeCategory;
+        activeCategory === "all" || service.serviceType === activeCategory;
       const matchesSearch =
         service.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         service.description.toLowerCase().includes(searchQuery.toLowerCase());
@@ -178,7 +178,7 @@ export default function ServicesClient({
                   />
                 ))
               ) : (
-                <div className="py-24 text-center text-muted-foreground text-lg italic">
+                <div className="py-12 text-center text-muted-foreground text-lg italic">
                   {t("noResults")}
                 </div>
               )}

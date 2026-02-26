@@ -15,6 +15,21 @@ vi.mock('@/lib/api/simple-client', () => ({
   }
 }));
 
+// Mock logger
+vi.mock('@/lib/utils/logger', () => ({
+  logger: {
+    info: vi.fn(),
+    error: vi.fn(),
+    warn: vi.fn(),
+    debug: vi.fn(),
+  }
+}));
+
+// Mock auth session
+vi.mock('@/lib/auth/session', () => ({
+  getSession: vi.fn().mockResolvedValue({ role: 'ADMIN' }),
+}));
+
 describe('Booking Actions', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -31,6 +46,7 @@ describe('Booking Actions', () => {
       expect.objectContaining({
         booking_id: 'booking-123',
         amount: 1500,
+        total_amount: 1500,
         items: expect.arrayContaining([expect.objectContaining({ title: 'Test' })])
       })
     );

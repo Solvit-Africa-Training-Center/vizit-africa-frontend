@@ -1,106 +1,85 @@
-"use client";
-
-import { RevealText } from "@/components/ui/reveal-text";
 import { cn } from "@/lib/utils";
 
 interface PageHeaderProps {
-  title: string | React.ReactNode;
-  overline?: string | React.ReactNode;
-  description?: string;
+  title: React.ReactNode;
+  overline?: string;
+  description?: React.ReactNode;
+  /**
+   * "default"  — single-column left-aligned (About, Services, Gallery…)
+   * "split"    — left title + right children slot (Contact, Experiences…)
+   */
+  layout?: "default" | "split";
   children?: React.ReactNode;
   className?: string;
-  align?: "left" | "center";
-  layout?: "vertical" | "split";
-  theme?: "light" | "dark";
 }
 
+/**
+ * PageHeader — shared editorial header for all inner pages.
+ *
+ * Design rules:
+ * - Overline always uses `.label-overline` (primary mono, with left tick)
+ * - Title always Cormorant, font-light, tight leading, uppercase
+ * - Bottom border is 1px primary/10 — a quiet primary horizon
+ * - No icons, no decorations, no background tints — pure type
+ */
 export function PageHeader({
   title,
   overline,
   description,
+  layout = "default",
   children,
   className,
-  align = "left",
-  layout = "vertical",
-  theme = "light",
 }: PageHeaderProps) {
-  const isDark = theme === "dark";
-  const isSplit = layout === "split";
-
-  const content = (
-    <>
-      {overline && (
-        <div
-          className={cn(
-            "text-sm font-mono uppercase tracking-widest block mb-4",
-            isDark ? "text-primary-foreground/70" : "text-muted-foreground",
-          )}
-        >
-          {overline}
-        </div>
-      )}
-
-      <h1
-        className={cn(
-          "font-display font-medium uppercase tracking-tighter leading-[0.85] mb-8",
-          isDark ? "text-primary-foreground" : "text-foreground",
-          "text-4xl md:text-6xl",
-        )}
-      >
-        {typeof title === "string" ? (
-          <RevealText
-            text={title}
-            className={cn(isDark && "text-primary-foreground")}
-          />
-        ) : (
-          title
-        )}
-      </h1>
-
-      {description && (
-        <p
-          className={cn(
-            "text-xl md:text-2xl font-light leading-relaxed",
-            isDark ? "text-primary-foreground/80" : "text-muted-foreground",
-            align === "center" && "mx-auto",
-            isSplit ? "max-w-lg" : "max-w-2xl",
-          )}
-        >
-          {description}
-        </p>
-      )}
-    </>
-  );
-
   return (
     <header
       className={cn(
-        "px-5 md:px-10 max-w-7xl mx-auto mb-20 md:mb-32",
-        align === "center" && !isSplit ? "text-center" : "text-left",
+        "pt-12 pb-8 md:pt-16 md:pb-10",
+        "border-b border-primary/10",
         className,
       )}
     >
-      {isSplit ? (
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-12">
-          <div className="max-w-3xl">{content}</div>
-          {children && (
-            <div className="flex flex-col items-start md:items-end gap-2 min-w-[200px]">
-              {children}
+      <div className="marketing-container">
+        {layout === "split" ? (
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 md:gap-16">
+            {/* ── Left: overline + title + optional description ── */}
+            <div className="flex-1 max-w-2xl">
+              {overline && (
+                <span className="text-primary mb-4 block">{overline}</span>
+              )}
+              <h1 className="font-display text-4xl md:text-[3rem] lg:text-[3.5rem] font-light tracking-tight leading-[0.92] uppercase">
+                {title}
+              </h1>
+              {description && (
+                <p className="mt-5 text-lg font-light text-muted-foreground leading-relaxed max-w-xl text-pretty">
+                  {description}
+                </p>
+              )}
             </div>
-          )}
-        </div>
-      ) : (
-        <div
-          className={cn("flex flex-col", align === "center" && "items-center")}
-        >
-          {content}
-          {children && (
-            <div className={cn("mt-8", align === "center" && "mx-auto")}>
-              {children}
-            </div>
-          )}
-        </div>
-      )}
+
+            {/* ── Right: optional children slot ── */}
+            {children && (
+              <div className="flex-shrink-0 flex flex-col items-start md:items-end gap-3 pb-0.5">
+                {children}
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="max-w-3xl">
+            {overline && (
+              <span className="label-overline mb-5 block">{overline}</span>
+            )}
+            <h1 className="font-display text-4xl md:text-[3rem] lg:text-[3.5rem] font-light tracking-tight leading-[0.92] uppercase">
+              {title}
+            </h1>
+            {description && (
+              <p className="mt-5 text-xl font-light text-muted-foreground leading-relaxed max-w-2xl text-pretty">
+                {description}
+              </p>
+            )}
+            {children && <div className="mt-8">{children}</div>}
+          </div>
+        )}
+      </div>
     </header>
   );
 }

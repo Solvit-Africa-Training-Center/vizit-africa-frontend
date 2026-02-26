@@ -25,20 +25,26 @@ export function AdminBookingCard({ booking, t }: AdminBookingCardProps) {
   const router = useRouter();
 
   const hasFlight =
-    booking.requestedItems?.some(
-      (i: any) => i.type === "flight" || i.category === "flight",
+    booking.items?.some(
+      (i: any) =>
+        i.type === "flight" ||
+        i.category === "flight" ||
+        i.itemType === "flight",
     ) || booking.needsFlights;
   const hasHotel =
-    booking.requestedItems?.some(
-      (i: any) => i.type === "hotel" || i.category === "hotel",
+    booking.items?.some(
+      (i: any) =>
+        i.type === "hotel" || i.category === "hotel" || i.itemType === "hotel",
     ) || booking.needsHotel;
   const hasCar =
-    booking.requestedItems?.some(
-      (i: any) => i.type === "car" || i.category === "car",
+    booking.items?.some(
+      (i: any) =>
+        i.type === "car" || i.category === "car" || i.itemType === "car",
     ) || booking.needsCar;
   const hasGuide =
-    booking.requestedItems?.some(
-      (i: any) => i.type === "guide" || i.category === "guide",
+    booking.items?.some(
+      (i: any) =>
+        i.type === "guide" || i.category === "guide" || i.itemType === "guide",
     ) || booking.needsGuide;
 
   const handleRefundSuccess = () => {
@@ -46,7 +52,7 @@ export function AdminBookingCard({ booking, t }: AdminBookingCardProps) {
   };
 
   const isPaid =
-    booking.payment_status === "succeeded" ||
+    booking.paymentStatus === "succeeded" ||
     booking.status === "paid" ||
     booking.status === "completed";
 
@@ -58,7 +64,7 @@ export function AdminBookingCard({ booking, t }: AdminBookingCardProps) {
             #{String(booking.id).toUpperCase().substring(0, 8)}
           </span>
           <div className="flex gap-2">
-            {booking.payment_status === "succeeded" && (
+            {booking.paymentStatus === "succeeded" && (
               <span className="text-[10px] bg-success/10 text-success font-bold uppercase tracking-wider px-1.5 py-0.5 rounded">
                 Paid
               </span>
@@ -148,9 +154,9 @@ export function AdminBookingCard({ booking, t }: AdminBookingCardProps) {
         isOpen={showRefundModal}
         onClose={() => setShowRefundModal(false)}
         bookingId={String(booking.id)}
-        amount={booking.total_amount || 0}
+        amount={booking.totalAmount || 0}
         currency={booking.currency || "USD"}
-        guestName={booking.name}
+        guestName={booking.name || "Guest"}
         onRefundSuccess={handleRefundSuccess}
       />
     </div>

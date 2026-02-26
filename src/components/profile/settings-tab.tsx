@@ -24,7 +24,7 @@ export function SettingsTab({ user }: SettingsTabProps) {
             {t("settings.fullName")}
           </Label>
           <div className="border-b border-border py-2 text-lg">
-            {user.full_name}
+            {user.fullName}
           </div>
         </div>
 
@@ -42,7 +42,7 @@ export function SettingsTab({ user }: SettingsTabProps) {
             {t("settings.phone")}
           </Label>
           <div className="border-b border-border/50 py-3 text-lg font-light">
-            {user.phone_number || "-"}
+            {user.phoneNumber || "-"}
           </div>
         </div>
 

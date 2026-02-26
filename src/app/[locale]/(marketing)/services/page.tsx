@@ -10,7 +10,7 @@ export default async function ServicesPage({ params }: PageProps) {
   const services = await getServices();
 
   const filtered = services.filter(
-    (s) => s.service_type !== "flight" && s.service_type !== "experience",
+    (s) => s.serviceType !== "flight" && s.serviceType !== "experience",
   );
 
   return <ServicesClient initialServices={filtered} />;

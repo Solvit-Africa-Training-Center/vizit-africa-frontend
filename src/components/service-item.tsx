@@ -11,14 +11,16 @@ import { cn } from "@/lib/utils";
 import { AddToTripButton } from "./plan-trip/add-to-trip-button";
 import { Button } from "./ui/button";
 
+import { useTranslations } from "next-intl";
+
 const TYPE_LABELS: Record<string, string> = {
-  hotel: "Hotels",
-  bnb: "BnBs",
-  car_rental: "Car Rentals",
-  car: "Car Rentals",
-  guide: "Guides",
-  flight: "Flights",
-  experience: "Experiences",
+  hotel: "categories.hotels",
+  bnb: "categories.bnbs",
+  car_rental: "categories.carRentals",
+  car: "categories.carRentals",
+  guide: "categories.guides",
+  flight: "categories.flights",
+  experience: "categories.experiences",
 };
 
 function getImage(service: ServiceResponse): string {
@@ -54,13 +56,15 @@ export function ServiceItem({
   bookLabel: string;
   onSelect?: (
     service: ServiceResponse,
-    options?: { with_driver?: boolean },
+    options?: { withDriver?: boolean },
   ) => void;
   isSelected?: boolean;
   driverSurcharge?: number;
 }) {
-  const [with_driver, setWithDriver] = useState(false);
-  const category = TYPE_LABELS[service.service_type] || service.service_type;
+  const t = useTranslations("ServicesPage");
+  const [withDriver, setWithDriver] = useState(false);
+  const categoryKey = TYPE_LABELS[service.serviceType] || service.serviceType;
+  const category = categoryKey.includes(".") ? t(categoryKey) : categoryKey;
 
   const { data: locationsResponse } = useQuery({
     queryKey: ["locations"],
@@ -77,25 +81,25 @@ export function ServiceItem({
   );
 
   const basePrice =
-    typeof service.base_price === "string"
-      ? Number.parseFloat(service.base_price)
-      : service.base_price;
+    typeof service.basePrice === "string"
+      ? Number.parseFloat(service.basePrice)
+      : service.basePrice;
 
   const displayPrice =
-    (service.service_type === ("car" as any) ||
-      service.service_type === ("car_rental" as any)) &&
-    with_driver
+    (service.serviceType === ("car" as any) ||
+      service.serviceType === ("car_rental" as any)) &&
+    withDriver
       ? basePrice + driverSurcharge
       : basePrice;
 
   const priceFormatted = `$${displayPrice.toLocaleString()}${
-    service.service_type === ("hotel" as any) ||
-    service.service_type === ("bnb" as any)
-      ? " / night"
-      : service.service_type === ("car_rental" as any) ||
-          service.service_type === ("guide" as any) ||
-          service.service_type === ("car" as any)
-        ? " / day"
+    service.serviceType === ("hotel" as any) ||
+    service.serviceType === ("bnb" as any)
+      ? t("labels.night")
+      : service.serviceType === ("car_rental" as any) ||
+          service.serviceType === ("guide" as any) ||
+          service.serviceType === ("car" as any)
+        ? t("labels.day")
         : ""
   }`;
 
@@ -178,19 +182,19 @@ export function ServiceItem({
                 </div>
 
                 <div className="flex flex-col gap-8">
-                  {(service.service_type === ("car" as any) ||
-                    service.service_type === ("car_rental" as any)) && (
+                  {(service.serviceType === ("car" as any) ||
+                    service.serviceType === ("car_rental" as any)) && (
                     <div className="flex items-center space-x-3 bg-muted/30 p-4 rounded-xl w-fit">
                       <Checkbox
                         id={`driver-${service.id}`}
-                        checked={with_driver}
+                        checked={withDriver}
                         onCheckedChange={(c) => setWithDriver(!!c)}
                       />
                       <Label
                         htmlFor={`driver-${service.id}`}
                         className="text-xs font-mono uppercase tracking-widest cursor-pointer"
                       >
-                        Add Driver (+${driverSurcharge}/day)
+                        {t("labels.addDriver", { price: driverSurcharge })}
                       </Label>
                     </div>
                   )}
@@ -201,44 +205,44 @@ export function ServiceItem({
                         size="lg"
                         variant={isSelected ? "destructive" : "default"}
                         className="px-8 rounded-full h-11 uppercase tracking-widest font-display text-[10px] shadow-lg shadow-primary/10"
-                        onClick={() => onSelect(service, { with_driver })}
+                        onClick={() => onSelect(service, { withDriver })}
                       >
-                        {isSelected ? "Remove" : bookLabel}
+                        {isSelected ? t("labels.remove") : bookLabel}
                       </Button>
                     ) : (
                       <AddToTripButton
-                        type={mapServiceTypeToTripType(service.service_type)}
+                        type={mapServiceTypeToTripType(service.serviceType)}
                         item={
                           {
                             id: String(service.id),
                             title: service.title,
                             price:
-                              typeof service.base_price === "string"
-                                ? Number.parseFloat(service.base_price)
-                                : service.base_price,
+                              typeof service.basePrice === "string"
+                                ? Number.parseFloat(service.basePrice)
+                                : service.basePrice,
                             image,
 
                             model: service.title,
                             category: "suv",
                             price_per_day:
-                              typeof service.base_price === "string"
-                                ? parseFloat(service.base_price)
-                                : service.base_price,
+                              typeof service.basePrice === "string"
+                                ? parseFloat(service.basePrice)
+                                : service.basePrice,
                             seats: service.capacity,
-                            transmission: "Automatic",
+                            transmission: t("labels.fallbackTransmission"),
 
                             name: service.title,
                             price_per_night:
-                              typeof service.base_price === "string"
-                                ? parseFloat(service.base_price)
-                                : service.base_price,
+                              typeof service.basePrice === "string"
+                                ? parseFloat(service.basePrice)
+                                : service.basePrice,
                             address: service.description,
                             amenities: [],
                             stars: 4,
                             location:
                               typeof service.location === "string"
                                 ? service.location
-                                : "Kigali",
+                                : t("labels.fallbackLocation"),
 
                             type: "guide",
                             description: service.description,

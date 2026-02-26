@@ -101,7 +101,7 @@ const ActionsCell = ({ row }: { row: Row<VendorResponse> }) => {
               Edit Vendor
             </DropdownMenuItem>
 
-            {!row.original.is_approved && (
+            {!row.original.isApproved && (
               <DropdownMenuItem
                 onClick={handleApprove}
                 disabled={isApproving}
@@ -119,7 +119,7 @@ const ActionsCell = ({ row }: { row: Row<VendorResponse> }) => {
               className="cursor-pointer text-destructive focus:text-destructive"
             >
               <RiDeleteBinLine className="mr-2 h-4 w-4" />
-              {row.original.is_approved
+              {row.original.isApproved
                 ? "Delete Vendor"
                 : "Reject Application"}
             </DropdownMenuItem>
@@ -153,8 +153,8 @@ const ActionsCell = ({ row }: { row: Row<VendorResponse> }) => {
 };
 
 const statusCell = ({ row }: { row: Row<VendorResponse> }) => (
-  <Badge variant={row.original.is_approved ? "default" : "secondary"}>
-    {row.original.is_approved ? "Active" : "Pending"}
+  <Badge variant={row.original.isApproved ? "default" : "secondary"}>
+    {row.original.isApproved ? "Active" : "Pending"}
   </Badge>
 );
 
@@ -163,25 +163,25 @@ const typeCell = ({ row }: { row: Row<VendorResponse> }) => (
     variant="outline"
     className="capitalize font-normal text-muted-foreground"
   >
-    {String(row.getValue("vendor_type")).replace(/_/g, " ")}
+    {String(row.getValue("vendorType")).replace(/_/g, " ")}
   </Badge>
 );
 
 const baseVendorColumns: ColumnDef<VendorResponse>[] = [
   {
-    accessorKey: "business_name",
+    accessorKey: "businessName",
     header: "Business",
     cell: ({ row }) => (
       <div className="font-medium text-foreground">
-        {row.original.business_name}
+        {row.original.businessName}
       </div>
     ),
   },
   {
-    accessorKey: "full_name",
+    accessorKey: "fullName",
     header: "Contact",
     cell: ({ row }) => (
-      <div className="text-muted-foreground">{row.original.full_name}</div>
+      <div className="text-muted-foreground">{row.original.fullName}</div>
     ),
   },
   {
@@ -192,13 +192,13 @@ const baseVendorColumns: ColumnDef<VendorResponse>[] = [
     ),
   },
   {
-    accessorKey: "vendor_type",
+    accessorKey: "vendorType",
     header: "Type",
     cell: typeCell,
     filterFn: facetedFilterFn,
   },
   {
-    accessorKey: "is_approved",
+    accessorKey: "isApproved",
     header: "Status",
     cell: statusCell,
   },

@@ -3,9 +3,9 @@ export type UserRole = "CLIENT" | "ADMIN" | "VENDOR";
 export interface User {
   id: string;
   email: string;
-  full_name: string;
+  fullName: string;
   role: UserRole;
-  phone_number?: string;
+  phoneNumber?: string;
   is_active?: boolean;
   bio?: string;
   preferred_currency?: string;

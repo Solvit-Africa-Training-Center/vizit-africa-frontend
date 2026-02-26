@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { useLocale } from "next-intl";
 
 export default function GlobalError({
   error,
@@ -11,7 +12,7 @@ export default function GlobalError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
-  const { locale } = useParams();
+  const locale = useLocale();
   const lang = (locale as string) || "en";
   const direction = lang === "ar" ? "rtl" : "ltr";
 

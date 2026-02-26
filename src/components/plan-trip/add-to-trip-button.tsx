@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useRouter } from "@/i18n/navigation";
 import { useLocale } from "next-intl";
 import { toast } from "sonner";
-import { v4 as uuidv4 } from "uuid";
+import { randomUUID as uuidv4 } from "node:crypto";
 import { Button } from "@/components/ui/button";
 import type {
   Car,

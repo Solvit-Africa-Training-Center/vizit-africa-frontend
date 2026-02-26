@@ -217,7 +217,6 @@ export default function GalleryPage() {
                   <GalleryItem
                     key={img.id}
                     img={img}
-                    index={index}
                     onClick={() => setSelectedImage(img)}
                   />
                 ))}
@@ -286,7 +285,6 @@ export default function GalleryPage() {
 
 function GalleryItem({
   img,
-  index,
   onClick,
 }: {
   img: {
@@ -298,7 +296,6 @@ function GalleryItem({
     aspect: string;
     rawCategory: string;
   };
-  index: number;
   onClick: () => void;
 }) {
   return (

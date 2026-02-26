@@ -27,6 +27,7 @@
     "gallery": "Gallery",
     "aboutUs": "About",
     "contact": "Contact",
+    "planTrip": "Plan Trip",
     "userMenu": {
       "profile": "Profile",
       "dashboard": "Dashboard",
@@ -37,246 +38,279 @@
       "item": "item",
       "items": "items",
       "tooltip": "Plan your dream trip to Africa"
-    }
+    },
+    "signIn": "Sign In"
   },
   "Hero": {
+    "planJourney": "Check Best Price",
     "slides": {
       "1": {
-        "subheading": "Best Price Guaranteed",
-        "heading1": "Secure",
-        "heading2": "Flights",
-        "description": "We specialize in finding the most competitive fares to Rwanda. Secure your tickets with confidence through our manual sourcing experts."
+        "title": "Sourcing",
+        "code": "BPR",
+        "subheading": "Global Sourcing",
+        "heading1": "Market-Leading",
+        "heading2": "Flight Fares",
+        "description": "We beat the algorithms. Our experts manually source private fares to ensure you never overpay for your seat to Africa."
       },
       "2": {
-        "subheading": "Unbeatable Value",
-        "heading1": "Trip",
+        "title": "Curation",
+        "code": "ADD",
+        "subheading": "Curated Comfort",
+        "heading1": "Hand-Picked",
         "heading2": "Add-Ons",
-        "description": "Premium hotels, rugged transport, and local guides—all at negotiated rates that beat the market. Complete your journey without the premium price tag."
+        "description": "Your stay, secured. We bundle your flight with boutique hotels and private BnBs vetted for quality and value."
       },
       "3": {
-        "subheading": "Travel with Confidence",
-        "heading1": "Secure",
-        "heading2": "Bookings",
-        "description": "No hidden fees, no automated risks. Every booking is manually verified and secured by our team for your peace of mind."
+        "title": "Logistics",
+        "code": "MGT",
+        "subheading": "End-to-End Care",
+        "heading1": "Total Trip",
+        "heading2": "Logistics",
+        "description": "We handle the complexity. From airport transfers to hotel check-ins, we manage every detail so you don't have to."
       },
       "4": {
-        "subheading": "The Real Africa",
-        "heading1": "Pristine",
-        "heading2": "Wilderness",
-        "description": "Step into ecosystems untouched by time. Discover why Rwanda's conservation efforts are celebrated globally."
+        "title": "Security",
+        "code": "VFD",
+        "subheading": "Human Reliability",
+        "heading1": "Verified",
+        "heading2": "Execution",
+        "description": "No automated risks. Every booking is manually checked and confirmed by our team for absolute reliability."
       },
       "5": {
-        "subheading": "Exclusive Access",
-        "heading1": "Premium",
-        "heading2": "Lodges",
-        "description": "Awake to misty volcanoes and serene lakes. We hold the keys to East Africa's most sought-after properties."
+        "title": "Vizit",
+        "code": "VZT",
+        "subheading": "Professional Travel",
+        "heading1": "Seamless",
+        "heading2": "Journeys",
+        "description": "Effortless travel starts here. Professional sourcing, curated add-ons, and end-to-end management in one place."
       }
     },
-    "location": "Kigali Int. Airport",
-    "coordinates": "1°58'S, 30°08'E"
+    "location": "Global Operations",
+    "coordinates": "Kigali · Dubai · London"
+  },
+  "Stats": {
+    "travelers": "Travelers",
+    "nationalities": "Nationalities",
+    "satisfaction": "Satisfaction",
+    "rating": "Rating"
+  },
+  "FeaturedExperience": {
+    "badge": "Featured Package",
+    "title": "Executive {br} Travel Sourcing",
+    "description": "Comprehensive sourcing and logistics management for executive travel, ensuring complete security and zero friction.",
+    "locationLabel": "Primary Hub",
+    "locationValue": "Kigali, Rwanda",
+    "durationLabel": "Execution",
+    "durationValue": "End-to-End",
+    "groupSizeLabel": "Capacity",
+    "groupSizeValue": "Scalable",
+    "startingFromLabel": "Sourcing Fee",
+    "startingFromValue": "From ${price}",
+    "requestButton": "Request Sourcing",
+    "itineraryButton": "View Details"
   },
   "SocialProof": {
     "tagline": "Securing the best fares from"
   },
   "Services": {
-    "overline": "All-In-One Ease",
-    "title": "The Full Package",
-    "description": "While we specialize in securing unbeatable flight fares, we handle everything else to ensure your journey is seamless and budget-friendly.",
+    "overline": "Operational Capabilities",
+    "title": "Full-Service Execution",
+    "description": "We specialize in market-leading flight sourcing, paired with vetted accommodations and complete ground logistics.",
     "items": {
       "hotels": {
-        "title": "Sourced Flights",
-        "description": "Best-in-market fares to Rwanda and Africa, manually verified."
+        "title": "Elite Sourcing",
+        "description": "Private flight fares manually sourced by our operations team for maximum value."
       },
       "experiences": {
-        "title": "Full Packages",
-        "description": "We bundle hotels, cars, and guides into one simple offer."
+        "title": "Vetted Curation",
+        "description": "Premium hotels and secure transport bundled into one optimized itinerary."
       },
       "transfers": {
-        "title": "Budget Friendly",
-        "description": "Negotiated local rates that beat automated search engines."
+        "title": "Ground Logistics",
+        "description": "We manage the transfers and on-ground scheduling. You simply arrive."
       }
     }
   },
   "PopularRoutes": {
-    "overline": "Top Routes",
-    "title": "Popular Flights",
-    "description": "Most booked routes to Kigali. Real-time pricing from partner airlines.",
-    "fromLabel": "From",
+    "overline": "High-Volume Hubs",
+    "title": "Key Sourcing Routes",
+    "description": "Our most frequently sourced logistical routes. Real-time private pricing secured by our team.",
+    "fromLabel": "Origin",
     "direct": "Direct",
     "oneStop": "1 Stop",
-    "searchRoute": "Search this route"
+    "searchRoute": "Source Route"
   },
   "Destinations": {
-    "overline": "Popular Routes",
-    "title": "Fly To",
-    "description": "Direct connections to Rwanda's most visited regions. Book your flight and accommodation in one go.",
+    "overline": "Operational Zones",
+    "title": "Primary Hubs",
+    "description": "We execute travel logistics across East Africa's key economic and conservation zones.",
     "regions": {
       "volcanoes": {
         "name": "Musanze (VNP)",
-        "subtitle": "45m Flight / 2h Drive"
+        "subtitle": "High-Value Operations"
       },
       "akagera": {
         "name": "Akagera (ANP)",
-        "subtitle": "30m Flight / 2.5h Drive"
+        "subtitle": "Conservation Hub"
       },
       "nyungwe": {
         "name": "Kamembe (NNP)",
-        "subtitle": "35m Flight"
+        "subtitle": "Southern Logistics"
       },
       "kivu": {
         "name": "Rubavu (Gisenyi)",
-        "subtitle": "35m Flight"
+        "subtitle": "Western Sector"
       },
       "kigali": {
         "name": "Kigali City",
-        "subtitle": "International Hub"
+        "subtitle": "Central Command"
       }
     }
   },
   "HowItWorks": {
-    "overline": "The Simple Path",
-    "title": "Share Sourcing Offer Fly",
-    "description": "We believe luxury is simplicity. You tell us your vision, and our experts handle the technical complexity of sourcing the best rates across the continent.",
+    "overline": "The Operations Protocol",
+    "title": "Request. Source. Execute.",
+    "description": "Professional travel requires seamless execution. You define the operational requirements; we handle the technical complexity of sourcing and logistics.",
     "steps": {
       "1": {
-        "title": "Share Your Plan",
-        "description": "Provide your dates and group size. Whether it's just flights or a full package, we start with your vision."
+        "title": "Submit Requirements",
+        "description": "Provide your dates, capacity, and objectives. We initiate the sourcing protocol based on your exact specifications."
       },
       "2": {
-        "title": "Expert Sourcing",
-        "description": "Our specialists manually source the best flight routes and negotiated rates for hotels and transport."
+        "title": "Manual Sourcing",
+        "description": "Our specialists bypass automated algorithms to secure private flight fares and negotiate vetted ground rates."
       },
       "3": {
-        "title": "Receive Your Offer",
-        "description": "Within 48 hours, you receive a finalized, budget-friendly package quote for your entire journey."
+        "title": "Review Proposal",
+        "description": "Within 48 hours, you receive a finalized, fully-itemized operational quote for your complete itinerary."
       },
       "4": {
-        "title": "Confirm & Fly",
-        "description": "Once you approve, we handle every booking and detail. You just pack your bags and enjoy the ride."
+        "title": "Authorize & Execute",
+        "description": "Once authorized, we secure all bookings and manage the end-to-end logistics. Zero friction."
       }
     }
   },
   "Testimonials": {
-    "overline": "What They Say",
-    "title": "Traveler Stories",
-    "description": "Real stories from real trips. See why thousands of adventurers choose Vizit Africa.",
+    "overline": "Client Outcomes",
+    "title": "Verified Execution",
+    "description": "Real results from complex itineraries. See why professionals choose our sourcing and logistics.",
     "items": {
       "1": {
         "name": "Sarah Mitchell",
-        "role": "Adventure Traveler",
+        "role": "Corporate Coordinator",
         "country": "United Kingdom",
-        "content": "Vizit Africa made our gorilla trekking dream come true. The logistics were flawless, and our guide Jean-Pierre was incredibly knowledgeable. Highly recommended!"
+        "content": "Vizit Africa handled our executive retreat flawlessly. The logistics were precise, and they secured private flight fares that significantly reduced our travel spend."
       },
       "2": {
         "name": "John Davis",
         "role": "Business Traveler",
         "country": "USA",
-        "content": "I needed a quick car rental and hotel for a conference in Kigali. Their team arranged everything within hours. Professional, reliable, and excellent service."
+        "content": "I needed a last-minute vehicle and secure hotel for a conference in Kigali. Their operations team executed the request within hours at an exceptional rate."
       },
       "3": {
         "name": "Aisha Mohammed",
-        "role": "Family Vacation",
+        "role": "Group Travel Lead",
         "country": "Kenya",
-        "content": "Traveling with kids can be stressful, but Vizit Africa handled everything. The Lake Kivu resort they suggested was perfect for our family. We'll be back!"
+        "content": "Coordinating multi-city travel is a logistical nightmare, but they managed every detail. The vetted accommodations were perfect and the end-to-end service was unmatched."
       },
       "4": {
         "name": "Marcus Chen",
-        "role": "Solo Explorer",
+        "role": "Independent Consultant",
         "country": "Singapore",
-        "content": "As a solo traveler, safety was my priority. Their local guides made me feel completely at ease while showing me hidden gems I'd never find on my own."
+        "content": "As an independent traveler, execution and security are my priorities. Their team manually verified every sector of my journey. Complete peace of mind."
       },
       "5": {
         "name": "Emma Laurent",
-        "role": "Photographer",
+        "role": "Production Manager",
         "country": "France",
-        "content": "The golden hour at Akagera was magical. They knew exactly where to position us for the best shots. My portfolio has never looked better!"
+        "content": "Moving equipment and crew across borders requires exact timing. They handled all ground logistics so my team could focus entirely on the project."
       }
     }
   },
   "WhyUs": {
     "overline": "The Vizit Edge",
-    "title": "Unbeatable Value",
-    "description": "We combine human expertise with secure technology to deliver the best prices and absolute security.",
+    "title": "Uncompromising Value",
+    "description": "We pair human sourcing expertise with a direct partner network to deliver market-beating prices and secure execution.",
     "stats": {
       "travelers": {
-        "value": "Best Price",
-        "label": "Guaranteed"
+        "value": "Elite",
+        "label": "Sourcing"
       },
       "countries": {
         "value": "100%",
-        "label": "Secure Booking"
+        "label": "Verified Execution"
       },
       "rating": {
         "value": "24/7",
-        "label": "Concierge Care"
+        "label": "Operational Support"
       }
     },
     "benefits": [
-      "Access to private, unlisted flight fares",
-      "Manual sourcing by African travel experts",
-      "Negotiated local rates for stays & cars",
-      "Full package curation tailored to your budget",
+      "Access to private, consolidated flight fares",
+      "Manual sourcing by elite travel operators",
+      "Vetted hotels, BnBs & premium transport",
+      "Complete logistics management tailored to your itinerary",
       "Absolute security through manual verification"
     ]
   },
   "FAQ": {
-    "overline": "Clarifying the Journey",
-    "title": "We Have Answers",
-    "description": "Everything you need to know about our secure booking and best-price sourcing.",
-    "cantFindAnswer": "Can't find your answer?",
-    "cantFindMobile": "Can't find what you're looking for?",
-    "contactTeam": "Contact our team",
+    "overline": "Operational Clarity",
+    "title": "Service Details",
+    "description": "Understanding our manual sourcing, secure execution, and logistics management.",
+    "cantFindAnswer": "Require further clarification?",
+    "cantFindMobile": "Need more operational details?",
+    "contactTeam": "Contact Operations",
     "items": {
       "1": {
-        "question": "How do you get better prices than online sites?",
-        "answer": "Our specialists have access to consolidated private fares and local market rates that automated search engines simply cannot access."
+        "question": "How do you secure better flight prices than automated engines?",
+        "answer": "Our specialists bypass standard algorithms, accessing private consolidated fares and regional market rates that public APIs cannot read."
       },
       "2": {
-        "question": "Is my flight booking secure?",
-        "answer": "Absolutely. We manually verify every ticket issued and use secure Stripe-powered payments for every transaction."
+        "question": "How do you guarantee the security of my booking?",
+        "answer": "We eliminate automated errors. Every ticket and reservation is manually verified by our operations team before confirmation, and all payments utilize enterprise-grade Stripe processing."
       },
       "3": {
-        "question": "Can I add hotels and cars later?",
-        "answer": "Yes. While bundling offers the best value, you can request and secure add-ons at any stage of your planning process."
+        "question": "Can logistics and accommodations be added post-flight booking?",
+        "answer": "Yes. While complete itinerary curation offers the highest value, our team can source and secure vetted add-ons at any point prior to your departure."
       },
       "4": {
-        "question": "What if I find a cheaper price elsewhere?",
-        "answer": "Tell us. If a lower publicly available fare exists, we'll beat it while still providing the added security of our concierge verification."
+        "question": "What is your price-match policy?",
+        "answer": "If you locate a lower publicly available fare for the exact same routing and class, we will match it while continuing to provide our manual verification and support."
       },
       "5": {
-        "question": "What's the baggage allowance?",
-        "answer": "Baggage allowance varies by airline and class. Economy typically includes 23kg checked + 7kg carry-on. Business class allows 32kg+. We display the allowance for each flight in the search results."
+        "question": "What standard of accommodations do you curate?",
+        "answer": "We maintain a strict network of vetted properties, ranging from premium corporate hotels to exclusive lodges, ensuring every option meets our standard for operational excellence and value."
       },
       "6": {
-        "question": "Can I change or cancel my flight?",
-        "answer": "Yes! Most bookings can be modified up to 48 hours before departure. Cancellation policies depend on the airline and fare class. We clearly display flexibility options during booking."
+        "question": "Do you manage on-ground transportation?",
+        "answer": "Yes. We execute all ground logistics, coordinating secure airport transfers and professional vehicle rentals (with or without drivers) through our verified partner network."
       },
       "7": {
-        "question": "Do you offer multi-city flights?",
-        "answer": "Absolutely. Search for multi-city itineraries to combine Kigali with Nairobi, Addis Ababa, or other African destinations. Great for regional exploration."
+        "question": "What level of support is provided during the journey?",
+        "answer": "Our operations center monitors your itinerary 24/7. Because we manage the complete logistical chain, we can instantly intervene and resolve any disruptions."
       },
       "8": {
-        "question": "What payment methods do you accept?",
-        "answer": "We accept all major credit cards (Visa, MasterCard, American Express), bank transfers, and mobile money (MTN MoMo, Airtel Money). Payment plans are available for larger bookings."
+        "question": "Which payment infrastructures are supported?",
+        "answer": "We process transactions securely via major credit networks, international bank transfers, and verified regional mobile money platforms."
       }
     }
   },
   "CTA": {
-    "overline": "Secure Your Fare",
+    "overline": "Initiate Your Sourcing",
     "title": "Ready to",
-    "titleHighlight": "Secure Your Flight?",
-    "description": "Tell us where you're starting from. Our experts will source the best price and secure your journey today.",
-    "startPlanning": "Check Best Price",
-    "contactTeam": "Secure Support",
-    "concierge": "Secure Concierge",
-    "emailUs": "Request Best Price",
-    "whatsapp": "Instant Secure Chat"
+    "titleHighlight": "Execute Your Itinerary?",
+    "description": "Submit your requirements. Our specialists will manually source the optimal fares and manage your complete logistical chain.",
+    "startPlanning": "Request Sourcing",
+    "contactTeam": "Contact Operations",
+    "concierge": "Dedicated Support",
+    "emailUs": "Submit Request",
+    "whatsapp": "Direct Secure Line"
   },
   "Footer": {
-    "tagline": "Your trusted Rwanda travel partner. Professional planning for unforgettable African experiences.",
-    "explore": "Explore",
-    "company": "Company",
-    "contact": "Contact",
+    "tagline": "The standard for elite flight sourcing and full-service logistics management across Africa. Professional execution for the modern traveler.",
+    "explore": "Services",
+    "company": "Organization",
+    "contact": "Operations",
     "links": {
       "tripsPackages": "Trips & Packages",
       "customItineraries": "Custom Itineraries",
@@ -289,35 +323,42 @@
       "termsOfService": "Terms of Service",
       "whatsapp": "WhatsApp"
     },
+    "coordinates": "Coordinates",
+    "allRightsReserved": "All rights reserved.",
+    "madeWithCare": "Made with care in Kigali",
     "copyright": "© 2025 Vizit Africa. All rights reserved.",
     "privacy": "Privacy",
     "terms": "Terms"
   },
   "About": {
-    "established": "Established 2018",
-    "title": "Vizit Logistics",
-    "intro1": "Global standards, local expertise.",
-    "intro2": "Vizit Africa is a fully integrated travel logistics partner. We control the entire value chain from fleet management to hotel partnerships.",
-    "intro3": "Reliability is our currency. We deliver seamless execution for complex itineraries.",
-    "guidesTitle": "Our Infrastructure",
-    "guidesDescription": "Private fleet. Verified accommodation partners. 24/7 Operations Center.",
-    "startJourney": "Partner With Us",
+    "established": "The Service Standard",
+    "title": "Beyond Automated",
+    "intro1": "The standard is simple:",
+    "intro2": "Elite sourcing and flawless execution.",
+    "intro3": "Automated platforms are built for volume, not value. They miss private fares and ignore local logistics. We built Vizit Africa to bridge that gap. We combine human expertise with a direct network to source the best flight prices, secure premium accommodations, and manage every logistics detail—so you can simply move.",
+    "guidesTitle": "Operational Excellence",
+    "guidesDescription": "We've spent years building an infrastructure of airline partnerships and verified property networks to ensure your movement is seamless.",
+    "startJourney": "Check Best Price",
+    "cta": {
+      "overline": "Expert Execution",
+      "description": "Professional sourcing and total logistics management for the modern traveler."
+    },
     "values": {
       "1": {
-        "title": "Respect",
-        "description": "We honor the land, the wildlife, and the communities we visit. Every footprint we leave is mindful."
+        "title": "Elite Sourcing",
+        "description": "We go beyond public APIs, manually scanning private networks to find the absolute best fares for your route."
       },
       "2": {
-        "title": "Authenticity",
-        "description": "We don't stage experiences. We facilitate genuine connections with the real people and culture of Rwanda."
+        "title": "Vetted Curation",
+        "description": "Your trip is more than a ticket. We hand-pick hotels and transport that meet our rigorous standards for value and comfort."
       },
       "3": {
-        "title": "Impact",
-        "description": "Tourism is a force for good. A portion of every journey goes directly to community upliftment."
+        "title": "Human Verification",
+        "description": "Every booking is manually verified by our operations team. No automated risks—just secure, reliable travel."
       },
       "4": {
-        "title": "Excellence",
-        "description": "From the vehicle you ride in to the coffee you drink, we obsess over every detail of your journey."
+        "title": "Managed Logistics",
+        "description": "We own the complexity. From airport transfers to on-ground support, we manage the details so you don't have to."
       }
     }
   },
@@ -331,16 +372,47 @@
     "visitUs": "Visit Us",
     "address": "Kigali Heights, 4th Floor",
     "addressSub": "KG 7 Ave, Kigali, Rwanda",
+    "formOverline": "Send a Message",
     "formTitle": "Send us a message",
     "formDescription": "Fill out the form below and our team will get back to you within 24 hours.",
     "firstName": "First Name",
+    "firstNamePlaceholder": "Jane",
     "lastName": "Last Name",
+    "lastNamePlaceholder": "Doe",
     "emailAddress": "Email Address",
+    "emailPlaceholder": "jane@example.com",
     "phoneNumber": "Phone Number",
+    "phonePlaceholder": "+1 (555) 000-0000",
     "message": "Message",
     "messagePlaceholder": "Tell us about your travel plans...",
+    "messages": {
+      "success": "Message Sent ✓",
+      "error": "Failed to send. Please try again.",
+      "genericError": "An error occurred."
+    },
     "contactDetails": "Contact Details",
     "office": "Office"
+  },
+  "Experiences": {
+    "title": "Experiences",
+    "overline": "The Collection",
+    "categoriesTitle": "Categories",
+    "categories": {
+      "wildlifeNature": "Wildlife & Nature",
+      "cultureLeisure": "Culture & Leisure",
+      "adventure": "Adventure"
+    },
+    "labels": {
+      "location": "Location",
+      "duration": "Duration",
+      "startingFrom": "Starting From",
+      "requestQuote": "Request Quote"
+    },
+    "fallbacks": {
+      "location": "Rwanda",
+      "tag": "Experience",
+      "duration": "Full Day"
+    }
   },
   "Auth": {
     "login": {
@@ -363,7 +435,8 @@
         "googleSuccess": "Successfully logged in with Google",
         "googleError": "Google login failed",
         "googleUnexpected": "An unexpected error occurred during Google login"
-      }
+      },
+      "googleContinue": "Continue with Google"
     },
     "signup": {
       "title": "Start Your Journey",
@@ -379,6 +452,8 @@
       "haveAccount": "Already have an account?",
       "signIn": "Sign in",
       "creating": "Creating...",
+      "orContinue": "OR CONTINUE WITH",
+      "googleSignup": "Sign up with Google",
       "messages": {
         "success": "Account created! Check your email to verify.",
         "error": "Registration failed. Please check the fields."
@@ -431,6 +506,14 @@
     },
     "noResults": "No services found matching your criteria.",
     "bookService": "Book This Service",
+    "labels": {
+      "night": " / night",
+      "day": " / day",
+      "addDriver": "Add Driver (+${price}/day)",
+      "remove": "Remove",
+      "fallbackLocation": "Kigali",
+      "fallbackTransmission": "Automatic"
+    },
     "items": {
       "rwandair-direct": {
         "title": "RwandAir Direct",
@@ -553,6 +636,12 @@
       "noFlights": "No flights match your filters",
       "tryAdjusting": "Try adjusting your search criteria"
     }
+  },
+  "NotFound": {
+    "title": "Lost in the wild.",
+    "description": "The page you're looking for seems to have wandered off the beaten path.",
+    "returnHome": "Return to Basecamp",
+    "startJourney": "Start a New Journey"
   },
   "Partners": {
     "apply": {
@@ -821,30 +910,70 @@
           "cabinClassPlaceholder": "Select Cabin Class",
           "starRatingPlaceholder": "Min. Star Rating",
           "preferredVehiclePlaceholder": "Preferred Vehicle",
-          "primaryLanguagePlaceholder": "Primary Language"
+          "primaryLanguagePlaceholder": "Primary Language",
+          "cabinClassOptions": {
+            "economy": "Economy",
+            "business": "Business",
+            "first": "First Class"
+          },
+          "starRatingOptions": {
+            "3": "3 Stars & Above",
+            "4": "4 Stars & Above",
+            "5": "Luxury 5 Stars"
+          },
+          "vehicleOptions": {
+            "sedan": "Executive Sedan",
+            "4x4": "Safari 4x4 SUV",
+            "van": "Passenger Van"
+          },
+          "languageOptions": {
+            "English": "English",
+            "French": "French",
+            "German": "German",
+            "Spanish": "Spanish"
+          }
         },
         "purpose": {
           "step": "03",
           "title": "Party & Purpose",
           "travelers": "Travelers",
           "tripStyle": "Trip Style",
-          "vibePlaceholder": "What's the vibe?"
+          "vibePlaceholder": "What's the vibe?",
+          "tripStyleOptions": {
+            "leisure": "Leisure & Relax",
+            "adventure": "Pure Adventure",
+            "business": "Business Focus",
+            "cultural": "Cultural Immersion",
+            "honeymoon": "Romantic Honeymoon"
+          }
         },
         "identity": {
-          "title": "The Identity",
+          "title": "Traveler Identity",
           "fullName": "Full Name",
-          "fullNamePlaceholder": "Sarah Johnson",
+          "fullNamePlaceholder": "John Doe",
           "email": "Email Address",
-          "emailPlaceholder": "sarah@example.com",
-          "budget": "Budget Alignment",
-          "budgetPlaceholder": "Select budget bracket",
-          "specialNarrative": "Special Narrative (Optional)",
-          "specialNarrativePlaceholder": "Dietary needs, preferred sights, or a specific occasion...",
+          "emailPlaceholder": "john@example.com",
+          "phone": "Phone Number",
+          "phonePlaceholder": "+250...",
+          "budget": "Budget Orientation",
+          "budgetPlaceholder": "Select target budget",
+          "budgetOptions": {
+            "value": "Value (Budget Conscious)",
+            "midRange": "Mid-Range (Quality & Comfort)",
+            "luxury": "Luxury (High-end Excellence)",
+            "ultraLuxe": "Ultra-Luxury (The Finest Only)"
+          },
+          "specialNarrative": "Special Requests",
+          "specialNarrativePlaceholder": "Any specific requirements or dreams for this journey?",
           "estimatedValue": "Estimated Value",
-          "servicesSelected": "{count} services selected",
-          "disclaimer": "Our concierge specialists will manually verify real-time availability and flight fares before providing your finalized narrative quote within 48 hours.",
-          "submit": "Review Your Narrative"
+          "servicesSelected": "{count} Services Selected",
+          "disclaimer": "This is an estimate. Final pricing is manually sourced and confirmed within 48 hours.",
+          "submit": "Request Package Quote"
         }
+      },
+      "messages": {
+        "fillNameEmail": "Please fill in your name and email before submitting.",
+        "personalizing": "Personalizing your journey..."
       }
     },
     "header": {
@@ -1379,7 +1508,41 @@
     },
     "saved": {
       "emptyTitle": "No Saved Items",
-      "emptyDescription": "Items you bookmark will appear here."
+      "emptyDescription": "Items you bookmark will appear here.",
+      "curateTitle": "Curate Your Adventure",
+      "curateDescription": "Your personal collection of dream destinations and experiences. Explore the landscape and bookmark what inspires you to start building your journey.",
+      "explore": "Explore Rwanda"
+    },
+    "trips": {
+      "title": "Your Trips",
+      "description": "Every journey you've embarked on, and those yet to begin.",
+      "fallbacks": {
+        "purpose": "African Adventure"
+      },
+      "views": {
+        "cards": "Cards",
+        "timeline": "Timeline"
+      },
+      "empty": {
+        "title": "No confirmed trips yet",
+        "description": "Your confirmed itineraries will appear here as soon as they're finalized and paid.",
+        "cta": "Start Planning a Trip"
+      },
+      "timeline": {
+        "selectJourney": "Select Journey",
+        "empty": "Select a trip to view detailed timeline",
+        "travelers": "{count} Travelers"
+      }
+    },
+    "messages": {
+      "paymentSuccess": "Payment received! Your booking is now paid.",
+      "paymentConfirmationFailed": "Payment processed but confirmation failed.",
+      "cancelSuccess": "Booking request cancelled successfully.",
+      "cancelError": "Failed to cancel booking",
+      "confirmCancel": "Are you sure you want to cancel this booking request?",
+      "fallbacks": {
+        "name": "Traveler"
+      }
     },
     "settings": {
       "title": "Account Settings",
@@ -1394,44 +1557,44 @@
     }
   },
   "ServiceHighlights": {
-    "overline": "Our Advantage",
-    "title": "Unbeatable Fares {br} Full Package Ease",
-    "description": "We specialize in the manual sourcing of flight fares that automated systems miss, then we bundle them with local negotiated rates for a complete, budget-friendly journey.",
+    "overline": "The Vizit Advantage",
+    "title": "Best-Price Fares {br} Complete Trip Ease",
+    "description": "We find the prices automated sites miss, then we bundle them with curated hotels and managed transport for a worry-free journey.",
     "items": {
       "flights": {
-        "title": "Best-Price Sourcing",
-        "description": "Our experts manually scan private and public flight fares to secure the absolute lowest price for your route to Africa."
+        "title": "Expert Sourcing",
+        "description": "Our specialists manually scan private and public fares to secure the absolute lowest price for your route to Africa."
       },
       "packages": {
-        "title": "Full Package Curation",
-        "description": "We don't just book flights. We bundle your stay, car rental, and local guides into one simple, itemized offer."
+        "title": "Curated Add-Ons",
+        "description": "We pair your flight with hand-picked hotels, BnBs, and cars that we've personally vetted for value."
       },
       "concierge": {
-        "title": "Human Concierge",
-        "description": "No bots, no algorithms. Real African travel specialists manage every detail of your narrative from request to return."
+        "title": "Total Management",
+        "description": "We handle the logistics, the confirmations, and the local details, so you can simply enjoy the ride."
       }
     },
-    "cta": "Start Your Narrative"
+    "cta": "Start Your Journey"
   },
   "LandingExperiences": {
-    "overline": "The Value Narrative",
-    "title": "Unbeatable\nFlight Deals",
+    "overline": "Value Without Compromise",
+    "title": "Sourced Fares\nCurated Stays",
     "cta": "See All Offers",
     "items": {
       "1": {
-        "title": "Secure Global Access",
-        "location": "Worldwide to Kigali",
-        "description": "We source exclusive fares from London, Dubai, and beyond, ensuring you get the best price on the market."
+        "title": "Expert Global Sourcing",
+        "location": "Worldwide to Africa",
+        "description": "We secure exclusive fares from major hubs worldwide, ensuring you get the best price on the market."
       },
       "2": {
-        "title": "Complete Itinerary Value",
-        "location": "Seamless Add-Ons",
-        "description": "Bundle your secure flight with hand-picked hotels and transport at prices you won't find anywhere else."
+        "title": "Hand-Picked Value",
+        "location": "Curated Accommodations",
+        "description": "Bundle your sourced flight with boutique hotels and BnBs at prices you won't find anywhere else."
       },
       "3": {
-        "title": "Verified Local Experts",
-        "location": "Reliable Guidance",
-        "description": "Our guides and transport partners are vetted for security and value, giving you a worry-free African experience."
+        "title": "Managed Logistics",
+        "location": "Zero Stress Travel",
+        "description": "Our team handles every detail from booking to transport, giving you a completely worry-free experience."
       }
     }
   },

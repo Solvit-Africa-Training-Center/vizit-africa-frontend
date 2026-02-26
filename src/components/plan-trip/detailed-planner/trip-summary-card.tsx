@@ -78,6 +78,18 @@ export function TripSummaryCard({
           </div>
           <div className="space-y-2">
             <Label className="text-[10px] uppercase font-bold tracking-widest text-primary-light/80 ml-1">
+              {t("phone")}
+            </Label>
+            <Input
+              type="tel"
+              value={tripInfo.phoneNumber || ""}
+              onChange={(e) => updateTripInfo({ phoneNumber: e.target.value })}
+              className="bg-white/5 border-white/10 text-white placeholder:text-white/30 h-12 text-base rounded-xl focus-visible:ring-primary-light/50 focus-visible:border-primary-light/50"
+              placeholder={t("phonePlaceholder")}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label className="text-[10px] uppercase font-bold tracking-widest text-primary-light/80 ml-1">
               {t("budget")}
             </Label>
             <Select
@@ -90,15 +102,15 @@ export function TripSummaryCard({
                 <SelectValue placeholder={t("budgetPlaceholder")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="value">Value (Budget Conscious)</SelectItem>
+                <SelectItem value="value">{t("budgetOptions.value")}</SelectItem>
                 <SelectItem value="mid-range">
-                  Mid-Range (Quality & Comfort)
+                  {t("budgetOptions.midRange")}
                 </SelectItem>
                 <SelectItem value="luxury">
-                  Luxury (High-end Excellence)
+                  {t("budgetOptions.luxury")}
                 </SelectItem>
                 <SelectItem value="ultra-luxe">
-                  Ultra-Luxury (The Finest Only)
+                  {t("budgetOptions.ultraLuxe")}
                 </SelectItem>
               </SelectContent>
             </Select>

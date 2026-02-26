@@ -203,7 +203,7 @@ export function ItemEditor({
           </div>
         </div>
 
-        {(type === "flight" || type === "car" || type === ("transport" as any)) && (
+        {(type === "flight" || type === ("transport" as any)) && (
           <div className="sm:col-span-2 flex items-center justify-between p-3 bg-muted/30 rounded-xl border border-border/50">
             <div className="space-y-0.5">
               <Label

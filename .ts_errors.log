@@ -1,0 +1,38 @@
+src/app/[locale]/(marketing)/experiences/experiences-client.tsx(294,60): error TS2304: Cannot find name 't'.
+src/app/[locale]/(marketing)/experiences/experiences-client.tsx(295,65): error TS2304: Cannot find name 't'.
+src/app/[locale]/(marketing)/experiences/experiences-client.tsx(296,55): error TS2304: Cannot find name 't'.
+src/app/[locale]/(marketing)/gallery/page.tsx(220,21): error TS2322: Type '{ key: number; img: { id: number; src: string; alt: string; caption: string; category: string; aspect: string; rawCategory: string; }; index: number; onClick: () => void; }' is not assignable to type 'IntrinsicAttributes & { img: { id: number; src: string; alt: string; caption: string; category: string; aspect: string; rawCategory: string; }; onClick: () => void; }'.
+  Property 'index' does not exist on type 'IntrinsicAttributes & { img: { id: number; src: string; alt: string; caption: string; category: string; aspect: string; rawCategory: string; }; onClick: () => void; }'.
+src/app/[locale]/admin/bookings/[id]/fulfill/fulfill-client.tsx(358,9): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/app/[locale]/admin/bookings/bookings-client.tsx(34,9): error TS18048: 'b.name' is possibly 'undefined'.
+src/app/[locale]/admin/dashboard-client.tsx(133,24): error TS18048: 'request.name' is possibly 'undefined'.
+src/app/[locale]/profile/bookings/[id]/booking-detail-client.tsx(336,26): error TS18048: 'booking.children' is possibly 'undefined'.
+src/app/[locale]/profile/bookings/[id]/booking-detail-client.tsx(338,26): error TS18048: 'booking.infants' is possibly 'undefined'.
+src/app/[locale]/profile/bookings/[id]/booking-detail-client.tsx(440,11): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/app/[locale]/profile/bookings/[id]/booking-detail-client.tsx(441,11): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/admin/admin-booking-card.tsx(153,9): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/admin/package-builder-client.tsx(54,9): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/admin/package-builder-client.tsx(119,9): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/admin/package-builder-client.tsx(120,9): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/profile/overview-tab.tsx(121,25): error TS2322: Type 'number | undefined' is not assignable to type 'string | number | Date'.
+  Type 'undefined' is not assignable to type 'string | number | Date'.
+src/components/profile/trip-timeline.tsx(74,40): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/profile/trips-tab.tsx(144,118): error TS2322: Type 'number | undefined' is not assignable to type 'string | number | Date'.
+  Type 'undefined' is not assignable to type 'string | number | Date'.
+src/components/schedule/completed-requests-schedule.tsx(98,9): error TS2322: Type '{ id: string; bookingId: string; title: string; startDate: Date | null; endDate: Date | null; quantity: number | undefined; amount: number; currency: string; }[]' is not assignable to type 'ScheduleEntry[]'.
+  Type '{ id: string; bookingId: string; title: string; startDate: Date | null; endDate: Date | null; quantity: number | undefined; amount: number; currency: string; }' is not assignable to type 'ScheduleEntry'.
+    Types of property 'quantity' are incompatible.
+      Type 'number | undefined' is not assignable to type 'number'.
+        Type 'undefined' is not assignable to type 'number'.
+src/components/ui/tooltip.tsx(31,5): error TS2322: Type 'ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps<any>, TooltipTriggerState> | undefined' is not assignable to type 'UseRenderRenderProp<Record<string, unknown>> | undefined'.
+  Type 'ComponentRenderFn<HTMLProps<any>, TooltipTriggerState>' is not assignable to type 'UseRenderRenderProp<Record<string, unknown>> | undefined'.
+    Type 'ComponentRenderFn<HTMLProps<any>, TooltipTriggerState>' is not assignable to type 'ComponentRenderFn<HTMLAttributes<any>, Record<string, unknown>>'.
+      Property 'open' is missing in type 'Record<string, unknown>' but required in type 'TooltipTriggerState'.

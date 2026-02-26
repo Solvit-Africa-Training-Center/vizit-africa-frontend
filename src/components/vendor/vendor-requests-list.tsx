@@ -26,9 +26,9 @@ export function VendorRequestsList({
     setCheckingId(String(req.id));
     try {
       const result = await checkVendorServiceAvailability(
-        req.service_id,
-        req.start_date,
-        req.end_date,
+        req.serviceId,
+        req.startDate,
+        req.endDate,
         req.quantity,
       );
 
@@ -95,10 +95,10 @@ export function VendorRequestsList({
                 item={
                   {
                     ...req,
-                    title: req.service_name,
+                    title: req.serviceName,
                     type: "service",
-                    startDate: req.start_date,
-                    endDate: req.end_date,
+                    startDate: req.startDate,
+                    endDate: req.endDate,
                   } as any
                 }
                 mode="view"

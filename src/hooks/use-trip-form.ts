@@ -5,7 +5,7 @@ import { useTripStore } from "@/store/trip-store";
 export interface TripFormValues {
   name: string;
   email: string;
-  phone: string;
+  phoneNumber: string;
   departureCity: string;
   destination: string;
   arrivalDate: string;
@@ -14,7 +14,6 @@ export interface TripFormValues {
   arrivalTime: string;
   departureTime: string;
   returnTime: string;
-  isRoundTrip: boolean;
   adults: number;
   children: number;
   infants: number;
@@ -34,7 +33,7 @@ export function useTripForm() {
     defaultValues: {
       name: tripInfo.name || "",
       email: tripInfo.email || "",
-      phone: tripInfo.phone || "",
+      phoneNumber: tripInfo.phoneNumber || "",
       departureCity: tripInfo.departureCity || "",
       destination: tripInfo.destination || "",
       arrivalDate: tripInfo.arrivalDate || "",
@@ -43,7 +42,6 @@ export function useTripForm() {
       arrivalTime: tripInfo.arrivalTime || "",
       departureTime: tripInfo.departureTime || "",
       returnTime: tripInfo.returnTime || "",
-      isRoundTrip: tripInfo.isRoundTrip || false,
       adults: tripInfo.adults || 2,
       children: tripInfo.children || 0,
       infants: tripInfo.infants || 0,

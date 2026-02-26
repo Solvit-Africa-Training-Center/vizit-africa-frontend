@@ -59,12 +59,12 @@ export async function submitTrip(
 }
 
 export async function confirmBooking(
-  bookingId: string,
+  booking_id: string,
 ): Promise<ActionResult<Booking>> {
   try {
     const data = await api.post(
       `${endpoints.bookings.confirm}`,
-      { booking_id: bookingId },
+      { booking_id },
       bookingSchema,
     );
     return { success: true, data };
@@ -114,22 +114,20 @@ export async function getUserBookings(): Promise<ActionResult<Booking[]>> {
 }
 
 export async function acceptQuoteForBooking(
-  bookingId: string,
+  booking_id: string,
 ): Promise<ActionResult<Booking>> {
-  logger.info(`Accepting quote for booking ${bookingId}`);
+  logger.info(`Accepting quote for booking ${booking_id}`);
   try {
-    const data = await api.post(
-      endpoints.bookings.accept(bookingId),
-      { booking_id: bookingId },
-      bookingSchema,
-    );
-    logger.info(`Successfully accepted quote for booking ${bookingId}`);
-    return { success: true, data };
+    // Send an empty body as the ID is already in the URL
+    await api.post(endpoints.bookings.accept(booking_id), {});
+
+    // Refetch the full booking to ensure we have all data (including the full schema)
+    return await getBookingById(booking_id);
   } catch (error) {
     const errorMsg =
       error instanceof ApiError ? error.message : "Failed to accept quote";
-    logger.error(`Failed to accept quote for booking ${bookingId}: ${errorMsg}`, {
-      bookingId,
+    logger.error(`Failed to accept quote for booking ${booking_id}: ${errorMsg}`, {
+      booking_id,
       error,
     });
     return {
@@ -143,11 +141,11 @@ export async function acceptQuoteForBooking(
 export const submitTripRequest = submitTrip;
 
 export async function cancelBooking(
-  bookingId: string,
+  booking_id: string,
 ): Promise<ActionResult<{ message: string }>> {
   try {
-    const result = await api.post(endpoints.bookings.cancel(bookingId), {
-      booking_id: bookingId,
+    const result = await api.post(endpoints.bookings.cancel(booking_id), {
+      booking_id,
     });
     return { success: true, data: result as { message: string } };
   } catch (error) {
@@ -160,7 +158,7 @@ export async function cancelBooking(
 }
 
 export async function sendQuoteForBooking(
-  bookingId: string,
+  booking_id: string,
   amount: number,
   items: Partial<BookingItem>[] = [],
 ): Promise<ActionResult<{ message: string }>> {
@@ -169,20 +167,20 @@ export async function sendQuoteForBooking(
     return { success: false, error: "Unauthorized: Admin access required" };
   }
 
-  logger.info(`Sending quote for booking ${bookingId}`, { amount, itemCount: items.length });
+  logger.info(`Sending quote for booking ${booking_id}`, { amount, itemCount: items.length });
   try {
-    const result = await api.post(endpoints.bookings.quote(bookingId), {
-      booking_id: bookingId,
+    const result = await api.post(endpoints.bookings.quote(booking_id), {
+      booking_id,
       amount,
-      total_amount: amount, // Send both just in case
+      total_amount: amount,
       items,
     });
-    logger.info(`Successfully sent quote for booking ${bookingId}`);
+    logger.info(`Successfully sent quote for booking ${booking_id}`);
     return { success: true, data: result as { message: string } };
   } catch (error) {
     const errorMsg = error instanceof ApiError ? error.message : "Failed to send quote";
-    logger.error(`Failed to send quote for booking ${bookingId}: ${errorMsg}`, { 
-      bookingId,
+    logger.error(`Failed to send quote for booking ${booking_id}: ${errorMsg}`, { 
+      booking_id,
       amount,
       itemCount: items.length,
       error 
@@ -220,9 +218,9 @@ export async function updateBooking(
 }
 
 export async function notifyVendor(
-  bookingId: string,
-  itemId?: string,
-  serviceId?: string | number,
+  booking_id: string,
+  item_id?: string,
+  service_id?: string | number,
   metadata?: Record<string, unknown>,
 ): Promise<ActionResult<{ message: string }>> {
   const session = await getSession();
@@ -230,18 +228,18 @@ export async function notifyVendor(
     return { success: false, error: "Unauthorized: Admin access required" };
   }
 
-  logger.info(`Notifying vendor for booking ${bookingId}`, { itemId, serviceId });
+  logger.info(`Notifying vendor for booking ${booking_id}`, { item_id, service_id });
   try {
-    const result = await api.post(endpoints.bookings.notifyVendor(bookingId), {
-      booking_id: bookingId,
-      item_id: itemId,
-      service_id: serviceId,
+    const result = await api.post(endpoints.bookings.notifyVendor(booking_id), {
+      booking_id,
+      item_id,
+      service_id,
       ...metadata,
     });
-    logger.info(`Successfully notified vendor for booking ${bookingId}`);
+    logger.info(`Successfully notified vendor for booking ${booking_id}`);
     return { success: true, data: result as { message: string } };
   } catch (error) {
-    logger.error(`Failed to notify vendor for booking ${bookingId}`, { error });
+    logger.error(`Failed to notify vendor for booking ${booking_id}`, { error });
     return {
       success: false,
       error:

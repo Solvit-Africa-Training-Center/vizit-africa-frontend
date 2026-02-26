@@ -1,6 +1,10 @@
 "use client";
 
-import { Tooltip as TooltipPrimitive } from "@base-ui/react/tooltip";
+import {
+  Tooltip as TooltipPrimitive,
+  useRender,
+  mergeProps,
+} from "@base-ui/react";
 
 import { cn } from "@/lib/utils";
 
@@ -21,8 +25,12 @@ function Tooltip({ ...props }: TooltipPrimitive.Root.Props) {
   return <TooltipPrimitive.Root data-slot="tooltip" {...props} />;
 }
 
-function TooltipTrigger({ ...props }: TooltipPrimitive.Trigger.Props) {
-  return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />;
+function TooltipTrigger({ render, ...props }: TooltipPrimitive.Trigger.Props) {
+  return useRender({
+    defaultTagName: "button",
+    props: mergeProps({ "data-slot": "tooltip-trigger" }, props),
+    render: render as any,
+  });
 }
 
 function TooltipContent({

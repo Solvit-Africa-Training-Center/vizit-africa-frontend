@@ -5,7 +5,7 @@ import { routing } from "./i18n/routing";
 const intlMiddleware = createMiddleware(routing);
 
 const protectedPaths = ["/admin", "/profile"];
-const authPaths = ["/login", "/signup", "/verify-email"];
+const authPaths = ["/login", "/signup", "/verify-email", "/set-password"];
 
 function getPathWithoutLocale(pathname: string): string {
   const localePattern = new RegExp(`^/(${routing.locales.join("|")})(?=/|$)`);

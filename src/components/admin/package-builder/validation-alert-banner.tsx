@@ -43,8 +43,7 @@ export function ValidationAlertBanner({
           {hasErrors && (
             <div>
               <h3 className="font-semibold text-destructive mb-2">
-                Fix {validation.errors.length} error
-                {validation.errors.length !== 1 ? "s" : ""} before sending
+                {validation.errors.length} item{validation.errors.length !== 1 ? "s" : ""} require{validation.errors.length === 1 ? "s" : ""} action before sending
               </h3>
               <ul className="space-y-1 text-sm text-destructive/90 mb-3">
                 {validation.errors.map((error, idx) => (
@@ -59,8 +58,8 @@ export function ValidationAlertBanner({
           {hasWarnings && (
             <div>
               <h3 className="font-semibold text-warning-foreground mb-2">
-                {validation.warnings.length} warning
-                {validation.warnings.length !== 1 ? "s" : ""}
+                {validation.warnings.length} suggestion
+                {validation.warnings.length !== 1 ? "s" : ""} for this draft
               </h3>
               <ul className="space-y-1 text-sm text-warning-foreground/80">
                 {validation.warnings.map((warning, idx) => (
@@ -112,7 +111,7 @@ export function ValidationBadge({
     return (
       <div className="inline-flex items-center gap-1 px-2 py-1 rounded bg-destructive/10 text-destructive text-xs font-medium">
         <RiErrorWarningLine className="size-3" />
-        {!compact && `${errorCount} error${errorCount !== 1 ? "s" : ""}`}
+        {!compact && `${errorCount} pending item${errorCount !== 1 ? "s" : ""}`}
       </div>
     );
   }
@@ -120,7 +119,7 @@ export function ValidationBadge({
   return (
     <div className="inline-flex items-center gap-1 px-2 py-1 rounded bg-warning/10 text-warning text-xs font-medium">
       <RiAlertLine className="size-3" />
-      {!compact && `${warningCount} warning${warningCount !== 1 ? "s" : ""}`}
+      {!compact && `${warningCount} notice${warningCount !== 1 ? "s" : ""}`}
     </div>
   );
 }

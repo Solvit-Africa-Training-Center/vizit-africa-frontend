@@ -8,6 +8,7 @@ import { type ZodSchema } from "zod";
 import { endpoints } from "@/actions/endpoints";
 import { ApiError } from "@/lib/api/error";
 import { logger } from "@/lib/utils/logger";
+import { toCamel, toSnake } from "@/lib/utils/casing";
 
 export { ApiError } from "@/lib/api/error";
 
@@ -80,52 +81,28 @@ async function handleResponse<T>(
 
   if (responseText) {
     try {
-      responseData = JSON.parse(responseText);
+      // Transform all incoming keys to camelCase
+      responseData = toCamel(JSON.parse(responseText));
     } catch {
       responseData = null;
     }
   }
 
   if (!response.ok) {
-    let message = "Request failed";
-    let code = `ERROR_${response.status}`;
-    let details: Record<string, unknown> | undefined;
+    // New simplified error structure handling
+    let message = responseData?.message || "Request failed";
+    let code = responseData?.error?.code || `ERROR_${response.status}`;
+    let details = responseData?.error?.details || responseData?.details;
 
-    if (responseData) {
-      if ("error" in responseData && responseData.error) {
-        message = responseData.error.message || message;
-        code = responseData.error.code || code;
-        details = responseData.error.details;
-      } else if (responseData.message) {
-        message = responseData.message;
-      } else if (responseData.detail) {
-        message = responseData.detail;
-      }
-
-      if (!details && typeof responseData === "object") {
-        const possibleErrors = Object.fromEntries(
-          Object.entries(responseData).filter(
-            ([key]) =>
-              !["success", "message", "detail", "status", "error"].includes(
-                key,
-              ),
-          ),
-        );
-        if (Object.keys(possibleErrors).length > 0) {
-          details = possibleErrors;
-        }
-      }
+    if (!responseData?.message && responseData?.error?.message) {
+      message = responseData.error.message;
     }
 
     if (IS_DEV) {
       logger.error(`[API Error] ${code} (${response.status}): ${message}`, {
         details,
         endpoint: response.url,
-        method: response.status,
       });
-      if (responseData) {
-        console.dir(responseData, { depth: null });
-      }
     }
 
     throw new ApiError(message, response.status, details);
@@ -237,7 +214,7 @@ export const api = {
     apiFetch<T>(endpoint, {
       ...options,
       method: "POST",
-      body: JSON.stringify(body),
+      body: JSON.stringify(toSnake(body)),
       schema,
     }),
 
@@ -250,7 +227,7 @@ export const api = {
     apiFetch<T>(endpoint, {
       ...options,
       method: "PUT",
-      body: JSON.stringify(body),
+      body: JSON.stringify(toSnake(body)),
       schema,
     }),
 
@@ -263,7 +240,7 @@ export const api = {
     apiFetch<T>(endpoint, {
       ...options,
       method: "PATCH",
-      body: JSON.stringify(body),
+      body: JSON.stringify(toSnake(body)),
       schema,
     }),
 

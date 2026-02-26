@@ -36,11 +36,11 @@ export function RegisterForm() {
 
   const form = useForm({
     defaultValues: {
-      full_name: "",
+      fullName: "",
       email: "",
-      phone_number: "",
+      phoneNumber: "",
       password: "",
-      re_password: "",
+      rePassword: "",
       role: "CLIENT" as "CLIENT" | "VENDOR" | "ADMIN",
     },
     validators: {
@@ -101,14 +101,14 @@ export function RegisterForm() {
           <AlertDescription className="mt-1">{error}</AlertDescription>
         </Alert>
       )}
-      <form.Field name="full_name">
+      <form.Field name="fullName">
         {(field) => (
           <div className="space-y-2">
-            <Label htmlFor="full_name">{t("fullName")}</Label>
+            <Label htmlFor="fullName">{t("fullName")}</Label>
             <InputGroup>
               <InputGroupInput
-                id="full_name"
-                name="full_name"
+                id="fullName"
+                name="fullName"
                 type="text"
                 placeholder={t("fullNamePlaceholder")}
                 value={field.state.value}
@@ -151,14 +151,14 @@ export function RegisterForm() {
         )}
       </form.Field>
 
-      <form.Field name="phone_number">
+      <form.Field name="phoneNumber">
         {(field) => (
           <div className="space-y-2">
-            <Label htmlFor="phone_number">{t("phoneNumber")}</Label>
+            <Label htmlFor="phoneNumber">{t("phoneNumber")}</Label>
             <InputGroup>
               <InputGroupInput
-                id="phone_number"
-                name="phone_number"
+                id="phoneNumber"
+                name="phoneNumber"
                 type="tel"
                 placeholder={t("phoneNumberPlaceholder")}
                 value={field.state.value}
@@ -206,14 +206,14 @@ export function RegisterForm() {
         )}
       </form.Field>
 
-      <form.Field name="re_password">
+      <form.Field name="rePassword">
         {(field) => (
           <div className="space-y-2">
-            <Label htmlFor="re_password">{t("confirmPassword")}</Label>
+            <Label htmlFor="rePassword">{t("confirmPassword")}</Label>
             <InputGroup>
               <InputGroupInput
-                id="re_password"
-                name="re_password"
+                id="rePassword"
+                name="rePassword"
                 type={showRePassword ? "text" : "password"}
                 placeholder={t("confirmPassword")}
                 value={field.state.value}

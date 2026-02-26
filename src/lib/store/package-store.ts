@@ -5,30 +5,22 @@ import { persist } from "zustand/middleware";
 export interface PackageItem {
   id?: string | number;
   tempId?: string;
-  service?: string | number;
+  serviceId?: string | number;
+  service?: string | number; // Alias for UI
   title?: string;
   description?: string;
   type?: string;
-  item_type?: string; // Align with backend
+  itemType?: string;
   quantity?: number;
   price?: number;
   quotePrice?: number;
-  unit_price?: number; // Align with backend
+  unitPrice?: number;
   isQuoted?: boolean;
   withDriver?: boolean;
-  with_driver?: boolean; // Align with backend
-  // generic timing
-  date?: string | null;
-  time?: string | null;
-  endDate?: string | null;
-  endTime?: string | null;
-  start_date?: string | null; // Align with backend
-  end_date?: string | null; // Align with backend
-  start_time?: string | null; // Align with backend
-  end_time?: string | null; // Align with backend
-  // backend-compatible naming
   startDate?: string | null;
+  endDate?: string | null;
   startTime?: string | null;
+  endTime?: string | null;
   // flight specifics
   departure?: string | null;
   departureTime?: string | null;
@@ -36,10 +28,7 @@ export interface PackageItem {
   arrivalTime?: string | null;
   returnDate?: string | null;
   returnTime?: string | null;
-  return_date?: string | null; // Align with backend
-  return_time?: string | null; // Align with backend
   isRoundTrip?: boolean;
-  is_round_trip?: boolean; // Align with backend
   // arbitrary extra fields from the builder UI
   metadata?: Record<string, unknown>;
   [key: string]: unknown;

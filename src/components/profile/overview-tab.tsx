@@ -54,9 +54,9 @@ export function OverviewTab({
             {nextTrip ? (
               <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 text-center min-w-24">
                 <p className="text-4xl font-display font-bold leading-none text-primary-light">
-                  {nextTrip.items[0]?.start_date
+                  {nextTrip.items[0]?.startDate
                     ? differenceInDays(
-                        new Date(nextTrip.items[0].start_date),
+                        new Date(nextTrip.items[0].startDate),
                         new Date(),
                       )
                     : "-"}
@@ -78,14 +78,14 @@ export function OverviewTab({
                     : t("overview.nextTrip.preparing")
                   : t("overview.nextTrip.start")}
               </h2>
-              {nextTrip?.items[0]?.start_date && (
+              {nextTrip?.items[0]?.startDate && (
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 backdrop-blur-sm text-sm font-light border border-white/10 text-white/90">
                   <RiCalendarLine className="size-4 text-primary-light" />
                   <span>
-                    {format(parseISO(nextTrip.items[0].start_date), "MMM d")} -{" "}
-                    {nextTrip.items[0].end_date
+                    {format(parseISO(nextTrip.items[0].startDate), "MMM d")} -{" "}
+                    {nextTrip.items[0].endDate
                       ? format(
-                          parseISO(nextTrip.items[0].end_date),
+                          parseISO(nextTrip.items[0].endDate),
                           "MMM d, yyyy",
                         )
                       : ""}
@@ -118,7 +118,7 @@ export function OverviewTab({
                 <p className="font-medium tracking-tight">
                   {nextTrip
                     ? t("overview.nextTrip.adventurers", {
-                        count: nextTrip.travelers,
+                        count: nextTrip.travelers || 0,
                       })
                     : t("overview.nextTrip.joinUs")}
                 </p>
@@ -168,12 +168,12 @@ export function OverviewTab({
                           ? "bg-emerald-100 text-emerald-700 border-emerald-200"
                           : req.status === "accepted"
                             ? "bg-indigo-100 text-indigo-700 border-indigo-200"
-                            : "border-border text-muted-foreground"
+                            : req.status === "quoted"
+                              ? "bg-primary/10 text-primary border-primary/20"
+                              : "border-border text-muted-foreground"
                       }`}
                     >
-                      {req.quote?.status === "quoted" && req.status !== "paid"
-                        ? "quoted"
-                        : req.status}
+                      {req.status}
                     </span>
                   </div>
 
@@ -186,7 +186,7 @@ export function OverviewTab({
                       </span>
                       <span className="font-medium">
                         {req.status === "paid"
-                          ? "Confirmed"
+                          ? t("overview.nextTrip.paid")
                           : new Date(req.createdAt).toLocaleDateString()}
                       </span>
                     </div>
@@ -200,13 +200,13 @@ export function OverviewTab({
                         })}
                       </span>
                     </div>
-                    {req.items[0]?.start_date && (
+                    {req.items[0]?.startDate && (
                       <div className="col-span-2">
                         <span className="block text-[9px] font-bold uppercase tracking-widest text-muted-foreground/60 mb-1">
                           {t("overview.tripsAndRequests.startDate")}
                         </span>
                         <span className="font-medium">
-                          {new Date(req.items[0].start_date).toLocaleDateString(
+                          {new Date(req.items[0].startDate).toLocaleDateString(
                             undefined,
                             { dateStyle: "long" },
                           )}
@@ -215,13 +215,13 @@ export function OverviewTab({
                     )}
                   </div>
 
-                  {req.quote?.status === "quoted" && req.status !== "paid" && (
+                  {req.status === "quoted" && (
                     <div className="mb-6 flex items-center justify-between gap-3 bg-primary/5 p-4 rounded-xl border border-primary/10">
                       <p className="text-xs font-bold uppercase tracking-widest text-primary">
                         {t("overview.tripsAndRequests.quoteReady", {
                           amount: formatCurrency(
-                            req.quote.totalAmount || 0,
-                            req.quote.currency || "USD",
+                            req.totalAmount || 0,
+                            req.currency || "USD",
                           ),
                         })}
                       </p>
@@ -274,13 +274,11 @@ export function OverviewTab({
                           setCancellingId(null);
 
                           if (result.success) {
-                            toast.success(
-                              "Booking request cancelled successfully.",
-                            );
+                            toast.success(t("messages.cancelSuccess"));
                             window.location.reload();
                           } else {
                             toast.error(
-                              result.error || "Failed to cancel booking",
+                              result.error || t("messages.cancelError"),
                             );
                           }
                         }}

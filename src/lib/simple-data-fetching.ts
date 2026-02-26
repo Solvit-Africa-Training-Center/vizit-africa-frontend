@@ -162,7 +162,7 @@ export async function getUserProfile(): Promise<any | null> {
 
 export async function getServices(category?: string): Promise<any[]> {
   const url = category
-    ? `${endpoints.services.list}?service_type=${category}`
+    ? `${endpoints.services.list}?serviceType=${category}`
     : endpoints.services.list;
 
   return fetchList(url, serviceSchema, {

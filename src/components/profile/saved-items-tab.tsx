@@ -7,7 +7,7 @@ interface SavedItemsTabProps {
   t: Translator;
 }
 
-export function SavedItemsTab({}: SavedItemsTabProps) {
+export function SavedItemsTab({ t }: SavedItemsTabProps) {
   return (
     <div className="py-24 px-6 text-center border border-primary/20 rounded-[2.5rem] bg-surface-ink text-white relative overflow-hidden isolate shadow-2xl">
       <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_top_right,oklch(65%_0.06_245/0.15)_0%,transparent_70%)] pointer-events-none" />
@@ -20,12 +20,10 @@ export function SavedItemsTab({}: SavedItemsTabProps) {
 
         <div className="space-y-3">
           <h3 className="font-display text-2xl font-medium text-white">
-            Curate Your Adventure
+            {t("saved.curateTitle")}
           </h3>
           <p className="text-white/70 text-sm leading-relaxed">
-            Your personal collection of dream destinations and experiences.
-            Explore the landscape and bookmark what inspires you to start
-            building your journey.
+            {t("saved.curateDescription")}
           </p>
         </div>
 
@@ -34,7 +32,7 @@ export function SavedItemsTab({}: SavedItemsTabProps) {
           className="rounded-full gap-2 px-8 bg-transparent border-white/20 text-white hover:bg-white/10 hover:text-white transition-all"
         >
           <RiCompass3Line className="size-4" />
-          Explore Rwanda
+          {t("saved.explore")}
         </Button>
       </div>
 

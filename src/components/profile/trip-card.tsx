@@ -18,9 +18,9 @@ interface TripCardProps {
 }
 
 export function TripCard({ booking }: TripCardProps) {
-  const startDate = booking.items[0]?.start_date || booking.arrivalDate;
+  const startDate = booking.items[0]?.startDate || booking.arrivalDate;
   const endDate =
-    booking.items[booking.items.length - 1]?.end_date || booking.departureDate;
+    booking.items[booking.items.length - 1]?.endDate || booking.departureDate;
 
   // Choose a random image from the collection for the card background
   const images = [
@@ -84,7 +84,7 @@ export function TripCard({ booking }: TripCardProps) {
               Total Value
             </p>
             <p className="text-sm font-mono font-bold text-primary-light">
-              {booking.currency} {Number(booking.total_amount).toLocaleString()}
+              {booking.currency} {Number(booking.totalAmount).toLocaleString()}
             </p>
           </div>
         </div>

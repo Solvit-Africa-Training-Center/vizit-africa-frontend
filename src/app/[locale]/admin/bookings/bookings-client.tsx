@@ -31,7 +31,7 @@ export default function BookingsClient({
   const filteredBookings = useMemo(() => {
     return initialBookings.filter((b) => {
       const matchesSearch =
-        b.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (b.name || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
         String(b.id).toLowerCase().includes(searchQuery.toLowerCase());
 
       const matchesTab =
@@ -56,7 +56,12 @@ export default function BookingsClient({
       icon: RiLayoutGridLine,
       count: stats.all,
     },
-    { id: "paid", label: t("tabs.paid"), icon: RiBankCardLine, count: stats.paid },
+    {
+      id: "paid",
+      label: t("tabs.paid"),
+      icon: RiBankCardLine,
+      count: stats.paid,
+    },
     {
       id: "completed",
       label: t("tabs.completed"),

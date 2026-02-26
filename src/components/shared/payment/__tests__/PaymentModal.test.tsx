@@ -47,7 +47,7 @@ describe("PaymentModal", () => {
   it('calls createPaymentIntent and switches to card step when "Proceed" is clicked', async () => {
     vi.mocked(createPaymentIntent).mockResolvedValue({
       success: true,
-      data: { client_secret: "secret_123", payment_intent_id: "pi_123" },
+      data: { clientSecret: "secret_123", paymentIntentId: "pi_123" },
     });
 
     render(<PaymentModal {...defaultProps} />);

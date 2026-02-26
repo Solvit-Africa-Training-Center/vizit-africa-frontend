@@ -1,6 +1,14 @@
 "use client";
 
-import { RiCalendar2Line, RiMapPin2Line, RiPlaneLine, RiHotelLine, RiCarLine, RiUserStarLine, RiPushpinLine } from "@remixicon/react";
+import {
+  RiCalendar2Line,
+  RiMapPin2Line,
+  RiPlaneLine,
+  RiHotelLine,
+  RiCarLine,
+  RiUserStarLine,
+  RiPushpinLine,
+} from "@remixicon/react";
 import { format, parseISO } from "date-fns";
 import { motion } from "motion/react";
 import { Badge } from "@/components/ui/badge";
@@ -14,15 +22,15 @@ interface TripTimelineProps {
 export function TripTimeline({ booking }: TripTimelineProps) {
   // Sort items by date
   const sortedItems = [...booking.items].sort((a, b) => {
-    if (!a.start_date || !b.start_date) return 0;
-    return new Date(a.start_date).getTime() - new Date(b.start_date).getTime();
+    if (!a.startDate || !b.startDate) return 0;
+    return new Date(a.startDate).getTime() - new Date(b.startDate).getTime();
   });
 
   // Group items by date
   const itemsByDate: Record<string, BookingItem[]> = {};
   sortedItems.forEach((item) => {
-    if (!item.start_date) return;
-    const dateKey = format(parseISO(item.start_date), "yyyy-MM-dd");
+    if (!item.startDate) return;
+    const dateKey = format(parseISO(item.startDate), "yyyy-MM-dd");
     if (!itemsByDate[dateKey]) itemsByDate[dateKey] = [];
     itemsByDate[dateKey].push(item);
   });
@@ -32,11 +40,16 @@ export function TripTimeline({ booking }: TripTimelineProps) {
   const getIcon = (type: string) => {
     const normalized = normalizeServiceType(type);
     switch (normalized) {
-      case "flight": return RiPlaneLine;
-      case "hotel": return RiHotelLine;
-      case "car": return RiCarLine;
-      case "guide": return RiUserStarLine;
-      default: return RiPushpinLine;
+      case "flight":
+        return RiPlaneLine;
+      case "hotel":
+        return RiHotelLine;
+      case "car":
+        return RiCarLine;
+      case "guide":
+        return RiUserStarLine;
+      default:
+        return RiPushpinLine;
     }
   };
 
@@ -58,7 +71,9 @@ export function TripTimeline({ booking }: TripTimelineProps) {
           >
             {/* Timeline node */}
             <div className="absolute left-0 top-1 size-[35px] rounded-full border-2 border-background bg-card flex items-center justify-center shadow-sm z-10">
-              <span className="text-[10px] font-bold text-primary">D{idx + 1}</span>
+              <span className="text-[10px] font-bold text-primary">
+                D{idx + 1}
+              </span>
             </div>
 
             <div className="space-y-4">
@@ -71,7 +86,7 @@ export function TripTimeline({ booking }: TripTimelineProps) {
 
               <div className="grid gap-3">
                 {itemsByDate[date].map((item, itemIdx) => {
-                  const Icon = getIcon(item.item_type);
+                  const Icon = getIcon(item.itemType || "other");
                   return (
                     <div
                       key={item.id || itemIdx}
@@ -82,18 +97,21 @@ export function TripTimeline({ booking }: TripTimelineProps) {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex justify-between items-start gap-4">
-                          <h5 className="font-medium text-sm truncate">{item.title}</h5>
+                          <h5 className="font-medium text-sm truncate">
+                            {item.title}
+                          </h5>
                           <span className="text-xs font-mono font-bold text-primary whitespace-nowrap">
-                            {Number(item.subtotal).toLocaleString()} {booking.currency}
+                            {Number(item.subtotal).toLocaleString()}{" "}
+                            {booking.currency}
                           </span>
                         </div>
                         <p className="text-xs text-muted-foreground line-clamp-1 mt-0.5">
                           {item.description}
                         </p>
-                        {item.start_time && (
+                        {item.startTime && (
                           <div className="flex items-center gap-1.5 mt-2 text-[10px] font-medium text-muted-foreground uppercase tracking-widest">
                             <RiCalendar2Line className="size-3" />
-                            {item.start_time}
+                            {item.startTime}
                           </div>
                         )}
                       </div>

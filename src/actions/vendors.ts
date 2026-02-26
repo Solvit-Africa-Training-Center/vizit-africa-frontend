@@ -136,9 +136,9 @@ export async function checkVendorServiceAvailability(
 ): Promise<ActionResult<Record<string, unknown>>> {
   try {
     const data = await api.post<Record<string, unknown>>(endpoints.services.checkAvailability, {
-      service_id: serviceId,
-      start_date: startDate,
-      end_date: endDate,
+      serviceId,
+      startDate,
+      endDate,
       quantity,
     });
     return { success: true, data };

@@ -45,15 +45,9 @@ import {
 // Combine schemas for the form
 // We remove role from register as it's implied
 const formSchema = registerObjectSchema.omit({ role: true }).extend({
-  // Vendor specific fields from createVendorInputSchema
-  // We omit fields that are already in registerInputSchema (email, full_name, phone_number)
-  // EXCEPT bio which is in User but not in RegisterInput usually?
-  // Wait, registerInputSchema has full_name, email, phone, password, re_password.
-  // createVendorInputSchema has full_name, email, phone, bio, business_name, vendor_type, address, website.
-
-  bio: z.string().optional(), // Make bio optional for registration
-  business_name: z.string().min(2, "Business name is required"),
-  vendor_type: z.enum([
+  bio: z.string().optional(),
+  businessName: z.string().min(2, "Business name is required"),
+  vendorType: z.enum([
     "hotel",
     "car_rental",
     "guide",
@@ -74,13 +68,13 @@ export function VendorRegistrationForm() {
 
   const form = useForm({
     defaultValues: {
-      full_name: "",
+      fullName: "",
       email: "",
-      phone_number: "",
+      phoneNumber: "",
       password: "",
-      re_password: "",
-      business_name: "",
-      vendor_type: "hotel" as "hotel" | "car_rental" | "guide" | "experience" | "transport" | "other",
+      rePassword: "",
+      businessName: "",
+      vendorType: "hotel" as "hotel" | "car_rental" | "guide" | "experience" | "transport" | "other",
       address: "",
       website: "",
       bio: "",
@@ -94,11 +88,11 @@ export function VendorRegistrationForm() {
 
       // 1. Register User
       const registerData: RegisterInput = {
-        full_name: value.full_name,
+        fullName: value.fullName,
         email: value.email,
-        phone_number: value.phone_number,
+        phoneNumber: value.phoneNumber,
         password: value.password,
-        re_password: value.re_password,
+        rePassword: value.rePassword,
         role: "VENDOR",
       };
 
@@ -126,14 +120,13 @@ export function VendorRegistrationForm() {
       }
 
       // 2. Create Vendor Profile
-      // The user is now logged in (cookies set by register action)
       const vendorData: CreateVendorInput = {
-        full_name: value.full_name,
+        fullName: value.fullName,
         email: value.email,
-        phone_number: value.phone_number,
-        bio: value.bio || "New Vendor", // Default bio if empty
-        business_name: value.business_name,
-        vendor_type: value.vendor_type as any,
+        phoneNumber: value.phoneNumber,
+        bio: value.bio || "New Vendor",
+        businessName: value.businessName,
+        vendorType: value.vendorType as any,
         address: value.address,
         website: value.website || "",
       };
@@ -186,14 +179,14 @@ export function VendorRegistrationForm() {
       <div className="space-y-4">
         <h3 className="text-lg font-semibold border-b pb-2 uppercase tracking-tight">{t("accountDetails")}</h3>
 
-        <form.Field name="full_name">
+        <form.Field name="fullName">
           {(field) => (
             <div className="space-y-2">
-              <Label htmlFor="full_name">{t("labels.contactName")}</Label>
+              <Label htmlFor="fullName">{t("labels.contactName")}</Label>
               <InputGroup>
                 <InputGroupInput
-                  id="full_name"
-                  name="full_name"
+                  id="fullName"
+                  name="fullName"
                   type="text"
                   placeholder={t("placeholders.contactName")}
                   value={field.state.value}
@@ -236,14 +229,14 @@ export function VendorRegistrationForm() {
           )}
         </form.Field>
 
-        <form.Field name="phone_number">
+        <form.Field name="phoneNumber">
           {(field) => (
             <div className="space-y-2">
-              <Label htmlFor="phone_number">{t("labels.phone")}</Label>
+              <Label htmlFor="phoneNumber">{t("labels.phone")}</Label>
               <InputGroup>
                 <InputGroupInput
-                  id="phone_number"
-                  name="phone_number"
+                  id="phoneNumber"
+                  name="phoneNumber"
                   type="tel"
                   placeholder={t("placeholders.phone")}
                   value={field.state.value}
@@ -286,14 +279,14 @@ export function VendorRegistrationForm() {
             )}
           </form.Field>
 
-          <form.Field name="re_password">
+          <form.Field name="rePassword">
             {(field) => (
               <div className="space-y-2">
-                <Label htmlFor="re_password">{t("labels.confirmPassword")}</Label>
+                <Label htmlFor="rePassword">{t("labels.confirmPassword")}</Label>
                 <InputGroup>
                   <InputGroupInput
-                    id="re_password"
-                    name="re_password"
+                    id="rePassword"
+                    name="rePassword"
                     type="password"
                     placeholder={t("placeholders.confirmPassword")}
                     value={field.state.value}
@@ -318,14 +311,14 @@ export function VendorRegistrationForm() {
           {t("businessDetails")}
         </h3>
 
-        <form.Field name="business_name">
+        <form.Field name="businessName">
           {(field) => (
             <div className="space-y-2">
-              <Label htmlFor="business_name">{t("labels.businessName")}</Label>
+              <Label htmlFor="businessName">{t("labels.businessName")}</Label>
               <InputGroup>
                 <InputGroupInput
-                  id="business_name"
-                  name="business_name"
+                  id="businessName"
+                  name="businessName"
                   placeholder={t("placeholders.businessName")}
                   value={field.state.value}
                   onBlur={field.handleBlur}
@@ -343,10 +336,10 @@ export function VendorRegistrationForm() {
         </form.Field>
 
         <div className="grid md:grid-cols-2 gap-4">
-          <form.Field name="vendor_type">
+          <form.Field name="vendorType">
             {(field) => (
               <div className="space-y-2">
-                <Label htmlFor="vendor_type">{t("labels.businessType")}</Label>
+                <Label htmlFor="vendorType">{t("labels.businessType")}</Label>
                 <Select
                   value={field.state.value}
                   onValueChange={(val) => field.handleChange(val as any)}

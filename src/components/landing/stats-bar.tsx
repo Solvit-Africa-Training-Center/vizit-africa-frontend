@@ -12,7 +12,7 @@ export function StatsBar() {
               1.2K<span className="text-primary">+</span>
             </div>
             <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/50">
-              {t("travelers", { defaultMessage: "Travelers" })}
+              {t("travelers")}
             </div>
           </div>
 
@@ -21,7 +21,7 @@ export function StatsBar() {
               18
             </div>
             <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/50">
-              {t("nationalities", { defaultMessage: "Nationalities" })}
+              {t("nationalities")}
             </div>
           </div>
 
@@ -30,7 +30,7 @@ export function StatsBar() {
               98<span className="text-primary">%</span>
             </div>
             <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/50">
-              {t("satisfaction", { defaultMessage: "Satisfaction" })}
+              {t("satisfaction")}
             </div>
           </div>
 
@@ -39,7 +39,7 @@ export function StatsBar() {
               4.9 <span className="text-2xl">★</span>
             </div>
             <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/50">
-              {t("rating", { defaultMessage: "Rating" })}
+              {t("rating")}
             </div>
           </div>
         </div>

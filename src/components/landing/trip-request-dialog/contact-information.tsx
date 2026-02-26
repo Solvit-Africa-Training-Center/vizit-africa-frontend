@@ -43,15 +43,15 @@ export function ContactInformation({
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="phone" className="text-sm font-medium">
+            <Label htmlFor="phoneNumber" className="text-sm font-medium">
               Phone
             </Label>
             <Input
-              id="phone"
+              id="phoneNumber"
               type="tel"
               placeholder="+1 (555) 000-0000"
-              value={contactInfo.phone}
-              onChange={(e) => updateContact({ phone: e.target.value })}
+              value={contactInfo.phoneNumber}
+              onChange={(e) => updateContact({ phoneNumber: e.target.value })}
               className="h-11"
             />
           </div>

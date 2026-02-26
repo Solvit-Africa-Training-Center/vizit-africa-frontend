@@ -24,12 +24,13 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* ── Page header ───────────────────────────────────────────── */}
       <PageHeader
         overline={t("openStatus")}
         title={
           <>
             {t("title")}
-            <span className="text-muted-foreground/40 block md:inline md:ml-4">
+            <span className="text-muted-foreground/30 block md:inline md:ml-3">
               {t("titleSub")}
             </span>
           </>
@@ -39,9 +40,10 @@ export default function ContactPage() {
         className="pt-24 md:pt-32"
       />
 
+      {/* ── Contact cards ─────────────────────────────────────────── */}
       <section className="marketing-section pt-0">
         <div className="marketing-container">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
             <ContactCard
               icon={RiMailLine}
               label={t("emailUs")}
@@ -64,18 +66,22 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="marketing-section bg-muted/30 border-t border-border/50">
+      {/* ── Form section ──────────────────────────────────────────── */}
+      <section className="marketing-section bg-surface-cream border-t border-border/50">
         <div className="marketing-container">
           <div className="grid lg:grid-cols-12 gap-16 md:gap-24">
+            {/* Left: copy */}
             <div className="lg:col-span-5">
-              <h2 className="font-display text-4xl md:text-5xl font-medium uppercase tracking-tighter leading-[0.9] mb-8">
+              <span className="label-overline mb-5 block">{t("formOverline")}</span>
+              <h2 className="font-display text-4xl md:text-5xl font-light uppercase tracking-tight leading-[0.92] mb-7">
                 {t("formTitle")}
               </h2>
-              <p className="text-xl text-muted-foreground font-light leading-relaxed max-w-md text-pretty">
+              <p className="text-lg text-muted-foreground font-light leading-relaxed max-w-md text-pretty">
                 {t("formDescription")}
               </p>
             </div>
 
+            {/* Right: form */}
             <div className="lg:col-span-7">
               <ContactForm t={t} tCommon={tCommon} />
             </div>
@@ -86,6 +92,9 @@ export default function ContactPage() {
   );
 }
 
+// ── ContactCard ─────────────────────────────────────────────────
+// Hover: surface lifts slightly, icon gets primary bg, arrow animates
+// No jarring dark-bg flip — stays in light system
 function ContactCard({
   icon: Icon,
   label,
@@ -100,27 +109,27 @@ function ContactCard({
   sub?: string;
 }) {
   const Content = () => (
-    <div className="group flex flex-col p-8 rounded-2xl bg-muted/30 border border-border/50 hover:border-primary/50 hover:bg-surface-ink transition-all duration-500 h-full relative overflow-hidden isolate">
-      {/* Hover glow effect */}
-      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_top_right,oklch(65%_0.06_245/0.2)_0%,transparent_50%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
-      <div className="relative z-10 size-12 rounded-xl bg-background border border-border flex items-center justify-center mb-8 group-hover:scale-110 group-hover:bg-primary group-hover:border-primary transition-all duration-500">
-        <Icon className="size-6 text-foreground group-hover:text-primary-foreground transition-colors" />
+    <div className="group flex flex-col p-7 rounded-2xl bg-card border border-border/50 hover:border-primary/25 hover:shadow-[0_8px_32px_oklch(65%_0.12_62/0.06)] transition-all duration-500 h-full relative overflow-hidden">
+      {/* Icon */}
+      <div className="size-11 rounded-xl bg-surface-cream border border-border/70 flex items-center justify-center mb-7 group-hover:bg-primary group-hover:border-primary transition-all duration-500">
+        <Icon className="size-5 text-muted-foreground group-hover:text-primary-foreground transition-colors duration-300" />
       </div>
-      <div className="relative z-10 mt-auto">
-        <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground group-hover:text-primary-light/80 transition-colors duration-500 mb-4">
+
+      <div className="mt-auto">
+        {/* Label — primary mono per design guide */}
+        <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-primary mb-3">
           {label}
         </p>
-        <div className="flex items-center gap-2 mb-2">
-          <h3 className="text-xl md:text-2xl font-display font-medium uppercase tracking-tight group-hover:text-white transition-colors duration-500">
+        <div className="flex items-start gap-1.5">
+          <h3 className="font-display text-xl md:text-2xl font-light uppercase tracking-tight text-foreground leading-tight">
             {value}
           </h3>
           {href && (
-            <RiArrowRightUpLine className="size-5 text-muted-foreground/30 group-hover:text-primary-light group-hover:-translate-y-1 group-hover:translate-x-1 transition-all duration-500" />
+            <RiArrowRightUpLine className="size-4 mt-1 text-muted-foreground/30 group-hover:text-primary group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all duration-400 shrink-0" />
           )}
         </div>
         {sub && (
-          <p className="text-sm text-muted-foreground/60 group-hover:text-white/60 transition-colors duration-500">
+          <p className="text-sm text-muted-foreground/55 mt-1 font-light">
             {sub}
           </p>
         )}
@@ -140,10 +149,10 @@ function ContactCard({
       </a>
     );
   }
-
   return <Content />;
 }
 
+// ── ContactForm ──────────────────────────────────────────────────
 function ContactForm({
   t,
   tCommon,
@@ -157,15 +166,11 @@ function ContactForm({
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (loading) return;
-
     setLoading(true);
-    const formData = new FormData(e.currentTarget);
 
+    const formData = new FormData(e.currentTarget);
     const payload = {
-      name:
-        (formData.get("firstName") as string) +
-        " " +
-        (formData.get("lastName") as string),
+      name: `${formData.get("firstName")} ${formData.get("lastName")}`,
       email: formData.get("email") as string,
       message: formData.get("message") as string,
       subject: "New Contact Form Message",
@@ -174,63 +179,59 @@ function ContactForm({
     try {
       const { sendContactMessage } = await import("@/actions/accounts");
       const result = await sendContactMessage(payload);
-
       if (result.success) {
         setSuccess(true);
         toast.success("Message sent successfully!");
         (e.target as HTMLFormElement).reset();
       } else {
-        toast.error(
-          result.error || "Failed to send message. Please try again.",
-        );
+        toast.error(result.error || "Failed to send. Please try again.");
       }
     } catch {
-      toast.error("An error occurred");
+      toast.error("An error occurred.");
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <form className="space-y-12" onSubmit={onSubmit}>
-      <div className="grid md:grid-cols-2 gap-x-10 gap-y-12">
+    <form className="space-y-10" onSubmit={onSubmit}>
+      <div className="grid md:grid-cols-2 gap-x-8 gap-y-10">
         <FormGroup
           label={t("firstName")}
           id="firstName"
-          placeholder="Jane"
+          placeholder={t("firstNamePlaceholder")}
           name="firstName"
           required
         />
         <FormGroup
           label={t("lastName")}
           id="lastName"
-          placeholder="Doe"
+          placeholder={t("lastNamePlaceholder")}
           name="lastName"
           required
         />
       </div>
-
       <FormGroup
         label={t("emailAddress")}
         id="email"
         type="email"
-        placeholder="jane@example.com"
+        placeholder={t("emailPlaceholder")}
         name="email"
         required
       />
-
       <FormGroup
         label={t("phoneNumber")}
         id="phone"
         type="tel"
-        placeholder="+1 (555) 000-0000"
+        placeholder={t("phonePlaceholder")}
         name="phone"
       />
 
-      <div className="space-y-4 group">
+      {/* Message textarea */}
+      <div className="space-y-3 group">
         <label
           htmlFor="message"
-          className="text-xs font-mono uppercase tracking-widest text-muted-foreground group-focus-within:text-primary transition-colors"
+          className="font-mono text-[9px] uppercase tracking-[0.22em] text-muted-foreground/60 group-focus-within:text-primary transition-colors duration-300"
         >
           {t("message")}
         </label>
@@ -240,28 +241,35 @@ function ContactForm({
           required
           rows={4}
           placeholder={t("messagePlaceholder")}
-          className="resize-none border-x-0 border-t-0 border-b border-border/50 rounded-none px-0 focus-visible:ring-0 focus-visible:border-primary text-xl transition-all duration-300 bg-transparent shadow-none placeholder:text-muted-foreground/20 min-h-[100px] py-4"
+          className={[
+            "resize-none rounded-none px-0",
+            "border-x-0 border-t-0 border-b border-border/50",
+            "focus-visible:ring-0 focus-visible:border-primary",
+            "text-lg bg-transparent shadow-none",
+            "placeholder:text-muted-foreground/20 min-h-[100px] py-3",
+            "transition-colors duration-300",
+          ].join(" ")}
         />
       </div>
 
-      <div className="pt-8">
+      <div className="pt-6">
         <Magnetic>
           <Button
             size="lg"
             type="submit"
             disabled={loading || success}
-            className="w-full md:w-auto min-w-[240px] h-16 rounded-full text-lg group relative overflow-hidden px-10"
+            className="w-full md:w-auto min-w-[220px] h-14 rounded-full text-xs group relative overflow-hidden px-10 btn-primary"
           >
-            <span className="relative z-10 flex items-center justify-center gap-3">
+            <span className="relative z-10 flex items-center justify-center gap-2.5">
               {loading ? (
                 <RiLoader4Line className="animate-spin" />
               ) : success ? (
-                "Message Sent"
+                t("messages.success")
               ) : (
-                tCommon("sendMessage")
-              )}
-              {!loading && !success && (
-                <RiArrowRightLine className="size-5 group-hover:translate-x-1 transition-transform" />
+                <>
+                  {tCommon("sendMessage")}
+                  <RiArrowRightLine className="size-4 group-hover:translate-x-1 transition-transform" />
+                </>
               )}
             </span>
           </Button>
@@ -271,6 +279,7 @@ function ContactForm({
   );
 }
 
+// ── FormGroup ────────────────────────────────────────────────────
 function FormGroup({
   label,
   id,
@@ -287,12 +296,13 @@ function FormGroup({
   required?: boolean;
 }) {
   return (
-    <div className="space-y-4 group">
+    <div className="space-y-3 group">
       <label
         htmlFor={id}
-        className="text-xs font-mono uppercase tracking-widest text-muted-foreground group-focus-within:text-primary transition-colors"
+        className="font-mono text-[9px] uppercase tracking-[0.22em] text-muted-foreground/60 group-focus-within:text-primary transition-colors duration-300"
       >
         {label}
+        {/* Amber required asterisk — primary not primary */}
         {required && <span className="text-primary ml-1">*</span>}
       </label>
       <Input
@@ -301,7 +311,14 @@ function FormGroup({
         required={required}
         type={type}
         placeholder={placeholder}
-        className="border-x-0 border-t-0 border-b border-border/50 rounded-none px-0 focus-visible:ring-0 focus-visible:border-primary text-xl transition-all duration-300 h-12 bg-transparent shadow-none placeholder:text-muted-foreground/20"
+        className={[
+          "rounded-none px-0",
+          "border-x-0 border-t-0 border-b border-border/50",
+          "focus-visible:ring-0 focus-visible:border-primary",
+          "text-lg bg-transparent shadow-none h-11",
+          "placeholder:text-muted-foreground/20",
+          "transition-colors duration-300",
+        ].join(" ")}
       />
     </div>
   );

@@ -74,9 +74,9 @@ export function PreferencesSection({
                   <SelectValue placeholder={tCuration("cabinClassPlaceholder")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="economy">Economy</SelectItem>
-                  <SelectItem value="business">Business</SelectItem>
-                  <SelectItem value="first">First Class</SelectItem>
+                  <SelectItem value="economy">{tCuration("cabinClassOptions.economy")}</SelectItem>
+                  <SelectItem value="business">{tCuration("cabinClassOptions.business")}</SelectItem>
+                  <SelectItem value="first">{tCuration("cabinClassOptions.first")}</SelectItem>
                 </SelectContent>
               </Select>
             )}
@@ -104,9 +104,9 @@ export function PreferencesSection({
                   <SelectValue placeholder={tCuration("starRatingPlaceholder")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="3">3 Stars & Above</SelectItem>
-                  <SelectItem value="4">4 Stars & Above</SelectItem>
-                  <SelectItem value="5">Luxury 5 Stars</SelectItem>
+                  <SelectItem value="3">{tCuration("starRatingOptions.3")}</SelectItem>
+                  <SelectItem value="4">{tCuration("starRatingOptions.4")}</SelectItem>
+                  <SelectItem value="5">{tCuration("starRatingOptions.5")}</SelectItem>
                 </SelectContent>
               </Select>
             )}
@@ -134,9 +134,9 @@ export function PreferencesSection({
                   <SelectValue placeholder={tCuration("preferredVehiclePlaceholder")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="sedan">Executive Sedan</SelectItem>
-                  <SelectItem value="4x4">Safari 4x4 SUV</SelectItem>
-                  <SelectItem value="van">Passenger Van</SelectItem>
+                  <SelectItem value="sedan">{tCuration("vehicleOptions.sedan")}</SelectItem>
+                  <SelectItem value="4x4">{tCuration("vehicleOptions.4x4")}</SelectItem>
+                  <SelectItem value="van">{tCuration("vehicleOptions.van")}</SelectItem>
                 </SelectContent>
               </Select>
             )}
@@ -164,10 +164,10 @@ export function PreferencesSection({
                                       <SelectValue placeholder={tCuration("primaryLanguagePlaceholder")} />
                                     </SelectTrigger>
                                     <SelectContent>
-                                      <SelectItem value="English">English</SelectItem>
-                                      <SelectItem value="French">French</SelectItem>
-                                      <SelectItem value="German">German</SelectItem>
-                                      <SelectItem value="Spanish">Spanish</SelectItem>
+                                      <SelectItem value="English">{tCuration("languageOptions.English")}</SelectItem>
+                                      <SelectItem value="French">{tCuration("languageOptions.French")}</SelectItem>
+                                      <SelectItem value="German">{tCuration("languageOptions.German")}</SelectItem>
+                                      <SelectItem value="Spanish">{tCuration("languageOptions.Spanish")}</SelectItem>
                                     </SelectContent>
                                   </Select>
                                 )}
@@ -223,11 +223,11 @@ export function PreferencesSection({
                                     <SelectValue placeholder={tPurpose("vibePlaceholder")} />
                                   </SelectTrigger>
                                   <SelectContent>
-                                    <SelectItem value="leisure">Leisure & Relax</SelectItem>
-                                    <SelectItem value="adventure">Pure Adventure</SelectItem>
-                                    <SelectItem value="business">Business Focus</SelectItem>
-                                    <SelectItem value="cultural">Cultural Immersion</SelectItem>
-                                    <SelectItem value="honeymoon">Romantic Honeymoon</SelectItem>
+                                    <SelectItem value="leisure">{tPurpose("tripStyleOptions.leisure")}</SelectItem>
+                                    <SelectItem value="adventure">{tPurpose("tripStyleOptions.adventure")}</SelectItem>
+                                    <SelectItem value="business">{tPurpose("tripStyleOptions.business")}</SelectItem>
+                                    <SelectItem value="cultural">{tPurpose("tripStyleOptions.cultural")}</SelectItem>
+                                    <SelectItem value="honeymoon">{tPurpose("tripStyleOptions.honeymoon")}</SelectItem>
                                   </SelectContent>
                                 </Select>
                               </div>

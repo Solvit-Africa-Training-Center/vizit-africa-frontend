@@ -55,7 +55,7 @@ export default function PlanTripClient({
   const handleSubmit = async () => {
     const { name, email } = planTrip.tripInfo;
     if (!name || !email) {
-      toast.error("Please fill in your name and email before submitting.");
+      toast.error(t("messages.fillNameEmail"));
       return;
     }
     await form.form.handleSubmit();
@@ -69,7 +69,7 @@ export default function PlanTripClient({
           <div className="animate-pulse flex flex-col items-center gap-4">
             <div className="h-12 w-48 bg-muted rounded-full" />
             <p className="text-muted-foreground font-display uppercase tracking-widest text-xs">
-              Personalizing your journey...
+              {t("messages.personalizing")}
             </p>
           </div>
         </div>

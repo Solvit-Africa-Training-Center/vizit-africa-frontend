@@ -40,7 +40,7 @@ export function TripRequestDialog({
     infants = 0,
     name = "",
     email = "",
-    phone = "",
+    phoneNumber = "",
     departureCity = "",
     specialRequests = "",
   } = tripInfo;
@@ -59,7 +59,7 @@ export function TripRequestDialog({
   const [contactInfo, setContactInfo] = React.useState({
     name,
     email,
-    phone,
+    phoneNumber,
     departureCity,
     specialRequests,
   });
@@ -148,8 +148,6 @@ export function TripRequestDialog({
         ? format(dateRange.from, "yyyy-MM-dd")
         : "",
       returnDate: dateRange?.to ? format(dateRange.to, "yyyy-MM-dd") : "",
-      startDate: dateRange?.from ? format(dateRange.from, "yyyy-MM-dd") : "",
-      endDate: dateRange?.to ? format(dateRange.to, "yyyy-MM-dd") : "",
       arrivalDate: dateRange?.from ? format(dateRange.from, "yyyy-MM-dd") : "",
       adults: guests.adults,
       children: guests.children,
@@ -157,7 +155,7 @@ export function TripRequestDialog({
       travelers: totalGuests,
       name: contactInfo.name,
       email: contactInfo.email,
-      phone: contactInfo.phone,
+      phoneNumber: contactInfo.phoneNumber,
       specialRequests: contactInfo.specialRequests,
       destination: "Kigali, Rwanda",
     });

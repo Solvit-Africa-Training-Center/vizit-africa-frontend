@@ -21,8 +21,8 @@ describe('Payment Actions', () => {
 
   it('should call create-intent endpoint with booking_id', async () => {
     const mockResponse = { 
-      client_secret: 'secret_123', 
-      payment_intent_id: 'pi_123' 
+      clientSecret: 'secret_123', 
+      paymentIntentId: 'pi_123' 
     };
     vi.mocked(api.post).mockResolvedValue(mockResponse);
 
@@ -34,7 +34,7 @@ describe('Payment Actions', () => {
     );
     expect(result.success).toBe(true);
     if (result.success) {
-      expect(result.data.client_secret).toBe('secret_123');
+      expect(result.data.clientSecret).toBe('secret_123');
     }
   });
 

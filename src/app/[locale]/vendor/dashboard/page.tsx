@@ -54,7 +54,7 @@ export default async function VendorDashboardPage({
     );
   }
 
-  if (!vendorProfile.is_approved) {
+  if (!vendorProfile.isApproved) {
     return (
       <div className="marketing-container max-w-2xl py-20">
         <div className="bg-card border border-border/50 rounded-[2rem] p-12 text-center shadow-card">
@@ -68,7 +68,7 @@ export default async function VendorDashboardPage({
             {t.rich("review.description", {
               businessName: () => (
                 <span className="font-semibold text-foreground">
-                  {vendorProfile.business_name}
+                  {vendorProfile.businessName}
                 </span>
               ),
             })}
@@ -117,7 +117,7 @@ export default async function VendorDashboardPage({
               {t("title")}
             </h1>
             <p className="text-muted-foreground mt-6 text-lg font-light text-pretty">
-              {t("welcome", { businessName: vendorProfile.business_name })}
+              {t("welcome", { businessName: vendorProfile.businessName })}
             </p>
           </div>
           <div className="flex items-center gap-4">

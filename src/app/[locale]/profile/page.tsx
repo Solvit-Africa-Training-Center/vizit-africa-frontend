@@ -62,9 +62,9 @@ export default function ProfilePage() {
     let days = 0;
     confirmedTrips.forEach((b: Booking) => {
       const hasStarted = b.items.some((item) => {
-        if (!item.start_date) return false;
+        if (!item.startDate) return false;
         try {
-          return isPast(parseISO(item.start_date));
+          return isPast(parseISO(item.startDate));
         } catch {
           return false;
         }
@@ -72,12 +72,12 @@ export default function ProfilePage() {
 
       if (hasStarted) {
         b.items.forEach((item) => {
-          if (!item.start_date || !item.end_date) return;
+          if (!item.startDate || !item.endDate) return;
           try {
             days +=
               differenceInDays(
-                parseISO(item.end_date),
-                parseISO(item.start_date),
+                parseISO(item.endDate),
+                parseISO(item.startDate),
               ) + 1;
           } catch {
             // ignore date parse errors
@@ -94,8 +94,8 @@ export default function ProfilePage() {
     const paid = bookingsData
       .filter((b: Booking) => b.status === "paid" && b.items.length > 0)
       .sort((a: Booking, b: Booking) => {
-        const startA = a.items[0]?.start_date;
-        const startB = b.items[0]?.start_date;
+        const startA = a.items[0]?.startDate;
+        const startB = b.items[0]?.startDate;
         if (!startA || !startB) return 0;
         return new Date(startA).getTime() - new Date(startB).getTime();
       })[0];
@@ -120,8 +120,7 @@ export default function ProfilePage() {
         b.status === "pending" ||
         b.status === "quoted" ||
         b.status === "accepted" ||
-        b.status === "paid" ||
-        b.quote?.status === "quoted",
+        b.status === "paid",
     );
   }, [bookingsData]);
 
@@ -150,10 +149,10 @@ export default function ProfilePage() {
   const handlePay = (booking: Booking) => {
     setPayingBooking({
       id: String(booking.id),
-      amount: booking.quote?.totalAmount || 0,
-      currency: booking.quote?.currency || "USD",
+      amount: booking.totalAmount || 0,
+      currency: booking.currency || "USD",
       email: booking.email || "",
-      name: booking.name || "Traveler",
+      name: booking.name || t("messages.fallbacks.name"),
     });
   };
 
@@ -168,7 +167,7 @@ export default function ProfilePage() {
                 {t("header.title")}
               </span>
               <h1 className="font-display text-5xl md:text-7xl font-medium text-foreground">
-                {t("header.subtitle", { name: user.full_name.split(" ")[0] })}
+                {t("header.subtitle", { name: user.fullName.split(" ")[0] })}
               </h1>
             </div>
 
@@ -252,11 +251,11 @@ export default function ProfilePage() {
             setAcceptingId(payingBooking.id);
             const result = await acceptQuoteForBooking(payingBooking.id);
             if (result.success) {
-              toast.success("Payment received! Your booking is now paid.");
+              toast.success(t("messages.paymentSuccess"));
               queryClient.invalidateQueries({ queryKey: ["user-bookings"] });
             } else {
               toast.error(
-                result.error || "Payment processed but confirmation failed.",
+                result.error || t("messages.paymentConfirmationFailed"),
               );
             }
             setAcceptingId(null);

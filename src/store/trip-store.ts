@@ -32,26 +32,23 @@ interface TripState {
 }
 
 const initialTripInfo: TripInfo = {
+  name: "",
+  email: "",
+  phoneNumber: "",
+  destination: "",
   departureCity: "",
-  startDate: null,
-  endDate: null,
   arrivalDate: null,
   departureDate: null,
   returnDate: null,
   arrivalTime: null,
   departureTime: null,
   returnTime: null,
-  isRoundTrip: false,
   travelers: 2,
   adults: 2,
   children: 0,
   infants: 0,
   tripPurpose: "leisure",
   specialRequests: "",
-  name: "",
-  email: "",
-  phone: "",
-  destination: "",
   needsFlights: true,
   needsHotel: true,
   needsCar: false,
@@ -59,7 +56,6 @@ const initialTripInfo: TripInfo = {
   preferredCabinClass: "economy",
   hotelStarRating: "4",
   carTypePreference: "4x4",
-  budgetBracket: "mid-range",
   guideLanguages: ["English"],
 };
 

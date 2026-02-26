@@ -62,15 +62,11 @@ export default function ExperiencesClient({
       cultureLeisure: [],
       adventure: [],
     };
-
     initialExperiences.forEach((exp) => {
       const metaCategory = (exp.metadata?.category as string) || "adventure";
       const groupKey = CATEGORY_MAPPING[metaCategory] || "adventure";
-      if (groups[groupKey]) {
-        groups[groupKey].push(exp);
-      }
+      if (groups[groupKey]) groups[groupKey].push(exp);
     });
-
     return [
       {
         id: "wildlifeNature",
@@ -87,7 +83,7 @@ export default function ExperiencesClient({
         category: t("categories.adventure"),
         items: groups.adventure,
       },
-    ].filter((group) => group.items.length > 0);
+    ].filter((g) => g.items.length > 0);
   }, [initialExperiences, t]);
 
   const allExperiences = useMemo(
@@ -101,12 +97,8 @@ export default function ExperiencesClient({
 
   const scrollToCategory = (categoryId: string) => {
     const element = document.getElementById(categoryId);
-    if (element) {
-      window.scrollTo({
-        top: element.offsetTop - 100,
-        behavior: "smooth",
-      });
-    }
+    if (element)
+      window.scrollTo({ top: element.offsetTop - 100, behavior: "smooth" });
   };
 
   const getExperienceImage = (exp: ServiceResponse) => {
@@ -116,77 +108,75 @@ export default function ExperiencesClient({
       .map((m) => m.media_url)
       .filter(Boolean);
 
-    if (mediaImages.length > 0) {
-      const mediaIdx = hashString(String(exp.id)) % mediaImages.length;
-      return mediaImages[mediaIdx];
-    }
+    if (mediaImages.length > 0)
+      return mediaImages[hashString(String(exp.id)) % mediaImages.length];
 
-    const metadataImageKeys = [
-      "hero_image",
-      "image",
-      "coverImage",
-      "thumbnail",
-    ];
-    for (const key of metadataImageKeys) {
+    for (const key of ["hero_image", "image", "coverImage", "thumbnail"]) {
       const value = exp.metadata?.[key];
-      if (typeof value === "string" && value.trim()) {
-        return value;
-      }
+      if (typeof value === "string" && value.trim()) return value;
     }
 
     const metaCategory = (exp.metadata?.category as string) || "adventure";
     const groupKey = CATEGORY_MAPPING[metaCategory] || "adventure";
     const pool =
       CATEGORY_FALLBACK_IMAGES[groupKey] || CATEGORY_FALLBACK_IMAGES.adventure;
-    const fallbackIdx = hashString(`${exp.id}-${exp.title}`) % pool.length;
-    return pool[fallbackIdx];
+    return pool[hashString(`${exp.id}-${exp.title}`) % pool.length];
   };
 
-  const getExperiencePrice = (exp: ServiceResponse) => {
-    return typeof exp.base_price === "string"
-      ? parseFloat(exp.base_price)
-      : exp.base_price;
-  };
+  const getExperiencePrice = (exp: ServiceResponse) =>
+    typeof exp.basePrice === "string"
+      ? parseFloat(exp.basePrice)
+      : exp.basePrice;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {/* ── Page header — split layout, category nav on right ── */}
       <PageHeader
         title={t("title")}
         overline={t("overline")}
         layout="split"
         className="pt-24 md:pt-32 mb-0"
       >
-        <div className="flex flex-col items-start md:items-end gap-3 mb-2">
-          <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-primary mb-2 font-bold">
-            Categories
+        <div className="flex flex-col items-start md:items-end gap-2.5 mb-1">
+          {/* Category label — primary per design guide */}
+          <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-primary mb-1">
+            {t("categoriesTitle")}
           </span>
           {experiences.map((cat) => (
             <button
               type="button"
               key={cat.id}
               onClick={() => scrollToCategory(cat.id)}
-              className="text-lg md:text-xl font-display font-medium uppercase tracking-tight text-muted-foreground/30 hover:text-foreground transition-all duration-300 hover:translate-x-2 md:hover:-translate-x-2 flex items-center gap-2 group"
+              className={[
+                "text-lg md:text-xl font-display font-light uppercase tracking-tight",
+                "text-muted-foreground/30 hover:text-foreground",
+                "transition-all duration-300 hover:translate-x-2 md:hover:-translate-x-2",
+                "flex items-center gap-2 group",
+              ].join(" ")}
             >
               {cat.category}
-              <RiArrowDownLine className="size-4 opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500" />
+              <RiArrowDownLine className="size-4 opacity-0 -translate-y-1.5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-400" />
             </button>
           ))}
         </div>
       </PageHeader>
 
+      {/* ── Split scroll layout ── */}
       <div className="relative flex flex-col md:flex-row">
-        <div className="w-full md:w-1/2 px-5 md:px-10 lg:pl-32 py-12 md:py-24 space-y-32 md:space-y-48">
+        {/* Left: scrollable content */}
+        <div className="w-full md:w-1/2 px-5 md:px-10 lg:pl-32 py-12 md:py-16 space-y-20 md:space-y-32">
           {experiences.map((category) => (
-            <div key={category.id} id={category.id} className="scroll-mt-32">
-              <div className="flex items-center gap-4 mb-16 md:mb-24">
+            <div key={category.id} id={category.id} className="scroll-mt-28">
+              {/* Category divider */}
+              <div className="flex items-center gap-4 mb-16 md:mb-20">
                 <span className="h-px bg-border flex-1" />
-                <span className="font-display font-medium text-2xl uppercase text-muted-foreground/50">
+                <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-primary">
                   {category.category}
                 </span>
                 <span className="h-px bg-border flex-1" />
               </div>
 
-              <div className="space-y-32 md:space-y-48">
+              <div className="space-y-20 md:space-y-32">
                 {category.items.map((exp) => (
                   <ExperienceItem
                     key={String(exp.id)}
@@ -206,21 +196,21 @@ export default function ExperiencesClient({
               </div>
             </div>
           ))}
-
-          <div className="h-[20vh]" />
+          <div className="h-[10vh]" />
         </div>
 
-        <div className="hidden md:block w-1/2 sticky top-0 h-screen overflow-hidden border-l border-border/40 bg-muted/20">
+        {/* Right: sticky image panel */}
+        <div className="hidden md:block w-1/2 sticky top-0 h-screen overflow-hidden border-l border-border/40 bg-surface-bone">
           <AnimatePresence mode="popLayout">
             {allExperiences.map(
               (exp) =>
                 exp.id === activeId && (
                   <motion.div
                     key={String(exp.id)}
-                    initial={{ opacity: 0, scale: 1.1 }}
+                    initial={{ opacity: 0, scale: 1.06 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 0.7, ease: [0.32, 0.72, 0, 1] }}
+                    transition={{ duration: 0.75, ease: [0.32, 0.72, 0, 1] }}
                     className="absolute inset-0 w-full h-full"
                   >
                     <NextImage
@@ -236,26 +226,33 @@ export default function ExperiencesClient({
             )}
           </AnimatePresence>
 
-          <div className="absolute bottom-12 left-12 right-12 z-10 flex justify-between items-end">
+          {/* Active experience metadata overlay */}
+          <div className="absolute bottom-10 left-10 right-10 z-10">
             <AnimatePresence mode="wait">
               <motion.div
                 key={String(activeId)}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
+                exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.4 }}
-                className="flex flex-col gap-2"
+                className="flex items-end justify-between"
               >
-                <div className="flex items-center gap-3">
-                  <span className="text-primary-foreground/60 text-xs font-mono uppercase tracking-widest">
-                    0{allExperiences.findIndex((e) => e.id === activeId) + 1} /
-                    0{allExperiences.length}
-                  </span>
-                  <span className="h-px w-12 bg-primary-foreground/20" />
-                  <span className="text-primary-foreground text-sm font-medium uppercase tracking-widest">
-                    {(allExperiences.find((e) => e.id === activeId)
-                      ?.location as string) || "Rwanda"}
-                  </span>
+                <div className="flex flex-col gap-1.5">
+                  {/* Amber overline — counter */}
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary-foreground/70">
+                      {String(
+                        allExperiences.findIndex((e) => e.id === activeId) + 1,
+                      ).padStart(2, "0")}
+                      &nbsp;/&nbsp;
+                      {String(allExperiences.length).padStart(2, "0")}
+                    </span>
+                    <span className="h-px w-8 bg-primary-light/30" />
+                    <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/60">
+                      {(allExperiences.find((e) => e.id === activeId)
+                        ?.location as string) || "Rwanda"}
+                    </span>
+                  </div>
                 </div>
               </motion.div>
             </AnimatePresence>
@@ -266,6 +263,7 @@ export default function ExperiencesClient({
   );
 }
 
+// ── ExperienceItem ───────────────────────────────────────────────
 function ExperienceItem({
   experience,
   isActive,
@@ -286,18 +284,18 @@ function ExperienceItem({
   getImage: (exp: ServiceResponse) => string;
   getPrice: (exp: ServiceResponse) => number;
 }) {
+  const t = useTranslations("Experiences");
   const ref = useRef(null);
   const isInView = useInView(ref, { margin: "-40% 0px -40% 0px" });
 
   useEffect(() => {
-    if (isInView) {
-      onActivate();
-    }
+    if (isInView) onActivate();
   }, [isInView, onActivate]);
 
-  const tags = (experience.metadata?.tags as string[]) || ["Experience"];
-  const duration = (experience.metadata?.duration as string) || "Full Day";
-  const location = (experience.location as string) || "Rwanda";
+  const tags = (experience.metadata?.tags as string[]) || [t("fallbacks.tag")];
+  const duration =
+    (experience.metadata?.duration as string) || t("fallbacks.duration");
+  const location = (experience.location as string) || t("fallbacks.location");
   const price = getPrice(experience);
   const image = getImage(experience);
 
@@ -305,31 +303,29 @@ function ExperienceItem({
     <div
       ref={ref}
       className={cn(
-        "transition-opacity duration-500",
-        isActive ? "opacity-100" : "opacity-30 blur-xs",
+        "transition-all duration-600",
+        isActive ? "opacity-100" : "opacity-25 blur-[1px]",
       )}
     >
-      <div className="mb-6 flex gap-3 flex-wrap">
+      {/* Tags — primary border per design guide */}
+      <div className="mb-5 flex gap-2 flex-wrap">
         {tags.map((tag: string) => (
           <span
             key={tag}
-            className="text-[10px] font-medium uppercase tracking-widest text-primary border border-primary/20 px-2 py-1 rounded-sm"
+            className="font-mono text-[9px] uppercase tracking-[0.18em] text-primary border border-primary/25 px-2.5 py-1 rounded-sm"
           >
             {tag}
           </span>
         ))}
       </div>
 
-      <h2
-        className={cn(
-          "font-display font-medium uppercase leading-[0.85] mb-10 transition-all duration-500",
-          "text-2xl md:text-4xl text-foreground",
-        )}
-      >
+      {/* Title */}
+      <h2 className="font-display font-light uppercase tracking-tight leading-[0.9] mb-9 text-2xl md:text-4xl text-foreground">
         {experience.title}
       </h2>
 
-      <div className="md:hidden w-full h-80 relative mb-12 rounded-2xl overflow-hidden active-image-mobile">
+      {/* Mobile image */}
+      <div className="md:hidden w-full h-72 relative mb-10 rounded-2xl overflow-hidden">
         <NextImage
           src={image}
           alt={experience.title}
@@ -338,38 +334,42 @@ function ExperienceItem({
         />
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-8 mb-12 border-y border-border/50 py-10">
-        <div className="flex flex-col">
-          <span className="text-muted-foreground text-[10px] font-mono uppercase tracking-[0.2em] mb-3">
+      {/* Meta grid */}
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-10 border-y border-border/50 py-8">
+        <div className="flex flex-col gap-1.5">
+          <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/60">
             {labels.location}
           </span>
-          <span className="font-display font-medium text-lg uppercase tracking-tight">
+          <span className="font-display font-light text-lg uppercase tracking-tight">
             {location}
           </span>
         </div>
-        <div className="flex flex-col">
-          <span className="text-muted-foreground text-[10px] font-mono uppercase tracking-[0.2em] mb-3">
+        <div className="flex flex-col gap-1.5">
+          <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/60">
             {labels.duration}
           </span>
-          <span className="font-display font-medium text-lg uppercase tracking-tight">
+          <span className="font-display font-light text-lg uppercase tracking-tight">
             {duration}
           </span>
         </div>
-        <div className="flex flex-col md:col-span-1 col-span-2">
-          <span className="text-muted-foreground text-[10px] font-mono uppercase tracking-[0.2em] mb-3">
+        <div className="flex flex-col gap-1.5 col-span-2 md:col-span-1">
+          <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/60">
             {labels.startingFrom}
           </span>
-          <span className="font-display font-medium text-3xl text-primary tracking-tighter">
+          {/* Price — primary per design guide */}
+          <span className="font-display font-light text-3xl text-primary tracking-tighter">
             ${price}
           </span>
         </div>
       </div>
 
-      <p className="text-xl md:text-2xl font-light leading-relaxed text-muted-foreground mb-12 max-w-2xl">
+      {/* Description */}
+      <p className="text-xl md:text-2xl font-light leading-relaxed text-muted-foreground mb-10 max-w-2xl">
         {experience.description}
       </p>
 
-      <div className="flex items-center gap-6">
+      {/* Actions */}
+      <div className="flex items-center gap-5">
         <AddToTripButton
           type="experience"
           item={{
@@ -385,10 +385,12 @@ function ExperienceItem({
           variant="default"
           size="lg"
           className={cn(
-            "rounded-full px-10 h-16 text-xs font-display uppercase tracking-widest transition-all duration-500 flex-1 md:flex-none md:min-w-[240px] shadow-lg",
+            "rounded-full px-10 h-14 text-[11px] font-sans font-medium uppercase tracking-widest",
+            "flex-1 md:flex-none md:min-w-[220px]",
+            "transition-all duration-500",
             isActive
-              ? "bg-primary text-primary-foreground shadow-primary/20 scale-105"
-              : "bg-muted text-muted-foreground hover:bg-muted-foreground/10 shadow-none",
+              ? "bg-primary text-primary-foreground shadow-[0_8px_24px_oklch(42%_0.06_245/0.2)] scale-100"
+              : "bg-muted text-muted-foreground hover:bg-muted-foreground/10 shadow-none scale-95",
           )}
         />
         <SaveButton
@@ -396,8 +398,8 @@ function ExperienceItem({
           id={String(experience.id)}
           variant="full"
           className={cn(
-            "h-16 w-16 rounded-full p-0 flex items-center justify-center",
-            !isActive && "opacity-50",
+            "h-14 w-14 rounded-full p-0 flex items-center justify-center border border-border/60",
+            !isActive && "opacity-40",
           )}
         />
       </div>

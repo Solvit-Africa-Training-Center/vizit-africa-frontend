@@ -34,13 +34,13 @@ export default function AdminVendorsClient({
     setPendingTableState((prev) => ({ ...prev, ...updates }));
   };
 
-  const activeVendors = vendors.filter((v) => v.is_approved);
-  const pendingVendors = vendors.filter((v) => !v.is_approved);
+  const activeVendors = vendors.filter((v) => v.isApproved);
+  const pendingVendors = vendors.filter((v) => !v.isApproved);
 
   const vendorFilters = [
     {
       label: "Type",
-      value: "vendor_type",
+      value: "vendorType",
       options: [
         { label: "Hotel", value: "hotel" },
         { label: "Car Rental", value: "car_rental" },
@@ -106,7 +106,7 @@ export default function AdminVendorsClient({
           data={activeVendors}
           filterFields={vendorFilters}
           searchPlaceholder="Search active vendors..."
-          searchColumn="business_name"
+          searchColumn="businessName"
           state={tableState}
           callbacks={{ onStateChange: handleStateChange }}
         />
@@ -116,7 +116,7 @@ export default function AdminVendorsClient({
           data={pendingVendors}
           filterFields={vendorFilters}
           searchPlaceholder="Search pending requests..."
-          searchColumn="business_name"
+          searchColumn="businessName"
           state={tableState}
           callbacks={{ onStateChange: handleStateChange }}
         />

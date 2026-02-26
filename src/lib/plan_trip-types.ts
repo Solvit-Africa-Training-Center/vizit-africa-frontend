@@ -51,34 +51,30 @@ export interface Guide {
 
 export interface TripInfo {
   name: string;
-  email?: string;
-  phone?: string;
+  email: string;
+  phoneNumber: string;
   destination: string;
-  departureCity?: string;
-  startDate: string | null;
-  endDate: string | null;
-  departureDate?: string | null; // alias for startDate
-  returnDate?: string | null; // alias for endDate
-  arrivalDate?: string | null;
-  arrivalTime?: string | null;
-  departureTime?: string | null;
-  returnTime?: string | null;
-  isRoundTrip?: boolean;
+  departureCity: string;
+  arrivalDate: string | null;
+  departureDate: string | null;
+  returnDate: string | null;
+  arrivalTime: string | null;
+  departureTime: string | null;
+  returnTime: string | null;
   travelers: number;
-  adults?: number;
-  children?: number;
-  infants?: number;
-  budget?: number;
-  budgetBracket?: string;
-  tripPurpose?: string;
-  specialRequests?: string;
-  needsFlights?: boolean;
-  needsHotel?: boolean;
-  needsCar?: boolean;
-  needsGuide?: boolean;
+  adults: number;
+  children: number;
+  infants: number;
+  tripPurpose: string;
+  specialRequests: string;
+  needsFlights: boolean;
+  needsHotel: boolean;
+  needsCar: boolean;
+  needsGuide: boolean;
   preferredCabinClass?: string | null;
   hotelStarRating?: string | null;
   carTypePreference?: string | null;
+  budgetBracket?: string | null;
   guideLanguages?: string[];
 }
 
@@ -122,15 +118,18 @@ export interface TripItem {
   title: string;
   description?: string;
   price?: number;
-  date?: string;
   startDate?: string | null;
   endDate?: string | null;
-  location?: string;
-  details?: Record<string, any>;
-  data?: any;
+  startTime?: string | null;
+  endTime?: string | null;
+  isRoundTrip?: boolean;
   withDriver?: boolean;
+  returnDate?: string | null;
+  returnTime?: string | null;
   quantity?: number;
+  location?: string;
   metadata?: Record<string, any>;
+  data?: any;
 }
 
 export type Service = Hotel | Car | Guide | Experience | Flight;

@@ -104,16 +104,16 @@ export function CompletedRequestsSchedule({
           title: booking.tripPurpose || "Paid trip",
           startDate: toDate(booking.arrivalDate) ?? toDate(booking.createdAt),
           endDate: toDate(booking.departureDate),
-          quantity: booking.travelers,
-          amount: booking.total_amount || 0,
+          quantity: booking.travelers || 1,
+          amount: booking.totalAmount || 0,
           currency: booking.currency || "USD",
         },
       ];
     }
 
     return booking.items.map((item) => {
-      const startDate = toDate(item.start_date);
-      const endDate = toDate(item.end_date);
+      const startDate = toDate(item.startDate);
+      const endDate = toDate(item.endDate);
       const metadataLocation =
         item.metadata &&
         typeof item.metadata === "object" &&
@@ -129,7 +129,10 @@ export function CompletedRequestsSchedule({
         startDate,
         endDate,
         quantity: item.quantity || booking.travelers || 1,
-        amount: Number(item.subtotal || item.unit_price || 0) || booking.total_amount || 0,
+        amount:
+          Number(item.subtotal || item.unitPrice || 0) ||
+          booking.totalAmount ||
+          0,
         currency:
           (item.metadata &&
           typeof item.metadata === "object" &&
@@ -300,7 +303,8 @@ export function CompletedRequestsSchedule({
                               {entry.quantity} unit(s)
                             </p>
                             <p className="text-sm font-medium">
-                              {entry.currency} {Number(entry.amount).toLocaleString()}
+                              {entry.currency}{" "}
+                              {Number(entry.amount).toLocaleString()}
                             </p>
                           </div>
                         </div>

@@ -31,15 +31,15 @@ export function ItineraryItem({
   // Normalize item keys to support both frontend camelCase and backend snake_case
   const normalizedItem: BaseItem = {
     ...item,
-    startDate: (item.startDate || item.start_date) as string | null,
-    endDate: (item.endDate || item.end_date) as string | null,
-    startTime: (item.startTime || item.start_time) as string | null,
-    endTime: (item.endTime || item.end_time) as string | null,
-    returnDate: (item.returnDate || item.return_date) as string | null,
-    returnTime: (item.returnTime || item.return_time) as string | null,
-    isRoundTrip: (item.isRoundTrip ?? item.is_round_trip) as boolean | undefined,
-    withDriver: (item.withDriver ?? item.with_driver) as boolean | undefined,
-    itemType: (item.itemType || item.item_type || item.type) as string | undefined,
+    startDate: (item.startDate || item.startDate) as string | null,
+    endDate: (item.endDate || item.endDate) as string | null,
+    startTime: (item.startTime || item.startTime) as string | null,
+    endTime: (item.endTime || item.endTime) as string | null,
+    returnDate: (item.returnDate || item.returnDate) as string | null,
+    returnTime: (item.returnTime || item.returnTime) as string | null,
+    isRoundTrip: (item.isRoundTrip ?? item.isRoundTrip) as boolean | undefined,
+    withDriver: (item.withDriver ?? item.withDriver) as boolean | undefined,
+    itemType: (item.itemType || item.itemType || item.type) as string | undefined,
     unitPrice: (item.unitPrice ?? item.unit_price ?? item.price) as string | number | undefined,
   };
 

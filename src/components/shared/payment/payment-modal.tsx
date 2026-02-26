@@ -61,8 +61,8 @@ export function PaymentModal({
     try {
       const result = await createPaymentIntent(bookingId);
       if (result.success) {
-        setClientSecret(result.data.client_secret);
-        setPaymentIntentId(result.data.payment_intent_id);
+        setClientSecret(result.data.clientSecret);
+        setPaymentIntentId(result.data.paymentIntentId);
         setStep("card");
       } else {
         setError(result.error);

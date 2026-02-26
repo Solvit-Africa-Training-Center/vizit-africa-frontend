@@ -75,7 +75,6 @@ export function LogisticsSection({
               onChange={(e) =>
                 updateTripInfo({
                   arrivalDate: e.target.value,
-                  startDate: e.target.value,
                 })
               }
               className="flex-1 bg-muted/30 border border-border/50 rounded-xl px-4 py-3 text-sm focus:border-primary transition-colors"
@@ -101,7 +100,6 @@ export function LogisticsSection({
               onChange={(e) =>
                 updateTripInfo({
                   departureDate: e.target.value,
-                  endDate: e.target.value,
                 })
               }
               className="flex-1 bg-muted/30 border border-border/50 rounded-xl px-4 py-3 text-sm focus:border-primary transition-colors"

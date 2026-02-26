@@ -47,20 +47,20 @@ export async function login({
 }
 
 export async function register({
-  full_name,
+  fullName,
   email,
   password,
-  phone_number,
+  phoneNumber,
 }: {
-  full_name: string;
+  fullName: string;
   email: string;
   password: string;
-  phone_number: string;
+  phoneNumber: string;
 }): Promise<ActionResult<User>> {
   try {
     const data = await api.post<User>(
       endpoints.auth.register,
-      { full_name, email, password, re_password: password, phone_number },
+      { fullName, email, password, rePassword: password, phoneNumber },
       undefined,
       { requiresAuth: false },
     );
@@ -125,20 +125,20 @@ export async function setPassword({
   uidb64,
   token,
   password,
-  re_password,
+  rePassword,
 }: {
   uidb64: string;
   token: string;
   password: string;
-  re_password: string;
+  rePassword: string;
 }): Promise<ActionResult<{ message: string }>> {
   try {
-    if (password !== re_password) {
+    if (password !== rePassword) {
       return { success: false, error: "Passwords do not match" };
     }
     const result = await api.post(endpoints.auth.setPassword(uidb64, token), {
       password,
-      re_password,
+      rePassword,
     });
     return { success: true, data: result as { message: string } };
   } catch (error) {

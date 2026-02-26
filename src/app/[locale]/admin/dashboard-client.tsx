@@ -130,7 +130,7 @@ export default function DashboardClient({ requests }: DashboardClientProps) {
                 <div className="flex items-center gap-4">
                   <div className="size-10 rounded-full bg-primary/10 flex items-center justify-center">
                     <span className="text-sm font-medium text-primary">
-                      {request.name
+                      {(request.name || "")
                         .split(" ")
                         .map((n) => n[0])
                         .join("")}
@@ -138,7 +138,7 @@ export default function DashboardClient({ requests }: DashboardClientProps) {
                   </div>
                   <div>
                     <p className="font-medium text-foreground">
-                      {request.name}
+                      {request.name || "Unknown"}
                     </p>
                     <p className="text-sm text-muted-foreground">
                       {request.travelers} {t("recentRequests.travelers")} -{" "}

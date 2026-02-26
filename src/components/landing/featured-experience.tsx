@@ -1,8 +1,11 @@
 import { RiArrowRightLine, RiPlaneLine } from "@remixicon/react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 
 export function FeaturedExperience() {
+  const t = useTranslations("FeaturedExperience");
+
   return (
     <section className="w-full bg-surface-cream relative overflow-hidden isolate py-24 md:py-32">
       {/* Subtle Blue Grain and Glow */}
@@ -30,55 +33,52 @@ export function FeaturedExperience() {
               <div className="flex items-center gap-3 mb-8">
                 <div className="px-3 py-1 rounded-full border border-primary-light/30 bg-primary-light/10">
                   <span className="font-mono text-[10px] text-primary-light uppercase tracking-widest">
-                    Featured Route
+                    {t("badge")}
                   </span>
                 </div>
               </div>
 
               <h2 className="font-display text-4xl md:text-5xl font-medium text-white leading-tight mb-4">
-                Silverback Gorilla <br className="hidden md:block" />
-                Trekking Expedition
+                {t.rich("title", {
+                  br: () => <br className="hidden md:block" />,
+                })}
               </h2>
 
               <p className="font-sans text-white/60 text-lg font-light mb-8 max-w-md">
-                Experience the rare privilege of encountering mountain gorillas
-                in their natural mist-shrouded habitat.
+                {t("description")}
               </p>
 
               <div className="grid grid-cols-2 gap-x-8 gap-y-4 mb-10 pb-10 border-b border-white/10">
                 <div>
                   <div className="font-mono text-[9px] uppercase tracking-widest text-white/40 mb-1">
-                    Location
+                    {t("locationLabel")}
                   </div>
                   <div className="font-sans text-sm text-white">
-                    Volcanoes National Park
+                    {t("locationValue")}
                   </div>
                 </div>
                 <div>
                   <div className="font-mono text-[9px] uppercase tracking-widest text-white/40 mb-1">
-                    Duration
+                    {t("durationLabel")}
                   </div>
                   <div className="font-sans text-sm text-white">
-                    3 Days / 2 Nights
+                    {t("durationValue")}
                   </div>
                 </div>
                 <div>
                   <div className="font-mono text-[9px] uppercase tracking-widest text-white/40 mb-1">
-                    Group Size
+                    {t("groupSizeLabel")}
                   </div>
                   <div className="font-sans text-sm text-white">
-                    Max 8 People
+                    {t("groupSizeValue")}
                   </div>
                 </div>
                 <div>
                   <div className="font-mono text-[9px] uppercase tracking-widest text-white/40 mb-1">
-                    Starting From
+                    {t("startingFromLabel")}
                   </div>
                   <div className="font-sans text-sm font-medium text-primary-light">
-                    $2,450{" "}
-                    <span className="text-white/40 text-xs font-normal">
-                      / person
-                    </span>
+                    {t("startingFromValue", { price: "2,450" })}
                   </div>
                 </div>
               </div>
@@ -86,13 +86,13 @@ export function FeaturedExperience() {
               <div className="flex flex-wrap gap-4">
                 <Button className="h-12 px-8 rounded-full bg-primary hover:bg-primary/80 text-white font-sans font-medium uppercase tracking-widest text-xs transition-colors">
                   <RiPlaneLine className="mr-2 size-4" />
-                  Request Details
+                  {t("requestButton")}
                 </Button>
                 <Button
                   variant="outline"
                   className="h-12 px-8 rounded-full border-white/20 hover:bg-white/5 text-white bg-transparent font-sans font-medium uppercase tracking-widest text-xs transition-colors"
                 >
-                  View Itinerary
+                  {t("itineraryButton")}
                   <RiArrowRightLine className="ml-2 size-4" />
                 </Button>
               </div>
@@ -104,7 +104,7 @@ export function FeaturedExperience() {
               <div className="absolute inset-0 bg-linear-to-t from-surface-ink via-surface-ink/20 to-transparent z-10 lg:hidden" />
               <Image
                 src="/images/tourism-guide-vehicle-car.jpg" // Placeholder for gorillas
-                alt="Silverback Gorilla Trekking"
+                alt={t("title", { br: " " })}
                 fill
                 className="object-cover"
               />

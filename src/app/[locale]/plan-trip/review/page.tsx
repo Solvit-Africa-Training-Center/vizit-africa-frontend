@@ -59,29 +59,43 @@ export default function TripReviewPage() {
 
     try {
       const mappedItems = items.map((item) => ({
-        id: item.id,
-        item_type: item.type,
+        type: item.type,
         title: item.title,
         description: item.description,
         quantity: item.quantity || 1,
-        unit_price: Number(item.price) || 0,
-        subtotal: (Number(item.price) || 0) * (item.quantity || 1),
-        start_date: item.startDate || tripInfo.arrivalDate,
-        end_date: item.endDate || tripInfo.departureDate,
+        startDate: item.startDate || tripInfo.arrivalDate,
+        endDate: item.endDate || tripInfo.departureDate,
+        startTime: item.startTime,
+        endTime: item.endTime,
+        isRoundTrip: !!item.isRoundTrip || !!item.metadata?.isRoundTrip,
+        withDriver: !!item.withDriver || !!item.metadata?.withDriver,
         metadata: item.metadata,
       }));
 
+      const adults = Number(tripInfo.adults) || 1;
+      const children = Number(tripInfo.children) || 0;
+      const infants = Number(tripInfo.infants) || 0;
+      const totalTravelers = adults + children + infants;
+
       const submissionData = {
-        ...tripInfo,
+        name: tripInfo.name,
+        email: tripInfo.email,
+        phoneNumber: tripInfo.phoneNumber,
+        departureCity: tripInfo.departureCity || "",
+        arrivalDate: tripInfo.arrivalDate || "",
+        departureDate: tripInfo.departureDate || "",
+        returnDate: tripInfo.returnDate || tripInfo.departureDate || "",
+        adults: adults,
+        children: children,
+        infants: infants,
+        travelers: totalTravelers,
+        needsFlights: !!tripInfo.needsFlights,
+        needsHotel: !!tripInfo.needsHotel,
+        needsCar: !!tripInfo.needsCar,
+        needsGuide: !!tripInfo.needsGuide,
+        tripPurpose: tripInfo.tripPurpose,
+        specialRequests: tripInfo.specialRequests,
         items: mappedItems,
-        preferredCabinClass: tripInfo.preferredCabinClass ?? undefined,
-        hotelStarRating: tripInfo.hotelStarRating ?? undefined,
-        carTypePreference: tripInfo.carTypePreference ?? undefined,
-        startDate: tripInfo.startDate ?? undefined,
-        endDate: tripInfo.endDate ?? undefined,
-        departureDate: tripInfo.departureDate ?? undefined,
-        returnDate: tripInfo.returnDate ?? undefined,
-        arrivalDate: tripInfo.arrivalDate ?? undefined,
       };
 
       const result = await submitTripRequest(submissionData as any);
@@ -262,14 +276,6 @@ export default function TripReviewPage() {
                   </div>
                   <div className="space-y-1">
                     <p className="text-[10px] font-bold uppercase tracking-widest text-primary-light/80">
-                      Budget Level
-                    </p>
-                    <p className="font-medium text-sm capitalize text-white">
-                      {tripInfo.budgetBracket?.replace("-", " ") || "Mid Range"}
-                    </p>
-                  </div>
-                  <div className="space-y-1">
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-primary-light/80">
                       Trip Style
                     </p>
                     <p className="font-medium text-sm capitalize text-white">
@@ -330,6 +336,21 @@ export default function TripReviewPage() {
                         required
                         className="bg-white/5 border-white/10 text-white placeholder:text-white/30 h-12 text-base rounded-xl focus-visible:ring-primary-light/50 focus-visible:border-primary-light/50"
                         placeholder="sarah@example.com"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-[10px] uppercase font-bold tracking-widest text-primary-light/80 ml-1">
+                        Phone Number
+                      </Label>
+                      <Input
+                        type="tel"
+                        value={tripInfo.phoneNumber}
+                        onChange={(e) =>
+                          updateTripInfo({ phoneNumber: e.target.value })
+                        }
+                        required
+                        className="bg-white/5 border-white/10 text-white placeholder:text-white/30 h-12 text-base rounded-xl focus-visible:ring-primary-light/50 focus-visible:border-primary-light/50"
+                        placeholder="+250..."
                       />
                     </div>
                     <div className="space-y-2">

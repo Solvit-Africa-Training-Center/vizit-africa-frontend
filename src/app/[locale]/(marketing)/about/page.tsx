@@ -34,43 +34,44 @@ export default async function AboutPage() {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* ── Page header ───────────────────────────────────────────── */}
       <PageHeader
         title={t("title")}
         overline={t("established")}
         className="pt-24 md:pt-32"
       />
 
+      {/* ── Intro prose ───────────────────────────────────────────── */}
       <section className="marketing-section pt-0">
         <div className="marketing-container">
           <div className="max-w-4xl">
-            <p className="font-display text-2xl md:text-4xl font-medium leading-tight tracking-tighter uppercase text-balance">
+            <p className="font-display text-2xl md:text-4xl font-light leading-tight tracking-tight uppercase text-balance">
+              {/* Primary color for first sentence — brand anchor */}
               <span className="text-primary">{t("intro1")}</span> {t("intro2")}
             </p>
-            <p className="text-xl md:text-2xl font-light leading-relaxed mt-12 text-muted-foreground/60 text-pretty">
+            <p className="text-xl md:text-2xl font-light leading-relaxed mt-10 text-muted-foreground/55 text-pretty">
               {t("intro3")}
             </p>
           </div>
         </div>
       </section>
 
-      <section className="marketing-section bg-muted/30">
+      {/* ── Team ──────────────────────────────────────────────────── */}
+      <section className="marketing-section bg-surface-cream">
         <div className="marketing-container">
-          <div className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-8">
-            <h2 className="font-display text-4xl md:text-5xl font-medium uppercase tracking-tighter leading-none">
+          <div className="mb-14 flex flex-col md:flex-row md:items-end justify-between gap-8">
+            <h2 className="font-display text-4xl md:text-5xl font-light uppercase tracking-tight leading-none">
               {t("guidesTitle")}
             </h2>
-            <p className="text-muted-foreground max-w-xs text-lg font-light">
+            <p className="text-muted-foreground max-w-xs text-base font-light leading-relaxed">
               {t("guidesDescription")}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {teamMembers.map((member) => (
-              <div
-                key={member.id}
-                className="relative group flex flex-col gap-4"
-              >
-                <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl">
+              <div key={member.id} className="group flex flex-col gap-4">
+                <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-surface-bone">
                   <Image
                     src={member.image || "/images/guide.jpg"}
                     alt={member.name}
@@ -78,11 +79,12 @@ export default async function AboutPage() {
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
-                <div className="flex flex-col gap-1 px-2">
-                  <h3 className="font-display text-3xl font-medium uppercase text-foreground">
+                <div className="flex flex-col gap-0.5 px-1">
+                  <h3 className="font-display text-2xl font-light uppercase text-foreground tracking-tight">
                     {member.name}
                   </h3>
-                  <p className="font-mono text-[10px] uppercase tracking-widest text-primary font-bold">
+                  {/* Role label — primary mono per design guide */}
+                  <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-primary">
                     {member.role}
                   </p>
                 </div>
@@ -92,18 +94,20 @@ export default async function AboutPage() {
         </div>
       </section>
 
+      {/* ── Values ────────────────────────────────────────────────── */}
       <section className="marketing-section">
         <div className="marketing-container">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-16">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-14">
             {values.map((val) => (
               <div
                 key={val.title}
-                className="flex flex-col border-t border-foreground/10 pt-8 group hover:border-primary transition-colors duration-500"
+                className="flex flex-col border-t border-border/60 pt-7 group hover:border-primary/40 transition-colors duration-500"
               >
-                <span className="font-mono text-xs text-primary font-bold mb-6">
-                  ({val.order})
+                {/* Order number — primary per design guide */}
+                <span className="font-mono text-[9px] text-primary uppercase tracking-[0.2em] mb-5">
+                  {val.order}
                 </span>
-                <h3 className="font-display text-2xl font-medium mb-4 uppercase group-hover:text-primary transition-colors duration-300 tracking-tight">
+                <h3 className="font-display text-2xl font-light mb-3 uppercase tracking-tight group-hover:text-primary transition-colors duration-300">
                   {val.title}
                 </h3>
                 <p className="text-muted-foreground leading-relaxed text-sm font-light">
@@ -115,21 +119,19 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section className="marketing-section pb-24 md:pb-32">
+      <section className="marketing-section pb-16 md:pb-24">
         <div className="marketing-container">
-          <div className="py-24 md:py-32 text-center bg-surface-ink text-primary-foreground rounded-[2.5rem] relative overflow-hidden isolate shadow-2xl border border-primary/10">
-            {/* Radial Gradient Background (Blue tint) */}
+          <div className="py-16 md:py-24 text-center bg-surface-ink text-primary-foreground rounded-[2.5rem] relative overflow-hidden isolate shadow-2xl border border-white/5">
             <div
               className="absolute inset-0 z-0 pointer-events-none"
               style={{
                 background:
-                  "radial-gradient(circle at top center, oklch(65% 0.06 245 / 0.25) 0%, transparent 60%)",
+                  "radial-gradient(ellipse 60% 70% at 50% 0%, oklch(65% 0.12 62 / 0.12) 0%, transparent 65%)",
               }}
             />
 
-            {/* Grain Texture */}
             <div
-              className="absolute inset-0 opacity-[0.03] pointer-events-none z-10 mix-blend-overlay"
+              className="absolute inset-0 opacity-[0.025] pointer-events-none z-10 mix-blend-overlay"
               aria-hidden="true"
             >
               <svg className="w-full h-full">
@@ -146,20 +148,32 @@ export default async function AboutPage() {
               </svg>
             </div>
 
+            {/* Amber horizon line */}
+            <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent" />
+
             <div className="relative z-20 px-6">
-              <h2 className="font-display text-4xl md:text-6xl font-medium uppercase tracking-tighter leading-[0.9] mb-4 max-w-2xl mx-auto text-white">
+              {/* Overline */}
+              <span className="inline-flex items-center gap-2.5 font-mono text-[9px] uppercase tracking-[0.25em] text-primary-foreground/70 mb-7">
+                <span className="w-4 h-px bg-primary-light/40" />
+                {t("cta.overline")}
+                <span className="w-4 h-px bg-primary-light/40" />
+              </span>
+
+              <h2 className="font-display text-4xl md:text-6xl font-light uppercase tracking-tight leading-[0.92] mb-4 max-w-2xl mx-auto text-white">
                 {t("startJourney").split(" ").slice(0, -1).join(" ")}{" "}
-                <span className="text-primary-light italic block mt-2">
+                <span className="text-primary-foreground italic block mt-1">
                   {t("startJourney").split(" ").slice(-1)}
                 </span>
               </h2>
-              <p className="text-white/60 font-light mb-12 mt-6 max-w-md mx-auto">
-                Discover the untamed beauty of East Africa with our expert
-                guides.
+
+              <p className="text-white/40 font-light mb-11 mt-5 max-w-sm mx-auto text-base leading-relaxed">
+                {t("cta.description")}
               </p>
+
+              {/* CTA — primary button on dark is fine; primary also works */}
               <Button
                 size="lg"
-                className="h-14 px-10 rounded-full font-sans font-semibold uppercase tracking-[0.12em] text-xs transition-colors shadow-lg shadow-primary/20 hover:scale-105 duration-300 bg-primary hover:bg-primary/90 text-white border-0"
+                className="btn-primary h-13 px-10 text-[10px]"
                 render={<Link href="/contact" />}
               >
                 {tCommon("getInTouch")}

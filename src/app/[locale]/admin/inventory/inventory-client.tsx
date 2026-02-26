@@ -31,7 +31,7 @@ export default function InventoryClient({ services }: InventoryClientProps) {
   const serviceFilters: DataTableFilterField[] = [
     {
       label: "Type",
-      value: "service_type",
+      value: "serviceType",
       options: [
         { label: "Flight", value: "flight" },
         { label: "Hotel", value: "hotel" },

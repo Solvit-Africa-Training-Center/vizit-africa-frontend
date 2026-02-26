@@ -9,7 +9,7 @@ export interface GuestCount {
 export interface ContactInfo {
   name: string;
   email: string;
-  phone: string;
+  phoneNumber: string;
   departureCity: string;
   specialRequests: string;
 }

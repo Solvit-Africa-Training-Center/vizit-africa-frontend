@@ -1,13 +1,7 @@
 "use client";
 
-import {
-  RiAlertLine,
-  RiArrowRightLine,
-  RiEyeLine,
-  RiLockPasswordLine,
-} from "@remixicon/react";
+import { RiAlertLine, RiArrowRightLine, RiEyeLine, RiLockPasswordLine } from "@remixicon/react";
 import { useForm } from "@tanstack/react-form";
-import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -24,23 +18,25 @@ import {
 } from "../ui/input-group";
 import { Label } from "../ui/label";
 
-export function SetPasswordForm() {
+export function SetPasswordForm({
+  uidb64 = "",
+  token = "",
+}: {
+  uidb64?: string;
+  token?: string;
+}) {
   const t = useTranslations("Auth.setPassword");
   const _tCommon = useTranslations("Common");
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  const uidb64 = searchParams.get("uidb64") || "";
-  const token = searchParams.get("token") || "";
 
   const form = useForm({
     defaultValues: {
       uidb64: uidb64,
       token: token,
       password: "",
-      re_password: "",
+      rePassword: "",
     },
     validators: {
       onChange: setPasswordInputSchema,
@@ -65,7 +61,7 @@ export function SetPasswordForm() {
           Object.entries(result.fieldErrors).forEach(([field, errors]) => {
             if (Object.keys(value).includes(field)) {
               formApi.setFieldMeta(
-                field as "uidb64" | "token" | "password" | "re_password",
+                field as "uidb64" | "token" | "password" | "rePassword",
                 (prev) => ({
                   ...prev,
                   errorMap: {
@@ -145,13 +141,13 @@ export function SetPasswordForm() {
         )}
       </form.Field>
 
-      <form.Field name="re_password">
+      <form.Field name="rePassword">
         {(field) => (
           <div className="space-y-2">
-            <Label htmlFor="re_password">{t("confirmPassword")}</Label>
+            <Label htmlFor="rePassword">{t("confirmPassword")}</Label>
             <InputGroup>
               <InputGroupInput
-                id="re_password"
+                id="rePassword"
                 type={showPassword ? "text" : "password"}
                 placeholder={t("confirmPlaceholder")}
                 value={field.state.value}

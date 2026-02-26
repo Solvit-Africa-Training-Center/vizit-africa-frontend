@@ -155,14 +155,14 @@ export const serviceColumns: ColumnDef<ServiceResponse>[] = [
     ),
   },
   {
-    accessorKey: "service_type",
+    accessorKey: "serviceType",
     header: () => <HeaderCell trKey="type" />,
     cell: ({ row }) => (
       <Badge
         variant="outline"
         className="capitalize font-normal text-muted-foreground"
       >
-        {row.getValue("service_type")}
+        {row.getValue("serviceType")}
       </Badge>
     ),
     filterFn: (row, id, value) => {
@@ -179,11 +179,11 @@ export const serviceColumns: ColumnDef<ServiceResponse>[] = [
     ),
   },
   {
-    accessorKey: "base_price",
+    accessorKey: "basePrice",
     header: () => <HeaderCell trKey="price" />,
     cell: ({ row }) => (
       <div className="font-mono tabular-nums text-muted-foreground">
-        {row.original.currency} {row.getValue("base_price")}
+        {row.original.currency} {row.getValue("basePrice")}
       </div>
     ),
   },

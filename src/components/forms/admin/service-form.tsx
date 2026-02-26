@@ -120,7 +120,7 @@ export function ServiceForm({ initialData, onSuccess }: ServiceFormProps) {
   const form = useForm({
     defaultValues: {
       title: initialData?.title || "",
-      service_type: (initialData?.service_type || "hotel") as
+      serviceType: (initialData?.serviceType || "hotel") as
         | "hotel"
         | "car"
         | "activity"
@@ -128,7 +128,7 @@ export function ServiceForm({ initialData, onSuccess }: ServiceFormProps) {
         | "tour"
         | "guide",
       description: initialData?.description || "",
-      base_price: initialData ? Number(initialData.base_price) : 0,
+      basePrice: initialData ? Number(initialData.basePrice) : 0,
       currency: initialData?.currency || "USD",
       capacity: initialData?.capacity || 1,
       status: (initialData?.status || "pending") as
@@ -221,7 +221,7 @@ export function ServiceForm({ initialData, onSuccess }: ServiceFormProps) {
       form.setFieldValue("user", String(newVendor.user));
     }
     setIsVendorDialogOpen(false);
-    toast.success(`Vendor ${newVendor.business_name} selected`);
+    toast.success(`Vendor ${newVendor.businessName} selected`);
   };
 
   useEffect(() => {
@@ -332,10 +332,10 @@ export function ServiceForm({ initialData, onSuccess }: ServiceFormProps) {
           )}
         </form.Field>
 
-        <form.Field name="service_type">
+        <form.Field name="serviceType">
           {(field) => (
             <div className="space-y-2">
-              <Label htmlFor="service_type">Service Type</Label>
+              <Label htmlFor="serviceType">Service Type</Label>
               <Select
                 value={field.state.value}
                 onValueChange={(val) =>
@@ -400,7 +400,7 @@ export function ServiceForm({ initialData, onSuccess }: ServiceFormProps) {
                       <span className="truncate">
                         {vendors.find(
                           (v) => String(v.user) === String(field.state.value),
-                        )?.business_name || "Search vendor..."}
+                        )?.businessName || "Search vendor..."}
                       </span>
                     </AutocompleteTrigger>
                     <AutocompletePortal>
@@ -413,7 +413,7 @@ export function ServiceForm({ initialData, onSuccess }: ServiceFormProps) {
                                 key={vendor.id}
                                 value={String(vendor.user)}
                               >
-                                {vendor.business_name}
+                                {vendor.businessName}
                               </AutocompleteItem>
                             ))}
                           </AutocompleteList>
@@ -456,12 +456,12 @@ export function ServiceForm({ initialData, onSuccess }: ServiceFormProps) {
       </form.Field>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <form.Field name="base_price">
+        <form.Field name="basePrice">
           {(field) => (
             <div className="space-y-2">
-              <Label htmlFor="base_price">Base Price</Label>
+              <Label htmlFor="basePrice">Base Price</Label>
               <NumberField
-                id="base_price"
+                id="basePrice"
                 min={0}
                 step={0.01}
                 value={field.state.value ?? null}

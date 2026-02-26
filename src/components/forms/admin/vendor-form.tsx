@@ -30,11 +30,11 @@ export function VendorForm({ onSuccess, initialData }: VendorFormProps) {
   const form = useForm({
     defaultValues: {
       email: initialData?.email || "",
-      full_name: initialData?.full_name || "",
-      phone_number: initialData?.phone_number || "",
+      fullName: initialData?.fullName || "",
+      phoneNumber: initialData?.phoneNumber || "",
       bio: initialData?.bio || "",
-      business_name: initialData?.business_name || "",
-      vendor_type: (initialData?.vendor_type || "guide") as
+      businessName: initialData?.businessName || "",
+      vendorType: (initialData?.vendorType || "guide") as
         | "hotel"
         | "car_rental"
         | "guide"
@@ -118,7 +118,7 @@ export function VendorForm({ onSuccess, initialData }: VendorFormProps) {
       />
 
       <form.Field
-        name="full_name"
+        name="fullName"
         children={(field) => (
           <div>
             <Label htmlFor={field.name}>Full Name</Label>
@@ -134,7 +134,7 @@ export function VendorForm({ onSuccess, initialData }: VendorFormProps) {
       />
 
       <form.Field
-        name="business_name"
+        name="businessName"
         children={(field) => (
           <div>
             <Label htmlFor={field.name}>Business Name</Label>
@@ -151,7 +151,7 @@ export function VendorForm({ onSuccess, initialData }: VendorFormProps) {
 
       <div className="grid grid-cols-2 gap-4">
         <form.Field
-          name="phone_number"
+          name="phoneNumber"
           children={(field) => (
             <div>
               <Label htmlFor={field.name}>Phone</Label>
@@ -167,7 +167,7 @@ export function VendorForm({ onSuccess, initialData }: VendorFormProps) {
         />
 
         <form.Field
-          name="vendor_type"
+          name="vendorType"
           children={(field) => (
             <div>
               <Label htmlFor={field.name}>Type</Label>

@@ -3,9 +3,15 @@ import { Suspense } from "react";
 import { SetPasswordForm } from "@/components/forms/set-password-form";
 import { Link } from "@/i18n/navigation";
 
-export default async function SetPasswordPage() {
+type Props = {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{ uidb64?: string; token?: string }>;
+};
+
+export default async function SetPasswordPage({ searchParams }: Props) {
   const t = await getTranslations("Auth.setPassword");
   const tCommon = await getTranslations("Common");
+  const { uidb64, token } = await searchParams;
 
   return (
     <div className="w-full">
@@ -24,7 +30,7 @@ export default async function SetPasswordPage() {
       </div>
 
       <Suspense fallback={<div>Loading form...</div>}>
-        <SetPasswordForm />
+        <SetPasswordForm uidb64={uidb64} token={token} />
       </Suspense>
 
       <p className="text-center text-sm text-muted-foreground mt-8 font-light">

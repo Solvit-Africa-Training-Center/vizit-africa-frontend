@@ -5,7 +5,7 @@ import { GroupedItems } from "./package-builder/grouped-items";
 import { AddDialog } from "./package-builder/add-dialog";
 import { ValidationAlertBanner } from "./package-builder/validation-alert-banner";
 import { QuoteSummaryPanel } from "./package-builder/quote-summary-panel";
-import { QuotePreviewModal } from "./package-builder/quote=preview-modal";
+import { QuotePreviewModal } from "./package-builder/quote-preview-modal";
 import { BuilderHeader } from "./package-builder/builder-header";
 import { type Booking } from "@/lib/unified-types";
 import { usePackageBuilder } from "@/hooks/use-package-builder";
@@ -51,7 +51,7 @@ export function PackageBuilderClient({ request }: PackageBuilderClientProps) {
   return (
     <div className="mx-auto max-w-9xl px-5 md:px-10 py-8 min-h-screen pb-24">
       <BuilderHeader
-        requestName={request.name}
+        requestName={request.name || "Guest"}
         total={total}
         isSending={isSending}
         itemCount={displayItems.length}
@@ -116,8 +116,8 @@ export function PackageBuilderClient({ request }: PackageBuilderClientProps) {
         }}
         items={displayItems}
         breakdown={quoteBreakdown}
-        travelerName={request.name}
-        clientEmail={request.email}
+        travelerName={request.name || "Guest"}
+        clientEmail={request.email || "Email"}
         warnings={validation.warnings}
         isLoading={isSending}
       />

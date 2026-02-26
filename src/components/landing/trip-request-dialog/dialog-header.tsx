@@ -1,7 +1,15 @@
-import { Badge } from "@/components/ui/badge";
 import { DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { RiSuitcaseLine, RiUser2Line } from "@remixicon/react";
 
+/**
+ * DialogHeader — top strip of the TripRequestDialog.
+ *
+ * Design changes:
+ * - Background: bg-surface-ink (dark, matches hero/footer aesthetic)
+ * - Title: Cormorant display font, lighter weight
+ * - Badges: primary-tinted for items, primary-tinted for guests/nights
+ * - Amber ✦ as a decorative brand mark next to title
+ */
 export function DialogHeader({
   nights,
   totalGuests,
@@ -14,38 +22,42 @@ export function DialogHeader({
   selectedItemsDisplay: string;
 }) {
   return (
-    <div className="px-8 py-6 border-b bg-linear-to-r from-primary/5 to-transparent shrink-0">
-      <div className="flex items-start justify-between gap-4">
-        <div className="space-y-1 flex-1">
-          <DialogTitle className="text-2xl font-bold tracking-tight flex items-center gap-2">
-            Quick Trip Request
+    <div className="px-7 py-5 border-b border-white/[0.07] bg-surface-ink shrink-0">
+      <div className="flex items-center justify-between gap-4">
+        {/* Left: title + description */}
+        <div className="space-y-0.5">
+          <DialogTitle className="font-display text-2xl font-light text-primary-foreground tracking-tight flex items-center gap-2">
+            <span className="text-primary text-base">✦</span>
+            Plan Your Journey
           </DialogTitle>
-          <DialogDescription className="text-sm">
-            Fast booking for your Kigali adventure
+          <DialogDescription className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/35">
+            Kigali, Rwanda — Concierge Request
           </DialogDescription>
         </div>
-        <div className="flex flex-col items-end gap-3 mr-5">
-          <div className="flex items-center gap-3">
+
+        {/* Right: status pills */}
+        <div className="flex flex-col items-end gap-2 mr-6">
+          <div className="flex items-center gap-2 flex-wrap justify-end">
             {nights > 0 && (
-              <Badge variant="secondary" className="font-mono">
+              <span className="font-mono text-[9px] uppercase tracking-[0.15em] text-white/50 bg-white/[0.06] border border-white/[0.08] px-2.5 py-1 rounded-full">
                 {nights} {nights === 1 ? "night" : "nights"}
-              </Badge>
+              </span>
             )}
             {totalGuests > 0 && (
-              <Badge variant="outline" className="gap-1">
-                <RiUser2Line className="size-3" />
+              <span className="flex items-center gap-1 font-mono text-[9px] uppercase tracking-[0.12em] text-primary-xl bg-primary/15 border border-primary/20 px-2.5 py-1 rounded-full">
+                <RiUser2Line className="size-2.5" />
                 {totalGuests} {totalGuests === 1 ? "guest" : "guests"}
-              </Badge>
+              </span>
             )}
             {itemsCount > 0 && (
-              <Badge className="gap-1 bg-primary/90">
-                <RiSuitcaseLine className="size-3" />
+              <span className="flex items-center gap-1 font-mono text-[9px] uppercase tracking-[0.12em] text-primary-foreground bg-primary/15 border border-primary/20 px-2.5 py-1 rounded-full">
+                <RiSuitcaseLine className="size-2.5" />
                 {itemsCount} item{itemsCount !== 1 ? "s" : ""}
-              </Badge>
+              </span>
             )}
           </div>
           {itemsCount > 0 && (
-            <p className="text-xs text-muted-foreground text-right max-w-sm">
+            <p className="font-mono text-[8px] text-white/25 text-right max-w-[240px] uppercase tracking-[0.1em] truncate">
               {selectedItemsDisplay}
             </p>
           )}

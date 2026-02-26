@@ -1,9 +1,10 @@
 "use client";
 
-import { RiSuitcaseLine } from "@remixicon/react";
+import { RiAddLine, RiSuitcaseLine } from "@remixicon/react";
 import { useTranslations } from "next-intl";
 import { logout } from "@/actions/auth";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useUser } from "@/components/user-provider";
 import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
@@ -58,7 +59,7 @@ export function NavbarMobile({ isOpen, onClose }: NavbarMobileProps) {
       {/* Header */}
       <div className="px-6 py-5 bg-surface-ink flex justify-between items-center shrink-0">
         <div className="font-display text-xl text-white font-semibold flex items-center gap-2">
-          <span className="text-primary text-[10px]">✦</span> Vizit Africa
+          <RiAddLine className="text-primary size-4" /> Vizit Africa
         </div>
         <button
           onClick={onClose}
@@ -148,10 +149,16 @@ export function NavbarMobile({ isOpen, onClose }: NavbarMobileProps) {
                   View Trip
                 </>
               ) : (
-                <>✦ {tCommon("startPlanning")}</>
+                <>
+                  <RiAddLine className="size-4 mr-2" />
+                  {tCommon("startPlanning")}
+                </>
               )
             ) : (
-              <>✦ {tCommon("startPlanning")}</>
+              <>
+                <RiAddLine className="size-4 mr-2" />
+                {tCommon("startPlanning")}
+              </>
             )}
           </Button>
         </Link>
@@ -164,9 +171,23 @@ export function NavbarMobile({ isOpen, onClose }: NavbarMobileProps) {
             <Link
               href="/profile"
               onClick={onClose}
-              className="font-mono text-[9px] text-surface-ink/60 tracking-[0.1em] uppercase hover:text-primary"
+              className="flex items-center gap-2 group"
             >
-              {user.full_name}
+              <span className="font-mono text-[9px] text-surface-ink/60 tracking-[0.1em] uppercase group-hover:text-primary transition-colors">
+                {user.fullName}
+              </span>
+              <Avatar className="size-6 border border-border-warm">
+                <AvatarFallback className="bg-primary/10 text-primary text-[8px] font-bold">
+                  {user.fullName
+                    ? user.fullName
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")
+                        .toUpperCase()
+                        .slice(0, 2)
+                    : "??"}
+                </AvatarFallback>
+              </Avatar>
             </Link>
           )}
         </div>

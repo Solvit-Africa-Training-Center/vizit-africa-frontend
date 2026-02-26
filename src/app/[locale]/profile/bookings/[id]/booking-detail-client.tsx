@@ -60,38 +60,32 @@ export default function BookingDetailClient({
 
   const handleAcceptAndPay = async () => {
     // If already quoted, we must "accept" it first to move it out of 'quoted' state
-    if (booking.status === "quoted") {
+    if (booking.status === "quoted" && booking.id) {
       setIsAccepting(true);
       try {
-        const result = await updateBooking(String(booking.id), {
-          status: "accepted",
-        });
-
-        if (result.success) {
-          setBooking(result.data);
+        const acceptResult = await acceptQuoteForBooking(String(booking.id));
+        if (acceptResult.success) {
+          setBooking(acceptResult.data);
           setShowPaymentModal(true);
         } else {
-          const acceptResult = await acceptQuoteForBooking(String(booking.id));
-          if (acceptResult.success) {
-            setBooking(acceptResult.data);
-            setShowPaymentModal(true);
-          } else {
-            toast.error(
-              acceptResult.error || "Failed to accept quote. Please try again.",
-            );
-          }
+          toast.error(
+            acceptResult.error || "Failed to accept quote. Please try again.",
+          );
         }
       } catch (error) {
         toast.error("An error occurred while accepting the quote.");
       } finally {
         setIsAccepting(false);
       }
-    } else {
+    } else if (booking.id) {
       setShowPaymentModal(true);
+    } else {
+      toast.error("Booking reference is missing.");
     }
   };
 
   const handlePaymentSuccess = async () => {
+    if (!booking.id) return;
     const refresh = await getBookingById(String(booking.id));
     if (refresh.success) {
       setBooking(refresh.data);
@@ -99,30 +93,24 @@ export default function BookingDetailClient({
     }
   };
 
-  const quote = booking.quote;
-  const isQuoted = booking.status === "quoted" && quote;
+  const isQuoted = booking.status === "quoted";
   const isPending = booking.status === "pending";
   const isPaid = booking.status === "paid";
   const isCompleted = booking.status === "completed";
 
   const showQuoteActions = isQuoted;
-  const displayItems =
-    isPaid || isCompleted ? booking.items || [] : quote?.items || [];
+  const displayItems = booking.items || [];
 
   const totalAmount = Number(
-    isPaid || isCompleted
-      ? (booking.items || []).reduce(
-          (sum, item) => sum + (Number(item.subtotal) || 0),
-          0,
-        )
-      : quote?.totalAmount || quote?.total_amount || booking.total_amount || 0,
+    booking.totalAmount ||
+      displayItems.reduce(
+        (sum, item) => sum + (Number(item.subtotal) || 0),
+        0,
+      ) ||
+      0,
   );
 
-  const currency = (
-    isPaid || isCompleted
-      ? (booking.items?.[0]?.metadata?.currency as string) || booking.currency
-      : quote?.currency || booking.currency || "USD"
-  ) as string;
+  const currency = (booking.currency || "USD") as string;
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -154,7 +142,10 @@ export default function BookingDetailClient({
                 <div className="flex flex-wrap items-center gap-y-2 gap-x-4 text-muted-foreground">
                   <span className="flex items-center gap-1.5">
                     <RiFileListLine className="size-4" />
-                    Ref: #{String(booking.id).toUpperCase().slice(0, 8)}
+                    Ref: #
+                    {(booking.id ? String(booking.id) : "")
+                      .toUpperCase()
+                      .slice(0, 8) || "N/A"}
                   </span>
                   <span className="flex items-center gap-1.5">
                     <RiCalendarEventLine className="size-4" />
@@ -205,13 +196,6 @@ export default function BookingDetailClient({
                       itinerary and finalized pricing below. Accept to secure
                       your booking.
                     </p>
-                    {(quote?.expiresAt || quote?.expires_at) && (
-                      <div className="mt-4 flex items-center gap-2 text-xs font-medium text-primary-700 uppercase tracking-wider">
-                        <RiTimeLine className="size-3.5" />
-                        Expires:{" "}
-                        {formatDate((quote?.expiresAt || quote?.expires_at)!)}
-                      </div>
-                    )}
                   </div>
                 </div>
               )}
@@ -238,11 +222,11 @@ export default function BookingDetailClient({
                   </h3>
                   <p className="text-sm text-emerald-900/80 leading-relaxed mb-4">
                     Your trip is officially booked and paid!
-                    {booking.payment_status === "succeeded"
+                    {booking.paymentStatus === "succeeded"
                       ? " Your payment has been received."
                       : " Please complete the payment to finalize your adventure."}
                   </p>
-                  {booking.payment_status !== "succeeded" && (
+                  {booking.paymentStatus !== "succeeded" && (
                     <Button
                       onClick={handleAcceptAndPay}
                       disabled={isAccepting}
@@ -320,7 +304,7 @@ export default function BookingDetailClient({
                         Destination
                       </p>
                       <p className="font-medium text-white/90">
-                        {booking.requestedItems?.[0]?.title ||
+                        {booking.items?.[0]?.title ||
                           booking.tripPurpose ||
                           "Rwanda"}
                       </p>
@@ -355,9 +339,10 @@ export default function BookingDetailClient({
                       </p>
                       <p className="font-medium text-white/90">
                         {booking.adults} Adults
-                        {booking.children > 0 &&
+                        {(booking.children || 0) > 0 &&
                           `, ${booking.children} Children`}
-                        {booking.infants > 0 && `, ${booking.infants} Infants`}
+                        {(booking.infants || 0) > 0 &&
+                          `, ${booking.infants} Infants`}
                       </p>
                     </div>
                   </div>
@@ -402,7 +387,7 @@ export default function BookingDetailClient({
                         Phone
                       </p>
                       <p className="font-medium truncate">
-                        {booking.phone || "Not provided"}
+                        {booking.phoneNumber || "Not provided"}
                       </p>
                     </div>
                   </div>
@@ -458,9 +443,9 @@ export default function BookingDetailClient({
           onClose={() => setShowPaymentModal(false)}
           amount={totalAmount}
           currency={currency}
-          bookingId={String(booking.id)}
-          clientEmail={booking.email}
-          travelerName={booking.name}
+          bookingId={booking.id ? String(booking.id) : ""}
+          clientEmail={booking.email || ""}
+          travelerName={booking.name || "Guest"}
           onPaymentSuccess={handlePaymentSuccess}
         />
       )}
