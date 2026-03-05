@@ -1,5 +1,7 @@
 import { Calendar } from "@/components/ui/calendar";
 import type { DateRange } from "react-day-picker";
+import * as React from "react";
+import { useTranslations } from "next-intl";
 
 export function TravelDates({
   dateRange,
@@ -8,17 +10,27 @@ export function TravelDates({
   dateRange: DateRange | undefined;
   setDateRange: (range: DateRange | undefined) => void;
 }) {
+  const t = useTranslations("PlanTrip.conciergeDialog.sections");
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
-        <h3 className="text-lg font-semibold">Travel Dates</h3>
+        <h3 className="text-lg font-semibold">{t("dates")}</h3>
       </div>
-      <div>
+      <div className="flex justify-center md:justify-start">
         <Calendar
           mode="range"
           selected={dateRange}
           onSelect={setDateRange}
-          numberOfMonths={2}
+          numberOfMonths={isMobile ? 1 : 2}
           disabled={(date) => date < new Date()}
           className="w-full"
           classNames={{

@@ -173,7 +173,7 @@ export function ServiceItem({
               </div>
               <div className="lg:col-span-7 flex flex-col justify-between py-2">
                 <div>
-                  <p className="text-xl md:text-2xl font-light leading-relaxed mb-8 text-foreground/80">
+                  <p className="text-lg md:text-2xl font-light leading-relaxed mb-8 text-foreground/80">
                     {service.description}
                   </p>
 

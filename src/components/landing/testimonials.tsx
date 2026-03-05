@@ -103,7 +103,7 @@ function TestimonialsColumn({
                   "transition-all duration-500 hover:shadow-md hover:border-primary/30 group",
                 )}
               >
-                <div className="text-[160px] leading-none text-primary/10 absolute -top-12 -left-4 font-display pointer-events-none select-none group-hover:text-primary/20 transition-colors duration-500">
+                <div className="text-[120px] md:text-[160px] leading-none text-primary/10 absolute -top-10 md:-top-12 -left-2 md:-left-4 font-display pointer-events-none select-none group-hover:text-primary/20 transition-colors duration-500">
                   &ldquo;
                 </div>
 

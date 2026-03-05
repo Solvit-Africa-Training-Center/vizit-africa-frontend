@@ -127,13 +127,13 @@ export function TripsTab({ completedRequests, isLoading }: TripsTabProps) {
                 <h3 className="text-[10px] font-bold uppercase tracking-widest text-primary mb-6">
                   {t("trips.timeline.selectJourney")}
                 </h3>
-                <div className="space-y-3">
+                <div className="flex lg:flex-col gap-3 overflow-x-auto no-scrollbar pb-2 lg:pb-0">
                   {completedRequests.map((trip) => (
                     <button
                       key={trip.id}
                       onClick={() => setSelectedId(String(trip.id))}
                       className={cn(
-                        "w-full text-left p-5 rounded-2xl border transition-all duration-500",
+                        "w-[240px] lg:w-full shrink-0 text-left p-5 rounded-2xl border transition-all duration-500",
                         selectedTripId === String(trip.id)
                           ? "border-primary/30 bg-primary/[0.03] shadow-lg shadow-primary/5"
                           : "border-border/50 bg-card hover:border-primary/20",

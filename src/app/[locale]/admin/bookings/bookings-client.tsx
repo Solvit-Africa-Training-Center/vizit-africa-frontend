@@ -71,7 +71,7 @@ export default function BookingsClient({
   ];
 
   return (
-    <div className="mx-auto max-w-9xl px-5 md:px-10 py-8 space-y-8">
+    <div className="mx-auto max-w-7xl px-5 md:px-10 py-8 space-y-8">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
@@ -93,13 +93,13 @@ export default function BookingsClient({
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-2 p-1 bg-muted/30 border border-border/50 rounded-xl w-fit">
+      <div className="flex items-center gap-2 p-1 bg-muted/30 border border-border/50 rounded-xl w-full sm:w-fit overflow-x-auto no-scrollbar">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setFilter(tab.id as BookingFilter)}
             className={cn(
-              "flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all",
+              "flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all whitespace-nowrap shrink-0",
               filter === tab.id
                 ? "bg-card text-primary shadow-sm border border-border/50"
                 : "text-muted-foreground hover:text-foreground",

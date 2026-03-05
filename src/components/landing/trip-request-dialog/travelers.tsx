@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { RiAddLine, RiSubtractLine } from "@remixicon/react";
 import type { GuestCount } from "./types";
+import { useTranslations } from "next-intl";
 
 export function Travelers({
   guests,
@@ -9,20 +10,23 @@ export function Travelers({
   guests: GuestCount;
   handleGuestChange: (type: keyof GuestCount, delta: number) => void;
 }) {
+  const t = useTranslations("PlanTrip.conciergeDialog.sections");
+  const tDetails = useTranslations("PlanTrip.tripDetails");
+
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
-        <h3 className="text-lg font-semibold">Travelers</h3>
+        <h3 className="text-lg font-semibold">{t("travelers")}</h3>
       </div>
       <div className="rounded-xl border bg-card divide-y">
         {[
-          { key: "adults", label: "Adults", sub: "Age 12+" },
-          { key: "children", label: "Children", sub: "Age 2-11" },
-          { key: "infants", label: "Infants", sub: "Under 2" },
+          { key: "adults", label: tDetails("adults"), sub: "Age 12+" },
+          { key: "children", label: tDetails("children"), sub: "Age 2-11" },
+          { key: "infants", label: tDetails("infants"), sub: "Under 2" },
         ].map(({ key, label, sub }) => (
           <div
             key={key}
-            className="flex items-center justify-between p-4"
+            className="flex items-center justify-between p-3 sm:p-4"
           >
             <div>
               <p className="text-sm font-medium">{label}</p>

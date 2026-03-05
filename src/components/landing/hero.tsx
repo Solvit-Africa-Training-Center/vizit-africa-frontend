@@ -128,7 +128,7 @@ export function Hero() {
             </div>
 
             {/* Headline — sized to impress, not overwhelm */}
-            <div className="font-display text-[2.6rem] sm:text-[3.25rem] md:text-[3.75rem] lg:text-[4.25rem] leading-[0.93] tracking-tight font-light text-white overflow-hidden">
+            <div className="font-display text-[2.2rem] min-[400px]:text-[2.6rem] sm:text-[3.25rem] md:text-[3.75rem] lg:text-[4.25rem] leading-[0.93] tracking-tight font-light text-white overflow-hidden">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={`headline-${slide.id}`}
@@ -161,7 +161,7 @@ export function Hero() {
           </div>
 
           {/* ── RIGHT: CTA + slide nav ───────────────────────────────── */}
-          <div className="flex flex-row-reverse lg:flex-col items-end justify-between lg:justify-end gap-6 lg:gap-7 shrink-0">
+          <div className="flex flex-col lg:flex-col items-start lg:items-end justify-between lg:justify-end gap-6 lg:gap-7 shrink-0 w-full lg:w-auto">
             {/* CTA button */}
             <TripRequestDialog
               open={isDialogOpen}
@@ -170,13 +170,13 @@ export function Hero() {
                 <button
                   type="button"
                   className={cn(
-                    "group flex items-center gap-2.5 px-6 py-3.5 rounded-full",
-                    "bg-primary text-white",
-                    "font-sans font-medium text-[11px] uppercase tracking-widest",
+                    "group flex items-center justify-center gap-2.5 px-8 py-4 lg:px-6 lg:py-3.5 rounded-full",
+                    "bg-primary text-white w-fit lg:w-auto",
+                    "font-sans font-semibold text-[12px] lg:text-[11px] uppercase tracking-widest",
                     "transition-all duration-500",
-                    "shadow-lg",
-                    "hover:shadow-lg",
-                    "hover:-translate-y-px",
+                    "shadow-lg shadow-primary/20",
+                    "hover:shadow-xl hover:shadow-primary/30",
+                    "hover:-translate-y-0.5 active:scale-95",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-black",
                   )}
                 >

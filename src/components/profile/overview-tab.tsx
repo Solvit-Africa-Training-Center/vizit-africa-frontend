@@ -46,14 +46,14 @@ export function OverviewTab({
         <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_top_right,oklch(65%_0.06_245/0.15)_0%,transparent_70%)] pointer-events-none" />
         <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent z-10" />
 
-        <div className="absolute inset-0 z-20 p-8 md:p-12 flex flex-col justify-between text-white">
+        <div className="absolute inset-0 z-20 p-6 sm:p-10 md:p-12 flex flex-col justify-between text-white">
           <div className="flex justify-between items-start">
             <Badge className="bg-primary-light/10 text-primary-light border border-primary-light/20 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] rounded-full">
               {t("overview.nextTrip.label")}
             </Badge>
             {nextTrip ? (
-              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 text-center min-w-24">
-                <p className="text-4xl font-display font-bold leading-none text-primary-light">
+              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-3 sm:p-4 text-center min-w-20 sm:min-w-24">
+                <p className="text-3xl sm:text-4xl font-display font-bold leading-none text-primary-light">
                   {nextTrip.items[0]?.startDate
                     ? differenceInDays(
                         new Date(nextTrip.items[0].startDate),
@@ -61,7 +61,7 @@ export function OverviewTab({
                       )
                     : "-"}
                 </p>
-                <p className="text-[9px] font-bold uppercase tracking-widest mt-1 opacity-70 text-white/80">
+                <p className="text-[8px] sm:text-[9px] font-bold uppercase tracking-widest mt-1 opacity-70 text-white/80">
                   {t("overview.nextTrip.daysLeft")}
                 </p>
               </div>
@@ -70,7 +70,7 @@ export function OverviewTab({
 
           <div className="space-y-6">
             <div>
-              <h2 className="font-display text-4xl md:text-6xl font-medium text-white mb-3 leading-tight text-pretty">
+              <h2 className="font-display text-3xl sm:text-5xl md:text-6xl font-medium text-white mb-3 leading-tight text-pretty">
                 {nextTrip
                   ? nextTrip.status === "paid" ||
                     nextTrip.status === "confirmed"
@@ -177,7 +177,7 @@ export function OverviewTab({
                     </span>
                   </div>
 
-                  <div className="mb-6 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                  <div className="mb-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
                     <div>
                       <span className="block text-[9px] font-bold uppercase tracking-widest text-muted-foreground/60 mb-1">
                         {req.status === "paid"
@@ -309,7 +309,7 @@ export function OverviewTab({
           <h3 className="font-display text-2xl font-medium mb-6 uppercase tracking-tight">
             {t("overview.stats.title")}
           </h3>
-          <div className="grid grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             <div>
               <p className="text-4xl font-display font-medium text-primary">
                 {stats.trips < 10 ? `0${stats.trips}` : stats.trips}

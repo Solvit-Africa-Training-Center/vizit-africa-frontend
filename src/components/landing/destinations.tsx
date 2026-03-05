@@ -78,7 +78,7 @@ export function Destinations() {
           </motion.div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 min-h-[600px] md:aspect-2/1">
+        <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 md:min-h-[600px] md:aspect-2/1">
           {regions.map((region, i) => (
             <Link
               href={`/plan-trip?destination=${encodeURIComponent(region.name)}&source=destinations`}
@@ -91,7 +91,7 @@ export function Destinations() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1, duration: 0.4 }}
                 className={cn(
-                  "group relative overflow-hidden rounded-2xl cursor-pointer focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2",
+                  "group relative overflow-hidden rounded-2xl cursor-pointer focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 h-[320px] md:h-auto",
                   region.className,
                 )}
               >

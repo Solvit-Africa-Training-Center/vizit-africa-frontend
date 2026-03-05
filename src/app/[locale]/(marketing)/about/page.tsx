@@ -49,7 +49,7 @@ export default async function AboutPage() {
               {/* Primary color for first sentence — brand anchor */}
               <span className="text-primary">{t("intro1")}</span> {t("intro2")}
             </p>
-            <p className="text-xl md:text-2xl font-light leading-relaxed mt-10 text-muted-foreground/55 text-pretty">
+            <p className="text-lg md:text-2xl font-light leading-relaxed mt-10 text-muted-foreground/55 text-pretty">
               {t("intro3")}
             </p>
           </div>
@@ -60,10 +60,10 @@ export default async function AboutPage() {
       <section className="marketing-section bg-surface-cream">
         <div className="marketing-container">
           <div className="mb-14 flex flex-col md:flex-row md:items-end justify-between gap-8">
-            <h2 className="font-display text-4xl md:text-5xl font-light uppercase tracking-tight leading-none">
+            <h2 className="font-display text-3xl md:text-5xl font-light uppercase tracking-tight leading-none">
               {t("guidesTitle")}
             </h2>
-            <p className="text-muted-foreground max-w-xs text-base font-light leading-relaxed">
+            <p className="text-muted-foreground/80 max-w-xs text-sm md:text-base font-light leading-relaxed">
               {t("guidesDescription")}
             </p>
           </div>
@@ -71,16 +71,17 @@ export default async function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {teamMembers.map((member) => (
               <div key={member.id} className="group flex flex-col gap-4">
-                <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-surface-bone">
+                <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-surface-bone shadow-md">
                   <Image
                     src={member.image || "/images/guide.jpg"}
                     alt={member.name}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
                 <div className="flex flex-col gap-0.5 px-1">
-                  <h3 className="font-display text-2xl font-light uppercase text-foreground tracking-tight">
+                  <h3 className="font-display text-xl md:text-2xl font-light uppercase text-foreground tracking-tight">
                     {member.name}
                   </h3>
                   {/* Role label — primary mono per design guide */}

@@ -2,8 +2,12 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { RiCarLine, RiCloseLine, RiHotelLine, RiPlaneLine, RiSuitcaseLine, RiUserStarLine } from "@remixicon/react";
 import type { TripItem } from "@/lib/plan_trip-types";
+import { useTranslations } from "next-intl";
 
 export function SelectedServices({ items, removeItem, hasItems }: { items: TripItem[]; removeItem: (id: string) => void; hasItems: boolean }) {
+  const t = useTranslations("PlanTrip.conciergeDialog.sections");
+  const tCommon = useTranslations("Common");
+
   const getItemIcon = (type: string) => {
     switch (type) {
       case "hotel":
@@ -26,7 +30,7 @@ export function SelectedServices({ items, removeItem, hasItems }: { items: TripI
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <h3 className="text-lg font-semibold">
-            Selected Services
+            {t("selected")}
           </h3>
         </div>
         <Badge variant="outline">{items.length} items</Badge>
@@ -37,7 +41,7 @@ export function SelectedServices({ items, removeItem, hasItems }: { items: TripI
           return (
             <div
               key={item.id}
-              className="group p-4 flex items-center gap-4 hover:bg-accent/50 transition-colors relative pr-12"
+              className="group p-3 sm:p-4 flex items-center gap-3 sm:gap-4 hover:bg-accent/50 transition-colors relative pr-10 sm:pr-12"
             >
               <div className="size-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
                 <Icon className="size-5 text-primary" />
@@ -63,7 +67,7 @@ export function SelectedServices({ items, removeItem, hasItems }: { items: TripI
                 }}
               >
                 <RiCloseLine className="size-4" />
-                <span className="sr-only">Remove</span>
+                <span className="sr-only">{tCommon("remove")}</span>
               </Button>
             </div>
           );

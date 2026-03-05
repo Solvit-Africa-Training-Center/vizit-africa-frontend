@@ -76,7 +76,7 @@ export function SettingsTab({ user }: SettingsTabProps) {
         </div>
 
         <div className="pt-8">
-          <Button className="rounded-full px-10 h-12 font-display uppercase tracking-widest text-[10px] font-bold shadow-lg shadow-primary/10 transition-all duration-500 hover:scale-105">
+          <Button className="w-full sm:w-auto rounded-full px-10 h-12 font-display uppercase tracking-widest text-[10px] font-bold shadow-lg shadow-primary/10 transition-all duration-500 hover:scale-105">
             {t("settings.save")}
           </Button>
         </div>

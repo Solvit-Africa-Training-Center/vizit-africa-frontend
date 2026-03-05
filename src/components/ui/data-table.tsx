@@ -152,8 +152,8 @@ export function DataTable<TData, TValue>({
   const isFiltered = state.columnFilters.length > 0;
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between gap-4">
+    <div className="space-y-4 overflow-hidden">
+      <div className="flex items-center justify-between gap-4 overflow-x-auto no-scrollbar pb-1">
         <div className="flex flex-1 items-center space-x-2">
           {searchColumn && (
             <div className="relative">
@@ -200,8 +200,9 @@ export function DataTable<TData, TValue>({
         </div>
       </div>
 
-      <div className="rounded-md border bg-card">
-        <Table>
+      <div className="rounded-md border bg-card overflow-hidden">
+        <div className="overflow-x-auto">
+          <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -248,15 +249,16 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-
-      <div className="flex items-center justify-between px-2">
-        <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
-        <div className="flex items-center space-x-6 lg:space-x-8">
-          <div className="flex items-center space-x-2">
-            <Label className="text-sm font-medium">Rows per page</Label>
+    </div>
+<div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-2">
+  <div className="flex-1 text-sm text-muted-foreground whitespace-nowrap">
+    {table.getFilteredSelectedRowModel().rows.length} of{" "}
+    {table.getFilteredRowModel().rows.length} row(s) selected.
+  </div>
+  <div className="flex flex-wrap items-center justify-center sm:justify-end gap-4 sm:gap-6 lg:gap-8 w-full sm:w-auto">
+    <div className="flex items-center space-x-2">
+      <Label className="text-sm font-medium whitespace-nowrap">Rows per page</Label>
+...
             <Select
               value={`${state.pagination.pageSize}`}
               onValueChange={(value) => {

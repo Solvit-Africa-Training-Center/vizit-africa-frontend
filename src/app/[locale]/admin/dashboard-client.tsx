@@ -89,17 +89,17 @@ export default function DashboardClient({ requests }: DashboardClientProps) {
         ))}
       </div>
 
-      <div className="flex items-center gap-2 mb-6">
+      <div className="flex items-center gap-2 mb-6 overflow-x-auto no-scrollbar pb-1">
         <Link
           href="/admin"
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium"
+          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium whitespace-nowrap shrink-0"
         >
           <RiDashboardLine className="size-4" />
           {t("overview")}
         </Link>
         <Link
           href="/admin/requests"
-          className="flex items-center gap-2 px-4 py-2 rounded-lg text-muted-foreground hover:bg-muted text-sm font-medium transition-colors"
+          className="flex items-center gap-2 px-4 py-2 rounded-lg text-muted-foreground hover:bg-muted text-sm font-medium transition-colors whitespace-nowrap shrink-0"
         >
           <RiFileListLine className="size-4" />
           {t("requests")}
@@ -125,10 +125,10 @@ export default function DashboardClient({ requests }: DashboardClientProps) {
             requests.slice(0, 10).map((request) => (
               <div
                 key={request.id}
-                className="p-5 flex items-center justify-between hover:bg-muted/50 transition-colors"
+                className="p-5 flex flex-col sm:flex-row sm:items-center justify-between hover:bg-muted/50 transition-colors gap-4"
               >
                 <div className="flex items-center gap-4">
-                  <div className="size-10 rounded-full bg-primary/10 flex items-center justify-center">
+                  <div className="size-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
                     <span className="text-sm font-medium text-primary">
                       {(request.name || "")
                         .split(" ")
@@ -148,11 +148,11 @@ export default function DashboardClient({ requests }: DashboardClientProps) {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4">
+                <div className="flex items-center justify-between sm:justify-end gap-4 w-full sm:w-auto pl-14 sm:pl-0">
                   <span
-                    className={`text-xs font-medium px-2 py-1 rounded-full capitalize ${
+                    className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${
                       request.status === "pending"
-                        ? "bg-primary-100 text-primary-700"
+                        ? "bg-primary/10 text-primary"
                         : request.status === "quoted"
                           ? "bg-blue-100 text-blue-700"
                           : request.status === "accepted"
@@ -166,7 +166,7 @@ export default function DashboardClient({ requests }: DashboardClientProps) {
                   </span>
                   <Link
                     href={`/admin/packages/${request.id}`}
-                    className="text-sm text-primary hover:underline"
+                    className="text-xs font-mono font-bold uppercase tracking-widest text-primary hover:underline"
                   >
                     {request.status === "pending"
                       ? t("recentRequests.createPackage")

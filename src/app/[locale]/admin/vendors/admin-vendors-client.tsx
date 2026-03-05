@@ -53,7 +53,7 @@ export default function AdminVendorsClient({
   ];
 
   return (
-    <div className="mx-auto max-w-9xl px-5 md:px-10 py-8">
+    <div className="mx-auto max-w-7xl px-5 md:px-10 py-8">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
         <div>
           <h1 className="font-display text-2xl md:text-3xl font-medium text-foreground">
@@ -65,11 +65,11 @@ export default function AdminVendorsClient({
         </div>
       </div>
 
-      <div className="flex gap-2 mb-6 border-b border-border pb-1">
+      <div className="flex gap-2 mb-6 border-b border-border pb-1 overflow-x-auto no-scrollbar">
         <button
           type="button"
           onClick={() => setActiveTab("active")}
-          className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors flex items-center gap-2 ${
+          className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap shrink-0 ${
             activeTab === "active"
               ? "border-primary text-primary"
               : "border-transparent text-muted-foreground hover:text-foreground"
@@ -84,7 +84,7 @@ export default function AdminVendorsClient({
         <button
           type="button"
           onClick={() => setActiveTab("pending")}
-          className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors flex items-center gap-2 ${
+          className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap shrink-0 ${
             activeTab === "pending"
               ? "border-primary text-primary"
               : "border-transparent text-muted-foreground hover:text-foreground"
