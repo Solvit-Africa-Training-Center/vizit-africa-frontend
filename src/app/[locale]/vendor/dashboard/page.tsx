@@ -108,23 +108,23 @@ export default async function VendorDashboardPage({
     <div className="min-h-screen bg-background pt-24 md:pt-32">
       <div className="marketing-container space-y-12 pb-24">
         {/* Header */}
-        <header className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-border/50 pb-12">
+        <header className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-border/50 pb-8 sm:pb-12">
           <div>
             <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-primary font-bold mb-4 block">
               {t("overline")}
             </span>
-            <h1 className="text-4xl md:text-6xl font-display font-medium uppercase tracking-tighter leading-[0.9]">
+            <h1 className="text-3xl sm:text-6xl font-display font-medium uppercase tracking-tighter leading-[0.9]">
               {t("title")}
             </h1>
-            <p className="text-muted-foreground mt-6 text-lg font-light text-pretty">
+            <p className="text-muted-foreground mt-6 text-base sm:text-lg font-light text-pretty">
               {t("welcome", { businessName: vendorProfile.businessName })}
             </p>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
             <Link 
               href="/" 
               className={cn(
-                "h-12 px-6 rounded-full border border-border/50 flex items-center justify-center text-[10px] font-mono uppercase tracking-[0.2em] font-bold hover:bg-muted transition-all duration-300"
+                "h-12 px-6 rounded-full border border-border/50 flex items-center justify-center text-[10px] font-mono uppercase tracking-[0.2em] font-bold hover:bg-muted transition-all duration-300 w-full sm:w-auto"
               )}
             >
               {t("actions.publicSite")}
@@ -132,7 +132,7 @@ export default async function VendorDashboardPage({
             <Link
               href="/profile"
               className={cn(
-                "h-12 px-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-[10px] font-mono uppercase tracking-[0.2em] font-bold shadow-lg shadow-primary/20 hover:scale-105 transition-all duration-500"
+                "h-12 px-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-[10px] font-mono uppercase tracking-[0.2em] font-bold shadow-lg shadow-primary/20 hover:scale-105 transition-all duration-500 w-full sm:w-auto"
               )}
             >
               {t("actions.myProfile")}
@@ -213,15 +213,15 @@ function StatCard({
   };
 
   return (
-    <div className="bg-card border border-border/50 rounded-[2rem] p-8 shadow-card flex items-center gap-6 group hover:border-primary/30 transition-all duration-500">
-      <div className={cn("size-16 rounded-2xl flex items-center justify-center shrink-0 transition-transform duration-500 group-hover:scale-110 border", colors[color])}>
-        <Icon className="size-8" />
+    <div className="bg-card border border-border/50 rounded-2xl sm:rounded-[2rem] p-6 sm:p-8 shadow-card flex items-center gap-4 sm:gap-6 group hover:border-primary/30 transition-all duration-500">
+      <div className={cn("size-12 sm:size-16 rounded-xl sm:rounded-2xl flex items-center justify-center shrink-0 transition-transform duration-500 group-hover:scale-110 border", colors[color])}>
+        <Icon className="size-6 sm:size-8" />
       </div>
       <div>
         <h3 className="text-[10px] font-mono uppercase tracking-[0.2em] text-muted-foreground font-bold mb-1">
           {label}
         </h3>
-        <p className="text-4xl font-display font-medium tracking-tighter">
+        <p className="text-3xl sm:text-4xl font-display font-medium tracking-tighter">
           {value}
         </p>
       </div>

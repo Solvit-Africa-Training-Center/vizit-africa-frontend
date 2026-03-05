@@ -25,15 +25,15 @@ export function SocialProof() {
       <div className="flex items-center w-full">
         {/* Static prefix label */}
         <div
-          className="bg-surface-muted z-20 border-r border-white/[0.06] flex items-center gap-2.5 shrink-0"
-          style={{ paddingLeft: "var(--container-px)", paddingRight: "1.5rem" }}
+          className="bg-surface-muted z-20 border-r border-white/[0.06] flex items-center gap-1.5 md:gap-2.5 shrink-0"
+          style={{ paddingLeft: "var(--container-px)", paddingRight: "1rem" }}
         >
           {/* Amber pulse = "live" signal */}
-          <span className="relative flex size-1.5 shrink-0">
+          <span className="relative flex size-1 md:size-1.5 shrink-0">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-60" />
-            <span className="relative inline-flex rounded-full size-1.5 bg-primary" />
+            <span className="relative inline-flex rounded-full size-1 md:size-1.5 bg-primary" />
           </span>
-          <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-white/40 whitespace-nowrap">
+          <span className="text-[9px] md:text-[10px] font-mono uppercase tracking-[0.18em] md:tracking-[0.22em] text-white/40 whitespace-nowrap">
             {t("tagline") || "Partnered With"}
           </span>
         </div>

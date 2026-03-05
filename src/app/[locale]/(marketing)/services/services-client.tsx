@@ -96,27 +96,27 @@ export default function ServicesClient({
       />
 
       <div className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-border/50">
-        <div className="marketing-container py-6 flex flex-col md:flex-row gap-8 md:items-center justify-between">
+        <div className="marketing-container py-4 md:py-6 flex flex-col md:flex-row gap-4 md:gap-8 md:items-center justify-between">
           <div className="relative w-full md:w-auto md:min-w-[400px]">
-            <RiSearchLine className="absolute left-0 top-1/2 -translate-y-1/2 text-muted-foreground size-5" />
+            <RiSearchLine className="absolute left-0 top-1/2 -translate-y-1/2 text-muted-foreground size-4 md:size-5" />
             <input
               type="text"
               placeholder={t("searchPlaceholder")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-transparent border-none pl-8 py-2 text-xl focus:ring-0 focus:outline-hidden placeholder:text-muted-foreground/30 font-light"
+              className="w-full bg-transparent border-none pl-7 md:pl-8 py-1.5 md:py-2 text-lg md:text-xl focus:ring-0 focus:outline-hidden placeholder:text-muted-foreground/30 font-light"
             />
           </div>
 
-          <div className="flex flex-col md:flex-row gap-8 md:items-center w-full md:w-auto overflow-x-auto pb-2 md:pb-0 no-scrollbar">
-            <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row gap-4 md:gap-8 md:items-center w-full md:w-auto">
+            <div className="flex items-center gap-2 md:gap-3 overflow-x-auto no-scrollbar pb-1 sm:pb-0">
               {categories.map((cat) => (
                 <button
                   type="button"
                   key={cat.value}
                   onClick={() => setActiveCategory(cat.value)}
                   className={cn(
-                    "px-6 py-2 rounded-full text-[10px] font-mono uppercase tracking-[0.2em] border transition-all whitespace-nowrap",
+                    "px-4 md:px-6 py-1.5 md:py-2 rounded-full text-[9px] md:text-[10px] font-mono uppercase tracking-[0.2em] border transition-all whitespace-nowrap",
                     activeCategory === cat.value
                       ? "bg-foreground text-background border-foreground"
                       : "border-border/50 text-muted-foreground hover:border-foreground/50 hover:text-foreground",
@@ -127,17 +127,17 @@ export default function ServicesClient({
               ))}
             </div>
 
-            <div className="h-8 w-px bg-border/50 hidden md:block" />
+            <div className="hidden sm:block h-6 md:h-8 w-px bg-border/50" />
 
-            <div className="flex items-center gap-4 shrink-0">
-              <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-muted-foreground hidden md:inline font-bold">
+            <div className="flex items-center gap-3 md:gap-4 shrink-0 justify-between sm:justify-start">
+              <span className="text-[9px] md:text-[10px] font-mono uppercase tracking-[0.2em] text-muted-foreground font-bold">
                 {t("sort")}
               </span>
               <Select
                 value={sortBy}
                 onValueChange={(value) => setSortBy(value as SortOption)}
               >
-                <SelectTrigger className="w-[200px] bg-transparent border-none text-xs font-mono uppercase tracking-[0.2em] focus:ring-0 text-foreground ring-0 shadow-none px-0 gap-3">
+                <SelectTrigger className="w-auto min-w-[140px] md:w-[200px] bg-transparent border-none text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] focus:ring-0 text-foreground ring-0 shadow-none px-0 gap-2 md:gap-3">
                   <SelectValue placeholder={t("sort")} />
                 </SelectTrigger>
                 <SelectContent>

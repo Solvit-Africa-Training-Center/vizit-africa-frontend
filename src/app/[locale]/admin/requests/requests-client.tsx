@@ -6,7 +6,7 @@ import { useState } from "react";
 import { DataTable, type DataTableState } from "@/components/ui/data-table";
 import { createDefaultDataTableState } from "@/components/ui/data-table-state";
 import { Link } from "@/i18n/navigation";
-import { bookingSchema, type Booking } from "@/lib/unified-types";
+import { type Booking } from "@/lib/unified-types";
 import { columns } from "./columns";
 
 interface RequestsClientProps {
@@ -39,7 +39,7 @@ export default function RequestsClient({ requests }: RequestsClientProps) {
   ];
 
   return (
-    <div className="mx-auto max-w-9xl px-5 md:px-10 py-8">
+    <div className="mx-auto max-w-7xl px-5 md:px-10 py-8">
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="font-display text-2xl md:text-3xl font-medium text-foreground">
@@ -49,17 +49,17 @@ export default function RequestsClient({ requests }: RequestsClientProps) {
         </div>
       </div>
 
-      <div className="flex items-center gap-2 mb-6">
+      <div className="flex items-center gap-2 mb-6 overflow-x-auto no-scrollbar pb-1">
         <Link
           href="/admin"
-          className="flex items-center gap-2 px-4 py-2 rounded-lg text-muted-foreground hover:bg-muted text-sm font-medium transition-colors"
+          className="flex items-center gap-2 px-4 py-2 rounded-lg text-muted-foreground hover:bg-muted text-sm font-medium transition-colors whitespace-nowrap shrink-0"
         >
           <RiDashboardLine className="size-4" />
           {tNav("overview")}
         </Link>
         <Link
           href="/admin/requests"
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium"
+          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium whitespace-nowrap shrink-0"
         >
           <RiFileListLine className="size-4" />
           {tNav("requests")}

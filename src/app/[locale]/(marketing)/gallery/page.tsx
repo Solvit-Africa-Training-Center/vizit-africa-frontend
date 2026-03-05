@@ -156,25 +156,27 @@ export default function GalleryPage() {
           layout="split"
           className="pt-24 md:pt-32"
         >
-          <div className="flex flex-col items-start md:items-end gap-2 min-w-[200px]">
+          <div className="flex flex-col items-start md:items-end gap-2 w-full md:w-auto overflow-hidden">
             <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-primary mb-2">
               {t("filterBy")}
             </span>
-            {categories.map((cat) => (
-              <button
-                type="button"
-                key={cat.value}
-                onClick={() => setActiveTab(cat.value)}
-                className={cn(
-                  "text-xl md:text-2xl font-display font-medium uppercase tracking-tight transition-all duration-300 hover:translate-x-2 md:hover:-translate-x-2",
-                  activeTab === cat.value
-                    ? "text-foreground"
-                    : "text-muted-foreground/30 hover:text-foreground",
-                )}
-              >
-                {cat.label}
-              </button>
-            ))}
+            <div className="flex md:flex-col items-center md:items-end gap-4 md:gap-2 overflow-x-auto no-scrollbar w-full md:w-auto pb-2 md:pb-0">
+              {categories.map((cat) => (
+                <button
+                  type="button"
+                  key={cat.value}
+                  onClick={() => setActiveTab(cat.value)}
+                  className={cn(
+                    "text-lg md:text-2xl font-display font-medium uppercase tracking-tight transition-all duration-300 whitespace-nowrap md:hover:translate-x-2 md:hover:-translate-x-2",
+                    activeTab === cat.value
+                      ? "text-foreground"
+                      : "text-muted-foreground/30 hover:text-foreground",
+                  )}
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </div>
           </div>
         </PageHeader>
 
@@ -210,7 +212,7 @@ export default function GalleryPage() {
           <div className="marketing-container">
             <motion.div
               layout
-              className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6"
+              className="columns-1 md:columns-2 lg:columns-3 gap-4 sm:gap-6 space-y-4 sm:space-y-6"
             >
               <AnimatePresence mode="popLayout">
                 {filteredImages.map((img, index) => (
@@ -239,18 +241,18 @@ export default function GalleryPage() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute top-6 right-6 text-primary-foreground/50 hover:text-primary-foreground transition-colors p-4 z-50 group"
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 text-primary-foreground/50 hover:text-primary-foreground transition-colors p-2 sm:p-4 z-50 group"
               onClick={() => setSelectedImage(null)}
             >
-              <RiCloseLine className="size-10 group-hover:rotate-90 transition-transform duration-300" />
+              <RiCloseLine className="size-8 sm:size-10 group-hover:rotate-90 transition-transform duration-300" />
             </motion.button>
 
             <motion.div
               layoutId={`image-${selectedImage.id}`}
-              className="relative w-full max-w-7xl max-h-[90vh] aspect-[16/9] md:aspect-auto h-full flex items-center justify-center"
+              className="relative w-full max-w-7xl h-full flex items-center justify-center"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="relative w-full h-full rounded-sm overflow-hidden shadow-2xl">
+              <div className="relative w-full h-full rounded-sm overflow-hidden shadow-2xl flex items-center justify-center">
                 <Image
                   src={selectedImage.src}
                   alt={selectedImage.alt}
@@ -260,16 +262,16 @@ export default function GalleryPage() {
                   priority
                 />
 
-                <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 bg-linear-to-t from-black/90 via-black/50 to-transparent">
+                <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 md:p-12 bg-linear-to-t from-black/90 via-black/50 to-transparent">
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
                   >
-                    <span className="text-primary-foreground/60 font-mono uppercase tracking-widest text-sm mb-2 block">
+                    <span className="text-primary-foreground/60 font-mono uppercase tracking-widest text-xs sm:text-sm mb-1 sm:mb-2 block">
                       {selectedImage.category} • {selectedImage.caption}
                     </span>
-                    <h2 className="text-primary-light font-display text-4xl md:text-5xl font-medium uppercase">
+                    <h2 className="text-primary-light font-display text-3xl sm:text-4xl md:text-5xl font-medium uppercase leading-tight">
                       {selectedImage.alt}
                     </h2>
                   </motion.div>

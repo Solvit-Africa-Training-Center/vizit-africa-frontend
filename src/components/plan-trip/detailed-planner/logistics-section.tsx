@@ -18,46 +18,46 @@ export function LogisticsSection({
   const today = new Date().toISOString().split("T")[0];
 
   return (
-    <section className="space-y-8">
+    <section className="space-y-6 sm:space-y-8">
       <div className="flex items-center gap-3">
-        <div className="size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-mono text-xs font-bold border border-primary/20">
+        <div className="size-9 sm:size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-mono text-xs font-bold border border-primary/20">
           {t("step")}
         </div>
-        <h3 className="font-display text-2xl font-medium uppercase tracking-tight">
+        <h3 className="font-display text-xl sm:text-2xl font-medium uppercase tracking-tight">
           {t("title")}
         </h3>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-8 pl-14">
-        <div className="space-y-3">
+      <div className="grid md:grid-cols-2 gap-6 sm:gap-8 md:pl-14">
+        <div className="space-y-2 sm:space-y-3">
           <Label className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground/60">
             {t("destination")}
           </Label>
           <div className="relative">
-            <RiMapPinLine className="absolute left-0 top-1/2 -translate-y-1/2 size-5 text-primary" />
+            <RiMapPinLine className="absolute left-0 top-1/2 -translate-y-1/2 size-4 sm:size-5 text-primary" />
             <input
               placeholder={t("destinationPlaceholder")}
               value={tripInfo.destination || ""}
               onChange={(e) => updateTripInfo({ destination: e.target.value })}
-              className="w-full bg-transparent border-none pl-8 py-4 text-xl focus:ring-0 focus:outline-hidden placeholder:text-muted-foreground/20 font-light"
+              className="w-full bg-transparent border-none pl-7 sm:pl-8 py-2.5 sm:py-4 text-lg sm:text-xl focus:ring-0 focus:outline-hidden placeholder:text-muted-foreground/20 font-light"
             />
             <div className="absolute bottom-0 left-0 right-0 h-px bg-linear-to-r from-primary/40 to-transparent" />
           </div>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-2 sm:space-y-3">
           <Label className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground/60">
             {t("origin")}
           </Label>
           <div className="relative">
-            <RiPlaneLine className="absolute left-0 top-1/2 -translate-y-1/2 size-5 text-muted-foreground/40" />
+            <RiPlaneLine className="absolute left-0 top-1/2 -translate-y-1/2 size-4 sm:size-5 text-muted-foreground/40" />
             <input
               placeholder={t("originPlaceholder")}
               value={tripInfo.departureCity || ""}
               onChange={(e) =>
                 updateTripInfo({ departureCity: e.target.value })
               }
-              className="w-full bg-transparent border-none pl-8 py-4 text-xl focus:ring-0 focus:outline-hidden placeholder:text-muted-foreground/20 font-light"
+              className="w-full bg-transparent border-none pl-7 sm:pl-8 py-2.5 sm:py-4 text-lg sm:text-xl focus:ring-0 focus:outline-hidden placeholder:text-muted-foreground/20 font-light"
             />
             <div className="absolute bottom-0 left-0 right-0 h-px bg-border/50" />
           </div>
@@ -77,13 +77,13 @@ export function LogisticsSection({
                   arrivalDate: e.target.value,
                 })
               }
-              className="flex-1 bg-muted/30 border border-border/50 rounded-xl px-4 py-3 text-sm focus:border-primary transition-colors"
+              className="flex-1 bg-muted/30 border border-border/50 rounded-xl px-4 py-2.5 sm:py-3 text-sm focus:border-primary transition-colors"
             />
             <input
               type="time"
               value={tripInfo.arrivalTime || ""}
               onChange={(e) => updateTripInfo({ arrivalTime: e.target.value })}
-              className="w-32 bg-muted/30 border border-border/50 rounded-xl px-4 py-3 text-sm focus:border-primary transition-colors"
+              className="w-32 bg-muted/30 border border-border/50 rounded-xl px-4 py-2.5 sm:py-3 text-sm focus:border-primary transition-colors"
             />
           </div>
         </div>
@@ -102,13 +102,13 @@ export function LogisticsSection({
                   departureDate: e.target.value,
                 })
               }
-              className="flex-1 bg-muted/30 border border-border/50 rounded-xl px-4 py-3 text-sm focus:border-primary transition-colors"
+              className="flex-1 bg-muted/30 border border-border/50 rounded-xl px-4 py-2.5 sm:py-3 text-sm focus:border-primary transition-colors"
             />
             <input
               type="time"
               value={tripInfo.departureTime || ""}
               onChange={(e) => updateTripInfo({ departureTime: e.target.value })}
-              className="w-32 bg-muted/30 border border-border/50 rounded-xl px-4 py-3 text-sm focus:border-primary transition-colors"
+              className="w-32 bg-muted/30 border border-border/50 rounded-xl px-4 py-2.5 sm:py-3 text-sm focus:border-primary transition-colors"
             />
           </div>
         </div>

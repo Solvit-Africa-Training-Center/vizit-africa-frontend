@@ -110,9 +110,9 @@ export default function PlanTripClient({
             </Button>
           </div>
 
-          <div className="grid lg:grid-cols-12 gap-12 items-start">
+          <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-start">
             {/* Left Column: Logistics & Details */}
-            <div className="lg:col-span-7 space-y-12">
+            <div className="lg:col-span-7 space-y-10 lg:space-y-12">
               <LogisticsSection
                 tripInfo={planTrip.tripInfo}
                 updateTripInfo={planTrip.updateTripInfo}
@@ -125,7 +125,7 @@ export default function PlanTripClient({
             </div>
 
             {/* Right Column: Collection & Identity */}
-            <div className="lg:col-span-5 space-y-8 sticky top-32">
+            <div className="lg:col-span-5 space-y-8 lg:sticky lg:top-32">
               <TripSummaryCard
                 tripInfo={planTrip.tripInfo}
                 items={planTrip.items}

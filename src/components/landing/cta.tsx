@@ -60,7 +60,7 @@ export function CTA() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="font-display text-white text-5xl md:text-6xl lg:text-7xl font-medium leading-[0.9] tracking-tighter mb-8"
+              className="font-display text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium leading-[0.9] tracking-tighter mb-8"
             >
               <span className="block uppercase">{t("title")}</span>
               <span className="block text-primary-light italic mt-2">

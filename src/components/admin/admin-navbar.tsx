@@ -45,15 +45,13 @@ export function AdminNavbar() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
       <div className="flex h-16 items-center px-5 md:px-10">
-        <div className="mr-8 hidden md:flex">
-          <Link href="/admin" className="mr-6 flex items-center space-x-2">
-            <span className="font-display text-xl font-medium text-primary">
-              {t("brand")}
-            </span>
+        <div className="flex md:hidden mr-4">
+          <Link href="/admin">
+            <span className="font-display text-lg font-bold text-primary">VA</span>
           </Link>
         </div>
 
-        <nav className="flex items-center space-x-6 text-sm font-medium flex-1">
+        <nav className="flex items-center space-x-1 sm:space-x-2 flex-1 overflow-x-auto no-scrollbar py-1 mr-2 sm:mr-4">
           {adminLinks.map((link) => {
             const Icon = link.icon;
             const isActive =
@@ -65,29 +63,33 @@ export function AdminNavbar() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "flex items-center gap-2 transition-colors hover:text-foreground/80",
+                  "flex items-center gap-2 px-3 py-2 rounded-full transition-all whitespace-nowrap text-[10px] sm:text-xs font-bold uppercase tracking-wider",
                   isActive
-                    ? "text-foreground font-semibold"
-                    : "text-foreground/60",
+                    ? "bg-primary/10 text-primary"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground",
                 )}
               >
-                <Icon className="size-4" />
-                <span className="hidden md:inline-block">{link.label}</span>
+                <Icon className="size-3.5 sm:size-4" />
+                <span className="hidden lg:inline-block">{link.label}</span>
+                {/* Show label on tablet/mobile if space allows, but keep it tight */}
+                <span className="inline-block lg:hidden">
+                  {link.label === t("overview") ? "" : link.label.slice(0, 3)}
+                </span>
               </Link>
             );
           })}
         </nav>
 
-        <div className="flex items-center gap-2 md:gap-4">
+        <div className="flex items-center gap-1 sm:gap-2">
           <DropdownMenu>
             <DropdownMenuTrigger
               render={
-                <Button variant="ghost" size="sm" className="gap-2 h-9 px-3">
+                <Button variant="ghost" size="sm" className="size-9 p-0 sm:w-auto sm:px-3 sm:gap-2 rounded-full">
                   <RiAddLine className="size-4" />
-                  <span className="hidden sm:inline font-medium">
+                  <span className="hidden xl:inline font-bold text-[10px] uppercase tracking-widest">
                     {t("create")}
                   </span>
-                  <RiArrowDownSLine className="size-4 opacity-50" />
+                  <RiArrowDownSLine className="size-3 opacity-50 hidden sm:inline" />
                 </Button>
               }
             />
@@ -109,14 +111,15 @@ export function AdminNavbar() {
 
           <LanguageSwitcher variant={"default"} />
           <Link href="/">
-            <Button variant="ghost" size="sm" className="text-muted-foreground">
-              <span className="hidden sm:inline">{t("publicSite")}</span>
+            <Button variant="ghost" size="sm" className="size-9 p-0 sm:w-auto sm:px-3 text-muted-foreground rounded-full">
+              <RiStoreLine className="size-4 sm:hidden" />
+              <span className="hidden sm:inline font-bold text-[10px] uppercase tracking-widest">{t("publicSite")}</span>
             </Button>
           </Link>
           <Button
             variant="ghost"
             size="icon"
-            className="text-muted-foreground hover:text-destructive"
+            className="size-9 rounded-full text-muted-foreground hover:text-destructive"
             onClick={async () => {
               try {
                 await import("@/actions/auth").then((mod) => mod.logout());
@@ -126,7 +129,7 @@ export function AdminNavbar() {
               }
             }}
           >
-            <RiLogoutBoxRLine />
+            <RiLogoutBoxRLine className="size-4" />
             <span className="sr-only">{t("logout")}</span>
           </Button>
         </div>

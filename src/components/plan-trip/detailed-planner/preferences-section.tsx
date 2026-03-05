@@ -22,6 +22,7 @@ import {
   NumberFieldInput,
 } from "@/components/ui/number-field";
 import type { TripInfo } from "@/lib/plan_trip-types";
+import { cn } from "@/lib/utils";
 
 interface PreferencesSectionProps {
   tripInfo: TripInfo;
@@ -37,20 +38,21 @@ export function PreferencesSection({
   const tDetails = useTranslations("PlanTrip.tripDetails");
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-10 sm:space-y-12">
       {/* Personalized Curation */}
-      <section className="space-y-8">
+      <section className="space-y-6 sm:space-y-8">
         <div className="flex items-center gap-3">
-          <div className="size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-mono text-xs font-bold border border-primary/20">
+          <div className="size-9 sm:size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-mono text-xs font-bold border border-primary/20">
             {tCuration("step")}
           </div>
-          <h3 className="font-display text-2xl font-medium uppercase tracking-tight">
+          <h3 className="font-display text-xl sm:text-2xl font-medium uppercase tracking-tight">
             {tCuration("title")}
           </h3>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-6 pl-14">
-          <div className="p-5 rounded-2xl border border-border/50 bg-muted/10 space-y-4 transition-all hover:border-primary/20">
+        <div className="grid sm:grid-cols-2 gap-4 sm:gap-6 md:pl-14">
+          {/* Flights */}
+          <div className="p-4 sm:p-5 rounded-2xl border border-border/50 bg-muted/10 space-y-4 transition-all hover:border-primary/20">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <RiPlaneLine className="size-5 text-primary" />
@@ -82,7 +84,8 @@ export function PreferencesSection({
             )}
           </div>
 
-          <div className="p-5 rounded-2xl border border-border/50 bg-muted/10 space-y-4 transition-all hover:border-primary/20">
+          {/* Accommodation */}
+          <div className="p-4 sm:p-5 rounded-2xl border border-border/50 bg-muted/10 space-y-4 transition-all hover:border-primary/20">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <RiHotelLine className="size-5 text-primary" />
@@ -112,7 +115,8 @@ export function PreferencesSection({
             )}
           </div>
 
-          <div className="p-5 rounded-2xl border border-border/50 bg-muted/10 space-y-4 transition-all hover:border-primary/20">
+          {/* Transport */}
+          <div className="p-4 sm:p-5 rounded-2xl border border-border/50 bg-muted/10 space-y-4 transition-all hover:border-primary/20">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <RiCarLine className="size-5 text-primary" />
@@ -142,7 +146,8 @@ export function PreferencesSection({
             )}
           </div>
 
-          <div className="p-5 rounded-2xl border border-border/50 bg-muted/10 space-y-4 transition-all hover:border-primary/20">
+          {/* Local Guide */}
+          <div className="p-4 sm:p-5 rounded-2xl border border-border/50 bg-muted/10 space-y-4 transition-all hover:border-primary/20">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <RiUserStarLine className="size-5 text-primary" />
@@ -155,84 +160,84 @@ export function PreferencesSection({
                 onCheckedChange={(v) => updateTripInfo({ needsGuide: v })}
               />
             </div>
-                                {tripInfo.needsGuide && (
-                                  <Select
-                                    value={tripInfo.guideLanguages?.[0] || ""}
-                                    onValueChange={(v) => updateTripInfo({ guideLanguages: v ? [v] : [] })}
-                                  >
-                                    <SelectTrigger className="h-10 bg-background border-border/50 text-xs">
-                                      <SelectValue placeholder={tCuration("primaryLanguagePlaceholder")} />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                      <SelectItem value="English">{tCuration("languageOptions.English")}</SelectItem>
-                                      <SelectItem value="French">{tCuration("languageOptions.French")}</SelectItem>
-                                      <SelectItem value="German">{tCuration("languageOptions.German")}</SelectItem>
-                                      <SelectItem value="Spanish">{tCuration("languageOptions.Spanish")}</SelectItem>
-                                    </SelectContent>
-                                  </Select>
-                                )}
-                              </div>
-                            </div>
-                          </section>
-            
-                          {/* Party & Purpose */}
-                          <section className="space-y-8">
-                            <div className="flex items-center gap-3">
-                              <div className="size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-mono text-xs font-bold border border-primary/20">
-                                {tPurpose("step")}
-                              </div>
-                              <h3 className="font-display text-2xl font-medium uppercase tracking-tight">
-                                {tPurpose("title")}
-                              </h3>
-                            </div>
-            
-                            <div className="grid md:grid-cols-2 gap-12 pl-14">
-                              <div className="space-y-4">
-                                <Label className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground/60">
-                                  {tPurpose("travelers")}
-                                </Label>
-                                <div className="grid grid-cols-3 gap-4">
-                                  {["adults", "children", "infants"].map((key) => (
-                                    <div key={key} className="space-y-1.5">
-                                      <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-tighter">
-                                        {tDetails(key)}
-                                      </p>
-                                      <NumberField
-                                        min={key === "adults" ? 1 : 0}
-                                        value={(tripInfo as any)[key] ?? 0}
-                                        onValueChange={(val) => updateTripInfo({ [key]: val ?? 0 })}
-                                      >
-                                        <NumberFieldGroup className="h-10 bg-muted/20 border-border/50">
-                                          <NumberFieldInput className="text-sm font-medium" />
-                                        </NumberFieldGroup>
-                                      </NumberField>
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-            
-                              <div className="space-y-4">
-                                <Label className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground/60">
-                                  {tPurpose("tripStyle")}
-                                </Label>
-                                <Select
-                                  value={tripInfo.tripPurpose || ""}
-                                  onValueChange={(v) => updateTripInfo({ tripPurpose: v ?? undefined })}
-                                >
-                                  <SelectTrigger className="h-12 rounded-xl bg-muted/30 border-border/50 text-sm">
-                                    <SelectValue placeholder={tPurpose("vibePlaceholder")} />
-                                  </SelectTrigger>
-                                  <SelectContent>
-                                    <SelectItem value="leisure">{tPurpose("tripStyleOptions.leisure")}</SelectItem>
-                                    <SelectItem value="adventure">{tPurpose("tripStyleOptions.adventure")}</SelectItem>
-                                    <SelectItem value="business">{tPurpose("tripStyleOptions.business")}</SelectItem>
-                                    <SelectItem value="cultural">{tPurpose("tripStyleOptions.cultural")}</SelectItem>
-                                    <SelectItem value="honeymoon">{tPurpose("tripStyleOptions.honeymoon")}</SelectItem>
-                                  </SelectContent>
-                                </Select>
-                              </div>
-                            </div>
-                          </section>
-                        </div>
-                      );
-                    }
+            {tripInfo.needsGuide && (
+              <Select
+                value={tripInfo.guideLanguages?.[0] || ""}
+                onValueChange={(v) => updateTripInfo({ guideLanguages: v ? [v] : [] })}
+              >
+                <SelectTrigger className="h-10 bg-background border-border/50 text-xs">
+                  <SelectValue placeholder={tCuration("primaryLanguagePlaceholder")} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="English">{tCuration("languageOptions.English")}</SelectItem>
+                  <SelectItem value="French">{tCuration("languageOptions.French")}</SelectItem>
+                  <SelectItem value="German">{tCuration("languageOptions.German")}</SelectItem>
+                  <SelectItem value="Spanish">{tCuration("languageOptions.Spanish")}</SelectItem>
+                </SelectContent>
+              </Select>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Party & Purpose */}
+      <section className="space-y-6 sm:space-y-8">
+        <div className="flex items-center gap-3">
+          <div className="size-9 sm:size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-mono text-xs font-bold border border-primary/20">
+            {tPurpose("step")}
+          </div>
+          <h3 className="font-display text-xl sm:text-2xl font-medium uppercase tracking-tight">
+            {tPurpose("title")}
+          </h3>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8 md:pl-14">
+          <div className="space-y-4">
+            <Label className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground/60">
+              {tPurpose("travelers")}
+            </Label>
+            <div className="grid grid-cols-3 gap-3 sm:gap-4">
+              {["adults", "children", "infants"].map((key) => (
+                <div key={key} className="space-y-1.5">
+                  <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-tighter">
+                    {tDetails(key)}
+                  </p>
+                  <NumberField
+                    min={key === "adults" ? 1 : 0}
+                    value={(tripInfo as any)[key] ?? 0}
+                    onValueChange={(val) => updateTripInfo({ [key]: val ?? 0 })}
+                  >
+                    <NumberFieldGroup className="h-9 sm:h-10 bg-muted/20 border-border/50">
+                      <NumberFieldInput className="text-xs sm:text-sm font-medium" />
+                    </NumberFieldGroup>
+                  </NumberField>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <Label className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground/60">
+              {tPurpose("tripStyle")}
+            </Label>
+            <Select
+              value={tripInfo.tripPurpose || ""}
+              onValueChange={(v) => updateTripInfo({ tripPurpose: v ?? undefined })}
+            >
+              <SelectTrigger className="h-11 sm:h-12 rounded-xl bg-muted/30 border-border/50 text-sm">
+                <SelectValue placeholder={tPurpose("vibePlaceholder")} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="leisure">{tPurpose("tripStyleOptions.leisure")}</SelectItem>
+                <SelectItem value="adventure">{tPurpose("tripStyleOptions.adventure")}</SelectItem>
+                <SelectItem value="business">{tPurpose("tripStyleOptions.business")}</SelectItem>
+                <SelectItem value="cultural">{tPurpose("tripStyleOptions.cultural")}</SelectItem>
+                <SelectItem value="honeymoon">{tPurpose("tripStyleOptions.honeymoon")}</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}

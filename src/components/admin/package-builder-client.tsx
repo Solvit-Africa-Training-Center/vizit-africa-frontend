@@ -49,7 +49,7 @@ export function PackageBuilderClient({ request }: PackageBuilderClientProps) {
   } = usePackageBuilder(request);
 
   return (
-    <div className="mx-auto max-w-9xl px-5 md:px-10 py-8 min-h-screen pb-24">
+    <div className="mx-auto max-w-7xl px-5 md:px-10 py-8 min-h-screen pb-24">
       <BuilderHeader
         requestName={request.name || "Guest"}
         total={total}

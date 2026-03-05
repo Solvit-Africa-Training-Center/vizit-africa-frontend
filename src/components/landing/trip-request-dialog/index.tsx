@@ -192,7 +192,7 @@ export function TripRequestDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       {trigger && <DialogTrigger render={trigger} />}
       <DialogContent
-        className="sm:max-w-7xl h-[90vh] p-0 gap-0 overflow-hidden flex flex-col"
+        className="w-full sm:max-w-7xl h-full sm:h-[90vh] p-0 gap-0 overflow-hidden flex flex-col"
         showCloseButton={true}
       >
         <DialogHeader
@@ -202,8 +202,8 @@ export function TripRequestDialog({
           selectedItemsDisplay={selectedItemsDisplay}
         />
 
-        <div className="overflow-y-auto flex-1 min-h-0">
-          <div className="grid lg:grid-cols-2 gap-8 p-8">
+        <div className="overflow-y-auto flex-1 min-h-0 bg-background sm:bg-transparent">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 p-4 sm:p-8">
             <div className="space-y-8">
               <TravelDates
                 dateRange={dateRange}

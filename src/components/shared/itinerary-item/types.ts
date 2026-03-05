@@ -21,6 +21,7 @@ export type BaseItem = Record<string, unknown> & {
 export interface ItineraryItemProps {
   item: BaseItem;
   mode?: "view" | "edit" | "admin" | "vendor";
+  isDefaultOpen?: boolean;
   onRemove?: () => void;
   onUpdate?: (updates: Partial<BaseItem>) => void;
   onAction?: () => void;

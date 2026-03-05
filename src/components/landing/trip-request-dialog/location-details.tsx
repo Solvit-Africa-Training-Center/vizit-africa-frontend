@@ -1,6 +1,7 @@
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 import {
   Autocomplete,
   AutocompleteInput,
@@ -29,15 +30,18 @@ export function LocationDetails({
   handleUseCurrentDepartureLocation: () => void;
   departureLocationError: string | null;
 }) {
+  const t = useTranslations("PlanTrip.conciergeDialog.sections");
+  const tForm = useTranslations("PlanTrip.detailedPlanner.sections.foundation");
+
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
-        <h3 className="text-lg font-semibold">Location Details</h3>
+        <h3 className="text-lg font-semibold">{t("location")}</h3>
       </div>
       <div className="space-y-3">
         <div className="space-y-2">
           <Label htmlFor="departure" className="text-sm font-medium">
-            Departure City
+            {tForm("origin")}
           </Label>
           <Autocomplete
             value={departureQuery}
@@ -45,7 +49,7 @@ export function LocationDetails({
           >
             <AutocompleteInput
               id="departure"
-              placeholder="e.g., New York, London, Tokyo"
+              placeholder={tForm("originPlaceholder")}
               className="h-11"
             />
             <AutocompletePortal>
@@ -80,14 +84,15 @@ export function LocationDetails({
               </AutocompletePositioner>
             </AutocompletePortal>
           </Autocomplete>
-          <div className="flex items-center justify-between gap-3">
-            <p className="text-xs text-muted-foreground">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <p className="text-[10px] sm:text-xs text-muted-foreground leading-tight">
               Pick from suggestions or use browser geolocation.
             </p>
             <Button
               type="button"
-              size="sm"
+              size="xs"
               variant="outline"
+              className="w-fit"
               loading={isDepartureLocating}
               onClick={() => void handleUseCurrentDepartureLocation()}
             >
@@ -101,7 +106,7 @@ export function LocationDetails({
           ) : null}
         </div>
         <div className="space-y-2">
-          <Label className="text-sm font-medium">Destination</Label>
+          <Label className="text-sm font-medium">{tForm("destination")}</Label>
           <Input
             value="Kigali, Rwanda"
             disabled

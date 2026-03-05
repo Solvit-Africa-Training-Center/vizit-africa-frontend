@@ -8,15 +8,10 @@ import {
 } from "@remixicon/react";
 import type { DateRange } from "react-day-picker";
 import type { ContactInfo } from "./types";
+import { useTranslations } from "next-intl";
 
 /**
  * DialogFooter — bottom action bar of TripRequestDialog.
- *
- * Design changes:
- * - Total price in Cormorant display, primary color (pricing = primary per guide)
- * - Primary action: bg-primary (brand, for main CTA on light bg)
- * - Secondary actions: outline, muted
- * - AI assistant button kept — useful feature
  */
 export function DialogFooter({
   hasItems,
@@ -37,17 +32,18 @@ export function DialogFooter({
   handleRequestQuote: () => void;
   canSubmit: boolean | undefined;
 }) {
+  const t = useTranslations("PlanTrip.conciergeDialog.footer");
+
   return (
-    <div className="border-t border-border/50 bg-background px-7 py-5 shrink-0">
-      <div className="flex items-center justify-between gap-5">
+    <div className="border-t border-border/50 bg-background px-4 sm:px-7 py-4 sm:py-5 shrink-0">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-5">
         {/* Price display */}
-        <div className="space-y-0.5">
+        <div className="flex items-center justify-between w-full sm:w-auto sm:block space-y-0.5">
           <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/60">
-            {hasItems ? "Total Estimate" : "Estimated Total"}
+            {hasItems ? t("totalEstimate") : t("estimatedTotal")}
           </p>
           <div className="flex items-baseline gap-1.5">
-            {/* Price in primary Cormorant — per design guide pricing rule */}
-            <span className="font-display text-3xl font-light text-primary tracking-tight tabular-nums">
+            <span className="font-display text-2xl sm:text-3xl font-light text-primary tracking-tight tabular-nums">
               ${totalPrice.toLocaleString()}
             </span>
             {nights > 0 && (
@@ -59,55 +55,49 @@ export function DialogFooter({
         </div>
 
         {/* Actions */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2 sm:gap-2.5 w-full sm:w-auto justify-end">
           <Button
             variant="outline"
-            size="default"
-            className="gap-2 font-mono text-[10px] uppercase tracking-[0.12em] h-10 rounded-full px-4"
+            size="sm"
+            className="sm:gap-2 font-mono text-[10px] uppercase tracking-[0.12em] h-9 sm:h-10 rounded-full px-2.5 sm:px-4 shrink-0"
             render={<Link href={"/plan-trip/ai"} />}
           >
-            <RiSparkling2Line className="size-3.5" />
-            AI Assistant
+            <RiSparkling2Line className="size-4 sm:size-3.5" />
+            <span className="hidden sm:inline">{t("aiAssistant")}</span>
           </Button>
 
           <Button
             variant="outline"
-            size="default"
+            size="sm"
             onClick={handleAddAddons}
             disabled={!dateRange?.from || !contactInfo.departureCity}
-            className="gap-2 font-mono text-[10px] uppercase tracking-[0.12em] h-10 rounded-full px-4"
+            className="sm:gap-2 font-mono text-[10px] uppercase tracking-[0.12em] h-9 sm:h-10 rounded-full px-2.5 sm:px-4 shrink-0"
           >
-            <RiAddLine className="size-3.5" />
-            Add Extras
+            <RiAddLine className="size-4 sm:size-3.5" />
+            <span className="hidden sm:inline">{t("addExtras")}</span>
           </Button>
 
           <Button
-            size="default"
+            size="sm"
             onClick={handleRequestQuote}
             disabled={!canSubmit}
             className={[
-              "gap-2 min-w-[160px] h-10 rounded-full px-6",
-              "font-mono text-[10px] uppercase tracking-[0.12em]",
+              "gap-2 min-w-[110px] sm:min-w-[160px] h-9 sm:h-10 rounded-full px-4 sm:px-6 shrink-0",
+              "font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.12em]",
               "bg-primary text-primary-foreground hover:bg-primary-light",
               "shadow-[0_4px_16px_oklch(42%_0.06_245/0.2)]",
               "transition-all duration-300",
               "disabled:opacity-40 disabled:shadow-none",
             ].join(" ")}
           >
-            {canSubmit ? (
-              <>
-                Request Quote
-                <RiArrowRightLine className="size-3.5" />
-              </>
-            ) : (
-              <>
-                <RiCheckboxCircleLine className="size-3.5" />
-                Complete Form
-              </>
-            )}
+            <span className="inline">
+              {canSubmit ? t("requestQuote") : t("completeForm")}
+            </span>
+            <RiArrowRightLine className="size-3.5 hidden sm:inline" />
           </Button>
         </div>
       </div>
     </div>
   );
 }
+

@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RiCarLine, RiCloseLine, RiHotelLine, RiPlaneLine, RiUserStarLine } from "@remixicon/react";
 import type { TripItem } from "@/lib/plan_trip-types";
+import { useTranslations } from "next-intl";
 
 export function QuickServices({
   items,
@@ -12,31 +13,33 @@ export function QuickServices({
   toggleItem: (id: string, data: TripItem) => void;
   removeItem: (id: string) => void;
 }) {
+  const t = useTranslations("PlanTrip.conciergeDialog.sections");
+  const tServices = useTranslations("PlanTrip.conciergeDialog.services");
   const itemsCount = items.length;
 
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold">What do you need?</h3>
+        <h3 className="text-lg font-semibold">{t("services")}</h3>
         {itemsCount > 0 && (
           <Badge variant="secondary" className="text-xs">
-            {itemsCount} selected
+            {tServices("selectedCount", { count: itemsCount })}
           </Badge>
         )}
       </div>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div
           onClick={() =>
             toggleItem("flight-request", {
               id: "flight-request",
               type: "flight",
-              title: "Flight Booking",
-              description: "Round-trip flight arrangement",
+              title: tServices("flights"),
+              description: tServices("flightsDesc"),
               price: 0,
               quantity: 1,
             })
           }
-          className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${
+          className={`p-3.5 sm:p-4 rounded-xl border-2 cursor-pointer transition-all ${
             items.some((i) => i.id === "flight-request")
               ? "border-primary bg-primary/5"
               : "border-border hover:border-primary/50 hover:bg-accent/30"
@@ -47,9 +50,9 @@ export function QuickServices({
               <RiPlaneLine className="size-5 text-blue-600 dark:text-blue-400" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium">Flights</p>
+              <p className="text-sm font-medium">{tServices("flights")}</p>
               <p className="text-xs text-muted-foreground">
-                Round-trip booking
+                {tServices("flightsDesc")}
               </p>
             </div>
             <Checkbox
@@ -74,13 +77,13 @@ export function QuickServices({
             toggleItem("hotel-request", {
               id: "hotel-request",
               type: "hotel",
-              title: "Hotel Accommodation",
-              description: "Quality accommodation",
+              title: tServices("accommodation"),
+              description: tServices("accommodationDesc"),
               price: 0,
               quantity: 1,
             })
           }
-          className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${
+          className={`p-3.5 sm:p-4 rounded-xl border-2 cursor-pointer transition-all ${
             items.some((i) => i.id === "hotel-request")
               ? "border-primary bg-primary/5"
               : "border-border hover:border-primary/50 hover:bg-accent/30"
@@ -91,9 +94,9 @@ export function QuickServices({
               <RiHotelLine className="size-5 text-primary-600 dark:text-primary-400" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium">Accommodation</p>
+              <p className="text-sm font-medium">{tServices("accommodation")}</p>
               <p className="text-xs text-muted-foreground">
-                Hotel stay
+                {tServices("accommodationDesc")}
               </p>
             </div>
             <Checkbox
@@ -118,13 +121,13 @@ export function QuickServices({
             toggleItem("car-request", {
               id: "car-request",
               type: "car",
-              title: "Car Rental",
-              description: "Vehicle rental service",
+              title: tServices("carRental"),
+              description: tServices("carRentalDesc"),
               price: 0,
               quantity: 1,
             })
           }
-          className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${
+          className={`p-3.5 sm:p-4 rounded-xl border-2 cursor-pointer transition-all ${
             items.some((i) => i.id === "car-request")
               ? "border-primary bg-primary/5"
               : "border-border hover:border-primary/50 hover:bg-accent/30"
@@ -135,9 +138,9 @@ export function QuickServices({
               <RiCarLine className="size-5 text-red-600 dark:text-red-400" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium">Car Rental</p>
+              <p className="text-sm font-medium">{tServices("carRental")}</p>
               <p className="text-xs text-muted-foreground">
-                Transportation
+                {tServices("carRentalDesc")}
               </p>
             </div>
             <Checkbox
@@ -162,13 +165,13 @@ export function QuickServices({
             toggleItem("guide-request", {
               id: "guide-request",
               type: "guide",
-              title: "Local Guide",
-              description: "Expert local guide",
+              title: tServices("localGuide"),
+              description: tServices("localGuideDesc"),
               price: 0,
               quantity: 1,
             })
           }
-          className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${
+          className={`p-3.5 sm:p-4 rounded-xl border-2 cursor-pointer transition-all ${
             items.some((i) => i.id === "guide-request")
               ? "border-primary bg-primary/5"
               : "border-border hover:border-primary/50 hover:bg-accent/30"
@@ -179,9 +182,9 @@ export function QuickServices({
               <RiUserStarLine className="size-5 text-green-600 dark:text-green-400" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium">Local Guide</p>
+              <p className="text-sm font-medium">{tServices("localGuide")}</p>
               <p className="text-xs text-muted-foreground">
-                Expert tours
+                {tServices("localGuideDesc")}
               </p>
             </div>
             <Checkbox
@@ -205,7 +208,7 @@ export function QuickServices({
       {itemsCount > 0 && (
         <div className="mt-4 p-3 rounded-lg bg-muted/40 border border-border/50">
           <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
-            Selected Services
+            {t("selected")}
           </p>
           <div className="flex flex-wrap gap-2">
             {items.map((item) => (

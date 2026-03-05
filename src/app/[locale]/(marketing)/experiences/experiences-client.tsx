@@ -292,7 +292,7 @@ function ExperienceItem({
 }) {
   const t = useTranslations("Experiences");
   const ref = useRef(null);
-  const isInView = useInView(ref, { margin: "-40% 0px -40% 0px" });
+  const isInView = useInView(ref, { margin: "-45% 0px -45% 0px" });
 
   useEffect(() => {
     if (isInView) onActivate();
@@ -326,12 +326,12 @@ function ExperienceItem({
       </div>
 
       {/* Title */}
-      <h2 className="font-display font-light uppercase tracking-tight leading-[0.9] mb-9 text-2xl md:text-4xl text-foreground">
+      <h2 className="font-display font-light uppercase tracking-tight leading-[0.9] mb-6 md:mb-7 text-3xl md:text-4xl lg:text-5xl text-foreground">
         {experience.title}
       </h2>
 
       {/* Mobile image */}
-      <div className="md:hidden w-full h-72 relative mb-10 rounded-2xl overflow-hidden">
+      <div className="md:hidden w-full aspect-[16/10] relative mb-8 rounded-xl overflow-hidden shadow-lg">
         <NextImage
           src={image}
           alt={experience.title}
@@ -341,41 +341,41 @@ function ExperienceItem({
       </div>
 
       {/* Meta grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-10 border-y border-border/50 py-8">
-        <div className="flex flex-col gap-1.5">
-          <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/60">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-6 mb-8 md:mb-10">
+        <div className="flex flex-col gap-1">
+          <span className="font-mono text-[8px] sm:text-[9px] uppercase tracking-[0.2em] text-muted-foreground/60">
             {labels.location}
           </span>
-          <span className="font-display font-light text-lg uppercase tracking-tight">
+          <span className="font-display font-light text-base sm:text-lg uppercase tracking-tight">
             {location}
           </span>
         </div>
-        <div className="flex flex-col gap-1.5">
-          <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/60">
+        <div className="flex flex-col gap-1">
+          <span className="font-mono text-[8px] sm:text-[9px] uppercase tracking-[0.2em] text-muted-foreground/60">
             {labels.duration}
           </span>
-          <span className="font-display font-light text-lg uppercase tracking-tight">
+          <span className="font-display font-light text-base sm:text-lg uppercase tracking-tight">
             {duration}
           </span>
         </div>
-        <div className="flex flex-col gap-1.5 col-span-2 md:col-span-1">
-          <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/60">
+        <div className="flex flex-col gap-1 col-span-2 md:col-span-1">
+          <span className="font-mono text-[8px] sm:text-[9px] uppercase tracking-[0.2em] text-muted-foreground/60">
             {labels.startingFrom}
           </span>
           {/* Price — primary per design guide */}
-          <span className="font-display font-light text-3xl text-primary tracking-tighter">
+          <span className="font-display font-light text-2xl sm:text-3xl text-primary tracking-tighter">
             ${price}
           </span>
         </div>
       </div>
 
       {/* Description */}
-      <p className="text-xl md:text-2xl font-light leading-relaxed text-muted-foreground mb-10 max-w-2xl">
+      <p className="text-base md:text-2xl font-light leading-relaxed text-muted-foreground mb-8 md:mb-10 max-w-2xl text-pretty">
         {experience.description}
       </p>
 
       {/* Actions */}
-      <div className="flex items-center gap-5">
+      <div className="flex items-center gap-3 sm:gap-5">
         <AddToTripButton
           type="experience"
           item={{
@@ -391,7 +391,7 @@ function ExperienceItem({
           variant="default"
           size="lg"
           className={cn(
-            "rounded-full px-10 h-14 text-[11px] font-sans font-medium uppercase tracking-widest",
+            "rounded-full px-6 sm:px-10 h-12 sm:h-14 text-[10px] sm:text-[11px] font-sans font-medium uppercase tracking-widest",
             "flex-1 md:flex-none md:min-w-[220px]",
             "transition-all duration-500",
             isActive
@@ -404,7 +404,7 @@ function ExperienceItem({
           id={String(experience.id)}
           variant="full"
           className={cn(
-            "h-14 w-14 rounded-full p-0 flex items-center justify-center border border-border/60",
+            "h-12 w-12 sm:h-14 sm:w-14 md:w-auto md:px-6 rounded-full flex items-center justify-center border border-border/60 shrink-0",
             !isActive && "opacity-40",
           )}
         />

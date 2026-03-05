@@ -179,21 +179,21 @@ export default function ProfilePage() {
             </div>
           </header>
 
-          <div className="flex items-center gap-8 border-b border-border/50 mb-12 overflow-x-auto no-scrollbar">
+          <div className="flex items-center border-b border-border/50 mb-8 md:mb-12 overflow-x-auto no-scrollbar">
             {tabs.map((tab) => (
               <button
                 type="button"
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as Tab)}
                 className={cn(
-                  "flex items-center gap-2 pb-4 text-sm font-medium uppercase tracking-widest transition-all relative whitespace-nowrap",
+                  "flex-1 flex items-center justify-center gap-2 px-4 pb-3.5 sm:pb-4 text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] transition-all relative whitespace-nowrap",
                   activeTab === tab.id
                     ? "text-primary"
-                    : "text-muted-foreground hover:text-foreground",
+                    : "text-muted-foreground/60 hover:text-foreground",
                 )}
               >
-                <tab.icon className="size-4" />
-                {tab.label}
+                <tab.icon className="size-3.5 sm:size-4 shrink-0" />
+                <span>{tab.label}</span>
                 {activeTab === tab.id && (
                   <motion.div
                     layoutId="activeTab"

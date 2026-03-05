@@ -419,6 +419,12 @@
       "tag": "Experience",
       "duration": "Full Day"
     },
+    "filters": {
+      "location": "Location",
+      "priceRange": "Price Range",
+      "duration": "Duration",
+      "difficulty": "Difficulty"
+    },
     "items": {
       "gorilla-trekking": {
         "title": "Gorilla Trekking",
@@ -973,6 +979,39 @@
       "messages": {
         "fillNameEmail": "Please fill in your name and email before submitting.",
         "personalizing": "Personalizing your journey..."
+      },
+      "conciergeDialog": {
+        "title": "Plan Your Journey",
+        "subtitle": "Kigali, Rwanda — Concierge Request",
+        "sections": {
+          "dates": "Travel Dates",
+          "services": "What do you need?",
+          "selected": "Selected Services",
+          "location": "Location Details",
+          "travelers": "Travelers",
+          "contact": "Contact Information"
+        },
+        "services": {
+          "flights": "Flights",
+          "flightsDesc": "Round-trip booking",
+          "accommodation": "Accommodation",
+          "accommodationDesc": "Hotel stay",
+          "carRental": "Car Rental",
+          "carRentalDesc": "Transportation",
+          "localGuide": "Local Guide",
+          "localGuideDesc": "Expert tours",
+          "selectedCount": "{count} selected"
+        },
+        "footer": {
+          "totalEstimate": "Total Estimate",
+          "estimatedTotal": "Estimated Total",
+          "aiAssistant": "AI Assistant",
+          "addExtras": "Add Extras",
+          "requestQuote": "Request Quote",
+          "completeForm": "Complete Form",
+          "quoteShort": "Quote",
+          "completeShort": "Complete"
+        }
       }
     },
     "header": {
@@ -1485,11 +1524,14 @@
       }
     },
     "trips": {
-      "title": "Trip History",
-      "description": "A curated record of your confirmed journeys and upcoming adventures across Africa.",
+      "title": "Your Trips",
+      "description": "Every journey you've embarked on, and those yet to begin.",
       "planNew": "Plan New Trip",
       "upcoming": "Upcoming",
       "viewDetails": "View Details",
+      "fallbacks": {
+        "purpose": "African Adventure"
+      },
       "views": {
         "cards": "Cards",
         "timeline": "Timeline"
@@ -1511,27 +1553,6 @@
       "curateTitle": "Curate Your Adventure",
       "curateDescription": "Your personal collection of dream destinations and experiences. Explore the landscape and bookmark what inspires you to start building your journey.",
       "explore": "Explore Rwanda"
-    },
-    "trips": {
-      "title": "Your Trips",
-      "description": "Every journey you've embarked on, and those yet to begin.",
-      "fallbacks": {
-        "purpose": "African Adventure"
-      },
-      "views": {
-        "cards": "Cards",
-        "timeline": "Timeline"
-      },
-      "empty": {
-        "title": "No confirmed trips yet",
-        "description": "Your confirmed itineraries will appear here as soon as they're finalized and paid.",
-        "cta": "Start Planning a Trip"
-      },
-      "timeline": {
-        "selectJourney": "Select Journey",
-        "empty": "Select a trip to view detailed timeline",
-        "travelers": "{count} Travelers"
-      }
     },
     "messages": {
       "paymentSuccess": "Payment received! Your booking is now paid.",

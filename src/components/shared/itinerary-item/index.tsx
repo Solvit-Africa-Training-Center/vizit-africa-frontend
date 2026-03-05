@@ -24,8 +24,9 @@ export function ItineraryItem({
   actionLabel,
   isActionLoading,
   defaultValues,
+  isDefaultOpen = false,
 }: ItineraryItemProps) {
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(isDefaultOpen);
   const type = normalizeServiceType(item.type || item.itemType);
 
   // Normalize item keys to support both frontend camelCase and backend snake_case
